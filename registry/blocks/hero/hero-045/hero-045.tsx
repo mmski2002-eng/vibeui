@@ -19,6 +19,10 @@ export type Hero045Props = {
   defaultMode?: "day" | "night"
   /** Показывать ли переключатель день/ночь. */
   showModeSwitch?: boolean
+  /** Строка над именем и подписи переключателя темы. */
+  topLine?: string
+  paperLabel?: string
+  nightLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -104,6 +108,9 @@ export function Hero045({
   secondaryHref = "#book",
   defaultMode = "night",
   showModeSwitch = true,
+  topLine = "Личный сайт · тексты · книга",
+  paperLabel = "Бумага",
+  nightLabel = "Ночь",
   tone = "auto",
   accent,
   ink,
@@ -181,10 +188,10 @@ export function Hero045({
         </svg>
         <div data-part="shell">
           <div data-part="top">
-            <span>Личный сайт · тексты · книга</span>
+            <span>{topLine}</span>
             {showModeSwitch ? (
               <button data-part="mode" type="button" role="switch" aria-checked={current === "day"} onClick={toggle}>
-                <span>{current === "day" ? "Бумага" : "Ночь"}</span>
+                <span>{current === "day" ? paperLabel : nightLabel}</span>
                 <span data-part="orb" aria-hidden="true">
                   <svg data-icon="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
                     <circle cx="12" cy="12" r="4" />

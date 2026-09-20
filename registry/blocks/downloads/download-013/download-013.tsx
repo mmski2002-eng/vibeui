@@ -21,6 +21,9 @@ export type Download013Props = {
   phoneBrand?: string
   phoneBalance?: string
   phoneCaption?: string
+  /** aria QR и строки на макете телефона. */
+  qrLabel?: string
+  phoneRows?: readonly [readonly [string, string], readonly [string, string], readonly [string, string]]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -172,6 +175,8 @@ export function Download013({
   phoneBrand = "Ось",
   phoneBalance = "1 284 650 ₽",
   phoneCaption = "Основной счёт",
+  qrLabel = "QR-код для скачивания приложения",
+  phoneRows = [["Ozon · выплата", "+184 300 ₽"], ["Аренда", "−62 000 ₽"], ["УСН 6 % · аванс", "−41 760 ₽"]],
   tone = "auto",
   accent,
   ink,
@@ -226,7 +231,7 @@ export function Download013({
             ) : null}
           </div>
           <div data-part="qr">
-            <div data-part="code" aria-label="QR-код для скачивания приложения" role="img">
+            <div data-part="code" aria-label={qrLabel} role="img">
               <svg viewBox={`0 0 ${SIZE} ${SIZE}`} shapeRendering="crispEdges" aria-hidden="true">
                 <path d={qrPath(qrSeed)} />
               </svg>
@@ -249,16 +254,16 @@ export function Download013({
                 ))}
               </div>
               <div data-part="row" data-plus="true">
-                <span>Ozon · выплата</span>
-                <b>+184 300 ₽</b>
+                <span>{phoneRows[0][0]}</span>
+                <b>{phoneRows[0][1]}</b>
               </div>
               <div data-part="row">
-                <span>Аренда</span>
-                <b>−62 000 ₽</b>
+                <span>{phoneRows[1][0]}</span>
+                <b>{phoneRows[1][1]}</b>
               </div>
               <div data-part="row">
-                <span>УСН 6 % · аванс</span>
-                <b>−41 760 ₽</b>
+                <span>{phoneRows[2][0]}</span>
+                <b>{phoneRows[2][1]}</b>
               </div>
             </div>
           </div>

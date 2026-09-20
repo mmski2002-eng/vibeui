@@ -19,6 +19,14 @@ export type Testimonials028Props = {
   addressee?: string
   address?: string
   reviews?: readonly Testimonials028Review[]
+  /** aria ленты и подписи на открытке. */
+  stripLabel?: string
+  postLabel?: string
+  linesLabel?: string
+  toLabel?: string
+  whereLabel?: string
+  fromLabel?: string
+  hint?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -97,6 +105,13 @@ export function Testimonials028({
   addressee = "Мастерская «Стебель»",
   address = "Пестеля, 4, Санкт-Петербург",
   reviews = DEFAULT_REVIEWS,
+  stripLabel = "Отзывы",
+  postLabel = "почта",
+  linesLabel = "Адресат",
+  toLabel = "кому:",
+  whereLabel = "куда:",
+  fromLabel = "откуда:",
+  hint = "← листайте открытки",
   tone = "auto",
   accent,
   ink,
@@ -124,7 +139,7 @@ export function Testimonials028({
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <ul data-part="strip" aria-label="Отзывы">
+          <ul data-part="strip" aria-label={stripLabel}>
             {reviews.map((review) => (
               <li key={review.name + review.text.slice(0, 12)} data-part="card">
                 <blockquote data-part="message">
@@ -143,23 +158,23 @@ export function Testimonials028({
                     <span data-part="mark" aria-hidden="true">
                       <span>
                         <b>{review.date}</b>
-                        почта
+                        {postLabel}
                       </span>
                     </span>
                   ) : null}
-                  <ul data-part="lines" aria-label="Адресат">
+                  <ul data-part="lines" aria-label={linesLabel}>
                     <li>
-                      кому: <b>{addressee}</b>
+                      {toLabel} <b>{addressee}</b>
                     </li>
-                    <li>куда: {address}</li>
-                    <li>откуда: {review.place ?? "—"}</li>
+                    <li>{whereLabel} {address}</li>
+                    <li>{fromLabel} {review.place ?? "—"}</li>
                   </ul>
                   <p data-part="signature">— {review.name}</p>
                 </div>
               </li>
             ))}
           </ul>
-          <p data-part="hint">← листайте открытки</p>
+          <p data-part="hint">{hint}</p>
         </div>
       </section>
     </>

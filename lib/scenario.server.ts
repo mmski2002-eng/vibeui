@@ -14,9 +14,15 @@ import type { Scenario } from "@/registry/scenarios"
  * relative к корню, и в standalone-релиз попадает трейсингом.
  */
 
-export async function readScenarioSource(scenario: Scenario): Promise<string> {
+export async function readScenarioSource(scenario: Scenario, locale: Locale): Promise<string> {
   // Путь собирается от литеральной папки: иначе трассировка сборки не может
   // сузить доступ к файлам и тащит в standalone весь проект.
+  if (locale === "en" && scenario.sourceEn) {
+    return readFile(
+      path.join(process.cwd(), "app/en/scenarios", path.relative("app/en/scenarios", scenario.sourceEn)),
+      "utf8",
+    )
+  }
   return readFile(
     path.join(process.cwd(), "app/scenarios", path.relative("app/scenarios", scenario.source)),
     "utf8",
@@ -134,7 +140,7 @@ export async function buildScenarioBrief({
   const ru = locale === "ru"
   const text = scenarioText(scenario, locale)
   const sections = scenarioSections(scenario, locale)
-  const source = agentSource(await readScenarioSource(scenario))
+  const source = agentSource(await readScenarioSource(scenario, locale))
   const { images } = await readScenarioImages(scenario)
   const files = images.map((image) => image.file).join(", ")
 
@@ -169,7 +175,7 @@ export async function buildScenarioBrief({
     source.trimEnd(),
     "```",
     "",
-    `${ru ? "Демо" : "Demo"}: ${siteUrl}${scenario.demo}`,
+    `${ru ? "Демо" : "Demo"}: ${siteUrl}${text.demo}`,
   ]
 
   return lines.filter((line, index, all) => !(line === "" && all[index - 1] === "")).join("\n")

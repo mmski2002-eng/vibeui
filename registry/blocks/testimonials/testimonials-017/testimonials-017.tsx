@@ -19,6 +19,8 @@ export type Testimonials017Props = {
   scoreLabel?: string
   /** Фото под мутным затемнением на весь фон. */
   image?: string
+  /** aria звёзд. */
+  ratingLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -84,6 +86,7 @@ export function Testimonials017({
   score = "4,9",
   scoreLabel = "по 640 отзывам на трёх площадках",
   image = "",
+  ratingLabel = "Оценка {n} из 5",
   tone = "auto",
   accent,
   ink,
@@ -122,7 +125,7 @@ export function Testimonials017({
             {reviews.map((review, index) => (
               <li key={review.name + review.quote.slice(0, 12)} data-part="card" style={{ ["--vibeui-testimonials-017-n" as string]: index }}>
                 {review.rating ? (
-                  <span data-part="stars" aria-label={`Оценка ${review.rating} из 5`}>
+                  <span data-part="stars" aria-label={ratingLabel.replace("{n}", String(review.rating))}>
                     {"★".repeat(Math.max(0, Math.min(5, Math.round(review.rating))))}
                   </span>
                 ) : null}

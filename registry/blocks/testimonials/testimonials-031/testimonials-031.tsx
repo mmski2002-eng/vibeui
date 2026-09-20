@@ -21,6 +21,10 @@ export type Testimonials031Props = {
   /** Шкала уровней по возрастанию. */
   levels?: readonly string[]
   reviews?: readonly Testimonials031Review[]
+  /** Формы слов и aria шкалы. */
+  monthUnits?: readonly [string, string, string]
+  levelUnits?: readonly [string, string, string]
+  scaleLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -97,20 +101,20 @@ const DEFAULT_REVIEWS: Testimonials031Review[] = [
   { name: "Игорь", lang: "английский", months: 12, before: "A1", after: "B1", quote: "Мне 47, начинал с нуля. Не стыдно было ни разу — это, наверное, главное. Теперь переписываюсь с сыном в Канаде без переводчика.", note: "лучший год" },
 ]
 
-function pluralMonths(count: number) {
+function pluralMonths(count: number, units: readonly [string, string, string]) {
   const mod10 = count % 10
   const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return "месяц"
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "месяца"
-  return "месяцев"
+  if (mod10 === 1 && mod100 !== 11) return units[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
+  return units[2]
 }
 
-function pluralLevels(count: number) {
+function pluralLevels(count: number, units: readonly [string, string, string]) {
   const mod10 = count % 10
   const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return "уровень"
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "уровня"
-  return "уровней"
+  if (mod10 === 1 && mod100 !== 11) return units[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
+  return units[2]
 }
 
 /** Отзывы с уровнем «до → после» на шкале A1–C1. */
@@ -120,6 +124,9 @@ export function Testimonials031({
   lede = "Уровень до и после — по нашему тесту и внешнему экзамену, если сдавали. Имена настоящие, с разрешения.",
   levels = DEFAULT_LEVELS,
   reviews = DEFAULT_REVIEWS,
+  monthUnits = ["месяц", "месяца", "месяцев"],
+  levelUnits = ["уровень", "уровня", "уровней"],
+  scaleLabel = "Уровень: было {before}, стало {after}",
   tone = "auto",
   accent,
   ink,
@@ -161,15 +168,15 @@ export function Testimonials031({
                 <li key={review.name + index} data-part="card" style={{ ["--vibeui-testimonials-031-tilt" as string]: index % 3 === 0 ? -0.8 : index % 3 === 1 ? 0.6 : -0.3 }}>
                   {gained > 0 ? (
                     <span data-part="sticker">
-                      +{gained} {pluralLevels(gained)}
+                      +{gained} {pluralLevels(gained, levelUnits)}
                     </span>
                   ) : null}
                   <blockquote data-part="quote">{review.quote}</blockquote>
                   {review.note ? <p data-part="note">{review.note}</p> : null}
                   <p data-part="who">
-                    <b>{review.name}</b> · {review.lang} · {review.months} {pluralMonths(review.months)}
+                    <b>{review.name}</b> · {review.lang} · {review.months} {pluralMonths(review.months, monthUnits)}
                   </p>
-                  <div data-part="scale" aria-label={`Уровень: было ${review.before}, стало ${review.after}`}>
+                  <div data-part="scale" aria-label={scaleLabel.replace("{before}", review.before).replace("{after}", review.after)}>
                     <div data-part="track" style={{ ["--vibeui-testimonials-031-from" as string]: from, ["--vibeui-testimonials-031-to" as string]: to }}>
                       <i data-part="fill" />
                       <i data-part="pin" data-kind="before" style={{ left: `${from}%` }} />

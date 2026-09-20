@@ -19,6 +19,13 @@ export type Contact015Props = {
   /** Куда отправить форму. Пусто — показывается «готово» на месте. */
   action?: string
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  /** Подписи полей формы. */
+  addressLabel?: string
+  addressPlaceholder?: string
+  areaLabel?: string
+  roomsLabel?: string
+  phoneLabel?: string
+  phonePlaceholder?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -98,6 +105,12 @@ export function Contact015({
   doneText = "Перезвоним в течение часа и назовём цену с вилкой.",
   consentLabel = "Согласен на обработку данных и звонок по этому номеру.",
   action = "",
+  addressLabel = "Адрес",
+  addressPlaceholder = "Улица, дом, квартира",
+  areaLabel = "Площадь, м²",
+  roomsLabel = "Комнат",
+  phoneLabel = "Телефон",
+  phonePlaceholder = "+7 999 123-45-67",
   tone = "auto",
   accent,
   ink,
@@ -150,16 +163,16 @@ export function Contact015({
           ) : (
             <form data-part="form" action={action || undefined} method={action ? "post" : undefined} onSubmit={submit}>
               <label data-part="field">
-                <span>Адрес</span>
-                <input name="address" required placeholder="Улица, дом, квартира" autoComplete="street-address" />
+                <span>{addressLabel}</span>
+                <input name="address" required placeholder={addressPlaceholder} autoComplete="street-address" />
               </label>
               <div data-part="pair">
                 <label data-part="field">
-                  <span>Площадь, м²</span>
+                  <span>{areaLabel}</span>
                   <input name="area" type="number" min={10} max={500} required placeholder="64" inputMode="numeric" />
                 </label>
                 <label data-part="field">
-                  <span>Комнат</span>
+                  <span>{roomsLabel}</span>
                   <select name="rooms" defaultValue={rooms[1] ?? rooms[0]}>
                     {rooms.map((room) => (
                       <option key={room}>{room}</option>
@@ -168,8 +181,8 @@ export function Contact015({
                 </label>
               </div>
               <label data-part="field">
-                <span>Телефон</span>
-                <input id={`${id}-phone`} name="phone" type="tel" required inputMode="tel" autoComplete="tel" placeholder="+7 999 123-45-67" />
+                <span>{phoneLabel}</span>
+                <input id={`${id}-phone`} name="phone" type="tel" required inputMode="tel" autoComplete="tel" placeholder={phonePlaceholder} />
               </label>
               <label data-part="consent">
                 <input type="checkbox" name="consent" required />

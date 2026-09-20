@@ -18,6 +18,10 @@ export type Ai002Props = {
   placeholder?: string
   /** Что «сгенерируется»: строки с «# » — заголовки секций. */
   result?: readonly string[]
+  /** Счётчик слов, пустое состояние и строка готовности. */
+  wordsUnit?: string
+  emptyText?: string
+  doneLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -134,6 +138,9 @@ export function Ai002({
   outputLabel = "сводка",
   placeholder = "Вставьте расшифровку встречи…",
   result = DEFAULT_RESULT,
+  wordsUnit = "слов",
+  emptyText = "Нажмите «{run}» — сводка появится здесь.",
+  doneLine = "готово · {n} токенов",
   tone = "auto",
   accent,
   ink,
@@ -283,7 +290,7 @@ export function Ai002({
                   {phase === "busy" || phase === "typing" ? runningLabel : runLabel}
                 </button>
                 <span data-part="stats">
-                  {text.split(/\s+/).filter(Boolean).length} слов
+                  {text.split(/\s+/).filter(Boolean).length} {wordsUnit}
                 </span>
               </div>
             </div>
@@ -293,7 +300,7 @@ export function Ai002({
                 {outputLabel}
               </p>
               {phase === "idle" ? (
-                <p data-part="empty">Нажмите «{runLabel}» — сводка появится здесь.</p>
+                <p data-part="empty">{emptyText.replace("{run}", runLabel)}</p>
               ) : (
                 <div data-part="out" aria-live="polite">
                   {sections.map((section, index) => (
@@ -308,7 +315,7 @@ export function Ai002({
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M5 12l5 5 9-10" />
                       </svg>
-                      готово · {tokens.length} токенов
+                      {doneLine.replace("{n}", String(tokens.length))}
                     </span>
                   ) : null}
                 </div>

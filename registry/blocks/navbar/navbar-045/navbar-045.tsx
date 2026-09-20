@@ -16,6 +16,14 @@ export type Navbar045Props = {
   /** Стартовое состояние переключателя: «night» — графит, «day» — бумага. */
   defaultMode?: "day" | "night"
   sticky?: boolean
+  /** aria навигации, меню и кнопки-бургера. */
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
+  /** aria переключателя темы. */
+  nightLabel?: string
+  paperLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -95,6 +103,12 @@ export function Navbar045({
   ],
   defaultMode = "night",
   sticky = true,
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
+  nightLabel = "Включить ночь",
+  paperLabel = "Включить бумагу",
   tone = "auto",
   accent,
   ink,
@@ -152,7 +166,7 @@ export function Navbar045({
             <span data-part="name">{brand}</span>
             {tagline ? <span data-part="tagline">{tagline}</span> : null}
           </a>
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -160,7 +174,7 @@ export function Navbar045({
             ))}
           </nav>
           <div data-part="right">
-            <button data-part="mode" type="button" role="switch" aria-checked={current === "day"} aria-label={current === "day" ? "Включить ночь" : "Включить бумагу"} onClick={toggle}>
+            <button data-part="mode" type="button" role="switch" aria-checked={current === "day"} aria-label={current === "day" ? nightLabel : paperLabel} onClick={toggle}>
               <svg data-icon="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="4" />
                 <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
@@ -169,14 +183,14 @@ export function Navbar045({
                 <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
               </svg>
             </button>
-            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-045-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-045-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />
               <i aria-hidden="true" />
               <i aria-hidden="true" />
             </button>
           </div>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-045-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+        <nav data-part="menu" id="vibeui-navbar-045-menu" hidden={!menuOpen} aria-label={menuLabel} onClick={() => setMenuOpen(false)}>
           {links.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}

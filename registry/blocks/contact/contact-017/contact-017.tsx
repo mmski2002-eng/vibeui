@@ -29,6 +29,26 @@ export type Contact017Props = {
   doneTitle?: string
   doneText?: string
   consent?: string
+  /** Подписи степпера, полей, кнопок и сводки. */
+  steps?: readonly [string, string, string]
+  stepperLabel?: string
+  artistLabel?: string
+  zoneLabel?: string
+  dateLabel?: string
+  slotsUnit?: string
+  timeLabel?: string
+  namePlaceholder?: string
+  nameLabel?: string
+  phonePlaceholder?: string
+  ideaPlaceholder?: string
+  ideaLabel?: string
+  fileLabel?: string
+  backLabel?: string
+  nextLabel?: string
+  summaryTitle?: string
+  whenLabel?: string
+  consultLabel?: string
+  freeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -132,8 +152,6 @@ const DEFAULT_SLOTS: Contact017Slot[] = [
   { date: "27 сен", times: ["12:00", "17:00"] },
 ]
 
-const STEPS = ["Мастер и зона", "Дата и время", "Идея и контакты"]
-
 /** Запись в тату-студию: степпер с неоновым прогрессом, слоты лаймом и сводка выбора. */
 export function Contact017({
   eyebrow = "Запись",
@@ -147,6 +165,25 @@ export function Contact017({
   doneTitle = "Заявка у нас",
   doneText = "Напишем в мессенджер в течение часа, чтобы подтвердить окно и обсудить эскиз.",
   consent = "Нажимая кнопку, вы соглашаетесь с политикой обработки данных. Вам должно быть 18+.",
+  steps = ["Мастер и зона", "Дата и время", "Идея и контакты"],
+  stepperLabel = "Шаги записи",
+  artistLabel = "Мастер",
+  zoneLabel = "Зона",
+  dateLabel = "Дата",
+  slotsUnit = "окна",
+  timeLabel = "Время",
+  namePlaceholder = "Как вас зовут",
+  nameLabel = "Имя",
+  phonePlaceholder = "Телефон или Telegram",
+  ideaPlaceholder = "Идея: что, размер, есть ли референсы",
+  ideaLabel = "Идея",
+  fileLabel = "Прикрепить референс — по желанию",
+  backLabel = "Назад",
+  nextLabel = "Дальше",
+  summaryTitle = "Ваш выбор",
+  whenLabel = "Когда",
+  consultLabel = "Консультация",
+  freeLabel = "бесплатно",
   tone = "auto",
   accent,
   background,
@@ -193,8 +230,8 @@ export function Contact017({
               </div>
             ) : (
               <form data-part="form" action={action || undefined} method={action ? "post" : undefined} onSubmit={submit}>
-                <ol data-part="stepper" aria-label="Шаги записи">
-                  {STEPS.map((label, index) => (
+                <ol data-part="stepper" aria-label={stepperLabel}>
+                  {steps.map((label, index) => (
                     <li key={label} data-active={index === step} data-done={index < step}>
                       {index + 1}. {label}
                     </li>
@@ -208,7 +245,7 @@ export function Contact017({
                   <div key="s0" data-part="step">
                     <div>
                       <span data-part="label" id={`${id}-artist`}>
-                        Мастер
+                        {artistLabel}
                       </span>
                       <ul data-part="chips" role="group" aria-labelledby={`${id}-artist`}>
                         {artists.map((item) => (
@@ -223,7 +260,7 @@ export function Contact017({
                     </div>
                     <div>
                       <span data-part="label" id={`${id}-zone`}>
-                        Зона
+                        {zoneLabel}
                       </span>
                       <ul data-part="chips" role="group" aria-labelledby={`${id}-zone`}>
                         {zones.map((item) => (
@@ -241,14 +278,14 @@ export function Contact017({
                   <div key="s1" data-part="step">
                     <div>
                       <span data-part="label" id={`${id}-date`}>
-                        Дата
+                        {dateLabel}
                       </span>
                       <ul data-part="chips" role="group" aria-labelledby={`${id}-date`}>
                         {slots.map((slot) => (
                           <li key={slot.date}>
                             <button type="button" data-part="chip" data-free="true" aria-pressed={date === slot.date} onClick={() => { setDate(slot.date); setTime("") }}>
                               {slot.date}
-                              <small>{slot.times.length} окна</small>
+                              <small>{slot.times.length} {slotsUnit}</small>
                             </button>
                           </li>
                         ))}
@@ -257,7 +294,7 @@ export function Contact017({
                     {date ? (
                       <div>
                         <span data-part="label" id={`${id}-time`}>
-                          Время
+                          {timeLabel}
                         </span>
                         <ul data-part="chips" role="group" aria-labelledby={`${id}-time`}>
                           {(slots.find((slot) => slot.date === date)?.times ?? []).map((item) => (
@@ -275,12 +312,12 @@ export function Contact017({
                 {step === 2 ? (
                   <div key="s2" data-part="step">
                     <div data-part="fields">
-                      <input type="text" name="name" required placeholder="Как вас зовут" aria-label="Имя" autoComplete="name" />
-                      <input type="tel" name="phone" required placeholder="Телефон или Telegram" aria-label="Телефон или Telegram" autoComplete="tel" />
-                      <textarea name="idea" placeholder="Идея: что, размер, есть ли референсы" aria-label="Идея" />
+                      <input type="text" name="name" required placeholder={namePlaceholder} aria-label={nameLabel} autoComplete="name" />
+                      <input type="tel" name="phone" required placeholder={phonePlaceholder} aria-label={phonePlaceholder} autoComplete="tel" />
+                      <textarea name="idea" placeholder={ideaPlaceholder} aria-label={ideaLabel} />
                       <label data-part="file">
                         <input type="file" name="reference" accept="image/*" />
-                        Прикрепить референс — по желанию
+                        {fileLabel}
                       </label>
                     </div>
                     {consent ? <p data-part="consent">{consent}</p> : null}
@@ -288,11 +325,11 @@ export function Contact017({
                 ) : null}
                 <div data-part="nav">
                   <button type="button" data-part="btn" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
-                    Назад
+                    {backLabel}
                   </button>
                   {step < 2 ? (
                     <button type="button" data-part="btn" data-primary="true" disabled={!canNext} onClick={() => setStep((value) => value + 1)}>
-                      Дальше
+                      {nextLabel}
                     </button>
                   ) : (
                     <button type="submit" data-part="btn" data-primary="true">
@@ -303,22 +340,22 @@ export function Contact017({
               </form>
             )}
             <aside data-part="summary" aria-live="polite">
-              <h3>Ваш выбор</h3>
+              <h3>{summaryTitle}</h3>
               <div data-part="row">
-                <span>Мастер</span>
+                <span>{artistLabel}</span>
                 <b>{artistName}</b>
               </div>
               <div data-part="row">
-                <span>Зона</span>
+                <span>{zoneLabel}</span>
                 <b>{zone || "—"}</b>
               </div>
               <div data-part="row">
-                <span>Когда</span>
+                <span>{whenLabel}</span>
                 <b>{date ? `${date}${time ? `, ${time}` : ""}` : "—"}</b>
               </div>
               <div data-part="row">
-                <span>Консультация</span>
-                <b>бесплатно</b>
+                <span>{consultLabel}</span>
+                <b>{freeLabel}</b>
               </div>
             </aside>
           </div>

@@ -31,6 +31,7 @@ export type Map006Props = {
   openLabel?: string
   /** Тема карты: auto следует за схемой страницы. */
   theme?: "auto" | "light" | "dark"
+  legendLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -116,6 +117,7 @@ export function Map006({
   routesLabel = "Дорога",
   openLabel = "Открыть в Яндекс Картах",
   theme = "auto",
+  legendLabel = "Площадки",
   tone = "auto",
   accent,
   background,
@@ -152,7 +154,7 @@ export function Map006({
             </div>
             <div>
               {points.length > 0 ? (
-                <ul data-part="legend" aria-label="Площадки">
+                <ul data-part="legend" aria-label={legendLabel}>
                   {points.map((point) => (
                     <li key={point.name} style={{ ["--vibeui-map-006-dot" as string]: point.color }}>
                       <i aria-hidden="true" />

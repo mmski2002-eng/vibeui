@@ -23,6 +23,11 @@ export type Charity002Props = {
   stories?: readonly Charity002Story[]
   openLabel?: string
   closeLabel?: string
+  /** aria стрелок, штамп «почта России», «от кого». */
+  prevLabel?: string
+  nextLabel?: string
+  stampLines?: readonly [string, string]
+  fromLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -124,6 +129,10 @@ export function Charity002({
   stories = DEFAULT_STORIES,
   openLabel = "Открыть письмо",
   closeLabel = "Сложить",
+  prevLabel = "Назад",
+  nextLabel = "Вперёд",
+  stampLines = ["почта", "России"],
+  fromLabel = "от кого:",
   tone = "auto",
   accent,
   ink,
@@ -211,12 +220,12 @@ export function Charity002({
                 {hint}
               </span>
             ) : null}
-            <button data-part="arrow" type="button" aria-label="Назад" onClick={() => scrollBy(-1)}>
+            <button data-part="arrow" type="button" aria-label={prevLabel} onClick={() => scrollBy(-1)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M15 5l-7 7 7 7" />
               </svg>
             </button>
-            <button data-part="arrow" type="button" aria-label="Вперёд" onClick={() => scrollBy(1)}>
+            <button data-part="arrow" type="button" aria-label={nextLabel} onClick={() => scrollBy(1)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M9 5l7 7-7 7" />
               </svg>
@@ -238,15 +247,15 @@ export function Charity002({
                     </svg>
                   </span>
                   <span data-part="post" aria-hidden="true">
-                    почта
+                    {stampLines[0]}
                     <br />
-                    России
+                    {stampLines[1]}
                   </span>
                   <span data-part="stamp" aria-hidden="true">
                     <i>{story.image ? <img src={story.image} alt={story.imageAlt ?? ""} /> : null}</i>
                   </span>
                   <span data-part="to">
-                    <small>от кого:</small>
+                    <small>{fromLabel}</small>
                     <b>{story.name}</b>
                     {story.meta}
                   </span>

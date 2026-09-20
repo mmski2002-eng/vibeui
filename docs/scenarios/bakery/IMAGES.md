@@ -34,7 +34,7 @@ readable signage, no warm orange color grading.
 | --- | --- | --- |
 | `hero.webp` | 4:5, 1280×1600 | Morning bakery counter seen from the customer side: glass display with croissants, sourdough loaves on wooden boards behind, a barista's hands blurred at the espresso machine, steam, window light from the left |
 | `shelf.webp` | 16:9, 1600×900 | Wide shot of pale oak shelves with sourdough loaves standing in a row, each with a different scoring pattern, flour dust on the shelf edge, white tile wall |
-| `item-01.webp` | 1:1, 1200×1200 | Single sourdough country loaf with an ear-shaped score, on a light concrete surface, three-quarter view, soft top light — **все `item-*` в одном ракурсе, на одной поверхности, одинаковый свет** |
+| `item-01.webp` | 1:1, 1200×1200 | Single sourdough country loaf with an ear-shaped score, on a light concrete surface, three-quarter view, soft top light — **all `item-*` from the same angle, on the same surface, same light** |
 | `item-02.webp` | 1:1, 1200×1200 | Single butter croissant, glossy layers, same surface and angle as item-01 |
 | `item-03.webp` | 1:1, 1200×1200 | Single cinnamon bun with glaze, same surface and angle |
 | `item-04.webp` | 1:1, 1200×1200 | Slice of rosemary focaccia with sea salt, same surface and angle |
@@ -55,8 +55,8 @@ readable signage, no warm orange color grading.
 | `hands-flour.webp` | 1:1, 1200×1200 | Top-down of hands shaping dough on a floured wooden bench, flour in the air |
 | `queue.webp` | 3:2, 1600×1067 | Small morning queue of three people outside a glass bakery door, city street, soft morning light, faces turned away |
 | `window.webp` | 2:3, 1067×1600 | Vertical view of the bakery window from inside: a person reading at a table, coffee cup, street blurred outside |
-| `box.webp` | 3:2, 1600×1067 | Open white cardboard pastry box with four pastries inside, top-down, on a light surface — **для крышки конструктора** |
-| `bag.webp` | 1:1, 1200×1200 | Flat texture of clean brown kraft paper bag, top-down, even light — **фактура для формы рассылки** |
+| `box.webp` | 3:2, 1600×1067 | Open white cardboard pastry box with four pastries inside, top-down, on a light surface — **for the builder lid** |
+| `bag.webp` | 1:1, 1200×1200 | Flat texture of clean brown kraft paper bag, top-down, even light — **texture for the newsletter form** |
 
 ## Куда что идёт
 

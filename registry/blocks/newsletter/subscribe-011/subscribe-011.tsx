@@ -31,6 +31,16 @@ export type Subscribe011Props = {
   actionLabel?: string
   doneTitle?: string
   doneText?: string
+  /** Подписи полей и сводки подписки. */
+  frequencyLegend?: string
+  sizeLegend?: string
+  summaryTitle?: string
+  bouquetLabel?: string
+  frequencyLabel?: string
+  perDeliveryLabel?: string
+  perMonthCountLabel?: string
+  perMonthLabel?: string
+  fine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -143,6 +153,15 @@ export function Subscribe011({
   actionLabel = "Подписаться",
   doneTitle = "Записали",
   doneText = "Перезвоним сегодня, уточним адрес и день. Первый букет — за наш счёт.",
+  frequencyLegend = "Как часто",
+  sizeLegend = "Какой букет",
+  summaryTitle = "ваша подписка",
+  bouquetLabel = "Букет",
+  frequencyLabel = "Частота",
+  perDeliveryLabel = "За доставку",
+  perMonthCountLabel = "Доставок в месяц",
+  perMonthLabel = "в месяц",
+  fine = "Списание в день доставки. Первая — бесплатно, без карты.",
   tone = "auto",
   accent,
   ink,
@@ -186,7 +205,7 @@ export function Subscribe011({
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
             <fieldset data-part="group">
-              <legend>Как часто</legend>
+              <legend>{frequencyLegend}</legend>
               <div data-part="chips">
                 {frequencies.map((item, index) => (
                   <label key={item.label} data-part="chip" data-on={index === frequency}>
@@ -198,7 +217,7 @@ export function Subscribe011({
               </div>
             </fieldset>
             <fieldset data-part="group">
-              <legend>Какой букет</legend>
+              <legend>{sizeLegend}</legend>
               <div data-part="chips">
                 {sizes.map((item, index) => (
                   <label key={item.label} data-part="chip" data-on={index === size}>
@@ -229,37 +248,37 @@ export function Subscribe011({
               </div>
             ) : (
               <>
-                <h3>ваша подписка</h3>
+                <h3>{summaryTitle}</h3>
                 <dl data-part="rows">
                   <div>
-                    <dt>Букет</dt>
+                    <dt>{bouquetLabel}</dt>
                     <dd>{currentSize ? `${currentSize.label.toLowerCase()}, ${currentSize.stems}` : "—"}</dd>
                   </div>
                   <div>
-                    <dt>Частота</dt>
+                    <dt>{frequencyLabel}</dt>
                     <dd>{currentFrequency ? currentFrequency.label.toLowerCase() : "—"}</dd>
                   </div>
                   <div>
-                    <dt>За доставку</dt>
+                    <dt>{perDeliveryLabel}</dt>
                     <dd>
                       {discount > 0 && currentSize ? <s>{formatMoney(currentSize.price, currency)}</s> : null}
                       {formatMoney(perDelivery, currency)}
                     </dd>
                   </div>
                   <div>
-                    <dt>Доставок в месяц</dt>
+                    <dt>{perMonthCountLabel}</dt>
                     <dd>{currentFrequency?.perMonth ?? 0}</dd>
                   </div>
                 </dl>
                 <div data-part="total">
-                  <span>в месяц</span>
+                  <span>{perMonthLabel}</span>
                   <b>{formatMoney(perMonth, currency)}</b>
                 </div>
                 <form data-part="form" onSubmit={submit}>
                   <input type="tel" name="phone" required placeholder={placeholder} aria-label={placeholder} autoComplete="tel" />
                   <button type="submit">{actionLabel}</button>
                 </form>
-                <p data-part="fine">Списание в день доставки. Первая — бесплатно, без карты.</p>
+                <p data-part="fine">{fine}</p>
               </>
             )}
           </div>

@@ -18,10 +18,16 @@ export type Map009Props = {
   image?: string
   imageAlt?: string
   imageCaption?: string
+  /** Фото-карта (аэро-вид) в панель карты; пусто — рисованный SVG-схематик. */
+  mapImage?: string
+  mapImageAlt?: string
   /** Как добраться и что дальше: машина, трансфер, ночёвка, парковка. */
   ways?: readonly Map009Way[]
   openLabel?: string
   theme?: "auto" | "light" | "dark"
+  /** alt картинки карты и aria рисованной карты. */
+  mapAlt?: string
+  drawnMapLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -70,6 +76,13 @@ container-type:inline-size;
 [data-vibeui-block="map-009"] [data-part="map"] circle[data-pulse]{animation:vibeui-map-009-pulse 2.8s ease-out infinite}
 @keyframes vibeui-map-009-dash{to{stroke-dashoffset:-16}}
 @keyframes vibeui-map-009-pulse{0%{r:8;opacity:.55}100%{r:24;opacity:0}}
+[data-vibeui-block="map-009"] [data-part="map"] .vibeui-map-009-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+[data-vibeui-block="map-009"] [data-part="map"][data-photo="true"] svg{display:none}
+[data-vibeui-block="map-009"] [data-part="map"][data-photo="true"]::after{box-shadow:inset 0 0 130px rgb(11 18 32 / .8)}
+[data-vibeui-block="map-009"] [data-part="marker"]{position:absolute;left:50%;top:47%;z-index:2;width:2.6rem;height:2.6rem;transform:translate(-50%,-100%) rotate(45deg);display:grid;place-items:center;border-radius:50% 50% 50% 0;background:var(--vibeui-map-009-accent);box-shadow:0 8px 20px -4px rgb(0 0 0 / .7),0 0 26px rgb(242 182 79 / .6)}
+[data-vibeui-block="map-009"] [data-part="marker"] svg{transform:rotate(-45deg);width:1.25rem;height:1.25rem;fill:none;stroke:#0b1220;stroke-width:1.8;stroke-linecap:round}
+[data-vibeui-block="map-009"] [data-part="marker"]::after{content:"";position:absolute;left:50%;top:50%;z-index:-1;width:3.6rem;height:3.6rem;border-radius:50%;background:radial-gradient(circle,rgb(242 182 79 / .4),transparent 68%);animation:vibeui-map-009-ping 2.8s ease-out infinite}
+@keyframes vibeui-map-009-ping{0%{opacity:.7;transform:translate(-50%,-50%) scale(.5)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
 [data-vibeui-block="map-009"] [data-part="aside"]{display:grid;gap:1.25rem;align-content:start}
 [data-vibeui-block="map-009"] [data-part="photo"]{position:relative;margin:0;padding:.45rem;border:1px solid var(--vibeui-map-009-line);border-radius:.5rem;background:var(--vibeui-map-009-card);box-shadow:0 24px 44px -30px rgb(0 0 0 / .8)}
 [data-vibeui-block="map-009"] [data-part="photo"] span{position:relative;display:block;aspect-ratio:3/2;overflow:hidden;border-radius:.25rem;background:var(--vibeui-map-009-bg)}
@@ -116,6 +129,8 @@ export function Map009({
   image,
   imageAlt = "",
   imageCaption = "дом, где всё случится",
+  mapImage,
+  mapImageAlt = "",
   ways = [
     { icon: "car", title: "На машине", text: "Час от центра без пробок. Точка в навигаторе — по кнопке выше. Въезд через ворота, охрана знает про свадьбу." },
     { icon: "bus", title: "Трансфер", text: "От метро «Тушинская» в 14:30 и 15:15, автобусы с табличкой «В ❄ Д». Обратно — в 00:30 и 01:00." },
@@ -124,6 +139,8 @@ export function Map009({
   ],
   openLabel = "Открыть в Яндекс Картах",
   theme = "auto",
+  mapAlt = "Карта проезда: {address}",
+  drawnMapLabel = "Стилизованная карта проезда: {address}",
   tone = "auto",
   accent,
   ink,
@@ -202,8 +219,18 @@ export function Map009({
           <h2 data-part="title">{title}</h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="grid">
-            <div data-part="map">
-              <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label={`Стилизованная карта проезда: ${address}`}>
+            <div data-part="map" data-photo={mapImage ? "true" : undefined}>
+              {mapImage ? (
+                <>
+                  <img className="vibeui-map-009-photo" src={mapImage} alt={mapImageAlt || mapAlt.replace("{address}", address)} loading="lazy" />
+                  <span data-part="marker" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19" />
+                    </svg>
+                  </span>
+                </>
+              ) : null}
+              <svg viewBox="0 0 480 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label={drawnMapLabel.replace("{address}", address)}>
                 <rect x="0" y="0" width="480" height="300" fill={mapBg} />
                 {contours.map((d, i) => (
                   <path key={`contour-${i}`} d={d} fill="none" stroke={mapInk} strokeWidth="1" strokeOpacity="0.06" />

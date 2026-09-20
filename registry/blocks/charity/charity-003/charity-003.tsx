@@ -25,6 +25,13 @@ export type Charity003Props = {
   stamp?: string
   reportLabel?: string
   reportHref?: string
+  /** Единицы суммы, aria года и кольца, подпись. */
+  millionUnit?: string
+  thousandUnit?: string
+  decimalSeparator?: string
+  yearsLabel?: string
+  ringLabel?: string
+  spentLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -143,9 +150,9 @@ function formatMoney(value: number) {
   return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
-function formatShort(value: number) {
-  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1).replace(".", ",").replace(",0", "")} млн`
-  if (value >= 1_000) return `${Math.round(value / 1_000)} тыс.`
+function formatShort(value: number, millionUnit: string, thousandUnit: string, decimalSeparator: string) {
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1).replace(".0", "").replace(".", decimalSeparator)} ${millionUnit}`
+  if (value >= 1_000) return `${Math.round(value / 1_000)} ${thousandUnit}`
   return String(value)
 }
 
@@ -159,6 +166,12 @@ export function Charity003({
   stamp = "на рекламу",
   reportLabel = "Открыть годовой отчёт (PDF)",
   reportHref = "#documents",
+  millionUnit = "млн",
+  thousandUnit = "тыс.",
+  decimalSeparator = ",",
+  yearsLabel = "Год",
+  ringLabel = "Расходы за {year}: {total}",
+  spentLine = "расходы за {year}",
   tone = "auto",
   accent,
   ink,
@@ -213,7 +226,7 @@ export function Charity003({
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
           {years.length > 1 ? (
-            <ul data-part="years" aria-label="Год">
+            <ul data-part="years" aria-label={yearsLabel}>
               {years.map((item, index) => (
                 <li key={item.year}>
                   <button data-part="year" type="button" aria-pressed={index === yearIndex} onClick={() => setYearIndex(index)}>
@@ -226,7 +239,7 @@ export function Charity003({
           {current ? (
             <div data-part="grid">
               <div data-part="chart">
-                <svg data-part="ring" viewBox="0 0 100 100" role="img" aria-label={`Расходы за ${current.year}: ${formatMoney(total)} ${currency}`}>
+                <svg data-part="ring" viewBox="0 0 100 100" role="img" aria-label={ringLabel.replace("{year}", current.year).replace("{total}", `${formatMoney(total)} ${currency}`)}>
                   <circle cx="50" cy="50" r="40" fill="none" stroke="var(--vibeui-charity-003-soft)" strokeWidth="14" />
                   {current.items.map((item, index) => {
                     const length = total > 0 ? (item.value / total) * 100 : 0
@@ -248,9 +261,9 @@ export function Charity003({
                 </svg>
                 <div data-part="center" aria-hidden="true">
                   <strong key={current.year}>
-                    {formatShort(total)} {currency}
+                    {formatShort(total, millionUnit, thousandUnit, decimalSeparator)} {currency}
                   </strong>
-                  <span>расходы за {current.year}</span>
+                  <span>{spentLine.replace("{year}", current.year)}</span>
                 </div>
                 {stamp ? (
                   <div data-part="stamp" aria-hidden="true">

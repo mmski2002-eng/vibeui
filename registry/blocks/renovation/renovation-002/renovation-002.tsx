@@ -22,6 +22,15 @@ export type Renovation002Props = {
   hereLabel?: string
   /** Подпись под шкалой. */
   fine?: string
+  /** Подписи таблицы Ганта и панели текущего этапа. */
+  chartLabel?: string
+  cornerLabel?: string
+  weeksLabel?: string
+  weekShort?: string
+  stageLine?: string
+  doneLabel?: string
+  startLabel?: string
+  crewLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -114,6 +123,14 @@ export function Renovation002({
   totalWeeks,
   hereLabel = "вы здесь",
   fine = "Пример графика капитального ремонта 54 м². Ваш график — после замера, в тот же день.",
+  chartLabel = "График работ по неделям",
+  cornerLabel = "Этап / неделя",
+  weeksLabel = "недели {from}–{to}",
+  weekShort = "нед",
+  stageLine = "Этап {n} из {total}",
+  doneLabel = "Объект сдан",
+  startLabel = "Старт",
+  crewLabel = "бригада: {crew}",
   tone = "auto",
   accent,
   ink,
@@ -178,9 +195,9 @@ export function Renovation002({
                 <h2 data-part="title">{title}</h2>
                 {lede ? <p data-part="lede">{lede}</p> : null}
               </div>
-              <div data-part="chart" role="table" aria-label="График работ по неделям">
+              <div data-part="chart" role="table" aria-label={chartLabel}>
                 <div data-part="corner" role="columnheader">
-                  Этап / неделя
+                  {cornerLabel}
                 </div>
                 <div data-part="axis" role="row" aria-hidden="true">
                   {Array.from({ length: total }, (_, index) => (
@@ -202,7 +219,7 @@ export function Renovation002({
                         <div
                           data-part="lane"
                           role="cell"
-                          aria-label={`недели ${stage.start + 1}–${Math.ceil(stage.start + stage.weeks)}`}
+                          aria-label={weeksLabel.replace("{from}", String(stage.start + 1)).replace("{to}", String(Math.ceil(stage.start + stage.weeks)))}
                           style={{ ["--vibeui-renovation-002-start" as string]: stage.start, ["--vibeui-renovation-002-len" as string]: stage.weeks }}
                         >
                           <div data-part="bar" style={{ ["--vibeui-renovation-002-p" as string]: Math.min(1, Math.max(0, (week - stage.start) / stage.weeks)).toFixed(3) }} />
@@ -213,17 +230,17 @@ export function Renovation002({
                 </div>
                 <div data-part="here" data-end={progress > 0.85} style={{ ["--vibeui-renovation-002-here" as string]: progress.toFixed(4), gridRow: `1 / span ${stages.length + 1}` }} aria-hidden="true">
                   <span>
-                    {hereLabel} · нед {weekLabel}
+                    {hereLabel} · {weekShort} {weekLabel}
                   </span>
                 </div>
               </div>
               <div data-part="now" aria-live="polite">
                 <small>
-                  {nowIndex >= 0 ? `Этап ${nowIndex + 1} из ${stages.length}` : week >= total ? "Объект сдан" : "Старт"} · нед {Math.min(total, Math.floor(current.start) + 1)}–{Math.ceil(current.start + current.weeks)}
+                  {nowIndex >= 0 ? stageLine.replace("{n}", String(nowIndex + 1)).replace("{total}", String(stages.length)) : week >= total ? doneLabel : startLabel} · {weekShort} {Math.min(total, Math.floor(current.start) + 1)}–{Math.ceil(current.start + current.weeks)}
                 </small>
                 <h3>{current.name}</h3>
                 <p>{current.text}</p>
-                {current.crew ? <b>бригада: {current.crew}</b> : null}
+                {current.crew ? <b>{crewLabel.replace("{crew}", current.crew)}</b> : null}
               </div>
               {fine ? <p data-part="fine">{fine}</p> : null}
             </div>

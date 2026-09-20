@@ -24,6 +24,16 @@ export type Renovation003Props = {
   afterLabel?: string
   /** Начальное положение шторки, %. */
   defaultPosition?: number
+  /** aria вкладок и шторки, подписи фактов, «нед». */
+  tabsLabel?: string
+  weekShort?: string
+  afterAlt?: string
+  beforeAlt?: string
+  sliderLabel?: string
+  areaLabel?: string
+  typeLabel?: string
+  termLabel?: string
+  worksLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -112,6 +122,15 @@ export function Renovation003({
   beforeLabel = "до",
   afterLabel = "после",
   defaultPosition = 50,
+  tabsLabel = "Объекты",
+  weekShort = "нед",
+  afterAlt = "{name}: после ремонта",
+  beforeAlt = "{name}: до ремонта",
+  sliderLabel = "Шторка до/после",
+  areaLabel = "Площадь",
+  typeLabel = "Тип",
+  termLabel = "Срок",
+  worksLabel = "Работы",
   tone = "auto",
   accent,
   ink,
@@ -151,13 +170,13 @@ export function Renovation003({
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
           <div data-part="grid">
-            <ul data-part="tabs" role="tablist" aria-label="Объекты">
+            <ul data-part="tabs" role="tablist" aria-label={tabsLabel}>
               {works.map((item, itemIndex) => (
                 <li key={item.name} role="presentation">
                   <button data-part="tab" type="button" role="tab" aria-selected={itemIndex === index} onClick={() => pick(itemIndex)}>
                     <b>{item.name}</b>
                     <span>
-                      {[item.area, item.type, item.weeks ? `${item.weeks} нед` : null].filter(Boolean).join(" · ")}
+                      {[item.area, item.type, item.weeks ? `${item.weeks} ${weekShort}` : null].filter(Boolean).join(" · ")}
                     </span>
                   </button>
                 </li>
@@ -165,8 +184,8 @@ export function Renovation003({
             </ul>
             <div data-part="panel" role="tabpanel">
               <div data-part="compare" data-settling={settling} style={{ ["--vibeui-renovation-003-x" as string]: `${position}%` }}>
-                <img data-part="after" src={work.after} alt={`${work.name}: после ремонта`} loading="lazy" draggable={false} />
-                <img data-part="before" src={work.before} alt={`${work.name}: до ремонта`} loading="lazy" draggable={false} />
+                <img data-part="after" src={work.after} alt={afterAlt.replace("{name}", work.name)} loading="lazy" draggable={false} />
+                <img data-part="before" src={work.before} alt={beforeAlt.replace("{name}", work.name)} loading="lazy" draggable={false} />
                 <span data-part="tag" data-side="before">
                   {beforeLabel}
                 </span>
@@ -179,7 +198,7 @@ export function Renovation003({
                   min={0}
                   max={100}
                   value={position}
-                  aria-label="Шторка до/после"
+                  aria-label={sliderLabel}
                   onChange={(event) => setPosition(Number(event.target.value))}
                   onPointerDown={() => setSettling(false)}
                   onKeyDown={() => setSettling(false)}
@@ -196,25 +215,25 @@ export function Renovation003({
               <dl data-part="facts">
                 {work.area ? (
                   <div>
-                    <dt>Площадь</dt>
+                    <dt>{areaLabel}</dt>
                     <dd>{work.area}</dd>
                   </div>
                 ) : null}
                 {work.type ? (
                   <div>
-                    <dt>Тип</dt>
+                    <dt>{typeLabel}</dt>
                     <dd>{work.type}</dd>
                   </div>
                 ) : null}
                 {work.weeks ? (
                   <div>
-                    <dt>Срок</dt>
-                    <dd>{work.weeks} нед</dd>
+                    <dt>{termLabel}</dt>
+                    <dd>{work.weeks} {weekShort}</dd>
                   </div>
                 ) : null}
                 {work.price ? (
                   <div>
-                    <dt>Работы</dt>
+                    <dt>{worksLabel}</dt>
                     <dd>{work.price}</dd>
                   </div>
                 ) : null}

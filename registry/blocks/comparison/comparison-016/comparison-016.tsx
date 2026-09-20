@@ -21,6 +21,9 @@ export type Comparison016Props = {
   previousName?: string
   previousNote?: string
   rows?: readonly Comparison016Row[]
+  /** aria таблицы и метка «новое». */
+  tableLabel?: string
+  newLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -102,6 +105,8 @@ export function Comparison016({
   previousName = "Луч 1",
   previousNote = "2023 · снят с производства",
   rows = DEFAULT_ROWS,
+  tableLabel = "{current} против {previous}",
+  newLabel = "новое",
   tone = "auto",
   accent,
   ink,
@@ -129,7 +134,7 @@ export function Comparison016({
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <div data-part="table" role="table" aria-label={`${currentName} против ${previousName}`}>
+          <div data-part="table" role="table" aria-label={tableLabel.replace("{current}", currentName).replace("{previous}", previousName)}>
             <div data-part="legend" role="row" aria-hidden="true">
               <div />
               <div data-current="">
@@ -145,7 +150,7 @@ export function Comparison016({
               <div key={row.label} data-part="row" role="row" style={{ ["--vibeui-comparison-016-i" as string]: index }}>
                 <div data-part="label" role="rowheader">
                   {row.label}
-                  {row.isNew ? <span data-part="new">новое</span> : null}
+                  {row.isNew ? <span data-part="new">{newLabel}</span> : null}
                 </div>
                 <div data-part="cell" data-current="" role="cell">
                   <span>

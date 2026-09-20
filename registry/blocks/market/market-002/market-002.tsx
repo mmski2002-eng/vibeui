@@ -33,6 +33,18 @@ export type Market002Props = {
   bundleEvent?: string
   /** CustomEvent, который добавляет товар в набор (detail: name, price, kind, image). */
   addEvent?: string
+  /** Формы слова «товар», aria кнопок, подписи панели. */
+  itemUnits?: readonly [string, string, string]
+  removeLabel?: string
+  addLabel?: string
+  removeShort?: string
+  scaleLabel?: string
+  nextLine?: string
+  maxLine?: string
+  subtotalLabel?: string
+  discountLabel?: string
+  totalLabel?: string
+  hideLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -179,6 +191,17 @@ export function Market002({
   checkoutHref = "#checkout",
   bundleEvent = "vibeui-market:bundle",
   addEvent = "vibeui-market:add",
+  itemUnits = ["товар", "товара", "товаров"],
+  removeLabel = "Убрать «{name}» из набора",
+  addLabel = "Добавить «{name}» в набор",
+  removeShort = "Убрать «{name}»",
+  scaleLabel = "Скидка растёт",
+  nextLine = "Ещё {n} {items} — и скидка {percent} %",
+  maxLine = "Максимальная скидка. Можно добавлять ещё.",
+  subtotalLabel = "Без скидки",
+  discountLabel = "Скидка",
+  totalLabel = "Итого",
+  hideLabel = "Скрыть мини-корзину",
   tone = "auto",
   accent,
   ink,
@@ -256,7 +279,7 @@ export function Market002({
                       <span data-part="kind">{item.kind}</span>
                     </div>
                     <span data-part="price">{formatMoney(item.price, currency)}</span>
-                    <button data-part="toggle" type="button" aria-pressed={on} aria-label={on ? `Убрать «${item.name}» из набора` : `Добавить «${item.name}» в набор`} onClick={() => toggle(item)}>
+                    <button data-part="toggle" type="button" aria-pressed={on} aria-label={on ? removeLabel.replace("{name}", item.name) : addLabel.replace("{name}", item.name)} onClick={() => toggle(item)}>
                       <svg data-icon="plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
                         <path d="M12 5v14M5 12h14" />
                       </svg>
@@ -272,7 +295,7 @@ export function Market002({
               <h3>
                 {panelTitle}
                 <span>
-                  {count} {plural(count, ["товар", "товара", "товаров"])}
+                  {count} {plural(count, itemUnits)}
                 </span>
               </h3>
               {count === 0 ? (
@@ -283,7 +306,7 @@ export function Market002({
                     <li key={item.name} data-part="pick">
                       <img src={item.image} alt="" />
                       {item.name}
-                      <button type="button" aria-label={`Убрать «${item.name}»`} onClick={() => toggle(item)}>
+                      <button type="button" aria-label={removeShort.replace("{name}", item.name)} onClick={() => toggle(item)}>
                         ×
                       </button>
                     </li>
@@ -292,7 +315,7 @@ export function Market002({
               )}
               <div data-part="scale">
                 <div data-part="scale-head">
-                  <span>Скидка растёт</span>
+                  <span>{scaleLabel}</span>
                   <b>−{percent} %</b>
                 </div>
                 <div data-part="track" style={{ ["--vibeui-market-002-fill" as string]: fill }}>
@@ -305,19 +328,19 @@ export function Market002({
                     </span>
                   ))}
                 </div>
-                <p data-part="hint">{nextTier ? `Ещё ${nextTier.count - count} ${plural(nextTier.count - count, ["товар", "товара", "товаров"])} — и скидка ${nextTier.percent} %` : "Максимальная скидка. Можно добавлять ещё."}</p>
+                <p data-part="hint">{nextTier ? nextLine.replace("{n}", String(nextTier.count - count)).replace("{items}", plural(nextTier.count - count, itemUnits)).replace("{percent}", String(nextTier.percent)) : maxLine}</p>
               </div>
               <div data-part="totals">
                 <div data-part="was">
-                  <span>Без скидки</span>
+                  <span>{subtotalLabel}</span>
                   <span>{formatMoney(subtotal, currency)}</span>
                 </div>
                 <div data-part="save">
-                  <span>Скидка</span>
+                  <span>{discountLabel}</span>
                   <span>−{formatMoney(discount, currency)}</span>
                 </div>
                 <div data-part="total">
-                  <span>Итого</span>
+                  <span>{totalLabel}</span>
                   <span key={total}>{formatMoney(total, currency)}</span>
                 </div>
               </div>
@@ -335,7 +358,7 @@ export function Market002({
           </div>
           <div data-part="mini-text">
             <span>
-              {count} {plural(count, ["товар", "товара", "товаров"])}
+              {count} {plural(count, itemUnits)}
             </span>
             {percent > 0 ? <em>−{percent} %</em> : null}
             <b>{formatMoney(total, currency)}</b>
@@ -343,7 +366,7 @@ export function Market002({
           <a data-part="mini-go" href={checkoutHref} tabIndex={count === 0 || dismissed ? -1 : 0}>
             {checkoutLabel}
           </a>
-          <button data-part="mini-close" type="button" aria-label="Скрыть мини-корзину" tabIndex={count === 0 || dismissed ? -1 : 0} onClick={() => setDismissed(true)}>
+          <button data-part="mini-close" type="button" aria-label={hideLabel} tabIndex={count === 0 || dismissed ? -1 : 0} onClick={() => setDismissed(true)}>
             ×
           </button>
         </div>

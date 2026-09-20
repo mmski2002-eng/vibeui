@@ -28,6 +28,8 @@ export async function GET(
   }
 
   const search = new URL(request.url).searchParams
+  const lang = search.get("lang") ?? undefined
+  const locale: Locale = isLocale(lang) ? lang : "ru"
   const signed = verifyRegistryLink(
     scenarioSignName(slug),
     Number(search.get("exp")),
@@ -39,14 +41,14 @@ export async function GET(
 
     if (!session || !(await isPro(session.user.id))) {
       return new Response(
-        "Сценарий целиком доступен в Pro.\nОформить: https://vibeui.ru/pricing\n",
+        locale === "ru"
+          ? "Сценарий целиком доступен в Pro.\nОформить: https://vibeui.ru/pricing\n"
+          : "The full scenario is available in Pro.\nSubscribe: https://vibeui.ru/en/pricing\n",
         { status: 401 },
       )
     }
   }
 
-  const lang = search.get("lang") ?? undefined
-  const locale: Locale = isLocale(lang) ? lang : "ru"
   const siteUrl = getSiteBaseUrl() ?? new URL(request.url).origin
 
   // Каждому блоку — своя подпись на сутки: агент ставит их без ключа.

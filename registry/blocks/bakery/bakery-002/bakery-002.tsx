@@ -30,6 +30,11 @@ export type Bakery002Props = {
   beanImage?: string
   beanTitle?: string
   beanText?: string
+  /** Подписи состава стакана и aria ползунка. */
+  espressoLabel?: string
+  milkLabel?: string
+  foamLabel?: string
+  strengthLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -164,6 +169,10 @@ export function Bakery002({
   beanImage = "",
   beanTitle = "Зерно недели: Эфиопия, Гуджи",
   beanText = "Мытая обработка, светлая обжарка. Чёрная смородина, жасмин, долгое сладкое послевкусие.",
+  espressoLabel = "эспрессо",
+  milkLabel = "молоко",
+  foamLabel = "пена",
+  strengthLabel = "Крепость напитка",
   tone = "auto",
   accent,
   ink,
@@ -270,7 +279,7 @@ export function Bakery002({
                 step={1}
                 value={index}
                 onChange={(event) => choose(Number(event.target.value))}
-                aria-label="Крепость напитка"
+                aria-label={strengthLabel}
                 aria-valuetext={drink.name}
               />
               <div data-part="drink" aria-live="polite">
@@ -285,18 +294,18 @@ export function Bakery002({
               <ul data-part="parts" key={index}>
                 <li style={{ ["--vibeui-bakery-002-i" as string]: 0 }}>
                   <i style={{ background: "var(--vibeui-bakery-002-coffee)" }} aria-hidden="true" />
-                  эспрессо {drink.coffee}%
+                  {espressoLabel} {drink.coffee}%
                 </li>
                 {drink.milk > 0 ? (
                   <li style={{ ["--vibeui-bakery-002-i" as string]: 1 }}>
                     <i style={{ background: "var(--vibeui-bakery-002-milk)" }} aria-hidden="true" />
-                    молоко {drink.milk}%
+                    {milkLabel} {drink.milk}%
                   </li>
                 ) : null}
                 {drink.foam > 0 ? (
                   <li style={{ ["--vibeui-bakery-002-i" as string]: 2 }}>
                     <i style={{ background: "#fff", boxShadow: "0 0 0 1px var(--vibeui-bakery-002-line)" }} aria-hidden="true" />
-                    пена {drink.foam}%
+                    {foamLabel} {drink.foam}%
                   </li>
                 ) : null}
                 {drink.volume ? <li style={{ ["--vibeui-bakery-002-i" as string]: 3 }}>{drink.volume}</li> : null}

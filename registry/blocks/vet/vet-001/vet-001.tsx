@@ -15,6 +15,9 @@ export type Vet001Props = {
   address?: string
   /** true — пилюля закреплена в углу экрана; false — лежит в потоке (для превью). */
   fixed?: boolean
+  /** aria секции и кнопки закрытия. */
+  sectionLabel?: string
+  closeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -109,6 +112,8 @@ export function Vet001({
   note = "Дежурный врач круглосуточно, без записи. Ночью — вход со двора, кнопка у двери.",
   address = "Ленинградский пр., 62, вход со стороны парка",
   fixed = true,
+  sectionLabel = "Экстренная помощь",
+  closeLabel = "Закрыть",
   tone = "auto",
   accent,
   ink,
@@ -140,7 +145,7 @@ export function Vet001({
       <style href="vibeui-vet-001" precedence="medium">
         {STYLES}
       </style>
-      <section data-vibeui-block="vet-001" data-tone={tone === "auto" ? undefined : tone} data-fixed={fixed} className={className} style={palette} aria-label="Экстренная помощь">
+      <section data-vibeui-block="vet-001" data-tone={tone === "auto" ? undefined : tone} data-fixed={fixed} className={className} style={palette} aria-label={sectionLabel}>
         <div data-part="dock" data-fixed={fixed}>
           <div data-part="panel" id="vibeui-vet-001-panel" hidden={!open}>
             <div data-part="head">
@@ -148,7 +153,7 @@ export function Vet001({
                 <h3>{title}</h3>
                 {lede ? <p>{lede}</p> : null}
               </div>
-              <button data-part="close" type="button" aria-label="Закрыть" onClick={() => setOpen(false)}>
+              <button data-part="close" type="button" aria-label={closeLabel} onClick={() => setOpen(false)}>
                 ×
               </button>
             </div>

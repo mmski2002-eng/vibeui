@@ -23,6 +23,7 @@ export type Footer037Props = {
   copyright?: string
   /** Огромное слово внизу; пусто — бренд. */
   giant?: string
+  socialsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -107,6 +108,7 @@ export function Footer037({
   ],
   copyright = "© 2026 ООО «Горячо». Москва, Бауманская, 20с2",
   giant,
+  socialsLabel = "Соцсети",
   tone = "auto",
   accent,
   ink,
@@ -144,7 +146,7 @@ export function Footer037({
               </a>
             ) : null}
             {socials.length > 0 ? (
-              <ul data-part="socials" aria-label="Соцсети">
+              <ul data-part="socials" aria-label={socialsLabel}>
                 {socials.map((item) => (
                   <li key={item.label}>
                     <a href={item.href}>{item.label}</a>

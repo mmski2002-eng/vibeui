@@ -29,6 +29,9 @@ export type Navbar026Props = {
   playingLabel?: string
   placement?: "fixed" | "static"
   spy?: boolean
+  /** aria кнопки меню. */
+  menuLabel?: string
+  closeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -149,6 +152,8 @@ export function Navbar026({
   actionLabel = "Check-in",
   actionHref = "#checkin",
   music,
+  menuLabel = "Меню",
+  closeLabel = "Закрыть меню",
   musicLabel = "Сон-кубано",
   playingLabel = "Играет",
   placement = "fixed",
@@ -288,7 +293,7 @@ export function Navbar026({
               </>
             ) : null}
             {action}
-            <button type="button" data-part="toggle" aria-expanded={open} aria-label={open ? "Закрыть меню" : "Меню"} onClick={() => setOpen((value) => !value)}>
+            <button type="button" data-part="toggle" aria-expanded={open} aria-label={open ? closeLabel : menuLabel} onClick={() => setOpen((value) => !value)}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
               </svg>

@@ -16,6 +16,12 @@ export type Cta035Props = {
   doneText?: string
   docsLabel?: string
   docsHref?: string
+  /** aria поля, кнопка копирования, строка времени. */
+  emailLabel?: string
+  copyLabel?: string
+  doneLabel?: string
+  elapsedLine?: string
+  decimalSeparator?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -105,6 +111,11 @@ export function Cta035({
   doneText = "Продублировали на почту. Первый запрос можно делать прямо сейчас — лимит обновится первого числа.",
   docsLabel = "Первый запрос в docs",
   docsHref = "#docs",
+  emailLabel = "Почта",
+  copyLabel = "копировать",
+  doneLabel = "готово",
+  elapsedLine = "готово за {s} с — обещали 30",
+  decimalSeparator = ",",
   tone = "auto",
   accent,
   ink,
@@ -171,7 +182,7 @@ export function Cta035({
               {secret === null ? (
                 <>
                   <form data-part="form" onSubmit={submit}>
-                    <input type="email" name="email" required placeholder={placeholder} aria-label="Почта" autoComplete="email" />
+                    <input type="email" name="email" required placeholder={placeholder} aria-label={emailLabel} autoComplete="email" />
                     <button type="submit">{actionLabel}</button>
                   </form>
                   {fine.length > 0 ? (
@@ -194,7 +205,7 @@ export function Cta035({
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         {copied ? <path d="M5 13l4 4L19 7" /> : <><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>}
                       </svg>
-                      {copied ? "готово" : "копировать"}
+                      {copied ? doneLabel : copyLabel}
                     </button>
                   </div>
                   {ready ? (
@@ -205,7 +216,7 @@ export function Cta035({
                       </svg>
                       {elapsed !== null ? (
                         <span data-part="elapsed">
-                          готово за {elapsed.toFixed(1).replace(".", ",")} с — обещали 30
+                          {elapsedLine.replace("{s}", elapsed.toFixed(1).replace(".", decimalSeparator))}
                         </span>
                       ) : null}
                       {docsLabel ? (

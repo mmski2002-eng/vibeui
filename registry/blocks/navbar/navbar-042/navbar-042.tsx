@@ -21,6 +21,11 @@ export type Navbar042Props = {
   actionLabel?: string
   actionHref?: string
   sticky?: boolean
+  /** aria навигации, меню и кнопки-бургера. */
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -113,6 +118,10 @@ export function Navbar042({
   actionLabel = "Получить ключ",
   actionHref = "#key",
   sticky = true,
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
   tone = "auto",
   accent,
   ink,
@@ -160,7 +169,7 @@ export function Navbar042({
               {status}
             </a>
           ) : null}
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -180,14 +189,14 @@ export function Navbar042({
                 <i aria-hidden="true">{"/>"}</i>
               </a>
             ) : null}
-            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-042-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-042-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />
               <i aria-hidden="true" />
               <i aria-hidden="true" />
             </button>
           </div>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-042-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+        <nav data-part="menu" id="vibeui-navbar-042-menu" hidden={!menuOpen} aria-label={menuLabel} onClick={() => setMenuOpen(false)}>
           {links.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}

@@ -21,6 +21,10 @@ export type Testimonials029Props = {
   stampLabel?: string
   remarkStampLabel?: string
   signLabel?: string
+  /** Заголовок акта, aria звёзд, подпись замечания. */
+  actLabel?: string
+  starsLabel?: string
+  remarkLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -108,6 +112,9 @@ export function Testimonials029({
   stampLabel = "Принято без замечаний",
   remarkStampLabel = "Замечание устранено",
   signLabel = "Подпись заказчика",
+  actLabel = "Акт приёмки № {n}",
+  starsLabel = "{n} из 5",
+  remarkLabel = "Замечание: ",
   tone = "auto",
   accent,
   ink,
@@ -141,12 +148,12 @@ export function Testimonials029({
               return (
                 <li key={review.number} data-part="act">
                   <div data-part="act-head">
-                    <b>Акт приёмки № {review.number}</b>
+                    <b>{actLabel.replace("{n}", review.number)}</b>
                     <span>{review.object}</span>
                     <span>{review.date}</span>
                   </div>
                   <blockquote data-part="quote">{review.text}</blockquote>
-                  <span data-part="stars" role="img" aria-label={`${stars} из 5`}>
+                  <span data-part="stars" role="img" aria-label={starsLabel.replace("{n}", String(stars))}>
                     {[0, 1, 2, 3, 4].map((index) => (
                       <span key={index} data-off={index >= stars} aria-hidden="true">
                         ★
@@ -155,7 +162,7 @@ export function Testimonials029({
                   </span>
                   {review.remark ? (
                     <p data-part="remark">
-                      <b>Замечание: </b>
+                      <b>{remarkLabel}</b>
                       {review.remark}
                     </p>
                   ) : null}

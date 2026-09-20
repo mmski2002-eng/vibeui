@@ -17,6 +17,7 @@ export type Testimonials034Props = {
   title?: string
   lede?: string
   reviews?: readonly Testimonials034Review[]
+  stackLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -97,6 +98,7 @@ export function Testimonials034({
   title = "Что говорят те, кто уже подключил",
   lede = "Без ретуши: разработчики из доставки, логистики, такси и e-commerce. Метрики — их, не наши.",
   reviews = DEFAULT_REVIEWS,
+  stackLabel = "Стек",
   tone = "auto",
   accent,
   ink,
@@ -140,7 +142,7 @@ export function Testimonials034({
                 </div>
                 <blockquote data-part="quote">{review.text}</blockquote>
                 {review.stack && review.stack.length > 0 ? (
-                  <ul data-part="stack" aria-label="Стек">
+                  <ul data-part="stack" aria-label={stackLabel}>
                     {review.stack.map((item) => (
                       <li key={item}>{item}</li>
                     ))}

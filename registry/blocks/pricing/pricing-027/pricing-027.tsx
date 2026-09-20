@@ -27,6 +27,9 @@ export type Pricing027Props = {
   fine?: string
   /** Событие в window, по которому вкладка переключается снаружи (detail.pet = key группы). Пусто — не слушать. */
   eventName?: string
+  /** aria вкладок и стикер популярной позиции. */
+  tabsLabel?: string
+  popularLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -150,6 +153,8 @@ export function Pricing027({
   actionHref = "#contacts",
   fine = "Полный прайс — 140 позиций — выдаём на ресепшене и присылаем в мессенджер. Ночной приём с 22:00 до 8:00 дороже на 30 %.",
   eventName = "vibeui-vet:pet",
+  tabsLabel = "Вид питомца",
+  popularLabel = "чаще всего",
   tone = "auto",
   accent,
   ink,
@@ -192,7 +197,7 @@ export function Pricing027({
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
             {groups.length > 1 ? (
-              <div data-part="tabs" role="tablist" aria-label="Вид питомца">
+              <div data-part="tabs" role="tablist" aria-label={tabsLabel}>
                 {groups.map((item) => (
                   <button key={item.key} type="button" role="tab" aria-selected={item.key === group.key} onClick={() => setActive(item.key)}>
                     {item.label}
@@ -204,7 +209,7 @@ export function Pricing027({
           <ul data-part="grid" key={group.key}>
             {group.items.map((item, index) => (
               <li key={item.name} data-part="ticket" style={{ ["--vibeui-pricing-027-i" as string]: index }} onPointerMove={spotlight}>
-                {item.popular ? <span data-part="sticker">чаще всего</span> : null}
+                {item.popular ? <span data-part="sticker">{popularLabel}</span> : null}
                 <div data-part="top">
                   <h3>{item.name}</h3>
                   {item.note ? <p>{item.note}</p> : null}

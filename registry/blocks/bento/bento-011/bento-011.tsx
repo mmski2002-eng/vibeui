@@ -20,6 +20,11 @@ export type Bento011Props = {
   title?: string
   lede?: string
   items?: readonly Bento011Item[]
+  /** Тексты на макетах: адрес, расстояние, ввод подсказки и три подсказки. */
+  demoAddress?: string
+  demoDistance?: string
+  demoQuery?: string
+  demoSuggestions?: readonly [string, string, string]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -128,12 +133,12 @@ const DEFAULT_ITEMS: Bento011Item[] = [
   { method: "POST", path: "/v2/batch", title: "Пакетная обработка", text: "Загрузите файл на миллион адресов — вернём геокодированный CSV.", meta: "≈ 12 мин на 1 000 000", kind: "batch" },
 ]
 
-function Demo({ kind }: { kind: Bento011Kind }) {
+function Demo({ kind, texts }: { kind: Bento011Kind; texts: { address: string; distance: string; query: string; suggestions: readonly [string, string, string] } }) {
   switch (kind) {
     case "geocode":
       return (
         <>
-          <span data-part="addr">«Тверская 7, мск»</span>
+          <span data-part="addr">{texts.address}</span>
           <i data-part="pin" aria-hidden="true" />
           <span data-part="coords">55.7599, 37.6101</span>
         </>
@@ -157,20 +162,20 @@ function Demo({ kind }: { kind: Bento011Kind }) {
             <circle cx="18" cy="88" r="4" />
             <circle cx="182" cy="22" r="4" />
           </svg>
-          <span data-part="dist">7,4 км · 18 мин</span>
+          <span data-part="dist">{texts.distance}</span>
         </>
       )
     case "suggest":
       return (
         <>
           <div data-part="input" aria-hidden="true">
-            <b>Тверск</b>
+            <b>{texts.query}</b>
             <i />
           </div>
           <ul data-part="list" aria-hidden="true">
-            <li>Тверская улица, Москва</li>
-            <li>Тверская-Ямская 1-я улица</li>
-            <li>Тверской бульвар</li>
+            {texts.suggestions.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
         </>
       )
@@ -207,6 +212,10 @@ export function Bento011({
   title = "Шесть методов, один ключ",
   lede = "Всё, что нужно доставке, картам и логистике. Один формат ответа, одна авторизация, одинаковая документация.",
   items = DEFAULT_ITEMS,
+  demoAddress = "«Тверская 7, мск»",
+  demoDistance = "7,4 км · 18 мин",
+  demoQuery = "Тверск",
+  demoSuggestions = ["Тверская улица, Москва", "Тверская-Ямская 1-я улица", "Тверской бульвар"],
   tone = "auto",
   accent,
   ink,
@@ -244,7 +253,7 @@ export function Bento011({
                   <span data-part="path">{item.path}</span>
                 </div>
                 <div data-part="demo">
-                  <Demo kind={item.kind} />
+                  <Demo kind={item.kind} texts={{ address: demoAddress, distance: demoDistance, query: demoQuery, suggestions: demoSuggestions }} />
                 </div>
                 <div>
                   <h3>{item.title}</h3>

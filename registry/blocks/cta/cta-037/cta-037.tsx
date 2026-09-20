@@ -22,6 +22,13 @@ export type Cta037Props = {
   image?: string
   imageAlt?: string
   caption?: string
+  /** Подписи периода, aria групп, своя сумма, «/ мес». */
+  everyMonthLabel?: string
+  onceShortLabel?: string
+  frequencyLabel?: string
+  amountsLabel?: string
+  customLabel?: string
+  perMonthSuffix?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -127,6 +134,12 @@ export function Cta037({
   image = "",
   imageAlt = "",
   caption = "Виктор Ильич и Игорь, развоз в Торжке",
+  everyMonthLabel = "каждый месяц",
+  onceShortLabel = "разово",
+  frequencyLabel = "Частота",
+  amountsLabel = "Сумма",
+  customLabel = "Своя сумма",
+  perMonthSuffix = " / мес",
   tone = "auto",
   accent,
   ink,
@@ -213,12 +226,12 @@ export function Cta037({
                   <h3>{doneTitle}</h3>
                   <p>{doneText}</p>
                   <em>
-                    {formatMoney(value)} {currency} {monthly ? "каждый месяц" : "разово"}
+                    {formatMoney(value)} {currency} {monthly ? everyMonthLabel : onceShortLabel}
                   </em>
                 </div>
               ) : (
                 <>
-                  <div data-part="seg" data-monthly={monthly} role="group" aria-label="Частота">
+                  <div data-part="seg" data-monthly={monthly} role="group" aria-label={frequencyLabel}>
                     <button type="button" aria-pressed={!monthly} onClick={() => setMonthly(false)}>
                       {onceLabel}
                     </button>
@@ -226,7 +239,7 @@ export function Cta037({
                       {monthlyLabel}
                     </button>
                   </div>
-                  <ul data-part="chips" aria-label="Сумма">
+                  <ul data-part="chips" aria-label={amountsLabel}>
                     {amounts.map((item) => (
                       <li key={item}>
                         <button
@@ -244,7 +257,7 @@ export function Cta037({
                     ))}
                   </ul>
                   <label data-part="own">
-                    <input type="number" inputMode="numeric" min={10} step={10} value={custom} placeholder="Своя сумма" aria-label="Своя сумма" onChange={(event) => setCustom(event.target.value)} />
+                    <input type="number" inputMode="numeric" min={10} step={10} value={custom} placeholder={customLabel} aria-label={customLabel} onChange={(event) => setCustom(event.target.value)} />
                     <span aria-hidden="true">{currency}</span>
                   </label>
                   {monthly && value > 0 ? (
@@ -260,7 +273,7 @@ export function Cta037({
                       <path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.4 5 7 5c2 0 3.4 1.1 5 2.8C13.6 6.1 15 5 17 5c3.6 0 5.8 3.6 4.5 6.8C19.5 16.4 12 21 12 21Z" />
                     </svg>
                     {actionLabel} {value > 0 ? `${formatMoney(value)} ${currency}` : ""}
-                    {monthly ? " / мес" : ""}
+                    {monthly ? perMonthSuffix : ""}
                   </button>
                   {fine.length > 0 ? (
                     <ul data-part="fine">

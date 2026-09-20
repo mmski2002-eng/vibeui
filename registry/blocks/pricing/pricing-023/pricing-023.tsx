@@ -27,6 +27,8 @@ export type Pricing023Props = {
   tiers?: readonly Pricing023Tier[]
   /** Фон секции: фото студии, затемняется. Пусто — без фото. */
   image?: string
+  /** aria переключателя периода. */
+  periodLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -130,6 +132,7 @@ export function Pricing023({
   featuredLabel = "выбирают",
   tiers = DEFAULT_TIERS,
   image = "",
+  periodLabel = "Период оплаты",
   tone = "auto",
   accent,
   ink,
@@ -205,7 +208,7 @@ export function Pricing023({
             ))}
           </h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
-          <div data-part="switch" role="group" aria-label="Период оплаты">
+          <div data-part="switch" role="group" aria-label={periodLabel}>
             <button type="button" aria-pressed={!yearly} onClick={() => setYearly(false)}>
               {monthlyLabel}
             </button>

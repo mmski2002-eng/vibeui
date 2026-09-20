@@ -18,6 +18,11 @@ export type Navbar034Props = {
   actionLabel?: string
   actionHref?: string
   sticky?: boolean
+  /** aria навигации, меню и кнопки-бургера. */
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -109,6 +114,10 @@ export function Navbar034({
   actionLabel = "Записаться",
   actionHref = "#booking",
   sticky = true,
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
   tone = "auto",
   accent,
   ink,
@@ -153,7 +162,7 @@ export function Navbar034({
               {status}
             </span>
           ) : null}
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -172,13 +181,13 @@ export function Navbar034({
               </a>
             ) : null}
           </div>
-          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-034-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-034-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
             <i aria-hidden="true" />
             <i aria-hidden="true" />
             <i aria-hidden="true" />
           </button>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-034-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+        <nav data-part="menu" id="vibeui-navbar-034-menu" hidden={!menuOpen} aria-label={menuLabel} onClick={() => setMenuOpen(false)}>
           {status ? (
             <span data-part="menu-status">
               <i data-part="dot" aria-hidden="true" />

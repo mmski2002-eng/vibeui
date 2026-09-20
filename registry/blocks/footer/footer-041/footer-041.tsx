@@ -21,6 +21,9 @@ export type Footer041Props = {
   build?: readonly string[]
   legal?: readonly Footer041Link[]
   copyright?: string
+  /** aria колонок и списка сборки. */
+  navLabel?: string
+  buildLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -98,6 +101,8 @@ export function Footer041({
   build = ["v2.4.0", "msk-1", "build 2026-09-19"],
   legal = [{ label: "Конфиденциальность", href: "#privacy" }, { label: "Оферта", href: "#terms" }, { label: "Обработка данных", href: "#dpa" }],
   copyright = "© 2026 Геокод",
+  navLabel = "Разделы сайта",
+  buildLabel = "Сборка",
   tone = "auto",
   accent,
   ink,
@@ -138,7 +143,7 @@ export function Footer041({
               </a>
             ) : null}
           </div>
-          <nav data-part="cols" aria-label="Разделы сайта">
+          <nav data-part="cols" aria-label={navLabel}>
             {columns.map((column) => (
               <div key={column.title}>
                 <h3>{column.title}</h3>
@@ -154,7 +159,7 @@ export function Footer041({
           </nav>
           <div data-part="bottom">
             {build.length > 0 ? (
-              <ul data-part="build" aria-label="Сборка">
+              <ul data-part="build" aria-label={buildLabel}>
                 {build.map((item) => (
                   <li key={item}>{item}</li>
                 ))}

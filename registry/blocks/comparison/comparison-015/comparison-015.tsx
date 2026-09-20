@@ -20,6 +20,9 @@ export type Comparison015Props = {
   columns?: readonly string[]
   rows?: readonly Comparison015Row[]
   note?: string
+  /** Заголовок колонки и aria чужих значений. */
+  criterionLabel?: string
+  othersLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -142,6 +145,8 @@ export function Comparison015({
   columns = ["Геокод", "AddrPro", "MapOne", "GeoCloud"],
   rows = DEFAULT_ROWS,
   note = "* — бесплатный лимит конкурента действует только с показом его карты и логотипа.",
+  criterionLabel = "критерий",
+  othersLabel = "У других",
   tone = "auto",
   accent,
   ink,
@@ -174,7 +179,7 @@ export function Comparison015({
           </div>
           <div data-part="table">
             <div data-part="cols" aria-hidden="true">
-              <span>критерий</span>
+              <span>{criterionLabel}</span>
               {columns.map((column, index) => (
                 <span key={column} data-us={index === 0 ? "" : undefined}>
                   {column}
@@ -207,7 +212,7 @@ export function Comparison015({
                       <div>
                         <div data-part="inner">
                           <div>
-                            <ul data-part="others" aria-label="У других">
+                            <ul data-part="others" aria-label={othersLabel}>
                               {columns.slice(1).map((column, other) => (
                                 <li key={column}>
                                   <span>{column}</span>

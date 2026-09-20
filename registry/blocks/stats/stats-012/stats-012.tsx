@@ -21,6 +21,8 @@ export type Stats012Props = {
   /** Моно-строка статуса на панели. */
   status?: string
   gauges?: readonly Stats012Gauge[]
+  /** Подпись прошлого значения, если у датчика нет своей. */
+  wasLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -104,6 +106,7 @@ export function Stats012({
   lede = "Луч 2 против Луч 1: в полтора раза ярче, в два раза громче, четыре датчика вместо одного. Всё измерено, а не обещано.",
   status = "Луч 2 · прошивка 2.3.1 · все датчики в норме",
   gauges = DEFAULT_GAUGES,
+  wasLabel = "было",
   tone = "auto",
   accent,
   ink,
@@ -185,7 +188,7 @@ export function Stats012({
                     <p data-part="label">{gauge.label}</p>
                     {delta !== null ? (
                       <p data-part="delta">
-                        {gauge.previousLabel ?? "было"} {format(gauge.previous ?? 0, decimals)} · <b>{delta >= 0 ? "+" : ""}{delta} %</b>
+                        {gauge.previousLabel ?? wasLabel} {format(gauge.previous ?? 0, decimals)} · <b>{delta >= 0 ? "+" : ""}{delta} %</b>
                       </p>
                     ) : null}
                   </div>

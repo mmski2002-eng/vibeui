@@ -16,6 +16,9 @@ export type Bento001Props = {
   title?: string
   lede?: string
   features?: readonly Bento001Feature[]
+  /** Подписи чужих библиотек и единица в демо размера. */
+  sizeOthers?: readonly [string, string]
+  kbUnit?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -133,7 +136,7 @@ const DEFAULT_FEATURES: Bento001Feature[] = [
   { title: "4 КБ и ноль зависимостей", text: "Меньше, чем иконка. Дерево-шейкинг: берёте только то, что используете.", demo: "size" },
 ]
 
-function Demo({ kind }: { kind: NonNullable<Bento001Feature["demo"]> }) {
+function Demo({ kind, sizeOthers, kbUnit }: { kind: NonNullable<Bento001Feature["demo"]>; sizeOthers: readonly [string, string]; kbUnit: string }) {
   const row = (key: number) => (
     <div key={key} data-part="row">
       <i />
@@ -186,13 +189,13 @@ function Demo({ kind }: { kind: NonNullable<Bento001Feature["demo"]> }) {
       <div data-part="demo" data-demo="size" aria-hidden="true">
         {[
           ["tabl", 0.12, "4.1"],
-          ["другие", 0.55, "19"],
-          ["ещё одни", 1, "38"],
+          [sizeOthers[0], 0.55, "19"],
+          [sizeOthers[1], 1, "38"],
         ].map(([name, w, kb]) => (
           <div key={String(name)}>
             <span>{name}</span>
             <i style={{ ["--vibeui-bento-001-w" as string]: w }} />
-            <span>{kb} кб</span>
+            <span>{kb} {kbUnit}</span>
           </div>
         ))}
       </div>
@@ -219,6 +222,8 @@ export function Bento001({
   title = "Всё, что нужно таблице. Ничего, что не нужно",
   lede = "Пять вещей, которые вы обычно пишете сами и потом чините. Здесь они написаны один раз.",
   features = DEFAULT_FEATURES,
+  sizeOthers = ["другие", "ещё одни"],
+  kbUnit = "кб",
   tone = "auto",
   accent,
   ink,
@@ -295,7 +300,7 @@ export function Bento001({
               <article key={feature.title} data-part="tile" data-wide={feature.wide ?? false} data-reveal="" style={index(featureIndex + 2)}>
                 <h3>{feature.title}</h3>
                 <p>{feature.text}</p>
-                {feature.demo && feature.demo !== "none" ? <Demo kind={feature.demo} /> : null}
+                {feature.demo && feature.demo !== "none" ? <Demo kind={feature.demo} sizeOthers={sizeOthers} kbUnit={kbUnit} /> : null}
               </article>
             ))}
           </div>

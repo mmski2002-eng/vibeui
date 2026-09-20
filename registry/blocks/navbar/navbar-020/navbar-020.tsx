@@ -24,6 +24,8 @@ export type Navbar020Props = {
   /** Прилипает к верху страницы. */
   sticky?: boolean
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  /** aria навигации. */
+  navLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -103,6 +105,7 @@ export function Navbar020({
   actionHref = "#valuation",
   menuLabel = "Меню",
   sticky = true,
+  navLabel = "Разделы",
   tone = "auto",
   accent,
   ink,
@@ -145,7 +148,7 @@ export function Navbar020({
             <span data-part="name">{brand}</span>
             {caption ? <span data-part="caption">{caption}</span> : null}
           </a>
-          <nav aria-label="Разделы">
+          <nav aria-label={navLabel}>
             <ul data-part="nav">{items}</ul>
           </nav>
           {phone ? (

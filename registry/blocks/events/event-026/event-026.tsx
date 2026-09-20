@@ -26,6 +26,14 @@ export type Event026Props = {
   countdownLabel?: string
   /** Сколько прошедших встреч показывать (вычеркнутыми). */
   pastLimit?: number
+  /** Месяцы в родительном падеже, дни недели, подписи списка. */
+  months?: readonly string[]
+  days?: readonly string[]
+  tbaLabel?: string
+  nextLabel?: string
+  todayLabel?: string
+  dayUnits?: readonly [string, string, string]
+  pastLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -95,8 +103,6 @@ container-type:inline-size;
 @container (min-width: 60rem){[data-vibeui-block="event-026"] [data-part="shell"]{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:4rem;align-items:start}[data-vibeui-block="event-026"] [data-part="aside"]{position:sticky;top:6rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-026"] *{animation:none!important;transition:none!important}}`
 
-const MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
-const DAYS = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"]
 
 const DEFAULT_EVENTS: Event026Item[] = [
   { inDays: -9, time: "19:30", kind: "чтения", title: "«Балконы» и другие тексты — вечер в «Подписных изданиях»", place: "Подписные издания", city: "Петербург" },
@@ -142,6 +148,13 @@ export function Event026({
   events = DEFAULT_EVENTS,
   countdownLabel = "до ближайшей встречи",
   pastLimit = 1,
+  months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+  days = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
+  tbaLabel = "дата уточняется",
+  nextLabel = "· ближайшая",
+  todayLabel = "сегодня",
+  dayUnits = ["день", "дня", "дней"],
+  pastLabel = "Уже прошло",
   tone = "auto",
   accent,
   ink,
@@ -191,13 +204,13 @@ export function Event026({
     <li key={row.event.title} data-part="row" data-next={isNext || undefined} data-past={isPast || undefined}>
       <div data-part="date">
         <b>{row.date ? row.date.getDate() : "—"}</b>
-        <small>{row.date ? `${MONTHS[row.date.getMonth()]}, ${DAYS[row.date.getDay()]}` : "дата уточняется"}</small>
+        <small>{row.date ? `${months[row.date.getMonth()]}, ${days[row.date.getDay()]}` : tbaLabel}</small>
       </div>
       <div>
         <div data-part="kind">
           {isNext ? <i data-part="dot" aria-hidden="true" /> : null}
           <span>{row.event.kind}</span>
-          {isNext ? <span>· ближайшая</span> : null}
+          {isNext ? <span>{nextLabel}</span> : null}
         </div>
         <h3 data-part="name">{row.event.title}</h3>
         <p data-part="where">
@@ -233,11 +246,11 @@ export function Event026({
               {nextDays === null ? (
                 <b>…</b>
               ) : nextDays === 0 ? (
-                <b>сегодня</b>
+                <b>{todayLabel}</b>
               ) : (
                 <b>
                   {nextDays}
-                  <span>{plural(nextDays, "день", "дня", "дней")}</span>
+                  <span>{plural(nextDays, ...dayUnits)}</span>
                 </b>
               )}
               {rows.next ? <em>{rows.next.event.kind}{rows.next.event.city ? `, ${rows.next.event.city}` : ""}</em> : null}
@@ -249,7 +262,7 @@ export function Event026({
             </ul>
             {rows.past.length > 0 ? (
               <>
-                <p data-part="past-label">Уже прошло</p>
+                <p data-part="past-label">{pastLabel}</p>
                 <ul data-part="list">{rows.past.map((row) => renderRow(row, false, true))}</ul>
               </>
             ) : null}

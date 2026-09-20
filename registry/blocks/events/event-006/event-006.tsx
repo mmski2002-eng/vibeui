@@ -36,6 +36,9 @@ export type Event006Props = {
   slots?: readonly Event006Slot[]
   allLabel?: string
   emptyText?: string
+  /** aria дней и фильтров. */
+  daysLabel?: string
+  filtersLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -133,6 +136,8 @@ export function Event006({
   slots = DEFAULT_SLOTS,
   allLabel = "Все направления",
   emptyText = "В этот день по выбранному направлению ничего нет — посмотрите соседний.",
+  daysLabel = "Дни фестиваля",
+  filtersLabel = "Направления",
   tone = "auto",
   accent,
   background,
@@ -160,7 +165,7 @@ export function Event006({
         <div data-part="shell">
           {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
           <h2 data-part="title">{title}</h2>
-          <ul data-part="days" role="tablist" aria-label="Дни фестиваля">
+          <ul data-part="days" role="tablist" aria-label={daysLabel}>
             {days.map((item) => (
               <li key={item.key} style={{ ["--vibeui-event-006-day" as string]: item.color, ["--vibeui-event-006-day-ink" as string]: item.ink ?? "#111" }}>
                 <button type="button" role="tab" data-part="day" aria-selected={item.key === day} onClick={() => setDay(item.key)}>
@@ -171,7 +176,7 @@ export function Event006({
             ))}
           </ul>
           {tags.length > 1 ? (
-            <ul data-part="filters" aria-label="Направления">
+            <ul data-part="filters" aria-label={filtersLabel}>
               <li>
                 <button type="button" data-part="filter" aria-pressed={tag === ""} onClick={() => setTag("")}>
                   {allLabel}

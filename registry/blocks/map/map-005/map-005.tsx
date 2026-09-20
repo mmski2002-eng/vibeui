@@ -23,6 +23,8 @@ export type Map005Props = {
   phoneHref?: string
   routeLabel?: string
   providerLabel?: string
+  /** Текст, если JS API карт не загрузился. */
+  failedText?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -98,7 +100,6 @@ container-type:inline-size;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="map-005"] *{transition:none!important}}`
 
-const STATUS_FAILED = "JS API не загрузился — показан встроенный виджет Яндекс Карт. Проверьте ключ и домен в кабинете разработчика."
 
 function resolveTheme(element: HTMLElement | null): "light" | "dark" {
   if (typeof window === "undefined") return "light"
@@ -151,6 +152,7 @@ export function Map005({
   phoneHref = "tel:+78123050040",
   routeLabel = "Построить маршрут",
   providerLabel = "Яндекс Карты",
+  failedText = "JS API не загрузился — показан встроенный виджет Яндекс Карт. Проверьте ключ и домен в кабинете разработчика.",
   tone = "auto",
   accent,
   ink,
@@ -232,7 +234,7 @@ export function Map005({
             <div data-part="map">
               <div data-part="canvas" ref={canvas} aria-hidden={status !== "ready"} />
               {status === "ready" ? null : <iframe src={embed} title={`${providerLabel}: ${address}`} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />}
-              {status === "failed" ? <p data-part="status">{STATUS_FAILED}</p> : null}
+              {status === "failed" ? <p data-part="status">{failedText}</p> : null}
             </div>
             <div data-part="card">
               <address data-part="address">{address}</address>

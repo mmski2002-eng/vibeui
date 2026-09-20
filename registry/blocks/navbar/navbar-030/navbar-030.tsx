@@ -19,6 +19,13 @@ export type Navbar030Props = {
   actionLabel?: string
   actionHref?: string
   sticky?: boolean
+  /** aria навигации, меню и кнопки-бургера. */
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
+  /** aria ссылки на звёзды. */
+  starsAria?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -109,6 +116,11 @@ export function Navbar030({
   actionLabel = "Начать",
   actionHref = "#install",
   sticky = true,
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
+  starsAria = "{stars} {label} на GitHub",
   tone = "auto",
   accent,
   ink,
@@ -161,7 +173,7 @@ export function Navbar030({
             {brand}
           </a>
           {version ? <span data-part="ver">{version}</span> : null}
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -169,7 +181,7 @@ export function Navbar030({
             ))}
           </nav>
           <div data-part="right">
-            <a data-part="stars" href={githubHref} aria-label={`${stars} ${starsLabel} на GitHub`}>
+            <a data-part="stars" href={githubHref} aria-label={starsAria.replace("{stars}", String(stars)).replace("{label}", starsLabel)}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" />
               </svg>
@@ -182,13 +194,13 @@ export function Navbar030({
               </a>
             ) : null}
           </div>
-          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-030-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-030-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
             <i aria-hidden="true" />
             <i aria-hidden="true" />
             <i aria-hidden="true" />
           </button>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-030-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+        <nav data-part="menu" id="vibeui-navbar-030-menu" hidden={!menuOpen} aria-label={menuLabel} onClick={() => setMenuOpen(false)}>
           {links.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}

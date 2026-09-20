@@ -22,6 +22,9 @@ export type Charity004Props = {
   points?: readonly Charity004Point[]
   /** Единица под общим числом: «подопечных». */
   unit?: string
+  /** aria карты и компас. */
+  mapLabel?: string
+  compassLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -114,6 +117,8 @@ export function Charity004({
   region = "Тверская область",
   points = DEFAULT_POINTS,
   unit = "подопечных на этой неделе",
+  mapLabel = "{region}: {cities} городов, {total} подопечных",
+  compassLabel = "↑ север",
   tone = "auto",
   accent,
   ink,
@@ -193,7 +198,7 @@ export function Charity004({
             </ul>
           </div>
           <div data-part="map">
-            <svg data-part="svg" viewBox="0 0 100 100" role="img" aria-label={`${region}: ${points.length} городов, ${total} подопечных`}>
+            <svg data-part="svg" viewBox="0 0 100 100" role="img" aria-label={mapLabel.replace("{region}", region).replace("{cities}", String(points.length)).replace("{total}", String(total))}>
               <defs>
                 <pattern id="vibeui-charity-004-hatch" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
                   <line x1="0" y1="0" x2="0" y2="3" stroke="var(--vibeui-charity-004-line)" strokeWidth=".5" />
@@ -220,7 +225,7 @@ export function Charity004({
               ))}
             </svg>
             <span data-part="compass" aria-hidden="true">
-              ↑ север
+              {compassLabel}
             </span>
           </div>
         </div>

@@ -16,6 +16,9 @@ export type Ai001Props = {
   title?: string
   lede?: string
   steps?: readonly Ai001Step[]
+  /** Счётчик шагов и задачи в демо третьего шага. */
+  stepLine?: string
+  tasks?: readonly string[]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -128,6 +131,8 @@ export function Ai001({
   title = "Три шага, ни одного вашего",
   lede = "Вы просто заканчиваете созвон. Всё остальное происходит, пока вы идёте за кофе.",
   steps = DEFAULT_STEPS,
+  stepLine = "шаг {n} / {total}",
+  tasks = ["Миграция базы — Марк", "Иконки — дизайн", "Окно провайдера — риск"],
   tone = "auto",
   accent,
   ink,
@@ -244,7 +249,7 @@ export function Ai001({
                 {lede ? <p data-part="lede">{lede}</p> : null}
                 <p data-part="counter" aria-live="polite">
                   <i aria-hidden="true" style={{ ["--vibeui-ai-001-p" as string]: total ? stage / total : 0 }} />
-                  {`шаг ${Math.min(Math.max(stage, 1), total)} / ${total}`}
+                  {stepLine.replace("{n}", String(Math.min(Math.max(stage, 1), total))).replace("{total}", String(total))}
                 </p>
               </div>
               <ol data-part="flow">
@@ -260,7 +265,7 @@ export function Ai001({
                         {step.kind === "wave" ? Array.from({ length: 24 }, (_, i) => <i key={i} style={{ ["--vibeui-ai-001-i" as string]: i }} />) : null}
                         {step.kind === "text" ? [0, 1, 2].map((i) => <i key={i} style={{ ["--vibeui-ai-001-i" as string]: i }} />) : null}
                         {step.kind === "tasks"
-                          ? ["Миграция базы — Марк", "Иконки — дизайн", "Окно провайдера — риск"].map((task, i) => (
+                          ? tasks.map((task, i) => (
                               <span key={task}>
                                 <i style={{ ["--vibeui-ai-001-i" as string]: i }}>✓</i>
                                 {task}

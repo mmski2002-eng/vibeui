@@ -34,6 +34,8 @@ export type Hero022Props = {
   facts?: readonly Hero022Fact[]
   logosLabel?: string
   logos?: readonly string[]
+  /** aria ссылки на постере, если нет secondaryLabel. */
+  watchLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -220,6 +222,7 @@ export function Hero022({
   ],
   logosLabel = "Выпускники работают в",
   logos = ["Ozon", "Тинькофф", "Яндекс", "Авито", "Самокат"],
+  watchLabel = "Смотреть урок",
   tone = "auto",
   accent,
   ink,
@@ -298,7 +301,7 @@ export function Hero022({
           </div>
           <ul data-part="bento">
             <li data-part="tile" data-kind="video" onMouseMove={tilt} onMouseLeave={untilt}>
-              <a href={secondaryHref} aria-label={secondaryLabel || "Смотреть урок"} style={{ position: "absolute", inset: 0, zIndex: 1 }} />
+              <a href={secondaryHref} aria-label={secondaryLabel || watchLabel} style={{ position: "absolute", inset: 0, zIndex: 1 }} />
               {poster ? <img src={poster} alt={posterAlt} /> : null}
               <span data-part="play" aria-hidden="true" />
               {secondaryLabel ? <span data-part="chip">{secondaryLabel}</span> : null}

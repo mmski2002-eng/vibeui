@@ -18,6 +18,8 @@ export type Writer003Props = {
   progressLabel?: string
   actionLabel?: string
   actionHref?: string
+  /** aria номера сноски. */
+  noteLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -98,14 +100,14 @@ const DEFAULT_NOTES = [
   "Кошки в этом эссе так и не появилось. Появился фикус.",
 ]
 
-function renderInline(text: string, notes: readonly string[]): ReactNode[] {
+function renderInline(text: string, notes: readonly string[], noteLabel: string): ReactNode[] {
   return text.split(/(==[^=]+==|\[\d+\])/g).map((chunk, i) => {
     if (chunk.startsWith("==") && chunk.endsWith("==")) return <mark key={i}>{chunk.slice(2, -2)}</mark>
     const ref = /^\[(\d+)\]$/.exec(chunk)
     if (ref) {
       const n = Number(ref[1])
       return notes[n - 1] ? (
-        <sup key={i} data-part="ref" aria-label={`Сноска ${n}`}>
+        <sup key={i} data-part="ref" aria-label={noteLabel.replace("{n}", String(n))}>
           {n}
         </sup>
       ) : null
@@ -128,6 +130,7 @@ export function Writer003({
   progressLabel = "прочитано",
   actionLabel = "Читать эссе целиком",
   actionHref = "#texts",
+  noteLabel = "Сноска {n}",
   tone = "auto",
   accent,
   ink,
@@ -220,7 +223,7 @@ export function Writer003({
               const numbers = noteNumbers(paragraph).filter((n) => notes[n - 1])
               return (
                 <div key={i} data-part="para" data-seen={seen[i] ? "true" : undefined}>
-                  <p>{renderInline(paragraph, notes)}</p>
+                  <p>{renderInline(paragraph, notes, noteLabel)}</p>
                   {numbers.length > 0 ? (
                     <ul data-part="notes">
                       {numbers.map((n) => (

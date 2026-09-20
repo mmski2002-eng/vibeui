@@ -30,6 +30,12 @@ export type Changelog013Props = {
   perSecond?: number
   /** С какого значения стартует счётчик «за сегодня». */
   todayStart?: number
+  /** aria вкладок, кнопка копирования, подписи счётчиков. */
+  tabsLabel?: string
+  copyLabel?: string
+  doneLabel?: string
+  rpsLabel?: string
+  todayLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -141,6 +147,11 @@ export function Changelog013({
   installs = DEFAULT_INSTALLS,
   perSecond = 1240,
   todayStart = 48213907,
+  tabsLabel = "Менеджер пакетов",
+  copyLabel = "копировать",
+  doneLabel = "готово",
+  rpsLabel = "запросов / сек",
+  todayLabel = "за сегодня",
   tone = "auto",
   accent,
   ink,
@@ -223,7 +234,7 @@ export function Changelog013({
               {install ? (
                 <div data-part="install">
                   <h4>{installTitle}</h4>
-                  <div data-part="tabs" role="tablist" aria-label="Менеджер пакетов">
+                  <div data-part="tabs" role="tablist" aria-label={tabsLabel}>
                     {installs.map((item, index) => (
                       <button key={item.label} type="button" role="tab" aria-selected={index === active} onClick={() => setActive(index)}>
                         {item.label}
@@ -236,18 +247,18 @@ export function Changelog013({
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         {copied ? <path d="M5 13l4 4L19 7" /> : <><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>}
                       </svg>
-                      {copied ? "готово" : "копировать"}
+                      {copied ? doneLabel : copyLabel}
                     </button>
                   </div>
                 </div>
               ) : null}
               <div data-part="counters" aria-live="off">
                 <div data-part="counter">
-                  <span>запросов / сек</span>
+                  <span>{rpsLabel}</span>
                   <b>{formatNumber(rate)}</b>
                 </div>
                 <div data-part="counter">
-                  <span>за сегодня</span>
+                  <span>{todayLabel}</span>
                   <b>{formatNumber(today)}</b>
                 </div>
               </div>

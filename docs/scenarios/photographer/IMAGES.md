@@ -40,7 +40,7 @@ watermark, no logos. Editorial documentary style, not stock photo.
 
 | Файл | Формат | Промпт |
 | --- | --- | --- |
-| `about.webp` (вариант 2) | 4:5, 1280×1600 | Waist-up portrait of the same woman photographer from hero.webp in a small home studio, face fully visible and sharp, looking slightly off-camera with an honest tired smile, holding a stack of printed photos, film cameras on a shelf and plants behind, overcast window light from the side. Head fully inside the frame with room above |
+| `about.webp` (variant 2) | 4:5, 1280×1600 | Waist-up portrait of the same woman photographer from hero.webp in a small home studio, face fully visible and sharp, looking slightly off-camera with an honest tired smile, holding a stack of printed photos, film cameras on a shelf and plants behind, overcast window light from the side. Head fully inside the frame with room above |
 | `logo.png` | 1:1, 512×512, прозрачный фон | Minimal hand-drawn ink doodle of a vintage film camera, single-line sketch style, slightly wobbly pen stroke, black ink on transparent background, no text, no shading, centered, sticker-like |
 
 `logo.png` не обязателен: у рукописной шапки фотоаппарат нарисован в SVG и кипит вместе с остальным. Картинка подставляется пропом `logo`.

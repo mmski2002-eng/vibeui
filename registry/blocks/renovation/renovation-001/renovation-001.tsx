@@ -40,6 +40,21 @@ export type Renovation001Props = {
   /** Имя CustomEvent, который уходит в window при сохранении сметы. */
   eventName?: string
   fine?: string
+  /** Формы слова «неделя» и подписи калькулятора. */
+  weekUnits?: readonly [string, string, string]
+  areaUnit?: string
+  areaLabel?: string
+  typeLabel?: string
+  fromLabel?: string
+  optionsLabel?: string
+  chosenLine?: string
+  nothingChosen?: string
+  sheetLabel?: string
+  draftLabel?: string
+  sheetAreaLabel?: string
+  totalLabel?: string
+  perLabel?: string
+  termLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -153,12 +168,12 @@ function formatMoney(value: number) {
   return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
-function weeksWord(value: number) {
+function weeksWord(value: number, units: readonly [string, string, string]) {
   const mod10 = value % 10
   const mod100 = value % 100
-  if (mod10 === 1 && mod100 !== 11) return "неделя"
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return "недели"
-  return "недель"
+  if (mod10 === 1 && mod100 !== 11) return units[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return units[1]
+  return units[2]
 }
 
 // Число докручивается до цели за 600 мс; первый рендер сразу равен цели,
@@ -202,6 +217,20 @@ export function Renovation001({
   savedLabel = "Смета сохранена",
   eventName = "vibeui-renovation:estimate",
   fine = "Работы без материалов. Точная смета — после бесплатного замера, но она не будет выше этой.",
+  weekUnits = ["неделя", "недели", "недель"],
+  areaUnit = "м²",
+  areaLabel = "Площадь квартиры",
+  typeLabel = "Тип ремонта",
+  fromLabel = "от",
+  optionsLabel = "Опции",
+  chosenLine = "выбрано {n}",
+  nothingChosen = "ничего не выбрано",
+  sheetLabel = "Смета № {n}",
+  draftLabel = "предварительная",
+  sheetAreaLabel = "Площадь",
+  totalLabel = "Итого работы",
+  perLabel = "за",
+  termLabel = "Срок под ключ",
   tone = "auto",
   accent,
   ink,
@@ -267,10 +296,10 @@ export function Renovation001({
             <div data-part="controls">
               <div data-part="field">
                 <label data-part="label" htmlFor="vibeui-renovation-001-area">
-                  <span>Площадь квартиры</span>
+                  <span>{areaLabel}</span>
                   <output htmlFor="vibeui-renovation-001-area">
                     {area}
-                    <small>м²</small>
+                    <small>{areaUnit}</small>
                   </output>
                 </label>
                 <div data-part="ruler">
@@ -288,7 +317,7 @@ export function Renovation001({
               </div>
               <div data-part="field">
                 <p data-part="label" id="vibeui-renovation-001-type">
-                  <span>Тип ремонта</span>
+                  <span>{typeLabel}</span>
                 </p>
                 <ul data-part="types" role="radiogroup" aria-labelledby="vibeui-renovation-001-type">
                   {types.map((item) => (
@@ -296,7 +325,7 @@ export function Renovation001({
                       <button data-part="type" type="button" role="radio" aria-checked={item.id === type.id} onClick={() => setTypeId(item.id)}>
                         <b>{item.name}</b>
                         <span>
-                          от {formatMoney(item.rate)} {currency}/м²{item.note ? ` · ${item.note}` : ""}
+                          {fromLabel} {formatMoney(item.rate)} {currency}/{areaUnit}{item.note ? ` · ${item.note}` : ""}
                         </span>
                       </button>
                     </li>
@@ -305,8 +334,8 @@ export function Renovation001({
               </div>
               <div data-part="field">
                 <p data-part="label" id="vibeui-renovation-001-options">
-                  <span>Опции</span>
-                  <span>{chosen.length ? `выбрано ${chosen.length}` : "ничего не выбрано"}</span>
+                  <span>{optionsLabel}</span>
+                  <span>{chosen.length ? chosenLine.replace("{n}", String(chosen.length)) : nothingChosen}</span>
                 </p>
                 <ul data-part="chips" aria-labelledby="vibeui-renovation-001-options">
                   {options.map((option) => (
@@ -321,18 +350,18 @@ export function Renovation001({
             </div>
             <div data-part="sheet" aria-live="polite">
               <div data-part="sheet-head">
-                <span>Смета № {number}</span>
-                <span>предварительная</span>
+                <span>{sheetLabel.replace("{n}", String(number))}</span>
+                <span>{draftLabel}</span>
               </div>
               <dl data-part="rows">
                 <div>
-                  <dt>Площадь</dt>
-                  <dd>{area} м²</dd>
+                  <dt>{sheetAreaLabel}</dt>
+                  <dd>{area} {areaUnit}</dd>
                 </div>
                 <div>
                   <dt>{type.name}</dt>
                   <dd>
-                    {formatMoney(type.rate)} {currency}/м²
+                    {formatMoney(type.rate)} {currency}/{areaUnit}
                   </dd>
                 </div>
                 {chosen.map((option) => (
@@ -345,19 +374,19 @@ export function Renovation001({
                 ))}
               </dl>
               <div data-part="total">
-                <small>Итого работы</small>
+                <small>{totalLabel}</small>
                 <p data-part="price">
                   {formatMoney(shownPrice)} {currency}
                 </p>
                 <p data-part="per">
-                  {formatMoney(price / area)} {currency} за м²
+                  {formatMoney(price / area)} {currency} {perLabel} {areaUnit}
                 </p>
               </div>
               <div data-part="weeks" style={{ ["--vibeui-renovation-001-max" as string]: maxWeeks }}>
                 <p>
-                  <span>Срок под ключ</span>
+                  <span>{termLabel}</span>
                   <span>
-                    <b>{Math.round(shownWeeks)}</b> {weeksWord(weeks)}
+                    <b>{Math.round(shownWeeks)}</b> {weeksWord(weeks, weekUnits)}
                   </span>
                 </p>
                 <div data-part="cells" aria-hidden="true">

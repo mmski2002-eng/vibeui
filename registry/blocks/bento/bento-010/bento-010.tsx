@@ -32,6 +32,9 @@ export type Bento010Props = {
   purchases?: readonly Bento010Purchase[]
   ctaLabel?: string
   ctaHref?: string
+  /** Короткие дни недели с понедельника и aria недели. */
+  days?: readonly string[]
+  weekLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -123,7 +126,6 @@ const DEFAULT_PURCHASES: Bento010Purchase[] = [
   { who: "Дина из Алматы", what: "Спринт — трекер продукта", ago: "9 мин" },
 ]
 
-const DAYS = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
 
 function formatNumber(value: number, decimals = 0) {
   const fixed = value.toFixed(decimals)
@@ -147,6 +149,8 @@ export function Bento010({
   purchases = DEFAULT_PURCHASES,
   ctaLabel = "Стать автором",
   ctaHref = "#become-author",
+  days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"],
+  weekLabel = "Неделя",
   tone = "auto",
   accent,
   ink,
@@ -218,8 +222,8 @@ export function Bento010({
                 <h3>{payoutTitle}</h3>
                 <p>{payoutText}</p>
               </div>
-              <ul data-part="week" aria-label="Неделя">
-                {DAYS.map((day, index) => (
+              <ul data-part="week" aria-label={weekLabel}>
+                {days.map((day, index) => (
                   <li key={day} data-on={index + 1 === payoutDay}>
                     {day}
                   </li>

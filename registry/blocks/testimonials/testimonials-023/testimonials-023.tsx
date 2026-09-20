@@ -23,6 +23,8 @@ export type Testimonials023Props = {
   guestLabel?: string
   thanks?: string
   reviews?: readonly Testimonials023Review[]
+  /** aria чека: «Отзыв: {name}». */
+  reviewLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -128,7 +130,7 @@ function useShown<T extends HTMLElement>(rootMargin: string) {
   return { ref, shown }
 }
 
-function Receipt({ review, index, brand, place, totalLabel, guestLabel, thanks }: { review: Testimonials023Review; index: number; brand: string; place: string; totalLabel: string; guestLabel: string; thanks: string }) {
+function Receipt({ review, index, brand, place, totalLabel, guestLabel, thanks, reviewLabel }: { review: Testimonials023Review; index: number; brand: string; place: string; totalLabel: string; guestLabel: string; thanks: string; reviewLabel: string }) {
   const { ref, shown } = useShown<HTMLDivElement>("-15% 0px")
 
   const rotate = [-2.5, 1.5, -1, 2.2][index % 4]
@@ -146,7 +148,7 @@ function Receipt({ review, index, brand, place, totalLabel, guestLabel, thanks }
     >
       <i data-part="slit" aria-hidden="true" />
       <div data-part="paper">
-        <article data-part="receipt" aria-label={`Отзыв: ${review.name}`}>
+        <article data-part="receipt" aria-label={reviewLabel.replace("{name}", review.name)}>
           <div data-part="head" style={next()}>
             <span>{brand.toUpperCase()}</span>
             <span>№ {review.no}</span>
@@ -193,6 +195,7 @@ export function Testimonials023({
   totalLabel = "ИТОГО",
   guestLabel = "гость",
   thanks = "спасибо, приходите к горячему",
+  reviewLabel = "Отзыв: {name}",
   reviews = DEFAULT_REVIEWS,
   tone = "auto",
   accent,
@@ -232,7 +235,7 @@ export function Testimonials023({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="row">
             {reviews.map((review, index) => (
-              <Receipt key={review.no} review={review} index={index} brand={brand} place={place} totalLabel={totalLabel} guestLabel={guestLabel} thanks={thanks} />
+              <Receipt key={review.no} review={review} index={index} brand={brand} place={place} totalLabel={totalLabel} guestLabel={guestLabel} thanks={thanks} reviewLabel={reviewLabel} />
             ))}
           </div>
         </div>

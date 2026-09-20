@@ -28,6 +28,8 @@ export type Map010Props = {
   warnBefore?: string
   warnAfter?: string
   warnHour?: number
+  /** aria диаграммы очереди. */
+  chartLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -161,6 +163,7 @@ export function Map010({
   warnBefore = "хлеб заканчивается к 14:00 — приходите до",
   warnAfter = "хлеб на сегодня почти разобрали — завтра с семи",
   warnHour = 14,
+  chartLabel = "Очередь по часам",
   tone = "auto",
   accent,
   ink,
@@ -261,7 +264,7 @@ export function Map010({
                 ))}
               </div>
               {queue.length > 0 ? (
-                <div data-part="queue" aria-label="Очередь по часам">
+                <div data-part="queue" aria-label={chartLabel}>
                   <div data-part="now">
                     <b>{open ? `~${shown ? counted : people}` : "0"}</b>
                     {open ? queueLabel : closedLabel}

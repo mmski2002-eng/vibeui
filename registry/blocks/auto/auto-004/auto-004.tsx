@@ -27,6 +27,24 @@ export type Auto004Props = {
   doneTitle?: string
   doneText?: string
   currency?: string
+  /** Короткие дни недели с воскресенья и месяцы в родительном падеже. */
+  weekdays?: readonly string[]
+  months?: readonly string[]
+  gridLabel?: string
+  /** Легенда и состояния слота в aria. */
+  freeLabel?: string
+  busyLabel?: string
+  pastLabel?: string
+  closedLabel?: string
+  pickedLabel?: string
+  orderTitle?: string
+  classLine?: string
+  totalLabel?: string
+  emptyText?: string
+  timeLabel?: string
+  pickHint?: string
+  phoneLabel?: string
+  fineText?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -119,8 +137,6 @@ container-type:inline-size;
 @container (min-width: 60rem){[data-vibeui-block="auto-004"] [data-part="layout"]{grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:2rem}[data-vibeui-block="auto-004"] [data-part="panel"]{position:sticky;top:5.5rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="auto-004"] *{animation:none!important;transition:none!important}[data-vibeui-block="auto-004"] [data-part="done"] circle,[data-vibeui-block="auto-004"] [data-part="done"] path{stroke-dashoffset:0}}`
 
-const WEEKDAYS = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"]
-const MONTHS = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
 
 function subscribe(listener: () => void) {
   const id = window.setInterval(listener, 60000)
@@ -153,6 +169,22 @@ export function Auto004({
   doneTitle = "Слот за вами",
   doneText = "Мастер напишет в мессенджер в течение минуты, чтобы подтвердить время и уточнить машину.",
   currency = "₽",
+  weekdays = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"],
+  months = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"],
+  gridLabel = "Свободные слоты на неделю",
+  freeLabel = "свободно",
+  busyLabel = "занято",
+  pastLabel = "прошло",
+  closedLabel = "выходной",
+  pickedLabel = "ваш выбор",
+  orderTitle = "Ваш заказ",
+  classLine = "Класс: {value}",
+  totalLabel = "Итого по калькулятору",
+  emptyText = "Услуги подтянутся из калькулятора выше. Или просто выберите время — обсудим по телефону.",
+  timeLabel = "Время",
+  pickHint = "Выберите слот в сетке",
+  phoneLabel = "Телефон",
+  fineText = "Предоплаты нет. Перенести или отменить можно до вечера накануне.",
   tone = "auto",
   accent,
   ink,
@@ -203,7 +235,7 @@ export function Auto004({
     const [key, hour] = picked.split("@")
     const column = columns.find((item) => item?.key === key)
     if (!column) return null
-    return `${WEEKDAYS[column.weekday]}, ${column.date.getDate()} ${MONTHS[column.date.getMonth()]} · ${hour}:00`
+    return `${weekdays[column.weekday]}, ${column.date.getDate()} ${months[column.date.getMonth()]} · ${hour}:00`
   })()
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
@@ -225,31 +257,31 @@ export function Auto004({
           <div data-part="layout">
             <div>
               <div data-part="board">
-                <div data-part="grid" aria-label="Свободные слоты на неделю" style={{ ["--vibeui-auto-004-days" as string]: days }}>
+                <div data-part="grid" aria-label={gridLabel} style={{ ["--vibeui-auto-004-days" as string]: days }}>
                   <span aria-hidden="true" />
                   {columns.map((column, index) => (
                     <span key={index} data-part="day" data-today={column?.today ? "true" : undefined}>
                       <b>{column ? column.date.getDate() : "··"}</b>
-                      {column ? WEEKDAYS[column.weekday] : "···"}
+                      {column ? weekdays[column.weekday] : "···"}
                     </span>
                   ))}
                   {hours.map((hour) => (
-                    <FragmentRow key={hour} hour={hour} columns={columns} stateOf={stateOf} picked={picked} onPick={setPicked} />
+                    <FragmentRow key={hour} hour={hour} columns={columns} stateOf={stateOf} picked={picked} onPick={setPicked} months={months} states={{ free: freeLabel, busy: busyLabel, past: pastLabel, closed: closedLabel }} />
                   ))}
                 </div>
               </div>
               <ul data-part="legend">
                 <li>
                   <i />
-                  свободно
+                  {freeLabel}
                 </li>
                 <li>
                   <i data-kind="busy" />
-                  занято
+                  {busyLabel}
                 </li>
                 <li>
                   <i data-kind="picked" />
-                  ваш выбор
+                  {pickedLabel}
                 </li>
               </ul>
             </div>
@@ -266,35 +298,35 @@ export function Auto004({
                 </div>
               ) : (
                 <>
-                  <h3>Ваш заказ</h3>
+                  <h3>{orderTitle}</h3>
                   {order && order.services.length > 0 ? (
                     <>
                       <ul data-part="order">
                         {order.services.map((service) => (
                           <li key={service}>{service}</li>
                         ))}
-                        {order.carClass ? <li>Класс: {order.carClass}</li> : null}
+                        {order.carClass ? <li>{classLine.replace("{value}", order.carClass)}</li> : null}
                       </ul>
                       <div data-part="sum">
-                        <span>Итого по калькулятору</span>
+                        <span>{totalLabel}</span>
                         <b>{formatMoney(order.total, currency)}</b>
                       </div>
                     </>
                   ) : (
-                    <p data-part="empty">Услуги подтянутся из калькулятора выше. Или просто выберите время — обсудим по телефону.</p>
+                    <p data-part="empty">{emptyText}</p>
                   )}
                   <div data-part="when">
-                    <small>Время</small>
-                    {pickedInfo ?? "Выберите слот в сетке"}
+                    <small>{timeLabel}</small>
+                    {pickedInfo ?? pickHint}
                   </div>
                   <form data-part="form" onSubmit={submit}>
                     <input type="text" name="name" required placeholder={namePlaceholder} aria-label={namePlaceholder} autoComplete="name" />
-                    <input type="tel" name="phone" required placeholder={phonePlaceholder} aria-label="Телефон" autoComplete="tel" />
+                    <input type="tel" name="phone" required placeholder={phonePlaceholder} aria-label={phoneLabel} autoComplete="tel" />
                     <button type="submit" disabled={!picked}>
                       {actionLabel}
                     </button>
                   </form>
-                  <p data-part="fine">Предоплаты нет. Перенести или отменить можно до вечера накануне.</p>
+                  <p data-part="fine">{fineText}</p>
                 </>
               )}
             </aside>
@@ -307,7 +339,7 @@ export function Auto004({
 
 type Column = { date: Date; key: string; weekday: number; today: boolean } | null
 
-function FragmentRow({ hour, columns, stateOf, picked, onPick }: { hour: number; columns: Column[]; stateOf: (column: Column, hour: number) => string; picked: string | null; onPick: (value: string) => void }) {
+function FragmentRow({ hour, columns, stateOf, picked, onPick, months, states }: { hour: number; columns: Column[]; stateOf: (column: Column, hour: number) => string; picked: string | null; onPick: (value: string) => void; months: readonly string[]; states: Record<"free" | "busy" | "past" | "closed", string> }) {
   return (
     <>
       <span data-part="hour">
@@ -318,7 +350,7 @@ function FragmentRow({ hour, columns, stateOf, picked, onPick }: { hour: number;
         const id = column ? `${column.key}@${hour}` : ""
         const free = state === "free"
         return (
-          <button key={index} data-part="slot" type="button" data-state={state} aria-pressed={free ? picked === id : undefined} aria-disabled={!free} disabled={state === "skeleton"} aria-label={column ? `${column.date.getDate()} ${MONTHS[column.date.getMonth()]}, ${hour}:00 — ${state === "busy" ? "занято" : state === "past" ? "прошло" : state === "closed" ? "выходной" : "свободно"}` : undefined} onClick={() => (free ? onPick(id) : undefined)}>
+          <button key={index} data-part="slot" type="button" data-state={state} aria-pressed={free ? picked === id : undefined} aria-disabled={!free} disabled={state === "skeleton"} aria-label={column ? `${column.date.getDate()} ${months[column.date.getMonth()]}, ${hour}:00 — ${state === "busy" ? states.busy : state === "past" ? states.past : state === "closed" ? states.closed : states.free}` : undefined} onClick={() => (free ? onPick(id) : undefined)}>
             {state === "closed" ? "—" : state === "skeleton" ? "" : `${hour}:00`}
           </button>
         )

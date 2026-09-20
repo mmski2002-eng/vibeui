@@ -21,6 +21,9 @@ export type Hero043Props = {
   /** Рендер лампы спереди (PNG без фона) с горящим диффузором. Пусто — лампа рисуется CSS. */
   image?: string
   imageAlt?: string
+  /** Подписи ползунков. */
+  kelvinLabel?: string
+  brightnessLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -125,6 +128,8 @@ export function Hero043({
   defaultBrightness = 90,
   image = "/demo/gadget/lamp-front.png",
   imageAlt = "Лампа-будильник Луч",
+  kelvinLabel = "Температура света",
+  brightnessLabel = "Яркость",
   tone = "auto",
   accent,
   ink,
@@ -219,17 +224,17 @@ export function Hero043({
             <div data-part="panel">
               <label data-part="control">
                 <span>
-                  Температура света
+                  {kelvinLabel}
                   <output>{kelvin} K</output>
                 </span>
-                <input data-part="range" data-kind="kelvin" type="range" min={minKelvin} max={maxKelvin} step={50} value={kelvin} onChange={(event) => setKelvin(Number(event.target.value))} aria-label="Температура света" />
+                <input data-part="range" data-kind="kelvin" type="range" min={minKelvin} max={maxKelvin} step={50} value={kelvin} onChange={(event) => setKelvin(Number(event.target.value))} aria-label={kelvinLabel} />
               </label>
               <label data-part="control">
                 <span>
-                  Яркость
+                  {brightnessLabel}
                   <output>{brightness} %</output>
                 </span>
-                <input data-part="range" data-kind="bright" type="range" min={5} max={100} value={brightness} onChange={(event) => setBrightness(Number(event.target.value))} aria-label="Яркость" />
+                <input data-part="range" data-kind="bright" type="range" min={5} max={100} value={brightness} onChange={(event) => setBrightness(Number(event.target.value))} aria-label={brightnessLabel} />
               </label>
             </div>
           </div>

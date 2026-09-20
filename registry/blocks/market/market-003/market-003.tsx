@@ -27,6 +27,16 @@ export type Market003Props = {
   maxSeats?: number
   defaultSeats?: number
   currency?: string
+  /** Подписи контролов и билетов. */
+  basePriceLabel?: string
+  seatsLabel?: string
+  lessLabel?: string
+  moreLabel?: string
+  peopleShort?: string
+  featuredLabel?: string
+  seatsLine?: string
+  extraLabel?: string
+  factorLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -126,6 +136,15 @@ export function Market003({
   maxSeats = 50,
   defaultSeats = 10,
   currency = "₽",
+  basePriceLabel = "Базовая цена товара",
+  seatsLabel = "Человек в команде",
+  lessLabel = "Меньше мест",
+  moreLabel = "Больше мест",
+  peopleShort = "чел.",
+  featuredLabel = "берут чаще",
+  seatsLine = "{n} мест · ×{factor}",
+  extraLabel = " + доплата",
+  factorLine = "×{factor} от базовой",
   tone = "auto",
   accent,
   ink,
@@ -167,7 +186,7 @@ export function Market003({
             </div>
             <div data-part="controls">
               <div data-part="control">
-                <span>Базовая цена товара</span>
+                <span>{basePriceLabel}</span>
                 <ul data-part="chips">
                   {samplePrices.map((price) => (
                     <li key={price}>
@@ -180,13 +199,13 @@ export function Market003({
               </div>
               {hasSeats ? (
                 <div data-part="control">
-                  <span>Человек в команде</span>
+                  <span>{seatsLabel}</span>
                   <div data-part="stepper">
-                    <button type="button" aria-label="Меньше мест" disabled={seats <= minSeats} onClick={() => setSeats((value) => Math.max(minSeats, value - 5))}>
+                    <button type="button" aria-label={lessLabel} disabled={seats <= minSeats} onClick={() => setSeats((value) => Math.max(minSeats, value - 5))}>
                       −
                     </button>
-                    <output aria-live="polite">{seats} чел.</output>
-                    <button type="button" aria-label="Больше мест" disabled={seats >= maxSeats} onClick={() => setSeats((value) => Math.min(maxSeats, value + 5))}>
+                    <output aria-live="polite">{seats} {peopleShort}</output>
+                    <button type="button" aria-label={moreLabel} disabled={seats >= maxSeats} onClick={() => setSeats((value) => Math.min(maxSeats, value + 5))}>
                       +
                     </button>
                   </div>
@@ -200,12 +219,12 @@ export function Market003({
               return (
                 <li key={license.name} data-part="ticket" data-featured={license.featured ? "true" : undefined}>
                   <div data-part="stub">
-                    {license.featured ? <span data-part="sticker">берут чаще</span> : null}
+                    {license.featured ? <span data-part="sticker">{featuredLabel}</span> : null}
                     <h3>{license.name}</h3>
                     <p data-part="who">{license.who}</p>
                     <div data-part="amount">
                       <output key={price}>{formatMoney(price, currency)}</output>
-                      <small>{license.seatsIncluded ? `${seats} мест · ×${license.factor}${seats > license.seatsIncluded ? " + доплата" : ""}` : `×${license.factor} от базовой`}</small>
+                      <small>{license.seatsIncluded ? `${seatsLine.replace("{n}", String(seats)).replace("{factor}", String(license.factor))}${seats > license.seatsIncluded ? extraLabel : ""}` : factorLine.replace("{factor}", String(license.factor))}</small>
                     </div>
                   </div>
                   <ul data-part="rules">

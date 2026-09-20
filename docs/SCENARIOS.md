@@ -43,6 +43,7 @@
   summary: "…", summaryEn: "…",
   demo: "/scenarios/photographer/demo",
   source: "app/scenarios/photographer/demo/page.tsx",
+  sourceEn: "app/en/scenarios/photographer/demo/page.tsx", // если есть английское демо
   images: "docs/scenarios/photographer/IMAGES.md",
   theme: { tone: "light", accent: "#c2410c", ink: "#1c1917", font: "Neucha, Caveat" },
   sections: [
@@ -50,6 +51,26 @@
   ],
 }
 ```
+
+## Английское демо
+
+Русский текст блоков — их дефолтные props, поэтому русское демо почти ничего
+не передаёт. Английская версия — отдельная страница
+`app/en/scenarios/<slug>/demo/page.tsx` с тем же составом и темой, где весь
+видимый текст передан в props (`const navbar: Navbar028Props = {…}` и
+`{...navbar}` в JSX). Она регистрируется полем `sourceEn`, и тогда:
+
+- на `/en/scenarios` карточка и кнопка «Open the demo» ведут на
+  `/en/scenarios/<slug>/demo`, постер берётся из
+  `public/demo/scenarios/en/<slug>.webp`
+  (`node scripts/scenario-covers.mjs <base> --en <slug>`);
+- бриф для агента на английской витрине собирается из английского исходника;
+- в sitemap у демо появляется языковая пара.
+
+Без `sourceEn` английская витрина показывает русское демо. Строки, зашитые
+в блоке помимо props (единицы, aria, форматы вроде «через {n} мин»), перед
+переводом выносятся в props с русским дефолтом — так блок не меняется для
+тех, кто его уже скачал.
 
 `sections` — **конкретные items**, в порядке появления на странице. Роль на
 странице — половина ценности: «Первый экран», а не «sketch-016». Имена

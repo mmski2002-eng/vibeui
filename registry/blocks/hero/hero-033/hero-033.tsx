@@ -24,6 +24,8 @@ export type Hero033Props = {
   summaryTitle?: string
   /** Ответ ассистента: строки печатаются по токенам; строка с «# » — заголовок секции. */
   summary?: readonly string[]
+  /** aria демо-панели. */
+  demoLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -156,6 +158,7 @@ export function Hero033({
   transcript = DEFAULT_TRANSCRIPT,
   summaryTitle = "сводка",
   summary = DEFAULT_SUMMARY,
+  demoLabel = "Демо: расшифровка и сводка",
   tone = "auto",
   accent,
   ink,
@@ -321,7 +324,7 @@ export function Hero033({
             </div>
             {trust ? <p data-part="trust">{trust}</p> : null}
           </div>
-          <div ref={demoRef} data-part="demo" aria-label="Демо: расшифровка и сводка" onPointerMove={onDemoMove} onPointerLeave={onDemoLeave}>
+          <div ref={demoRef} data-part="demo" aria-label={demoLabel} onPointerMove={onDemoMove} onPointerLeave={onDemoLeave}>
             <div data-part="pane">
               <p data-part="ph">
                 <i aria-hidden="true" />

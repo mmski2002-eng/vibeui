@@ -21,6 +21,19 @@ export type Navbar028Props = {
   actionShort?: string
   actionHref?: string
   sticky?: boolean
+  /** «до {time}» — чип, когда открыто. */
+  untilLabel?: string
+  /** «закроемся через {n} мин» — меньше часа до закрытия. */
+  closingLabel?: string
+  /** «через {n} {unit}» — сколько ждать до открытия. */
+  inLabel?: string
+  /** Формы слова «час»: один, несколько, много. */
+  hourUnits?: readonly [string, string, string]
+  minutesUnit?: string
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -172,6 +185,15 @@ export function Navbar028({
   actionShort = "Заказать",
   actionHref = "#box",
   sticky = true,
+  untilLabel = "до {time}",
+  closingLabel = "закроемся через {n} мин",
+  inLabel = "через {n} {unit}",
+  hourUnits = ["час", "часа", "часов"],
+  minutesUnit = "мин",
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
   tone = "auto",
   accent,
   ink,
@@ -193,18 +215,21 @@ export function Navbar028({
   const close = closeHour * 60
   let isOpen = true
   let main = openLabel
-  let extra = `до ${closeHour}:00`
+  let extra = untilLabel.replace("{time}", `${closeHour}:00`)
 
   if (minutes !== null) {
     if (minutes >= open && minutes < close) {
       const left = close - minutes
-      extra = left < 60 ? `закроемся через ${left} мин` : `до ${closeHour}:00`
+      extra = left < 60 ? closingLabel.replace("{n}", String(left)) : untilLabel.replace("{time}", `${closeHour}:00`)
     } else {
       const until = minutes < open ? open - minutes : 24 * 60 - minutes + open
       const hours = Math.floor(until / 60)
       isOpen = false
       main = `${closedLabel} ${openHour}:00`
-      extra = hours > 0 ? `через ${hours} ${plural(hours, "час", "часа", "часов")}` : `через ${until % 60} мин`
+      extra =
+        hours > 0
+          ? inLabel.replace("{n}", String(hours)).replace("{unit}", plural(hours, ...hourUnits))
+          : inLabel.replace("{n}", String(until % 60)).replace("{unit}", minutesUnit)
     }
   }
 
@@ -234,7 +259,7 @@ export function Navbar028({
             <i data-part="dot" aria-hidden="true" />
             {brand}
           </a>
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -253,13 +278,13 @@ export function Navbar028({
               </a>
             ) : null}
           </div>
-          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-028-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+          <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-028-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
             <i aria-hidden="true" />
             <i aria-hidden="true" />
             <i aria-hidden="true" />
           </button>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-028-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+        <nav data-part="menu" id="vibeui-navbar-028-menu" hidden={!menuOpen} aria-label={menuLabel} onClick={() => setMenuOpen(false)}>
           {links.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}

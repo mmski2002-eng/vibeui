@@ -45,6 +45,11 @@ export type Hero037Props = {
   /** Габариты для размерных линий по низу и справа. */
   widthLabel?: string
   heightLabel?: string
+  /** Единица площади, разделитель дробной части, aria плана и подсказка. */
+  areaUnit?: string
+  decimalSeparator?: string
+  planLabel?: string
+  hintLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -169,8 +174,8 @@ function renderTitle(title: string, measure: string): ReactNode[] {
   )
 }
 
-function formatArea(value: number) {
-  return value.toFixed(1).replace(".", ",")
+function formatArea(value: number, decimalSeparator: string) {
+  return value.toFixed(1).replace(".", decimalSeparator)
 }
 
 function doorPath(door: Hero037Door) {
@@ -205,6 +210,10 @@ export function Hero037({
   ],
   widthLabel = "12 400",
   heightLabel = "7 600",
+  areaUnit = "м²",
+  decimalSeparator = ",",
+  planLabel = "План квартиры, {area}",
+  hintLine = "Наведите на комнату. Всего {area}, {n} помещений.",
   tone = "auto",
   accent,
   ink,
@@ -256,7 +265,7 @@ export function Hero037({
             ) : null}
           </div>
           <div data-part="sheet">
-            <svg data-part="plan" viewBox="0 0 660 440" role="group" aria-label={`План квартиры, ${formatArea(total)} м²`} onMouseLeave={() => setActive(null)}>
+            <svg data-part="plan" viewBox="0 0 660 440" role="group" aria-label={planLabel.replace("{area}", `${formatArea(total, decimalSeparator)} ${areaUnit}`)} onMouseLeave={() => setActive(null)}>
               {rooms.map((room, index) => (
                 <g
                   key={room.name}
@@ -264,7 +273,7 @@ export function Hero037({
                   data-active={active === index}
                   role="button"
                   tabIndex={0}
-                  aria-label={`${room.name}, ${formatArea(room.area)} м²`}
+                  aria-label={`${room.name}, ${formatArea(room.area, decimalSeparator)} ${areaUnit}`}
                   onMouseEnter={() => setActive(index)}
                   onFocus={() => setActive(index)}
                   onBlur={() => setActive(null)}
@@ -272,7 +281,7 @@ export function Hero037({
                   <rect x={room.x} y={room.y} width={room.w} height={room.h} />
                   <text x={room.x + 12} y={room.y + 24}>{room.name}</text>
                   <text data-area="" x={room.x + 12} y={room.y + 42}>
-                    {formatArea(room.area)} м²
+                    {formatArea(room.area, decimalSeparator)} {areaUnit}
                   </text>
                 </g>
               ))}
@@ -307,12 +316,14 @@ export function Hero037({
               <p data-part="caption" aria-live="polite">
                 {current ? (
                   <>
-                    <b>{current.name}</b> · <b>{formatArea(current.area)} м²</b>
+                    <b>{current.name}</b> · <b>{formatArea(current.area, decimalSeparator)} {areaUnit}</b>
                     {current.note ? ` · ${current.note}` : ""}
                   </>
                 ) : (
                   <>
-                    Наведите на комнату. Всего <b>{formatArea(total)} м²</b>, {rooms.length} помещений.
+                    {hintLine.split("{area}")[0]}
+                    <b>{formatArea(total, decimalSeparator)} {areaUnit}</b>
+                    {(hintLine.split("{area}")[1] ?? "").replace("{n}", String(rooms.length))}
                   </>
                 )}
               </p>

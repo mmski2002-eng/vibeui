@@ -26,6 +26,7 @@ export type Footer019Props = {
   links?: readonly Footer019Link[]
   legal?: string
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  phoneLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -118,6 +119,7 @@ export function Footer019({
   messengers = DEFAULT_MESSENGERS,
   links = DEFAULT_LINKS,
   legal = "© 2007–2026 ООО «Дом на Неве». Лицензия РГР № 0412. Не оферта.",
+  phoneLabel = "Телефон",
   tone = "auto",
   accent,
   ink,
@@ -150,7 +152,7 @@ export function Footer019({
             <div>
               {phone ? (
                 <>
-                  <span data-part="label">Телефон</span>
+                  <span data-part="label">{phoneLabel}</span>
                   <a data-part="phone" href={phoneHref}>
                     {phone}
                   </a>

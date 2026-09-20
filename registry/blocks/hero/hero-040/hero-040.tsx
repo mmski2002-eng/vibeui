@@ -33,6 +33,11 @@ export type Hero040Props = {
   transactions?: readonly Hero040Transaction[]
   /** Интервал появления операций, мс. */
   interval?: number
+  /** aria карты, кнопки номера и ленты операций. */
+  cardLabel?: string
+  showLabel?: string
+  hideLabel?: string
+  feedLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -167,6 +172,10 @@ export function Hero040({
   cardExpiry = "09/29",
   transactions = DEFAULT_TRANSACTIONS,
   interval = 2600,
+  cardLabel = "Карта {brand} {kind}",
+  showLabel = "Показать номер",
+  hideLabel = "Скрыть номер",
+  feedLabel = "Последние операции",
   tone = "auto",
   accent,
   ink,
@@ -256,7 +265,7 @@ export function Hero040({
           </div>
           <div data-part="scene" ref={sceneRef} data-active={active} onPointerMove={onMove} onPointerEnter={() => setActive(true)} onPointerLeave={onLeave}>
             <div data-part="float">
-              <div data-part="card" aria-label={`Карта ${cardBrand} ${cardKind}`}>
+              <div data-part="card" aria-label={cardLabel.replace("{brand}", cardBrand).replace("{kind}", cardKind)}>
                 <div data-part="cardtop">
                   <span>
                     {cardBrand}
@@ -273,7 +282,7 @@ export function Hero040({
                   <p data-part="number" aria-live="polite">
                     {masked ? maskNumber(cardNumber) : cardNumber}
                   </p>
-                  <button data-part="eye" type="button" aria-pressed={!masked} aria-label={masked ? "Показать номер" : "Скрыть номер"} onClick={() => setMasked((value) => !value)}>
+                  <button data-part="eye" type="button" aria-pressed={!masked} aria-label={masked ? showLabel : hideLabel} onClick={() => setMasked((value) => !value)}>
                     {masked ? (
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
@@ -294,7 +303,7 @@ export function Hero040({
               </div>
             </div>
             {visible.length > 0 ? (
-              <ul data-part="feed" aria-label="Последние операции">
+              <ul data-part="feed" aria-label={feedLabel}>
                 {visible.map(({ index, item }, position) => (
                   <li key={index} data-part="tx" data-new={position === visible.length - 1} data-plus={item.amount.trim().startsWith("+")}>
                     <i aria-hidden="true">{item.amount.trim().startsWith("+") ? "↓" : "↑"}</i>

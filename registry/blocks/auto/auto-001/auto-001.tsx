@@ -33,6 +33,17 @@ export type Auto001Props = {
   /** Имя CustomEvent, который уносит выбор в блок записи. */
   eventName?: string
   currency?: string
+  /** Единицы времени: формы «день», час, минута. */
+  dayUnits?: readonly [string, string, string]
+  hoursUnit?: string
+  minutesUnit?: string
+  /** Формы слова «услуга» в счётчике. */
+  serviceUnits?: readonly [string, string, string]
+  classLabel?: string
+  servicesLabel?: string
+  totalLabel?: string
+  timeLabel?: string
+  selectedLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -133,16 +144,20 @@ function formatMoney(value: number, currency: string) {
   return `${String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ${currency}`
 }
 
-function formatTime(minutes: number) {
+function plural(n: number, units: readonly [string, string, string]) {
+  return n === 1 ? units[0] : n > 1 && n < 5 ? units[1] : units[2]
+}
+
+function formatTime(minutes: number, dayUnits: readonly [string, string, string], hoursUnit: string, minutesUnit: string) {
   if (minutes === 0) return "—"
   if (minutes >= 540) {
     const days = Math.ceil(minutes / 540)
-    return `${days} ${days === 1 ? "день" : days < 5 ? "дня" : "дней"}`
+    return `${days} ${plural(days, dayUnits)}`
   }
   const hours = Math.floor(minutes / 60)
   const rest = Math.round((minutes % 60) / 30) * 30
-  if (hours === 0) return `${rest} мин`
-  return rest ? `${hours} ч ${rest} мин` : `${hours} ч`
+  if (hours === 0) return `${rest} ${minutesUnit}`
+  return rest ? `${hours} ${hoursUnit} ${rest} ${minutesUnit}` : `${hours} ${hoursUnit}`
 }
 
 /** Калькулятор услуг детейлинга: чипы, класс авто, итог на лету, «записаться» через CustomEvent. */
@@ -157,6 +172,15 @@ export function Auto001({
   actionHref = "#booking",
   eventName = "vibeui-auto:book",
   currency = "₽",
+  dayUnits = ["день", "дня", "дней"],
+  hoursUnit = "ч",
+  minutesUnit = "мин",
+  serviceUnits = ["услуга", "услуги", "услуг"],
+  classLabel = "Класс автомобиля",
+  servicesLabel = "Услуги",
+  totalLabel = "Итого",
+  timeLabel = "Время в боксе",
+  selectedLabel = "Выбрано",
   tone = "auto",
   accent,
   ink,
@@ -224,7 +248,7 @@ export function Auto001({
             </div>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <div data-part="classes" role="radiogroup" aria-label="Класс автомобиля">
+          <div data-part="classes" role="radiogroup" aria-label={classLabel}>
             {classes.map((item, index) => (
               <button key={item.label} data-part="class" type="button" role="radio" aria-checked={carClass === index} onClick={() => setCarClass(index)}>
                 <b>{item.label}</b>
@@ -232,7 +256,7 @@ export function Auto001({
               </button>
             ))}
           </div>
-          <ul data-part="grid" aria-label="Услуги">
+          <ul data-part="grid" aria-label={servicesLabel}>
             {services.map((service, index) => (
               <li key={service.name}>
                 <button data-part="card" type="button" aria-pressed={selected.has(index)} onClick={() => toggle(index)} onPointerMove={spotlight}>
@@ -245,7 +269,7 @@ export function Auto001({
                   {service.note ? <p data-part="cardnote">{service.note}</p> : null}
                   <span data-part="meta">
                     <b>{formatMoney(service.price * factor, currency)}</b>
-                    <span>{formatTime(service.minutes * (factor > 1.2 ? 1.2 : 1))}</span>
+                    <span>{formatTime(service.minutes * (factor > 1.2 ? 1.2 : 1), dayUnits, hoursUnit, minutesUnit)}</span>
                   </span>
                 </button>
               </li>
@@ -254,17 +278,17 @@ export function Auto001({
           <div data-part="bar">
             <div data-part="totals" aria-live="polite">
               <div data-part="total" data-kind="price">
-                <small>Итого</small>
+                <small>{totalLabel}</small>
                 <output>{formatMoney(totals.price, currency)}</output>
               </div>
               <div data-part="total">
-                <small>Время в боксе</small>
-                <output>{formatTime(totals.minutes)}</output>
+                <small>{timeLabel}</small>
+                <output>{formatTime(totals.minutes, dayUnits, hoursUnit, minutesUnit)}</output>
               </div>
               <div data-part="total">
-                <small>Выбрано</small>
+                <small>{selectedLabel}</small>
                 <output>
-                  {count} <span data-part="count">{count === 1 ? "услуга" : count > 1 && count < 5 ? "услуги" : "услуг"}</span>
+                  {count} <span data-part="count">{plural(count, serviceUnits)}</span>
                 </output>
               </div>
             </div>

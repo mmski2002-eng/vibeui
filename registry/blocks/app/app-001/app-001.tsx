@@ -15,6 +15,12 @@ export type App001Props = {
   eyebrow?: string
   title?: string
   features?: readonly App001Feature[]
+  /** Текст на макетах экранов будильника и серии, подпись «экран ·» и aria телефона. */
+  alarmWindow?: string
+  alarmPhase?: string
+  streak?: string
+  screenPrefix?: string
+  phoneLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -130,7 +136,7 @@ function Words({ text }: { text: string }) {
   ))
 }
 
-function Screen({ kind, title, pos }: { kind: App001Feature["screen"]; title?: string; pos: "before" | "on" | "after" }) {
+function Screen({ kind, title, pos, alarmWindow, alarmPhase, streak }: { kind: App001Feature["screen"]; title?: string; pos: "before" | "on" | "after"; alarmWindow: string; alarmPhase: string; streak: string }) {
   const on = pos === "on"
   return (
     <div data-part="view" data-on={on} data-pos={on ? undefined : pos} aria-hidden={!on}>
@@ -146,8 +152,8 @@ function Screen({ kind, title, pos }: { kind: App001Feature["screen"]; title?: s
       {kind === "alarm" ? (
         <div data-part="clock">
           <b>06:40</b>
-          <small>окно 06:20 — 06:50</small>
-          <span>лёгкая фаза</span>
+          <small>{alarmWindow}</small>
+          <span>{alarmPhase}</span>
         </div>
       ) : null}
       {kind === "stats" ? (
@@ -155,7 +161,7 @@ function Screen({ kind, title, pos }: { kind: App001Feature["screen"]; title?: s
           {DAYS.map((d, i) => (
             <i key={i} data-on={d === 1} style={{ ["--vibeui-app-001-i" as string]: i }} />
           ))}
-          <b>18 дней подряд</b>
+          <b>{streak}</b>
         </div>
       ) : null}
     </div>
@@ -167,6 +173,11 @@ export function App001({
   eyebrow = "Что внутри",
   title = "Четыре экрана, которые вы откроете перед сном",
   features = DEFAULT_FEATURES,
+  alarmWindow = "окно 06:20 — 06:50",
+  alarmPhase = "лёгкая фаза",
+  streak = "18 дней подряд",
+  screenPrefix = "экран",
+  phoneLabel = "Экран приложения",
   tone = "auto",
   accent,
   ink,
@@ -264,16 +275,16 @@ export function App001({
                   <h3>{feature.title}</h3>
                   <p>{feature.text}</p>
                   <span data-part="mini">
-                    экран · {feature.screenTitle ?? feature.screen}
+                    {screenPrefix} · {feature.screenTitle ?? feature.screen}
                   </span>
                 </li>
               ))}
             </ol>
             <div data-part="sticky">
-              <div data-part="phone" aria-label="Экран приложения">
+              <div data-part="phone" aria-label={phoneLabel}>
                 <div data-part="screen">
                   {features.map((feature, index) => (
-                    <Screen key={feature.title} kind={feature.screen} title={feature.screenTitle} pos={index === active ? "on" : index < active ? "before" : "after"} />
+                    <Screen key={feature.title} kind={feature.screen} title={feature.screenTitle} pos={index === active ? "on" : index < active ? "before" : "after"} alarmWindow={alarmWindow} alarmPhase={alarmPhase} streak={streak} />
                   ))}
                 </div>
               </div>

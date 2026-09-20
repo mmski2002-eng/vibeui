@@ -22,6 +22,11 @@ export type Footer043Props = {
   socials?: readonly Footer043Link[]
   legal?: readonly Footer043Link[]
   copyright?: string
+  /** aria соцсетей и заголовки колонок. */
+  socialsLabel?: string
+  requisitesTitle?: string
+  documentsTitle?: string
+  contactsTitle?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -119,6 +124,10 @@ export function Footer043({
     { label: "Вернуть платёж", href: "#" },
   ],
   copyright = "© 2018–2026 БФ «Тёплый дом»",
+  socialsLabel = "Соцсети",
+  requisitesTitle = "Реквизиты",
+  documentsTitle = "Документы",
+  contactsTitle = "Контакты",
   tone = "auto",
   accent,
   ink,
@@ -156,7 +165,7 @@ export function Footer043({
               {legalName ? <p data-part="legal-name">{legalName}</p> : null}
               {thanks ? <p data-part="thanks">{thanks}</p> : null}
               {socials.length > 0 ? (
-                <ul data-part="socials" aria-label="Соцсети">
+                <ul data-part="socials" aria-label={socialsLabel}>
                   {socials.map((item) => (
                     <li key={item.label}>
                       <a href={item.href}>{item.label}</a>
@@ -166,7 +175,7 @@ export function Footer043({
               ) : null}
             </div>
             <div data-part="col">
-              <h3>Реквизиты</h3>
+              <h3>{requisitesTitle}</h3>
               <dl data-part="req">
                 {requisites.map((item) => (
                   <div key={item.label}>
@@ -176,8 +185,8 @@ export function Footer043({
                 ))}
               </dl>
             </div>
-            <nav data-part="col" aria-label="Документы">
-              <h3>Документы</h3>
+            <nav data-part="col" aria-label={documentsTitle}>
+              <h3>{documentsTitle}</h3>
               <ul>
                 {documents.map((item) => (
                   <li key={item.label}>
@@ -193,7 +202,7 @@ export function Footer043({
               </ul>
             </nav>
             <div data-part="col">
-              <h3>Контакты</h3>
+              <h3>{contactsTitle}</h3>
               <ul>
                 {contacts.map((item) => (
                   <li key={item.label}>

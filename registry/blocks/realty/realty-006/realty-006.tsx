@@ -19,6 +19,16 @@ export type Realty006Props = {
   actionHref?: string
   note?: string
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  /** Подписи ползунков и итога. */
+  costLabel?: string
+  downLabel?: string
+  termLabel?: string
+  yearsUnit?: string
+  rateLabel?: string
+  monthlyLabel?: string
+  loanLabel?: string
+  overpayLabel?: string
+  currency?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -44,8 +54,8 @@ function annuity(principal: number, yearlyRate: number, years: number) {
 
 const rub = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 })
 
-function money(value: number) {
-  return `${rub.format(Math.round(value))} ₽`
+function money(value: number, currency: string) {
+  return `${rub.format(Math.round(value))} ${currency}`
 }
 
 /** Число, которое едет к целевому значению, а не прыгает. */
@@ -144,6 +154,15 @@ export function Realty006({
   actionLabel = "Подобрать программу",
   actionHref = "#valuation",
   note = "Расчёт предварительный и не является офертой банка.",
+  costLabel = "Стоимость",
+  downLabel = "Первый взнос",
+  termLabel = "Срок",
+  yearsUnit = "лет",
+  rateLabel = "Ставка",
+  monthlyLabel = "Платёж в месяц",
+  loanLabel = "Сумма кредита",
+  overpayLabel = "Переплата за {n} лет",
+  currency = "₽",
   tone = "auto",
   accent,
   ink,
@@ -184,41 +203,41 @@ export function Realty006({
           <div data-part="panel">
             <div data-part="field">
               <label htmlFor={`${id}-price`}>
-                Стоимость <output>{money(cost)}</output>
+                {costLabel} <output>{money(cost, currency)}</output>
               </label>
               <input id={`${id}-price`} type="range" min={priceRange[0]} max={priceRange[1]} step={100_000} value={cost} onChange={(event) => setCost(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(cost, priceRange) }} />
             </div>
             <div data-part="field">
               <label htmlFor={`${id}-down`}>
-                Первый взнос <output>{down} % · {money(cost * (down / 100))}</output>
+                {downLabel} <output>{down} % · {money(cost * (down / 100), currency)}</output>
               </label>
               <input id={`${id}-down`} type="range" min={10} max={80} step={5} value={down} onChange={(event) => setDown(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(down, [10, 80]) }} />
             </div>
             <div data-part="field">
               <label htmlFor={`${id}-term`}>
-                Срок <output>{term} лет</output>
+                {termLabel} <output>{term} {yearsUnit}</output>
               </label>
               <input id={`${id}-term`} type="range" min={yearsRange[0]} max={yearsRange[1]} step={1} value={term} onChange={(event) => setTerm(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(term, yearsRange) }} />
             </div>
             <div data-part="field">
               <label htmlFor={`${id}-rate`}>
-                Ставка <output>{percent.toFixed(1)} %</output>
+                {rateLabel} <output>{percent.toFixed(1)} %</output>
               </label>
               <input id={`${id}-rate`} type="range" min={rateRange[0]} max={rateRange[1]} step={0.1} value={percent} onChange={(event) => setPercent(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(percent, rateRange) }} />
             </div>
           </div>
           <div data-part="result" aria-live="polite">
             <div>
-              <small>Платёж в месяц</small>
-              <div data-part="payment">{money(rolling)}</div>
+              <small>{monthlyLabel}</small>
+              <div data-part="payment">{money(rolling, currency)}</div>
             </div>
             <div data-part="row">
-              <span>Сумма кредита</span>
-              <b>{money(principal)}</b>
+              <span>{loanLabel}</span>
+              <b>{money(principal, currency)}</b>
             </div>
             <div data-part="row">
-              <span>Переплата за {term} лет</span>
-              <b>{money(total - principal)}</b>
+              <span>{overpayLabel.replace("{n}", String(term))}</span>
+              <b>{money(total - principal, currency)}</b>
             </div>
             {actionLabel ? (
               <a href={actionHref} data-part="action">

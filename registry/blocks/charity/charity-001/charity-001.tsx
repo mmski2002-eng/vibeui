@@ -23,6 +23,11 @@ export type Charity001Props = {
   currency?: string
   actionLabel?: string
   actionHref?: string
+  /** aria сумм и ползунка, подсказка, «это». */
+  chipsLabel?: string
+  sliderLabel?: string
+  hint?: string
+  thisLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -125,6 +130,10 @@ export function Charity001({
   currency = "₽",
   actionLabel = "Помочь этой суммой",
   actionHref = "#donate",
+  chipsLabel = "Сумма",
+  sliderLabel = "Сумма пожертвования",
+  hint = "потяните ползунок или нажмите на сумму →",
+  thisLabel = "это",
   tone = "auto",
   accent,
   ink,
@@ -161,7 +170,7 @@ export function Charity001({
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
-            <ul data-part="chips" aria-label="Сумма">
+            <ul data-part="chips" aria-label={chipsLabel}>
               {tiers.map((item, itemIndex) => (
                 <li key={item.amount}>
                   <button data-part="chip" type="button" aria-pressed={itemIndex === index} onClick={() => choose(itemIndex)}>
@@ -179,7 +188,7 @@ export function Charity001({
                 step={1}
                 value={index}
                 onChange={(event) => choose(Number(event.target.value))}
-                aria-label="Сумма пожертвования"
+                aria-label={sliderLabel}
                 aria-valuetext={`${formatMoney(tier?.amount ?? 0)} ${currency}`}
                 style={{ ["--vibeui-charity-001-fill" as string]: fill }}
               />
@@ -189,7 +198,7 @@ export function Charity001({
               </label>
             </div>
             <p data-part="hint" aria-hidden="true">
-              потяните ползунок или нажмите на сумму →
+              {hint}
             </p>
           </div>
           <div data-part="stage" aria-live="polite">
@@ -202,7 +211,7 @@ export function Charity001({
                 </svg>
                 <p data-part="amount">
                   {formatMoney(tier.amount)} {currency}
-                  <small>это</small>
+                  <small>{thisLabel}</small>
                 </p>
                 <h3 data-part="what">{tier.title}</h3>
                 <p data-part="text">{tier.text}</p>

@@ -30,6 +30,11 @@ export type Writer001Props = {
   /** Подпись к счётчику. */
   pagesLabel?: string
   currency?: string
+  /** aria книги, подсказка, aria форматов, «страниц». */
+  openLabel?: string
+  hint?: string
+  formatsLabel?: string
+  pagesUnit?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -142,6 +147,10 @@ export function Writer001({
   pagesRead = 1284391,
   pagesLabel = "прочитано читателями",
   currency = "₽",
+  openLabel = "Открыть первую страницу книги «{title}»",
+  hint = "Наведите или нажмите — откроется на седьмой странице",
+  formatsLabel = "Формат книги",
+  pagesUnit = "страниц",
   tone = "auto",
   accent,
   ink,
@@ -194,7 +203,7 @@ export function Writer001({
         <div data-part="shell">
           <div data-part="stage">
             <div>
-              <div data-part="book" data-open={open} tabIndex={0} role="button" aria-pressed={open} aria-label={`Открыть первую страницу книги «${title}»`} onClick={() => setOpen((value) => !value)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setOpen((value) => !value) } }}>
+              <div data-part="book" data-open={open} tabIndex={0} role="button" aria-pressed={open} aria-label={openLabel.replace("{title}", title)} onClick={() => setOpen((value) => !value)} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setOpen((value) => !value) } }}>
                 <i data-part="shadow" aria-hidden="true" />
                 <div data-part="page" aria-hidden="true">
                   {firstPage.map((paragraph, i) => (
@@ -217,7 +226,7 @@ export function Writer001({
                   <i data-part="inside" aria-hidden="true" />
                 </div>
               </div>
-              <p data-part="hint">Наведите или нажмите — откроется на седьмой странице</p>
+              <p data-part="hint">{hint}</p>
             </div>
           </div>
           <div>
@@ -233,7 +242,7 @@ export function Writer001({
               </ul>
             ) : null}
             {formats.length > 0 ? (
-              <div data-part="formats" role="group" aria-label="Формат книги">
+              <div data-part="formats" role="group" aria-label={formatsLabel}>
                 {formats.map((item, i) => (
                   <button key={item.name} type="button" aria-pressed={i === active} onClick={() => setActive(i)}>
                     {item.name}
@@ -258,7 +267,7 @@ export function Writer001({
           <div data-part="counter" aria-live="off">
             <span>{pagesLabel}</span>
             <output data-tick={tick}>
-              {formatNumber(pages)} <span>страниц</span>
+              {formatNumber(pages)} <span>{pagesUnit}</span>
             </output>
           </div>
         </div>

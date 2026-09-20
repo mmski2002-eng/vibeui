@@ -24,6 +24,8 @@ export type Hero038Props = {
   sticker?: string
   /** Бегущая строка блюд. */
   ticker?: readonly string[]
+  /** aria таймера. */
+  timerLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -129,6 +131,7 @@ export function Hero038({
   sideImageAlt = "Том-ям с креветками",
   sticker = "хит недели · том-ям 490 ₽",
   ticker = ["Смэш-бургер", "Том-ям", "Поке с лососем", "Пад-тай", "Картошка с трюфелем", "Чизкейк «Сан-Себастьян»", "Рамен тонкоцу", "Шаурма на углях"],
+  timerLabel = "{m} минут {s} секунд",
   tone = "auto",
   accent,
   ink,
@@ -171,7 +174,7 @@ export function Hero038({
               </span>
               <span>
                 <i>
-                  <time data-part="timer" aria-live="off" aria-label={`${Math.floor(seconds / 60)} минут ${seconds % 60} секунд`}>
+                  <time data-part="timer" aria-live="off" aria-label={timerLabel.replace("{m}", String(Math.floor(seconds / 60))).replace("{s}", String(seconds % 60))}>
                     {pad(Math.floor(seconds / 60))}
                     <b>:</b>
                     {pad(seconds % 60)}

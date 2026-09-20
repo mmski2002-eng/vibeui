@@ -26,6 +26,7 @@ export type People019Props = {
   listenLabel?: string
   /** Сколько секунд «звучит» акцент после нажатия. */
   seconds?: number
+  yearsUnit?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -107,6 +108,7 @@ export function People019({
   people = DEFAULT_PEOPLE,
   listenLabel = "послушать акцент",
   seconds = 4,
+  yearsUnit = "лет",
   tone = "auto",
   accent,
   ink,
@@ -178,7 +180,7 @@ export function People019({
                 </div>
                 <h3>{person.name}</h3>
                 <p data-part="meta">
-                  {person.role} · {person.years} лет
+                  {person.role} · {person.years} {yearsUnit}
                 </p>
                 {person.note ? <p data-part="note">{person.note}</p> : null}
                 <button data-part="listen" type="button" aria-pressed={playing === index} onClick={() => setPlaying(playing === index ? null : index)} aria-label={`${listenLabel}: ${person.accent ?? person.from}`}>

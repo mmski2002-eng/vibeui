@@ -23,6 +23,10 @@ export type Event025Props = {
   title?: string
   lede?: string
   events?: readonly Event025Item[]
+  /** Строки счётчика мест. */
+  joinedLine?: string
+  fullLabel?: string
+  leftLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -102,6 +106,9 @@ export function Event025({
   title = "Ближайшие выезды и встречи",
   lede = "Каждую субботу мы куда-то едем. Билет бесплатный, дресс-код — удобная обувь.",
   events = DEFAULT_EVENTS,
+  joinedLine = "Записалось {joined} из {need}",
+  fullLabel = "мест нет",
+  leftLine = "ещё {n}",
   tone = "auto",
   accent,
   ink,
@@ -163,9 +170,11 @@ export function Event025({
                     {need > 0 ? (
                       <div data-part="hands">
                         <span>
-                          Записалось <b>{joined}</b> из {need}
+                          {joinedLine.split("{joined}")[0]}
+                          <b>{joined}</b>
+                          {(joinedLine.split("{joined}")[1] ?? "").replace("{need}", String(need))}
                         </span>
-                        <span>{joined >= need ? "мест нет" : `ещё ${need - joined}`}</span>
+                        <span>{joined >= need ? fullLabel : leftLine.replace("{n}", String(need - joined))}</span>
                         <div data-part="track" aria-hidden="true">
                           <i style={{ ["--vibeui-event-025-w" as string]: `${(joined / need) * 100}%` }} />
                         </div>

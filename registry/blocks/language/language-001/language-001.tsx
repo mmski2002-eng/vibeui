@@ -32,6 +32,10 @@ export type Language001Props = {
   actionLabel?: string
   actionHref?: string
   retryLabel?: string
+  /** Счётчик вопросов, подсказка, подпись группы. */
+  counterLine?: string
+  hint?: string
+  groupLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -146,6 +150,9 @@ export function Language001({
   actionLabel = "Записаться в эту группу",
   actionHref = "#schedule",
   retryLabel = "Пройти ещё раз",
+  counterLine = "Вопрос {n} из {total}",
+  hint = "не думайте долго — первая мысль обычно верная",
+  groupLabel = "вам подойдёт группа",
   tone = "auto",
   accent,
   ink,
@@ -239,7 +246,7 @@ export function Language001({
                   ))}
                 </ul>
                 <p data-part="counter">
-                  Вопрос {index + 1} из {total}
+                  {counterLine.replace("{n}", String(index + 1)).replace("{total}", String(total))}
                 </p>
                 <p data-part="prompt">
                   {promptParts.map((part, partIndex) => (
@@ -258,7 +265,7 @@ export function Language001({
                     </li>
                   ))}
                 </ul>
-                <p data-part="hint">не думайте долго — первая мысль обычно верная</p>
+                <p data-part="hint">{hint}</p>
               </div>
             ) : level ? (
               <div data-part="result">
@@ -285,7 +292,7 @@ export function Language001({
                 </div>
                 <p data-part="can">{level.can}</p>
                 <p data-part="group">
-                  <b>вам подойдёт группа</b>
+                  <b>{groupLabel}</b>
                   {level.group}
                 </p>
                 <div data-part="actions">

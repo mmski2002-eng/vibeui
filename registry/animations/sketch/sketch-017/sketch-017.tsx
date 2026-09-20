@@ -30,6 +30,8 @@ export type Sketch017Props = {
   prevLabel?: string
   nextLabel?: string
   /** Почерк: аккуратный или размашистый. */
+  /** Пустая категория. */
+  emptyLabel?: string
   rough?: "neat" | "loose"
   /** Дрожание линии: покой, мягкое или живое. */
   boil?: "still" | "soft" | "lively"
@@ -521,6 +523,7 @@ export function Sketch017({
   closeLabel = "Закрыть",
   prevLabel = "Предыдущий кадр",
   nextLabel = "Следующий кадр",
+  emptyLabel = "Пока пусто",
   rough = "loose",
   boil = "soft",
   seed,
@@ -592,7 +595,7 @@ export function Sketch017({
             </ul>
           </div>
           {visible.length === 0 ? (
-            <p data-part="empty">Пока пусто</p>
+            <p data-part="empty">{emptyLabel}</p>
           ) : (
             <ul data-part="table" data-leaving={pending !== undefined ? "" : undefined} key={active ?? "all"}>
               {visible.map((work, index) => (

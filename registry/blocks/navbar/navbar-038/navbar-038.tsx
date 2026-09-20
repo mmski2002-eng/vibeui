@@ -18,6 +18,15 @@ export type Navbar038Props = {
   cartLabel?: string
   cartHref?: string
   sticky?: boolean
+  /** aria навигации, меню и кнопки-бургера. */
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
+  /** aria адреса, «мин» и aria счётчика корзины. */
+  whereLabel?: string
+  minutesUnit?: string
+  countLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -110,6 +119,13 @@ export function Navbar038({
   cartLabel = "Корзина",
   cartHref = "#menu",
   sticky = true,
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
+  whereLabel = "Доставка: {address}, {n} минут",
+  minutesUnit = "мин",
+  countLabel = "В корзине {n}",
   tone = "auto",
   accent,
   ink,
@@ -163,13 +179,13 @@ export function Navbar038({
   const shownMinutes = where?.minutes ?? minutes
 
   const whereChip = (
-    <a data-part="where" href="#zones" aria-label={`Доставка: ${shownAddress}, ${shownMinutes} минут`}>
+    <a data-part="where" href="#zones" aria-label={whereLabel.replace("{address}", shownAddress).replace("{n}", String(shownMinutes))}>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z" />
         <circle cx="12" cy="10" r="2.5" />
       </svg>
       <span>{shownAddress}</span>
-      <b>· {shownMinutes} мин</b>
+      <b>· {shownMinutes} {minutesUnit}</b>
     </a>
   )
 
@@ -188,7 +204,7 @@ export function Navbar038({
             {brand}
           </a>
           {whereChip}
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -203,18 +219,18 @@ export function Navbar038({
                 <circle cx="17.5" cy="20" r="1.2" />
               </svg>
               <span>{cartLabel}</span>
-              <output data-part="count" data-bump={bump} aria-label={`В корзине ${count}`}>
+              <output data-part="count" data-bump={bump} aria-label={countLabel.replace("{n}", String(count))}>
                 {count}
               </output>
             </a>
-            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-038-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-038-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />
               <i aria-hidden="true" />
               <i aria-hidden="true" />
             </button>
           </div>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-038-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+        <nav data-part="menu" id="vibeui-navbar-038-menu" hidden={!menuOpen} aria-label={menuLabel} onClick={() => setMenuOpen(false)}>
           {whereChip}
           {links.map((link) => (
             <a key={link.href} href={link.href}>

@@ -106,13 +106,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: "monthly",
         priority: 0.7,
       }),
-      // Демо — одна страница без языковой пары: это и есть готовый сайт.
-      {
-        url: `${SITE_URL}${scenario.demo}`,
-        lastModified: siteDate,
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
-      },
+      // Демо — готовый сайт: языковая пара есть только у переведённых,
+      // остальные — одна русская страница.
+      ...(scenario.sourceEn
+        ? localized(scenario.demo, {
+            lastModified: siteDate,
+            changeFrequency: "monthly",
+            priority: 0.6,
+          })
+        : [
+            {
+              url: `${SITE_URL}${scenario.demo}`,
+              lastModified: siteDate,
+              changeFrequency: "monthly" as const,
+              priority: 0.6,
+            },
+          ]),
     ]),
   ]
 

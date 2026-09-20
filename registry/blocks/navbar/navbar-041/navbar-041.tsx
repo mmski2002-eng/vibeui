@@ -21,6 +21,11 @@ export type Navbar041Props = {
   /** Имя CustomEvent, из которого шапка берёт число товаров в наборе (detail.count). */
   cartEvent?: string
   sticky?: boolean
+  /** aria навигации, меню и кнопки-бургера. */
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -133,6 +138,10 @@ export function Navbar041({
   cartHref = "#bundle",
   cartEvent = "vibeui-market:bundle",
   sticky = true,
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
   tone = "auto",
   accent,
   ink,
@@ -186,7 +195,7 @@ export function Navbar041({
             {brand}
           </a>
           {searchPlaceholder ? <SearchField placeholder={searchPlaceholder} /> : null}
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -210,14 +219,14 @@ export function Navbar041({
                 </span>
               ) : null}
             </a>
-            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-041-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-041-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />
               <i aria-hidden="true" />
               <i aria-hidden="true" />
             </button>
           </div>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-041-menu" hidden={!menuOpen} aria-label="Меню">
+        <nav data-part="menu" id="vibeui-navbar-041-menu" hidden={!menuOpen} aria-label={menuLabel}>
           {searchPlaceholder ? <SearchField placeholder={searchPlaceholder} /> : null}
           {links.map((link) => (
             <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>

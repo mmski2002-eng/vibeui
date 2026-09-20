@@ -4,6 +4,52 @@ import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } fr
 
 export type Contact020Option = { value: string; label: string }
 
+export type Contact020Labels = {
+  whoTitle: string
+  whoText: string
+  nameLabel: string
+  namePlaceholder: string
+  comingYes: string
+  comingNo: string
+  companionsLabel: string
+  companionsPlaceholder: string
+  stayTitle: string
+  stayText: string
+  stayHouse: string
+  stayBack: string
+  transferTitle: string
+  transferText: string
+  transferBus: string
+  transferCar: string
+  transferTimeLabel: string
+  transferAt: string
+  menuTitle: string
+  menuText: string
+  allergies: string
+  allergiesPlaceholder: string
+  songTitle: string
+  songText: string
+  songLabel: string
+  songPlaceholder: string
+  wishLabel: string
+  wishPlaceholder: string
+  back: string
+  next: string
+  summaryFrom: string
+  summaryAnswer: string
+  willCome: string
+  cannotCome: string
+  summaryWith: string
+  summaryStay: string
+  inHouse: string
+  leaving: string
+  summaryRoad: string
+  byTransfer: string
+  byCar: string
+  summaryMenu: string
+  summarySong: string
+}
+
 export type Contact020Props = {
   eyebrow?: string
   title?: string
@@ -22,6 +68,8 @@ export type Contact020Props = {
   thanksText?: string
   stampLabel?: string
   action?: string
+  /** Подписи шагов, полей и сводки; можно переопределить частично. */
+  labels?: Partial<Contact020Labels>
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -96,9 +144,9 @@ container-type:inline-size;
 [data-vibeui-block="contact-020"] [data-part="row"]{display:grid;gap:0 .8rem}
 [data-vibeui-block="contact-020"] label{display:block;margin-bottom:1rem}
 [data-vibeui-block="contact-020"] label > span{display:block;margin-bottom:.35rem;font-family:var(--vibeui-contact-020-display);font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-contact-020-paper-muted)}
-[data-vibeui-block="contact-020"] input,[data-vibeui-block="contact-020"] textarea{width:100%;padding:.75rem .9rem;border:0;border-bottom:1px solid var(--vibeui-contact-020-paper-line);border-radius:.3rem .3rem 0 0;background:var(--vibeui-contact-020-field);color:var(--vibeui-contact-020-ink);font-family:var(--vibeui-contact-020-script);font-size:1.25rem;transition:border-color .25s,box-shadow .25s}
-[data-vibeui-block="contact-020"] input::placeholder,[data-vibeui-block="contact-020"] textarea::placeholder{color:#b3ab9b}
-[data-vibeui-block="contact-020"] input:focus,[data-vibeui-block="contact-020"] textarea:focus{outline:none;border-color:var(--vibeui-contact-020-wax);box-shadow:0 2px 0 0 var(--vibeui-contact-020-wax)}
+[data-vibeui-block="contact-020"] input,[data-vibeui-block="contact-020"] textarea{width:100%;padding:.7rem .9rem;border:1px solid var(--vibeui-contact-020-paper-line);border-radius:.45rem;background:#fffdf8;color:var(--vibeui-contact-020-ink);font-family:var(--vibeui-contact-020-display);font-size:1.15rem;font-weight:500;box-shadow:inset 0 1px 2px rgb(28 39 64 / .05);transition:border-color .25s,box-shadow .25s}
+[data-vibeui-block="contact-020"] input::placeholder,[data-vibeui-block="contact-020"] textarea::placeholder{color:#a89e8a;font-weight:400}
+[data-vibeui-block="contact-020"] input:focus,[data-vibeui-block="contact-020"] textarea:focus{outline:none;border-color:var(--vibeui-contact-020-wax);box-shadow:0 0 0 3px rgb(122 43 53 / .14)}
 [data-vibeui-block="contact-020"] textarea{min-height:5.5rem;resize:vertical}
 [data-vibeui-block="contact-020"] [data-part="choices"]{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
 [data-vibeui-block="contact-020"] [data-part="choice"]{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border:1px solid var(--vibeui-contact-020-paper-line);border-radius:999px;background:var(--vibeui-contact-020-field);color:var(--vibeui-contact-020-ink);font-family:var(--vibeui-contact-020-display);font-size:1.02rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:border-color .25s,background .25s,color .25s,transform .2s}
@@ -156,6 +204,52 @@ function readGuest(): string {
 
 const SNOW = "M12 2v20M2 12h20M5 5l14 14M19 5L5 19"
 
+const DEFAULT_LABELS: Contact020Labels = {
+  whoTitle: "Кто приедет",
+  whoText: "Как вас записать и получится ли быть с нами.",
+  nameLabel: "Имя и фамилия",
+  namePlaceholder: "Анна Соколова",
+  comingYes: "Приеду",
+  comingNo: "Не смогу",
+  companionsLabel: "С кем",
+  companionsPlaceholder: "Одна, с парой, с ребёнком 5 лет…",
+  stayTitle: "Останетесь ночевать?",
+  stayText: "В доме двенадцать комнат, бельё и завтрак — наши. Кто уезжает — трансфер в 00:30 и 01:00.",
+  stayHouse: "Остаюсь в доме",
+  stayBack: "Вернусь ночью",
+  transferTitle: "Как доберётесь",
+  transferText: "Трансфер от метро «Тушинская» или своя машина — парковка под навесом.",
+  transferBus: "Трансфером",
+  transferCar: "На машине",
+  transferTimeLabel: "Время трансфера",
+  transferAt: "В {time}",
+  menuTitle: "Что приготовить",
+  menuText: "Ужин у камина готовят заранее — выберите основное.",
+  allergies: "Аллергии и ограничения",
+  allergiesPlaceholder: "Орехи, лактоза…",
+  songTitle: "Песня и пара слов",
+  songText: "Под что вы точно пойдёте танцевать — отдадим диджею.",
+  songLabel: "Исполнитель — название",
+  songPlaceholder: "Frank Sinatra — Let It Snow",
+  wishLabel: "Слова для нас",
+  wishPlaceholder: "Необязательно, но мы читаем всё",
+  back: "← Назад",
+  next: "Дальше →",
+  summaryFrom: "От кого",
+  summaryAnswer: "Ответ",
+  willCome: "приедет",
+  cannotCome: "не сможет",
+  summaryWith: "С кем",
+  summaryStay: "Ночёвка",
+  inHouse: "в доме",
+  leaving: "уедет",
+  summaryRoad: "Дорога",
+  byTransfer: "трансфер {time}",
+  byCar: "на машине",
+  summaryMenu: "Меню",
+  summarySong: "Песня",
+}
+
 /** Письмо-ответ вместо RSVP: пять шагов на бумаге, конверт-сводка с сургучом и штамп «Ждём». */
 export function Contact020({
   eyebrow = "Ответ",
@@ -177,6 +271,7 @@ export function Contact020({
   thanksText = "Спасибо! За две недели до вечера напишем про трансфер и комнаты.",
   stampLabel = "Ждём",
   action,
+  labels,
   tone = "auto",
   accent,
   ink,
@@ -184,6 +279,7 @@ export function Contact020({
   className,
   style,
 }: Contact020Props) {
+  const t = { ...DEFAULT_LABELS, ...labels }
   const fromUrl = useSyncExternalStore(subscribe, readGuest, () => "")
   const guestName = guest ?? fromUrl
   const [step, setStep] = useState(0)
@@ -255,82 +351,82 @@ export function Contact020({
                   </ol>
                   {step === 0 ? (
                     <div data-part="step" key="who">
-                      <h3>Кто приедет</h3>
-                      <p>Как вас записать и получится ли быть с нами.</p>
+                      <h3>{t.whoTitle}</h3>
+                      <p>{t.whoText}</p>
                       <label>
-                        <span>Имя и фамилия</span>
-                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder="Анна Соколова" />
+                        <span>{t.nameLabel}</span>
+                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder={t.namePlaceholder} />
                       </label>
                       <div data-part="choices">
-                        {choice(answers.coming === "yes", "Приеду", () => set("coming", "yes"))}
-                        {choice(answers.coming === "no", "Не смогу", () => set("coming", "no"))}
+                        {choice(answers.coming === "yes", t.comingYes, () => set("coming", "yes"))}
+                        {choice(answers.coming === "no", t.comingNo, () => set("coming", "no"))}
                       </div>
                       <label>
-                        <span>С кем</span>
-                        <input type="text" value={answers.companions} onChange={(event) => set("companions", event.target.value)} placeholder="Одна, с парой, с ребёнком 5 лет…" />
+                        <span>{t.companionsLabel}</span>
+                        <input type="text" value={answers.companions} onChange={(event) => set("companions", event.target.value)} placeholder={t.companionsPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   {step === 1 ? (
                     <div data-part="step" key="stay">
-                      <h3>Останетесь ночевать?</h3>
-                      <p>В доме двенадцать комнат, бельё и завтрак — наши. Кто уезжает — трансфер в 00:30 и 01:00.</p>
+                      <h3>{t.stayTitle}</h3>
+                      <p>{t.stayText}</p>
                       <div data-part="choices">
-                        {choice(answers.stay === "house", "Остаюсь в доме", () => set("stay", "house"))}
-                        {choice(answers.stay === "back", "Вернусь ночью", () => set("stay", "back"))}
+                        {choice(answers.stay === "house", t.stayHouse, () => set("stay", "house"))}
+                        {choice(answers.stay === "back", t.stayBack, () => set("stay", "back"))}
                       </div>
                     </div>
                   ) : null}
                   {step === 2 ? (
                     <div data-part="step" key="road">
-                      <h3>Как доберётесь</h3>
-                      <p>Трансфер от метро «Тушинская» или своя машина — парковка под навесом.</p>
+                      <h3>{t.transferTitle}</h3>
+                      <p>{t.transferText}</p>
                       <div data-part="choices">
-                        {choice(answers.transfer === "bus", "Трансфером", () => set("transfer", "bus"))}
-                        {choice(answers.transfer === "car", "На машине", () => set("transfer", "car"))}
+                        {choice(answers.transfer === "bus", t.transferBus, () => set("transfer", "bus"))}
+                        {choice(answers.transfer === "car", t.transferCar, () => set("transfer", "car"))}
                       </div>
                       {answers.transfer === "bus" ? (
-                        <div data-part="choices" role="group" aria-label="Время трансфера">
-                          {choice(answers.transferTime === "14:30", "В 14:30", () => set("transferTime", "14:30"))}
-                          {choice(answers.transferTime === "15:15", "В 15:15", () => set("transferTime", "15:15"))}
+                        <div data-part="choices" role="group" aria-label={t.transferTimeLabel}>
+                          {choice(answers.transferTime === "14:30", t.transferAt.replace("{time}", "14:30"), () => set("transferTime", "14:30"))}
+                          {choice(answers.transferTime === "15:15", t.transferAt.replace("{time}", "15:15"), () => set("transferTime", "15:15"))}
                         </div>
                       ) : null}
                     </div>
                   ) : null}
                   {step === 3 ? (
                     <div data-part="step" key="menu">
-                      <h3>Что приготовить</h3>
-                      <p>Ужин у камина готовят заранее — выберите основное.</p>
+                      <h3>{t.menuTitle}</h3>
+                      <p>{t.menuText}</p>
                       <div data-part="choices" role="group" aria-label={stepLabels[3]}>
                         {menu.map((item) => choice(answers.menu === item.value, item.label, () => set("menu", item.value)))}
                       </div>
                       <label>
-                        <span>Аллергии и ограничения</span>
-                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder="Орехи, лактоза…" />
+                        <span>{t.allergies}</span>
+                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder={t.allergiesPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   {step === 4 ? (
                     <div data-part="step" key="song">
-                      <h3>Песня и пара слов</h3>
-                      <p>Под что вы точно пойдёте танцевать — отдадим диджею.</p>
+                      <h3>{t.songTitle}</h3>
+                      <p>{t.songText}</p>
                       <label>
-                        <span>Исполнитель — название</span>
-                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder="Frank Sinatra — Let It Snow" />
+                        <span>{t.songLabel}</span>
+                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder={t.songPlaceholder} />
                       </label>
                       <label>
-                        <span>Слова для нас</span>
-                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder="Необязательно, но мы читаем всё" />
+                        <span>{t.wishLabel}</span>
+                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder={t.wishPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   <div data-part="nav">
                     <button type="button" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
-                      ← Назад
+                      {t.back}
                     </button>
                     {step < last ? (
                       <button type="button" data-primary="" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))}>
-                        Дальше →
+                        {t.next}
                       </button>
                     ) : (
                       <button type="submit" data-primary="">
@@ -348,31 +444,31 @@ export function Contact020({
               <header>{summaryTitle}</header>
               <dl>
                 <div>
-                  <dt>От кого</dt>
+                  <dt>{t.summaryFrom}</dt>
                   <dd>{name}</dd>
                 </div>
                 <div>
-                  <dt>Ответ</dt>
-                  <dd>{answers.coming === "yes" ? "приедет" : answers.coming === "no" ? "не сможет" : ""}</dd>
+                  <dt>{t.summaryAnswer}</dt>
+                  <dd>{answers.coming === "yes" ? t.willCome : answers.coming === "no" ? t.cannotCome : ""}</dd>
                 </div>
                 <div>
-                  <dt>С кем</dt>
+                  <dt>{t.summaryWith}</dt>
                   <dd>{answers.companions}</dd>
                 </div>
                 <div>
-                  <dt>Ночёвка</dt>
-                  <dd>{answers.stay === "house" ? "в доме" : answers.stay === "back" ? "уедет" : ""}</dd>
+                  <dt>{t.summaryStay}</dt>
+                  <dd>{answers.stay === "house" ? t.inHouse : answers.stay === "back" ? t.leaving : ""}</dd>
                 </div>
                 <div>
-                  <dt>Дорога</dt>
-                  <dd>{answers.transfer === "bus" ? `трансфер ${answers.transferTime}`.trim() : answers.transfer === "car" ? "на машине" : ""}</dd>
+                  <dt>{t.summaryRoad}</dt>
+                  <dd>{answers.transfer === "bus" ? t.byTransfer.replace("{time}", answers.transferTime).trim() : answers.transfer === "car" ? t.byCar : ""}</dd>
                 </div>
                 <div>
-                  <dt>Меню</dt>
+                  <dt>{t.summaryMenu}</dt>
                   <dd>{menuLabel}</dd>
                 </div>
                 <div data-wide="">
-                  <dt>Песня</dt>
+                  <dt>{t.summarySong}</dt>
                   <dd>{answers.song}</dd>
                 </div>
               </dl>

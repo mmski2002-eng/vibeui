@@ -20,6 +20,7 @@ export type Testimonials027Props = {
   lede?: string
   entries?: readonly Testimonials027Entry[]
   hint?: string
+  trackLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -96,6 +97,7 @@ export function Testimonials027({
   lede = "Отзывы с карт и из мессенджера — как есть, с кличками и датами. Фото присылают сами.",
   entries = DEFAULT_ENTRIES,
   hint = "тяните ленту",
+  trackLabel = "Отзывы",
   tone = "auto",
   accent,
   ink,
@@ -153,7 +155,7 @@ export function Testimonials027({
             </span>
           ) : null}
         </div>
-        <ul data-part="track" ref={trackRef} data-dragging={dragging} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} aria-label="Отзывы">
+        <ul data-part="track" ref={trackRef} data-dragging={dragging} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} aria-label={trackLabel}>
           {entries.map((entry) => (
             <li key={entry.pet + entry.date} data-part="card">
               <i data-part="tape" aria-hidden="true" />

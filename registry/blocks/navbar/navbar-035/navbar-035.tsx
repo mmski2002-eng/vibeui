@@ -20,6 +20,15 @@ export type Navbar035Props = {
   actionLabel?: string
   actionHref?: string
   sticky?: boolean
+  /** aria навигации, меню и кнопки-бургера. */
+  navLabel?: string
+  menuLabel?: string
+  menuOpenLabel?: string
+  menuCloseLabel?: string
+  /** Статус в чипе: открыто, скоро закроемся, закрыто. */
+  openLine?: string
+  closingLine?: string
+  closedLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -147,6 +156,13 @@ export function Navbar035({
   actionLabel = "Записаться",
   actionHref = "#contacts",
   sticky = true,
+  navLabel = "Разделы",
+  menuLabel = "Меню",
+  menuOpenLabel = "Открыть меню",
+  menuCloseLabel = "Закрыть меню",
+  openLine = "Открыто до {time}",
+  closingLine = "Закроемся через {n} мин",
+  closedLine = "Закрыто · откроемся в {time}",
   tone = "auto",
   accent,
   ink,
@@ -170,13 +186,13 @@ export function Navbar035({
     const left = closesAt * 60 - minutes
     if (minutes >= opensAt * 60 && left > 60) {
       state = "open"
-      status = `Открыто до ${pad(closesAt)}`
+      status = openLine.replace("{time}", pad(closesAt))
     } else if (minutes >= opensAt * 60 && left > 0) {
       state = "soon"
-      status = `Закроемся через ${left} мин`
+      status = closingLine.replace("{n}", String(left))
     } else {
       state = "closed"
-      status = `Закрыто · откроемся в ${pad(opensAt)}`
+      status = closedLine.replace("{time}", pad(opensAt))
     }
   }
 
@@ -209,7 +225,7 @@ export function Navbar035({
               {caption ? <small>{caption}</small> : null}
             </span>
           </a>
-          <nav data-part="nav" aria-label="Разделы">
+          <nav data-part="nav" aria-label={navLabel}>
             {links.map((link) => (
               <a key={link.href} href={link.href}>
                 {link.label}
@@ -231,14 +247,14 @@ export function Navbar035({
                 {actionLabel}
               </a>
             ) : null}
-            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-035-menu" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((value) => !value)}>
+            <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-035-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />
               <i aria-hidden="true" />
               <i aria-hidden="true" />
             </button>
           </div>
         </div>
-        <nav data-part="menu" id="vibeui-navbar-035-menu" hidden={!menuOpen} aria-label="Меню" onClick={() => setMenuOpen(false)}>
+        <nav data-part="menu" id="vibeui-navbar-035-menu" hidden={!menuOpen} aria-label={menuLabel} onClick={() => setMenuOpen(false)}>
           {links.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}

@@ -16,6 +16,9 @@ export type Event013Props = {
   slots?: readonly Event013Slot[]
   /** Подпись под луной: «закат в 16:04». */
   skyNote?: string
+  /** Фото вечера в левую панель; пусто — рисованное небо с луной. */
+  image?: string
+  imageAlt?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -59,7 +62,9 @@ container-type:inline-size;
 [data-vibeui-block="event-013"] [data-part="lede"]{max-width:36rem;margin:1rem 0 0;color:var(--vibeui-event-013-muted)}
 [data-vibeui-block="event-013"] [data-part="grid"]{display:grid;gap:1.5rem;margin-top:2.5rem}
 [data-vibeui-block="event-013"] [data-part="sky"]{position:relative;height:13rem;overflow:hidden;border:1px solid var(--vibeui-event-013-line);border-radius:1rem;background:linear-gradient(180deg,#1c2740 0%,#2a3a5c 55%,#6b4a5a 82%,#c97b4a 100%)}
-[data-vibeui-block="event-013"] [data-part="sky"]::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#05090f 0%,#0b1220 70%,#131c2e 100%);opacity:var(--vibeui-event-013-k)}
+[data-vibeui-block="event-013"] [data-part="sky"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+[data-vibeui-block="event-013"] [data-part="sky"]::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgb(5 9 15 / .85) 0%,rgb(11 18 32 / .6) 70%,#131c2e 100%);opacity:var(--vibeui-event-013-k)}
+[data-vibeui-block="event-013"] [data-part="sky"] img+*,[data-vibeui-block="event-013"] [data-part="sky"] [data-part="skynote"]{z-index:2}
 [data-vibeui-block="event-013"] [data-part="stars"]{position:absolute;inset:0;opacity:calc(var(--vibeui-event-013-k) * .9);background-image:radial-gradient(1px 1px at 12% 22%,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 28% 12%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 44% 30%,#fff 50%,transparent 51%),radial-gradient(1.4px 1.4px at 58% 8%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 70% 26%,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 84% 16%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 92% 38%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 20% 48%,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 76% 50%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 36% 58%,#fff 50%,transparent 51%)}
 [data-vibeui-block="event-013"] [data-part="trees"]{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,transparent,#05090f 70%)}
 [data-vibeui-block="event-013"] [data-part="trees"] svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:100%;fill:#070c15}
@@ -95,6 +100,8 @@ export function Event013({
   title = "От заката до полуночи",
   lede = "Начинаем, когда садится солнце, заканчиваем, когда луна над лесом. Между — камин, глинтвейн и танцы.",
   skyNote = "закат в 16:04",
+  image,
+  imageAlt = "",
   slots = [
     { time: "15:30", title: "Сбор гостей", place: "у камина", text: "Чай, глинтвейн, пледы. Трансфер от метро подходит к 15:15." },
     { time: "16:00", title: "Церемония", place: "большая гостиная", text: "На закате, при свечах, двадцать минут. Телефоны — в карман, фотограф всё снимет." },
@@ -161,15 +168,21 @@ export function Event013({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="grid">
             <div data-part="sky" aria-hidden="true">
-              <span data-part="stars" />
-              <span data-part="moon">
-                <i />
-              </span>
-              <span data-part="trees">
-                <svg viewBox="0 0 400 100" preserveAspectRatio="none">
-                  <path d="M0 100V70l14-28 12 24 10-40 14 34 8-16 12 30 16-52 14 40 10-22 12 34 18-46 12 28 10-14 14 38 16-60 12 44 10-20 14 32 18-40 12 26 8-12 14 36 16-56 14 46 8-18 12 28 18-44 12 30 10-16 14 40V100z" />
-                </svg>
-              </span>
+              {image ? (
+                <img src={image} alt={imageAlt} loading="lazy" />
+              ) : (
+                <>
+                  <span data-part="stars" />
+                  <span data-part="moon">
+                    <i />
+                  </span>
+                  <span data-part="trees">
+                    <svg viewBox="0 0 400 100" preserveAspectRatio="none">
+                      <path d="M0 100V70l14-28 12 24 10-40 14 34 8-16 12 30 16-52 14 40 10-22 12 34 18-46 12 28 10-14 14 38 16-60 12 44 10-20 14 32 18-40 12 26 8-12 14 36 16-56 14 46 8-18 12 28 18-44 12 30 10-16 14 40V100z" />
+                    </svg>
+                  </span>
+                </>
+              )}
               {skyNote ? <p data-part="skynote">{skyNote}</p> : null}
             </div>
             <ol data-part="list">

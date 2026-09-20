@@ -22,6 +22,11 @@ export type Download011Props = {
   /** Фото блюда в блобе за QR. Пусто — без фото. */
   image?: string
   imageAlt?: string
+  /** Кнопка копирования промокода, aria поля и QR. */
+  copyLabel?: string
+  copiedLabel?: string
+  phoneLabel?: string
+  qrAria?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -160,6 +165,10 @@ export function Download011({
   doneText = "Ссылка ушла в SMS",
   image = "/demo/delivery/promo.webp",
   imageAlt = "",
+  copyLabel = "Скопировать",
+  copiedLabel = "Скопировано",
+  phoneLabel = "Телефон",
+  qrAria = "QR-код приложения",
   tone = "auto",
   accent,
   ink,
@@ -214,7 +223,7 @@ export function Download011({
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       {copied ? <path d="M5 12l5 5 9-11" /> : <path d="M9 9h10v10H9zM5 15V5h10" />}
                     </svg>
-                    {copied ? "Скопировано" : "Скопировать"}
+                    {copied ? copiedLabel : copyLabel}
                   </button>
                 </div>
               ) : null}
@@ -245,14 +254,14 @@ export function Download011({
                 </p>
               ) : (
                 <form data-part="form" onSubmit={submit}>
-                  <input type="tel" name="phone" required placeholder={phonePlaceholder} aria-label="Телефон" autoComplete="tel" />
+                  <input type="tel" name="phone" required placeholder={phonePlaceholder} aria-label={phoneLabel} autoComplete="tel" />
                   <button type="submit">{smsLabel}</button>
                 </form>
               )}
             </div>
             <div data-part="side">
               {image ? <img data-part="photo" src={image} alt={imageAlt} loading="lazy" /> : null}
-              <div data-part="qr" aria-label="QR-код приложения">
+              <div data-part="qr" aria-label={qrAria}>
                 <svg viewBox={`0 0 ${SIZE} ${SIZE}`} shapeRendering="crispEdges" aria-hidden="true">
                   <path d={modules(qrSeed)} fill="currentColor" />
                 </svg>

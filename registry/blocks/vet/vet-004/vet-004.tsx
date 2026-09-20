@@ -39,6 +39,13 @@ export type Vet004Props = {
   currency?: string
   actionLabel?: string
   actionHref?: string
+  /** Единица длины, подписи ползунка и итога. */
+  mmUnit?: string
+  stageLabel?: string
+  lengthLabel?: string
+  sizeLabel?: string
+  extrasLabel?: string
+  summaryLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -176,6 +183,12 @@ export function Vet004({
   currency = "₽",
   actionLabel = "Записать на стрижку",
   actionHref = "#contacts",
+  mmUnit = "мм",
+  stageLabel = "Собака со стрижкой {n} мм",
+  lengthLabel = "Длина шерсти после стрижки",
+  sizeLabel = "Размер",
+  extrasLabel = "Добавить",
+  summaryLine = "≈ {minutes} минут · {size}, {length} мм",
   tone = "auto",
   accent,
   ink,
@@ -220,7 +233,7 @@ export function Vet004({
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
-            <div data-part="stage" style={stageStyle} role="img" aria-label={photos ? `${imageAlt}: ${length} мм` : `Собака со стрижкой ${length} мм`}>
+            <div data-part="stage" style={stageStyle} role="img" aria-label={photos ? `${imageAlt}: ${length} ${mmUnit}` : stageLabel.replace("{n}", String(length))}>
               <span data-part="badge">{mark?.label}</span>
               <svg data-part="scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="6" cy="6" r="3" />
@@ -252,16 +265,16 @@ export function Vet004({
           <div data-part="panel">
             <div>
               <label data-part="row" htmlFor="vibeui-vet-004-range">
-                <span>Длина шерсти после стрижки</span>
+                <span>{lengthLabel}</span>
                 <output htmlFor="vibeui-vet-004-range">
-                  {length} мм
+                  {length} {mmUnit}
                   <small>{mark?.label}</small>
                 </output>
               </label>
               <input data-part="range" id="vibeui-vet-004-range" type="range" min={minLength} max={maxLength} value={length} onChange={(event) => setLength(Number(event.target.value))} style={{ ["--vibeui-vet-004-fill" as string]: `${ratio * 100}%` }} />
             </div>
             <div>
-              <p data-part="label">Размер</p>
+              <p data-part="label">{sizeLabel}</p>
               <ul data-part="sizes">
                 {sizes.map((item) => (
                   <li key={item.key}>
@@ -275,7 +288,7 @@ export function Vet004({
             </div>
             {extras.length > 0 ? (
               <div>
-                <p data-part="label">Добавить</p>
+                <p data-part="label">{extrasLabel}</p>
                 <ul data-part="extras">
                   {extras.map((item) => (
                     <li key={item.key}>
@@ -291,7 +304,7 @@ export function Vet004({
             <div data-part="total" aria-live="polite">
               <b>
                 {formatMoney(total, currency)}
-                <small>≈ {minutes} минут · {size?.label}, {length} мм</small>
+                <small>{summaryLine.replace("{minutes}", String(minutes)).replace("{size}", size?.label ?? "").replace("{length}", String(length))}</small>
               </b>
               {actionLabel ? (
                 <a data-part="action" href={actionHref}>

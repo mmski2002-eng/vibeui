@@ -17,6 +17,11 @@ export type Flowers004Props = {
   months?: readonly Flowers004Month[]
   /** Подпись у текущего месяца. */
   nowLabel?: string
+  /** aria стрелок и ленты, подсказка под лентой. */
+  prevLabel?: string
+  nextLabel?: string
+  ribbonLabel?: string
+  hint?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -112,6 +117,10 @@ export function Flowers004({
   lede = "Мы не возим розы из Эквадора круглый год. Вот честный календарь: что свежее, что дешевле и что стоит дольше.",
   months = DEFAULT_MONTHS,
   nowLabel = "цветёт сейчас",
+  prevLabel = "Раньше",
+  nextLabel = "Позже",
+  ribbonLabel = "Календарь сезона",
+  hint = "← тяните ленту или листайте стрелками",
   tone = "auto",
   accent,
   ink,
@@ -180,19 +189,19 @@ export function Flowers004({
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
             <div data-part="arrows">
-              <button type="button" onClick={() => scrollBy(-1)} aria-label="Раньше">
+              <button type="button" onClick={() => scrollBy(-1)} aria-label={prevLabel}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M20 12H4M11 5l-7 7 7 7" />
                 </svg>
               </button>
-              <button type="button" onClick={() => scrollBy(1)} aria-label="Позже">
+              <button type="button" onClick={() => scrollBy(1)} aria-label={nextLabel}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M4 12h16M13 5l7 7-7 7" />
                 </svg>
               </button>
             </div>
           </div>
-          <ul data-part="ribbon" ref={ribbonRef} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} aria-label="Календарь сезона">
+          <ul data-part="ribbon" ref={ribbonRef} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} aria-label={ribbonLabel}>
             {months.map((item, index) => (
               <li key={item.name} data-part="month" data-now={month === index}>
                 {month === index ? <span data-part="now">{nowLabel}</span> : null}
@@ -210,7 +219,7 @@ export function Flowers004({
               </li>
             ))}
           </ul>
-          <p data-part="hint">← тяните ленту или листайте стрелками</p>
+          <p data-part="hint">{hint}</p>
         </div>
       </section>
     </>

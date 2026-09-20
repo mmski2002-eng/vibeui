@@ -39,6 +39,10 @@ export type Realty003Props = {
   openLabel?: string
   closeLabel?: string
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  /** Строка этажа, aria фильтра, пустое состояние. */
+  floorLabel?: string
+  chipsLabel?: string
+  emptyLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -162,7 +166,7 @@ function rectOf(element: HTMLElement): Box {
   return { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
 }
 
-function Front({ item, hint }: { item: Realty003Listing; hint: string }) {
+function Front({ item, hint, floorLabel }: { item: Realty003Listing; hint: string; floorLabel: string }) {
   return (
     <>
       <span data-part="media">
@@ -177,7 +181,7 @@ function Front({ item, hint }: { item: Realty003Listing; hint: string }) {
         <span data-part="meta">
           <span>{item.area}</span>
           <span>{item.rooms}</span>
-          {item.floor ? <span>этаж {item.floor}</span> : null}
+          {item.floor ? <span>{floorLabel.replace("{n}", item.floor)}</span> : null}
         </span>
         <span data-part="place">
           <span>{item.district}</span>
@@ -209,6 +213,9 @@ export function Realty003({
   flipHint = "подробнее",
   openLabel = "Смотреть объект",
   closeLabel = "Закрыть",
+  floorLabel = "этаж {n}",
+  chipsLabel = "Тип объекта",
+  emptyLabel = "Пока пусто",
   tone = "auto",
   accent,
   ink,
@@ -347,7 +354,7 @@ export function Realty003({
               <h2 data-part="title">{title}</h2>
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
-            <ul data-part="chips" aria-label="Тип объекта">
+            <ul data-part="chips" aria-label={chipsLabel}>
               <li>
                 <button type="button" data-part="chip" aria-pressed={active === null} onClick={() => setActive(null)}>
                   {allLabel}
@@ -363,7 +370,7 @@ export function Realty003({
             </ul>
           </div>
           {visible.length === 0 ? (
-            <p data-part="empty">Пока пусто</p>
+            <p data-part="empty">{emptyLabel}</p>
           ) : (
             <ul data-part="grid" key={active ?? "all"}>
               {visible.map((item, index) => (
@@ -381,7 +388,7 @@ export function Realty003({
                     onClick={() => open(item)}
                     onKeyDown={(event) => onKey(event, item)}
                   >
-                    <Front item={item} hint={flipHint} />
+                    <Front item={item} hint={flipHint} floorLabel={floorLabel} />
                   </div>
                 </li>
               ))}
@@ -419,7 +426,7 @@ export function Realty003({
                 }}
               >
                 <div data-part="side" data-side="front" inert={side === "back" ? true : undefined} onClick={() => setSide("back")}>
-                  <Front item={current} hint={flipHint} />
+                  <Front item={current} hint={flipHint} floorLabel={floorLabel} />
                   <button type="button" data-part="close" aria-label={closeLabel} onClick={(event) => { event.stopPropagation(); close() }}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
                       <path d="M3 3l10 10M13 3L3 13" />

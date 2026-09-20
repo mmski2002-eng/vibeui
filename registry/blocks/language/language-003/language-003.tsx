@@ -23,6 +23,16 @@ export type Language003Props = {
   wordsLabel?: string
   lessonsLabel?: string
   minutesLabel?: string
+  /** Подписи графика и ползунка. */
+  byWeekLine?: string
+  chartLabel?: string
+  startLabel?: string
+  weekShort?: string
+  wordsShort?: string
+  weekLabel?: string
+  weekLine?: string
+  weekValue?: string
+  monthTicks?: readonly [string, string, string]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -135,6 +145,15 @@ export function Language003({
   wordsLabel = "слов в активе",
   lessonsLabel = "занятий",
   minutesLabel = "минут разговора",
+  byWeekLine = "к неделе {n}:",
+  chartLabel = "Словарный запас по неделям: от {from} до {to} слов",
+  startLabel = "старт",
+  weekShort = "нед",
+  wordsShort = "сл.",
+  weekLabel = "Неделя обучения",
+  weekLine = "неделя {n}",
+  weekValue = "неделя {n}, {words} слов",
+  monthTicks = ["1 месяц", "2 месяца", "3 месяца"],
   tone = "auto",
   accent,
   ink,
@@ -229,12 +248,12 @@ export function Language003({
             </ul>
             {reached ? (
               <p data-part="can">
-                к неделе {week}: <q>{reached.can}</q>
+                {byWeekLine.replace("{n}", String(week))} <q>{reached.can}</q>
               </p>
             ) : null}
           </div>
           <div data-part="board" ref={boardRef} data-visible={visible ? "true" : undefined}>
-            <svg data-part="chart" viewBox={`0 0 ${WIDTH} ${HEIGHT}`} role="img" aria-label={`Словарный запас по неделям: от ${words[0]} до ${words[weeks]} слов`}>
+            <svg data-part="chart" viewBox={`0 0 ${WIDTH} ${HEIGHT}`} role="img" aria-label={chartLabel.replace("{from}", String(words[0])).replace("{to}", String(words[weeks]))}>
               <defs>
                 <linearGradient id="vibeui-language-003-fill" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0" stopColor="var(--vibeui-language-003-accent)" stopOpacity="0.28" />
@@ -252,7 +271,7 @@ export function Language003({
               {geometry.points.map((item, index) =>
                 index % 2 === 0 ? (
                   <text key={index} data-part="axis" x={item.x} y={HEIGHT - 10} textAnchor="middle">
-                    {index === 0 ? "старт" : `${index} нед`}
+                    {index === 0 ? startLabel : `${index} ${weekShort}`}
                   </text>
                 ) : null,
               )}
@@ -269,20 +288,20 @@ export function Language003({
                 <circle r="10" />
                 <circle r="6" />
                 <rect data-part="tag" x="-32" y="-40" width="64" height="24" rx="8" />
-                <text y="-24">{formatNumber(value)} сл.</text>
+                <text y="-24">{formatNumber(value)} {wordsShort}</text>
               </g>
             </svg>
             <div data-part="control">
               <label htmlFor={rangeId}>
-                <span>Неделя обучения</span>
-                <output htmlFor={rangeId}>{week === 0 ? "старт" : `неделя ${week}`}</output>
+                <span>{weekLabel}</span>
+                <output htmlFor={rangeId}>{week === 0 ? startLabel : weekLine.replace("{n}", String(week))}</output>
               </label>
-              <input id={rangeId} data-part="range" type="range" min={0} max={weeks} step={1} value={week} onChange={(event) => setWeek(Number(event.target.value))} style={{ ["--vibeui-language-003-fill" as string]: fill }} aria-valuetext={`неделя ${week}, ${value} слов`} />
+              <input id={rangeId} data-part="range" type="range" min={0} max={weeks} step={1} value={week} onChange={(event) => setWeek(Number(event.target.value))} style={{ ["--vibeui-language-003-fill" as string]: fill }} aria-valuetext={weekValue.replace("{n}", String(week)).replace("{words}", String(value))} />
               <ul data-part="months" aria-hidden="true">
-                <li>старт</li>
-                <li>1 месяц</li>
-                <li>2 месяца</li>
-                <li>3 месяца</li>
+                <li>{startLabel}</li>
+                <li>{monthTicks[0]}</li>
+                <li>{monthTicks[1]}</li>
+                <li>{monthTicks[2]}</li>
               </ul>
             </div>
           </div>

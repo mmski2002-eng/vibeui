@@ -12,6 +12,10 @@ export type Cta025Props = {
   /** Строка-затравка для узора QR: любые символы, из хеша рисуется сетка. */
   seed?: string
   image?: string
+  /** Подписи над названиями магазинов и aria QR-кода. */
+  appStoreCaption?: string
+  playCaption?: string
+  qrLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -145,6 +149,9 @@ export function Cta025({
   qrNote = "наведите камеру — откроется магазин",
   seed = "tishe.app",
   image = "",
+  appStoreCaption = "Скачать в",
+  playCaption = "Доступно в",
+  qrLabel = "QR-код для скачивания",
   tone = "auto",
   accent,
   ink,
@@ -183,13 +190,13 @@ export function Cta025({
               <div data-part="stores">
                 {appStoreLabel ? (
                   <a data-part="store" href={appStoreHref}>
-                    <small>Скачать в</small>
+                    <small>{appStoreCaption}</small>
                     <b>{appStoreLabel}</b>
                   </a>
                 ) : null}
                 {playLabel ? (
                   <a data-part="store" href={playHref}>
-                    <small>Доступно в</small>
+                    <small>{playCaption}</small>
                     <b>{playLabel}</b>
                   </a>
                 ) : null}
@@ -197,7 +204,7 @@ export function Cta025({
             </div>
             <div data-part="qr">
               <div data-part="frame">
-                <div data-part="grid" role="img" aria-label="QR-код для скачивания">
+                <div data-part="grid" role="img" aria-label={qrLabel}>
                   {grid.map((on, i) => (
                     <i key={i} data-on={on} />
                   ))}

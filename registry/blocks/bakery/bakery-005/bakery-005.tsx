@@ -26,6 +26,8 @@ export type Bakery005Props = {
   subNote?: string
   subAction?: string
   subHref?: string
+  /** aria перфокарты: «{n} штампов, {next}-й — бесплатно». */
+  punchLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -150,6 +152,7 @@ export function Bakery005({
   subNote = "в месяц · выгода 210 ₽",
   subAction = "Оформить подписку",
   subHref = "#newsletter",
+  punchLabel = "{n} штампов, {next}-й — бесплатно",
   tone = "auto",
   accent,
   ink,
@@ -232,7 +235,7 @@ export function Bakery005({
             <div data-part="card" style={{ ["--vibeui-bakery-005-i" as string]: 0 }} onPointerMove={tilt} onPointerLeave={untilt}>
               <h3>{cardTitle}</h3>
               {cardText ? <p>{cardText}</p> : null}
-              <div data-part="punch" data-shown={shown} role="img" aria-label={`${stamps} штампов, ${stamps + 1}-й — бесплатно`} style={{ ["--vibeui-bakery-005-cells" as string]: stamps + 1 }}>
+              <div data-part="punch" data-shown={shown} role="img" aria-label={punchLabel.replace("{n}", String(stamps)).replace("{next}", String(stamps + 1))} style={{ ["--vibeui-bakery-005-cells" as string]: stamps + 1 }}>
                 {Array.from({ length: stamps }, (_, i) => (
                   <i key={i} style={{ ["--vibeui-bakery-005-i" as string]: i }} />
                 ))}

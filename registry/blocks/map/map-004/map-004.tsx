@@ -28,6 +28,8 @@ export type Map004Props = {
   apiKey?: string
   providerLabel?: string
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  /** Текст, если JS API карт не загрузился. */
+  failedText?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -110,7 +112,6 @@ const DEFAULT_POINTS: Map004Point[] = [
   { name: "Приморский", price: "205 тыс ₽", count: "356 объектов", note: "новостройки у залива, парки", latitude: 59.9989, longitude: 30.2632 },
 ]
 
-const STATUS_FAILED = "JS API не загрузился — показан встроенный виджет Яндекс Карт. Проверьте ключ и домен в кабинете разработчика."
 
 function resolveTheme(element: HTMLElement | null): "light" | "dark" {
   if (typeof window === "undefined") return "light"
@@ -156,6 +157,7 @@ export function Map004({
   zoom = 11,
   apiKey = "",
   providerLabel = "Яндекс Карты",
+  failedText = "JS API не загрузился — показан встроенный виджет Яндекс Карт. Проверьте ключ и домен в кабинете разработчика.",
   tone = "auto",
   accent,
   ink,
@@ -264,7 +266,7 @@ export function Map004({
             <div data-part="map">
               <div data-part="canvas" ref={canvas} aria-hidden={status !== "ready"} />
               {status === "ready" ? null : <iframe src={embed} title={`${providerLabel}: ${title}`} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />}
-              {status === "failed" ? <p data-part="status">{STATUS_FAILED}</p> : null}
+              {status === "failed" ? <p data-part="status">{failedText}</p> : null}
             </div>
             <ul data-part="list">
               {points.map((point, index) => (

@@ -4,6 +4,46 @@ import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } fr
 
 export type Contact018Option = { value: string; label: string }
 
+export type Contact018Labels = {
+  whoText: string
+  nameLabel: string
+  namePlaceholder: string
+  comingYes: string
+  comingNo: string
+  plusText: string
+  alone: string
+  withPair: string
+  pairName: string
+  pairPlaceholder: string
+  children: string
+  childrenPlaceholder: string
+  menuText: string
+  drinksLabel: string
+  allergies: string
+  allergiesPlaceholder: string
+  transferText: string
+  transferYes: string
+  transferNo: string
+  songText: string
+  songLabel: string
+  songPlaceholder: string
+  wishLabel: string
+  wishPlaceholder: string
+  back: string
+  next: string
+  summaryGuest: string
+  summaryComing: string
+  yes: string
+  no: string
+  summaryWith: string
+  withPairShort: string
+  summaryMenu: string
+  summaryTransfer: string
+  transferNeeded: string
+  transferNotNeeded: string
+  summarySong: string
+}
+
 export type Contact018Props = {
   eyebrow?: string
   title?: string
@@ -25,6 +65,8 @@ export type Contact018Props = {
   thanksText?: string
   /** Куда уходит анкета: форма делает POST сюда. Пусто — только экран «спасибо». */
   action?: string
+  /** Подписи шагов, полей и сводки; можно переопределить частично. */
+  labels?: Partial<Contact018Labels>
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -141,6 +183,46 @@ function readGuest(): string {
   }
 }
 
+const DEFAULT_LABELS: Contact018Labels = {
+  whoText: "Как вас записать и получится ли приехать.",
+  nameLabel: "Имя и фамилия",
+  namePlaceholder: "Ольга Смирнова",
+  comingYes: "Буду, конечно",
+  comingNo: "Не смогу, простите",
+  plusText: "Плюс один и дети — мы посчитаем стулья и стаканы.",
+  alone: "Приду один(на)",
+  withPair: "С парой",
+  pairName: "Как зовут пару",
+  pairPlaceholder: "Имя",
+  children: "Дети и их возраст, если берёте",
+  childrenPlaceholder: "Мира, 4 года",
+  menuText: "Основное блюдо одно на выбор, напитки — сколько угодно.",
+  drinksLabel: "Напитки",
+  allergies: "Аллергии и ограничения",
+  allergiesPlaceholder: "Орехи, лактоза…",
+  transferText: "Трансфер от метро «Алтуфьево» в 13:30 и 14:15, обратно в 23:30.",
+  transferYes: "Поеду на трансфере",
+  transferNo: "Доберусь сам(а)",
+  songText: "Песня, под которую вы точно выйдете танцевать, — поставим её вечером.",
+  songLabel: "Исполнитель — название",
+  songPlaceholder: "ABBA — Dancing Queen",
+  wishLabel: "Пара слов для нас",
+  wishPlaceholder: "Необязательно, но приятно",
+  back: "← Назад",
+  next: "Дальше →",
+  summaryGuest: "Гость",
+  summaryComing: "Придёт",
+  yes: "да",
+  no: "нет",
+  summaryWith: "С кем",
+  withPairShort: "с парой",
+  summaryMenu: "Меню",
+  summaryTransfer: "Трансфер",
+  transferNeeded: "нужен",
+  transferNotNeeded: "не нужен",
+  summarySong: "Песня",
+}
+
 /** RSVP-анкета свадьбы в пять шагов: кто, с кем, меню и напитки, трансфер, песня и пожелание; сводка справа, «спасибо» с печатью. */
 export function Contact018({
   eyebrow = "Подтверждение",
@@ -165,6 +247,7 @@ export function Contact018({
   thanksTitle = "Спасибо, ждём вас!",
   thanksText = "Ответ записан. Если что-то поменяется — просто откройте эту страницу снова и напишите нам.",
   action,
+  labels,
   tone = "auto",
   accent,
   ink,
@@ -172,6 +255,7 @@ export function Contact018({
   className,
   style,
 }: Contact018Props) {
+  const t = { ...DEFAULT_LABELS, ...labels }
   const fromUrl = useSyncExternalStore(subscribe, readGuest, () => "")
   const guestName = guest ?? fromUrl
   const [step, setStep] = useState(0)
@@ -249,84 +333,84 @@ export function Contact018({
                   {step === 0 ? (
                     <div data-part="step" key="who">
                       <h3>{stepLabels[0]}</h3>
-                      <p>Как вас записать и получится ли приехать.</p>
+                      <p>{t.whoText}</p>
                       <label>
-                        <span>Имя и фамилия</span>
-                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder="Ольга Смирнова" />
+                        <span>{t.nameLabel}</span>
+                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder={t.namePlaceholder} />
                       </label>
                       <div data-part="choices">
-                        {choice(answers.coming === "yes", "Буду, конечно", () => set("coming", "yes"))}
-                        {choice(answers.coming === "no", "Не смогу, простите", () => set("coming", "no"))}
+                        {choice(answers.coming === "yes", t.comingYes, () => set("coming", "yes"))}
+                        {choice(answers.coming === "no", t.comingNo, () => set("coming", "no"))}
                       </div>
                     </div>
                   ) : null}
                   {step === 1 ? (
                     <div data-part="step" key="with">
                       <h3>{stepLabels[1]}</h3>
-                      <p>Плюс один и дети — мы посчитаем стулья и стаканы.</p>
+                      <p>{t.plusText}</p>
                       <div data-part="choices">
-                        {choice(!answers.plusOne, "Приду один(на)", () => set("plusOne", false))}
-                        {choice(answers.plusOne, "С парой", () => set("plusOne", true))}
+                        {choice(!answers.plusOne, t.alone, () => set("plusOne", false))}
+                        {choice(answers.plusOne, t.withPair, () => set("plusOne", true))}
                       </div>
                       {answers.plusOne ? (
                         <label>
-                          <span>Как зовут пару</span>
-                          <input type="text" value={answers.plusOneName} onChange={(event) => set("plusOneName", event.target.value)} placeholder="Имя" />
+                          <span>{t.pairName}</span>
+                          <input type="text" value={answers.plusOneName} onChange={(event) => set("plusOneName", event.target.value)} placeholder={t.pairPlaceholder} />
                         </label>
                       ) : null}
                       <label>
-                        <span>Дети и их возраст, если берёте</span>
-                        <input type="text" value={answers.children} onChange={(event) => set("children", event.target.value)} placeholder="Мира, 4 года" />
+                        <span>{t.children}</span>
+                        <input type="text" value={answers.children} onChange={(event) => set("children", event.target.value)} placeholder={t.childrenPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   {step === 2 ? (
                     <div data-part="step" key="menu">
                       <h3>{stepLabels[2]}</h3>
-                      <p>Основное блюдо одно на выбор, напитки — сколько угодно.</p>
+                      <p>{t.menuText}</p>
                       <div data-part="choices" role="group" aria-label={stepLabels[2]}>
                         {menu.map((item) => choice(answers.menu === item.value, item.label, () => set("menu", item.value)))}
                       </div>
-                      <div data-part="choices" role="group" aria-label="Напитки">
+                      <div data-part="choices" role="group" aria-label={t.drinksLabel}>
                         {drinks.map((item) => choice(answers.drinks.includes(item.value), item.label, () => toggleDrink(item.value), "checkbox"))}
                       </div>
                       <label>
-                        <span>Аллергии и ограничения</span>
-                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder="Орехи, лактоза…" />
+                        <span>{t.allergies}</span>
+                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder={t.allergiesPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   {step === 3 ? (
                     <div data-part="step" key="road">
                       <h3>{stepLabels[3]}</h3>
-                      <p>Трансфер от метро «Алтуфьево» в 13:30 и 14:15, обратно в 23:30.</p>
+                      <p>{t.transferText}</p>
                       <div data-part="choices">
-                        {choice(answers.transfer === "yes", "Поеду на трансфере", () => set("transfer", "yes"))}
-                        {choice(answers.transfer === "no", "Доберусь сам(а)", () => set("transfer", "no"))}
+                        {choice(answers.transfer === "yes", t.transferYes, () => set("transfer", "yes"))}
+                        {choice(answers.transfer === "no", t.transferNo, () => set("transfer", "no"))}
                       </div>
                     </div>
                   ) : null}
                   {step === 4 ? (
                     <div data-part="step" key="song">
                       <h3>{stepLabels[4]}</h3>
-                      <p>Песня, под которую вы точно выйдете танцевать, — поставим её вечером.</p>
+                      <p>{t.songText}</p>
                       <label>
-                        <span>Исполнитель — название</span>
-                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder="ABBA — Dancing Queen" />
+                        <span>{t.songLabel}</span>
+                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder={t.songPlaceholder} />
                       </label>
                       <label>
-                        <span>Пара слов для нас</span>
-                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder="Необязательно, но приятно" />
+                        <span>{t.wishLabel}</span>
+                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder={t.wishPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   <div data-part="nav">
                     <button type="button" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
-                      ← Назад
+                      {t.back}
                     </button>
                     {step < last ? (
                       <button type="button" data-primary="" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))}>
-                        Дальше →
+                        {t.next}
                       </button>
                     ) : (
                       <button type="submit" data-primary="">
@@ -340,17 +424,17 @@ export function Contact018({
             <aside data-part="summary" aria-live="polite">
               <h3>{summaryTitle}</h3>
               <dl>
-                <dt>Гость</dt>
+                <dt>{t.summaryGuest}</dt>
                 <dd>{name}</dd>
-                <dt>Придёт</dt>
-                <dd>{answers.coming === "yes" ? "да" : answers.coming === "no" ? "нет" : ""}</dd>
-                <dt>С кем</dt>
-                <dd>{[answers.plusOne ? answers.plusOneName || "с парой" : "", answers.children].filter(Boolean).join(", ")}</dd>
-                <dt>Меню</dt>
+                <dt>{t.summaryComing}</dt>
+                <dd>{answers.coming === "yes" ? t.yes : answers.coming === "no" ? t.no : ""}</dd>
+                <dt>{t.summaryWith}</dt>
+                <dd>{[answers.plusOne ? answers.plusOneName || t.withPairShort : "", answers.children].filter(Boolean).join(", ")}</dd>
+                <dt>{t.summaryMenu}</dt>
                 <dd>{[menuLabel, drinksLabel].filter(Boolean).join(" · ")}</dd>
-                <dt>Трансфер</dt>
-                <dd>{answers.transfer === "yes" ? "нужен" : answers.transfer === "no" ? "не нужен" : ""}</dd>
-                <dt>Песня</dt>
+                <dt>{t.summaryTransfer}</dt>
+                <dd>{answers.transfer === "yes" ? t.transferNeeded : answers.transfer === "no" ? t.transferNotNeeded : ""}</dd>
+                <dt>{t.summarySong}</dt>
                 <dd>{answers.song}</dd>
               </dl>
             </aside>

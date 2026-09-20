@@ -28,6 +28,9 @@ export type Stats002Props = {
   contributors?: readonly Stats002Contributor[]
   moreLabel?: string
   moreHref?: string
+  /** Прирост за месяц и aria контрибьютора. */
+  gainLine?: string
+  personAria?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -158,7 +161,7 @@ function Counter({ stat, run }: { stat: Stats002Stat; run: boolean }) {
   )
 }
 
-function StarGraph({ history, label, run }: { history: readonly number[]; label: string; run: boolean }) {
+function StarGraph({ history, label, run, gainLine }: { history: readonly number[]; label: string; run: boolean; gainLine: string }) {
   const last = history[history.length - 1] ?? 0
   const delta = last - (history[history.length - 2] ?? last)
   const total = useCountUp(last, run, 2200)
@@ -179,7 +182,7 @@ function StarGraph({ history, label, run }: { history: readonly number[]; label:
           </svg>
           {format(total, 0)}
         </span>
-        {delta > 0 ? <span data-part="gdelta">+{format(gain, 0)} за месяц</span> : null}
+        {delta > 0 ? <span data-part="gdelta">{gainLine.replace("{n}", format(gain, 0))}</span> : null}
         {label ? <p data-part="glabel">{label}</p> : null}
       </div>
       <svg data-part="svg" viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
@@ -216,6 +219,8 @@ export function Stats002({
   contributors = DEFAULT_CONTRIBUTORS,
   moreLabel = "+190 на GitHub →",
   moreHref = "#",
+  gainLine = "+{n} за месяц",
+  personAria = "{name}, {n} коммитов",
   tone = "auto",
   accent,
   ink,
@@ -289,7 +294,7 @@ export function Stats002({
           <div data-part="side">
             {starHistory.length > 1 ? (
               <div data-reveal="" style={at(2)}>
-                <StarGraph history={starHistory} label={starLabel} run={shown} />
+                <StarGraph history={starHistory} label={starLabel} run={shown} gainLine={gainLine} />
               </div>
             ) : null}
             <div data-part="wall" data-reveal="" style={at(3)}>
@@ -297,7 +302,7 @@ export function Stats002({
               <ul data-part="people">
                 {contributors.map((person, index) => (
                   <li key={person.name} style={at(index)}>
-                    <a data-part="p" href={person.href ?? "#"} style={{ ["--vibeui-stats-002-k" as string]: (person.commits / max).toFixed(2), ["--vibeui-stats-002-h" as string]: hue(person.name) }} aria-label={`${person.name}, ${person.commits} коммитов`}>
+                    <a data-part="p" href={person.href ?? "#"} style={{ ["--vibeui-stats-002-k" as string]: (person.commits / max).toFixed(2), ["--vibeui-stats-002-h" as string]: hue(person.name) }} aria-label={personAria.replace("{name}", person.name).replace("{n}", String(person.commits))}>
                       {initials(person.name)}
                       <span aria-hidden="true">
                         {person.name} · {person.commits}

@@ -27,6 +27,8 @@ export type Sketch019Props = {
   /** Прилипает к верху страницы. */
   sticky?: boolean
   /** Почерк: аккуратный или размашистый. */
+  /** aria навигации. */
+  navLabel?: string
   rough?: "neat" | "loose"
   /** Дрожание линии: покой, мягкое или живое. */
   boil?: "still" | "soft" | "lively"
@@ -400,6 +402,7 @@ export function Sketch019({
   actionStyle = "hatch",
   menuLabel = "меню",
   sticky = true,
+  navLabel = "Разделы",
   rough = "loose",
   boil = "soft",
   seed,
@@ -457,7 +460,7 @@ export function Sketch019({
               {caption ? <span data-part="caption">{caption}</span> : null}
             </span>
           </a>
-          <nav aria-label="Разделы">
+          <nav aria-label={navLabel}>
             <ul data-part="nav">{items}</ul>
           </nav>
           {actionLabel ? (

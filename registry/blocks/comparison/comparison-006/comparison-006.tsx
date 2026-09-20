@@ -26,6 +26,8 @@ export type Comparison006Props = {
   checksLabel?: string
   /** Что входит в размер: галочки прорисовываются каскадом. */
   checks?: readonly string[]
+  /** Ярлык своей строки. */
+  selfTag?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -142,6 +144,7 @@ export function Comparison006({
   footnote = "Измерено `import { useTable }` без стилей. Полный набор фич tabl — 6,8 КБ.",
   checksLabel = "В 4,1 КБ входит",
   checks = ["сортировка", "группировка", "виртуализация", "типы колонок", "SSR", "выделение строк"],
+  selfTag = "это мы",
   tone = "auto",
   accent,
   ink,
@@ -224,7 +227,7 @@ export function Comparison006({
               <ul data-part="rows">
                 {rows.map((row, index) => (
                   <li key={row.name} data-part="row" data-self={row.self ?? false}>
-                    <span data-part="name" data-tag="это мы">
+                    <span data-part="name" data-tag={selfTag}>
                       {row.name}
                       {row.note ? <small>{row.note}</small> : null}
                     </span>

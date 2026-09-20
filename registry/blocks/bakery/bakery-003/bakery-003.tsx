@@ -36,6 +36,9 @@ export type Bakery003Props = {
   doneTitle?: string
   doneText?: string
   currency?: string
+  /** «Убрать {name}» — aria кнопки на позиции; «{n} из {size}» — счётчик. */
+  removeLabel?: string
+  ofLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -206,6 +209,8 @@ export function Bakery003({
   doneTitle = "спасибо, что рано встали",
   doneText = "Коробка будет на стойке к выбранному времени. Пришлём напоминание за полчаса.",
   currency = "₽",
+  removeLabel = "Убрать {name}",
+  ofLabel = "из",
   tone = "auto",
   accent,
   ink,
@@ -297,7 +302,7 @@ export function Bakery003({
                           {item ? (
                             <>
                               {item.image ? <img src={item.image} alt={item.name} /> : <span data-part="empty">{item.name}</span>}
-                              <button type="button" data-part="out" aria-label={`Убрать ${item.name}`} onClick={() => setItems((current) => current.filter((_, index) => index !== i))}>
+                              <button type="button" data-part="out" aria-label={removeLabel.replace("{name}", item.name)} onClick={() => setItems((current) => current.filter((_, index) => index !== i))}>
                                 ×
                               </button>
                             </>
@@ -346,7 +351,7 @@ export function Bakery003({
                 <form onSubmit={submit}>
                   <div data-part="sum">
                     <span>
-                      {items.length} из {size}
+                      {items.length} {ofLabel} {size}
                     </span>
                     <b key={total}>
                       {total} {currency}

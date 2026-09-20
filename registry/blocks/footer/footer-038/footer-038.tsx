@@ -22,6 +22,7 @@ export type Footer038Props = {
   copyright?: string
   /** Огромное слово-контур по низу. Пусто — не показывать. */
   bigWord?: string
+  navLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -109,6 +110,7 @@ export function Footer038({
   ],
   copyright = "© 2026 Слово, Санкт-Петербург",
   bigWord = "Слово",
+  navLabel = "Разделы сайта",
   tone = "auto",
   accent,
   ink,
@@ -147,7 +149,7 @@ export function Footer038({
             ) : null}
           </div>
           {columns.length > 0 ? (
-            <nav data-part="columns" aria-label="Разделы сайта">
+            <nav data-part="columns" aria-label={navLabel}>
               {columns.map((column) => (
                 <div key={column.title}>
                   <h3>{column.title}</h3>

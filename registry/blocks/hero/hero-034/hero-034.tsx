@@ -23,6 +23,10 @@ export type Hero034Props = {
   /** Подсказка, пока ни одна зона не выбрана. */
   hint?: string
   zones?: readonly Hero034Zone[]
+  /** aria силуэта, подпись и aria списка зон. */
+  carLabel?: string
+  zonesTitle?: string
+  zonesLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -139,6 +143,9 @@ export function Hero034({
   secondaryHref = "#results",
   hint = "Наведите на капот, фары, диски, кузов или салон — покажем услугу и цену",
   zones = DEFAULT_ZONES,
+  carLabel = "Силуэт автомобиля: зоны с услугами",
+  zonesTitle = "Услуги по зонам",
+  zonesLabel = "Зоны машины",
   tone = "auto",
   accent,
   ink,
@@ -233,7 +240,7 @@ export function Hero034({
             </div>
           </div>
           <div data-part="stage">
-            <svg data-part="car" viewBox="0 0 800 300" aria-label="Силуэт автомобиля: зоны с услугами" role="img">
+            <svg data-part="car" viewBox="0 0 800 300" aria-label={carLabel} role="img">
               <path data-part="stroke" pathLength={1} d="M58 206 C58 180 72 166 112 158 L252 146 C296 108 346 90 424 86 L522 84 C592 86 642 118 692 144 L734 154 C754 160 762 180 760 202 L752 216 L662 216 A48 48 0 0 0 566 216 L248 216 A48 48 0 0 0 152 216 L68 216 Z" />
               <path data-part="stroke" pathLength={1} d="M262 150 L338 104 C360 96 392 94 424 94 L512 94 C562 96 604 122 644 144 Z" style={{ ["--vibeui-hero-034-d" as string]: ".5s" }} />
               <path data-part="stroke" data-kind="thin" pathLength={1} d="M424 94 L426 150 M420 152 L414 212 M338 118 L322 126 L324 136 L340 134 Z M60 190 L112 186 M700 150 L742 160" style={{ ["--vibeui-hero-034-d" as string]: ".8s" }} />
@@ -263,14 +270,14 @@ export function Hero034({
                 </>
               ) : (
                 <>
-                  <small>Услуги по зонам</small>
+                  <small>{zonesTitle}</small>
                   <p data-part="hint">
                     {hint}
                   </p>
                 </>
               )}
             </div>
-            <ul data-part="chips" aria-label="Зоны машины">
+            <ul data-part="chips" aria-label={zonesLabel}>
               {zones.map((zone) => (
                 <li key={zone.id}>
                   <button data-part="chip" type="button" aria-pressed={pinned === zone.id} onPointerEnter={() => setActive(zone.id)} onPointerLeave={() => setActive(null)} onFocus={() => setActive(zone.id)} onBlur={() => setActive(null)} onClick={() => setPinned((value) => (value === zone.id ? null : zone.id))}>

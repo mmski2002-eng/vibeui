@@ -21,6 +21,9 @@ export type People017Props = {
   people?: readonly People017Person[]
   /** Что написать в бейдже «сейчас»: «на объекте». */
   nowLabel?: string
+  /** Строки фактов карточки; {n} выделяется жирным. */
+  yearsLine?: string
+  objectsLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -113,6 +116,8 @@ export function People017({
   lede = "Шесть человек, которые работают вместе больше семи лет. Субподряда нет: на объекте те, чьи имена в договоре.",
   people = DEFAULT_PEOPLE,
   nowLabel = "сейчас",
+  yearsLine = "стаж {n} лет",
+  objectsLine = "сдано {n}",
   tone = "auto",
   accent,
   ink,
@@ -159,12 +164,16 @@ export function People017({
                   <ul data-part="nums">
                     {person.years ? (
                       <li>
-                        стаж <b>{person.years}</b> лет
+                        {yearsLine.split("{n}")[0]}
+                        <b>{person.years}</b>
+                        {yearsLine.split("{n}")[1]}
                       </li>
                     ) : null}
                     {person.objects ? (
                       <li>
-                        сдано <b>{person.objects}</b>
+                        {objectsLine.split("{n}")[0]}
+                        <b>{person.objects}</b>
+                        {objectsLine.split("{n}")[1]}
                       </li>
                     ) : null}
                   </ul>

@@ -22,6 +22,8 @@ export type Map011Props = {
   pinLabel?: string
   /** Подпись у точки старта маршрута (метро, шоссе). */
   fromLabel?: string
+  /** aria схемы; {pin} — подпись метки. */
+  mapLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -115,6 +117,7 @@ export function Map011({
   navigatorHref = "#",
   pinLabel = "Гараж 42",
   fromLabel = "м. Балтийская · 7 мин",
+  mapLabel = "Схема проезда: {pin}",
   tone = "auto",
   accent,
   ink,
@@ -165,7 +168,7 @@ export function Map011({
               ) : null}
             </div>
           </div>
-          <div data-part="map" aria-label={`Схема проезда: ${pinLabel}`} role="img">
+          <div data-part="map" aria-label={mapLabel.replace("{pin}", pinLabel)} role="img">
             <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <g data-part="blocks">
                 <rect x="20" y="20" width="110" height="80" rx="6" />

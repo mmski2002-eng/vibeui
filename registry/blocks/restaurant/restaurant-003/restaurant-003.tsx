@@ -27,6 +27,8 @@ export type Restaurant003Props = {
   /** Ссылка на полное меню в PDF. Пусто — без ссылки. */
   fullLabel?: string
   fullHref?: string
+  /** aria вкладок. */
+  tabsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -157,6 +159,7 @@ export function Restaurant003({
   sections = DEFAULT_SECTIONS,
   fullLabel = "Полное меню в PDF",
   fullHref = "#",
+  tabsLabel = "Разделы меню",
   tone = "auto",
   accent,
   ink,
@@ -217,7 +220,7 @@ export function Restaurant003({
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <ul ref={tabs} data-part="tabs" role="tablist" aria-label="Разделы меню">
+          <ul ref={tabs} data-part="tabs" role="tablist" aria-label={tabsLabel}>
             <li ref={pill} aria-hidden="true" data-part="pill" />
             {sections.map((item, index) => (
               <li key={item.title} role="presentation">

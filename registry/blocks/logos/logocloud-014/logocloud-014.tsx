@@ -24,6 +24,7 @@ export type Logocloud014Props = {
   counters?: readonly Logocloud014Counter[]
   /** Секунд на полный проход строки. */
   speed?: number
+  rowsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -125,6 +126,7 @@ export function Logocloud014({
     { label: "переводов за сегодня", base: 0, perSecond: 3.4 },
   ],
   speed = 40,
+  rowsLabel = "Интеграции",
   tone = "auto",
   accent,
   ink,
@@ -164,7 +166,7 @@ export function Logocloud014({
             </ul>
           ) : null}
         </div>
-        <div data-part="rows" aria-label="Интеграции">
+        <div data-part="rows" aria-label={rowsLabel}>
           {rows.map((row, rowIndex) => (
             <div key={rowIndex} data-part="row" data-dir={rowIndex % 2 ? "rtl" : "ltr"} style={{ ["--vibeui-logocloud-014-t" as string]: `${speed + rowIndex * 8}s` }}>
               {[0, 1].map((copy) => (

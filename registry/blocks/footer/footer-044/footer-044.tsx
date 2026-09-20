@@ -17,6 +17,8 @@ export type Footer044Props = {
   copyright?: string
   topLabel?: string
   topHref?: string
+  navLabel?: string
+  socialsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -90,6 +92,8 @@ export function Footer044({
   copyright = "© 2026 Вера Холодова. Тексты можно цитировать со ссылкой.",
   topLabel = "Наверх",
   topHref = "#top",
+  navLabel = "Разделы",
+  socialsLabel = "Соцсети",
   tone = "auto",
   accent,
   ink,
@@ -131,7 +135,7 @@ export function Footer044({
             {tagline ? <p data-part="tagline">{tagline}</p> : null}
           </div>
           {links.length > 0 ? (
-            <nav aria-label="Разделы">
+            <nav aria-label={navLabel}>
               <ul data-part="nav">
                 {links.map((link) => (
                   <li key={link.href + link.label}>
@@ -142,7 +146,7 @@ export function Footer044({
             </nav>
           ) : null}
           {socials.length > 0 ? (
-            <ul data-part="socials" aria-label="Соцсети">
+            <ul data-part="socials" aria-label={socialsLabel}>
               {socials.map((link) => (
                 <li key={link.label}>
                   <a href={link.href}>{link.label}</a>

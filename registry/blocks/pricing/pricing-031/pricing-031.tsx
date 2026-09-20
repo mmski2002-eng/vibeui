@@ -37,6 +37,17 @@ export type Pricing031Props = {
   /** Заголовки колонок сравнения; первая — «мы». */
   compareColumns?: readonly string[]
   compareRows?: readonly Pricing031Row[]
+  /** Формы слова «занятие», подписи калькулятора и сравнения. */
+  lessonUnits?: readonly [string, string, string]
+  formatLabel?: string
+  formatAria?: string
+  perWeekLabel?: string
+  perMonthLabel?: string
+  lessonLabel?: string
+  monthLabel?: string
+  firstLabel?: string
+  freeLabel?: string
+  markLabels?: readonly [string, string, string]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -148,12 +159,12 @@ function formatMoney(value: number, currency: string) {
   return `${String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ${currency}`
 }
 
-function pluralLessons(count: number) {
+function pluralLessons(count: number, units: readonly [string, string, string]) {
   const mod10 = count % 10
   const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return "занятие"
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "занятия"
-  return "занятий"
+  if (mod10 === 1 && mod100 !== 11) return units[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
+  return units[2]
 }
 
 /** Тарифы с переключателем формата, слайдером занятий и таблицей «мы vs …». */
@@ -172,6 +183,16 @@ export function Pricing031({
   compareTitle = "Мы, приложение или репетитор?",
   compareColumns = ["Слово", "Приложение", "Репетитор"],
   compareRows = DEFAULT_ROWS,
+  lessonUnits = ["занятие", "занятия", "занятий"],
+  formatLabel = "Формат",
+  formatAria = "Формат занятий",
+  perWeekLabel = "Занятий в неделю",
+  perMonthLabel = "в месяц",
+  lessonLabel = "Занятие",
+  monthLabel = "В месяц",
+  firstLabel = "Первое занятие",
+  freeLabel = "бесплатно",
+  markLabels = ["да", "нет", "частично"],
   tone = "auto",
   accent,
   ink,
@@ -209,8 +230,8 @@ export function Pricing031({
           <div data-part="calc">
             <div data-part="controls">
               <div>
-                <p data-part="label">Формат</p>
-                <div data-part="segments" role="group" aria-label="Формат занятий" style={{ ["--vibeui-pricing-031-n" as string]: formats.length, ["--vibeui-pricing-031-active" as string]: active }}>
+                <p data-part="label">{formatLabel}</p>
+                <div data-part="segments" role="group" aria-label={formatAria} style={{ ["--vibeui-pricing-031-n" as string]: formats.length, ["--vibeui-pricing-031-active" as string]: active }}>
                   {formats.map((item, index) => (
                     <button key={item.key} data-part="segment" type="button" aria-pressed={active === index} onClick={() => setActive(index)}>
                       {item.label}
@@ -221,10 +242,10 @@ export function Pricing031({
               </div>
               <div>
                 <div data-part="perweek">
-                  <p data-part="label">Занятий в неделю</p>
+                  <p data-part="label">{perWeekLabel}</p>
                   <output>{perWeek}</output>
                 </div>
-                <input data-part="range" type="range" min={minPerWeek} max={maxPerWeek} step={1} value={perWeek} onChange={(event) => setPerWeek(Number(event.target.value))} aria-label="Занятий в неделю" style={{ ["--vibeui-pricing-031-fill" as string]: fill }} />
+                <input data-part="range" type="range" min={minPerWeek} max={maxPerWeek} step={1} value={perWeek} onChange={(event) => setPerWeek(Number(event.target.value))} aria-label={perWeekLabel} style={{ ["--vibeui-pricing-031-fill" as string]: fill }} />
                 <ul data-part="ticks" aria-hidden="true">
                   {Array.from({ length: maxPerWeek - minPerWeek + 1 }, (_, index) => (
                     <li key={index}>{minPerWeek + index}</li>
@@ -242,22 +263,22 @@ export function Pricing031({
                 <h3>{format.label}</h3>
                 <div data-part="price">
                   {formatMoney(monthly, currency)}
-                  <small>в месяц</small>
+                  <small>{perMonthLabel}</small>
                 </div>
                 <dl data-part="breakdown">
                   <div>
-                    <dt>Занятие</dt>
+                    <dt>{lessonLabel}</dt>
                     <dd>{formatMoney(format.perLesson, currency)}</dd>
                   </div>
                   <div>
-                    <dt>В месяц</dt>
+                    <dt>{monthLabel}</dt>
                     <dd>
-                      {lessons} {pluralLessons(lessons)}
+                      {lessons} {pluralLessons(lessons, lessonUnits)}
                     </dd>
                   </div>
                   <div>
-                    <dt>Первое занятие</dt>
-                    <dd>бесплатно</dd>
+                    <dt>{firstLabel}</dt>
+                    <dd>{freeLabel}</dd>
                   </div>
                 </dl>
                 <ul data-part="features">
@@ -294,7 +315,7 @@ export function Pricing031({
                       {row.values.map((value, index) => (
                         <td key={index} data-us={index === 0 ? "" : undefined}>
                           {value === "yes" || value === "no" || value === "part" ? (
-                            <span data-part="mark" data-v={value} aria-label={value === "yes" ? "да" : value === "no" ? "нет" : "частично"}>
+                            <span data-part="mark" data-v={value} aria-label={value === "yes" ? markLabels[0] : value === "no" ? markLabels[1] : markLabels[2]}>
                               {value === "yes" ? "✓" : value === "no" ? "✕" : "~"}
                             </span>
                           ) : (

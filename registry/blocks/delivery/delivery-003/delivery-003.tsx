@@ -26,6 +26,22 @@ export type Delivery003Props = {
   addresses?: readonly Delivery003Address[]
   kitchenLabel?: string
   currency?: string
+  /** aria списков и карты, подписи панели зоны. */
+  addressesLabel?: string
+  mapLabel?: string
+  legendLabel?: string
+  minutesUnit?: string
+  yourAddressTitle?: string
+  pickZoneTitle?: string
+  pickHint?: string
+  etaNote?: string
+  etaIdle?: string
+  feeLabel?: string
+  freeLabel?: string
+  freeFromLabel?: string
+  anySumLabel?: string
+  zoneLabel?: string
+  hint?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -183,6 +199,21 @@ export function Delivery003({
   addresses = DEFAULT_ADDRESSES,
   kitchenLabel = "кухня",
   currency = "₽",
+  addressesLabel = "Частые адреса",
+  mapLabel = "Карта зон доставки: кварталы вокруг кухни",
+  legendLabel = "Зоны",
+  minutesUnit = "мин",
+  yourAddressTitle = "Ваш адрес",
+  pickZoneTitle = "Выберите зону",
+  pickHint = "Нажмите на квартал или адрес выше",
+  etaNote = "от оплаты до двери",
+  etaIdle = "время доставки",
+  feeLabel = "Доставка",
+  freeLabel = "бесплатно",
+  freeFromLabel = "Бесплатно от",
+  anySumLabel = "любой суммы",
+  zoneLabel = "Зона",
+  hint = "Время — среднее за последние 30 дней в этой зоне. В снег и в пятницу вечером плюс 5–10 минут, честно.",
   tone = "auto",
   accent,
   ink,
@@ -223,7 +254,7 @@ export function Delivery003({
           <h2 data-part="title">{title}</h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
           {addresses.length > 0 ? (
-            <ul data-part="addresses" aria-label="Частые адреса">
+            <ul data-part="addresses" aria-label={addressesLabel}>
               {addresses.map((address) => {
                 const index = zones.findIndex((item) => item.id === address.zone)
                 return (
@@ -242,8 +273,8 @@ export function Delivery003({
           ) : null}
           <div data-part="layout">
             <div data-part="map">
-              <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} aria-label="Карта зон доставки: кварталы вокруг кухни">
-                <title>Карта зон доставки: кварталы вокруг кухни</title>
+              <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} aria-label={mapLabel}>
+                <title>{mapLabel}</title>
                 <path data-part="river" d={RIVER_PATH} />
                 {BLOCKS.map((block, index) => (
                   <rect
@@ -277,38 +308,38 @@ export function Delivery003({
                   {kitchenLabel}
                 </text>
               </svg>
-              <ul data-part="legend" aria-label="Зоны">
+              <ul data-part="legend" aria-label={legendLabel}>
                 {zones.map((item, index) => (
                   <li key={item.id}>
                     <button type="button" aria-pressed={zoneIndex === index} style={{ ["--vibeui-delivery-003-o" as string]: opacities[index] ?? 0.2 } as CSSProperties} onClick={() => choose(index, null)}>
-                      {item.minutes} мин
+                      {item.minutes} {minutesUnit}
                     </button>
                   </li>
                 ))}
               </ul>
             </div>
             <div data-part="result" aria-live="polite">
-              <h3>{zone ? "Ваш адрес" : "Выберите зону"}</h3>
-              <p data-part="where">{addressLabel ?? zone?.name ?? "Нажмите на квартал или адрес выше"}</p>
+              <h3>{zone ? yourAddressTitle : pickZoneTitle}</h3>
+              <p data-part="where">{addressLabel ?? zone?.name ?? pickHint}</p>
               <p data-part="big" key={zone?.id ?? "none"}>
-                {zone ? `${zone.minutes} мин` : "—"}
-                <small>{zone ? "от оплаты до двери" : "время доставки"}</small>
+                {zone ? `${zone.minutes} ${minutesUnit}` : "—"}
+                <small>{zone ? etaNote : etaIdle}</small>
               </p>
               <ul data-part="facts">
                 <li>
-                  <span>Доставка</span>
-                  <b>{zone ? (zone.fee === 0 ? "бесплатно" : formatMoney(zone.fee, currency)) : "—"}</b>
+                  <span>{feeLabel}</span>
+                  <b>{zone ? (zone.fee === 0 ? freeLabel : formatMoney(zone.fee, currency)) : "—"}</b>
                 </li>
                 <li>
-                  <span>Бесплатно от</span>
-                  <b>{zone ? (zone.freeFrom === 0 ? "любой суммы" : formatMoney(zone.freeFrom, currency)) : "—"}</b>
+                  <span>{freeFromLabel}</span>
+                  <b>{zone ? (zone.freeFrom === 0 ? anySumLabel : formatMoney(zone.freeFrom, currency)) : "—"}</b>
                 </li>
                 <li>
-                  <span>Зона</span>
+                  <span>{zoneLabel}</span>
                   <b>{zone ? zone.name : "—"}</b>
                 </li>
               </ul>
-              <p data-part="hint">Время — среднее за последние 30 дней в этой зоне. В снег и в пятницу вечером плюс 5–10 минут, честно.</p>
+              <p data-part="hint">{hint}</p>
             </div>
           </div>
         </div>

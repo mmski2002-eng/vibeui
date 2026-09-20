@@ -45,6 +45,12 @@ export type Scenario = {
   demo: string
   /** Файл демо-страницы относительно корня репозитория. */
   source: string
+  /**
+   * Английская демо-страница (`app/en/scenarios/<slug>/demo/page.tsx`):
+   * тот же состав блоков с английским текстом в props. Без неё английская
+   * витрина показывает русское демо.
+   */
+  sourceEn?: string
   /** Файл с промптами картинок относительно корня репозитория. */
   images?: string
   /** Общие правила страницы: одна тема и палитра на все блоки. */
@@ -69,6 +75,7 @@ export const SCENARIOS: Scenario[] = [
       "A portrait and wedding photographer's site: work filtered by genre, how a shoot goes, about, reviews, prices and call booking. Everything hand-drawn on a paper background.",
     demo: "/scenarios/photographer/demo",
     source: "app/scenarios/photographer/demo/page.tsx",
+    sourceEn: "app/en/scenarios/photographer/demo/page.tsx",
     images: "docs/scenarios/photographer/IMAGES.md",
     theme: {
       tone: "light",
@@ -212,6 +219,7 @@ export const SCENARIOS: Scenario[] = [
       "A Nordic-cuisine restaurant site: a hero with a ticker, a menu with cursor photos, the chef, a parallax hall gallery, table booking, events, reviews over a photo, a map and a footer. A dark theme: candles, wood and a wine-red glow.",
     demo: "/scenarios/restaurant/demo",
     source: "app/scenarios/restaurant/demo/page.tsx",
+    sourceEn: "app/en/scenarios/restaurant/demo/page.tsx",
     images: "docs/scenarios/restaurant/IMAGES.md",
     theme: {
       tone: "dark",
@@ -327,6 +335,7 @@ export const SCENARIOS: Scenario[] = [
       "A real estate agency site: property search on the first screen, a filtered listings grid, districts on a Yandex Map, deal steps, a mortgage calculator, agents, reviews, FAQ and an appraisal form. A sand theme with serif headlines and a brass accent.",
     demo: "/scenarios/realty/demo",
     source: "app/scenarios/realty/demo/page.tsx",
+    sourceEn: "app/en/scenarios/realty/demo/page.tsx",
     images: "docs/scenarios/realty/IMAGES.md",
     theme: {
       tone: "light",
@@ -444,6 +453,7 @@ export const SCENARIOS: Scenario[] = [
       "An online course landing: a hero with a marker and a lesson preview, who it's for, a week-by-week curriculum, graduate results, the author, a day-by-day week, pricing with instalments, reviews, FAQ and a countdown to the start. A light theme: indigo and a lime marker.",
     demo: "/scenarios/course/demo",
     source: "app/scenarios/course/demo/page.tsx",
+    sourceEn: "app/en/scenarios/course/demo/page.tsx",
     images: "docs/scenarios/course/IMAGES.md",
     theme: {
       tone: "light",
@@ -570,6 +580,7 @@ export const SCENARIOS: Scenario[] = [
       "A city festival site: a giant headline and colourful strand pills, a manifesto, a programme with a “pick of the day”, a day-by-day schedule, line-up, venues, tickets, a map, FAQ and a “buy a ticket” banner. A white page, twelve colours, pills and stickers.",
     demo: "/scenarios/festival/demo",
     source: "app/scenarios/festival/demo/page.tsx",
+    sourceEn: "app/en/scenarios/festival/demo/page.tsx",
     images: "docs/scenarios/festival/IMAGES.md",
     theme: {
       tone: "light",
@@ -688,6 +699,7 @@ export const SCENARIOS: Scenario[] = [
       "A tattoo studio site: a neon sign hero, works filtered by style with a lightbox, polaroid artists, how a session goes, figures, a price calculator, reviews years later, about the studio and sterility, FAQ, a three-step booking, contacts and a footer. Always dark: magenta, violet and cyan.",
     demo: "/scenarios/tattoo/demo",
     source: "app/scenarios/tattoo/demo/page.tsx",
+    sourceEn: "app/en/scenarios/tattoo/demo/page.tsx",
     images: "docs/scenarios/tattoo/IMAGES.md",
     theme: {
       tone: "dark",
@@ -816,6 +828,7 @@ export const SCENARIOS: Scenario[] = [
       "A wedding invitation site: a wax-sealed envelope at the door, names and a countdown, the couple's story as a film strip, the day's schedule, a dress-code palette, a map and hotels, a five-step RSVP with menu and song, FAQ, a gallery, the wedding party, gifts, a wishes wall and a footer. A cream page, plum and terracotta, Cormorant Garamond.",
     demo: "/scenarios/wedding/demo",
     source: "app/scenarios/wedding/demo/page.tsx",
+    sourceEn: "app/en/scenarios/wedding/demo/page.tsx",
     images: "docs/scenarios/wedding/IMAGES.md",
     theme: {
       tone: "light",
@@ -944,6 +957,7 @@ export const SCENARIOS: Scenario[] = [
       "A destination-wedding site: a boarding pass with a tear-off stub at the door, a full-screen beach and a “to departure” countdown, the couple's route as a plane on a flight line, three days as ticket tabs, travel info with a packing checklist, a beach-formal dress code, a hotel and beach map, check-in instead of RSVP, FAQ as luggage tags, flipping postcards, “next flight” gifts, guest postcards and a boarding-pass footer. Paper and sand, ink and coral, Oswald and Lobster.",
     demo: "/scenarios/wedding-cuba/demo",
     source: "app/scenarios/wedding-cuba/demo/page.tsx",
+    sourceEn: "app/en/scenarios/wedding-cuba/demo/page.tsx",
     images: "docs/scenarios/wedding-cuba/IMAGES.md",
     theme: {
       tone: "light",
@@ -1076,6 +1090,7 @@ export const SCENARIOS: Scenario[] = [
       "A dark-theme winter wedding site: a candle at the door, snow across the whole site, a house in a snowy forest and a countdown, a garland story with bulbs, a sunset-to-midnight schedule with a moon, a “velvet and wool” dress code, a map with shuttle and rooms, a reply letter with an envelope and wax seal, FAQ on frosted glass, a gallery in window frames, who meets you, “for the fireplace” gifts, notes on a fogged window and a pine footer. Night blue, candles and silver, Cormorant Garamond and Marck Script.",
     demo: "/scenarios/wedding-winter/demo",
     source: "app/scenarios/wedding-winter/demo/page.tsx",
+    sourceEn: "app/en/scenarios/wedding-winter/demo/page.tsx",
     images: "docs/scenarios/wedding-winter/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1213,6 +1228,7 @@ export const SCENARIOS: Scenario[] = [
       "A café-bakery site that lives by the oven clock: a header with a live “open / opens in”, a hero with an oven timer and a batch ribbon, a draggable shelf with stock, a coffee strength slider with a filling cup, a morning box builder, a “36 hours to a loaf” scroll story from night to morning, people with notes, a punch card with stamps, a bento gallery, receipt reviews, a map with an hourly queue, a bread alarm and a footer with a day bar. Light theme: milk, crust and poppy, Playfair Display and Caveat.",
     demo: "/scenarios/bakery/demo",
     source: "app/scenarios/bakery/demo/page.tsx",
+    sourceEn: "app/en/scenarios/bakery/demo/page.tsx",
     images: "docs/scenarios/bakery/IMAGES.md",
     theme: {
       tone: "light",
@@ -1247,6 +1263,7 @@ export const SCENARIOS: Scenario[] = [
       "A dark-theme podcast site with an acid recording light: a header with a “now playing” chip, an episode-of-the-week player with a live waveform and chapters, an episode list where duration is bar length, quote marquees running towards each other, guests as an endless lane, count-up stats and tilting platforms, support tiers over the studio photo, a post-episode letter with an envelope flip, a footer with a giant wordmark and a bottom mini-player that ties everything together with events. Sofia Sans Extra Condensed, Inter Tight and IBM Plex Mono.",
     demo: "/scenarios/podcast/demo",
     source: "app/scenarios/podcast/demo/page.tsx",
+    sourceEn: "app/en/scenarios/podcast/demo/page.tsx",
     images: "docs/scenarios/podcast/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1278,6 +1295,7 @@ export const SCENARIOS: Scenario[] = [
       "An open-source library site in a light engineering hairline theme: a header with a GitHub stars chip, a hero with a copyable install command and a self-typing terminal, a playground where toggles change both the code and a live table, features as bento tiles with CSS micro-demos, a bundle-size comparison with growing bars, a community with an initials contributors wall, a version history with breaking tags, a star-us call to action and a minimal footer. Onest and JetBrains Mono, an electric blue accent.",
     demo: "/scenarios/opensource/demo",
     source: "app/scenarios/opensource/demo/page.tsx",
+    sourceEn: "app/en/scenarios/opensource/demo/page.tsx",
     images: "docs/scenarios/opensource/IMAGES.md",
     theme: {
       tone: "light",
@@ -1308,6 +1326,7 @@ export const SCENARIOS: Scenario[] = [
       "A designer-developer's personal site on paper with ultraviolet: a header with an availability chip and a live city clock, a hero with typing roles, a cursor spotlight and magnetic buttons, projects as a stack of sticky cards, “worked with” as a text marquee, “about me” with a B/W → colour photo, one-at-a-time autoplay reviews, a contact with a copyable email and a one-row footer. Inter Tight, Golos Text and IBM Plex Mono.",
     demo: "/scenarios/portfolio/demo",
     source: "app/scenarios/portfolio/demo/page.tsx",
+    sourceEn: "app/en/scenarios/portfolio/demo/page.tsx",
     images: "docs/scenarios/portfolio/IMAGES.md",
     theme: {
       tone: "light",
@@ -1337,6 +1356,7 @@ export const SCENARIOS: Scenario[] = [
       "A sleep-and-breathing app landing in a light lavender theme — with no screenshots: a header with a “breathing” logo and rating, a hero with a CSS phone whose circle breathes to 4-7-8, features with a sticky phone whose screens change on scroll, “before / after” with a sleep chart comparison slider, store reviews as a strip, free / premium pricing with a table, an FAQ accordion, a “download” CTA with a CSS QR and a footer with badges. Manrope and IBM Plex Mono.",
     demo: "/scenarios/app/demo",
     source: "app/scenarios/app/demo/page.tsx",
+    sourceEn: "app/en/scenarios/app/demo/page.tsx",
     images: "docs/scenarios/app/IMAGES.md",
     theme: {
       tone: "light",
@@ -1367,6 +1387,7 @@ export const SCENARIOS: Scenario[] = [
       "An AI meeting-assistant site in a dark aurora with glass — the site is the demo: a header with a spark and an aurora line, a hero where the assistant types a recap from a call transcript, a “how it works” pipeline of three animated nodes, a sandbox with a button and a sectioned answer, integrations on two orbits, a client marquee, pricing with a seats slider and a yearly discount, a data FAQ accordion, a glass email call to action and a footer with a system status. Not a single photo. Wix Madefor Display, Golos Text and IBM Plex Mono.",
     demo: "/scenarios/saas/demo",
     source: "app/scenarios/saas/demo/page.tsx",
+    sourceEn: "app/en/scenarios/saas/demo/page.tsx",
     images: "docs/scenarios/saas/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1398,6 +1419,7 @@ export const SCENARIOS: Scenario[] = [
       "A car service and detailing site “Garage 42” in a dark garage with an orange accent: a header with a free-lift status, a hero with a car silhouette that draws itself and highlights zones with prices, a service calculator by car class, tabbed before/after with a curtain, a process with a rail that fills on scroll, mechanics with a 3D tilt, reviews with marquees and counters, weekly slot booking from today, a map with a route that draws itself and a footer with an outlined word. Unbounded, Inter Tight and JetBrains Mono.",
     demo: "/scenarios/auto/demo",
     source: "app/scenarios/auto/demo/page.tsx",
+    sourceEn: "app/en/scenarios/auto/demo/page.tsx",
     images: "docs/scenarios/auto/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1429,6 +1451,7 @@ export const SCENARIOS: Scenario[] = [
       "A vet clinic and grooming site “Paw” in warm cream with terracotta: a header with a live “open till 21:00”, a hero with a CSS pet face whose eyes follow the cursor and a cat / dog / rabbit switch that changes everything, a pinned “urgent” button with a checklist, perforated price tickets, a body map with hotspots, a symptom checker with an urgency thermometer, vets with a 3D tilt and a schedule from today, grooming with a fur-length slider, a pet diary in polaroids, booking with a map and a footer with paw prints. Nunito and Golos Text.",
     demo: "/scenarios/vet/demo",
     source: "app/scenarios/vet/demo/page.tsx",
+    sourceEn: "app/en/scenarios/vet/demo/page.tsx",
     images: "docs/scenarios/vet/IMAGES.md",
     theme: {
       tone: "light",
@@ -1461,6 +1484,7 @@ export const SCENARIOS: Scenario[] = [
       "A flower studio site “Stem” in the spirit of a botanical journal — paper, ink, a poppy accent, Cormorant serif: a hero with a bouquet of SVG layers that assembles on load and drifts apart with parallax, a table-of-contents catalogue with an image following the cursor, a bouquet builder where stems grow out of the vase, delivery to the hour from the current time, a seasonal calendar strip with drag-scroll, care with icons that draw themselves, an about section with a collage, postcard reviews, a subscription with a receipt and a footer with a map. Cormorant, Golos Text and Caveat.",
     demo: "/scenarios/flowers/demo",
     source: "app/scenarios/flowers/demo/page.tsx",
+    sourceEn: "app/en/scenarios/flowers/demo/page.tsx",
     images: "docs/scenarios/flowers/IMAGES.md",
     theme: {
       tone: "light",
@@ -1493,6 +1517,7 @@ export const SCENARIOS: Scenario[] = [
       "An apartment renovation crew site “Level” on a blueprint grid — concrete, graph paper and signal yellow: a hero with an apartment plan that draws itself in lines and highlights rooms with their area, an estimate calculator by area and renovation type, stages as a Gantt chart on a sticky scene with a “you are here” marker, before/after projects with a curtain, live construction with a progress ring from today's date, a comparison with a typical crew and counters, the crew as a staff list, reviews as acceptance acts with a stamp, a one-field request and a blueprint title-block footer. Inter Tight, Onest and JetBrains Mono.",
     demo: "/scenarios/renovation/demo",
     source: "app/scenarios/renovation/demo/page.tsx",
+    sourceEn: "app/en/scenarios/renovation/demo/page.tsx",
     images: "docs/scenarios/renovation/IMAGES.md",
     theme: {
       tone: "light",
@@ -1525,6 +1550,7 @@ export const SCENARIOS: Scenario[] = [
       "A food delivery site “Hot” — charcoal, tomato and cream, a bold grotesque: a hero with a live “delivered in 28:00” countdown and a burger of CSS layers, a menu with a cart in a pinned bar and progress to free delivery, a bowl builder with layers in a bowl, a delivery zone on an SVG block map, an order tracker with a courier along the route, an app promo with a QR and promo code, sticker reviews with reactions and an order counter, an FAQ and a footer with an outlined word. Unbounded, Russo One and Onest.",
     demo: "/scenarios/delivery/demo",
     source: "app/scenarios/delivery/demo/page.tsx",
+    sourceEn: "app/en/scenarios/delivery/demo/page.tsx",
     images: "docs/scenarios/delivery/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1556,6 +1582,7 @@ export const SCENARIOS: Scenario[] = [
       "An online language school site “Word” in a notebook spirit — warm white, ruling, ink blue and coral: a hero where a word flips between languages and a dialogue types on a notebook page, a level test with an A1–C1 scale, how lessons go in a bento, a group schedule with the “next start” from today, a vocabulary graph with a week slider, teacher polaroids with a “hear the accent” wave, pricing with a format switch and a receipt, reviews with a “before → after” scale, a trial lesson and a footer with an outlined word. Onest, Golos Text and Marck Script.",
     demo: "/scenarios/language/demo",
     source: "app/scenarios/language/demo/page.tsx",
+    sourceEn: "app/en/scenarios/language/demo/page.tsx",
     images: "docs/scenarios/language/IMAGES.md",
     theme: {
       tone: "light",
@@ -1589,6 +1616,7 @@ export const SCENARIOS: Scenario[] = [
       "A small-business neobank site “Axis” — deep indigo with a green glow, glass and thin lines: a hero with a 3D card that turns with the cursor and shows live transactions, a dashboard with a graph that draws itself and transactions arriving one by one, features in a bento with micro-animations, a fee-savings calculator, security on a sticky scene where the card passes four layers of protection, pricing with a switch and an employee slider, integrations as marquees with counters, entrepreneur reviews, an app with a QR and a footer with a status. Wix Madefor Display, Inter Tight and IBM Plex Mono.",
     demo: "/scenarios/fintech/demo",
     source: "app/scenarios/fintech/demo/page.tsx",
+    sourceEn: "app/en/scenarios/fintech/demo/page.tsx",
     images: "docs/scenarios/fintech/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1622,6 +1650,7 @@ export const SCENARIOS: Scenario[] = [
       "A digital goods marketplace site “Layer” — almost white, black ink and electric blue: a hero with a 3D shelf of covers that unfolds into a grid on scroll, a storefront with live filters and FLIP reordering, quick view and licences, a bundle builder with a discount scale and a pinned mini-cart, perforated licence tickets, authors as a strip with ticking income, an authors bento with counters, reviews, an FAQ, a drop subscription with a timer and a footer with a giant word. Inter Tight, Onest and JetBrains Mono.",
     demo: "/scenarios/market/demo",
     source: "app/scenarios/market/demo/page.tsx",
+    sourceEn: "app/en/scenarios/market/demo/page.tsx",
     images: "docs/scenarios/market/IMAGES.md",
     theme: {
       tone: "light",
@@ -1654,6 +1683,7 @@ export const SCENARIOS: Scenario[] = [
       "A geocoding API site “Geocode” — a beautiful terminal: dark background, phosphor accent, dot grid, mono font: a hero where the request types and JSON arrives with a “42 ms” delay and switches between curl / JS / Python / Go, a sandbox with a dot on a map, endpoints in a bento with micro-demos, a price calculator with a logarithmic slider and a staircase, a region status panel with sparklines, a competitor comparison with expanders, a changelog with install commands and ticking counters, who uses it, developer reviews, “a key in 30 seconds” and a footer with a status light. Inter Tight and JetBrains Mono.",
     demo: "/scenarios/api/demo",
     source: "app/scenarios/api/demo/page.tsx",
+    sourceEn: "app/en/scenarios/api/demo/page.tsx",
     images: "docs/scenarios/api/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1687,6 +1717,7 @@ export const SCENARIOS: Scenario[] = [
       "A smart alarm lamp “Ray” landing at the level of Apple product pages — almost black that brightens to morning on scroll: a hero with a CSS lamp where temperature and brightness sliders really change the light, “dawn in 30 minutes” on a sticky scene where the room brightens from night to morning, features in a bento, an exploded view with parts drifting apart, specs as a dashboard with arcs and rolling numbers, a comparison with the previous version, a preorder with colour choice and a shipping countdown, press as a marquee, an FAQ and a footer with an outlined “RAY”. Unbounded, Inter Tight and JetBrains Mono.",
     demo: "/scenarios/gadget/demo",
     source: "app/scenarios/gadget/demo/page.tsx",
+    sourceEn: "app/en/scenarios/gadget/demo/page.tsx",
     images: "docs/scenarios/gadget/IMAGES.md",
     theme: {
       tone: "dark",
@@ -1719,6 +1750,7 @@ export const SCENARIOS: Scenario[] = [
       "An elderly-care foundation site “Warm Home” — paper, terracotta, Playfair Display serif and handwritten notes, warmth without pity: a hero with a fundraising counter and milestone progress, “what your amount gives” with a card that changes with chips, ward stories as letters opening from envelopes, reporting as a ring chart by year, a help map with points lighting up, the team in polaroids, volunteering with a live badge, partners, ticket events, a donation form with “×12” and a footer with bank details. Playfair Display, Golos Text and Caveat.",
     demo: "/scenarios/charity/demo",
     source: "app/scenarios/charity/demo/page.tsx",
+    sourceEn: "app/en/scenarios/charity/demo/page.tsx",
     images: "docs/scenarios/charity/IMAGES.md",
     theme: {
       tone: "light",
@@ -1752,6 +1784,7 @@ export const SCENARIOS: Scenario[] = [
       "A writer's personal site “Vera Kholodova” — a reader with a site-wide day / night switch, Cormorant Garamond and PT Serif, silence and typography: a hero with a name rising from a mask and a line of the day written by a pen, a 3D book that opens to the first page and changes price by format, a text archive with a cursor preview and expanding excerpts, reading on scroll with a bookmark and margin notes, an about bento with numbers, reviews as margin notes, meetings from today's date, letters to readers with an envelope, publisher contacts and a colophon footer. Cormorant Garamond and PT Serif.",
     demo: "/scenarios/writer/demo",
     source: "app/scenarios/writer/demo/page.tsx",
+    sourceEn: "app/en/scenarios/writer/demo/page.tsx",
     images: "docs/scenarios/writer/IMAGES.md",
     theme: {
       tone: "dark",

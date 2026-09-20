@@ -33,6 +33,16 @@ export type Delivery002Props = {
   currency?: string
   addLabel?: string
   addedLabel?: string
+  /** Имя позиции в корзине, подписи групп и итога. */
+  ownBowlLabel?: string
+  singleHint?: string
+  multiHint?: string
+  emptyText?: string
+  kcalLabel?: string
+  gramsUnit?: string
+  weightLabel?: string
+  priceLabel?: string
+  nothingLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -215,6 +225,15 @@ export function Delivery002({
   currency = "₽",
   addLabel = "В корзину",
   addedLabel = "Добавили в корзину",
+  ownBowlLabel = "Свой боул: {items}",
+  singleHint = "один на выбор",
+  multiHint = "сколько хочешь",
+  emptyText = "Выберите основу — миска наполнится",
+  kcalLabel = "ккал",
+  gramsUnit = "г",
+  weightLabel = "вес",
+  priceLabel = "цена",
+  nothingLabel = "Пока пусто",
   tone = "auto",
   accent,
   ink,
@@ -252,7 +271,7 @@ export function Delivery002({
   }
 
   const add = () => {
-    const name = `Свой боул: ${chosen.map((option) => option.name.toLowerCase()).join(", ")}`
+    const name = ownBowlLabel.replace("{items}", chosen.map((option) => option.name.toLowerCase()).join(", "))
     window.dispatchEvent(new CustomEvent("vibeui-cart:add", { detail: { id: `bowl-${picked.slice().sort().join("-")}`, name, price, qty: 1 } }))
     setDone(true)
     window.setTimeout(() => setDone(false), 2200)
@@ -288,7 +307,7 @@ export function Delivery002({
                 <li key={group.id} data-part="group">
                   <h3>
                     {group.title}
-                    <small>{group.mode === "single" ? "один на выбор" : "сколько хочешь"}</small>
+                    <small>{group.mode === "single" ? singleHint : multiHint}</small>
                   </h3>
                   <ul data-part="chips" role={group.mode === "single" ? "radiogroup" : undefined} aria-label={group.title}>
                     {group.options.map((option) => {
@@ -328,7 +347,7 @@ export function Delivery002({
                     const radius = 22 + (index % 3) * 6
                     return <i key={option.id} data-part="dot" style={{ left: `${(50 + Math.cos(angle) * radius).toFixed(1)}%`, top: `${(50 + Math.sin(angle) * radius).toFixed(1)}%`, ["--vibeui-delivery-002-c" as string]: option.color, animationDelay: `${(index % 3) * 60}ms` } as CSSProperties} />
                   })}
-                  {chosen.length === 0 ? <p data-part="empty">Выберите основу — миска наполнится</p> : null}
+                  {chosen.length === 0 ? <p data-part="empty">{emptyText}</p> : null}
                 </div>
               ) : (
                 <div data-part="bowl" aria-hidden="true">
@@ -342,25 +361,25 @@ export function Delivery002({
                     })}
                     {sauce ? <i key={sauce.id} data-part="layer" data-role="sauce" style={{ ["--vibeui-delivery-002-c" as string]: sauce.color } as CSSProperties} /> : null}
                   </div>
-                  {chosen.length === 0 ? <p data-part="empty">Выберите основу — миска наполнится</p> : null}
+                  {chosen.length === 0 ? <p data-part="empty">{emptyText}</p> : null}
                 </div>
               )}
               <ul data-part="facts">
                 <li>
                   <b>{kcal}</b>
-                  <span>ккал</span>
+                  <span>{kcalLabel}</span>
                 </li>
                 <li>
-                  <b>{weight} г</b>
-                  <span>вес</span>
+                  <b>{weight} {gramsUnit}</b>
+                  <span>{weightLabel}</span>
                 </li>
                 <li>
                   <b>{formatMoney(price, currency)}</b>
-                  <span>цена</span>
+                  <span>{priceLabel}</span>
                 </li>
               </ul>
               <p data-part="recipe" aria-live="polite">
-                {chosen.length > 0 ? chosen.map((option) => option.name).join(" · ") : "Пока пусто"}
+                {chosen.length > 0 ? chosen.map((option) => option.name).join(" · ") : nothingLabel}
               </p>
               <button data-part="add" type="button" data-done={done} onClick={add} disabled={chosen.length === 0}>
                 {done ? (

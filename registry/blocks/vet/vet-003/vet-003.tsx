@@ -23,6 +23,16 @@ export type Vet003Props = {
   actionHref?: string
   disclaimer?: string
   emptyText?: string
+  /** aria списка симптомов. */
+  chipsLabel?: string
+  /** Заголовок шкалы: ничего не выбрано, затем по уровню срочности 1–3. */
+  scaleTitles?: readonly [string, string, string, string]
+  scaleEmpty?: string
+  scaleLine?: string
+  scaleUnknown?: string
+  scaleLabel?: string
+  scaleTicks?: readonly [string, string, string]
+  callLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -137,6 +147,14 @@ export function Vet003({
   actionHref = "#contacts",
   disclaimer = "Если сомневаетесь — звоните. Дежурный врач ответит и скажет, ехать ли сейчас. Это бесплатно.",
   emptyText = "Пока ничего не отмечено. Нажмите на симптомы выше — карточки соберутся сами.",
+  chipsLabel = "Симптомы",
+  scaleTitles = ["Шкала срочности", "Можно записаться планово", "Сегодня, не откладывая", "Ехать сейчас"],
+  scaleEmpty = "Отметьте симптомы — бегунок покажет, насколько всё серьёзно.",
+  scaleLine = "Отмечено: {n}. Смотрим на самый тревожный симптом.",
+  scaleUnknown = "Срочность не определена",
+  scaleLabel = "Срочность: {level}",
+  scaleTicks = ["планово", "сутки", "сейчас"],
+  callLabel = "Позвонить {phone}",
   tone = "auto",
   accent,
   ink,
@@ -186,7 +204,7 @@ export function Vet003({
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <ul data-part="chips" aria-label="Симптомы">
+          <ul data-part="chips" aria-label={chipsLabel}>
             {symptoms.map((symptom) => (
               <li key={symptom.label}>
                 <button data-part="chip" type="button" data-level={symptom.urgency} aria-pressed={picked.includes(symptom.label)} onClick={() => toggle(symptom.label)}>
@@ -197,15 +215,15 @@ export function Vet003({
           </ul>
           <div data-part="result">
             <div data-part="gauge" style={{ ["--vibeui-vet-003-level" as string]: gaugeLevel, ["--vibeui-vet-003-tone" as string]: toneVar }}>
-              <h3>{top === 0 ? "Шкала срочности" : top === 3 ? "Ехать сейчас" : top === 2 ? "Сегодня, не откладывая" : "Можно записаться планово"}</h3>
-              <p>{picked.length === 0 ? "Отметьте симптомы — бегунок покажет, насколько всё серьёзно." : `Отмечено: ${picked.length}. Смотрим на самый тревожный симптом.`}</p>
-              <div data-part="scale" role="img" aria-label={top === 0 ? "Срочность не определена" : `Срочность: ${levels[top - 1]}`}>
+              <h3>{scaleTitles[top]}</h3>
+              <p>{picked.length === 0 ? scaleEmpty : scaleLine.replace("{n}", String(picked.length))}</p>
+              <div data-part="scale" role="img" aria-label={top === 0 ? scaleUnknown : scaleLabel.replace("{level}", levels[top - 1])}>
                 <i />
               </div>
               <ul data-part="ticks" aria-hidden="true">
-                <li>планово</li>
-                <li>сутки</li>
-                <li>сейчас</li>
+                {scaleTicks.map((tick) => (
+                  <li key={tick}>{tick}</li>
+                ))}
               </ul>
               {top > 0 ? (
                 <div data-part="verdict" aria-live="polite">
@@ -215,7 +233,7 @@ export function Vet003({
               ) : null}
               {top === 3 ? (
                 <a data-part="cta" data-level="3" href={phoneHref}>
-                  Позвонить {phone}
+                  {callLabel.replace("{phone}", phone)}
                 </a>
               ) : top > 0 && actionLabel ? (
                 <a data-part="cta" href={actionHref}>

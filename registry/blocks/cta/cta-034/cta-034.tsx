@@ -16,6 +16,9 @@ export type Cta034Props = {
   fine?: readonly string[]
   doneTitle?: string
   doneText?: string
+  /** aria таймера и единицы. */
+  timerLabel?: string
+  units?: readonly [string, string, string, string]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -120,6 +123,8 @@ export function Cta034({
   fine = ["раз в неделю", "отписка в одно письмо", "без спама"],
   doneTitle = "Вы в списке",
   doneText = "Первое письмо придёт в четверг ровно в 12:00.",
+  timerLabel = "До следующего дропа",
+  units = ["дн", "час", "мин", "сек"],
   tone = "auto",
   accent,
   ink,
@@ -173,11 +178,11 @@ export function Cta034({
             ) : (
               <>
                 {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-                <ul data-part="timer" aria-label="До следующего дропа">
+                <ul data-part="timer" aria-label={timerLabel}>
                   {(["d", "h", "m", "s"] as const).map((unit) => (
                     <li key={unit}>
                       <b data-empty={parts === null}>{parts === null ? "--" : pad(parts[unit])}</b>
-                      <small>{{ d: "дн", h: "час", m: "мин", s: "сек" }[unit]}</small>
+                      <small>{{ d: units[0], h: units[1], m: units[2], s: units[3] }[unit]}</small>
                     </li>
                   ))}
                 </ul>

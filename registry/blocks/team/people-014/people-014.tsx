@@ -19,6 +19,9 @@ export type People014Props = {
   title?: string
   lede?: string
   members?: readonly People014Member[]
+  /** Подписи под цифрами карточки. */
+  yearsLabel?: string
+  carsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -103,6 +106,8 @@ export function People014({
   title = "Кто трогает вашу машину",
   lede = "Трое мастеров, каждый со своей темой. Без стажёров на чужих кузовах: сложное делает тот, кто на этом собаку съел.",
   members = DEFAULT_MEMBERS,
+  yearsLabel = "стаж",
+  carsLabel = "машин",
   tone = "auto",
   accent,
   ink,
@@ -173,13 +178,13 @@ export function People014({
                       {member.years ? (
                         <div>
                           <b>{member.years}</b>
-                          <small>стаж</small>
+                          <small>{yearsLabel}</small>
                         </div>
                       ) : null}
                       {member.cars ? (
                         <div>
                           <b>{member.cars}</b>
-                          <small>машин</small>
+                          <small>{carsLabel}</small>
                         </div>
                       ) : null}
                     </div>

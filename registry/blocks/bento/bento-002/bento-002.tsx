@@ -19,6 +19,8 @@ export type Bento002Props = {
   speed?: number
   /** Список справа: что делает интеграция. */
   facts?: readonly string[]
+  /** aria орбит. */
+  spaceLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -133,6 +135,7 @@ export function Bento002({
   outer = [{ name: "Jira", mark: "J" }, { name: "Notion", mark: "N" }, { name: "Telegram", mark: "TG" }, { name: "Slack", mark: "S" }, { name: "Linear", mark: "L" }, { name: "Confluence", mark: "C" }, { name: "Google Docs", mark: "D" }, { name: "Trello", mark: "Tr" }],
   speed = 40,
   facts = ["Созвоны: бот заходит участником или берёт запись", "Трекеры: задачи создаются с исполнителем и сроком", "Мессенджеры: сводка приходит через минуту после встречи", "Базы знаний: решения копятся в одном месте"],
+  spaceLabel = "{core}: интеграции",
   tone = "auto",
   accent,
   ink,
@@ -157,7 +160,7 @@ export function Bento002({
         <i data-part="glow" aria-hidden="true" />
         <i data-part="glow" aria-hidden="true" />
         <div data-part="shell">
-          <div data-part="space" aria-label={`${core}: интеграции`}>
+          <div data-part="space" aria-label={spaceLabel.replace("{core}", core)}>
             <div data-part="core">{core}</div>
             <Ring items={inner} radius="27cqi" seconds={speed} dir="cw" />
             <Ring items={outer} radius="44cqi" seconds={speed * 1.5} dir="ccw" />

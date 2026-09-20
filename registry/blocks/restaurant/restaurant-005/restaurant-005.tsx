@@ -17,6 +17,9 @@ export type Restaurant005Props = {
   lede?: string
   photos?: readonly Restaurant005Photo[]
   closeLabel?: string
+  /** aria кадра без подписи и диалога. */
+  openLabel?: string
+  photoLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -122,6 +125,8 @@ export function Restaurant005({
   lede = "Сорок мест в зале, восемь у бара и терраса на лето. Столы для компаний до двенадцати — в дальнем зале.",
   photos = DEFAULT_PHOTOS,
   closeLabel = "Закрыть",
+  openLabel = "Открыть фото",
+  photoLabel = "Фото",
   tone = "auto",
   accent,
   ink,
@@ -271,7 +276,7 @@ export function Restaurant005({
                     data-part="frame"
                     data-hidden={phase !== "closed" && current === index}
                     style={{ ["--vibeui-restaurant-005-aspect" as string]: photo.aspect ?? "3 / 2" }}
-                    aria-label={photo.caption ?? photo.alt ?? "Открыть фото"}
+                    aria-label={photo.caption ?? photo.alt ?? openLabel}
                     onClick={() => open(index)}
                   >
                     {photo.src ? <img src={photo.src} alt={photo.alt ?? ""} loading="lazy" /> : null}
@@ -285,7 +290,7 @@ export function Restaurant005({
       </section>
       {phase !== "closed" && box && current !== null
         ? createPortal(
-            <div data-vibeui-block="restaurant-005" data-part="layer" data-phase={phase} data-tone={dataTone} style={palette} role="dialog" aria-modal="true" aria-label={photos[current].caption ?? "Фото"}>
+            <div data-vibeui-block="restaurant-005" data-part="layer" data-phase={phase} data-tone={dataTone} style={palette} role="dialog" aria-modal="true" aria-label={photos[current].caption ?? photoLabel}>
               <div data-part="backdrop" onClick={close} />
               <div data-part="flyer" style={{ top: box.top, left: box.left, width: box.width, height: box.height }}>
                 <img src={photos[current].src} alt={photos[current].alt ?? ""} />

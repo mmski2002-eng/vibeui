@@ -28,6 +28,11 @@ export type Portfolio007Props = {
   works?: readonly Portfolio007Work[]
   allLabel?: string
   closeLabel?: string
+  /** aria фильтров, пустое состояние и стрелки. */
+  filtersLabel?: string
+  emptyText?: string
+  prevLabel?: string
+  nextLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -148,6 +153,10 @@ export function Portfolio007({
   works = DEFAULT_WORKS,
   allLabel = "Все",
   closeLabel = "Закрыть",
+  filtersLabel = "Стиль",
+  emptyText = "Пока пусто — посмотрите другой стиль.",
+  prevLabel = "Предыдущая",
+  nextLabel = "Следующая",
   tone = "auto",
   accent,
   background,
@@ -199,7 +208,7 @@ export function Portfolio007({
               {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
               <h2 data-part="title">{title}</h2>
             </div>
-            <ul data-part="filters" aria-label="Стиль">
+            <ul data-part="filters" aria-label={filtersLabel}>
               <li>
                 <button type="button" data-part="filter" aria-pressed={filter === ""} onClick={() => setFilter("")}>
                   {allLabel}
@@ -230,7 +239,7 @@ export function Portfolio007({
               ))}
             </ul>
           ) : (
-            <p data-part="empty">Пока пусто — посмотрите другой стиль.</p>
+            <p data-part="empty">{emptyText}</p>
           )}
         </div>
         <dialog ref={dialog} data-part="dialog" aria-labelledby={label} onClose={() => setCurrent(null)} onClick={(event) => event.target === dialog.current && dialog.current.close()}>
@@ -240,12 +249,12 @@ export function Portfolio007({
                 <img key={work.image} src={work.image} alt={work.imageAlt ?? work.title} />
                 {visible.length > 1 ? (
                   <>
-                    <button type="button" data-part="nav" data-dir="prev" aria-label="Предыдущая" onClick={() => shift(-1)}>
+                    <button type="button" data-part="nav" data-dir="prev" aria-label={prevLabel} onClick={() => shift(-1)}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M15 5l-7 7 7 7" />
                       </svg>
                     </button>
-                    <button type="button" data-part="nav" data-dir="next" aria-label="Следующая" onClick={() => shift(1)}>
+                    <button type="button" data-part="nav" data-dir="next" aria-label={nextLabel} onClick={() => shift(1)}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M9 5l7 7-7 7" />
                       </svg>

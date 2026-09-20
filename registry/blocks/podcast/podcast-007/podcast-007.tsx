@@ -22,6 +22,9 @@ export type Podcast007Props = {
   closeLabel?: string
   /** Прижат к низу окна (по умолчанию). false — обычный блок в потоке, для витрины и превью. */
   docked?: boolean
+  /** aria плеера и перемотки. */
+  regionLabel?: string
+  seekLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -109,7 +112,7 @@ const clock = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60))
 type Control = { id?: string; action?: "play" | "pause" | "seek"; elapsed?: number }
 
 /** Мини-плеер у нижнего края: появляется по событию, рассылает состояние. */
-export function Podcast007({ initial, playLabel = "Слушать", pauseLabel = "Пауза", closeLabel = "Закрыть", docked = true, tone = "auto", accent, ink, background, className, style }: Podcast007Props) {
+export function Podcast007({ initial, playLabel = "Слушать", pauseLabel = "Пауза", closeLabel = "Закрыть", regionLabel = "Плеер", seekLabel = "Перемотать", docked = true, tone = "auto", accent, ink, background, className, style }: Podcast007Props) {
   const [track, setTrack] = useState<Podcast007Track | null>(initial ?? null)
   const [playing, setPlaying] = useState(false)
   const [elapsed, setElapsed] = useState(initial?.elapsed ?? 0)
@@ -170,7 +173,7 @@ export function Podcast007({ initial, playLabel = "Слушать", pauseLabel =
       <style href="vibeui-podcast-007" precedence="medium">
         {STYLES}
       </style>
-      <div data-vibeui-block="podcast-007" data-tone={tone === "auto" ? undefined : tone} data-open={Boolean(track)} data-playing={active} data-docked={docked} className={className} style={palette} role="region" aria-label="Плеер">
+      <div data-vibeui-block="podcast-007" data-tone={tone === "auto" ? undefined : tone} data-open={Boolean(track)} data-playing={active} data-docked={docked} className={className} style={palette} role="region" aria-label={regionLabel}>
         <div data-part="halo" aria-hidden="true" />
         <div data-part="bar">
           <div data-part="cover">
@@ -199,7 +202,7 @@ export function Podcast007({ initial, playLabel = "Слушать", pauseLabel =
               {track?.number ? `№ ${track.number}` : ""}
               {track?.guest ? ` · ${track.guest}` : ""}
             </div>
-            <button type="button" data-part="track" aria-label="Перемотать" onClick={seek}>
+            <button type="button" data-part="track" aria-label={seekLabel} onClick={seek}>
               <span data-part="spark" aria-hidden="true" />
             </button>
           </div>

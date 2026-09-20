@@ -32,6 +32,8 @@ export type Fintech002Props = {
   /** Сокращения тысяч и миллионов на шкале: [«тыс.», «млн»]. */
   units?: readonly [string, string]
   note?: string
+  /** aria быстрых значений. */
+  presetsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -142,6 +144,7 @@ export function Fintech002({
   perYearLabel = "/ год",
   units = ["тыс.", "млн"],
   note = "Расчёт условный: обслуживание и комиссия за переводы юрлицам, без эквайринга и валютного контроля. Точные тарифы — в разделе ниже.",
+  presetsLabel = "Типовые обороты",
   tone = "auto",
   accent,
   ink,
@@ -211,7 +214,7 @@ export function Fintech002({
                 <li>{formatShort(maxTurnover, units)}</li>
               </ul>
               {presets.length > 0 ? (
-                <div data-part="presets" role="group" aria-label="Типовые обороты">
+                <div data-part="presets" role="group" aria-label={presetsLabel}>
                   {presets.map((value) => (
                     <button key={value} type="button" aria-pressed={turnover === value} onClick={() => setTurnover(value)}>
                       {formatShort(value, units)} {currency}

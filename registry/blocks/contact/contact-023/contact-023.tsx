@@ -23,6 +23,15 @@ export type Contact023Props = {
   actionLabel?: string
   doneTitle?: string
   doneText?: string
+  /** Подписи полей формы, плейсхолдер записки и мелкий текст. */
+  nameLabel?: string
+  phoneLabel?: string
+  petLabel?: string
+  whenLabel?: string
+  noteLabel?: string
+  notePlaceholder?: string
+  fine?: string
+  mapAria?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -134,6 +143,14 @@ export function Contact023({
   actionLabel = "Записаться",
   doneTitle = "Записали",
   doneText = "Перезвоним в ближайшие 15 минут. Если срочно — звоните сами, дежурный врач на месте.",
+  nameLabel = "Как вас зовут",
+  phoneLabel = "Телефон",
+  petLabel = "Кто у вас",
+  whenLabel = "Когда удобно",
+  noteLabel = "Что случилось — коротко",
+  notePlaceholder = "Что случилось",
+  fine = "Нажимая кнопку, вы соглашаетесь, что мы перезвоним. Больше ни на что.",
+  mapAria = "Карта: {address}",
   tone = "auto",
   accent,
   ink,
@@ -180,12 +197,12 @@ export function Contact023({
               <form data-part="form" onSubmit={submit}>
                 <div data-part="two">
                   <label data-part="field">
-                    <input type="text" name="name" placeholder="Как вас зовут" autoComplete="name" required />
-                    <span>Как вас зовут</span>
+                    <input type="text" name="name" placeholder={nameLabel} autoComplete="name" required />
+                    <span>{nameLabel}</span>
                   </label>
                   <label data-part="field">
-                    <input type="tel" name="phone" placeholder="Телефон" autoComplete="tel" required />
-                    <span>Телефон</span>
+                    <input type="tel" name="phone" placeholder={phoneLabel} autoComplete="tel" required />
+                    <span>{phoneLabel}</span>
                   </label>
                 </div>
                 <div data-part="two">
@@ -197,27 +214,27 @@ export function Contact023({
                         </option>
                       ))}
                     </select>
-                    <span>Кто у вас</span>
+                    <span>{petLabel}</span>
                     <i aria-hidden="true" />
                   </label>
                   <label data-part="field">
-                    <input type="text" name="when" placeholder="Когда удобно" />
-                    <span>Когда удобно</span>
+                    <input type="text" name="when" placeholder={whenLabel} />
+                    <span>{whenLabel}</span>
                   </label>
                 </div>
                 <label data-part="field">
-                  <textarea name="note" placeholder="Что случилось" />
-                  <span>Что случилось — коротко</span>
+                  <textarea name="note" placeholder={notePlaceholder} />
+                  <span>{noteLabel}</span>
                 </label>
                 <button data-part="submit" type="submit">
                   {actionLabel}
                 </button>
-                <p data-part="fine">Нажимая кнопку, вы соглашаетесь, что мы перезвоним. Больше ни на что.</p>
+                <p data-part="fine">{fine}</p>
               </form>
             )}
           </div>
           <div data-part="place">
-            <div data-part="map" role="img" aria-label={`Карта: ${address}`}>
+            <div data-part="map" role="img" aria-label={mapAria.replace("{address}", address)}>
               <svg viewBox="0 0 400 300" aria-hidden="true">
                 <rect x="250" y="150" width="150" height="150" rx="24" fill="var(--vibeui-contact-023-park)" opacity=".22" />
                 <circle cx="330" cy="225" r="18" fill="var(--vibeui-contact-023-park)" opacity=".3" />

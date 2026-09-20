@@ -25,6 +25,10 @@ export type Comparison010Props = {
   themLabel?: string
   rows?: readonly Comparison010Row[]
   fine?: string
+  /** aria галочки и крестика, заголовок колонки критериев. */
+  yesLabel?: string
+  noLabel?: string
+  criterionLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -124,6 +128,9 @@ export function Comparison010({
   themLabel = "Типичная бригада",
   rows = DEFAULT_ROWS,
   fine = "Выписка из типового договора, редакция 2026 года. Полный текст — по запросу до замера.",
+  yesLabel = "да",
+  noLabel = "нет",
+  criterionLabel = "Критерий",
   tone = "auto",
   accent,
   ink,
@@ -181,11 +188,11 @@ export function Comparison010({
       {typeof value === "string" ? (
         <span data-part="cell-text">{value}</span>
       ) : value ? (
-        <svg data-part="mark" data-kind="yes" viewBox="0 0 24 24" role="img" aria-label="да">
+        <svg data-part="mark" data-kind="yes" viewBox="0 0 24 24" role="img" aria-label={yesLabel}>
           <path d="M5 12.5l4.5 4.5L19 7" pathLength={1} />
         </svg>
       ) : (
-        <svg data-part="mark" data-kind="no" viewBox="0 0 24 24" role="img" aria-label="нет">
+        <svg data-part="mark" data-kind="no" viewBox="0 0 24 24" role="img" aria-label={noLabel}>
           <path d="M7 7l10 10M17 7L7 17" pathLength={1} />
         </svg>
       )}
@@ -223,7 +230,7 @@ export function Comparison010({
               <table data-part="table">
                 <thead>
                   <tr>
-                    <th scope="col">Критерий</th>
+                    <th scope="col">{criterionLabel}</th>
                     <th scope="col" data-col="us">
                       {usLabel}
                     </th>

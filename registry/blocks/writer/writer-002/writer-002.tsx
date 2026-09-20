@@ -27,6 +27,12 @@ export type Writer002Props = {
   lessLabel?: string
   /** Ссылка «читать целиком» внутри раскрытого фрагмента. */
   fullLabel?: string
+  /** aria фильтров, формы слов «текст» и «минута», пустое состояние. */
+  filtersLabel?: string
+  textUnits?: readonly [string, string, string]
+  minuteUnits?: readonly [string, string, string]
+  emptyText?: string
+  firstLineLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -134,6 +140,11 @@ export function Writer002({
   moreLabel = "читать дальше",
   lessLabel = "свернуть",
   fullLabel = "Читать целиком →",
+  filtersLabel = "Темы",
+  textUnits = ["текст", "текста", "текстов"],
+  minuteUnits = ["минута", "минуты", "минут"],
+  emptyText = "Пока ничего — но я пишу.",
+  firstLineLabel = "первая строка",
   tone = "auto",
   accent,
   ink,
@@ -197,7 +208,7 @@ export function Writer002({
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
             <div>
-              <ul data-part="filters" aria-label="Темы">
+              <ul data-part="filters" aria-label={filtersLabel}>
                 <li>
                   <button type="button" aria-pressed={topic === ""} onClick={() => { setTopic(""); setOpen(-1) }}>
                     {allLabel}
@@ -211,12 +222,12 @@ export function Writer002({
                   </li>
                 ))}
               </ul>
-              <p data-part="count">{plural(visible.length, "текст", "текста", "текстов")}</p>
+              <p data-part="count">{plural(visible.length, ...textUnits)}</p>
             </div>
           </div>
           <div data-part="archive" ref={listRef} data-hover={hover >= 0 && open !== hover} onPointerMove={track} onPointerLeave={() => setHover(-1)}>
             <ul data-part="list">
-            {visible.length === 0 ? <li data-part="empty">Пока ничего — но я пишу.</li> : null}
+            {visible.length === 0 ? <li data-part="empty">{emptyText}</li> : null}
             {visible.map(({ text, index }, order) => {
               const isOpen = open === index
               return (
@@ -227,7 +238,7 @@ export function Writer002({
                       <span data-part="name">{text.title}</span>
                       <span data-part="meta">
                         <span>{text.year}</span>
-                        <span>{plural(text.minutes, "минута", "минуты", "минут")}</span>
+                        <span>{plural(text.minutes, ...minuteUnits)}</span>
                         <span data-part="more">{isOpen ? lessLabel : moreLabel}</span>
                       </span>
                     </button>
@@ -249,7 +260,7 @@ export function Writer002({
             <div data-part="preview" ref={previewRef} aria-hidden="true">
               {hovered ? (
                 <>
-                  <small>первая строка</small>
+                  <small>{firstLineLabel}</small>
                   {hovered.firstLine}
                 </>
               ) : null}

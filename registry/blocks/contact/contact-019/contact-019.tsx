@@ -4,6 +4,47 @@ import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } fr
 
 export type Contact019Option = { value: string; label: string }
 
+export type Contact019Labels = {
+  whoText: string
+  nameLabel: string
+  namePlaceholder: string
+  comingYes: string
+  comingNo: string
+  datesText: string
+  arriveLabel: string
+  arrivePlaceholder: string
+  departLabel: string
+  departPlaceholder: string
+  flightLabel: string
+  flightPlaceholder: string
+  hotelText: string
+  hotelHelp: string
+  hotelOwn: string
+  companionsLabel: string
+  companionsPlaceholder: string
+  menuText: string
+  allergies: string
+  allergiesPlaceholder: string
+  songText: string
+  songLabel: string
+  songPlaceholder: string
+  wishLabel: string
+  wishPlaceholder: string
+  back: string
+  next: string
+  summaryPassenger: string
+  summaryStatus: string
+  flying: string
+  notFlying: string
+  summaryDates: string
+  summaryFlight: string
+  summaryHotel: string
+  hotelBooking: string
+  hotelOwnShort: string
+  summaryMenu: string
+  summarySong: string
+}
+
 export type Contact019Props = {
   eyebrow?: string
   title?: string
@@ -23,6 +64,8 @@ export type Contact019Props = {
   thanksText?: string
   stampLabel?: string
   action?: string
+  /** Подписи шагов, полей и сводки; можно переопределить частично. */
+  labels?: Partial<Contact019Labels>
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -147,6 +190,47 @@ function readGuest(): string {
   }
 }
 
+const DEFAULT_LABELS: Contact019Labels = {
+  whoText: "Как вас записать в список пассажиров и получится ли прилететь.",
+  nameLabel: "Имя и фамилия — как в паспорте",
+  namePlaceholder: "Ольга Смирнова",
+  comingYes: "Лечу!",
+  comingNo: "Не смогу",
+  datesText: "Когда вас встречать в Гаване и когда провожать.",
+  arriveLabel: "Прилёт",
+  arrivePlaceholder: "12 февраля",
+  departLabel: "Вылет",
+  departPlaceholder: "15 февраля",
+  flightLabel: "Номер рейса, если уже есть",
+  flightPlaceholder: "SU 1402",
+  hotelText: "Мы держим номера в Гаване и на Кайо-Ларго по нашей цене — или живите где хотите.",
+  hotelHelp: "Забронируйте за меня",
+  hotelOwn: "Сам(а) найду жильё",
+  companionsLabel: "С кем летите",
+  companionsPlaceholder: "С парой, с ребёнком 6 лет…",
+  menuText: "Ужин на пляже готовят заранее — выберите основное.",
+  allergies: "Аллергии и ограничения",
+  allergiesPlaceholder: "Морепродукты, орехи…",
+  songText: "Песня, под которую вы выйдете танцевать на песке, — отдадим группе.",
+  songLabel: "Исполнитель — название",
+  songPlaceholder: "Buena Vista Social Club — Chan Chan",
+  wishLabel: "Пара слов для нас",
+  wishPlaceholder: "Необязательно, но приятно",
+  back: "← Назад",
+  next: "Дальше →",
+  summaryPassenger: "Пассажир",
+  summaryStatus: "Статус",
+  flying: "летит",
+  notFlying: "не летит",
+  summaryDates: "Даты",
+  summaryFlight: "Рейс",
+  summaryHotel: "Отель",
+  hotelBooking: "бронируем",
+  hotelOwnShort: "своё",
+  summaryMenu: "Меню",
+  summarySong: "Песня",
+}
+
 /** Check-in вместо RSVP для свадьбы-путешествия: пять дорожных шагов, сводка-посадочный талон и штамп «Checked in». */
 export function Contact019({
   eyebrow = "Check-in",
@@ -169,6 +253,7 @@ export function Contact019({
   thanksText = "Ответ записан. Мариэла напишет за две недели до вылета с деталями трансфера.",
   stampLabel = "Checked in",
   action,
+  labels,
   tone = "auto",
   accent,
   ink,
@@ -176,6 +261,7 @@ export function Contact019({
   className,
   style,
 }: Contact019Props) {
+  const t = { ...DEFAULT_LABELS, ...labels }
   const fromUrl = useSyncExternalStore(subscribe, readGuest, () => "")
   const guestName = guest ?? fromUrl
   const [step, setStep] = useState(0)
@@ -249,85 +335,85 @@ export function Contact019({
                   {step === 0 ? (
                     <div data-part="step" key="who">
                       <h3>{stepLabels[0]}</h3>
-                      <p>Как вас записать в список пассажиров и получится ли прилететь.</p>
+                      <p>{t.whoText}</p>
                       <label>
-                        <span>Имя и фамилия — как в паспорте</span>
-                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder="Ольга Смирнова" />
+                        <span>{t.nameLabel}</span>
+                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder={t.namePlaceholder} />
                       </label>
                       <div data-part="choices">
-                        {choice(answers.coming === "yes", "Лечу!", () => set("coming", "yes"))}
-                        {choice(answers.coming === "no", "Не смогу", () => set("coming", "no"))}
+                        {choice(answers.coming === "yes", t.comingYes, () => set("coming", "yes"))}
+                        {choice(answers.coming === "no", t.comingNo, () => set("coming", "no"))}
                       </div>
                     </div>
                   ) : null}
                   {step === 1 ? (
                     <div data-part="step" key="dates">
                       <h3>{stepLabels[1]}</h3>
-                      <p>Когда вас встречать в Гаване и когда провожать.</p>
+                      <p>{t.datesText}</p>
                       <div data-part="row">
                         <label>
-                          <span>Прилёт</span>
-                          <input type="text" value={answers.arrive} onChange={(event) => set("arrive", event.target.value)} placeholder="12 февраля" />
+                          <span>{t.arriveLabel}</span>
+                          <input type="text" value={answers.arrive} onChange={(event) => set("arrive", event.target.value)} placeholder={t.arrivePlaceholder} />
                         </label>
                         <label>
-                          <span>Вылет</span>
-                          <input type="text" value={answers.depart} onChange={(event) => set("depart", event.target.value)} placeholder="15 февраля" />
+                          <span>{t.departLabel}</span>
+                          <input type="text" value={answers.depart} onChange={(event) => set("depart", event.target.value)} placeholder={t.departPlaceholder} />
                         </label>
                       </div>
                       <label>
-                        <span>Номер рейса, если уже есть</span>
-                        <input type="text" value={answers.flight} onChange={(event) => set("flight", event.target.value)} placeholder="SU 1402" />
+                        <span>{t.flightLabel}</span>
+                        <input type="text" value={answers.flight} onChange={(event) => set("flight", event.target.value)} placeholder={t.flightPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   {step === 2 ? (
                     <div data-part="step" key="hotel">
                       <h3>{stepLabels[2]}</h3>
-                      <p>Мы держим номера в Гаване и на Кайо-Ларго по нашей цене — или живите где хотите.</p>
+                      <p>{t.hotelText}</p>
                       <div data-part="choices">
-                        {choice(answers.hotel === "help", "Забронируйте за меня", () => set("hotel", "help"))}
-                        {choice(answers.hotel === "own", "Сам(а) найду жильё", () => set("hotel", "own"))}
+                        {choice(answers.hotel === "help", t.hotelHelp, () => set("hotel", "help"))}
+                        {choice(answers.hotel === "own", t.hotelOwn, () => set("hotel", "own"))}
                       </div>
                       <label>
-                        <span>С кем летите</span>
-                        <input type="text" value={answers.companions} onChange={(event) => set("companions", event.target.value)} placeholder="С парой, с ребёнком 6 лет…" />
+                        <span>{t.companionsLabel}</span>
+                        <input type="text" value={answers.companions} onChange={(event) => set("companions", event.target.value)} placeholder={t.companionsPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   {step === 3 ? (
                     <div data-part="step" key="menu">
                       <h3>{stepLabels[3]}</h3>
-                      <p>Ужин на пляже готовят заранее — выберите основное.</p>
+                      <p>{t.menuText}</p>
                       <div data-part="choices" role="group" aria-label={stepLabels[3]}>
                         {menu.map((item) => choice(answers.menu === item.value, item.label, () => set("menu", item.value)))}
                       </div>
                       <label>
-                        <span>Аллергии и ограничения</span>
-                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder="Морепродукты, орехи…" />
+                        <span>{t.allergies}</span>
+                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder={t.allergiesPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   {step === 4 ? (
                     <div data-part="step" key="song">
                       <h3>{stepLabels[4]}</h3>
-                      <p>Песня, под которую вы выйдете танцевать на песке, — отдадим группе.</p>
+                      <p>{t.songText}</p>
                       <label>
-                        <span>Исполнитель — название</span>
-                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder="Buena Vista Social Club — Chan Chan" />
+                        <span>{t.songLabel}</span>
+                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder={t.songPlaceholder} />
                       </label>
                       <label>
-                        <span>Пара слов для нас</span>
-                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder="Необязательно, но приятно" />
+                        <span>{t.wishLabel}</span>
+                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder={t.wishPlaceholder} />
                       </label>
                     </div>
                   ) : null}
                   <div data-part="nav">
                     <button type="button" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
-                      ← Назад
+                      {t.back}
                     </button>
                     {step < last ? (
                       <button type="button" data-primary="" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))}>
-                        Дальше →
+                        {t.next}
                       </button>
                     ) : (
                       <button type="submit" data-primary="">
@@ -347,31 +433,31 @@ export function Contact019({
               </header>
               <dl>
                 <div>
-                  <dt>Пассажир</dt>
+                  <dt>{t.summaryPassenger}</dt>
                   <dd>{name}</dd>
                 </div>
                 <div>
-                  <dt>Статус</dt>
-                  <dd>{answers.coming === "yes" ? "летит" : answers.coming === "no" ? "не летит" : ""}</dd>
+                  <dt>{t.summaryStatus}</dt>
+                  <dd>{answers.coming === "yes" ? t.flying : answers.coming === "no" ? t.notFlying : ""}</dd>
                 </div>
                 <div>
-                  <dt>Даты</dt>
+                  <dt>{t.summaryDates}</dt>
                   <dd>{dates}</dd>
                 </div>
                 <div>
-                  <dt>Рейс</dt>
+                  <dt>{t.summaryFlight}</dt>
                   <dd>{answers.flight}</dd>
                 </div>
                 <div>
-                  <dt>Отель</dt>
-                  <dd>{answers.hotel === "help" ? "бронируем" : answers.hotel === "own" ? "своё" : ""}</dd>
+                  <dt>{t.summaryHotel}</dt>
+                  <dd>{answers.hotel === "help" ? t.hotelBooking : answers.hotel === "own" ? t.hotelOwnShort : ""}</dd>
                 </div>
                 <div>
-                  <dt>Меню</dt>
+                  <dt>{t.summaryMenu}</dt>
                   <dd>{menuLabel}</dd>
                 </div>
                 <div data-wide="">
-                  <dt>Песня</dt>
+                  <dt>{t.summarySong}</dt>
                   <dd>{answers.song}</dd>
                 </div>
               </dl>

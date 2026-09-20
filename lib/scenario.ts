@@ -33,9 +33,14 @@ export function getScenario(slug: string): Scenario | undefined {
 }
 
 export function scenarioText(scenario: Scenario, locale: Locale) {
+  // Английское демо и его постер есть не у каждого сценария: без них
+  // английская витрина показывает русские.
+  const english = locale === "en" && Boolean(scenario.sourceEn)
   return {
     label: locale === "ru" ? scenario.label : scenario.en,
     summary: locale === "ru" ? scenario.summary : scenario.summaryEn,
+    demo: english ? `/en${scenario.demo}` : scenario.demo,
+    poster: english ? `/demo/scenarios/en/${scenario.slug}.webp` : `/demo/scenarios/${scenario.slug}.webp`,
   }
 }
 

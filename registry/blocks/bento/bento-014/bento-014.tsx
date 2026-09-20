@@ -31,6 +31,20 @@ export type Bento014Props = {
   nowTitle?: string
   nowNote?: string
   nowPercent?: number
+  /** Подписи ячеек бенто. */
+  portraitAlt?: string
+  portraitCaption?: string
+  portraitLabel?: string
+  portraitFact?: string
+  bioLabel?: string
+  nowLabel?: string
+  draftLine?: string
+  numbersLabel?: string
+  citiesLabel?: string
+  deskAlt?: string
+  deskCaption?: string
+  deskLabel?: string
+  factLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -134,6 +148,19 @@ export function Bento014({
   nowTitle = "Сейчас пишу: «Ночная смена»",
   nowNote = "Книга о людях, которые не спят, когда спит город: пекари, диспетчеры, санитарки. Черновик готов на",
   nowPercent = 62,
+  portraitAlt = "Портрет автора",
+  portraitCaption = "портрет · 2025",
+  portraitLabel = "Портрет",
+  portraitFact = "Фотографий мало: я обычно по ту сторону страницы.",
+  bioLabel = "Биография",
+  nowLabel = "Сейчас пишу",
+  draftLine = "черновик · {n}%",
+  numbersLabel = "В цифрах",
+  citiesLabel = "Города",
+  deskAlt = "Рабочий стол автора",
+  deskCaption = "рабочий стол",
+  deskLabel = "Рабочий стол",
+  factLabel = "Факт",
   tone = "auto",
   accent,
   ink,
@@ -204,18 +231,18 @@ export function Bento014({
             <div data-part="tile" data-photo={portrait ? "true" : undefined} data-tall="">
               {portrait ? (
                 <>
-                  <img src={portrait} alt="Портрет автора" />
-                  <span data-part="caption">портрет · 2025</span>
+                  <img src={portrait} alt={portraitAlt} />
+                  <span data-part="caption">{portraitCaption}</span>
                 </>
               ) : (
                 <>
-                  <p data-part="label">Портрет</p>
-                  <p data-part="fact">Фотографий мало: я обычно по ту сторону страницы.</p>
+                  <p data-part="label">{portraitLabel}</p>
+                  <p data-part="fact">{portraitFact}</p>
                 </>
               )}
             </div>
             <div data-part="tile" data-span="2">
-              <p data-part="label">Биография</p>
+              <p data-part="label">{bioLabel}</p>
               <div data-part="bio">
                 {bio.map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
@@ -223,7 +250,7 @@ export function Bento014({
               </div>
             </div>
             <div data-part="tile">
-              <p data-part="label">Сейчас пишу</p>
+              <p data-part="label">{nowLabel}</p>
               <div data-part="now">
                 <b>{nowTitle}</b>
                 <p>
@@ -232,11 +259,11 @@ export function Bento014({
                 <span data-part="bar" aria-hidden="true">
                   <i />
                 </span>
-                <output>черновик · {nowPercent}%</output>
+                <output>{draftLine.replace("{n}", String(nowPercent))}</output>
               </div>
             </div>
             <div data-part="tile" data-span="2">
-              <p data-part="label">В цифрах</p>
+              <p data-part="label">{numbersLabel}</p>
               <ul data-part="numbers">
                 {numbers.map((item, i) => (
                   <li key={item.label}>
@@ -250,7 +277,7 @@ export function Bento014({
               </ul>
             </div>
             <div data-part="tile">
-              <p data-part="label">Города</p>
+              <p data-part="label">{citiesLabel}</p>
               <ul data-part="cities">
                 {cities.map((city, i) => (
                   <li key={city.name + i}>
@@ -263,18 +290,18 @@ export function Bento014({
             <div data-part="tile" data-photo={desk ? "true" : undefined} data-wide="">
               {desk ? (
                 <>
-                  <img src={desk} alt="Рабочий стол автора" />
-                  <span data-part="caption">рабочий стол</span>
+                  <img src={desk} alt={deskAlt} />
+                  <span data-part="caption">{deskCaption}</span>
                 </>
               ) : (
                 <>
-                  <p data-part="label">Рабочий стол</p>
+                  <p data-part="label">{deskLabel}</p>
                   <p data-part="fact">{deskNote}</p>
                 </>
               )}
             </div>
             <div data-part="tile" data-span="2">
-              <p data-part="label">Факт</p>
+              <p data-part="label">{factLabel}</p>
               <p data-part="fact">{fact}</p>
             </div>
           </div>

@@ -31,6 +31,7 @@ export type Footer020Props = {
   linksLabel?: string
   links?: readonly Footer020Link[]
   legal?: string
+  hoursLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -129,6 +130,7 @@ export function Footer020({
     { label: "Политика конфиденциальности", href: "#" },
   ],
   legal = "© 2019–2026 ООО «Сойка». ИНН 7813000000. Меню не является публичной офертой.",
+  hoursLabel = "Часы",
   tone = "auto",
   accent,
   ink,
@@ -158,7 +160,7 @@ export function Footer020({
               {address ? <address>{address}</address> : null}
             </div>
             <div>
-              <span data-part="label">Часы</span>
+              <span data-part="label">{hoursLabel}</span>
               <dl data-part="hours">
                 {hours.map((row) => (
                   <div key={row.days} style={{ display: "contents" }}>

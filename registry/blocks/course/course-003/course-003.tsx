@@ -37,6 +37,9 @@ export type Course003Props = {
   beforeLabel?: string
   afterLabel?: string
   linkLabel?: string
+  /** aria стрелок. */
+  prevLabel?: string
+  nextLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -159,6 +162,8 @@ export function Course003({
   beforeLabel = "Было",
   afterLabel = "Стало",
   linkLabel = "Смотреть кейс",
+  prevLabel = "Назад",
+  nextLabel = "Вперёд",
   tone = "auto",
   accent,
   ink,
@@ -259,12 +264,12 @@ export function Course003({
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
             <div data-part="arrows">
-              <button type="button" aria-label="Назад" onClick={() => shift(-1)}>
+              <button type="button" aria-label={prevLabel} onClick={() => shift(-1)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M15 5l-7 7 7 7" />
                 </svg>
               </button>
-              <button type="button" aria-label="Вперёд" onClick={() => shift(1)}>
+              <button type="button" aria-label={nextLabel} onClick={() => shift(1)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9 5l7 7-7 7" />
                 </svg>

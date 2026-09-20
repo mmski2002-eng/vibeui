@@ -38,6 +38,9 @@ export type Hero039Props = {
   sticker?: string
   /** Секунд на одно слово в заголовке. */
   interval?: number
+  /** aria чата и индикатора набора. */
+  chatLabel?: string
+  typingLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -160,6 +163,8 @@ export function Hero039({
   messages = DEFAULT_MESSAGES,
   sticker = "домашка: рассказать про выходные",
   interval = 2.8,
+  chatLabel = "Фрагмент урока",
+  typingLabel = "печатает",
   tone = "auto",
   accent,
   ink,
@@ -262,7 +267,7 @@ export function Hero039({
             </div>
             {trust ? <p data-part="trust">{trust}</p> : null}
           </div>
-          <div data-part="chat" aria-label="Фрагмент урока">
+          <div data-part="chat" aria-label={chatLabel}>
             {sticker ? <span data-part="sticker">{sticker}</span> : null}
             <div data-part="chathead">
               <i aria-hidden="true" />
@@ -278,7 +283,7 @@ export function Hero039({
                     <b>{message.who === "teacher" ? teacherName : studentName}</b>
                     {active && step.chars < 0 ? (
                       <span data-part="bubble">
-                        <span data-part="dots" aria-label="печатает">
+                        <span data-part="dots" aria-label={typingLabel}>
                           <i />
                           <i />
                           <i />

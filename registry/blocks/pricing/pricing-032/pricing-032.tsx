@@ -36,6 +36,9 @@ export type Pricing032Props = {
   /** Шаблон чипа, {n} — число операций. */
   freeLabel?: string
   unlimitedLabel?: string
+  /** aria переключателя и формы слова «человек». */
+  switchLabel?: string
+  peopleUnits?: readonly [string, string, string]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -144,6 +147,8 @@ export function Pricing032({
   includedLabel = "включено",
   freeLabel = "бесплатно до {n} операций / мес",
   unlimitedLabel = "операции без лимита",
+  switchLabel = "Тариф",
+  peopleUnits = ["человек", "человека", "человек"],
   tone = "auto",
   accent,
   ink,
@@ -199,7 +204,7 @@ export function Pricing032({
           {plan ? (
             <div data-part="card">
               <div data-part="controls">
-                <div data-part="switch" role="group" aria-label="Тариф" style={{ ["--vibeui-pricing-032-n" as string]: plans.length, ["--vibeui-pricing-032-i" as string]: planIndex }}>
+                <div data-part="switch" role="group" aria-label={switchLabel} style={{ ["--vibeui-pricing-032-n" as string]: plans.length, ["--vibeui-pricing-032-i" as string]: planIndex }}>
                   {plans.map((item, index) => (
                     <button key={item.name} type="button" aria-pressed={index === planIndex} onClick={() => setPlanIndex(index)}>
                       {item.name}
@@ -210,7 +215,7 @@ export function Pricing032({
                 <label data-part="seats">
                   <span>{seatsLabel}</span>
                   <output>
-                    {employees} {seatsUnit ?? plural(employees, "человек", "человека", "человек")}
+                    {employees} {seatsUnit ?? plural(employees, ...peopleUnits)}
                   </output>
                 </label>
                 <input data-part="range" type="range" min={minEmployees} max={maxEmployees} value={employees} onChange={(event) => setEmployees(Number(event.target.value))} aria-label={seatsLabel} style={{ ["--vibeui-pricing-032-fill" as string]: fill }} />

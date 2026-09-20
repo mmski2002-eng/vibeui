@@ -28,6 +28,12 @@ export type Hero028Props = {
   primaryHref?: string
   secondaryLabel?: string
   secondaryHref?: string
+  /** Подписи кольца: минуты до партии и «печь» до открытия. */
+  minutesUnit?: string
+  ovenLabel?: string
+  /** «достанем в {time}» под названием следующей партии. */
+  outLine?: string
+  batchesLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -217,6 +223,10 @@ export function Hero028({
   primaryHref = "#box",
   secondaryLabel = "Что на полке",
   secondaryHref = "#shelf",
+  minutesUnit = "мин",
+  ovenLabel = "печь",
+  outLine = "достанем в {time}",
+  batchesLabel = "Партии дня",
   tone = "auto",
   accent,
   ink,
@@ -294,12 +304,12 @@ export function Hero028({
                   {baking ? (
                     <>
                       <b>{times[nextIndex] - m}</b>
-                      <small>мин</small>
+                      <small>{minutesUnit}</small>
                     </>
                   ) : (
                     <>
                       <b>{String(ovenHour).padStart(2, "0")}:00</b>
-                      <small>печь</small>
+                      <small>{ovenLabel}</small>
                     </>
                   )}
                 </div>
@@ -313,7 +323,8 @@ export function Hero028({
                   <>
                     <h2>{batches[nextIndex].name}</h2>
                     <p>
-                      {batches[nextIndex].note ? `${batches[nextIndex].note} · ` : ""}достанем в {batches[nextIndex].time}
+                      {batches[nextIndex].note ? `${batches[nextIndex].note} · ` : ""}
+                      {outLine.replace("{time}", batches[nextIndex].time)}
                     </p>
                   </>
                 ) : (
@@ -324,7 +335,7 @@ export function Hero028({
                 )}
               </div>
             </div>
-            <ol data-part="batches" aria-label="Партии дня">
+            <ol data-part="batches" aria-label={batchesLabel}>
               {batches.map((batch, index) => (
                 <li key={batch.time} data-state={times[index] <= m ? "done" : baking && index === nextIndex ? "now" : "next"} style={{ ["--vibeui-hero-028-n" as string]: index }}>
                   {batch.time} {batch.name.toLowerCase()}

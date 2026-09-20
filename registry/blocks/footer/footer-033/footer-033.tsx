@@ -23,6 +23,7 @@ export type Footer033Props = {
   /** Юридическая строка. */
   legal?: string
   note?: string
+  contactsTitle?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -99,6 +100,7 @@ export function Footer033({
   hours = "Пн–Сб 9:00–21:00",
   legal = "© 2026 ООО «Гараж 42». ИНН 7805123456",
   note = "Цены на сайте — ориентир, точная фиксируется после осмотра.",
+  contactsTitle = "Контакты",
   tone = "auto",
   accent,
   ink,
@@ -146,7 +148,7 @@ export function Footer033({
                 </nav>
               ))}
               <div data-part="col">
-                <h3>Контакты</h3>
+                <h3>{contactsTitle}</h3>
                 <div data-part="contacts">
                   {phone ? (
                     <a data-part="phone" href={phoneHref}>

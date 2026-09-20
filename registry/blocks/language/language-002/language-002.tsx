@@ -33,6 +33,26 @@ export type Language002Props = {
   days?: readonly string[]
   actionLabel?: string
   actionHref?: string
+  /** Месяцы в родительном падеже, формы слов, подписи фильтров и панели старта. */
+  months?: readonly string[]
+  dayUnits?: readonly [string, string, string]
+  seatUnits?: readonly [string, string, string]
+  nearestLabel?: string
+  todayLabel?: string
+  inDaysLine?: string
+  countingLabel?: string
+  onRequestLabel?: string
+  calendarLabel?: string
+  writeLabel?: string
+  langFilterLabel?: string
+  langShort?: string
+  allLabel?: string
+  levelFilterLabel?: string
+  levelShort?: string
+  anyLabel?: string
+  emptyText?: string
+  tableLabel?: string
+  waitlistLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -142,8 +162,6 @@ const DEFAULT_GROUPS: Language002Group[] = [
   { lang: "it", level: "B1", day: 5, time: "19:30", start: "2026-10-09", teacher: "Giulia", seats: 1 },
 ]
 
-const MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
-
 const listeners = new Set<() => void>()
 let minute = 0
 let ticker: ReturnType<typeof setInterval> | undefined
@@ -179,20 +197,20 @@ function parseDate(iso: string) {
   return new Date(year, (month || 1) - 1, day || 1)
 }
 
-function pluralDays(count: number) {
+function pluralDays(count: number, units: readonly [string, string, string]) {
   const mod10 = count % 10
   const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return "день"
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "дня"
-  return "дней"
+  if (mod10 === 1 && mod100 !== 11) return units[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
+  return units[2]
 }
 
-function pluralSeats(count: number) {
+function pluralSeats(count: number, units: readonly [string, string, string]) {
   const mod10 = count % 10
   const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return "место"
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "места"
-  return "мест"
+  if (mod10 === 1 && mod100 !== 11) return units[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
+  return units[2]
 }
 
 /** Расписание групп: сетка неделя × время, фильтры, «ближайший старт через N дней». */
@@ -206,6 +224,25 @@ export function Language002({
   days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"],
   actionLabel = "Не нашли своё время? Напишите — соберём группу под вас.",
   actionHref = "#trial",
+  months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+  dayUnits = ["день", "дня", "дней"],
+  seatUnits = ["место", "места", "мест"],
+  nearestLabel = "ближайший старт",
+  todayLabel = "сегодня",
+  inDaysLine = "через {n} {days}",
+  countingLabel = "считаем…",
+  onRequestLabel = "по запросу",
+  calendarLabel = "смотрим календарь",
+  writeLabel = "напишите — соберём группу",
+  langFilterLabel = "Язык",
+  langShort = "язык",
+  allLabel = "Все",
+  levelFilterLabel = "Уровень",
+  levelShort = "уровень",
+  anyLabel = "Любой",
+  emptyText = "Таких групп пока нет — но мы собираем новые каждые две недели.",
+  tableLabel = "Расписание групп",
+  waitlistLabel = "лист ожидания",
   tone = "auto",
   accent,
   ink,
@@ -265,27 +302,27 @@ export function Language002({
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
             <div data-part="next" aria-live="polite">
-              <small>ближайший старт</small>
+              <small>{nearestLabel}</small>
               {nearest ? (
                 <>
-                  <strong>{nearest.daysLeft === 0 ? "сегодня" : `через ${nearest.daysLeft} ${pluralDays(nearest.daysLeft)}`}</strong>
+                  <strong>{nearest.daysLeft === 0 ? todayLabel : inDaysLine.replace("{n}", String(nearest.daysLeft)).replace("{days}", pluralDays(nearest.daysLeft, dayUnits))}</strong>
                   <span>
-                    {parseDate(nearest.group.start).getDate()} {MONTHS[parseDate(nearest.group.start).getMonth()]} · {languageLabel(nearest.group.lang)} {nearest.group.level} · {nearest.group.time}
+                    {parseDate(nearest.group.start).getDate()} {months[parseDate(nearest.group.start).getMonth()]} · {languageLabel(nearest.group.lang)} {nearest.group.level} · {nearest.group.time}
                   </span>
                 </>
               ) : (
                 <>
-                  <strong>{now === null ? "считаем…" : "по запросу"}</strong>
-                  <span>{now === null ? "смотрим календарь" : "напишите — соберём группу"}</span>
+                  <strong>{now === null ? countingLabel : onRequestLabel}</strong>
+                  <span>{now === null ? calendarLabel : writeLabel}</span>
                 </>
               )}
             </div>
           </div>
           <div data-part="filters">
-            <div data-part="filter" role="group" aria-label="Язык">
-              <span>язык</span>
+            <div data-part="filter" role="group" aria-label={langFilterLabel}>
+              <span>{langShort}</span>
               <button data-part="chip" type="button" aria-pressed={lang === "all"} onClick={() => setLang("all")}>
-                Все
+                {allLabel}
               </button>
               {languages.map((item) => (
                 <button key={item.code} data-part="chip" type="button" aria-pressed={lang === item.code} onClick={() => setLang(item.code)}>
@@ -293,10 +330,10 @@ export function Language002({
                 </button>
               ))}
             </div>
-            <div data-part="filter" role="group" aria-label="Уровень">
-              <span>уровень</span>
+            <div data-part="filter" role="group" aria-label={levelFilterLabel}>
+              <span>{levelShort}</span>
               <button data-part="chip" type="button" aria-pressed={level === "all"} onClick={() => setLevel("all")}>
-                Любой
+                {anyLabel}
               </button>
               {levels.map((item) => (
                 <button key={item} data-part="chip" type="button" aria-pressed={level === item} onClick={() => setLevel(item)}>
@@ -306,9 +343,9 @@ export function Language002({
             </div>
           </div>
           {filtered.length === 0 ? (
-            <p data-part="empty">Таких групп пока нет — но мы собираем новые каждые две недели.</p>
+            <p data-part="empty">{emptyText}</p>
           ) : (
-            <div data-part="grid" key={`${lang}-${level}`} role="table" aria-label="Расписание групп">
+            <div data-part="grid" key={`${lang}-${level}`} role="table" aria-label={tableLabel}>
               <div data-part="timehead" role="columnheader" aria-hidden="true" />
               {days.map((day) => (
                 <div key={day} data-part="dayhead" role="columnheader">
@@ -332,7 +369,7 @@ export function Language002({
                               <i>{group.time}</i>
                             </header>
                             <span>{group.teacher}</span>
-                            <em>{group.seats === 0 ? "лист ожидания" : `${group.seats} ${pluralSeats(group.seats)}`}</em>
+                            <em>{group.seats === 0 ? waitlistLabel : `${group.seats} ${pluralSeats(group.seats, seatUnits)}`}</em>
                           </a>
                         ))}
                       </div>

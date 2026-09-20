@@ -34,6 +34,19 @@ export type Flowers002Props = {
   formHref?: string
   /** Имя CustomEvent, в detail которого уходит состав. */
   eventName?: string
+  /** Формы слова «день», подписи вазы и итога. */
+  dayUnits?: readonly [string, string, string]
+  /** Время сборки: до 6, до 14 и больше стеблей. */
+  assemblyLabels?: readonly [string, string, string]
+  emptyLine?: string
+  lifeLine?: string
+  stemLine?: string
+  removeLabel?: string
+  addLabel?: string
+  stemsLabel?: string
+  assemblyLabel?: string
+  priceLabel?: string
+  wrapLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -131,12 +144,12 @@ function formatMoney(value: number, currency: string) {
   return `${String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ${currency}`
 }
 
-function daysWord(days: number) {
+function daysWord(days: number, units: readonly [string, string, string]) {
   const rest = days % 10
-  if (days % 100 >= 11 && days % 100 <= 14) return "дней"
-  if (rest === 1) return "день"
-  if (rest >= 2 && rest <= 4) return "дня"
-  return "дней"
+  if (days % 100 >= 11 && days % 100 <= 14) return units[2]
+  if (rest === 1) return units[0]
+  if (rest >= 2 && rest <= 4) return units[1]
+  return units[2]
 }
 
 function Bloom({ kind, color }: { kind: Flowers002Flower["kind"]; color: string }) {
@@ -210,6 +223,17 @@ export function Flowers002({
   orderLabel = "Заказать этот букет",
   formHref = "#delivery",
   eventName = "vibeui-flowers:order",
+  dayUnits = ["день", "дня", "дней"],
+  assemblyLabels = ["40 мин", "1,5 ч", "3 ч"],
+  emptyLine = "ваза пуста — добавьте пару стеблей →",
+  lifeLine = "этот букет живёт {n} {days}",
+  stemLine = "{price}/шт · стоит {n} {days}",
+  removeLabel = "Убрать: {name}",
+  addLabel = "Добавить: {name}",
+  stemsLabel = "Стеблей",
+  assemblyLabel = "Соберём за",
+  priceLabel = "Цена",
+  wrapLine = "{wrap} — {price}, уже в цене",
   tone = "auto",
   accent,
   ink,
@@ -225,7 +249,7 @@ export function Flowers002({
   const chosen = flowers.filter((flower) => (counts[flower.name] ?? 0) > 0)
   const price = chosen.reduce((sum, flower) => sum + flower.price * (counts[flower.name] ?? 0), 0) + (total > 0 ? wrapPrice : 0)
   const life = chosen.length ? Math.min(...chosen.map((flower) => flower.days)) : 0
-  const assembly = total === 0 ? "—" : total <= 6 ? "40 мин" : total <= 14 ? "1,5 ч" : "3 ч"
+  const assembly = total === 0 ? "—" : total <= 6 ? assemblyLabels[0] : total <= 14 ? assemblyLabels[1] : assemblyLabels[2]
 
   const change = (name: string, delta: number) => {
     setCounts((current) => {
@@ -303,10 +327,10 @@ export function Flowers002({
                 <path d="M136 284c14 5 34 5 48 0" fill="none" stroke="var(--vibeui-flowers-002-fg)" strokeWidth={1.2} opacity={0.5} />
               </svg>
               )}
-              {total === 0 ? <p data-part="empty">ваза пуста — добавьте пару стеблей →</p> : null}
+              {total === 0 ? <p data-part="empty">{emptyLine}</p> : null}
               {life > 0 ? (
                 <p data-part="life" aria-live="polite">
-                  этот букет живёт {life} {daysWord(life)}
+                  {lifeLine.replace("{n}", String(life)).replace("{days}", daysWord(life, dayUnits))}
                 </p>
               ) : null}
             </div>
@@ -320,15 +344,15 @@ export function Flowers002({
                       <div>
                         <h3>{flower.name}</h3>
                         <p>
-                          {flower.price} {currency}/шт · стоит {flower.days} {daysWord(flower.days)}
+                          {stemLine.replace("{price}", `${flower.price} ${currency}`).replace("{n}", String(flower.days)).replace("{days}", daysWord(flower.days, dayUnits))}
                         </p>
                       </div>
                       <div data-part="count">
-                        <button type="button" onClick={() => change(flower.name, -1)} disabled={count === 0} aria-label={`Убрать: ${flower.name}`}>
+                        <button type="button" onClick={() => change(flower.name, -1)} disabled={count === 0} aria-label={removeLabel.replace("{name}", flower.name)}>
                           −
                         </button>
                         <output aria-label={`${flower.name}: ${count}`}>{count}</output>
-                        <button type="button" onClick={() => change(flower.name, 1)} disabled={total >= maxStems} aria-label={`Добавить: ${flower.name}`}>
+                        <button type="button" onClick={() => change(flower.name, 1)} disabled={total >= maxStems} aria-label={addLabel.replace("{name}", flower.name)}>
                           +
                         </button>
                       </div>
@@ -339,23 +363,23 @@ export function Flowers002({
               <div data-part="sum" aria-live="polite">
                 <dl>
                   <div>
-                    <dt>Стеблей</dt>
+                    <dt>{stemsLabel}</dt>
                     <dd>
                       {total}
                       <small> / {maxStems}</small>
                     </dd>
                   </div>
                   <div>
-                    <dt>Соберём за</dt>
+                    <dt>{assemblyLabel}</dt>
                     <dd>{assembly}</dd>
                   </div>
                   <div>
-                    <dt>Цена</dt>
+                    <dt>{priceLabel}</dt>
                     <dd>{formatMoney(price, currency)}</dd>
                   </div>
                 </dl>
                 <p data-part="wrap">
-                  {wrapLabel} — {wrapPrice} {currency}, уже в цене
+                  {wrapLine.replace("{wrap}", wrapLabel).replace("{price}", `${wrapPrice} ${currency}`)}
                 </p>
                 <button data-part="order" type="button" onClick={order} disabled={total === 0}>
                   {orderLabel}

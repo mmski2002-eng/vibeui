@@ -19,6 +19,8 @@ export type Cta017Props = {
   consent?: string
   /** Куда отправить форму. Пусто — «готово» на месте. */
   action?: string
+  /** Подписи единиц обратного отсчёта. */
+  units?: readonly [string, string, string, string]
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -99,12 +101,7 @@ container-type:inline-size;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-017"] *{animation:none!important;transition:none!important}}`
 
-const UNITS: [keyof Remaining, string][] = [
-  ["days", "дней"],
-  ["hours", "часов"],
-  ["minutes", "минут"],
-  ["seconds", "секунд"],
-]
+const KEYS: (keyof Remaining)[] = ["days", "hours", "minutes", "seconds"]
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number }
 
@@ -127,6 +124,7 @@ export function Cta017({
   doneText = "Письмо с программой и ссылкой уже летит. Проверьте «Промоакции», если не видите.",
   consent = "Нажимая кнопку, вы соглашаетесь с политикой обработки данных.",
   action = "",
+  units = ["дней", "часов", "минут", "секунд"],
   tone = "auto",
   accent,
   ink,
@@ -178,7 +176,8 @@ export function Cta017({
             </div>
             <div>
               <ol data-part="timer" aria-label={countdownLabel}>
-                {UNITS.map(([key, label]) => {
+                {KEYS.map((key, index) => {
+                  const label = units[index]
                   const value = left ? left[key] : 0
                   return (
                     <li key={key} data-part="unit">

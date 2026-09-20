@@ -21,6 +21,16 @@ export type People015Props = {
   doctors?: readonly People015Doctor[]
   actionLabel?: string
   actionHref?: string
+  /** Дни недели: полные с воскресенья и короткие с понедельника. */
+  dayNames?: readonly string[]
+  dayShort?: readonly string[]
+  scheduleTitle?: string
+  scheduleNote?: string
+  todayLine?: string
+  onDutyLine?: string
+  nobodyLine?: string
+  todayHoursLine?: string
+  weekLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -99,8 +109,6 @@ container-type:inline-size;
 @container (min-width: 64rem){[data-vibeui-block="people-015"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="people-015"] *{animation:none!important;transition:none!important}}`
 
-const DAY_NAMES = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"]
-const DAY_SHORT = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
 
 const DEFAULT_DOCTORS: People015Doctor[] = [
   { name: "Марина Соколова", role: "Главный врач, терапевт", photo: "/demo/vet/doctor-01.webp", tags: ["кошки", "УЗИ", "эндокринология"], days: [1, 2, 3, 4, 5], hours: "9:00–17:00", since: "в профессии с 2009" },
@@ -143,6 +151,15 @@ export function People015({
   doctors = DEFAULT_DOCTORS,
   actionLabel = "Все 11 врачей",
   actionHref = "#contacts",
+  dayNames = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
+  dayShort = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"],
+  scheduleTitle = "Расписание приёма",
+  scheduleNote = "День недели подставится на вашем устройстве.",
+  todayLine = "Сегодня, {day}",
+  onDutyLine = "Принимают: {list}",
+  nobodyLine = "Плановых приёмов нет, дежурный врач на месте.",
+  todayHoursLine = "сегодня {hours}",
+  weekLabel = "Дни приёма",
   tone = "auto",
   accent,
   ink,
@@ -178,13 +195,13 @@ export function People015({
               <i aria-hidden="true" />
               {today === null ? (
                 <span>
-                  <b>Расписание приёма</b>
-                  День недели подставится на вашем устройстве.
+                  <b>{scheduleTitle}</b>
+                  {scheduleNote}
                 </span>
               ) : (
                 <span>
-                  <b>Сегодня, {DAY_NAMES[today]}</b>
-                  {onDuty.length > 0 ? `Принимают: ${onDuty.map((doctor) => `${doctor.name.split(" ")[0]} ${doctor.hours}`).join(", ")}` : "Плановых приёмов нет, дежурный врач на месте."}
+                  <b>{todayLine.replace("{day}", dayNames[today])}</b>
+                  {onDuty.length > 0 ? onDutyLine.replace("{list}", onDuty.map((doctor) => `${doctor.name.split(" ")[0]} ${doctor.hours}`).join(", ")) : nobodyLine}
                 </span>
               )}
             </p>
@@ -199,7 +216,7 @@ export function People015({
                     {duty ? (
                       <span data-part="badge">
                         <i aria-hidden="true" />
-                        сегодня {doctor.hours}
+                        {todayHoursLine.replace("{hours}", doctor.hours)}
                       </span>
                     ) : null}
                   </div>
@@ -213,8 +230,8 @@ export function People015({
                         ))}
                       </ul>
                     ) : null}
-                    <ul data-part="week" aria-label="Дни приёма">
-                      {DAY_SHORT.map((label, index) => {
+                    <ul data-part="week" aria-label={weekLabel}>
+                      {dayShort.map((label, index) => {
                         const day = (index + 1) % 7
                         return (
                           <li key={label} data-on={doctor.days.includes(day)} data-today={today === day}>

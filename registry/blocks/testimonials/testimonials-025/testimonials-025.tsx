@@ -19,6 +19,8 @@ export type Testimonials025Props = {
   reviews?: readonly Testimonials025Review[]
   /** Фото-подложка с затемнением. Пусто — без фото. */
   image?: string
+  /** aria звёзд. */
+  starsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -117,9 +119,9 @@ const DEFAULT_REVIEWS: Testimonials025Review[] = [
   { title: "Тихо и без рекламы", text: "Никаких «премиум за 3 990 в год» на каждом экране. Бесплатной версии хватает.", name: "Оля", store: "App Store", stars: 5, date: "июл 2026" },
 ]
 
-function Stars({ n }: { n: number }) {
+function Stars({ n, label }: { n: number; label: string }) {
   return (
-    <span data-part="stars" aria-label={`${n} из 5`}>
+    <span data-part="stars" aria-label={label.replace("{n}", String(n))}>
       {[1, 2, 3, 4, 5].map((i) => (
         <i key={i} data-off={i > n} aria-hidden="true" style={{ ["--vibeui-testimonials-025-i" as string]: i - 1 }}>
           ★
@@ -146,6 +148,7 @@ export function Testimonials025({
   ratingNote = "12 412 оценок",
   reviews = DEFAULT_REVIEWS,
   image = "",
+  starsLabel = "{n} из 5",
   tone = "auto",
   accent,
   ink,
@@ -185,7 +188,7 @@ export function Testimonials025({
             {rating ? (
               <div data-part="rating">
                 <b>{rating}</b>
-                <Stars n={5} />
+                <Stars n={5} label={starsLabel} />
                 {ratingNote ? <small>{ratingNote}</small> : null}
               </div>
             ) : null}
@@ -193,7 +196,7 @@ export function Testimonials025({
           <div data-part="track">
             {reviews.map((review, index) => (
               <article key={review.title} data-part="card" style={{ ["--vibeui-testimonials-025-i" as string]: index }}>
-                <Stars n={review.stars ?? 5} />
+                <Stars n={review.stars ?? 5} label={starsLabel} />
                 <h3>{review.title}</h3>
                 <p>{review.text}</p>
                 <div data-part="who">

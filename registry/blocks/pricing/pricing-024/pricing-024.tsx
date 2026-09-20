@@ -25,6 +25,9 @@ export type Pricing024Props = {
   freeAction?: string
   premiumAction?: string
   premiumHref?: string
+  /** aria переключателя периода и заголовок колонки функций. */
+  periodLabel?: string
+  featureLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -163,6 +166,8 @@ export function Pricing024({
   freeAction = "Скачать",
   premiumAction = "Попробовать 7 дней",
   premiumHref = "#",
+  periodLabel = "Период оплаты",
+  featureLabel = "функция",
   tone = "auto",
   accent,
   ink,
@@ -223,7 +228,7 @@ export function Pricing024({
             <Words text={title} />
           </h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
-          <div data-part="switch" data-yearly={yearly} role="group" aria-label="Период оплаты">
+          <div data-part="switch" data-yearly={yearly} role="group" aria-label={periodLabel}>
             <button type="button" aria-pressed={!yearly} onClick={() => setYearly(false)}>
               {monthlyLabel}
             </button>
@@ -256,7 +261,7 @@ export function Pricing024({
           </div>
           <div data-part="table">
             <div data-part="row" data-reveal="" style={{ ["--vibeui-pricing-024-i" as string]: 0 }}>
-              <span>функция</span>
+              <span>{featureLabel}</span>
               <span>{freeName}</span>
               <span>{premiumName}</span>
             </div>

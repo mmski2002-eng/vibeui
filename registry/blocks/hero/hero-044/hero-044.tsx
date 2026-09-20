@@ -30,6 +30,13 @@ export type Hero044Props = {
   imageAlt?: string
   /** Рукописная подпись под фото. */
   caption?: string
+  /** Формы «день», строки счётчика и фактов. */
+  dayUnits?: readonly [string, string, string]
+  leftLine?: string
+  ofLine?: string
+  barLabel?: string
+  donorsLine?: string
+  adsLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -118,12 +125,12 @@ function formatMoney(value: number) {
   return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
-function pluralDays(value: number) {
+function pluralDays(value: number, units: readonly [string, string, string]) {
   const mod10 = value % 10
   const mod100 = value % 100
-  if (mod10 === 1 && mod100 !== 11) return "день"
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return "дня"
-  return "дней"
+  if (mod10 === 1 && mod100 !== 11) return units[0]
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return units[1]
+  return units[2]
 }
 
 /** Хиро сбора: строки из масок, счётчик, прогресс с вехами, магнитная кнопка. */
@@ -149,6 +156,12 @@ export function Hero044({
   image = "",
   imageAlt = "",
   caption = "Нина Петровна, 84 года. Ржев, ул. Ленина",
+  dayUnits = ["день", "дня", "дней"],
+  leftLine = "осталось {n} {days}",
+  ofLine = "из {goal} · {percent}%",
+  barLabel = "Собрано",
+  donorsLine = "{n} человек уже помогли",
+  adsLine = "{n} на рекламу",
   tone = "auto",
   accent,
   ink,
@@ -235,7 +248,7 @@ export function Hero044({
                 <span>{eyebrow}</span>
                 {daysLeft > 0 ? (
                   <em>
-                    осталось {daysLeft} {pluralDays(daysLeft)}
+                    {leftLine.replace("{n}", String(daysLeft)).replace("{days}", pluralDays(daysLeft, dayUnits))}
                   </em>
                 ) : null}
               </p>
@@ -258,10 +271,14 @@ export function Hero044({
                   {formatMoney(shown)} {currency}
                 </strong>
                 <span>
-                  из <b>{formatMoney(goal)} {currency}</b> · {Math.round(percent)}%
+                  {ofLine.split("{goal}")[0]}
+                  <b>
+                    {formatMoney(goal)} {currency}
+                  </b>
+                  {(ofLine.split("{goal}")[1] ?? "").replace("{percent}", String(Math.round(percent)))}
                 </span>
               </p>
-              <div data-part="bar" role="progressbar" aria-valuemin={0} aria-valuemax={goal} aria-valuenow={raised} aria-label="Собрано">
+              <div data-part="bar" role="progressbar" aria-valuemin={0} aria-valuemax={goal} aria-valuenow={raised} aria-label={barLabel}>
                 <i data-part="fill" style={{ ["--vibeui-hero-044-p" as string]: `${percent}%` }} />
                 {milestones.map((milestone) => (
                   <i key={milestone.at} data-part="mark" data-done={inView && raised >= milestone.at} style={{ ["--vibeui-hero-044-x" as string]: `${Math.min(100, (milestone.at / Math.max(1, goal)) * 100)}%` }}>
@@ -273,11 +290,13 @@ export function Hero044({
                 <ul data-part="meta">
                   {donors > 0 ? (
                     <li>
-                      <b>{formatMoney(donors)}</b> человек уже помогли
+                      <b>{formatMoney(donors)}</b>
+                      {donorsLine.split("{n}")[1]}
                     </li>
                   ) : null}
                   <li>
-                    <b>0 %</b> на рекламу
+                    <b>0 %</b>
+                    {adsLine.split("{n}")[1]}
                   </li>
                 </ul>
               ) : null}

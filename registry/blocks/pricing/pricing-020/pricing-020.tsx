@@ -34,6 +34,13 @@ export type Pricing020Props = {
   /** Подпись под тарифами: возврат, договор. */
   note?: string
   currency?: string
+  /** aria переключателя и подписи цен. */
+  methodLabel?: string
+  monthsUnit?: string
+  perMonthLabel?: string
+  perCourseLabel?: string
+  totalLabel?: string
+  seatsLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -140,6 +147,12 @@ export function Pricing020({
   sticker = "−20 % до 30 сентября",
   note = "Договор оферты и чек — на почту. Оплата картой, СБП или по счёту для юрлиц.",
   currency = "₽",
+  methodLabel = "Способ оплаты",
+  monthsUnit = "мес",
+  perMonthLabel = "в месяц",
+  perCourseLabel = "за курс",
+  totalLabel = "всего",
+  seatsLine = "занято {taken} из {total}",
   tone = "auto",
   accent,
   ink,
@@ -175,12 +188,12 @@ export function Pricing020({
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
           <div data-part="bar">
-            <div data-part="switch" data-split={split} role="group" aria-label="Способ оплаты">
+            <div data-part="switch" data-split={split} role="group" aria-label={methodLabel}>
               <button type="button" aria-pressed={!split} onClick={() => setSplit(false)}>
                 {onceLabel}
               </button>
               <button type="button" aria-pressed={split} onClick={() => setSplit(true)}>
-                {splitLabel} · {months} мес
+                {splitLabel} · {months} {monthsUnit}
               </button>
             </div>
             {sticker ? <span data-part="sticker">{sticker}</span> : null}
@@ -202,7 +215,7 @@ export function Pricing020({
                         {format.format(value)} {currency}
                       </span>
                     </span>
-                    <span data-part="per">{split ? "в месяц" : "за курс"}</span>
+                    <span data-part="per">{split ? perMonthLabel : perCourseLabel}</span>
                     {plan.oldPrice && !split ? (
                       <span data-part="old">
                         {format.format(plan.oldPrice)} {currency}
@@ -210,7 +223,7 @@ export function Pricing020({
                     ) : null}
                     {split ? (
                       <span data-part="old" style={{ textDecoration: "none" }}>
-                        всего {format.format(plan.price)} {currency}
+                        {totalLabel} {format.format(plan.price)} {currency}
                       </span>
                     ) : null}
                   </div>
@@ -218,7 +231,7 @@ export function Pricing020({
                     <div data-part="meter" style={{ ["--vibeui-pricing-020-fill" as string]: fill }}>
                       <i aria-hidden="true" />
                       <span>
-                        занято {plan.seatsTaken} из {plan.seatsTotal}
+                        {seatsLine.replace("{taken}", String(plan.seatsTaken)).replace("{total}", String(plan.seatsTotal))}
                       </span>
                     </div>
                   ) : null}

@@ -19,6 +19,8 @@ export type Course001Props = {
   lede?: string
   personas?: readonly Course001Persona[]
   outcomesLabel?: string
+  /** aria плиток персон. */
+  tilesLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -103,6 +105,7 @@ export function Course001({
   lede = "Три типичных старта — три разных набора практики. Раскройте свой.",
   personas = DEFAULT_PERSONAS,
   outcomesLabel = "Что получите",
+  tilesLabel = "Кто вы сейчас",
   tone = "auto",
   accent,
   ink,
@@ -133,7 +136,7 @@ export function Course001({
             </div>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <ul data-part="tiles" role="tablist" aria-label="Кто вы сейчас">
+          <ul data-part="tiles" role="tablist" aria-label={tilesLabel}>
             {personas.map((item, index) => {
               const open = index === active
               return (

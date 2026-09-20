@@ -21,6 +21,8 @@ export type Navbar022Props = {
   /** Полоска прогресса чтения под шапкой. */
   progress?: boolean
   sticky?: boolean
+  /** aria навигации. */
+  navLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -97,6 +99,7 @@ export function Navbar022({
   menuLabel = "Меню",
   progress = true,
   sticky = true,
+  navLabel = "Разделы",
   tone = "auto",
   accent,
   ink,
@@ -155,7 +158,7 @@ export function Navbar022({
             <span data-part="name">{brand}</span>
             {caption ? <span data-part="caption">{caption}</span> : null}
           </a>
-          <nav aria-label="Разделы">
+          <nav aria-label={navLabel}>
             <ul data-part="nav">
               {links.map((link) => (
                 <li key={link.label + link.href}>

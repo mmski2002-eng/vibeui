@@ -27,6 +27,8 @@ export type Fintech001Props = {
   account?: string
   periods?: readonly Fintech001Period[]
   currency?: string
+  /** aria переключателя периода. */
+  tabsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -194,6 +196,7 @@ export function Fintech001({
   account = "Основной счёт · 40702…4821",
   periods = DEFAULT_PERIODS,
   currency = "₽",
+  tabsLabel = "Период",
   tone = "auto",
   accent,
   ink,
@@ -290,7 +293,7 @@ export function Fintech001({
                 {period?.delta ? <span data-part="delta">{period.delta}</span> : null}
               </div>
               {periods.length > 1 ? (
-                <div data-part="tabs" role="group" aria-label="Период">
+                <div data-part="tabs" role="group" aria-label={tabsLabel}>
                   {periods.map((item, index) => (
                     <button key={item.label} type="button" aria-pressed={index === periodIndex} onClick={() => { setPeriodIndex(index); setTouched(true) }}>
                       {item.label}

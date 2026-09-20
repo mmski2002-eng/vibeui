@@ -30,6 +30,36 @@ export type Flowers003Props = {
   submitLabel?: string
   doneTitle?: string
   doneText?: string
+  /** Формы слова «день», единицы ожидания и все подписи формы. */
+  dayUnits?: readonly [string, string, string]
+  minutesUnit?: string
+  hoursUnit?: string
+  decimalSeparator?: string
+  clockLine?: string
+  nightLine?: string
+  nowLine?: string
+  byLine?: string
+  todayLabel?: string
+  tomorrowLabel?: string
+  windowLine?: string
+  countingLine?: string
+  tapeLabel?: string
+  rangeLabel?: string
+  hintLine?: string
+  courierLine?: string
+  orderTitle?: string
+  orderLine?: string
+  editLabel?: string
+  noOrderTitle?: string
+  noOrderText?: string
+  builderLabel?: string
+  nameLabel?: string
+  phoneLabel?: string
+  addressLabel?: string
+  noteLabel?: string
+  totalLine?: string
+  freeLabel?: string
+  noBouquetLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -153,12 +183,12 @@ function formatMoney(value: number, currency: string) {
   return `${String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ${currency}`
 }
 
-function daysWord(days: number) {
+function daysWord(days: number, units: readonly [string, string, string]) {
   const rest = days % 10
-  if (days % 100 >= 11 && days % 100 <= 14) return "дней"
-  if (rest === 1) return "день"
-  if (rest >= 2 && rest <= 4) return "дня"
-  return "дней"
+  if (days % 100 >= 11 && days % 100 <= 14) return units[2]
+  if (rest === 1) return units[0]
+  if (rest >= 2 && rest <= 4) return units[1]
+  return units[2]
 }
 
 /** Доставка к часу: лента времени от текущего момента и форма заказа. */
@@ -178,6 +208,35 @@ export function Flowers003({
   submitLabel = "Оформить заказ",
   doneTitle = "Заказ принят",
   doneText = "Флорист позвонит в течение десяти минут — уточнить открытку и подъезд.",
+  dayUnits = ["день", "дня", "дней"],
+  minutesUnit = "мин",
+  hoursUnit = "ч",
+  decimalSeparator = ",",
+  clockLine = "смотрим на часы…",
+  nightLine = "сейчас ночь — привезём утром первым",
+  nowLine = "сейчас {time}, ближайшее окно — через {wait}",
+  byLine = "к {time}",
+  todayLabel = "сегодня",
+  tomorrowLabel = "завтра",
+  windowLine = "{day}, окно {from}–{to}",
+  countingLine = "считаем окна",
+  tapeLabel = "Окно доставки",
+  rangeLabel = "Время доставки",
+  hintLine = "Курьеры с {open} до {close}. Доставка {price}, от {free} — бесплатно.",
+  courierLine = "Курьер будет {day} к {time}. ",
+  orderTitle = "Ваш букет",
+  orderLine = "{items} · {stems} стеблей · живёт {n} {days}",
+  editLabel = "изменить состав",
+  noOrderTitle = "Какой букет?",
+  noOrderText = "Соберите его в конструкторе — состав появится здесь. Или опишите словами ниже.",
+  builderLabel = "открыть конструктор",
+  nameLabel = "Как вас зовут",
+  phoneLabel = "Телефон",
+  addressLabel = "Адрес, подъезд, этаж",
+  noteLabel = "Открытка или пожелания",
+  totalLine = "букет {bouquet} + доставка {delivery}",
+  freeLabel = "бесплатно",
+  noBouquetLine = "доставка {delivery}, букет посчитаем после звонка",
   tone = "auto",
   accent,
   ink,
@@ -203,8 +262,8 @@ export function Flowers003({
   const bouquetPrice = order?.price ?? 0
   const delivery = bouquetPrice >= freeFrom ? 0 : deliveryPrice
   const wait = now !== null && slots.length > 0 ? Math.max(0, slots[0].start - now) : 0
-  const waitLabel = wait < 60 ? `${wait} мин` : `${(wait / 60).toFixed(wait % 60 ? 1 : 0).replace(".", ",")} ч`
-  const status = now === null ? "смотрим на часы…" : night ? "сейчас ночь — привезём утром первым" : `сейчас ${clock(now)}, ближайшее окно — через ${waitLabel}`
+  const waitLabel = wait < 60 ? `${wait} ${minutesUnit}` : `${(wait / 60).toFixed(wait % 60 ? 1 : 0).replace(".", decimalSeparator)} ${hoursUnit}`
+  const status = now === null ? clockLine : night ? nightLine : nowLine.replace("{time}", clock(now)).replace("{wait}", waitLabel)
   const id = useId()
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
@@ -238,23 +297,23 @@ export function Flowers003({
                 {status}
               </p>
               <div data-part="readout">
-                <b>{current ? `к ${clock(current.start)}` : "—:—"}</b>
-                <span>{current ? `${current.day === "today" ? "сегодня" : "завтра"}, окно ${clock(current.start)}–${clock(current.start + slotMinutes)}` : "считаем окна"}</span>
+                <b>{current ? byLine.replace("{time}", clock(current.start)) : "—:—"}</b>
+                <span>{current ? windowLine.replace("{day}", current.day === "today" ? todayLabel : tomorrowLabel).replace("{from}", clock(current.start)).replace("{to}", clock(current.start + slotMinutes)) : countingLine}</span>
               </div>
-              <div data-part="tape" role="radiogroup" aria-label="Окно доставки">
+              <div data-part="tape" role="radiogroup" aria-label={tapeLabel}>
                 <div data-part="track" style={{ ["--vibeui-flowers-003-i" as string]: index }}>
                   {slots.map((slot, slotIndex) => (
                     <button key={`${slot.day}-${slot.start}`} type="button" data-part="slot" role="radio" aria-checked={slotIndex === index} data-on={slotIndex === index} onClick={() => setSelected(slotIndex)}>
                       <i aria-hidden="true" />
                       <b>{clock(slot.start)}</b>
-                      <small>{slot.day === "today" ? "сегодня" : "завтра"}</small>
+                      <small>{slot.day === "today" ? todayLabel : tomorrowLabel}</small>
                     </button>
                   ))}
                 </div>
               </div>
-              <input data-part="range" type="range" min={0} max={Math.max(0, slots.length - 1)} value={index} onChange={(event) => setSelected(Number(event.target.value))} aria-label="Время доставки" disabled={slots.length === 0} />
+              <input data-part="range" type="range" min={0} max={Math.max(0, slots.length - 1)} value={index} onChange={(event) => setSelected(Number(event.target.value))} aria-label={rangeLabel} disabled={slots.length === 0} />
               <p data-part="hint">
-                Курьеры с {pad(openHour)}:00 до {pad(closeHour)}:00. Доставка {deliveryPrice} {currency}, от {formatMoney(freeFrom, currency)} — бесплатно.
+                {hintLine.replace("{open}", `${pad(openHour)}:00`).replace("{close}", `${pad(closeHour)}:00`).replace("{price}", `${deliveryPrice} ${currency}`).replace("{free}", formatMoney(freeFrom, currency))}
               </p>
             </div>
             <div>
@@ -266,7 +325,7 @@ export function Flowers003({
                   </svg>
                   <h3>{doneTitle}</h3>
                   <p>
-                    {current ? `Курьер будет ${current.day === "today" ? "сегодня" : "завтра"} к ${clock(current.start)}. ` : ""}
+                    {current ? courierLine.replace("{day}", current.day === "today" ? todayLabel : tomorrowLabel).replace("{time}", clock(current.start)) : ""}
                     {doneText}
                   </p>
                 </div>
@@ -275,45 +334,45 @@ export function Flowers003({
                   <div data-part="bouquet" aria-live="polite">
                     {order && order.items.length > 0 ? (
                       <>
-                        <h3>Ваш букет</h3>
+                        <h3>{orderTitle}</h3>
                         <p>
-                          {order.items.map((item) => `${item.name.toLowerCase()} ×${item.count}`).join(", ")} · {order.stems} стеблей · живёт {order.days} {daysWord(order.days)}
+                          {orderLine.replace("{items}", order.items.map((item) => `${item.name.toLowerCase()} ×${item.count}`).join(", ")).replace("{stems}", String(order.stems)).replace("{n}", String(order.days)).replace("{days}", daysWord(order.days, dayUnits))}
                         </p>
-                        <a href={builderHref}>изменить состав</a>
+                        <a href={builderHref}>{editLabel}</a>
                       </>
                     ) : (
                       <>
-                        <h3>Какой букет?</h3>
-                        <p>Соберите его в конструкторе — состав появится здесь. Или опишите словами ниже.</p>
-                        <a href={builderHref}>открыть конструктор</a>
+                        <h3>{noOrderTitle}</h3>
+                        <p>{noOrderText}</p>
+                        <a href={builderHref}>{builderLabel}</a>
                       </>
                     )}
                   </div>
                   <div data-part="field">
                     <input id={`${id}-name`} name="name" type="text" placeholder=" " required autoComplete="name" />
-                    <label htmlFor={`${id}-name`}>Как вас зовут</label>
+                    <label htmlFor={`${id}-name`}>{nameLabel}</label>
                   </div>
                   <div data-part="field">
                     <input id={`${id}-phone`} name="phone" type="tel" placeholder=" " required autoComplete="tel" />
-                    <label htmlFor={`${id}-phone`}>Телефон</label>
+                    <label htmlFor={`${id}-phone`}>{phoneLabel}</label>
                   </div>
                   <div data-part="field">
                     <input id={`${id}-address`} name="address" type="text" placeholder=" " required autoComplete="street-address" />
-                    <label htmlFor={`${id}-address`}>Адрес, подъезд, этаж</label>
+                    <label htmlFor={`${id}-address`}>{addressLabel}</label>
                   </div>
                   <div data-part="field">
                     <textarea id={`${id}-note`} name="note" placeholder=" " rows={2} />
-                    <label htmlFor={`${id}-note`}>Открытка или пожелания</label>
+                    <label htmlFor={`${id}-note`}>{noteLabel}</label>
                   </div>
                   <div data-part="total">
                     <span>
-                      {order ? `букет ${formatMoney(bouquetPrice, currency)} + доставка ${delivery === 0 ? "бесплатно" : formatMoney(delivery, currency)}` : `доставка ${formatMoney(deliveryPrice, currency)}, букет посчитаем после звонка`}
+                      {order ? totalLine.replace("{bouquet}", formatMoney(bouquetPrice, currency)).replace("{delivery}", delivery === 0 ? freeLabel : formatMoney(delivery, currency)) : noBouquetLine.replace("{delivery}", formatMoney(deliveryPrice, currency))}
                     </span>
                     <b>{formatMoney(bouquetPrice + delivery, currency)}</b>
                   </div>
                   <button data-part="submit" type="submit">
                     {submitLabel}
-                    {current ? ` · к ${clock(current.start)}` : ""}
+                    {current ? ` · ${byLine.replace("{time}", clock(current.start))}` : ""}
                   </button>
                 </form>
               )}

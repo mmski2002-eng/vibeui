@@ -19,6 +19,18 @@ export type Contact016Props = {
   consentLabel?: string
   /** Куда отправить форму. Пусто — показывается «готово» на месте. */
   action?: string
+  /** Подписи полей формы брони. */
+  dateLabel?: string
+  timeLabel?: string
+  guestsLabel?: string
+  lessLabel?: string
+  moreLabel?: string
+  nameLabel?: string
+  namePlaceholder?: string
+  phoneLabel?: string
+  phonePlaceholder?: string
+  noteLabel?: string
+  notePlaceholder?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -123,6 +135,17 @@ export function Contact016({
   doneText = "Пришлём подтверждение в мессенджер за пару минут.",
   consentLabel = "Согласен на обработку данных и звонок по этому номеру.",
   action = "",
+  dateLabel = "Дата",
+  timeLabel = "Время",
+  guestsLabel = "Гостей",
+  lessLabel = "Меньше",
+  moreLabel = "Больше",
+  nameLabel = "Имя",
+  namePlaceholder = "Как к вам обращаться",
+  phoneLabel = "Телефон",
+  phonePlaceholder = "+7 999 123-45-67",
+  noteLabel = "Пожелания",
+  notePlaceholder = "У окна, день рождения, без лука…",
   tone = "auto",
   accent,
   ink,
@@ -199,40 +222,40 @@ export function Contact016({
             <form data-part="form" action={action || undefined} method={action ? "post" : undefined} onSubmit={submit}>
               <div data-part="pair">
                 <label data-part="field">
-                  <span>Дата</span>
+                  <span>{dateLabel}</span>
                   <input name="date" type="date" required value={date} min={minDate || undefined} onChange={(event) => setDate(event.target.value)} />
                 </label>
                 <label data-part="field">
-                  <span>Время</span>
+                  <span>{timeLabel}</span>
                   <input name="time" type="time" required value={time} step={900} onChange={(event) => setTime(event.target.value)} />
                 </label>
               </div>
               <div data-part="pair">
                 <div data-part="field">
-                  <span>Гостей</span>
+                  <span>{guestsLabel}</span>
                   <div data-part="stepper">
-                    <button type="button" aria-label="Меньше" onClick={() => setGuests((value) => Math.max(minGuests, value - 1))}>
+                    <button type="button" aria-label={lessLabel} onClick={() => setGuests((value) => Math.max(minGuests, value - 1))}>
                       −
                     </button>
                     <output aria-live="polite">{guests}</output>
-                    <button type="button" aria-label="Больше" onClick={() => setGuests((value) => Math.min(maxGuests, value + 1))}>
+                    <button type="button" aria-label={moreLabel} onClick={() => setGuests((value) => Math.min(maxGuests, value + 1))}>
                       +
                     </button>
                     <input type="hidden" name="guests" value={guests} />
                   </div>
                 </div>
                 <label data-part="field">
-                  <span>Имя</span>
-                  <input name="name" required placeholder="Как к вам обращаться" autoComplete="name" />
+                  <span>{nameLabel}</span>
+                  <input name="name" required placeholder={namePlaceholder} autoComplete="name" />
                 </label>
               </div>
               <label data-part="field">
-                <span>Телефон</span>
-                <input name="phone" type="tel" required inputMode="tel" autoComplete="tel" placeholder="+7 999 123-45-67" />
+                <span>{phoneLabel}</span>
+                <input name="phone" type="tel" required inputMode="tel" autoComplete="tel" placeholder={phonePlaceholder} />
               </label>
               <label data-part="field">
-                <span>Пожелания</span>
-                <textarea name="note" placeholder="У окна, день рождения, без лука…" />
+                <span>{noteLabel}</span>
+                <textarea name="note" placeholder={notePlaceholder} />
               </label>
               <label data-part="consent">
                 <input type="checkbox" name="consent" required />

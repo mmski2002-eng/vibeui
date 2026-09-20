@@ -24,6 +24,9 @@ export type Writer004Props = {
   visible?: number
   /** Секунд между сменами заметок. */
   interval?: number
+  /** aria полей. */
+  leftLabel?: string
+  rightLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -108,6 +111,8 @@ export function Writer004({
   notes = DEFAULT_NOTES,
   visible = 4,
   interval = 4,
+  leftLabel = "Заметки читателей",
+  rightLabel = "Ещё заметки читателей",
   tone = "auto",
   accent,
   ink,
@@ -189,7 +194,7 @@ export function Writer004({
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
           <div data-part="spread">
-            <ul data-part="margin" data-side="left" aria-label="Заметки читателей">
+            <ul data-part="margin" data-side="left" aria-label={leftLabel}>
               {left.map(renderNote)}
             </ul>
             <article data-part="page">
@@ -199,7 +204,7 @@ export function Writer004({
               ))}
               {pageNumber ? <span data-part="folio">{pageNumber}</span> : null}
             </article>
-            <ul data-part="margin" data-side="right" aria-label="Ещё заметки читателей">
+            <ul data-part="margin" data-side="right" aria-label={rightLabel}>
               {right.map(renderNote)}
             </ul>
           </div>

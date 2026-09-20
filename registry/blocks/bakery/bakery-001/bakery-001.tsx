@@ -28,6 +28,16 @@ export type Bakery001Props = {
   boxHref?: string
   /** Сколько позиций вмещает коробка (совпадает с блоком коробки). */
   boxSize?: number
+  /** «будет в {time}» / «испечено в {time}» на карточке. */
+  soonLine?: string
+  bakedLine?: string
+  /** «последние {n}» / «осталось {n}». */
+  lastLine?: string
+  leftLine?: string
+  /** «{count} из {size}» — aria мини-коробки. */
+  ofLabel?: string
+  /** Единица штук у кнопки: «в коробке · 2 шт». */
+  unit?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -200,6 +210,12 @@ export function Bakery001({
   boxLabel = "в коробке",
   boxHref = "#box",
   boxSize = 4,
+  soonLine = "будет в {time}",
+  bakedLine = "испечено в {time}",
+  lastLine = "последние {n}",
+  leftLine = "осталось {n}",
+  ofLabel = "из",
+  unit = "шт",
   tone = "auto",
   accent,
   ink,
@@ -326,7 +342,7 @@ export function Bakery001({
                   {hint}
                 </div>
               ) : null}
-              <a ref={box} data-part="box" data-count={inBox.length} href={boxHref} aria-label={`${boxLabel}: ${inBox.length} из ${boxSize}`}>
+              <a ref={box} data-part="box" data-count={inBox.length} href={boxHref} aria-label={`${boxLabel}: ${inBox.length} ${ofLabel} ${boxSize}`}>
                 <svg viewBox="0 0 34 30" aria-hidden="true">
                   <path d="M3 11 L17 4 L31 11 L31 26 L3 26 Z M3 11 L17 18 L31 11 M17 18 L17 26" />
                 </svg>
@@ -365,12 +381,12 @@ export function Bakery001({
                     {baked !== null ? (
                       <span data-part="fresh" data-cold={cold}>
                         <i aria-hidden="true" />
-                        {m < baked ? `будет в ${product.bakedAt}` : `испечено в ${product.bakedAt}`}
+                        {(m < baked ? soonLine : bakedLine).replace("{time}", product.bakedAt ?? "")}
                       </span>
                     ) : null}
                     {product.left !== undefined ? (
                       <span data-part="left" data-few={product.left <= 4}>
-                        {product.left <= 4 ? `последние ${product.left}` : `осталось ${product.left}`}
+                        {(product.left <= 4 ? lastLine : leftLine).replace("{n}", String(product.left))}
                       </span>
                     ) : null}
                   </div>
@@ -385,7 +401,7 @@ export function Bakery001({
                     disabled={full && count === 0}
                     onClick={(event) => add(product, event.currentTarget.closest("[data-part='item']")?.querySelector<HTMLElement>("[data-part='pic']") ?? null)}
                   >
-                    {count > 0 ? `${inBoxLabel} · ${count} шт` : full ? fullLabel : addLabel}
+                    {count > 0 ? `${inBoxLabel} · ${count} ${unit}` : full ? fullLabel : addLabel}
                   </button>
                 </article>
               )

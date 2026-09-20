@@ -32,6 +32,13 @@ export type Api001Props = {
   /** Остаток бесплатных запросов, уменьшается с каждым запросом. */
   freeLeft?: number
   note?: string
+  /** aria поля и примеров, пустой ответ, aria карты, подписи счётчиков. */
+  inputLabel?: string
+  chipsLabel?: string
+  emptyLine?: string
+  mapLabel?: string
+  costLabel?: string
+  freeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -174,6 +181,12 @@ export function Api001({
   cost = 0.012,
   freeLeft = 10000,
   note = "Песочница отвечает предзаписанными данными: ключ не нужен, лимит не тратится.",
+  inputLabel = "Адрес",
+  chipsLabel = "Примеры адресов",
+  emptyLine = "ответ появится здесь — нажмите «{action}» или выберите адрес",
+  mapLabel = "Карта с точкой результата",
+  costLabel = "стоимость",
+  freeLabel = "бесплатных осталось",
   tone = "auto",
   accent,
   ink,
@@ -255,14 +268,14 @@ export function Api001({
               <form data-part="form" onSubmit={submit}>
                 <label data-part="field">
                   <span>GET /v2/geocode?q=</span>
-                  <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={placeholder} aria-label="Адрес" autoComplete="off" />
+                  <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={placeholder} aria-label={inputLabel} autoComplete="off" />
                 </label>
                 <button data-part="send" type="submit" disabled={pending !== null}>
                   {pending ? "…" : actionLabel} <span aria-hidden="true">↵</span>
                 </button>
               </form>
               {suggestions.length > 0 ? (
-                <ul data-part="chips" aria-label="Примеры адресов">
+                <ul data-part="chips" aria-label={chipsLabel}>
                   {suggestions.map((item) => (
                     <li key={item}>
                       <button type="button" onClick={() => pick(item)}>
@@ -283,13 +296,14 @@ export function Api001({
                   ))
                 ) : (
                   <span data-part="empty">
-                    <b>{"// "}</b>ответ появится здесь — нажмите «{actionLabel}» или выберите адрес
+                    <b>{"// "}</b>
+                    {emptyLine.replace("{action}", actionLabel)}
                   </span>
                 )}
               </pre>
             </div>
             <div data-part="right">
-              <div data-part="map" aria-label="Карта с точкой результата" role="img">
+              <div data-part="map" aria-label={mapLabel} role="img">
                 <svg viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
                   <path d="M0 96 L400 96 M0 172 L400 172 M0 240 L400 240 M72 0 L72 300 M158 0 L158 300 M252 0 L252 300 M336 0 L336 300" />
                   <path d="M0 40 L400 210 M120 0 L320 300" />
@@ -312,7 +326,7 @@ export function Api001({
                   <b data-accent="">{result ? `${result.latency} ms` : "—"}</b>
                 </li>
                 <li>
-                  <span>стоимость</span>
+                  <span>{costLabel}</span>
                   <b>{result ? `${cost.toFixed(3).replace(".", ",")} ₽` : "—"}</b>
                 </li>
                 <li>
@@ -320,7 +334,7 @@ export function Api001({
                   <b>{result ? result.precision : "—"}</b>
                 </li>
                 <li>
-                  <span>бесплатных осталось</span>
+                  <span>{freeLabel}</span>
                   <b>{formatNumber(Math.max(0, freeLeft - count))}</b>
                 </li>
               </ul>

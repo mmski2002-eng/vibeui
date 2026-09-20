@@ -25,6 +25,12 @@ export type Subscribe020Props = {
   letterText?: readonly string[]
   letterHref?: string
   letterHrefLabel?: string
+  /** aria частоты, конверта, буква на печати и подпись. */
+  frequencyLabel?: string
+  closeLabel?: string
+  openLabel?: string
+  sealLetter?: string
+  caption?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -138,6 +144,11 @@ export function Subscribe020({
   ],
   letterHref = "#archive",
   letterHrefLabel = "Архив писем →",
+  frequencyLabel = "Как часто",
+  closeLabel = "Закрыть конверт",
+  openLabel = "Открыть прошлое письмо",
+  sealLetter = "В",
+  caption = "Прошлое письмо · наведите, чтобы открыть",
   tone = "auto",
   accent,
   ink,
@@ -201,7 +212,7 @@ export function Subscribe020({
             ) : (
               <>
                 {frequencies.length > 1 ? (
-                  <div data-part="freq" role="group" aria-label="Как часто">
+                  <div data-part="freq" role="group" aria-label={frequencyLabel}>
                     {frequencies.map((item, i) => (
                       <button key={item.name} type="button" aria-pressed={i === active} onClick={() => setActive(i)}>
                         {item.name}
@@ -226,7 +237,7 @@ export function Subscribe020({
             )}
           </div>
           <div data-part="scene">
-            <button data-part="envelope" type="button" aria-pressed={open} aria-label={open ? "Закрыть конверт" : "Открыть прошлое письмо"} onClick={() => setOpen((value) => !value)}>
+            <button data-part="envelope" type="button" aria-pressed={open} aria-label={open ? closeLabel : openLabel} onClick={() => setOpen((value) => !value)}>
               <i data-part="back" aria-hidden="true" />
               <span data-part="letter" aria-hidden={!open}>
                 <small>{letterDate}</small>
@@ -240,10 +251,10 @@ export function Subscribe020({
               <i data-part="pocket" aria-hidden="true" />
               <i data-part="flap" aria-hidden="true" />
               <span data-part="seal" aria-hidden="true">
-                В
+                {sealLetter}
               </span>
             </button>
-            <p data-part="caption">Прошлое письмо · наведите, чтобы открыть</p>
+            <p data-part="caption">{caption}</p>
             {letterHrefLabel ? (
               <a data-part="archive" href={letterHref}>
                 {letterHrefLabel}

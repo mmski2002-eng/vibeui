@@ -29,6 +29,10 @@ export type Sketch021Props = {
   /** Куда отправить форму. Пусто — форма только показывает «готово». */
   action?: string
   /** Почерк: аккуратный или размашистый. */
+  /** Подписи групп формы и занятого слота. */
+  dayLegend?: string
+  slotLegend?: string
+  takenLabel?: string
   rough?: "neat" | "loose"
   /** Дрожание линии: покой, мягкое или живое. */
   boil?: "still" | "soft" | "lively"
@@ -337,6 +341,9 @@ export function Sketch021({
   doneLabel = "Записала. Перезвоню в выбранное время.",
   footNote = "Отвечаю в тот же день. Переносы без вопросов.",
   action = "",
+  dayLegend = "День",
+  slotLegend = "Время звонка",
+  takenLabel = "занято",
   rough = "loose",
   boil = "soft",
   seed,
@@ -393,7 +400,7 @@ export function Sketch021({
             ) : (
               <form action={action || undefined} method={action ? "post" : undefined} onSubmit={submit}>
                 <fieldset>
-                  <legend>День</legend>
+                  <legend>{dayLegend}</legend>
                   <div data-part="row">
                     {days.map((item, index) => (
                       <label key={item.label} data-part="option">
@@ -408,14 +415,14 @@ export function Sketch021({
                 </fieldset>
 
                 <fieldset>
-                  <legend>Время звонка</legend>
+                  <legend>{slotLegend}</legend>
                   <div data-part="grid">
                     {slots.map((item, index) => (
                       <label key={item.time} data-part="option" data-taken={item.taken ? "" : undefined}>
                         <input type="radio" name="slot" value={item.time} disabled={item.taken} checked={slot === index} onChange={() => setSlot(index)} />
                         <Frame part="slot" seed={base + 30 + index} rough={roughness} boil={shake} radius={8} fill={slot === index} strike={item.taken}>
                           <b>{item.time}</b>
-                          {item.taken ? <small>занято</small> : null}
+                          {item.taken ? <small>{takenLabel}</small> : null}
                         </Frame>
                       </label>
                     ))}

@@ -23,6 +23,10 @@ export type Hero032Props = {
   inhale?: number
   hold?: number
   exhale?: number
+  /** Подписи над названиями магазинов и aria телефона. */
+  appStoreCaption?: string
+  playCaption?: string
+  phoneLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -153,6 +157,9 @@ export function Hero032({
   inhale = 4,
   hold = 7,
   exhale = 8,
+  appStoreCaption = "Скачать в",
+  playCaption = "Доступно в",
+  phoneLabel = "Экран приложения: дыхательная практика",
   tone = "auto",
   accent,
   ink,
@@ -242,13 +249,13 @@ export function Hero032({
             <div data-part="stores">
               {appStoreLabel ? (
                 <a data-part="store" href={appStoreHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                  <small>Скачать в</small>
+                  <small>{appStoreCaption}</small>
                   <b>{appStoreLabel}</b>
                 </a>
               ) : null}
               {playLabel ? (
                 <a data-part="store" href={playHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                  <small>Доступно в</small>
+                  <small>{playCaption}</small>
                   <b>{playLabel}</b>
                 </a>
               ) : null}
@@ -269,7 +276,7 @@ export function Hero032({
           </div>
           <div data-part="stage">
             <div data-part="tilt">
-              <div data-part="phone" aria-label="Экран приложения: дыхательная практика">
+              <div data-part="phone" aria-label={phoneLabel}>
                 <div data-part="glare" aria-hidden="true" />
                 <div data-part="screen">
                   <div data-part="stitle">{screenTitle}</div>

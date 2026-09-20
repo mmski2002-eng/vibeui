@@ -44,7 +44,7 @@ export async function ScenarioPage({
   const pro = session ? await isPro(session.user.id) : false
   const [source, pictures] = pro
     ? await Promise.all([
-        readScenarioSource(scenario),
+        readScenarioSource(scenario, locale),
         readScenarioImages(scenario),
       ])
     : [null, null]
@@ -77,7 +77,7 @@ export async function ScenarioPage({
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Link
-              href={scenario.demo}
+              href={text.demo}
               target="_blank"
               rel="noopener"
               className="acc-press border-shell-border-strong text-shell-fg hover:border-shell-accent inline-flex h-11 items-center gap-2 rounded-full border px-5 text-sm font-medium transition-colors"
@@ -124,7 +124,7 @@ export async function ScenarioPage({
           ) : null}
           <div className="mt-6">
             <ScenarioTour
-              demo={scenario.demo}
+              demo={text.demo}
               labels={{ show: t.showInDemo, openInCatalog: t.openInCatalog }}
               rows={sections.map((section) => ({
                 name: section.name,

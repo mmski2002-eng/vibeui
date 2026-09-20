@@ -22,6 +22,11 @@ export type Hero020Props = {
   action?: string
   stats?: readonly Hero020Stat[]
   /** Тема: следовать странице или зафиксировать светлую либо тёмную. */
+  /** aria режимов и подписи полей поиска. */
+  modesLabel?: string
+  typeLabel?: string
+  districtLabel?: string
+  budgetLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -107,6 +112,10 @@ export function Hero020({
     { value: "18 лет", label: "на рынке" },
     { value: "3 офиса", label: "в городе" },
   ],
+  modesLabel = "Что нужно",
+  typeLabel = "Тип",
+  districtLabel = "Район",
+  budgetLabel = "Бюджет",
   tone = "auto",
   accent,
   ink,
@@ -137,7 +146,7 @@ export function Hero020({
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
           <form data-part="search" method="get" action={action}>
-            <div data-part="modes" role="radiogroup" aria-label="Что нужно">
+            <div data-part="modes" role="radiogroup" aria-label={modesLabel}>
               {modes.map((mode, index) => (
                 <label key={mode} data-part="mode">
                   <input type="radio" name="mode" value={mode} defaultChecked={index === 0} />
@@ -147,7 +156,7 @@ export function Hero020({
             </div>
             <div data-part="fields">
               <label data-part="field">
-                <span>Тип</span>
+                <span>{typeLabel}</span>
                 <select name="type">
                   {types.map((type) => (
                     <option key={type}>{type}</option>
@@ -155,7 +164,7 @@ export function Hero020({
                 </select>
               </label>
               <label data-part="field">
-                <span>Район</span>
+                <span>{districtLabel}</span>
                 <select name="district">
                   {districts.map((district) => (
                     <option key={district}>{district}</option>
@@ -163,7 +172,7 @@ export function Hero020({
                 </select>
               </label>
               <label data-part="field">
-                <span>Бюджет</span>
+                <span>{budgetLabel}</span>
                 <select name="budget">
                   {budgets.map((budget) => (
                     <option key={budget}>{budget}</option>

@@ -18,6 +18,11 @@ export type Gadget002Props = {
   /** Рендеры: собранная лампа и взрыв-схема (PNG без фона, один ракурс). Заданы оба — вместо CSS-деталей. */
   assembledImage?: string
   explodedImage?: string
+  /** Подпись ползунка и кнопки. */
+  explodeLabel?: string
+  explodeAria?: string
+  assembleLabel?: string
+  disassembleLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -134,6 +139,10 @@ export function Gadget002({
   autoExplode = true,
   assembledImage = "/demo/gadget/lamp-front.png",
   explodedImage = "/demo/gadget/exploded.png",
+  explodeLabel = "Разбор",
+  explodeAria = "Степень разбора",
+  assembleLabel = "Собрать",
+  disassembleLabel = "Разобрать",
   tone = "auto",
   accent,
   ink,
@@ -211,14 +220,14 @@ export function Gadget002({
               )}
               <div data-part="controls">
                 <label>
-                  Разбор
+                  {explodeLabel}
                   <input
                     data-part="range"
                     type="range"
                     min={0}
                     max={100}
                     value={explode}
-                    aria-label="Степень разбора"
+                    aria-label={explodeAria}
                     onChange={(event) => {
                       touched.current = true
                       setSmooth(false)
@@ -235,7 +244,7 @@ export function Gadget002({
                     setExplode((value) => (value > 50 ? 0 : 100))
                   }}
                 >
-                  {explode > 50 ? "Собрать" : "Разобрать"}
+                  {explode > 50 ? assembleLabel : disassembleLabel}
                 </button>
               </div>
             </div>

@@ -25,6 +25,9 @@ export type Hero030Props = {
   secondaryHref?: string
   /** Строка фактов под кнопками: «4 КБ · TypeScript · MIT». */
   facts?: readonly string[]
+  /** aria вкладок и терминала. */
+  managersLabel?: string
+  terminalLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -161,6 +164,8 @@ export function Hero030({
   secondaryLabel = "Открыть песочницу",
   secondaryHref = "#playground",
   facts = ["4 КБ gzip", "TypeScript", "0 зависимостей", "MIT"],
+  managersLabel = "Менеджер пакетов",
+  terminalLabel = "Терминал",
   tone = "auto",
   accent,
   ink,
@@ -299,7 +304,7 @@ export function Hero030({
                 </p>
               ) : null}
               <div data-part="install" data-reveal="" style={reveal(1)}>
-                <div data-part="tabs" role="tablist" aria-label="Менеджер пакетов">
+                <div data-part="tabs" role="tablist" aria-label={managersLabel}>
                   {managers.map((item, index) => (
                     <button key={item.name} type="button" role="tab" aria-selected={index === manager} onClick={() => setManager(index)}>
                       {item.name}
@@ -334,7 +339,7 @@ export function Hero030({
               ) : null}
             </div>
             <div data-part="scene" data-reveal="" style={reveal(2)}>
-              <div data-part="term" aria-label="Терминал" onPointerMove={tilt} onPointerLeave={untilt}>
+              <div data-part="term" aria-label={terminalLabel} onPointerMove={tilt} onPointerLeave={untilt}>
                 <div data-part="bar" aria-hidden="true">
                   <i />
                   <i />

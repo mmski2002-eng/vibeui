@@ -29,6 +29,9 @@ export type Navbar025Props = {
   /** fixed — поверх страницы, складывается при прокрутке; static — в потоке (превью). */
   placement?: "fixed" | "static"
   spy?: boolean
+  /** aria кнопки меню. */
+  menuLabel?: string
+  closeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -147,6 +150,8 @@ export function Navbar025({
     { label: "Место", href: "#place" },
     { label: "Вопросы", href: "#faq" },
   ],
+  menuLabel = "Меню",
+  closeLabel = "Закрыть меню",
   actionLabel = "Подтвердить",
   actionHref = "#rsvp",
   music,
@@ -280,7 +285,7 @@ export function Navbar025({
               </>
             ) : null}
             {action}
-            <button type="button" data-part="toggle" aria-expanded={open} aria-label={open ? "Закрыть меню" : "Меню"} onClick={() => setOpen((value) => !value)}>
+            <button type="button" data-part="toggle" aria-expanded={open} aria-label={open ? closeLabel : menuLabel} onClick={() => setOpen((value) => !value)}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
               </svg>

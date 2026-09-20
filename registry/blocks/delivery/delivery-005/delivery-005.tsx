@@ -23,6 +23,9 @@ export type Delivery005Props = {
   /** Сколько заказов в среднем за сутки: счётчик растёт от текущего времени. */
   ordersPerDay?: number
   ordersLabel?: string
+  /** aria реакций. */
+  reactionsLabel?: string
+  reactionLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -129,7 +132,7 @@ function formatNumber(value: number) {
   return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
-function Sticker({ review, index, emojis }: { review: Delivery005Review; index: number; emojis: readonly string[] }) {
+function Sticker({ review, index, emojis, reactionsLabel, reactionLabel }: { review: Delivery005Review; index: number; emojis: readonly string[]; reactionsLabel: string; reactionLabel: string }) {
   const [counts, setCounts] = useState<Record<string, number>>(() => ({ ...review.reactions }))
   const [mine, setMine] = useState<string | null>(null)
   const [pop, setPop] = useState<string | null>(null)
@@ -160,10 +163,10 @@ function Sticker({ review, index, emojis }: { review: Delivery005Review; index: 
         {review.meta ? <span>{review.meta}</span> : null}
       </p>
       <blockquote data-part="text">{review.text}</blockquote>
-      <ul data-part="reactions" aria-label="Реакции">
+      <ul data-part="reactions" aria-label={reactionsLabel}>
         {emojis.map((emoji) => (
           <li key={emoji}>
-            <button type="button" data-on={mine === emoji} data-pop={pop === emoji} aria-pressed={mine === emoji} aria-label={`Реакция ${emoji}: ${counts[emoji] ?? 0}`} onClick={() => react(emoji)}>
+            <button type="button" data-on={mine === emoji} data-pop={pop === emoji} aria-pressed={mine === emoji} aria-label={reactionLabel.replace("{emoji}", emoji).replace("{n}", String(counts[emoji] ?? 0))} onClick={() => react(emoji)}>
               <i aria-hidden="true">{emoji}</i>
               {counts[emoji] ?? 0}
             </button>
@@ -183,6 +186,8 @@ export function Delivery005({
   emojis = ["🔥", "😋", "❤️"],
   ordersPerDay = 1840,
   ordersLabel = "заказов сегодня",
+  reactionsLabel = "Реакции",
+  reactionLabel = "Реакция {emoji}: {n}",
   tone = "auto",
   accent,
   ink,
@@ -220,7 +225,7 @@ export function Delivery005({
           </div>
           <ul data-part="grid">
             {reviews.map((review, index) => (
-              <Sticker key={review.name} review={review} index={index} emojis={emojis} />
+              <Sticker key={review.name} review={review} index={index} emojis={emojis} reactionsLabel={reactionsLabel} reactionLabel={reactionLabel} />
             ))}
           </ul>
         </div>

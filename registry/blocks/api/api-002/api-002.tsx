@@ -25,6 +25,14 @@ export type Api002Props = {
   /** Индексы дней с деградацией (0 — самый старый). */
   historyIncidents?: readonly number[]
   historyLabel?: string
+  /** aria лампы, подписи карточки региона, панели и оси. */
+  statusLabels?: readonly [string, string, string]
+  uptimeLabel?: string
+  p50Label?: string
+  sparkLabel?: string
+  axisLabels?: readonly [string, string, string]
+  updatedLine?: string
+  historyTitle?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -146,7 +154,9 @@ function pad(value: number) {
   return String(value).padStart(2, "0")
 }
 
-function Region({ region, now, index }: { region: Api002Region; now: number | null; index: number }) {
+type RegionTexts = { statusLabels: readonly [string, string, string]; uptimeLabel: string; p50Label: string; sparkLabel: string; axisLabels: readonly [string, string, string] }
+
+function Region({ region, now, index, texts }: { region: Api002Region; now: number | null; index: number; texts: RegionTexts }) {
   const ref = useRef<HTMLLIElement>(null)
   const [drawn, setDrawn] = useState(false)
 
@@ -188,15 +198,15 @@ function Region({ region, now, index }: { region: Api002Region; now: number | nu
       <div data-part="rhead">
         <h4>{region.name}</h4>
         <span>{region.code}</span>
-        <i data-part="lamp" data-status={status} aria-label={status === "ok" ? "работает" : status === "degraded" ? "деградация" : "недоступен"} />
+        <i data-part="lamp" data-status={status} aria-label={status === "ok" ? texts.statusLabels[0] : status === "degraded" ? texts.statusLabels[1] : texts.statusLabels[2]} />
       </div>
       <ul data-part="nums">
         <li>
-          <span>аптайм 30 дн.</span>
+          <span>{texts.uptimeLabel}</span>
           <b>{region.uptime}</b>
         </li>
         <li>
-          <span>p50 сейчас</span>
+          <span>{texts.p50Label}</span>
           <b data-live="">{now === null ? "—" : `${live} ms`}</b>
         </li>
         <li>
@@ -204,7 +214,7 @@ function Region({ region, now, index }: { region: Api002Region; now: number | nu
           <b>{now === null ? "—" : `${Math.round(points[23] * 2.4)} ms`}</b>
         </li>
       </ul>
-      <svg data-part="spark" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={`Латентность ${region.name} за 24 часа`}>
+      <svg data-part="spark" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={texts.sparkLabel.replace("{name}", region.name)}>
         <line data-part="base" x1={0} x2={width} y1={height} y2={height} />
         {now === null ? null : (
           <>
@@ -215,9 +225,9 @@ function Region({ region, now, index }: { region: Api002Region; now: number | nu
         )}
       </svg>
       <div data-part="axis" aria-hidden="true">
-        <span>−24 ч</span>
-        <span>−12 ч</span>
-        <span>сейчас</span>
+        <span>{texts.axisLabels[0]}</span>
+        <span>{texts.axisLabels[1]}</span>
+        <span>{texts.axisLabels[2]}</span>
       </div>
     </li>
   )
@@ -233,6 +243,13 @@ export function Api002({
   historyDays = 90,
   historyIncidents = [23, 61],
   historyLabel = "90 дней · 2 деградации · 0 простоев",
+  statusLabels = ["работает", "деградация", "недоступен"],
+  uptimeLabel = "аптайм 30 дн.",
+  p50Label = "p50 сейчас",
+  sparkLabel = "Латентность {name} за 24 часа",
+  axisLabels = ["−24 ч", "−12 ч", "сейчас"],
+  updatedLine = "обновлено {time}",
+  historyTitle = "история",
   tone = "auto",
   accent,
   ink,
@@ -270,17 +287,17 @@ export function Api002({
               <i data-part="lamp" data-status={worst} aria-hidden="true" />
               <h3>{summary}</h3>
               <span data-part="clock" aria-live="off">
-                обновлено {clock}
+                {updatedLine.replace("{time}", clock)}
               </span>
             </div>
             <ul data-part="regions">
               {regions.map((region, index) => (
-                <Region key={region.code} region={region} now={now} index={index} />
+                <Region key={region.code} region={region} now={now} index={index} texts={{ statusLabels, uptimeLabel, p50Label, sparkLabel, axisLabels }} />
               ))}
             </ul>
             <div data-part="history">
               <p>
-                <span>история</span>
+                <span>{historyTitle}</span>
                 <span>{historyLabel}</span>
               </p>
               <div data-part="days" aria-label={historyLabel}>

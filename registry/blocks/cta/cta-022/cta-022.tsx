@@ -19,6 +19,8 @@ export type Cta022Props = {
   copiedLabel?: string
   /** Шутливая строка внизу: «или привезите бутылку рома». */
   joke?: string
+  /** Город вылета под кодом. */
+  fromCity?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -105,6 +107,7 @@ export function Cta022({
   copyLabel = "Скопировать номер",
   copiedLabel = "Скопировано",
   joke = "Или привезите бутылку рома — у нас на Кубе его нет. Шутка. Есть.",
+  fromCity = "Гавана",
   tone = "auto",
   accent,
   ink,
@@ -153,7 +156,7 @@ export function Cta022({
               <div data-part="codes">
                 <div>
                   <b>{from}</b>
-                  <small>Гавана</small>
+                  <small>{fromCity}</small>
                 </div>
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M21 12.5c0 .6-.5 1-1.1 1L13 12.9 9.5 20H7.6l1.7-7.4-4.6-.6-1.7 2H1.6l1.2-3.5L1.6 7.1H3l1.7 2 4.6-.6L7.6 1h1.9L13 8.1l6.9-.6c.6 0 1.1.4 1.1 1v4z" />

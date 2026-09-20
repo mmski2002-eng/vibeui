@@ -29,6 +29,8 @@ export type Course004Props = {
   imageAlt?: string
   /** Подпись к фото: «лайв по средам, запись остаётся». */
   caption?: string
+  /** aria календаря. */
+  calendarLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -137,6 +139,7 @@ export function Course004({
   image = "",
   imageAlt = "",
   caption = "Лайв по средам — запись остаётся",
+  calendarLabel = "Неделя по дням",
   tone = "auto",
   accent,
   ink,
@@ -165,7 +168,7 @@ export function Course004({
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <ol data-part="calendar" aria-label="Неделя по дням">
+          <ol data-part="calendar" aria-label={calendarLabel}>
             {columns.map((column, index) => (
               <li key={column.name} data-part="col" data-busy={column.events.length > 0} style={{ ["--vibeui-course-004-n" as string]: index }}>
                 <span data-part="dayname">{column.name}</span>

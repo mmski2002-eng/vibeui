@@ -27,6 +27,8 @@ export type Hero029Props = {
   chaptersLabel?: string
   allLabel?: string
   allHref?: string
+  /** aria волны-перемотки. */
+  seekLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -161,6 +163,7 @@ export function Hero029({
   chaptersLabel = "Главы",
   allLabel = "Все эпизоды",
   allHref = "#episodes",
+  seekLabel = "Перемотать",
   tone = "auto",
   accent,
   ink,
@@ -337,7 +340,7 @@ export function Hero029({
                 )}
               </button>
               <div>
-                <button ref={wave} type="button" data-part="wave" aria-label="Перемотать" onClick={seek}>
+                <button ref={wave} type="button" data-part="wave" aria-label={seekLabel} onClick={seek}>
                   {Array.from({ length: BARS }, (_, i) => (
                     <i key={i} data-past={i / BARS <= progress} style={{ ["--vibeui-hero-029-h" as string]: heightAt(i), ["--vibeui-hero-029-i" as string]: i }} />
                   ))}

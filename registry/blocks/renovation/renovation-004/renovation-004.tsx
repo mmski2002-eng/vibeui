@@ -28,6 +28,17 @@ export type Renovation004Props = {
   /** Сколько отчётов показать. */
   limit?: number
   camLabel?: string
+  /** Короткие месяцы и подписи кабинета заказчика. */
+  months?: readonly string[]
+  loadingLabel?: string
+  dayLine?: string
+  startLabel?: string
+  endLabel?: string
+  nowLabel?: string
+  nextLabel?: string
+  feedLabel?: string
+  dayLabel?: string
+  plannedLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -119,11 +130,9 @@ function subscribe(listener: () => void) {
   return () => window.clearInterval(timer)
 }
 
-const MONTHS = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
-
-function formatDay(dayStart: number, day: number) {
+function formatDay(dayStart: number, day: number, months: readonly string[]) {
   const date = new Date(dayStart + (day - 1) * 86400000)
-  return `${date.getDate()} ${MONTHS[date.getMonth()]}`
+  return `${date.getDate()} ${months[date.getMonth()]}`
 }
 
 /** Стройка онлайн: прогресс-кольцо от сегодняшней даты и лента отчётов по дням. */
@@ -139,6 +148,16 @@ export function Renovation004({
   reports = DEFAULT_REPORTS,
   limit = 6,
   camLabel = "камера онлайн",
+  months = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"],
+  loadingLabel = "загрузка",
+  dayLine = "день {day} из {total}",
+  startLabel = "Старт",
+  endLabel = "Сдача",
+  nowLabel = "Сейчас",
+  nextLabel = "Дальше",
+  feedLabel = "Отчёты с объекта",
+  dayLabel = "день {n}",
+  plannedLabel = "запланировано",
   tone = "auto",
   accent,
   ink,
@@ -196,39 +215,39 @@ export function Renovation004({
                 </svg>
                 <output aria-live="polite">
                   <b>{today === null ? "—" : `${Math.round(progress * 100)} %`}</b>
-                  <small>{today === null ? "загрузка" : `день ${day} из ${totalDays}`}</small>
+                  <small>{today === null ? loadingLabel : dayLine.replace("{day}", String(day)).replace("{total}", String(totalDays))}</small>
                 </output>
               </div>
               <h3 data-part="object">{object}</h3>
               <dl data-part="meta">
                 <div>
-                  <dt>Старт</dt>
-                  <dd>{today === null ? "—" : formatDay(dayStart, 1)}</dd>
+                  <dt>{startLabel}</dt>
+                  <dd>{today === null ? "—" : formatDay(dayStart, 1, months)}</dd>
                 </div>
                 <div>
-                  <dt>Сдача</dt>
-                  <dd>{today === null ? "—" : formatDay(dayStart, totalDays)}</dd>
+                  <dt>{endLabel}</dt>
+                  <dd>{today === null ? "—" : formatDay(dayStart, totalDays, months)}</dd>
                 </div>
                 <div>
-                  <dt>Сейчас</dt>
+                  <dt>{nowLabel}</dt>
                   <dd>{stage}</dd>
                 </div>
                 <div>
-                  <dt>Дальше</dt>
+                  <dt>{nextLabel}</dt>
                   <dd>{next}</dd>
                 </div>
               </dl>
             </div>
-            <ol data-part="feed" aria-label="Отчёты с объекта">
+            <ol data-part="feed" aria-label={feedLabel}>
               {feed.map((report) => {
                 const future = today !== null && report.day > day
                 return (
                   <li key={`${report.day}-${report.title}`} data-part="report" data-future={future}>
                     <p data-part="when">
-                      <b>день {report.day}</b>
-                      <span>{today === null ? "" : formatDay(dayStart, report.day)}</span>
+                      <b>{dayLabel.replace("{n}", String(report.day))}</b>
+                      <span>{today === null ? "" : formatDay(dayStart, report.day, months)}</span>
                       {report.time ? <span>{report.time}</span> : null}
-                      {future ? <span>запланировано</span> : null}
+                      {future ? <span>{plannedLabel}</span> : null}
                     </p>
                     <h3>{report.title}</h3>
                     <p>{report.text}</p>

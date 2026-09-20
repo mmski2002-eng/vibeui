@@ -30,6 +30,16 @@ export type Gadget003Props = {
   doneTitle?: string
   doneText?: string
   currency?: string
+  /** aria списков, подписи отсчёта и остатка. */
+  swatchesLabel?: string
+  kitsLabel?: string
+  shipLabel?: string
+  countLabel?: string
+  countUnits?: readonly [string, string, string, string]
+  leftLabel?: string
+  ofLabel?: string
+  /** Локаль даты отгрузки. */
+  dateLocale?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -194,6 +204,14 @@ export function Gadget003({
   doneTitle = "Место закреплено",
   doneText = "Номер в партии — 0689. Письмо с подтверждением уже ушло, напомним за три дня до отгрузки.",
   currency = "₽",
+  swatchesLabel = "Цвет корпуса",
+  kitsLabel = "Комплект",
+  shipLabel = "Отгрузка партии",
+  countLabel = "До отгрузки",
+  countUnits = ["дн", "час", "мин", "сек"],
+  leftLabel = "Осталось в партии",
+  ofLabel = "из",
+  dateLocale = "ru-RU",
   tone = "auto",
   accent,
   ink,
@@ -216,7 +234,7 @@ export function Gadget003({
     target.setDate(target.getDate() + shipInDays)
     const diff = Math.max(0, target.getTime() - time)
     ship = {
-      date: new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long" }).format(target),
+      date: new Intl.DateTimeFormat(dateLocale, { day: "numeric", month: "long" }).format(target),
       d: Math.floor(diff / 86400000),
       h: Math.floor((diff % 86400000) / 3600000),
       m: Math.floor((diff % 3600000) / 60000),
@@ -281,7 +299,7 @@ export function Gadget003({
                   </>
                 )}
               </div>
-              <ul data-part="swatches" aria-label="Цвет корпуса">
+              <ul data-part="swatches" aria-label={swatchesLabel}>
                 {swatches.map((item, index) => (
                   <li key={item.name}>
                     <button data-part="swatch" type="button" aria-pressed={swatch === index} onClick={() => setSwatch(index)} style={{ ["--vibeui-gadget-003-sw" as string]: item.color }}>
@@ -303,7 +321,7 @@ export function Gadget003({
               </div>
             ) : (
               <form data-part="form" onSubmit={submit}>
-                <ul data-part="kits" aria-label="Комплект">
+                <ul data-part="kits" aria-label={kitsLabel}>
                   {kits.map((item, index) => (
                     <li key={item.name}>
                       <label data-part="kit" data-on={kit === index}>
@@ -320,31 +338,31 @@ export function Gadget003({
                 </ul>
                 <div data-part="meta">
                   <div data-part="row">
-                    <span>Отгрузка партии</span>
+                    <span>{shipLabel}</span>
                     <b>{ship ? ship.date : "—"}</b>
                   </div>
-                  <ul data-part="count" aria-label="До отгрузки">
+                  <ul data-part="count" aria-label={countLabel}>
                     <li>
                       <b>{ship ? ship.d : "–"}</b>
-                      <small>дн</small>
+                      <small>{countUnits[0]}</small>
                     </li>
                     <li>
                       <b>{ship ? String(ship.h).padStart(2, "0") : "–"}</b>
-                      <small>час</small>
+                      <small>{countUnits[1]}</small>
                     </li>
                     <li>
                       <b>{ship ? String(ship.m).padStart(2, "0") : "–"}</b>
-                      <small>мин</small>
+                      <small>{countUnits[2]}</small>
                     </li>
                     <li>
                       <b>{ship ? String(ship.s).padStart(2, "0") : "–"}</b>
-                      <small>сек</small>
+                      <small>{countUnits[3]}</small>
                     </li>
                   </ul>
                   <div data-part="row">
-                    <span>Осталось в партии</span>
+                    <span>{leftLabel}</span>
                     <b>
-                      {batchLeft} из {batchSize}
+                      {batchLeft} {ofLabel} {batchSize}
                     </b>
                   </div>
                   <div data-part="bar" aria-hidden="true">

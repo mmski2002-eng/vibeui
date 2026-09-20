@@ -33,6 +33,7 @@ export type Bento008Props = {
   natives?: readonly string[]
   recordTitle?: string
   records?: readonly string[]
+  minutesUnit?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -149,6 +150,7 @@ export function Bento008({
   natives = ["Manchester", "Valencia", "Bologna"],
   recordTitle = "После урока остаётся",
   records = ["Запись занятия на неделю", "Конспект с новыми словами", "Голосовой разбор домашки"],
+  minutesUnit = "мин",
   tone = "auto",
   accent,
   ink,
@@ -193,7 +195,7 @@ export function Bento008({
               <ul data-part="legend">
                 {segments.map((segment) => (
                   <li key={segment.label}>
-                    <b>{segment.minutes} мин</b> {segment.label}
+                    <b>{segment.minutes} {minutesUnit}</b> {segment.label}
                     <span aria-hidden="true"> · {Math.round((segment.minutes / totalMinutes) * 100)}%</span>
                   </li>
                 ))}

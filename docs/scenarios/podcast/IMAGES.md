@@ -35,7 +35,7 @@ logos, no readable signage.
 | `studio-01.webp` | 16:9, 1600×900 | Wide shot of the studio at night: two microphones on boom arms, a small table lamp, acoustic panels, a red-green recording light |
 | `studio-02.webp` | 3:2, 1600×1067 | Close-up of a mixing console with faders and glowing meters, hands adjusting a knob |
 | `studio-03.webp` | 2:3, 1067×1600 | Vertical: a guest's hands holding a warm mug in front of a microphone, out-of-focus host behind |
-| `guest-01.webp` … `guest-08.webp` | 1:1, 800×800 | Waist-up portraits of eight guests as described in «Герои», same dark background and key light, looking slightly off camera |
+| `guest-01.webp` … `guest-08.webp` | 1:1, 800×800 | Waist-up portraits of eight guests as described in the characters block, same dark background and key light, looking slightly off camera |
 | `episode-01.webp` … `episode-06.webp` | 1:1, 1000×1000 | Abstract episode covers without text: (01) a potter's wheel in motion, (02) a lighthouse beam in fog, (03) surgical lamp reflections, (04) code on a dark screen out of focus, (05) a train cab at dawn, (06) library shelves in low light — each with a subtle acid-green tint |
 
 ## Куда что идёт

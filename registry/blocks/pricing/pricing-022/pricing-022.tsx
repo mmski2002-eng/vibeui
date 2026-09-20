@@ -36,6 +36,12 @@ export type Pricing022Props = {
   packages?: readonly Pricing022Package[]
   currency?: string
   note?: string
+  /** Подписи калькулятора. */
+  sizeLabel?: string
+  cmUnit?: string
+  zoneLabel?: string
+  approxLabel?: string
+  hoursLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -152,6 +158,11 @@ export function Pricing022({
   packages = DEFAULT_PACKAGES,
   currency = "₽",
   note = "Консультация и эскиз бесплатно. Предоплата 20 % при бронировании даты, возвращается при отмене за 48 часов.",
+  sizeLabel = "Размер",
+  cmUnit = "см",
+  zoneLabel = "Зона",
+  approxLabel = "Примерно",
+  hoursLine = "≈ {n} ч работы",
   tone = "auto",
   accent,
   background,
@@ -186,14 +197,14 @@ export function Pricing022({
           <div data-part="calc">
             <div data-part="field">
               <label htmlFor={`${id}-size`}>
-                <span>Размер</span>
-                <output htmlFor={`${id}-size`}>{size} см</output>
+                <span>{sizeLabel}</span>
+                <output htmlFor={`${id}-size`}>{size} {cmUnit}</output>
               </label>
               <input id={`${id}-size`} type="range" min={minSize} max={maxSize} step={1} value={size} onChange={(event) => setSize(Number(event.target.value))} style={{ ["--vibeui-pricing-022-fill" as string]: `${fill}%` }} />
             </div>
             <div data-part="field" role="group" aria-labelledby={`${id}-zone`}>
               <p id={`${id}-zone`} data-part="legend">
-                <span>Зона</span>
+                <span>{zoneLabel}</span>
                 <span>×{factor}</span>
               </p>
               <ul data-part="zones">
@@ -207,13 +218,13 @@ export function Pricing022({
               </ul>
             </div>
             <div data-part="total" aria-live="polite">
-              <small>Примерно</small>
+              <small>{approxLabel}</small>
               <span data-part="sum">
                 <span key={total}>
                   {format.format(total)} {currency}
                 </span>
               </span>
-              <span data-part="hours">≈ {hours} ч работы</span>
+              <span data-part="hours">{hoursLine.replace("{n}", String(hours))}</span>
             </div>
           </div>
           <ul data-part="packages">

@@ -39,6 +39,12 @@ export type Course002Props = {
   finalTitle?: string
   finalText?: string
   homeworkLabel?: string
+  /** Единицы длительности, aria недель, подписи итога. */
+  hoursUnit?: string
+  minutesUnit?: string
+  weeksLabel?: string
+  finalLabel?: string
+  totalLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -162,10 +168,10 @@ function minutes(length?: string) {
   return /ч|h/i.test(match[2]) ? Math.round(value * 60) : Math.round(value)
 }
 
-function duration(total: number) {
+function duration(total: number, hoursUnit: string, minutesUnit: string) {
   const h = Math.floor(total / 60)
   const m = total % 60
-  return [h ? `${h} ч` : "", m ? `${m} мин` : ""].filter(Boolean).join(" ")
+  return [h ? `${h} ${hoursUnit}` : "", m ? `${m} ${minutesUnit}` : ""].filter(Boolean).join(" ")
 }
 
 const DEFAULT_WEEKS: Course002Week[] = [
@@ -194,6 +200,11 @@ export function Course002({
   finalTitle = "Итоговый проект: мобильное приложение с нуля до прототипа",
   finalText = "Защита перед арт-директором из партнёрской компании. Лучшие кейсы попадают в базу рекомендаций.",
   homeworkLabel = "Домашка:",
+  hoursUnit = "ч",
+  minutesUnit = "мин",
+  weeksLabel = "Недели курса",
+  finalLabel = "Итоговый проект",
+  totalLabel = "Итого",
   tone = "auto",
   accent,
   ink,
@@ -246,7 +257,7 @@ export function Course002({
           </div>
           <div data-part="grid">
             <aside data-part="rail">
-              <ol data-part="nav" aria-label="Недели курса" style={{ ["--vibeui-course-002-p" as string]: weeks.length ? (active + 1) / weeks.length : 0 }}>
+              <ol data-part="nav" aria-label={weeksLabel} style={{ ["--vibeui-course-002-p" as string]: weeks.length ? (active + 1) / weeks.length : 0 }}>
                 <span data-part="progress" aria-hidden="true" />
                 {weeks.map((week, index) => {
                   const total = week.lessons.reduce((sum, lesson) => sum + minutes(lesson.length), 0)
@@ -255,7 +266,7 @@ export function Course002({
                       <button type="button" data-part="nav-btn" onClick={() => jump(index)} aria-current={index === active ? "true" : undefined}>
                         <span data-part="nav-num">{week.label}</span>
                         <span data-part="nav-title">{week.title}</span>
-                        {total ? <span data-part="nav-min">{duration(total)}</span> : null}
+                        {total ? <span data-part="nav-min">{duration(total, hoursUnit, minutesUnit)}</span> : null}
                       </button>
                     </li>
                   )
@@ -276,7 +287,7 @@ export function Course002({
               ) : null}
               {finalTitle ? (
                 <div data-part="final">
-                  <p data-part="final-label">Итоговый проект</p>
+                  <p data-part="final-label">{finalLabel}</p>
                   <p data-part="final-title">{finalTitle}</p>
                   {finalText ? <p data-part="final-text">{finalText}</p> : null}
                 </div>
@@ -329,7 +340,7 @@ export function Course002({
                                 <span>{week.homework}</span>
                               </p>
                             ) : null}
-                            {total ? <span data-part="total">Итого {duration(total)}</span> : null}
+                            {total ? <span data-part="total">{totalLabel} {duration(total, hoursUnit, minutesUnit)}</span> : null}
                           </div>
                         </div>
                       </div>

@@ -15,6 +15,9 @@ export type App002Props = {
   /** Подписи под графиком: среднее до / после, засыпание. */
   beforeNote?: string
   afterNote?: string
+  /** Единица часов в цифрах и aria ползунка. */
+  hoursUnit?: string
+  rangeLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -142,6 +145,8 @@ export function App002({
   days = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"],
   beforeNote = "засыпали за 48 мин",
   afterNote = "засыпают за 12 мин",
+  hoursUnit = "ч",
+  rangeLabel = "Сравнение до и после",
   tone = "auto",
   accent,
   ink,
@@ -294,12 +299,12 @@ export function App002({
             <div ref={notes} data-part="notes" data-reveal="">
               <div>
                 <small>{beforeLabel}</small>
-                <b>{(targets[0] * tick).toFixed(1)} ч</b>
+                <b>{(targets[0] * tick).toFixed(1)} {hoursUnit}</b>
                 <span>{beforeNote}</span>
               </div>
               <div>
                 <small>{afterLabel}</small>
-                <b>{(targets[1] * tick).toFixed(1)} ч</b>
+                <b>{(targets[1] * tick).toFixed(1)} {hoursUnit}</b>
                 <span>{afterNote}</span>
               </div>
             </div>
@@ -328,7 +333,7 @@ export function App002({
             <span data-part="tag" data-side="after">
               {afterLabel}
             </span>
-            <input data-part="range" type="range" min={0} max={100} value={Math.round(p * 100)} onChange={(event) => setP(Number(event.target.value) / 100)} aria-label="Сравнение до и после" />
+            <input data-part="range" type="range" min={0} max={100} value={Math.round(p * 100)} onChange={(event) => setP(Number(event.target.value) / 100)} aria-label={rangeLabel} />
             <div data-part="handle" aria-hidden="true">
               <i>◀ ▶</i>
             </div>

@@ -18,6 +18,10 @@ export type People024Props = {
   moreCount?: number
   moreLabel?: string
   moreHref?: string
+  /** Инициалы на карточке «ещё N» и подписи к ней. */
+  initials?: readonly string[]
+  moreCountLine?: string
+  joinLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -92,8 +96,6 @@ const DEFAULT_PEOPLE: People024Person[] = [
   { name: "Катя Рябова", role: "Старший соцработник", quote: "«Мои среды — это Нина Петровна, чай и давление.»" },
 ]
 
-const INITIALS = ["АН", "ЛВ", "СМ", "ЮК"]
-
 /** Команда фонда полароидами с рукописными подписями. */
 export function People024({
   eyebrow = "Команда",
@@ -103,6 +105,9 @@ export function People024({
   moreCount = 40,
   moreLabel = "волонтёров, которых мы обнимаем",
   moreHref = "#volunteer",
+  initials = ["АН", "ЛВ", "СМ", "ЮК"],
+  moreCountLine = "ещё {n}",
+  joinLabel = "стать одним из них →",
   tone = "auto",
   accent,
   ink,
@@ -143,14 +148,14 @@ export function People024({
               <li>
                 <a data-part="more" href={moreHref}>
                   <span data-part="stack" aria-hidden="true">
-                    {INITIALS.map((initial) => (
+                    {initials.map((initial) => (
                       <i key={initial}>{initial}</i>
                     ))}
                     <i>+</i>
                   </span>
-                  <strong>ещё {moreCount}</strong>
+                  <strong>{moreCountLine.replace("{n}", String(moreCount))}</strong>
                   <span>{moreLabel}</span>
-                  <em>стать одним из них →</em>
+                  <em>{joinLabel}</em>
                 </a>
               </li>
             ) : null}

@@ -20,6 +20,13 @@ export type Footer035Props = {
   links?: readonly Footer035Link[]
   socials?: readonly Footer035Link[]
   copyright?: string
+  /** Подписи контактов и aria навигации. */
+  addressLabel?: string
+  hoursLabel?: string
+  phoneLabel?: string
+  emailLabel?: string
+  navLabel?: string
+  socialsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -102,6 +109,12 @@ export function Footer035({
     { label: "Instagram", href: "https://instagram.com/" },
   ],
   copyright = "© 2014–2026 Стебель",
+  addressLabel = "Адрес",
+  hoursLabel = "Часы",
+  phoneLabel = "Телефон",
+  emailLabel = "Почта",
+  navLabel = "Разделы",
+  socialsLabel = "Соцсети",
   tone = "auto",
   accent,
   ink,
@@ -130,19 +143,19 @@ export function Footer035({
               <dl data-part="contacts">
                 {address ? (
                   <div>
-                    <dt>Адрес</dt>
+                    <dt>{addressLabel}</dt>
                     <dd>{address}</dd>
                   </div>
                 ) : null}
                 {hours ? (
                   <div>
-                    <dt>Часы</dt>
+                    <dt>{hoursLabel}</dt>
                     <dd>{hours}</dd>
                   </div>
                 ) : null}
                 {phone ? (
                   <div>
-                    <dt>Телефон</dt>
+                    <dt>{phoneLabel}</dt>
                     <dd>
                       <a href={`tel:${phone.replace(/[^\d+]/g, "")}`}>{phone}</a>
                     </dd>
@@ -150,7 +163,7 @@ export function Footer035({
                 ) : null}
                 {email ? (
                   <div>
-                    <dt>Почта</dt>
+                    <dt>{emailLabel}</dt>
                     <dd>
                       <a href={`mailto:${email}`}>{email}</a>
                     </dd>
@@ -174,7 +187,7 @@ export function Footer035({
             {brand}
           </p>
           <div data-part="bottom">
-            <nav aria-label="Разделы">
+            <nav aria-label={navLabel}>
               {links.map((link) => (
                 <a key={link.href} href={link.href}>
                   {link.label}
@@ -182,7 +195,7 @@ export function Footer035({
               ))}
             </nav>
             {socials.length > 0 ? (
-              <nav data-part="socials" aria-label="Соцсети">
+              <nav data-part="socials" aria-label={socialsLabel}>
                 {socials.map((link) => (
                   <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
                     {link.label}

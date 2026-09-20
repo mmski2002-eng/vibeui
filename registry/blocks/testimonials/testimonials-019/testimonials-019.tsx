@@ -21,6 +21,9 @@ export type Testimonials019Props = {
   items?: readonly Testimonials019Item[]
   prevLabel?: string
   nextLabel?: string
+  /** aria звёзд и точек. */
+  ratingLine?: string
+  dotLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -104,6 +107,8 @@ export function Testimonials019({
   items = DEFAULT_ITEMS,
   prevLabel = "Предыдущий",
   nextLabel = "Следующий",
+  ratingLine = "{n} из 5",
+  dotLine = "Отзыв {n}",
   tone = "auto",
   accent,
   background,
@@ -173,7 +178,7 @@ export function Testimonials019({
                       {item.meta ? <span data-part="meta">{item.meta}</span> : null}
                     </span>
                     {item.rating ? (
-                      <span data-part="stars" aria-label={`${item.rating} из 5`}>
+                      <span data-part="stars" aria-label={ratingLine.replace("{n}", String(item.rating))}>
                         {"★".repeat(item.rating)}
                       </span>
                     ) : null}
@@ -185,7 +190,7 @@ export function Testimonials019({
           <ul data-part="dots">
             {items.map((item, index) => (
               <li key={item.name + index}>
-                <button type="button" data-part="dot" aria-current={index === active ? "true" : undefined} aria-label={`Отзыв ${index + 1}`} onClick={() => go(index)} />
+                <button type="button" data-part="dot" aria-current={index === active ? "true" : undefined} aria-label={dotLine.replace("{n}", String(index + 1))} onClick={() => go(index)} />
               </li>
             ))}
           </ul>

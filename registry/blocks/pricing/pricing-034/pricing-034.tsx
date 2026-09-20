@@ -26,6 +26,20 @@ export type Pricing034Props = {
   secondaryHref?: string
   /** Подписи под ценой: «без карты», «счёт по факту». */
   fine?: readonly string[]
+  /** Единицы счётчика, подписи ползунка, итога и графика. */
+  millionUnit?: string
+  thousandUnit?: string
+  decimalSeparator?: string
+  requestsLabel?: string
+  requestsUnit?: string
+  requestsValue?: string
+  totalLabel?: string
+  monthUnit?: string
+  effectiveLine?: string
+  freeLabel?: string
+  chartLabel?: string
+  yLabel?: string
+  xLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -119,9 +133,9 @@ const DEFAULT_TIERS: Pricing034Tier[] = [
   { upTo: Infinity, perThousand: 0.12, label: "свыше 10 млн" },
 ]
 
-function formatCount(value: number) {
-  if (value >= 1000000) return `${(value / 1000000).toFixed(value % 1000000 === 0 ? 0 : 1).replace(".", ",")} млн`
-  if (value >= 1000) return `${Math.round(value / 1000)} тыс.`
+function formatCount(value: number, millionUnit: string, thousandUnit: string, decimalSeparator: string) {
+  if (value >= 1000000) return `${(value / 1000000).toFixed(value % 1000000 === 0 ? 0 : 1).replace(".", decimalSeparator)} ${millionUnit}`
+  if (value >= 1000) return `${Math.round(value / 1000)} ${thousandUnit}`
   return String(value)
 }
 
@@ -160,6 +174,19 @@ export function Pricing034({
   secondaryLabel = "Нужен договор",
   secondaryHref = "#contact",
   fine = ["Без карты до 10 000", "Счёт по факту в конце месяца", "Лимиты и алерты в кабинете"],
+  millionUnit = "млн",
+  thousandUnit = "тыс.",
+  decimalSeparator = ",",
+  requestsLabel = "Запросов в месяц",
+  requestsUnit = "запросов / мес",
+  requestsValue = "{n} запросов",
+  totalLabel = "Итого в месяц",
+  monthUnit = "мес",
+  effectiveLine = "эффективно {effective} за 1 000 · {rate} на текущей ступени",
+  freeLabel = "бесплатно",
+  chartLabel = "Лестница ставок: цена за тысячу запросов по объёму",
+  yLabel = "{currency} за 1 000 запросов",
+  xLabel = "запросов в месяц →",
   tone = "auto",
   accent,
   ink,
@@ -222,27 +249,29 @@ export function Pricing034({
             <div data-part="left">
               <div>
                 <label data-part="count">
-                  <span>Запросов в месяц</span>
+                  <span>{requestsLabel}</span>
                   <output>
                     {formatMoney(requests, "").trim()}
-                    <small>запросов / мес</small>
+                    <small>{requestsUnit}</small>
                   </output>
                 </label>
-                <input data-part="range" type="range" min={0} max={1000} value={slider} onChange={(event) => setSlider(Number(event.target.value))} aria-label="Запросов в месяц" aria-valuetext={`${formatCount(requests)} запросов`} style={{ ["--vibeui-pricing-034-fill" as string]: fill }} />
+                <input data-part="range" type="range" min={0} max={1000} value={slider} onChange={(event) => setSlider(Number(event.target.value))} aria-label={requestsLabel} aria-valuetext={requestsValue.replace("{n}", formatCount(requests, millionUnit, thousandUnit, decimalSeparator))} style={{ ["--vibeui-pricing-034-fill" as string]: fill }} />
                 <ul data-part="ticks" aria-hidden="true">
                   {tickValues.map((value) => (
-                    <li key={value}>{formatCount(value)}</li>
+                    <li key={value}>{formatCount(value, millionUnit, thousandUnit, decimalSeparator)}</li>
                   ))}
                 </ul>
               </div>
               <div data-part="total" aria-live="polite">
-                <span>Итого в месяц</span>
+                <span>{totalLabel}</span>
                 <div data-part="price" data-free={total === 0 ? "true" : undefined}>
                   {total === 0 ? "0" : formatMoney(total, "")}
-                  <small>{currency} / мес</small>
+                  <small>{currency} / {monthUnit}</small>
                 </div>
                 <p data-part="rate">
-                  эффективно <b>{formatRate(effective, currency)}</b> за 1 000 · {formatRate(currentRate, currency)} на текущей ступени
+                  {effectiveLine.split("{effective}")[0]}
+                  <b>{formatRate(effective, currency)}</b>
+                  {(effectiveLine.split("{effective}")[1] ?? "").replace("{rate}", formatRate(currentRate, currency))}
                 </p>
               </div>
               <ul data-part="steps">
@@ -250,7 +279,7 @@ export function Pricing034({
                   <li key={row.tier.label} data-on={row.inTier > 0 ? "true" : undefined} data-active={row.active ? "true" : undefined}>
                     <i aria-hidden="true" />
                     <span>
-                      {row.tier.label} · {row.tier.perThousand === 0 ? "бесплатно" : `${formatRate(row.tier.perThousand, currency)} / 1 000`}
+                      {row.tier.label} · {row.tier.perThousand === 0 ? freeLabel : `${formatRate(row.tier.perThousand, currency)} / 1 000`}
                     </span>
                     <em>{row.inTier > 0 ? formatMoney(row.sum, currency) : "—"}</em>
                   </li>
@@ -258,7 +287,7 @@ export function Pricing034({
               </ul>
             </div>
             <div data-part="chart">
-              <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Лестница ставок: цена за тысячу запросов по объёму">
+              <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={chartLabel}>
                 {[0, 0.5, 1].map((share) => (
                   <line key={share} data-part="grid-line" x1={padL} x2={width - 8} y1={y(maxRate * share)} y2={y(maxRate * share)} />
                 ))}
@@ -269,7 +298,7 @@ export function Pricing034({
                 ))}
                 {tickValues.map((value) => (
                   <text key={value} x={x(value)} y={height - 6} textAnchor="middle">
-                    {formatCount(value)}
+                    {formatCount(value, millionUnit, thousandUnit, decimalSeparator)}
                   </text>
                 ))}
                 <path data-part="area" d={area} />
@@ -280,8 +309,8 @@ export function Pricing034({
                 <circle data-part="dot" r={5} cx={0} cy={y(currentRate)} style={{ transform: `translateX(${markerX}px)` }} />
               </svg>
               <div data-part="legend">
-                <span>{currency} за 1 000 запросов</span>
-                <span>запросов в месяц →</span>
+                <span>{yLabel.replace("{currency}", currency)}</span>
+                <span>{xLabel}</span>
               </div>
               <div data-part="actions">
                 {primaryLabel ? (

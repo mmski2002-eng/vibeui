@@ -26,6 +26,7 @@ export type Vet002Props = {
   defaultSpot?: string
   actionLabel?: string
   actionHref?: string
+  legendLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -119,6 +120,7 @@ export function Vet002({
   defaultSpot = "teeth",
   actionLabel = "Записаться",
   actionHref = "#contacts",
+  legendLabel = "Части тела",
   tone = "auto",
   accent,
   ink,
@@ -183,7 +185,7 @@ export function Vet002({
                   </button>
                 ))}
               </div>
-              <ul data-part="legend" aria-label="Части тела">
+              <ul data-part="legend" aria-label={legendLabel}>
                 {spots.map((item) => (
                   <li key={item.key}>
                     <button type="button" aria-pressed={item.key === spot.key} onClick={() => setActive(item.key)}>

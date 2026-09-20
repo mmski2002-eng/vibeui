@@ -21,6 +21,13 @@ export type Delivery004Props = {
   playLabel?: string
   replayLabel?: string
   courierName?: string
+  /** Статусы и значения ETA, подписи карты, сообщение курьера. */
+  etaLabels?: readonly [string, string, string, string]
+  etaValues?: readonly [string, string, string]
+  kitchenLabel?: string
+  youLabel?: string
+  courierRole?: string
+  courierMessage?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -118,6 +125,12 @@ export function Delivery004({
   playLabel = "Показать, как это выглядит",
   replayLabel = "Ещё раз",
   courierName = "Артём",
+  etaLabels = ["Ждём заказ", "Готовим", "Курьер в пути", "Доставлено"],
+  etaValues = ["26 мин", "11 мин", "0 мин"],
+  kitchenLabel = "КУХНЯ",
+  youLabel = "ВЫ",
+  courierRole = "курьер",
+  courierMessage = "Я у подъезда, поднимаюсь. Заказ горячий.",
   tone = "auto",
   accent,
   ink,
@@ -160,8 +173,8 @@ export function Delivery004({
   const finished = step === steps.length - 1
   const moving = step >= 0 && progress > 0 && !finished
 
-  const eta = step < 0 ? "Ждём заказ" : finished ? "Доставлено" : step >= 2 ? "Курьер в пути" : "Готовим"
-  const etaValue = step < 0 ? "—" : finished ? "0 мин" : step >= 2 ? "11 мин" : "26 мин"
+  const eta = step < 0 ? etaLabels[0] : finished ? etaLabels[3] : step >= 2 ? etaLabels[2] : etaLabels[1]
+  const etaValue = step < 0 ? "—" : finished ? etaValues[2] : step >= 2 ? etaValues[1] : etaValues[0]
 
   return (
     <>
@@ -202,9 +215,9 @@ export function Delivery004({
                 <path data-part="route" d={ROUTE} />
                 <path data-part="trail" d={ROUTE} pathLength={1} />
                 <circle data-part="pin" cx="36" cy="214" r="7" />
-                <text data-part="pin-label" x="36" y="240" textAnchor="middle">КУХНЯ</text>
+                <text data-part="pin-label" x="36" y="240" textAnchor="middle">{kitchenLabel}</text>
                 <path data-part="pin" d="M284 24c-8 0-14 6-14 14 0 10 14 24 14 24s14-14 14-24c0-8-6-14-14-14Zm0 19a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z" />
-                <text data-part="pin-label" x="284" y="78" textAnchor="middle">ВЫ</text>
+                <text data-part="pin-label" x="284" y="78" textAnchor="middle">{youLabel}</text>
                 <g data-part="courier" data-moving={moving}>
                   <circle r="13" />
                   <path d="M-6 3h3l2-5h4l1 3h2M-4 5.5a2 2 0 1 0 0 .01M5 5.5a2 2 0 1 0 0 .01" />
@@ -217,8 +230,8 @@ export function Delivery004({
               <div data-part="chat" data-show={finished}>
                 <i>{courierName.charAt(0)}</i>
                 <span>
-                  <b>{courierName}, курьер</b>
-                  Я у подъезда, поднимаюсь. Заказ горячий.
+                  <b>{courierName}, {courierRole}</b>
+                  {courierMessage}
                 </span>
               </div>
             </div>

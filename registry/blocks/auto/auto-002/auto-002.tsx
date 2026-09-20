@@ -22,6 +22,11 @@ export type Auto002Props = {
   afterLabel?: string
   /** Стартовое положение шторки, %. */
   defaultPosition?: number
+  /** aria вкладок, заголовок описания, «Заняло: {time}» и aria шторки «{label}». */
+  tabsLabel?: string
+  workLabel?: string
+  tookLine?: string
+  sliderLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -99,6 +104,10 @@ export function Auto002({
   beforeLabel = "до",
   afterLabel = "после",
   defaultPosition = 50,
+  tabsLabel = "Что сравниваем",
+  workLabel = "Что сделали",
+  tookLine = "Заняло: {time}",
+  sliderLabel = "Шторка до/после: {label}",
   tone = "auto",
   accent,
   ink,
@@ -152,7 +161,7 @@ export function Auto002({
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
-            <div data-part="tabs" role="tablist" aria-label="Что сравниваем">
+            <div data-part="tabs" role="tablist" aria-label={tabsLabel}>
               {pairs.map((pair, index) => (
                 <button key={pair.label} data-part="tab" type="button" role="tab" aria-selected={tab === index} onClick={() => pick(index)}>
                   {pair.label}
@@ -161,16 +170,16 @@ export function Auto002({
             </div>
             {current ? (
               <div data-part="work" role="tabpanel">
-                <small>Что сделали</small>
+                <small>{workLabel}</small>
                 <p>{current.work}</p>
-                {current.time ? <span>Заняло: {current.time}</span> : null}
+                {current.time ? <span>{tookLine.replace("{time}", current.time)}</span> : null}
               </div>
             ) : null}
           </div>
           {current ? (
             <div data-part="compare" style={{ ["--vibeui-auto-002-pos" as string]: `${position}%` }} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
-              <img data-part="after" src={current.after} alt={`${current.label}: после`} draggable={false} />
-              <img data-part="before" src={current.before} alt={`${current.label}: до`} draggable={false} />
+              <img data-part="after" src={current.after} alt={`${current.label}: ${afterLabel}`} draggable={false} />
+              <img data-part="before" src={current.before} alt={`${current.label}: ${beforeLabel}`} draggable={false} />
               <span data-part="tag" data-side="before">
                 {beforeLabel}
               </span>
@@ -183,7 +192,7 @@ export function Auto002({
                   <path d="M9 6l-6 6 6 6M15 6l6 6-6 6" />
                 </svg>
               </span>
-              <input data-part="range" type="range" min={0} max={100} value={Math.round(position)} onChange={(event) => setPosition(Number(event.target.value))} aria-label={`Шторка до/после: ${current.label}`} />
+              <input data-part="range" type="range" min={0} max={100} value={Math.round(position)} onChange={(event) => setPosition(Number(event.target.value))} aria-label={sliderLabel.replace("{label}", current.label)} />
             </div>
           ) : null}
         </div>

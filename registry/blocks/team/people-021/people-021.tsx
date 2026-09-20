@@ -25,6 +25,10 @@ export type People021Props = {
   joinLabel?: string
   joinHref?: string
   currency?: string
+  /** Подписи карточки и подсказка ленты. */
+  productsUnit?: string
+  perHourUnit?: string
+  dragHint?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -135,6 +139,9 @@ export function People021({
   joinLabel = "Стать автором",
   joinHref = "#for-authors",
   currency = "₽",
+  productsUnit = "товаров",
+  perHourUnit = "/час",
+  dragHint = "← потяните ленту →",
   tone = "auto",
   accent,
   ink,
@@ -238,10 +245,10 @@ export function People021({
                 </div>
                 <div data-part="meta">
                   <span>
-                    <b>{author.products}</b> товаров
+                    <b>{author.products}</b> {productsUnit}
                   </span>
                   <span>
-                    <b>{formatMoney(author.perSecond * 3600, "").trim()}</b> {currency}/час
+                    <b>{formatMoney(author.perSecond * 3600, "").trim()}</b> {currency}{perHourUnit}
                   </span>
                 </div>
               </a>
@@ -249,7 +256,7 @@ export function People021({
           })}
         </div>
         <p data-part="drag" aria-hidden="true">
-          ← потяните ленту →
+          {dragHint}
         </p>
       </section>
     </>

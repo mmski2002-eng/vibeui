@@ -27,6 +27,16 @@ export type Pricing025Props = {
   /** Скидка за год, в процентах. */
   yearlyDiscount?: number
   currency?: string
+  /** Подписи ползунка, периода и карточек. */
+  seatsLabel?: string
+  seatUnits?: readonly [string, string, string]
+  monthlyLabel?: string
+  yearlyLabel?: string
+  yearlyAria?: string
+  featuredLabel?: string
+  upToLine?: string
+  foreverLabel?: string
+  perSeatLine?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -176,6 +186,15 @@ export function Pricing025({
   defaultSeats = 12,
   yearlyDiscount = 20,
   currency = "₽",
+  seatsLabel = "Человек в команде",
+  seatUnits = ["место", "места", "мест"],
+  monthlyLabel = "В месяц",
+  yearlyLabel = "За год",
+  yearlyAria = "Оплата за год",
+  featuredLabel = "Выбирают чаще",
+  upToLine = "только до {n} человек",
+  foreverLabel = "навсегда",
+  perSeatLine = "/ мес · {price} за место",
   tone = "auto",
   accent,
   ink,
@@ -245,10 +264,10 @@ export function Pricing025({
           </div>
           <div data-part="controls">
             <label data-part="seats">
-              <span>Человек в команде</span>
+              <span>{seatsLabel}</span>
               <output>
                 <Odometer value={String(seats)} />
-                <small>{seats === 1 ? "место" : seats < 5 ? "места" : "мест"}</small>
+                <small>{seats === 1 ? seatUnits[0] : seats < 5 ? seatUnits[1] : seatUnits[2]}</small>
               </output>
             </label>
             <input
@@ -258,13 +277,13 @@ export function Pricing025({
               max={maxSeats}
               value={seats}
               onChange={(event) => setSeats(Number(event.target.value))}
-              aria-label="Человек в команде"
+              aria-label={seatsLabel}
               style={{ ["--vibeui-pricing-025-fill" as string]: fill }}
             />
             <div data-part="period">
-              <span data-on={!yearly}>В месяц</span>
-              <button data-part="switch" type="button" role="switch" aria-checked={yearly} aria-label="Оплата за год" onClick={() => setYearly((value) => !value)} />
-              <span data-on={yearly}>За год</span>
+              <span data-on={!yearly}>{monthlyLabel}</span>
+              <button data-part="switch" type="button" role="switch" aria-checked={yearly} aria-label={yearlyAria} onClick={() => setYearly((value) => !value)} />
+              <span data-on={yearly}>{yearlyLabel}</span>
               {yearlyDiscount > 0 ? <span data-part="save">−{yearlyDiscount}%</span> : null}
             </div>
           </div>
@@ -275,18 +294,18 @@ export function Pricing025({
               const over = plan.perSeat === 0 && plan.seatsIncluded !== undefined && seats > plan.seatsIncluded
               return (
                 <li key={plan.name} data-part="plan" data-featured={plan.featured ? "true" : undefined} style={{ ["--vibeui-pricing-025-i" as string]: planIndex }} onPointerMove={onPlanMove}>
-                  {plan.featured ? <span data-part="badge">Выбирают чаще</span> : null}
+                  {plan.featured ? <span data-part="badge">{featuredLabel}</span> : null}
                   <h3>{plan.name}</h3>
                   <div data-part="price">
                     {plan.perSeat === 0 ? (
                       <>
                         {"0 " + currency}
-                        <small>{over ? `только до ${plan.seatsIncluded} человек` : "навсегда"}</small>
+                        <small>{over ? upToLine.replace("{n}", String(plan.seatsIncluded)) : foreverLabel}</small>
                       </>
                     ) : (
                       <>
                         <Odometer value={formatMoney(total, currency)} />
-                        <small>/ мес · {formatMoney(plan.perSeat * factor, currency)} за место</small>
+                        <small>{perSeatLine.replace("{price}", formatMoney(plan.perSeat * factor, currency))}</small>
                       </>
                     )}
                   </div>

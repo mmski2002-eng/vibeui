@@ -27,6 +27,9 @@ export type Testimonials026Props = {
   reviews?: readonly Testimonials026Review[]
   /** Секунд на полный круг ряда отзывов. */
   speed?: number
+  /** aria звёзд и ленты марок. */
+  starsLabel?: string
+  brandsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -157,11 +160,11 @@ function Star() {
   )
 }
 
-function Review({ review, hidden }: { review: Testimonials026Review; hidden?: boolean }) {
+function Review({ review, hidden, starsLabel }: { review: Testimonials026Review; hidden?: boolean; starsLabel: string }) {
   const stars = review.stars ?? 5
   return (
     <li data-part="review" aria-hidden={hidden ? true : undefined}>
-      <span data-part="stars" aria-label={`${stars} из 5`}>
+      <span data-part="stars" aria-label={starsLabel.replace("{n}", String(stars))}>
         {Array.from({ length: stars }, (_, index) => (
           <Star key={index} />
         ))}
@@ -183,6 +186,8 @@ export function Testimonials026({
   brands = DEFAULT_BRANDS,
   reviews = DEFAULT_REVIEWS,
   speed = 70,
+  starsLabel = "{n} из 5",
+  brandsLabel = "Марки, с которыми работаем",
   tone = "auto",
   accent,
   ink,
@@ -240,7 +245,7 @@ export function Testimonials026({
           ) : null}
         </div>
         {brands.length > 0 ? (
-          <div data-part="band" aria-label="Марки, с которыми работаем">
+          <div data-part="band" aria-label={brandsLabel}>
             <ul>
               {[...brands, ...brands].map((brand, index) => (
                 <li key={`${brand}-${index}`} aria-hidden={index >= brands.length ? true : undefined}>
@@ -256,7 +261,7 @@ export function Testimonials026({
               <div key={rowIndex} data-part="row" data-dir={rowIndex % 2 ? "back" : "forth"} style={{ ["--vibeui-testimonials-026-t" as string]: `${speed + rowIndex * 12}s` }}>
                 <ul data-part="track">
                   {[...row, ...row].map((review, index) => (
-                    <Review key={`${review.name}-${index}`} review={review} hidden={index >= row.length} />
+                    <Review key={`${review.name}-${index}`} review={review} hidden={index >= row.length} starsLabel={starsLabel} />
                   ))}
                 </ul>
               </div>

@@ -31,6 +31,15 @@ export type Cta030Props = {
   estimateLabel?: string
   doneTitle?: string
   fine?: string
+  /** Текст после отправки; {n} — номер жирным. */
+  doneLine?: string
+  estimateLine?: string
+  numberPrefix?: string
+  areaUnit?: string
+  weekShort?: string
+  detachLabel?: string
+  phoneLabel?: string
+  channelsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -129,6 +138,14 @@ export function Cta030({
   estimateLabel = "К заявке прикреплена смета",
   doneTitle = "Заявка принята",
   fine = "Никаких рассылок: один звонок или одно сообщение по делу.",
+  doneLine = "Заявка {n}. {promise}.",
+  estimateLine = "Смета {n} прикреплена.",
+  numberPrefix = "№",
+  areaUnit = "м²",
+  weekShort = "нед",
+  detachLabel = "Открепить смету",
+  phoneLabel = "Телефон",
+  channelsLabel = "Как связаться",
   tone = "auto",
   accent,
   ink,
@@ -182,11 +199,19 @@ export function Cta030({
                   </svg>
                   <h3>{doneTitle}</h3>
                   <p>
-                    Заявка <b>№ {done}</b>. {current.promise}.
+                    {doneLine.split("{n}")[0]}
+                    <b>
+                      {numberPrefix} {done}
+                    </b>
+                    {(doneLine.split("{n}")[1] ?? "").replace("{promise}", current.promise)}
                     {estimate ? (
                       <>
                         {" "}
-                        Смета <b>№ {estimate.number}</b> прикреплена.
+                        {estimateLine.split("{n}")[0]}
+                        <b>
+                          {numberPrefix} {estimate.number}
+                        </b>
+                        {estimateLine.split("{n}")[1]}
                       </>
                     ) : null}
                   </p>
@@ -202,27 +227,27 @@ export function Cta030({
                     {estimate ? (
                       <div data-part="estimate">
                         <span>{estimateLabel}</span>
-                        {estimate.number ? <b>№ {estimate.number}</b> : null}
-                        {estimate.area ? <span>{estimate.area} м²</span> : null}
+                        {estimate.number ? <b>{numberPrefix} {estimate.number}</b> : null}
+                        {estimate.area ? <span>{estimate.area} {areaUnit}</span> : null}
                         {estimate.type ? <span>{estimate.type}</span> : null}
                         {estimate.price ? (
                           <b>
                             {formatMoney(estimate.price)} {estimate.currency ?? "₽"}
                           </b>
                         ) : null}
-                        {estimate.weeks ? <span>{estimate.weeks} нед</span> : null}
-                        <button type="button" aria-label="Открепить смету" onClick={() => setEstimate(null)}>
+                        {estimate.weeks ? <span>{estimate.weeks} {weekShort}</span> : null}
+                        <button type="button" aria-label={detachLabel} onClick={() => setEstimate(null)}>
                           ×
                         </button>
                       </div>
                     ) : null}
                     <form data-part="form" onSubmit={submit}>
-                      <input type="tel" name="phone" required placeholder={placeholder} aria-label="Телефон" autoComplete="tel" inputMode="tel" />
+                      <input type="tel" name="phone" required placeholder={placeholder} aria-label={phoneLabel} autoComplete="tel" inputMode="tel" />
                       <button data-part="submit" type="submit">
                         {actionLabel}
                       </button>
                     </form>
-                    <ul data-part="channels" role="radiogroup" aria-label="Как связаться">
+                    <ul data-part="channels" role="radiogroup" aria-label={channelsLabel}>
                       {channels.map((item) => (
                         <li key={item.id}>
                           <button data-part="channel" type="button" role="radio" aria-checked={item.id === current.id} onClick={() => setChannel(item.id)}>

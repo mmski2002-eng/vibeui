@@ -7,7 +7,9 @@
 // человек должен видеть сам сайт. Заставка раскрывается кликом по её
 // кнопке, постер снимается уже с первого экрана.
 //
-// Запуск: node scripts/scenario-covers.mjs [https://vibeui.ru] [slug ...]
+// Запуск: node scripts/scenario-covers.mjs [https://vibeui.ru] [--en] [slug ...]
+// С `--en` снимаются английские демо (`/en/scenarios/<slug>/demo`) — только
+// те, у кого в registry есть `sourceEn`, — в `public/demo/scenarios/en/`.
 // Playwright в проекте не стоит: путь к пакету — через PLAYWRIGHT_MODULE,
 // иначе берётся глобальный `playwright`.
 
@@ -18,12 +20,17 @@ import { pathToFileURL } from "node:url"
 import sharp from "sharp"
 
 const root = process.cwd()
-const base = process.argv[2] ?? "https://vibeui.ru"
-const only = process.argv.slice(3)
-const outputDirectory = path.join(root, "public/demo/scenarios")
+const english = process.argv.includes("--en")
+const rest = process.argv.slice(2).filter((argument) => argument !== "--en")
+const base = rest[0] ?? "https://vibeui.ru"
+const only = rest.slice(1)
+const outputDirectory = path.join(root, "public/demo/scenarios", english ? "en" : "")
 
 const source = await readFile(path.join(root, "registry/scenarios.ts"), "utf8")
-const slugs = [...source.matchAll(/demo: "\/scenarios\/([a-z0-9-]+)\/demo"/g)]
+const pattern = english
+  ? /sourceEn: "app\/en\/scenarios\/([a-z0-9-]+)\/demo\/page\.tsx"/g
+  : /demo: "\/scenarios\/([a-z0-9-]+)\/demo"/g
+const slugs = [...source.matchAll(pattern)]
   .map((match) => match[1])
   .filter((slug) => only.length === 0 || only.includes(slug))
 
@@ -49,7 +56,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
 await mkdir(outputDirectory, { recursive: true })
 
 for (const slug of slugs) {
-  const url = `${base}/scenarios/${slug}/demo`
+  const url = `${base}${english ? "/en" : ""}/scenarios/${slug}/demo`
   await page.goto(url, { waitUntil: "load", timeout: 120000 })
   // Анимации появления первого экрана должны отыграть, иначе на постере
   // пустые места вместо блоков.

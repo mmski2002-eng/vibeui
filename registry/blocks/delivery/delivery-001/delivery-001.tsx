@@ -29,6 +29,17 @@ export type Delivery001Props = {
   allLabel?: string
   addLabel?: string
   checkoutLabel?: string
+  /** aria фильтров и корзины, тексты полосы корзины. */
+  filtersLabel?: string
+  removeLabel?: string
+  emptyText?: string
+  cartLabel?: string
+  dishUnits?: readonly [string, string, string]
+  etaLine?: string
+  leftLine?: string
+  freeLine?: string
+  progressLabel?: string
+  doneLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -157,6 +168,16 @@ export function Delivery001({
   allLabel = "Всё",
   addLabel = "В корзину",
   checkoutLabel = "Оформить",
+  filtersLabel = "Разделы меню",
+  removeLabel = "Убрать {name}",
+  emptyText = "В этом разделе пока пусто",
+  cartLabel = "Корзина",
+  dishUnits = ["блюдо", "блюда", "блюд"],
+  etaLine = " · привезём за {n} мин",
+  leftLine = "До бесплатной доставки осталось {left} · сейчас доставка {fee}",
+  freeLine = "Доставка бесплатная · спасибо, что взяли побольше",
+  progressLabel = "До бесплатной доставки",
+  doneLabel = "Принято, готовим",
   tone = "auto",
   accent,
   ink,
@@ -272,7 +293,7 @@ export function Delivery001({
               <h2 data-part="title">{title}</h2>
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
-            <ul data-part="filters" aria-label="Разделы меню">
+            <ul data-part="filters" aria-label={filtersLabel}>
               <li>
                 <button type="button" aria-pressed={filter === null} onClick={() => setFilter(null)}>
                   {allLabel}
@@ -306,7 +327,7 @@ export function Delivery001({
                     <div data-part="step" data-active={amount > 0}>
                       {amount > 0 ? (
                         <>
-                          <button type="button" aria-label={`Убрать ${dish.name}`} onClick={() => change(dish.id, -1)}>
+                          <button type="button" aria-label={removeLabel.replace("{name}", dish.name)} onClick={() => change(dish.id, -1)}>
                             −
                           </button>
                           <output aria-live="polite" aria-label={`${dish.name}: ${amount}`}>
@@ -323,34 +344,37 @@ export function Delivery001({
               )
             })}
           </ul>
-          {visible.length === 0 ? <p data-part="empty">В этом разделе пока пусто</p> : null}
+          {visible.length === 0 ? <p data-part="empty">{emptyText}</p> : null}
         </div>
-        <aside data-part="bar" data-open={count > 0} aria-label="Корзина" aria-hidden={count === 0}>
+        <aside data-part="bar" data-open={count > 0} aria-label={cartLabel} aria-hidden={count === 0}>
           <p data-part="sum">
             <b>{formatMoney(total, currency)}</b>
             <span>
-              {count} {plural(count, "блюдо", "блюда", "блюд")}
-              {zone ? ` · привезём за ${zone.minutes} мин` : null}
+              {count} {plural(count, ...dishUnits)}
+              {zone ? etaLine.replace("{n}", String(zone.minutes)) : null}
             </span>
           </p>
           <div data-part="progress">
             <em>
               {left > 0 ? (
                 <>
-                  До бесплатной доставки осталось <b>{formatMoney(left, currency)}</b> · сейчас доставка {formatMoney(fee, currency)}
+                  {leftLine.split("{left}")[0]}
+                  <b>{formatMoney(left, currency)}</b>
+                  {(leftLine.split("{left}")[1] ?? "").replace("{fee}", formatMoney(fee, currency))}
                 </>
               ) : (
                 <>
-                  <b>Доставка бесплатная</b> · спасибо, что взяли побольше
+                  <b>{freeLine.split(" · ")[0]}</b>
+                  {freeLine.includes(" · ") ? ` · ${freeLine.split(" · ").slice(1).join(" · ")}` : ""}
                 </>
               )}
             </em>
-            <div data-part="track" role="progressbar" aria-valuemin={0} aria-valuemax={freeFrom} aria-valuenow={Math.min(total, freeFrom)} aria-label="До бесплатной доставки">
+            <div data-part="track" role="progressbar" aria-valuemin={0} aria-valuemax={freeFrom} aria-valuenow={Math.min(total, freeFrom)} aria-label={progressLabel}>
               <i style={{ ["--vibeui-delivery-001-fill" as string]: fill }} />
             </div>
           </div>
           <button data-part="checkout" type="button" data-done={done} onClick={checkout} disabled={count === 0}>
-            {done ? "Принято, готовим" : `${checkoutLabel} · ${formatMoney(total + (left > 0 ? fee : 0), currency)}`}
+            {done ? doneLabel : `${checkoutLabel} · ${formatMoney(total + (left > 0 ? fee : 0), currency)}`}
           </button>
         </aside>
       </section>

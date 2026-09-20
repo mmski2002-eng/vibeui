@@ -31,6 +31,9 @@ export type Pricing021Props = {
   maxCount?: number
   freeNote?: string
   currency?: string
+  /** aria счётчика билетов. */
+  lessLabel?: string
+  moreLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -122,6 +125,8 @@ export function Pricing021({
   maxCount = 8,
   freeNote = "Детям до 7 лет — бесплатно с любым билетом. Возврат до 15 августа без вопросов.",
   currency = "₽",
+  lessLabel = "Меньше",
+  moreLabel = "Больше",
   tone = "auto",
   accent,
   background,
@@ -149,13 +154,13 @@ export function Pricing021({
             {counter ? (
               <div data-part="counter" role="group" aria-label={counterLabel}>
                 <span>{counterLabel}</span>
-                <button type="button" aria-label="Меньше" disabled={count <= 1} onClick={() => setCount((value) => Math.max(1, value - 1))}>
+                <button type="button" aria-label={lessLabel} disabled={count <= 1} onClick={() => setCount((value) => Math.max(1, value - 1))}>
                   −
                 </button>
                 <span data-part="count" aria-live="polite">
                   {count}
                 </span>
-                <button type="button" aria-label="Больше" disabled={count >= maxCount} onClick={() => setCount((value) => Math.min(maxCount, value + 1))}>
+                <button type="button" aria-label={moreLabel} disabled={count >= maxCount} onClick={() => setCount((value) => Math.min(maxCount, value + 1))}>
                   +
                 </button>
               </div>

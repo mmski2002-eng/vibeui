@@ -16,6 +16,10 @@ export type Cta032Props = {
   fine?: string
   doneTitle?: string
   doneText?: string
+  /** Заголовок формы без eyebrow, aria и подпись языков. */
+  fallbackTitle?: string
+  langsLabel?: string
+  langsShort?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -106,6 +110,9 @@ export function Cta032({
   fine = "Напишем в течение часа в рабочее время. Никаких звонков без предупреждения.",
   doneTitle = "записали!",
   doneText = "Напишем в течение часа и предложим два-три времени на выбор. Проверьте Telegram.",
+  fallbackTitle = "пробный урок",
+  langsLabel = "Язык",
+  langsShort = "язык",
   tone = "auto",
   accent,
   ink,
@@ -161,7 +168,7 @@ export function Cta032({
               </div>
             ) : (
               <form data-part="form" onSubmit={submit}>
-                <h3>{eyebrow || "пробный урок"}</h3>
+                <h3>{eyebrow || fallbackTitle}</h3>
                 <div data-part="field">
                   <input id={`${id}-name`} name="name" type="text" required placeholder={nameLabel} autoComplete="name" />
                   <label htmlFor={`${id}-name`}>{nameLabel}</label>
@@ -171,8 +178,8 @@ export function Cta032({
                   <label htmlFor={`${id}-contact`}>{contactLabel}</label>
                 </div>
                 {languages.length > 0 ? (
-                  <div data-part="langs" role="group" aria-label="Язык">
-                    <span>язык</span>
+                  <div data-part="langs" role="group" aria-label={langsLabel}>
+                    <span>{langsShort}</span>
                     {languages.map((language, index) => (
                       <button key={language} data-part="chip" type="button" aria-pressed={lang === index} onClick={() => setLang(index)}>
                         {language}

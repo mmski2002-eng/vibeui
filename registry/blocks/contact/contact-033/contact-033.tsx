@@ -23,6 +23,11 @@ export type Contact033Props = {
   authorEmail?: string
   pressKitLabel?: string
   pressKitHref?: string
+  /** Начало статуса, которое считается «свободно» (подсветка). */
+  freePrefix?: string
+  directLine?: string
+  copyLabel?: string
+  copiedLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -112,6 +117,10 @@ export function Contact033({
   authorEmail = "vera@kholodova.ru",
   pressKitLabel = "Пресс-кит: фото, биография, обложка (zip, 14 МБ)",
   pressKitHref = "#press-kit",
+  freePrefix = "свободны",
+  directLine = "Для интервью и эфиров — напрямую:",
+  copyLabel = "копировать",
+  copiedLabel = "скопировано",
   tone = "auto",
   accent,
   ink,
@@ -181,14 +190,14 @@ export function Contact033({
                 {rights.map((right) => (
                   <li key={right.name}>
                     <b>{right.name}</b>
-                    <span data-free={right.status.startsWith("свободны") ? "true" : undefined}>{right.status}</span>
+                    <span data-free={right.status.startsWith(freePrefix) ? "true" : undefined}>{right.status}</span>
                   </li>
                 ))}
               </ul>
             ) : null}
             {authorEmail ? (
               <p data-part="author">
-                Для интервью и эфиров — напрямую: <a href={`mailto:${authorEmail}`}>{authorEmail}</a>
+                {directLine} <a href={`mailto:${authorEmail}`}>{authorEmail}</a>
               </p>
             ) : null}
           </div>
@@ -203,7 +212,7 @@ export function Contact033({
                 <div>
                   <a href={`mailto:${email}`}>{email}</a>
                   <button data-part="copy" type="button" data-done={copied} onClick={copy} aria-live="polite">
-                    {copied ? "скопировано" : "копировать"}
+                    {copied ? copiedLabel : copyLabel}
                   </button>
                 </div>
                 {phone ? <a href={`tel:${phone.replace(/[^\d+]/g, "")}`}>{phone}</a> : null}

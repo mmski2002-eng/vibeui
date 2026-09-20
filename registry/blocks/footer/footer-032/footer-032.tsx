@@ -20,6 +20,7 @@ export type Footer032Props = {
   socials?: readonly Footer032Link[]
   legal?: readonly Footer032Link[]
   copyright?: string
+  navLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -113,6 +114,7 @@ export function Footer032({
   socials = [{ label: "Telegram", href: "#" }, { label: "X", href: "#" }, { label: "GitHub", href: "#" }],
   legal = [{ label: "Конфиденциальность", href: "#privacy" }, { label: "Условия", href: "#terms" }, { label: "Обработка данных", href: "#dpa" }],
   copyright = "© 2026 Сводка",
+  navLabel = "Разделы сайта",
   tone = "auto",
   accent,
   ink,
@@ -153,7 +155,7 @@ export function Footer032({
               </a>
             ) : null}
           </div>
-          <nav data-part="columns" aria-label="Разделы сайта">
+          <nav data-part="columns" aria-label={navLabel}>
             {columns.map((column) => (
               <div key={column.title}>
                 <h3>{column.title}</h3>

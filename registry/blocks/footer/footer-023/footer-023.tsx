@@ -26,6 +26,8 @@ export type Footer023Props = {
   /** Ссылка на карту. */
   mapLabel?: string
   mapHref?: string
+  /** aria значка 18+. */
+  ageLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   background?: string
@@ -111,6 +113,7 @@ export function Footer023({
   legal = "ИП Волкова А. С., лицензия № ЛО-78-01-011245. Только для лиц старше 18 лет. © 2014–2026.",
   mapLabel = "на карте",
   mapHref = "https://yandex.ru/maps/",
+  ageLabel = "18 плюс",
   tone = "auto",
   accent,
   background,
@@ -178,7 +181,7 @@ export function Footer023({
             </ul>
           </div>
           <div data-part="bottom">
-            <span data-part="age" aria-label="18 плюс">
+            <span data-part="age" aria-label={ageLabel}>
               18+
             </span>
             {legal ? <span>{legal}</span> : null}

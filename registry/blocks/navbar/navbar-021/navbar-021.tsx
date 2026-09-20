@@ -23,6 +23,8 @@ export type Navbar021Props = {
   /** Прозрачная поверх первого экрана, при скролле — тёмная и ниже. */
   overlay?: boolean
   sticky?: boolean
+  /** aria навигации. */
+  navLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -112,6 +114,7 @@ export function Navbar021({
   menuLabel = "Меню",
   overlay = false,
   sticky = true,
+  navLabel = "Разделы",
   tone = "auto",
   accent,
   ink,
@@ -166,7 +169,7 @@ export function Navbar021({
             <span data-part="name">{brand}</span>
             {caption ? <span data-part="caption">{caption}</span> : null}
           </a>
-          <nav aria-label="Разделы">
+          <nav aria-label={navLabel}>
             <ul data-part="nav">
               {links.map((link) => (
                 <li key={link.label + link.href}>

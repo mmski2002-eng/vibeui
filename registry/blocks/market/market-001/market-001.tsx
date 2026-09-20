@@ -44,6 +44,13 @@ export type Market001Props = {
   currency?: string
   /** Имя CustomEvent, которое уходит наружу при «В набор» (detail: name, price, kind, image, license). */
   addEvent?: string
+  /** aria фильтров, сортировки и лицензий; подписи. */
+  chipsLabel?: string
+  sortsLabel?: string
+  sortShort?: string
+  emptyText?: string
+  downloadsUnit?: string
+  licenseLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -198,6 +205,12 @@ export function Market001({
   addedLabel = "В наборе",
   currency = "₽",
   addEvent = "vibeui-market:add",
+  chipsLabel = "Категории",
+  sortsLabel = "Сортировка",
+  sortShort = "сорт.",
+  emptyText = "Пока пусто — загляните в четверг.",
+  downloadsUnit = "загрузок",
+  licenseLabel = "Лицензия",
   tone = "auto",
   accent,
   ink,
@@ -310,7 +323,7 @@ export function Market001({
             </div>
           </div>
           <div data-part="bar">
-            <ul data-part="chips" aria-label="Категории">
+            <ul data-part="chips" aria-label={chipsLabel}>
               <li>
                 <button data-part="chip" type="button" aria-pressed={kind === "all"} onClick={() => pickKind("all")}>
                   {allLabel}
@@ -326,9 +339,9 @@ export function Market001({
                 </li>
               ))}
             </ul>
-            <ul data-part="sorts" aria-label="Сортировка">
+            <ul data-part="sorts" aria-label={sortsLabel}>
               <li data-part="sort-label" aria-hidden="true">
-                сорт.
+                {sortShort}
               </li>
               {(Object.keys(sortLabels) as SortKey[]).map((key) => (
                 <li key={key}>
@@ -340,7 +353,7 @@ export function Market001({
             </ul>
           </div>
           {visible.length === 0 ? (
-            <p data-part="empty">Пока пусто — загляните в четверг.</p>
+            <p data-part="empty">{emptyText}</p>
           ) : (
             <ul ref={gridRef} data-part="grid">
               {visible.map((product, index) => {
@@ -374,13 +387,13 @@ export function Market001({
                       <span data-part="price">{formatMoney(product.price, currency)}</span>
                       <p data-part="author">
                         {product.author}
-                        <span>{formatMoney(product.downloads, "").trim()} загрузок</span>
+                        <span>{formatMoney(product.downloads, "").trim()} {downloadsUnit}</span>
                       </p>
                     </div>
                     <div data-part="panel" data-open={isOpen} id={panelId}>
                       <div>
                         <div data-part="licenses">
-                          <ul data-part="lic" aria-label="Лицензия">
+                          <ul data-part="lic" aria-label={licenseLabel}>
                             {licenses.map((item) => (
                               <li key={item.key}>
                                 <button type="button" aria-pressed={license === item.key} onClick={() => setLicense(item.key)} tabIndex={isOpen ? 0 : -1}>

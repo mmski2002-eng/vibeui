@@ -34,6 +34,10 @@ export type Hero035Props = {
   stats?: readonly Hero035Stat[]
   /** Имя события, которое летит в window при смене питомца: другие блоки могут подхватить. */
   eventName?: string
+  /** aria переключателя питомца. */
+  switchLabel?: string
+  /** Разделитель дробной части в счётчиках. */
+  decimalSeparator?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -147,10 +151,10 @@ function renderTitle(title: string) {
   return title.split("*").map((chunk, index) => (index % 2 === 1 ? <em key={index}>{chunk}</em> : chunk))
 }
 
-function formatStat(value: number, progress: number) {
+function formatStat(value: number, progress: number, decimalSeparator: string) {
   const current = value * progress
   if (Number.isInteger(value)) return String(Math.round(current)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-  return current.toFixed(1).replace(".", ",")
+  return current.toFixed(1).replace(".", decimalSeparator)
 }
 
 function useCountUp(active: boolean) {
@@ -180,6 +184,8 @@ export function Hero035({
   secondaryHref = "#symptoms",
   stats = DEFAULT_STATS,
   eventName = "vibeui-vet:pet",
+  switchLabel = "Кто у вас",
+  decimalSeparator = ",",
   tone = "auto",
   accent,
   ink,
@@ -256,7 +262,7 @@ export function Hero035({
         ))}
         <div data-part="shell">
           <div data-part="copy">
-            <div data-part="switch" role="group" aria-label="Кто у вас" style={switchStyle}>
+            <div data-part="switch" role="group" aria-label={switchLabel} style={switchStyle}>
               {pets.map((item) => (
                 <button key={item.key} type="button" aria-pressed={item.key === pet.key} onClick={() => choose(item.key)}>
                   {item.label}
@@ -290,7 +296,7 @@ export function Hero035({
                 {stats.map((stat) => (
                   <li key={stat.label}>
                     <b>
-                      {formatStat(stat.value, progress)}
+                      {formatStat(stat.value, progress, decimalSeparator)}
                       {stat.suffix}
                     </b>
                     <span>{stat.label}</span>

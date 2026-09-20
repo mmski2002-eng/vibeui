@@ -27,6 +27,8 @@ export type Opensource001Props = {
   resultLabel?: string
   /** Шаги scroll-сцены на широком экране: по одному на переключатель, в том же порядке. */
   steps?: readonly Opensource001Step[]
+  /** aria списка шагов. */
+  stepsLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -154,6 +156,7 @@ export function Opensource001({
   codeLabel = "table.tsx",
   resultLabel = "результат",
   steps = DEFAULT_STEPS,
+  stepsLabel = "Шаги",
   tone = "auto",
   accent,
   ink,
@@ -268,7 +271,7 @@ export function Opensource001({
             ))}
           </div>
           <div data-part="scene">
-            <ol ref={stepList} data-part="steps" aria-label="Шаги">
+            <ol ref={stepList} data-part="steps" aria-label={stepsLabel}>
               {steps.slice(0, 4).map((step, stepIndex) => (
                 <li key={step.title} data-part="step" data-active={values[stepIndex]}>
                   <div>

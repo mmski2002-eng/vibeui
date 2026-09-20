@@ -21,6 +21,9 @@ export type Footer036Props = {
   /** Реквизиты моно-строкой. */
   requisites?: string
   copyright?: string
+  /** Заголовки колонок навигации и документов. */
+  navTitle?: string
+  legalTitle?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -108,6 +111,8 @@ export function Footer036({
   ],
   requisites = "ООО «Ровно» · ИНН 7706412870 · ОГРН 1157746318204 · СРО НОСТРОЙ № С-0412",
   copyright = "© 2011–2026 Ровно",
+  navTitle = "Разделы",
+  legalTitle = "Документы",
   tone = "auto",
   accent,
   ink,
@@ -146,8 +151,8 @@ export function Footer036({
               </dl>
               <div data-part="links">
                 {nav.length > 0 ? (
-                  <nav aria-label="Разделы">
-                    <h3>Разделы</h3>
+                  <nav aria-label={navTitle}>
+                    <h3>{navTitle}</h3>
                     <ul>
                       {nav.map((link) => (
                         <li key={link.href}>
@@ -158,8 +163,8 @@ export function Footer036({
                   </nav>
                 ) : null}
                 {legal.length > 0 ? (
-                  <nav aria-label="Документы">
-                    <h3>Документы</h3>
+                  <nav aria-label={legalTitle}>
+                    <h3>{legalTitle}</h3>
                     <ul>
                       {legal.map((link) => (
                         <li key={link.href}>

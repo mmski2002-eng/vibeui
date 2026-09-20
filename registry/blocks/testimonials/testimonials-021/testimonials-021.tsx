@@ -22,6 +22,7 @@ export type Testimonials021Props = {
   /** Штемпель на новой открытке: «отправлено». */
   sentLabel?: string
   action?: string
+  fromPlaceholder?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -124,6 +125,7 @@ export function Testimonials021({
   submitLabel = "Отправить",
   sentLabel = "отправлено",
   action,
+  fromPlaceholder = "Москва",
   tone = "auto",
   accent,
   ink,
@@ -176,7 +178,7 @@ export function Testimonials021({
                   </label>
                   <label>
                     <span>{fromLabel}</span>
-                    <input type="text" name="from" value={from} onChange={(event) => setFrom(event.target.value)} placeholder="Москва" />
+                    <input type="text" name="from" value={from} onChange={(event) => setFrom(event.target.value)} placeholder={fromPlaceholder} />
                   </label>
                 </div>
                 <label>

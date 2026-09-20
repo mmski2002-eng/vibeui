@@ -14,6 +14,7 @@ export type ScenarioCard = {
   summary: string
   href: string
   demo: string
+  poster: string
   group: ScenarioGroup
   tone: "light" | "dark"
   blocks: number
@@ -25,7 +26,6 @@ export type ScenarioGridText = {
   all: string
   groups: Record<ScenarioGroup, string>
   tones: { light: string; dark: string }
-  shown: string
   openDemo: string
 }
 
@@ -34,8 +34,10 @@ const GROUP_ORDER: ScenarioGroup[] = ["local", "product", "content", "events"]
 /**
  * Сетка сценариев с фильтрами по сфере и теме. Фильтры — чистое клиентское
  * состояние: 27 карточек уже на странице, серверный раунд был бы дороже,
- * чем спрятать лишние. Карточка целиком ведёт на рецепт, демо — иконкой
- * в углу постера, чтобы не плодить по две кнопки на карточку.
+ * чем спрятать лишние. Сфера — табы на общей линии (главный фильтр), тема —
+ * нейтральный segmented control справа: два разных языка, чтобы группы не
+ * сливались в один ряд одинаковых чипов, а оранжевый остался бейджам NEW.
+ * Карточка целиком ведёт на рецепт, демо — иконкой в углу постера.
  */
 export function ScenariosGrid({ cards, text }: { cards: ScenarioCard[]; text: ScenarioGridText }) {
   const [group, setGroup] = useState<ScenarioGroup | "all">("all")
@@ -54,33 +56,39 @@ export function ScenariosGrid({ cards, text }: { cards: ScenarioCard[]; text: Sc
 
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Сфера">
-          <Chip active={group === "all"} onClick={() => setGroup("all")}>
+      <div className="border-shell-border mb-6 flex items-end justify-between gap-4 border-b">
+        <div
+          className="-mb-px flex min-w-0 flex-1 gap-x-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          role="tablist"
+          aria-label="Сфера"
+        >
+          <Tab active={group === "all"} onClick={() => setGroup("all")}>
             {text.all} <Count>{groupCounts.all}</Count>
-          </Chip>
+          </Tab>
           {GROUP_ORDER.map((key) => (
-            <Chip key={key} active={group === key} onClick={() => setGroup(key)}>
+            <Tab key={key} active={group === key} onClick={() => setGroup(key)}>
               {text.groups[key]} <Count>{groupCounts[key]}</Count>
-            </Chip>
+            </Tab>
           ))}
         </div>
-        <div className="flex gap-1.5" role="group" aria-label="Тема">
-          <Chip active={tone === "all"} onClick={() => setTone("all")}>
-            {text.all}
-          </Chip>
-          <Chip active={tone === "light"} onClick={() => setTone("light")}>
+        <div
+          className="border-shell-border bg-shell-panel mb-2 inline-flex h-8 shrink-0 items-center rounded-lg border p-0.5"
+          role="group"
+          aria-label="Тема"
+        >
+          <Segment active={tone === "all"} onClick={() => setTone("all")} label={text.all}>
+            <i
+              className="border-shell-border-strong size-2.5 rounded-full border bg-[linear-gradient(90deg,#fff_50%,#171717_50%)]"
+              aria-hidden="true"
+            />
+          </Segment>
+          <Segment active={tone === "light"} onClick={() => setTone("light")} label={text.tones.light}>
             <i className="border-shell-border-strong size-2.5 rounded-full border bg-white" aria-hidden="true" />
-            {text.tones.light}
-          </Chip>
-          <Chip active={tone === "dark"} onClick={() => setTone("dark")}>
+          </Segment>
+          <Segment active={tone === "dark"} onClick={() => setTone("dark")} label={text.tones.dark}>
             <i className="size-2.5 rounded-full bg-neutral-900" aria-hidden="true" />
-            {text.tones.dark}
-          </Chip>
+          </Segment>
         </div>
-        <span className="text-shell-muted ml-auto text-xs tabular-nums" aria-live="polite">
-          {text.shown} {visible.length} / {cards.length}
-        </span>
       </div>
 
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -88,7 +96,7 @@ export function ScenariosGrid({ cards, text }: { cards: ScenarioCard[]; text: Sc
           <li key={card.slug}>
             <article className="border-shell-border bg-shell-panel acc-lift group relative flex h-full flex-col overflow-hidden rounded-xl border">
               <div className="relative">
-                <LiveCover src={card.demo} title={card.label} poster={`/demo/scenarios/${card.slug}.webp`} />
+                <LiveCover src={card.demo} title={card.label} poster={card.poster} />
                 <Link
                   href={card.demo}
                   target="_blank"
@@ -126,20 +134,48 @@ export function ScenariosGrid({ cards, text }: { cards: ScenarioCard[]; text: Sc
   )
 }
 
-function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+function Tab({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      role="tab"
+      onClick={onClick}
+      aria-selected={active}
+      className={cn(
+        "focus-visible:ring-shell-ring inline-flex h-10 items-center gap-1.5 border-b-2 px-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none",
+        active ? "border-shell-accent text-shell-fg" : "text-shell-muted hover:text-shell-fg border-transparent",
+      )}
+    >
+      {children}
+    </button>
+  )
+}
+
+function Segment({
+  active,
+  onClick,
+  label,
+  children,
+}: {
+  active: boolean
+  onClick: () => void
+  label: string
+  children: React.ReactNode
+}) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={active}
+      aria-label={label}
+      title={label}
       className={cn(
-        "acc-press inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-colors",
-        active
-          ? "border-shell-accent bg-shell-accent text-shell-accent-fg"
-          : "border-shell-border text-shell-fg hover:border-shell-border-strong",
+        "focus-visible:ring-shell-ring inline-flex h-7 items-center gap-1.5 rounded-md px-2 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none",
+        active ? "bg-shell-fg text-shell" : "text-shell-muted hover:text-shell-fg",
       )}
     >
       {children}
+      <span className="hidden sm:inline">{label}</span>
     </button>
   )
 }

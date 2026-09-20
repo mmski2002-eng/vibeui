@@ -22,6 +22,20 @@ export type Charity005Props = {
   doneText?: string
   /** Сколько человек «помогло сегодня» к полуночи — счётчик растёт от текущего времени. */
   helpedPerDay?: number
+  /** Месяцы в родительном падеже и подписи бейджа/формы. */
+  months?: readonly string[]
+  helpedLine?: string
+  rolesLegend?: string
+  daysLegend?: string
+  nameLabel?: string
+  badgeBrand?: string
+  badgeNumber?: string
+  namePlaceholderBadge?: string
+  pickRoleLabel?: string
+  weekLabel?: string
+  hoursLabel?: string
+  applicationLabel?: string
+  stampLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -121,7 +135,6 @@ const DEFAULT_ROLES: Charity005Role[] = [
 
 const DEFAULT_DAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
 
-const MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
 
 const subscribe = (callback: () => void) => {
   const id = window.setInterval(callback, 60_000)
@@ -142,6 +155,19 @@ export function Charity005({
   doneTitle = "Заявка у нас",
   doneText = "Координатор напишет в течение двух дней и позовёт на короткую встречу-знакомство.",
   helpedPerDay = 63,
+  months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"],
+  helpedLine = "сегодня помогли {n} чел.",
+  rolesLegend = "Чем хотите помогать",
+  daysLegend = "В какие дни свободны",
+  nameLabel = "Имя",
+  badgeBrand = "Тёплый дом",
+  badgeNumber = "волонтёр № {n}",
+  namePlaceholderBadge = "Ваше имя",
+  pickRoleLabel = "Выберите роль слева",
+  weekLabel = "Дни",
+  hoursLabel = "Часов в неделю",
+  applicationLabel = "Заявка",
+  stampLabel = "ждём вас",
   tone = "auto",
   accent,
   ink,
@@ -159,7 +185,7 @@ export function Charity005({
 
   const now = minute === null ? null : new Date(minute * 60_000)
   const helped = now === null ? null : Math.max(1, Math.round(((now.getHours() * 60 + now.getMinutes()) / 1440) * helpedPerDay))
-  const dateLabel = now === null ? "—" : `${now.getDate()} ${MONTHS[now.getMonth()]}`
+  const dateLabel = now === null ? "—" : `${now.getDate()} ${months[now.getMonth()]}`
   const number = now === null ? "—" : String(1200 + ((now.getDate() * 31 + now.getMonth() * 7 + name.length * 13) % 700))
   const initials = name
     .trim()
@@ -193,13 +219,13 @@ export function Charity005({
           <div>
             <p data-part="eyebrow">
               {eyebrow ? <span>{eyebrow}</span> : null}
-              {helped !== null ? <span data-part="today">сегодня помогли {helped} чел.</span> : null}
+              {helped !== null ? <span data-part="today">{helpedLine.replace("{n}", String(helped))}</span> : null}
             </p>
             <h2 data-part="title">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
             <form data-part="form" onSubmit={submit}>
               <fieldset data-part="group">
-                <legend>Чем хотите помогать</legend>
+                <legend>{rolesLegend}</legend>
                 <div data-part="chips">
                   {roles.map((item, index) => (
                     <button key={item.label} data-part="chip" type="button" aria-pressed={roleIndex === index} onClick={() => setRoleIndex(index)}>
@@ -209,7 +235,7 @@ export function Charity005({
                 </div>
               </fieldset>
               <fieldset data-part="group">
-                <legend>В какие дни свободны</legend>
+                <legend>{daysLegend}</legend>
                 <div data-part="chips" role="group">
                   {days.map((day, index) => (
                     <button key={day} data-part="chip" data-day="" type="button" role="checkbox" aria-checked={picked[index] ?? false} aria-label={day} onClick={() => toggleDay(index)}>
@@ -219,7 +245,7 @@ export function Charity005({
                 </div>
               </fieldset>
               <div data-part="group">
-                <label htmlFor="vibeui-charity-005-name">Имя</label>
+                <label htmlFor="vibeui-charity-005-name">{nameLabel}</label>
                 <input data-part="input" id="vibeui-charity-005-name" type="text" value={name} placeholder={namePlaceholder} autoComplete="given-name" maxLength={40} onChange={(event) => setName(event.target.value)} />
               </div>
               <button data-part="submit" type="submit" disabled={done || role === null || pickedCount === 0}>
@@ -242,14 +268,14 @@ export function Charity005({
               ) : (
                 <>
                   <p data-part="brand">
-                    <span>Тёплый дом</span>
-                    <small>волонтёр № {number}</small>
+                    <span>{badgeBrand}</span>
+                    <small>{badgeNumber.replace("{n}", String(number))}</small>
                   </p>
                   <div data-part="avatar" aria-hidden="true">
                     {initials || "?"}
                   </div>
                   <p data-part="who" data-empty={!name.trim()}>
-                    {name.trim() || "Ваше имя"}
+                    {name.trim() || namePlaceholderBadge}
                   </p>
                   {role ? (
                     <p data-part="role" key={role.label}>
@@ -258,10 +284,10 @@ export function Charity005({
                     </p>
                   ) : (
                     <p data-part="role">
-                      <small>Выберите роль слева</small>
+                      <small>{pickRoleLabel}</small>
                     </p>
                   )}
-                  <ul data-part="week" aria-label="Дни">
+                  <ul data-part="week" aria-label={weekLabel}>
                     {days.map((day, index) => (
                       <li key={day} data-on={picked[index] ?? false}>
                         {day}
@@ -270,16 +296,16 @@ export function Charity005({
                   </ul>
                   <dl data-part="facts">
                     <div>
-                      <dt>Часов в неделю</dt>
+                      <dt>{hoursLabel}</dt>
                       <dd>≈ {role ? role.hours * Math.max(1, pickedCount) : 0}</dd>
                     </div>
                     <div>
-                      <dt>Заявка</dt>
+                      <dt>{applicationLabel}</dt>
                       <dd>{dateLabel}</dd>
                     </div>
                   </dl>
                   <span data-part="stamp" aria-hidden="true">
-                    ждём вас
+                    {stampLabel}
                   </span>
                 </>
               )}
