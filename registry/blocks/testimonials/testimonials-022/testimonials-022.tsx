@@ -36,7 +36,7 @@ const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,
 const STYLES = `
 :where([data-vibeui-block="testimonials-022"]){
 --vibeui-testimonials-022-bg:light-dark(#ffffff,#1a1a1a);
---vibeui-testimonials-022-glass:light-dark(#d6dde6,var(--vibeui-testimonials-022-fg));
+--vibeui-testimonials-022-glass:light-dark(rgb(214 221 230 / .55),rgb(18 27 45 / .48));
 --vibeui-testimonials-022-card:light-dark(#ffffff,#242424);
 --vibeui-testimonials-022-fg:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-testimonials-022-muted:light-dark(#6b6b6b,#a3a3a3);
@@ -70,7 +70,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-022"] [data-part="submit"]:hover{transform:translateY(-1px)}
 [data-vibeui-block="testimonials-022"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-testimonials-022-fg);outline-offset:3px}
 [data-vibeui-block="testimonials-022"] [data-part="submit"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-[data-vibeui-block="testimonials-022"] [data-part="window"]{position:relative;padding:1rem;border:1px solid var(--vibeui-testimonials-022-line);border-radius:1rem;background:radial-gradient(60% 50% at 30% 20%,rgb(242 238 230 / .14),transparent 70%),radial-gradient(50% 45% at 80% 90%,rgb(242 238 230 / .1),transparent 70%),var(--vibeui-testimonials-022-glass);overflow:hidden;box-shadow:inset 0 0 0 1px rgb(242 238 230 / .06),inset 0 0 80px rgb(159 176 200 / .12)}
+[data-vibeui-block="testimonials-022"] [data-part="window"]{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:24rem;padding:1.4rem;border:1px solid rgb(242 238 230 / .14);border-radius:1.2rem;background:radial-gradient(60% 50% at 30% 20%,rgb(242 238 230 / .12),transparent 70%),radial-gradient(50% 45% at 80% 90%,rgb(159 176 200 / .12),transparent 70%),var(--vibeui-testimonials-022-glass);-webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1);overflow:hidden;box-shadow:inset 0 1px 0 rgb(242 238 230 / .2),inset 0 0 90px rgb(159 176 200 / .1),0 40px 90px -50px rgb(0 0 0 / .9)}
 [data-vibeui-block="testimonials-022"] [data-part="window"]::before{content:"";position:absolute;inset:0;background-image:radial-gradient(3px 4px at 12% 18%,rgb(242 238 230 / .35) 50%,transparent 51%),radial-gradient(2px 3px at 70% 8%,rgb(242 238 230 / .3) 50%,transparent 51%),radial-gradient(4px 6px at 88% 44%,rgb(242 238 230 / .28) 50%,transparent 51%),radial-gradient(2px 3px at 40% 70%,rgb(242 238 230 / .3) 50%,transparent 51%),radial-gradient(3px 5px at 22% 92%,rgb(242 238 230 / .3) 50%,transparent 51%),radial-gradient(2px 2px at 58% 36%,rgb(242 238 230 / .35) 50%,transparent 51%);pointer-events:none}
 [data-vibeui-block="testimonials-022"] [data-part="wall"]{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="testimonials-022"] [data-part="note"]{position:relative;display:grid;gap:.6rem;padding:1.2rem 1.3rem 1rem;border-radius:1.2rem 1.6rem 1.3rem 1.8rem;background:rgb(242 238 230 / .07);border:1px solid rgb(242 238 230 / .12);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);transform:rotate(-.6deg);transition:transform .4s cubic-bezier(.2,.9,.3,1),background .4s}
@@ -84,7 +84,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-022"] [data-part="note"] svg{position:absolute;right:1rem;top:.9rem;width:.9rem;height:.9rem;fill:none;stroke:rgb(242 238 230 / .35);stroke-width:1.2;stroke-linecap:round}
 @container (min-width:56rem){
 [data-vibeui-block="testimonials-022"] [data-part="shell"]{padding:5rem 2.5rem}
-[data-vibeui-block="testimonials-022"] [data-part="grid"]{grid-template-columns:minmax(0,.8fr) minmax(0,1.7fr);gap:3rem;align-items:start}
+[data-vibeui-block="testimonials-022"] [data-part="grid"]{grid-template-columns:minmax(0,.8fr) minmax(0,1.7fr);gap:3rem;align-items:stretch}
 [data-vibeui-block="testimonials-022"] [data-part="aside"]{position:sticky;top:6rem}
 [data-vibeui-block="testimonials-022"] [data-part="window"]{padding:1.4rem}
 }

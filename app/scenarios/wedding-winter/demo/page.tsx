@@ -64,12 +64,13 @@ export default function Page() {
         {`html{scroll-behavior:smooth;scroll-padding-top:5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
       <Background006 density={0.6} wind={0.2} shape="star" zIndex={30} />
-      <Navbar027 {...dark} background="rgb(11 18 32 / .78)" brandHref="#hero" music={`${IMG}music.mp3`} />
+      <Navbar027 {...dark} background="rgb(11 18 32 / .78)" brandHref="#hero" actionLabel="Подтвердить" music={`${IMG}music.mp3`} />
 
       <div id="hero">
         <Hero027
           {...dark}
           candle={false}
+          primaryLabel="Подтвердить"
           image={`${IMG}hero.webp`}
           imageAlt="Дом в снежном лесу с тёплыми окнами"
           photo={`${IMG}hero-couple.webp`}
@@ -90,7 +91,7 @@ export default function Page() {
       </div>
 
       <div id="evening">
-        <Event013 {...lift} />
+        <Event013 {...lift} image={`${IMG}evening.webp`} imageAlt="Длинный стол при свечах, синие сумерки за окном" />
       </div>
 
       <div id="dresscode">
@@ -104,7 +105,7 @@ export default function Page() {
       </div>
 
       <div id="place">
-        <Map009 {...lift} image={`${IMG}venue.webp`} imageAlt="Дом с тёплыми окнами и фонарями у подъезда" />
+        <Map009 {...lift} mapImage={`${IMG}map.webp`} mapImageAlt="Аэровид: дорога через лес к дому в снежной поляне" image={`${IMG}venue.webp`} imageAlt="Дом с тёплыми окнами и фонарями у подъезда" />
       </div>
 
       <div id="rsvp">

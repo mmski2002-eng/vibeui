@@ -70,18 +70,13 @@ container-type:inline-size;
 [data-vibeui-block="cta-023"] [data-part="copy"]:hover{transform:translateY(-1px);box-shadow:0 0 34px -4px var(--vibeui-cta-023-accent)}
 [data-vibeui-block="cta-023"] [data-part="copy"]:focus-visible{outline:2px solid var(--vibeui-cta-023-fg);outline-offset:3px}
 [data-vibeui-block="cta-023"] [data-part="copy"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-[data-vibeui-block="cta-023"] [data-part="fire"]{position:relative;height:11rem;background:radial-gradient(60% 70% at 50% 100%,#3a2416 0,#1a1410 55%,#0e0c0c 100%)}
-[data-vibeui-block="cta-023"] [data-part="fire"]::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 1.1rem,rgb(0 0 0 / .25) 1.1rem 1.2rem),repeating-linear-gradient(90deg,transparent 0 2.3rem,rgb(0 0 0 / .22) 2.3rem 2.4rem);opacity:.5}
-[data-vibeui-block="cta-023"] [data-part="fire"]::after{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 100%,rgb(255 154 60 / .6),transparent 70%);opacity:.7;transition:opacity .6s}
+[data-vibeui-block="cta-023"] [data-part="fire"]{position:relative;height:12rem;overflow:hidden;background:radial-gradient(75% 90% at 50% 118%,#3a2416 0,#1a1410 48%,#0d0b0b 100%)}
+[data-vibeui-block="cta-023"] [data-part="fire"] video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+[data-vibeui-block="cta-023"] [data-part="fire"]::before{content:"";position:absolute;left:50%;bottom:-4.5rem;width:18rem;height:11rem;margin-left:-9rem;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,rgb(255 154 60 / .5),rgb(242 182 79 / .18) 44%,transparent 72%);filter:blur(7px);animation:vibeui-cta-023-embers 4.5s ease-in-out infinite}
+[data-vibeui-block="cta-023"] [data-part="fire"]::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 55% at 50% 106%,rgb(255 154 60 / .3),transparent 70%);mix-blend-mode:screen;opacity:.85;transition:opacity .6s}
 [data-vibeui-block="cta-023"] [data-part="hearth"][data-copied="true"] [data-part="fire"]::after{opacity:1}
-[data-vibeui-block="cta-023"] [data-part="logs"]{position:absolute;left:50%;bottom:1rem;width:8rem;height:1.2rem;margin-left:-4rem;border-radius:.6rem;background:linear-gradient(180deg,#5a3a24,#2f1d12);box-shadow:0 .3rem .5rem rgb(0 0 0 / .5)}
-[data-vibeui-block="cta-023"] [data-part="logs"]::before{content:"";position:absolute;left:1rem;top:-.8rem;width:6.5rem;height:1.1rem;border-radius:.55rem;background:linear-gradient(180deg,#6a4529,#3a2416);transform:rotate(-8deg)}
-[data-vibeui-block="cta-023"] [data-part="flame"]{position:absolute;bottom:1.8rem;left:50%;margin-left:-1.1rem;width:2.2rem;height:4.2rem;border-radius:50% 50% 40% 40%;background:radial-gradient(50% 60% at 50% 75%,#fff2c8,#ffb347 45%,var(--vibeui-cta-023-fire) 65%,transparent 82%);transform-origin:50% 100%;filter:blur(.5px);animation:vibeui-cta-023-flame 1.3s ease-in-out infinite}
-[data-vibeui-block="cta-023"] [data-part="flame"]:nth-child(2){margin-left:-2.9rem;height:3rem;animation-delay:-.4s;animation-duration:1.6s}
-[data-vibeui-block="cta-023"] [data-part="flame"]:nth-child(3){margin-left:-.3rem;height:4.6rem;animation-delay:-.9s}
-[data-vibeui-block="cta-023"] [data-part="flame"]:nth-child(4){margin-left:1rem;height:3.4rem;animation-delay:-.2s;animation-duration:1.1s}
-@keyframes vibeui-cta-023-flame{0%,100%{transform:scaleX(1) scaleY(1)}35%{transform:scaleX(.88) scaleY(1.12) translateX(.05rem)}70%{transform:scaleX(1.06) scaleY(.9) translateX(-.05rem)}}
-[data-vibeui-block="cta-023"] [data-part="hearth"][data-copied="true"] [data-part="flame"]{animation-duration:.6s}
+@keyframes vibeui-cta-023-embers{0%,100%{opacity:.7;transform:scaleY(1) translateY(0)}50%{opacity:1;transform:scaleY(1.09) translateY(-.3rem)}}
+[data-vibeui-block="cta-023"] [data-part="hearth"][data-copied="true"] [data-part="fire"]::before{animation-duration:1.8s}
 [data-vibeui-block="cta-023"] [data-part="stamp"]{position:absolute;right:1.2rem;top:1.1rem;padding:.3rem .8rem;border:2px solid var(--vibeui-cta-023-accent);border-radius:.4rem;color:var(--vibeui-cta-023-accent);font-family:var(--vibeui-cta-023-script);font-size:1.4rem;transform:rotate(-8deg);opacity:0;pointer-events:none}
 [data-vibeui-block="cta-023"] [data-part="hearth"][data-copied="true"] [data-part="stamp"]{animation:vibeui-cta-023-stamp .5s cubic-bezier(.2,.9,.3,1.4) both}
 @keyframes vibeui-cta-023-stamp{from{opacity:0;transform:rotate(-8deg) scale(2)}to{opacity:.95;transform:rotate(-8deg) scale(1)}}
@@ -164,11 +159,6 @@ export function Cta023({
                 </button>
               </div>
               <div data-part="fire" aria-hidden="true">
-                <i data-part="flame" />
-                <i data-part="flame" />
-                <i data-part="flame" />
-                <i data-part="flame" />
-                <i data-part="logs" />
               </div>
               <span data-part="stamp" aria-hidden="true">
                 {stampLabel}

@@ -41,7 +41,7 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="faq-022"]{color-scheme:dark}
 :where([data-vibeui-block="faq-022"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="faq-022"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="faq-022"]{box-sizing:border-box;display:block;background:var(--vibeui-faq-022-bg);color:var(--vibeui-faq-022-fg);font-family:var(--vibeui-faq-022-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="faq-022"]{box-sizing:border-box;display:block;background:var(--vibeui-faq-022-bg);color:var(--vibeui-faq-022-fg);font-family:var(--vibeui-faq-022-font);font-size:1rem;line-height:1.5;interpolate-size:allow-keywords}
 [data-vibeui-block="faq-022"] *{box-sizing:border-box}
 [data-vibeui-block="faq-022"] a{color:inherit}
 [data-vibeui-block="faq-022"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4.5rem 1.25rem}
@@ -54,6 +54,8 @@ container-type:inline-size;
 [data-vibeui-block="faq-022"] details{position:relative;border:1px solid var(--vibeui-faq-022-line);border-radius:.9rem;background:var(--vibeui-faq-022-card);overflow:hidden;transition:border-color .35s,box-shadow .35s}
 [data-vibeui-block="faq-022"] details::before{content:"";position:absolute;inset:0;background:radial-gradient(30% 40% at 0 0,rgb(242 238 230 / .08),transparent 70%),radial-gradient(25% 35% at 100% 100%,rgb(242 238 230 / .06),transparent 70%);pointer-events:none}
 [data-vibeui-block="faq-022"] details[open]{border-color:rgb(242 182 79 / .45);box-shadow:0 0 0 1px rgb(242 182 79 / .12),0 0 40px -10px rgb(242 182 79 / .4)}
+[data-vibeui-block="faq-022"] details::details-content{block-size:0;overflow:hidden;opacity:0;transition:block-size .45s cubic-bezier(.2,.9,.3,1),opacity .35s,content-visibility .45s allow-discrete}
+[data-vibeui-block="faq-022"] details[open]::details-content{block-size:auto;opacity:1}
 [data-vibeui-block="faq-022"] summary{position:relative;display:grid;grid-template-columns:1.6rem minmax(0,1fr);align-items:center;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;list-style:none;font-family:var(--vibeui-faq-022-display);font-size:1.35rem;font-weight:500;line-height:1.2}
 [data-vibeui-block="faq-022"] summary::-webkit-details-marker{display:none}
 [data-vibeui-block="faq-022"] summary:focus-visible{outline:2px solid var(--vibeui-faq-022-accent);outline-offset:-4px;border-radius:.9rem}
