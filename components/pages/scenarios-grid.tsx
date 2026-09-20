@@ -151,7 +151,7 @@ export function ScenariosGrid({
                   target="_blank"
                   rel="noopener"
                   aria-label={`${text.openDemo}: ${card.label}`}
-                  className="bg-shell-panel/90 text-shell-fg hover:bg-shell-accent hover:text-shell-accent-fg absolute top-2 right-12 z-20 inline-flex size-8 items-center justify-center rounded-full opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+                  className="bg-shell-panel/90 text-shell-fg hover:bg-shell-accent hover:text-shell-accent-fg absolute right-2 bottom-2 z-20 inline-flex size-8 items-center justify-center rounded-full opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
                 >
                   <ArrowUpRight className="size-4" aria-hidden="true" />
                 </Link>
