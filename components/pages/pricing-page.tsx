@@ -1,3 +1,4 @@
+import { headers } from "next/headers"
 import Link from "next/link"
 import { ArrowRight, Infinity as InfinityIcon, Lock, LockOpen, Sparkles } from "lucide-react"
 
@@ -9,7 +10,9 @@ import { Pricing011 } from "@/registry/blocks/pricing/pricing-011/pricing-011"
 import { getUsedCount } from "@/lib/entitlements"
 import { localePath, type Locale } from "@/lib/i18n"
 import { FREE_MONTHLY_LIMIT } from "@/lib/limits"
+import { startCryptoCheckout } from "@/lib/payment-actions"
 import { getPlans, type Plans } from "@/lib/plan-prices"
+import { PLAN_USD } from "@/lib/plans"
 import {
   isFirstPayment,
   normalizePromo,
@@ -429,6 +432,59 @@ const buildTexts = ({
   },
 }) as const
 
+/**
+ * Крипто-оверлей текстов для vibeui.club: доллары и крипто-оплата вместо
+ * рублей и ЮKassa. Берётся английская версия и переопределяются только
+ * платёжные строки — остальной текст (о продукте) остаётся общим.
+ */
+function cryptoTexts(t: ReturnType<typeof buildTexts>["en"]) {
+  const um = PLAN_USD.monthly
+  const uy = PLAN_USD.yearly
+  const uey = PLAN_USD["enterprise-yearly"]
+
+  return {
+    ...t,
+    trust: [
+      `${number(ITEMS)} items`,
+      "Zero dependencies",
+      "shadcn CLI",
+      "Crypto payments (USDC, USDT, ETH)",
+      "No auto-charges",
+    ],
+    plans: {
+      ...t.plans,
+      yearlyNotePro: `$${Math.round(uy / 12)} a month`,
+      yearlyNoteEnterprise: `$${Math.round(uey / 12)} a month`,
+      savingNote: `save $${um * 12 - uy}`,
+      pro: {
+        ...t.plans.pro,
+        under: "One-off crypto payment. Nothing is stored, no auto-charges.",
+      },
+    },
+    faq: t.faq.map((item) => {
+      if (/how do i pay/i.test(item.question)) {
+        return {
+          ...item,
+          answer:
+            "In crypto — USDC, USDT or ETH on Ethereum or Base — via NOWPayments. You pay a hosted invoice; we never touch your wallet.",
+        }
+      }
+
+      if (/receipt/i.test(item.question)) {
+        return {
+          ...item,
+          answer:
+            "Payment is on-chain: the NOWPayments invoice and your wallet transaction are the record. No paper invoice is issued.",
+        }
+      }
+
+      return item
+    }),
+    ctaText: `${FREE_MONTHLY_LIMIT} components a month for free. Then $${um} for a month, no auto-charges.`,
+    legal: "Crypto payments via NOWPayments. By subscribing you accept the",
+  }
+}
+
 function Eyebrow({ children }: { children: string }) {
   return (
     <p className="text-shell-accent-text text-xs font-semibold tracking-[0.14em] uppercase">
@@ -453,7 +509,10 @@ export async function PricingPage({
 }) {
   const prices = pricesOf(await getPlans())
   const { MONTHLY, YEARLY, ENTERPRISE_MONTHLY, ENTERPRISE_YEARLY } = prices
-  const t = buildTexts(prices)[locale]
+  // vibeui.club платит криптой в долларах; всё остальное — рублями через ЮKassa.
+  const host = (await headers()).get("host")?.split(":")[0].toLowerCase() ?? ""
+  const club = host === "vibeui.club" || host === "www.vibeui.club"
+  const t = club ? cryptoTexts(buildTexts(prices).en) : buildTexts(prices)[locale]
   const session = await getSession()
   const [state, used, firstPayment] = session
     ? await Promise.all([
@@ -495,18 +554,33 @@ export async function PricingPage({
                   activeUntil: until ? `${t.plans.pro.activeUntil} ${until}` : null,
                 },
               }}
-              prices={{
-                monthly: MONTHLY,
-                yearly: YEARLY,
-                enterpriseMonthly: ENTERPRISE_MONTHLY,
-                enterpriseYearly: ENTERPRISE_YEARLY,
-              }}
+              prices={
+                club
+                  ? {
+                      monthly: PLAN_USD.monthly,
+                      yearly: PLAN_USD.yearly,
+                      enterpriseMonthly: PLAN_USD["enterprise-monthly"],
+                      enterpriseYearly: PLAN_USD["enterprise-yearly"],
+                    }
+                  : {
+                      monthly: MONTHLY,
+                      yearly: YEARLY,
+                      enterpriseMonthly: ENTERPRISE_MONTHLY,
+                      enterpriseYearly: ENTERPRISE_YEARLY,
+                    }
+              }
               signed={Boolean(session)}
               pro={pro}
               signupHref={signupHref}
               accountHref={localePath(locale, "/account")}
               manageHref={localePath(locale, "/account/subscription")}
-              promo={{ initialCode: initialPromo, eligible: firstPayment }}
+              promo={{
+                initialCode: club ? null : initialPromo,
+                eligible: club ? false : firstPayment,
+              }}
+              pay={club ? startCryptoCheckout : undefined}
+              currency={club ? "$" : "₽"}
+              currencyBefore={club}
             />
           </Reveal>
           {session && !pro ? (

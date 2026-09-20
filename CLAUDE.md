@@ -262,3 +262,85 @@ Push в `main` не только собирает и заливает релиз
 правь этот шаг в том же коммите, чтобы ассерты остались верными. Билд и деплой
 локально не гоняются (правило выше), поэтому эти `curl`-проверки сверяй глазами
 перед пушем: что раньше отдавалось в HTML/по коду, а что теперь закрыто.
+
+## Мультидомен и оплата (заведено 2026-09-20)
+
+Два домена — один проект, один VPS, один деплой. НЕ форкать код в два.
+
+- `vibeui.ru` — русская аудитория, локаль `ru`, оплата **только ЮKassa**
+  (крипта в РФ для внутренних расчётов запрещена). Регистратор — российский
+  (не Porkbun), DNS у него; здесь его NS не трогать.
+- `vibeui.club` — англоязычная аудитория, локаль `en`, оплата **ЮKassa +
+  крипта + карта (в планах)**. Регистратор — Porkbun (акк `escape20021987`).
+- `.ru`-домен от `.club` отделён намеренно: RU-домен отпугивает англоязычных.
+
+### DNS / инфраструктура `.club` (СДЕЛАНО)
+- Домен `vibeui.club` заведён в Cloudflare (free, акк `Mmski2002@gmail.com`).
+- Записи в Cloudflare:
+  - `A vibeui.club → 185.104.251.106` (Proxied);
+  - `CNAME www → vibeui.club` (Proxied);
+  - дефолтные парковочные записи Porkbun удалены.
+- Nameservers в Porkbun переключены на Cloudflare:
+  `cesar.ns.cloudflare.com`, `miki.ns.cloudflare.com` (распространение ≤48ч).
+- SSL/TLS в Cloudflare = **Full** (не strict): proxied→origin принимает любой
+  серт, пока на origin нет отдельного серта под `.club`.
+- Origin `.club` = тот же RU-VPS `185.104.251.106`, что и `.ru`. Cloudflare
+  проксированием прячет RU-IP и даёт CDN/эдж-TLS англоязычным.
+
+### Устройство сервера (общий VPS, Debian, root)
+- На машине несколько чужих сайтов (prolatex, skazkidladetey, tarovarvara×2) —
+  **не трогать**. Наше — только `vibeui*`.
+- `vibeui.ru` = сервис **`vibeui.service`**, Next standalone на **порту 3003**,
+  `WorkingDirectory=/srv/vibeui-live` (симлинк на `/srv/vibeui-releases/<ts>`),
+  env `/etc/vibeui.env` (DATABASE_URL, BETTER_AUTH_*, SMTP_*, ADMIN_EMAILS,
+  YOOKASSA_*). **Почта и админка на `.ru` уже работают в проде.**
+- Схема «один код + детект по хосту»: `.club` обслуживает **тот же процесс**
+  на :3003. Добавлен nginx-блок `/etc/nginx/sites-available/vibeui.club`
+  (`server_name vibeui.club www` → `proxy_pass 127.0.0.1:3003`, `Host $host`),
+  серт переиспользован от `vibeui.ru` (CF Full принимает). Блок `vibeui.ru`
+  НЕ менялся. Проверено: `curl` origin с Host `vibeui.club` = 200, `.ru` = 200.
+- Доступ: root по паролю из `СЕКРЕТЫ.md` (в `.gitignore`) через OpenSSH
+  `SSH_ASKPASS_REQUIRE=force`. Правки nginx — только `nginx -t` → reload, с
+  откатом симлинка при ошибке.
+
+### Реализовано в коде (2026-09-20, НЕ задеплоено)
+
+Схема «один код + детект по хосту». Правки аддитивные, поведение `.ru` не
+менялось; проверено на dev (`/pricing` RU и `/en/pricing` c `Host: vibeui.club`).
+
+- **Локаль по хосту** — в [proxy.ts](proxy.ts) (в Next 16 это `proxy.ts`, НЕ
+  `middleware.ts` — два файла ронят старт!). На `.club` главная `/` → `/en`;
+  URL с `/en` видимый (как принято на сайте). `.ru` — прежнее поведение.
+- **Крипто-оплата `.club`** ([lib/nowpayments.ts](lib/nowpayments.ts),
+  [app/api/payments/nowpayments/webhook/route.ts](app/api/payments/nowpayments/webhook/route.ts),
+  `startCryptoCheckout` в [lib/payment-actions.ts](lib/payment-actions.ts)):
+  инвойс в USD, проверка подписи IPN (HMAC-SHA512), идемпотентность через
+  `webhook_event`, продление Pro как у ЮKassa. `order_id = <userId>:<planId>`.
+  USD-цены — `PLAN_USD` в [lib/plans.ts](lib/plans.ts): $9/$69, Ent $18/$138.
+- **Pricing по хосту** ([components/pages/pricing-page.tsx](components/pages/pricing-page.tsx),
+  [components/pages/pricing/plan-cards.tsx](components/pages/pricing/plan-cards.tsx)):
+  `.club` → USD, крипто-кнопка, крипто-FAQ, без промокодов; `.ru` — ЮKassa/₽.
+- **Auth host-aware** ([lib/auth.ts](lib/auth.ts)): `trustedOrigins` включает
+  `vibeui.club`; ссылки в письмах верификации/сброса переписываются на
+  `vibeui.club`, если запрос пришёл с него (иначе кука села бы на `.ru`).
+- Аккаунты — **вариант A**: свой вход на каждом домене, БД общая.
+
+### Что нужно на деплое (push в main — только с согласия пользователя)
+- В `/etc/vibeui.env` на сервере добавить `NOWPAYMENTS_API_KEY` и
+  `NOWPAYMENTS_IPN_SECRET` (лежат в `СЕКРЕТЫ.md`), перезапустить `vibeui.service`.
+- После DNS (≤48ч): проверить `https://vibeui.club` (en), оплату криптой
+  тестовым инвойсом, письмо верификации со ссылкой на `.club`.
+
+### Отложено (сделать отдельно, с проверкой)
+- **SEO host-aware:** `canonical`/`sitemap`/`robots` сейчас захардкожены на
+  `vibeui.ru` (статическая metadata, [lib/seo.ts](lib/seo.ts)). Для `.club`
+  canonical ведёт на `.ru` — Google может не индексировать `.club`. Фикс —
+  перевод metadata на `generateMetadata` с `headers()` (крупный рефактор ~15
+  страниц), делать отдельно и тестировать. `hreflang` ru↔en уже есть.
+- **Смоук-тест** `deploy.yml` на `vibeui.club` — добавить после подтверждения
+  live `.club` (иначе job краснеет до распространения DNS).
+- Опционально: отдельный LE origin-серт под `.club` (или оставить CF-edge).
+
+### Безопасность
+- В чат/файл попадали открытые пароли (VPS, аккаунт) — считать
+  скомпрометированными, сменить. `СЕКРЕТЫ.md` — в `.gitignore`.

@@ -61,6 +61,16 @@ export function proxy(request: NextRequest) {
   }
 
   if (pathname === "/") {
+    // vibeui.club — англоязычный домен: его главная всегда ведёт в /en-ветку,
+    // независимо от языка браузера и куки. Дальше язык несут /en-ссылки.
+    // Для vibeui.ru и прочих хостов — прежнее поведение по Accept-Language.
+    if (isClubHost(request)) {
+      const redirect = NextResponse.redirect(new URL("/en", request.url))
+      redirect.headers.set("Vary", "Accept-Language, Cookie")
+
+      return redirect
+    }
+
     const chosen = request.cookies.get(LOCALE_COOKIE)?.value
 
     if (chosen === "en" || (!chosen && !isCrawler(request) && prefersEnglish(request.headers.get("accept-language")))) {
@@ -103,6 +113,13 @@ export function proxy(request: NextRequest) {
 
 function isCrawler(request: NextRequest) {
   return CRAWLER.test(request.headers.get("user-agent") ?? "")
+}
+
+/** Пришёл ли запрос на англоязычный домен vibeui.club. */
+function isClubHost(request: NextRequest) {
+  const host = (request.headers.get("host") ?? "").split(":")[0].toLowerCase()
+
+  return host === "vibeui.club" || host === "www.vibeui.club"
 }
 
 export const config = {

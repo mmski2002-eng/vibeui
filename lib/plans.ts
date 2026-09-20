@@ -44,3 +44,15 @@ export function isPlanId(value: string): value is PlanId {
   return value in PLANS
 }
 
+/**
+ * Цена в долларах для крипто-оплаты на vibeui.club. Отдельной картой, а не
+ * пересчётом из рублей: курс скачет, а цена витрины должна быть ровной. Рубли
+ * (ЮKassa, vibeui.ru) и доллары (крипта, vibeui.club) живут независимо.
+ */
+export const PLAN_USD: Record<PlanId, number> = {
+  monthly: 9,
+  yearly: 69,
+  "enterprise-monthly": 18,
+  "enterprise-yearly": 138,
+}
+

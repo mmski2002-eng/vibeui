@@ -70,6 +70,15 @@ export type PlanCardsProps = {
     /** Скидка только на первый платёж: тем, кто уже платил, поле не показываем. */
     eligible: boolean
   }
+  /**
+   * Действие оплаты. По умолчанию ЮKassa (vibeui.ru). На vibeui.club сюда
+   * приходит крипто-оплата — форма та же, различается только серверное действие.
+   */
+  pay?: (formData: FormData) => void | Promise<void>
+  /** Символ валюты: «₽» (ЮKassa) или «$» (крипта на .club). */
+  currency?: string
+  /** Ставить символ перед числом ($9) или после (9 ₽). */
+  currencyBefore?: boolean
 }
 
 const money = new Intl.NumberFormat("ru-RU")
@@ -156,7 +165,16 @@ export function PlanCards({
   accountHref,
   manageHref,
   promo,
+  pay,
+  currency = "₽",
+  currencyBefore = false,
 }: PlanCardsProps) {
+  // Действие оплаты и валюта различаются по домену; форма и вёрстка — общие.
+  const payAction = pay ?? startCheckout
+  const amount = (value: number) =>
+    currencyBefore
+      ? `${currency}${money.format(value)}`
+      : `${money.format(value)} ${currency}`
   const [yearly, setYearly] = useState(true)
   const [applied, setApplied] = useState<AppliedPromo | null>(null)
   const listPro = yearly ? prices.yearly : prices.monthly
@@ -236,7 +254,7 @@ export function PlanCards({
           </p>
           <h2 className="text-shell-fg mt-2 text-xl font-semibold">{t.free.name}</h2>
           <p className="text-shell-fg mt-5 text-4xl font-semibold tracking-tight tabular-nums">
-            0 ₽
+            {amount(0)}
           </p>
           <p className="text-shell-muted mt-1 text-sm">&nbsp;</p>
           <ul className="text-shell-muted mt-6 grid gap-2.5">
@@ -277,7 +295,16 @@ export function PlanCards({
               </s>
             ) : null}
             <span>
-              <AnimatedPrice value={proPrice} /> ₽
+              {currencyBefore ? (
+                <>
+                  {currency}
+                  <AnimatedPrice value={proPrice} />
+                </>
+              ) : (
+                <>
+                  <AnimatedPrice value={proPrice} /> {currency}
+                </>
+              )}
               <span className="text-base font-normal text-[#f2f2f2]/60"> {period}</span>
             </span>
           </p>
@@ -322,7 +349,7 @@ export function PlanCards({
                 </Link>
               </div>
             ) : (
-              <form action={startCheckout}>
+              <form action={payAction}>
                 <input type="hidden" name="plan" value={yearly ? "yearly" : "monthly"} />
                 <input type="hidden" name="locale" value={locale} />
                 {applied ? <input type="hidden" name="promo" value={applied.code} /> : null}
@@ -359,7 +386,16 @@ export function PlanCards({
               </s>
             ) : null}
             <span>
-              <AnimatedPrice value={enterprisePrice} /> ₽
+              {currencyBefore ? (
+                <>
+                  {currency}
+                  <AnimatedPrice value={enterprisePrice} />
+                </>
+              ) : (
+                <>
+                  <AnimatedPrice value={enterprisePrice} /> {currency}
+                </>
+              )}
               <span className="text-shell-muted text-base font-normal"> {period}</span>
             </span>
           </p>
@@ -391,7 +427,7 @@ export function PlanCards({
                 {t.enterprise.cta}
               </Link>
             ) : (
-              <form action={startCheckout}>
+              <form action={payAction}>
                 <input
                   type="hidden"
                   name="plan"

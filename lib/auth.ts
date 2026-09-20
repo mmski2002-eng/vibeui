@@ -70,6 +70,31 @@ function localeOf(user: object): Locale {
 
 const BASE_URL = process.env.BETTER_AUTH_URL ?? "https://vibeui.ru"
 
+/**
+ * Ссылки в письмах Better Auth строит от BASE_URL (vibeui.ru). Но если человек
+ * регистрируется на англоязычном vibeui.club, письмо со ссылкой на .ru увело
+ * бы его на другой домен: там нет его куки, и подтверждение не вошло бы в
+ * аккаунт. Поэтому для запросов с vibeui.club переписываем хост ссылки на него
+ * же. Для vibeui.ru и фоновых задач (request нет) ссылка остаётся прежней.
+ */
+function hostAwareUrl(url: string, request?: Request): string {
+  const host = request?.headers.get("host")?.split(":")[0].toLowerCase()
+
+  if (host !== "vibeui.club" && host !== "www.vibeui.club") {
+    return url
+  }
+
+  try {
+    const next = new URL(url)
+    next.protocol = "https:"
+    next.host = "vibeui.club"
+
+    return next.toString()
+  } catch {
+    return url
+  }
+}
+
 /** Следующее имя по умолчанию: Viber000001, Viber000002, … */
 async function viberName() {
   const [row] = await db.execute<{ n: string }>(
@@ -101,7 +126,7 @@ export const auth = betterAuth({
     // Верхняя граница нужна не ради удобства: хеширование очень длинной
     // строки — способ нагрузить единственное ядро сервера.
     maxPasswordLength: 128,
-    sendResetPassword: async ({ user, url }) => {
+    sendResetPassword: async ({ user, url }, request) => {
       const locale = localeOf(user)
       const copy = MAIL_COPY[locale].reset
 
@@ -113,7 +138,7 @@ export const auth = betterAuth({
           heading: copy.heading,
           intro: copy.intro,
           action: copy.action,
-          url,
+          url: hostAwareUrl(url, request),
           minutes: 30,
         }),
       })
@@ -127,7 +152,7 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     expiresIn: 60 * 30,
-    sendVerificationEmail: async ({ user, url }) => {
+    sendVerificationEmail: async ({ user, url }, request) => {
       const locale = localeOf(user)
       const copy = MAIL_COPY[locale].verify
 
@@ -140,7 +165,7 @@ export const auth = betterAuth({
           intro: copy.intro,
           action: copy.action,
           hint: copy.hint,
-          url,
+          url: hostAwareUrl(url, request),
           minutes: 30,
         }),
       })
@@ -278,7 +303,10 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: [BASE_URL],
+  // vibeui.club обслуживается тем же процессом: запросы авторизации приходят
+  // и с него, а не только с BASE_URL (vibeui.ru) — иначе Better Auth отклонит
+  // их по проверке источника.
+  trustedOrigins: [BASE_URL, "https://vibeui.club", "https://www.vibeui.club"],
 })
 
 export type Session = typeof auth.$Infer.Session
