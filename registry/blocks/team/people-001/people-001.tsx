@@ -2,7 +2,6 @@ import type { CSSProperties } from "react"
 import { Card049 } from "@/registry/components/card/card-049/card-049"
 import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-
 type People001Link = {
   kind: "mail" | "site" | "chat"
   label: string
@@ -159,14 +158,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
-}
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
 }
 
 /** Сетка команды: карточки с инициалами, ролью и контактами-глифами. */

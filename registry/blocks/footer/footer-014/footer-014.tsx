@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks001 } from "@/registry/components/navigation/footerlinks-001/footerlinks-001"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Footer014Link = {
   label: string
@@ -114,6 +113,12 @@ outline:2px solid var(--vibeui-footer-014-accent);outline-offset:3px;
 [data-vibeui-block="footer-014"] [data-part="top"]{grid-template-columns:2fr minmax(18rem,1.1fr);gap:3.5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-014"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-014"] [data-part="column"] [data-part="column-title"]{margin:0 0 0.75rem;color:var(--vibeui-footer-014-ink);
+font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+[data-vibeui-block="footer-014"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:0.5rem}
+[data-vibeui-block="footer-014"] [data-part="column"] a{color:var(--vibeui-footer-014-muted);text-decoration:none;font-size:0.875rem;
+transition:color var(--vibeui-footer-014-dur-2) ease;}
+[data-vibeui-block="footer-014"] [data-part="column"] a:hover{color:var(--vibeui-footer-014-accent)}
 `
 
 const DEFAULT_COLUMNS: Footer014Column[] = [
@@ -189,6 +194,51 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  title?: string
+  links?: ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Продукт",
+  links = [ { label: "Возможности", href: "#features" }, { label: "Тарифы", href: "#pricing" }, { label: "Интеграции", href: "#integrations" }, { label: "Что нового", href: "#changelog" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-014-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props}
+        aria-label={title}
+        className={className}
+        style={palette}
+      >
+        <p data-part="column-title">{title}</p>
+        <ul>
+          {links.map((link) => (
+            <li key={link.href}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+  )
+}
+
 /** Подвал с колонками ссылок и колонкой последних статей блога с датами. */
 export function Footer014({
   columns = DEFAULT_COLUMNS,
@@ -227,7 +277,7 @@ export function Footer014({
           <div data-part="top">
             <div data-part="columns">
               {columns.map((column) => (
-                <Footerlinks001 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+                <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
             <nav data-part="blog" aria-label={blogTitle}>

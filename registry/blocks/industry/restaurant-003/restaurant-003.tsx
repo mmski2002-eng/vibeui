@@ -1,7 +1,7 @@
 "use client"
 
 import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react"
-import { Button093 } from "@/registry/components/button/button-093/button-093"
+import type { ComponentProps } from "react"
 
 export type Restaurant003Dish = {
   name: string
@@ -98,7 +98,12 @@ container-type:inline-size;
 [data-vibeui-block="restaurant-003"] [data-part="list"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 3rem}
 }
 @media (hover:none){[data-vibeui-block="restaurant-003"] [data-part="float"]{display:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="restaurant-003"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="restaurant-003"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="restaurant-003"] [data-part="tab"]{position:relative;z-index:1;appearance:none;border:1px solid var(--vibeui-restaurant-003-line);border-radius:999px;background:transparent;padding:.6rem 1.1rem;font:inherit;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-restaurant-003-fg);cursor:pointer;transition:color .35s,border-color .35s}
+[data-vibeui-block="restaurant-003"] [data-part="tab"]:hover{border-color:var(--vibeui-restaurant-003-accent-ink)}
+[data-vibeui-block="restaurant-003"] [data-part="tab"][aria-selected="true"]{color:var(--vibeui-restaurant-003-on-accent);border-color:transparent}
+[data-vibeui-block="restaurant-003"] [data-part="tab"]:focus-visible{outline:2px solid var(--vibeui-restaurant-003-accent);outline-offset:2px}
+`
 
 const DEFAULT_SECTIONS: Restaurant003Section[] = [
   {
@@ -146,6 +151,38 @@ function kindOf(tag: string): "veg" | "hot" | "chef" | undefined {
   if (lower.startsWith("остр") || lower.startsWith("hot") || lower.startsWith("spicy")) return "hot"
   if (lower.startsWith("шеф") || lower.startsWith("chef")) return "chef"
   return undefined
+}
+
+type TabProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  title?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Tab({
+  title = "Закуски",
+  accent,
+  className,
+  style,
+  ...props
+}: TabProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-restaurant-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props}
+        type="button"
+        role="tab"
+        className={className}
+        style={palette}
+      >
+        {title}
+      </button>
+  )
 }
 
 /** Меню ресторана: разделы табами, блюда с лидером до цены, фото всплывает у курсора. */
@@ -221,7 +258,7 @@ export function Restaurant003({
             <li ref={pill} aria-hidden="true" data-part="pill" />
             {sections.map((item, index) => (
               <li key={item.title} role="presentation">
-                <Button093 data-part="tab" title={item.title} aria-selected={index === active} onClick={() => {
+                <Tab data-part="tab" title={item.title} aria-selected={index === active} onClick={() => {
                     setActive(index)
                     setImage(null)
                   }} accent={accent} />

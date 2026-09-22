@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
-import { Card141 } from "@/registry/components/card/card-141/card-141"
+import type { ComponentProps } from "react"
 
 export type Map010Hours = {
   label: string
@@ -110,7 +110,11 @@ container-type:inline-size;
 @keyframes vibeui-map-010-pulse{0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-map-010-accent) 50%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
 @keyframes vibeui-map-010-beam{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(1.6,1.1)}}
 @container (min-width: 60rem){[data-vibeui-block="map-010"] [data-part="grid"]{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}[data-vibeui-block="map-010"] [data-part="map"]{min-height:0}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="map-010"] *{animation:none!important;transition:none!important}[data-vibeui-block="map-010"] [data-part="word"] i{transform:none}[data-vibeui-block="map-010"] [data-part="lede"],[data-vibeui-block="map-010"] [data-part="map"],[data-vibeui-block="map-010"] [data-part="info"]{opacity:1;translate:none}[data-vibeui-block="map-010"] [data-part="bars"] i{transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="map-010"] *{animation:none!important;transition:none!important}[data-vibeui-block="map-010"] [data-part="word"] i{transform:none}[data-vibeui-block="map-010"] [data-part="lede"],[data-vibeui-block="map-010"] [data-part="map"],[data-vibeui-block="map-010"] [data-part="info"]{opacity:1;translate:none}[data-vibeui-block="map-010"] [data-part="bars"] i{transform:none}}
+[data-vibeui-block="map-010"] [data-part="hours"]{display:grid;gap:.4rem;font-size:.92rem}
+[data-vibeui-block="map-010"] [data-part="hours"] div{display:flex;justify-content:space-between;gap:1rem;padding-bottom:.4rem;border-bottom:1px dashed var(--vibeui-map-010-line)}
+[data-vibeui-block="map-010"] [data-part="hours"] span{color:var(--vibeui-map-010-muted)}
+`
 
 const listeners = new Set<() => void>()
 let timer: number | undefined
@@ -136,6 +140,45 @@ function spotlight(event: PointerEvent<HTMLElement>) {
   const rect = event.currentTarget.getBoundingClientRect()
   event.currentTarget.style.setProperty("--vibeui-map-010-x", `${event.clientX - rect.left}px`)
   event.currentTarget.style.setProperty("--vibeui-map-010-y", `${event.clientY - rect.top}px`)
+}
+
+export type HoursHours = {
+  label: string
+  value: string
+}
+
+type HoursProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  hours?: readonly HoursHours[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Hours({
+  hours = [ { label: "Будни", value: "7:00 — 21:00" }, { label: "Выходные", value: "8:00 — 21:00" }, { label: "Коробки к утру", value: "с 7:30" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: HoursProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-map-010-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {hours.map((line) => (
+          <div key={line.label}>
+            {line.label} <span>{line.value}</span>
+          </div>
+        ))}
+      </div>
+  )
 }
 
 /** Карта с часами и очередью по часам. */
@@ -254,7 +297,7 @@ export function Map010({
             </div>
             <div data-part="info" onPointerMove={spotlight}>
               <h3>{hoursTitle}</h3>
-              <Card141 data-part="hours" hours={hours} accent={accent} />
+              <Hours data-part="hours" hours={hours} accent={accent} />
               {queue.length > 0 ? (
                 <div data-part="queue" aria-label={chartLabel}>
                   <div data-part="now">

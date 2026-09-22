@@ -4559,9 +4559,17 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "group",
+            "label": "group",
+            "type": "text",
+            "default": "vibeui-accordion-016",
+            "maxLength": 160
           }
         ],
         "cardControls": [
+          "group",
           "exclusive",
           "defaultOpen",
           "accent"
@@ -4607,6 +4615,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "group": {
+                "label": "group",
+                "default": "vibeui-accordion-016"
               }
             },
             "preview": {
@@ -4715,9 +4727,17 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "group",
+            "label": "group",
+            "type": "text",
+            "default": "vibeui-accordion-017",
+            "maxLength": 160
           }
         ],
         "cardControls": [
+          "group",
           "exclusive",
           "defaultOpen",
           "accent"
@@ -4763,6 +4783,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "group": {
+                "label": "group",
+                "default": "vibeui-accordion-017"
               }
             },
             "preview": {
@@ -4871,9 +4895,17 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "group",
+            "label": "group",
+            "type": "text",
+            "default": "vibeui-accordion-018",
+            "maxLength": 160
           }
         ],
         "cardControls": [
+          "group",
           "exclusive",
           "defaultOpen",
           "accent"
@@ -4919,6 +4951,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "group": {
+                "label": "group",
+                "default": "vibeui-accordion-018"
               }
             },
             "preview": {
@@ -5031,9 +5067,17 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "group",
+            "label": "group",
+            "type": "text",
+            "default": "vibeui-accordion-019",
+            "maxLength": 160
           }
         ],
         "cardControls": [
+          "group",
           "exclusive",
           "defaultOpen",
           "accent"
@@ -5079,6 +5123,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "group": {
+                "label": "group",
+                "default": "vibeui-accordion-019"
               }
             },
             "preview": {
@@ -5187,9 +5235,17 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "group",
+            "label": "group",
+            "type": "text",
+            "default": "vibeui-accordion-020",
+            "maxLength": 160
           }
         ],
         "cardControls": [
+          "group",
           "exclusive",
           "defaultOpen",
           "accent"
@@ -5235,6 +5291,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "group": {
+                "label": "group",
+                "default": "vibeui-accordion-020"
               }
             },
             "preview": {
@@ -5343,9 +5403,17 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "group",
+            "label": "group",
+            "type": "text",
+            "default": "vibeui-accordion-021",
+            "maxLength": 160
           }
         ],
         "cardControls": [
+          "group",
           "exclusive",
           "defaultOpen",
           "accent"
@@ -5391,6 +5459,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "group": {
+                "label": "group",
+                "default": "vibeui-accordion-021"
               }
             },
             "preview": {
@@ -5503,9 +5575,17 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "group",
+            "label": "group",
+            "type": "text",
+            "default": "vibeui-accordion-022",
+            "maxLength": 160
           }
         ],
         "cardControls": [
+          "group",
           "exclusive",
           "defaultOpen",
           "accent"
@@ -5551,6 +5631,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "group": {
+                "label": "group",
+                "default": "vibeui-accordion-022"
               }
             },
             "preview": {

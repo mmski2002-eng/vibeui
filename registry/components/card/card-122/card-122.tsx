@@ -35,10 +35,10 @@ const STYLES = `
 
 /** Строка расписания дня: время, заголовок и подпись. */
 export function Card122({
-  time,
-  title,
-  place,
-  text,
+  time = "Слот дня",
+  title = "Слот дня",
+  place = "Слот дня",
+  text = "Слот дня",
   accent,
   className,
   style,

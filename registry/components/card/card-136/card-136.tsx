@@ -42,12 +42,12 @@ const STYLES = `
 
 /** Ссылка-карточка объекта рядом с картой: миниатюра, название с заметкой, цена и число; активна по data-active. */
 export function Card136({
-  href,
-  image,
+  href = "#",
+  image = "/demo/realty/object-01.webp",
   name = "Петроградская",
-  note,
+  note = "Карточка объекта на карте",
   price = "285 тыс ₽",
-  count,
+  count = "Карточка объекта на карте",
   accent,
   className,
   style,

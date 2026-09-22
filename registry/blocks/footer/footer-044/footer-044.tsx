@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
-import { Sociallinks005 } from "@/registry/components/navigation/sociallinks-005/sociallinks-005"
-import { Footerlinks026 } from "@/registry/components/navigation/footerlinks-026/footerlinks-026"
+import type { ComponentProps } from "react"
 
 export type Footer044Link = {
   label: string
@@ -70,7 +69,91 @@ container-type:inline-size;
 [data-vibeui-block="footer-044"] [data-part="top"] svg{width:.9rem;height:.9rem;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="footer-044"] [data-part="top"]:hover svg{transform:translateY(-3px)}
 @container (min-width: 56rem){[data-vibeui-block="footer-044"] [data-part="bottom"]{grid-template-columns:1fr auto 1fr;align-items:center;text-align:left}[data-vibeui-block="footer-044"] [data-part="bottom"] p:last-of-type{text-align:right}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-044"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-044"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-044"] [data-part="socials"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.8rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-044"] [data-part="socials"] a{color:var(--vibeui-footer-044-muted);font-size:.88rem}
+[data-vibeui-block="footer-044"] [data-part="socials"] a:hover{color:var(--vibeui-footer-044-fg)}
+`
+
+export type NavLink = {
+  label: string
+  href: string
+}
+
+type NavProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  links?: readonly NavLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Nav({
+  links = [ { label: "Тексты", href: "#texts" }, { label: "Книга", href: "#book" }, { label: "Встречи", href: "#events" }, { label: "Письма", href: "#letters" }, { label: "Издателям", href: "#publishers" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: NavProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-044-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {links.map((link) => (
+          <li key={link.href + link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
+
+export type SocialsLink = {
+  label: string
+  href: string
+}
+
+type SocialsProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  socialsLabel?: string
+  socials?: readonly SocialsLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Socials({
+  socialsLabel = "Соцсети",
+  socials = [ { label: "Телеграм", href: "#" }, { label: "Подкаст", href: "#" }, { label: "Литрес", href: "#" }, { label: "Почта", href: "mailto:vera@kholodova.ru" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: SocialsProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-044-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props} aria-label={socialsLabel}
+        className={className}
+        style={palette}
+      >
+        {socials.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
 
 /** Подвал-колофон писателя с виньеткой и «наверх». */
 export function Footer044({
@@ -137,11 +220,11 @@ export function Footer044({
           </div>
           {links.length > 0 ? (
             <nav aria-label={navLabel}>
-              <Footerlinks026 data-part="nav" links={links} accent={accent} />
+              <Nav data-part="nav" links={links} accent={accent} />
             </nav>
           ) : null}
           {socials.length > 0 ? (
-            <Sociallinks005 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
+            <Socials data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
           ) : null}
           <div data-part="bottom">
             <p>{copyright}</p>

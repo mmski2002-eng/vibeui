@@ -132,16 +132,6 @@ function ellipsePoints(cx: number, cy: number, rx: number, ry: number, count = 2
   })
 }
 
-function linePoints(x0: number, y0: number, x1: number, y1: number, step = 14): Point[] {
-  const count = Math.max(2, Math.round(Math.hypot(x1 - x0, y1 - y0) / step) + 1)
-
-  return Array.from({ length: count }, (_, index) => {
-    const t = index / (count - 1)
-
-    return [x0 + (x1 - x0) * t, y0 + (y1 - y0) * t] as Point
-  })
-}
-
 /** Размер хоста: контуры рисуются в пикселях, поэтому холст ждёт измерения. */
 function useSize(ref: RefObject<HTMLElement | null>) {
   const [size, setSize] = useState({ w: 0, h: 0 })

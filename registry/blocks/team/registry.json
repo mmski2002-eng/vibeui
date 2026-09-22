@@ -3692,9 +3692,7 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-118"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "people-019/people-019.tsx",
@@ -3770,7 +3768,7 @@
           "usage": "<People019\n  title=\"Люди, с которыми не страшно ошибаться\"\n  people={[{ name: \"Emma Whitfield\", role: \"английский · носитель\", from: \"Манчестер\", years: 9, note: \"любимое слово — serendipity\", accent: \"манчестерский\", image: \"/photos/emma.webp\" }]}\n/>",
           "summary": "Команда для школы или курсов: полароиды с 3D-tilt и бликом, кнопка «послушать акцент» с волной.",
           "preserve": [
-            "импорты card-118 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "наклон — onPointerMove пишет --rx/--ry/--x/--y прямо в style карточки, без setState; data-hover укорачивает transition до 0.12 с",
             "волна — семь i с --i и keyframes scaleY с отрицательной задержкой; играет только при aria-pressed=true, таймер seconds сбрасывает playing",
             "фото — aspect-ratio 4/5 с фоном-подложкой, если image пуст; бейдж города поверх"
@@ -3842,7 +3840,7 @@
             "ai": {
               "summary": "A team section for a school or courses: polaroids with a 3D tilt and glare, a “hear the accent” button with a wave.",
               "preserve": [
-                "the card-118 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the tilt is onPointerMove writing --rx/--ry/--x/--y straight into the card's style, no setState; data-hover shortens the transition to 0.12 s",
                 "the wave is seven i elements with --i and scaleY keyframes with a negative delay; it plays only at aria-pressed=true, a seconds timer resets playing",
                 "the photo is aspect-ratio 4/5 with a tinted backdrop when image is empty; the city badge sits on top"
@@ -3927,11 +3925,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports card-118 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует card-118 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-021",

@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Card167 } from "@/registry/components/card/card-167/card-167"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid017Row = {
@@ -139,6 +138,16 @@ display:block;position:relative;width:100%;min-height:22rem;
 }
 [data-vibeui-block="datagrid-017"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-017"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-017"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-017-border);}
+[data-vibeui-block="datagrid-017"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-017"] [data-part="bar"] [data-part="status"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-017-muted)}
+[data-vibeui-block="datagrid-017"] [data-part="bar"] [data-part="go"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
+padding:0.375rem 0.75rem;border-radius:0.5rem;border:1px solid transparent;
+background:var(--vibeui-datagrid-017-accent);color:oklch(from var(--vibeui-datagrid-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="datagrid-017"] [data-part="bar"] [data-part="go"]:disabled{opacity:.4;cursor:not-allowed}
+[data-vibeui-block="datagrid-017"] [data-part="bar"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-017"] [data-part="bar"] [data-part="go"]{display:none}
 `
 
 const DEFAULT_ROWS: Datagrid017Row[] = [
@@ -219,6 +228,113 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с выгрузкой отмеченных строк через подтверждение в нативном
  * диалоге: число строк, формат и размер названы заранее. Один файл.
  */
+export type BarRow = {
+  id: string
+  contract: string
+  counterparty: string
+  signed: string
+  amount: number
+}
+
+const BarDEFAULT_ROWS: BarRow[] = [
+  {
+    id: "d1",
+    contract: "ДГ-1104",
+    counterparty: "Артель «Кама»",
+    signed: "04.02.2026",
+    amount: 1240000,
+  },
+  {
+    id: "d2",
+    contract: "ДГ-1105",
+    counterparty: "Ювенко Логистика",
+    signed: "11.02.2026",
+    amount: 386000,
+  },
+  {
+    id: "d3",
+    contract: "ДГ-1106",
+    counterparty: "Северный Порт",
+    signed: "19.02.2026",
+    amount: 2015000,
+  },
+  {
+    id: "d4",
+    contract: "ДГ-1107",
+    counterparty: "Гранд-Сервис",
+    signed: "27.02.2026",
+    amount: 94000,
+  },
+  {
+    id: "d5",
+    contract: "ДГ-1108",
+    counterparty: "Мостовик",
+    signed: "03.03.2026",
+    amount: 771000,
+  },
+]
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  statusTemplate?: string
+  rows?: BarRow[]
+  exportLabel?: string
+  done?: string
+  selected?: BarRow[]
+  onExport?: () => void
+  setDone?: (value: string) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Договоры",
+  statusTemplate = "Отмечено: {count} из {total}",
+  rows = BarDEFAULT_ROWS,
+  exportLabel = "Экспортировать",
+  done = "",
+  selected = [],
+  onExport,
+  setDone = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-017-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="status" role="status" aria-live="polite">
+          {done ||
+            statusTemplate
+              .replace("{count}", String(selected.length))
+              .replace("{total}", String(rows.length))}
+        </p>
+        <button
+          type="button"
+          data-part="go"
+          disabled={selected.length === 0}
+          onClick={() => {
+            setDone("")
+            onExport?.()
+          }}
+        >
+          {exportLabel}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid017({
   rows = DEFAULT_ROWS,
   caption = "Отметьте договоры и нажмите «Экспортировать»",
@@ -292,7 +408,7 @@ export function Datagrid017({
         className={className}
         style={palette}
       >
-        <Card167 data-part="bar" onExport={() => dialogRef.current?.showModal()} heading={heading} statusTemplate={statusTemplate} rows={rows} exportLabel={exportLabel} done={done} selected={selected} setDone={setDone} accent={accent} />
+        <Bar data-part="bar" onExport={() => dialogRef.current?.showModal()} heading={heading} statusTemplate={statusTemplate} rows={rows} exportLabel={exportLabel} done={done} selected={selected} setDone={setDone} accent={accent} />
         <div
           data-part="scroll"
           role="region"

@@ -46,7 +46,7 @@ background:var(--vibeui-card-050-accent);color:oklch(from var(--vibeui-card-050-
 export function Card050({
   name = "Вера Лапина",
   department = "Дизайн",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Дизайн-система и токены",
   accent,
   className,

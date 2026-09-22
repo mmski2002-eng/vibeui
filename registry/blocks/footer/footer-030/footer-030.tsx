@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks022 } from "@/registry/components/navigation/footerlinks-022/footerlinks-022"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer030Link = {
   label: string
@@ -60,7 +59,52 @@ container-type:inline-size;
 [data-vibeui-block="footer-030"] a:focus-visible{outline:2px solid var(--vibeui-footer-030-accent);outline-offset:3px}
 @keyframes vibeui-footer-030-up{0%{transform:translateY(0)}45%{transform:translateY(-140%)}50%{transform:translateY(140%)}100%{transform:translateY(0)}}
 @container (min-width: 56rem){[data-vibeui-block="footer-030"] [data-part="shell"]{grid-template-columns:auto 1fr auto;gap:3rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-030"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-030"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-030"] [data-part="links"]{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-030"] [data-part="links"] a{position:relative;display:inline-block;padding:.2rem 0;color:inherit;text-decoration:none;font-weight:500;opacity:.8;transition:opacity .2s,color .2s,transform .3s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="footer-030"] [data-part="links"] a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--vibeui-footer-030-accent);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="footer-030"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-030-accent);transform:translateY(-2px)}
+[data-vibeui-block="footer-030"] [data-part="links"] a:hover::after{transform:none;transform-origin:left}
+`
+
+export type LinksLink = {
+  label: string
+  href: string
+}
+
+type LinksProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  links?: readonly LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  links = [ { label: "Проекты", href: "#work" }, { label: "Обо мне", href: "#about" }, { label: "Отзывы", href: "#words" }, { label: "Контакт", href: "#contact" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-030-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
 
 /** Подвал личного сайта в одну полосу с кнопкой «наверх». */
 export function Footer030({
@@ -102,7 +146,7 @@ export function Footer030({
             {name}
             {caption ? <small>{caption}</small> : null}
           </div>
-          <Footerlinks022 data-part="links" links={links} accent={accent} />
+          <Links data-part="links" links={links} accent={accent} />
           <div data-part="right">
             <span>
               © {year}

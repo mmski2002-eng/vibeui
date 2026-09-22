@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Sociallinks004 } from "@/registry/components/navigation/sociallinks-004/sociallinks-004"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer043Link = {
   label: string
@@ -87,7 +86,52 @@ container-type:inline-size;
 [data-vibeui-block="footer-043"] a:focus-visible{outline:2px solid var(--vibeui-footer-043-accent);outline-offset:2px}
 @container (min-width: 44rem){[data-vibeui-block="footer-043"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="footer-043"] [data-part="grid"]{grid-template-columns:1.3fr 1fr 1fr 1fr;gap:3rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-043"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-043"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-043"] [data-part="socials"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0 0;padding:0;list-style:none}
+[data-vibeui-block="footer-043"] [data-part="socials"] a{display:inline-flex;align-items:center;padding:.4rem .8rem;border-radius:999px;border:1px solid var(--vibeui-footer-043-line);font-size:.85rem;font-weight:500;color:var(--vibeui-footer-043-fg);text-decoration:none;transition:border-color .2s,background .2s}
+[data-vibeui-block="footer-043"] [data-part="socials"] a:hover{border-color:var(--vibeui-footer-043-accent);background:var(--vibeui-footer-043-soft)}
+`
+
+export type SocialsLink = {
+  label: string
+  href: string
+}
+
+type SocialsProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  socialsLabel?: string
+  socials?: readonly SocialsLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Socials({
+  socialsLabel = "Соцсети",
+  socials = [ { label: "Telegram", href: "#" }, { label: "ВКонтакте", href: "#" }, { label: "Дзен", href: "#" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: SocialsProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-043-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props} aria-label={socialsLabel}
+        className={className}
+        style={palette}
+      >
+        {socials.map((item) => (
+          <li key={item.label}>
+            <a href={item.href}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
 
 /** Подвал фонда: реквизиты, документы, контакты, рукописное «спасибо». */
 export function Footer043({
@@ -164,7 +208,7 @@ export function Footer043({
               {legalName ? <p data-part="legal-name">{legalName}</p> : null}
               {thanks ? <p data-part="thanks">{thanks}</p> : null}
               {socials.length > 0 ? (
-                <Sociallinks004 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
+                <Socials data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
               ) : null}
             </div>
             <div data-part="col">

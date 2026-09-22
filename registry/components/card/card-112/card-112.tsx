@@ -46,9 +46,9 @@ const STYLES = `
 
 /** Карточка отзыва: звёзды, текст, имя и подпись. */
 export function Card112({
-  text,
-  name,
-  car,
+  text = "Отзыв со звёздами",
+  name = "Отзыв со звёздами",
+  car = "Отзыв со звёздами",
   stars,
   starsLabel = "{n} из 5",
   accent,

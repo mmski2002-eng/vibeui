@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card169 } from "@/registry/components/card/card-169/card-169"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid021Row = {
   id: string
@@ -120,6 +119,11 @@ display:flex;align-items:center;gap:0.5rem;padding:0.1875rem 0;
 padding:0.125rem 0.4375rem;font-size:0.6875rem;font-weight:550;border-radius:0.375rem;flex:none;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-021"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-021"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
+padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-021-border);}
+[data-vibeui-block="datagrid-021"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-021"] [data-part="bar"] [data-part="count"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-021-muted)}
+[data-vibeui-block="datagrid-021"] [data-part="bar"] [data-part="primary"]{border-color:transparent;background:var(--vibeui-datagrid-021-accent);color:oklch(from var(--vibeui-datagrid-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 `
 
 const DEFAULT_ROWS: Datagrid021Row[] = [
@@ -198,6 +202,142 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с пакетной правкой: все числовые ячейки редактируются разом,
  * журнал показывает «было → стало» с точечной отменой. Один файл.
  */
+export type BarRow = {
+  id: string
+  position: string
+  unit: string
+  quantity: number
+  price: number
+}
+
+const BarDEFAULT_ROWS: BarRow[] = [
+  {
+    id: "p1",
+    position: "Профиль алюминиевый",
+    unit: "м",
+    quantity: 240,
+    price: 410,
+  },
+  {
+    id: "p2",
+    position: "Уплотнитель EPDM",
+    unit: "м",
+    quantity: 180,
+    price: 95,
+  },
+  {
+    id: "p3",
+    position: "Стеклопакет 4-16-4",
+    unit: "м²",
+    quantity: 62,
+    price: 3400,
+  },
+  {
+    id: "p4",
+    position: "Фурнитура поворотная",
+    unit: "компл.",
+    quantity: 48,
+    price: 1750,
+  },
+  {
+    id: "p5",
+    position: "Монтажная пена",
+    unit: "балл.",
+    quantity: 90,
+    price: 380,
+  },
+]
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  noEditsText?: string
+  editsTemplate?: string
+  editLabel?: string
+  revertAllText?: string
+  rows?: BarRow[]
+  saveAllText?: string
+  editing?: boolean
+  entries?: readonly [string, number][]
+  setDraft?: (value: Draft) => void
+  setEditing?: Dispatch<SetStateAction<boolean>>
+  setSaved?: Dispatch<SetStateAction<BarRow[] | null>>
+  cellValue?: (row: BarRow, key: "quantity" | "price") => number
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Спецификация заказа",
+  noEditsText = "Несохранённых правок нет",
+  editsTemplate = "Несохранённых правок: {count}",
+  editLabel = "Режим правки",
+  revertAllText = "Отменить всё",
+  rows = BarDEFAULT_ROWS,
+  saveAllText = "Сохранить всё",
+  editing = true,
+  entries = [],
+  setDraft = () => {},
+  setEditing = () => {},
+  setSaved = () => {},
+  cellValue = () => 0,
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-021-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="count" role="status" aria-live="polite">
+          {entries.length === 0
+            ? noEditsText
+            : editsTemplate.replace("{count}", String(entries.length))}
+        </p>
+        <button
+          type="button"
+          aria-pressed={editing}
+          onClick={() => setEditing((value) => !value)}
+        >
+          {editLabel}
+        </button>
+        <button
+          type="button"
+          disabled={entries.length === 0}
+          onClick={() => setDraft({})}
+        >
+          {revertAllText}
+        </button>
+        <button
+          type="button"
+          data-part="primary"
+          disabled={entries.length === 0}
+          onClick={() => {
+            setSaved((current) =>
+              (current ?? rows).map((row) => ({
+                ...row,
+                quantity: cellValue(row, "quantity"),
+                price: cellValue(row, "price"),
+              })),
+            )
+            setDraft({})
+          }}
+        >
+          {saveAllText}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid021({
   rows = DEFAULT_ROWS,
   caption = "Правки копятся в черновике и уезжают одним сохранением",
@@ -265,7 +405,7 @@ export function Datagrid021({
         className={className}
         style={palette}
       >
-        <Card169 data-part="bar" heading={heading} noEditsText={noEditsText} editsTemplate={editsTemplate} editLabel={editLabel} revertAllText={revertAllText} rows={rows} saveAllText={saveAllText} editing={editing} entries={entries} setDraft={setDraft} setEditing={setEditing} setSaved={setSaved} cellValue={valueOf} accent={accent} />
+        <Bar data-part="bar" heading={heading} noEditsText={noEditsText} editsTemplate={editsTemplate} editLabel={editLabel} revertAllText={revertAllText} rows={rows} saveAllText={saveAllText} editing={editing} entries={entries} setDraft={setDraft} setEditing={setEditing} setSaved={setSaved} cellValue={valueOf} accent={accent} />
         <div
           data-part="scroll"
           role="region"

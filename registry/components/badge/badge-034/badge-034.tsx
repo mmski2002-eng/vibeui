@@ -34,8 +34,8 @@ const STYLES = `
 
 /** Цветная капсула-тег фестиваля со стикером-эмодзи; цвет и чернила через переменные. */
 export function Badge034({
-  emoji,
-  href,
+  emoji = "Капсула направления",
+  href = "#",
   label = "#Музыка",
   accent,
   className,

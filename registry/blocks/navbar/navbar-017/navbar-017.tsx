@@ -1,8 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { Button108 } from "@/registry/components/button/button-108/button-108"
-import type { CSSProperties } from "react"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Navbar017Link = {
   label: string
@@ -203,6 +202,25 @@ outline:2px solid var(--vibeui-navbar-017-accent);outline-offset:3px;
 [data-vibeui-block="navbar-017"] [data-part="panel"]{display:none}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-017"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="navbar-017"] [data-part="ticket"]{margin-left:auto;flex:none;position:relative;
+display:inline-flex;align-items:center;gap:0.5rem;
+min-height:2.75rem;padding:0.25rem 1.5rem;border-radius:0.625rem;
+background:var(--vibeui-navbar-017-accent);color:oklch(from var(--vibeui-navbar-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+text-decoration:none;font-size:0.9375rem;font-weight:740;letter-spacing:0.02em;
+text-transform:uppercase;white-space:nowrap;
+/* вырезы по краям: кнопка читается билетом, а не плашкой */
+-webkit-mask:radial-gradient(0.4375rem 0.4375rem at 0 50%,transparent 98%,#000 100%),
+radial-gradient(0.4375rem 0.4375rem at 100% 50%,transparent 98%,#000 100%);
+-webkit-mask-composite:source-in;
+mask:radial-gradient(0.4375rem 0.4375rem at 0 50%,transparent 98%,#000 100%),
+radial-gradient(0.4375rem 0.4375rem at 100% 50%,transparent 98%,#000 100%);
+mask-composite:intersect;
+transition:transform var(--vibeui-navbar-017-dur-2) var(--vibeui-navbar-017-ease),filter var(--vibeui-navbar-017-dur-3) ease;}
+[data-vibeui-block="navbar-017"] [data-part="ticket"]::before{content:"";position:absolute;left:0.9375rem;top:0.5rem;bottom:0.5rem;width:1.5px;
+background:repeating-linear-gradient(currentColor 0 3px,transparent 3px 6px);
+opacity:.4;}
+[data-vibeui-block="navbar-017"] [data-part="ticket"]:hover{transform:translateY(-1px);filter:brightness(1.06);}
+[data-vibeui-block="navbar-017"] [data-part="ticket"] span{padding-left:0.75rem}
 `
 
 const DEFAULT_LINKS: Navbar017Link[] = [
@@ -211,6 +229,38 @@ const DEFAULT_LINKS: Navbar017Link[] = [
   { label: "Площадка", href: "#venue" },
   { label: "Партнёры", href: "#partners" },
 ]
+
+type TicketProps = Omit<ComponentProps<"a">, "title" | "children"> & {
+  ticketHref?: string
+  ticketLabel?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Ticket({
+  ticketHref = "#tickets",
+  ticketLabel = "Билеты",
+  accent,
+  className,
+  style,
+  ...props
+}: TicketProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-navbar-017-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <a
+        {...props} href={ticketHref}
+        className={className}
+        style={palette}
+      >
+        <span>{ticketLabel}</span>
+      </a>
+  )
+}
 
 /** Шапка события: знак с датой, программа и билет с честным состоянием продаж. */
 export function Navbar017({
@@ -338,7 +388,7 @@ export function Navbar017({
           </nav>
 
           {sales === "open" ? (
-            <Button108 data-part="ticket" ticketHref={ticketHref} ticketLabel={ticketLabel} accent={accent} />
+            <Ticket data-part="ticket" ticketHref={ticketHref} ticketLabel={ticketLabel} accent={accent} />
           ) : (
             <span data-part="state" role="status">
               {sales === "soon" ? soonLabel : closedLabel}

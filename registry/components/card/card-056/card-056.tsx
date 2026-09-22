@@ -58,13 +58,13 @@ const STYLES = `
 /** Полароид мастера с неоновой обводкой цвета из данных: фото, имя, стиль и ссылка на запись. */
 export function Card056({
   name = "Лина",
-  color,
-  image,
+  color = "Мастер-полароид с неоном",
+  image = "/demo/realty/object-01.webp",
   styles = [],
-  experience,
-  slot,
+  experience = "Мастер-полароид с неоном",
+  slot = "Мастер-полароид с неоном",
   works = [],
-  href,
+  href = "#",
   bookLabel = "Записаться",
   index = 0,
   accent,

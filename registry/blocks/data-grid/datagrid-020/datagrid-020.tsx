@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card180 } from "@/registry/components/card/card-180/card-180"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid020Row = {
   id: string
@@ -123,6 +122,19 @@ display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;
 [data-vibeui-block="datagrid-020"] [data-part="stage"]::before{content:"";width:0.4375rem;height:0.4375rem;border-radius:999px;background:currentColor}
 [data-vibeui-block="datagrid-020"] [data-part="none"]{padding:1.5rem 0.875rem;text-align:center;color:var(--vibeui-datagrid-020-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-020"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-020"] [data-part="tools"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-020-border);
+background:var(--vibeui-datagrid-020-panel);}
+[data-vibeui-block="datagrid-020"] [data-part="tools"] label{display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-020-muted);}
+[data-vibeui-block="datagrid-020"] [data-part="tools"] select{font:inherit;font-size:0.75rem;color:inherit;padding:0.25rem 0.4375rem;
+border:1px solid var(--vibeui-datagrid-020-border);border-radius:0.4375rem;
+background:transparent;}
+[data-vibeui-block="datagrid-020"] [data-part="tools"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-020-accent);outline-offset:1px}
+[data-vibeui-block="datagrid-020"] [data-part="tools"] [data-part="save"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;margin-inline-start:auto;
+padding:0.3125rem 0.625rem;border-radius:0.4375rem;border:1px solid var(--vibeui-datagrid-020-accent);
+background:transparent;color:var(--vibeui-datagrid-020-accent);}
+[data-vibeui-block="datagrid-020"] [data-part="tools"] [data-part="save"]:disabled{opacity:.4;cursor:not-allowed}
+[data-vibeui-block="datagrid-020"] [data-part="tools"] [data-part="save"]:focus-visible{outline:2px solid var(--vibeui-datagrid-020-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid020Row[] = [
@@ -185,7 +197,6 @@ const VIEWS: Datagrid020View[] = [
 
 const STAGES = ["Квалификация", "Предложение", "Переговоры", "Закрыта"]
 
-
 const SORT_TEXT: Record<string, string> = {
   deal: "по названию",
   amount: "по сумме",
@@ -225,6 +236,137 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с сохранёнными представлениями: вкладка восстанавливает фильтр и
  * сортировку разом, отклонение помечается. Один файл, ноль зависимостей.
  */
+export type ToolsView = {
+  id: string
+  label: string
+  state: { stage: string; sort: ToolsSort }
+}
+
+export type ToolsSort = "amount" | "deal" | "stage"
+
+const ToolsSTAGES = ["Квалификация", "Предложение", "Переговоры", "Закрыта"]
+
+const ToolsSORT_TEXT: Record<string, string> = {
+  deal: "по названию",
+  amount: "по сумме",
+  stage: "по этапу",
+}
+
+const ToolsVIEWS: ToolsView[] = [
+  { id: "all", label: "Все сделки", state: { stage: "", sort: "deal" } },
+  {
+    id: "hot",
+    label: "В переговорах",
+    state: { stage: "Переговоры", sort: "amount" },
+  },
+  { id: "new", label: "Новые", state: { stage: "Квалификация", sort: "deal" } },
+  { id: "won", label: "Закрытые", state: { stage: "Закрыта", sort: "amount" } },
+]
+
+const SORTS: ToolsSort[] = ["deal", "amount", "stage"]
+
+type ToolsProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  stageLabel?: string
+  anyStageText?: string
+  stages?: string[]
+  sortLabel?: string
+  sortText?: Record<string, string>
+  views?: ToolsView[]
+  saveText?: string
+  active?: string
+  dirty?: unknown
+  setEdited?: Dispatch<SetStateAction<ToolsView[] | null>>
+  setState?: Dispatch<SetStateAction<ViewState>>
+  state?: ViewState
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Tools({
+  stageLabel = "Этап",
+  anyStageText = "любой",
+  stages = ToolsSTAGES,
+  sortLabel = "Сортировка",
+  sortText = ToolsSORT_TEXT,
+  views = ToolsVIEWS,
+  saveText = "Сохранить в представление",
+  active,
+  dirty,
+  setEdited = () => {},
+  setState = () => {},
+  state = {} as ViewState,
+  accent,
+  className,
+  style,
+  ...props
+}: ToolsProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-020-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <label>
+          {stageLabel}
+          <select
+            value={state.stage}
+            onChange={(event) =>
+              setState((current) => ({
+                ...current,
+                stage: event.target.value,
+              }))
+            }
+          >
+            <option value="">{anyStageText}</option>
+            {stages.map((stage) => (
+              <option key={stage} value={stage}>
+                {stage}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          {sortLabel}
+          <select
+            value={state.sort}
+            onChange={(event) =>
+              setState((current) => ({
+                ...current,
+                sort: event.target.value as ViewState["sort"],
+              }))
+            }
+          >
+            {SORTS.map((item) => (
+              <option key={item} value={item}>
+                {sortText[item] ?? SORT_TEXT[item]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          data-part="save"
+          disabled={!dirty}
+          onClick={() =>
+            setEdited((current) =>
+              (current ?? views).map((view) =>
+                view.id === active ? { ...view, state } : view,
+              ),
+            )
+          }
+        >
+          {saveText}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid020({
   rows = DEFAULT_ROWS,
   caption = "Представление хранит фильтр по этапу и порядок сортировки",
@@ -344,7 +486,7 @@ export function Datagrid020({
             </span>
           ) : null}
         </nav>
-        <Card180 data-part="tools" stageLabel={stageLabel} anyStageText={anyStageText} stages={stages} sortLabel={sortLabel} sortText={sortText} views={views} saveText={saveText} active={active} dirty={dirty} setEdited={setEdited} setState={setState} state={state} accent={accent} />
+        <Tools data-part="tools" stageLabel={stageLabel} anyStageText={anyStageText} stages={stages} sortLabel={sortLabel} sortText={sortText} views={views} saveText={saveText} active={active} dirty={dirty} setEdited={setEdited} setState={setState} state={state} accent={accent} />
         <div
           data-part="scroll"
           role="region"

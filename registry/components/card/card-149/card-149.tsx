@@ -60,7 +60,7 @@ font-size:0.8125rem;font-weight:600;text-align:center;line-height:1.4;}
 export function Card149({
   question = "Где на карточке блока кнопка Copy for AI?",
   answer = "В правом верхнем углу карточки и на странице блока рядом с превью. Нажатие кладёт в буфер готовую инструкцию для агента.",
-  imageLabel,
+  imageLabel = "/demo/realty/object-01.webp",
   accent,
   className,
   style,

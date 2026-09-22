@@ -62,11 +62,11 @@ const STYLES = `
 /** Карточка мастера с фото, именем, специализацией и наклоном за курсором: наклон передаётся блоком. */
 export function Card058({
   name = "Даша Орлова",
-  photo,
+  photo = "/demo/realty/object-01.webp",
   role = "Салон, кожа, химчистка",
   skills = [],
-  years,
-  cars,
+  years = "Мастер автосервиса",
+  cars = "Мастер автосервиса",
   yearsLabel = "стаж",
   carsLabel = "машин",
   index = 0,

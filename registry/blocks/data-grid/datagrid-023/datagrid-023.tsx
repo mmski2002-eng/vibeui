@@ -1,8 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import { Card181 } from "@/registry/components/card/card-181/card-181"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid023Row = {
   id: string
@@ -101,6 +100,20 @@ border-top:1px solid var(--vibeui-datagrid-023-border);
 [data-vibeui-block="datagrid-023"] tbody tr[data-origin="bad"] th{background:var(--vibeui-datagrid-023-badbg);color:var(--vibeui-datagrid-023-bad)}
 [data-vibeui-block="datagrid-023"] [data-part="why"]{font-size:0.6875rem;white-space:normal}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-023"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-023"] [data-part="paste"]{padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-023-border);
+background:var(--vibeui-datagrid-023-panel);}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] label{display:block;margin-bottom:0.375rem;font-size:0.75rem;font-weight:600;}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] [data-part="hint"]{margin:0 0 0.5rem;font-size:0.6875rem;color:var(--vibeui-datagrid-023-muted);
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] textarea{display:block;width:100%;min-height:4.5rem;resize:vertical;
+font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem;line-height:1.5;color:inherit;
+padding:0.5rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-023-border);background:transparent;}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] textarea:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:1px}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin-top:0.5rem}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] [data-part="commit"]{border-color:transparent;background:var(--vibeui-datagrid-023-accent);color:oklch(from var(--vibeui-datagrid-023-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] [data-part="report"]{margin:0;margin-inline-start:auto;font-size:0.75rem;color:var(--vibeui-datagrid-023-muted)}
+[data-vibeui-block="datagrid-023"] [data-part="paste"] [data-part="report"][data-bad="true"]{color:var(--vibeui-datagrid-023-bad);font-weight:600}
 `
 
 const DEFAULT_ROWS: Datagrid023Row[] = [
@@ -182,6 +195,131 @@ function parse(text: string, problems: Record<string, string>): Parsed[] {
  * Сетка со вставкой нескольких строк из буфера: разбор с пометкой битых
  * строк перед добавлением в таблицу. Один файл, ноль зависимостей.
  */
+export type PasteRow = {
+  id: string
+  sku: string
+  title: string
+  quantity: number
+}
+
+const PasteDEFAULT_ROWS: PasteRow[] = [
+  { id: "b1", sku: "MTR-100", title: "Мотор редукторный", quantity: 12 },
+  { id: "b2", sku: "BLT-220", title: "Ремень приводной", quantity: 40 },
+]
+
+type PasteProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  pasteLabel?: string
+  separatorHint?: string
+  rows?: PasteRow[]
+  addTemplate?: string
+  clearText?: string
+  emptyText?: string
+  okTemplate?: string
+  mixedTemplate?: string
+  areaId?: string
+  bad?: readonly Parsed[]
+  batch?: number
+  good?: readonly Parsed[]
+  parsed?: Parsed[]
+  setAdded?: Dispatch<SetStateAction<PasteRow[] | null>>
+  setBatch?: (value: number) => void
+  setPasted?: (value: string[]) => void
+  setTyped?: (value: string | null) => void
+  text?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Paste({
+  pasteLabel = "Вставьте строки из таблицы или письма",
+  separatorHint = "артикул ⇥ название ⇥ количество",
+  rows = PasteDEFAULT_ROWS,
+  addTemplate = "Добавить {count} стр.",
+  clearText = "Очистить поле",
+  emptyText = "Поле пустое",
+  okTemplate = "Разобрано строк: {count}, ошибок нет",
+  mixedTemplate = "Готово {good}, с ошибками {bad}",
+  areaId = "",
+  bad = [],
+  batch = 0,
+  good = [],
+  parsed = [],
+  setAdded = () => {},
+  setBatch = () => {},
+  setPasted = () => {},
+  setTyped = () => {},
+  text,
+  accent,
+  className,
+  style,
+  ...props
+}: PasteProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-023-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <label htmlFor={areaId}>{pasteLabel}</label>
+        <p data-part="hint">{separatorHint}</p>
+        <textarea
+          id={areaId}
+          value={text}
+          spellCheck={false}
+          onChange={(event) => setTyped(event.target.value)}
+        />
+        <div data-part="actions">
+          <button
+            type="button"
+            data-part="commit"
+            disabled={good.length === 0}
+            onClick={() => {
+              const stamp = batch + 1
+
+              setBatch(stamp)
+              setAdded((current) => [
+                ...(current ?? rows),
+                ...good.map((item, index) => ({
+                  id: `p${stamp}-${index}`,
+                  sku: item.sku,
+                  title: item.title,
+                  quantity: item.quantity,
+                })),
+              ])
+              setPasted(good.map((_, index) => `p${stamp}-${index}`))
+              setTyped("")
+            }}
+          >
+            {addTemplate.replace("{count}", String(good.length))}
+          </button>
+          <button type="button" onClick={() => setTyped("")}>
+            {clearText}
+          </button>
+          <p
+            data-part="report"
+            data-bad={bad.length > 0 ? "true" : undefined}
+            role="status"
+            aria-live="polite"
+          >
+            {parsed.length === 0
+              ? emptyText
+              : bad.length === 0
+                ? okTemplate.replace("{count}", String(good.length))
+                : mixedTemplate
+                    .replace("{good}", String(good.length))
+                    .replace("{bad}", String(bad.length))}
+          </p>
+        </div>
+      </div>
+  )
+}
+
 export function Datagrid023({
   rows = DEFAULT_ROWS,
   caption = "Вставленные строки помечены заливкой до следующей вставки",
@@ -255,7 +393,7 @@ export function Datagrid023({
         className={className}
         style={palette}
       >
-        <Card181 data-part="paste" pasteLabel={pasteLabel} separatorHint={separatorHint} rows={rows} addTemplate={addTemplate} clearText={clearText} emptyText={emptyText} okTemplate={okTemplate} mixedTemplate={mixedTemplate} areaId={areaId} bad={bad} batch={batch} good={good} parsed={parsed} setAdded={setAdded} setBatch={setBatch} setPasted={setPasted} setTyped={setTyped} text={text} accent={accent} />
+        <Paste data-part="paste" pasteLabel={pasteLabel} separatorHint={separatorHint} rows={rows} addTemplate={addTemplate} clearText={clearText} emptyText={emptyText} okTemplate={okTemplate} mixedTemplate={mixedTemplate} areaId={areaId} bad={bad} batch={batch} good={good} parsed={parsed} setAdded={setAdded} setBatch={setBatch} setPasted={setPasted} setTyped={setTyped} text={text} accent={accent} />
         <div
           data-part="scroll"
           role="region"

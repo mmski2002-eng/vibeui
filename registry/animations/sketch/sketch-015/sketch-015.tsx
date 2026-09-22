@@ -87,50 +87,6 @@ function sketch(points: Point[], seed: number, rough: number, boil: number, clos
 }
 
 /** Периметр прямоугольника со скруглёнными углами, точки с шагом step. */
-function rectPoints(w: number, h: number, inset: number, radius: number, step = 14): Point[] {
-  const x0 = inset
-  const y0 = inset
-  const x1 = w - inset
-  const y1 = h - inset
-  const r = Math.min(radius, (x1 - x0) / 2, (y1 - y0) / 2)
-  const points: Point[] = []
-  const edge = (ax: number, ay: number, bx: number, by: number) => {
-    const length = Math.hypot(bx - ax, by - ay)
-    const count = Math.max(1, Math.round(length / step))
-
-    for (let index = 0; index < count; index += 1) {
-      const t = index / count
-
-      points.push([ax + (bx - ax) * t, ay + (by - ay) * t])
-    }
-  }
-  const corner = (cx: number, cy: number, from: number) => {
-    for (let index = 0; index <= 2; index += 1) {
-      const angle = from + (Math.PI / 2) * (index / 2)
-
-      points.push([cx + Math.cos(angle) * r, cy + Math.sin(angle) * r])
-    }
-  }
-
-  edge(x0 + r, y0, x1 - r, y0)
-  corner(x1 - r, y0 + r, -Math.PI / 2)
-  edge(x1, y0 + r, x1, y1 - r)
-  corner(x1 - r, y1 - r, 0)
-  edge(x1 - r, y1, x0 + r, y1)
-  corner(x0 + r, y1 - r, Math.PI / 2)
-  edge(x0, y1 - r, x0, y0 + r)
-  corner(x0 + r, y0 + r, Math.PI)
-
-  return points
-}
-
-function ellipsePoints(cx: number, cy: number, rx: number, ry: number, count = 24): Point[] {
-  return Array.from({ length: count }, (_, index) => {
-    const angle = (index / count) * Math.PI * 2 - Math.PI / 3
-
-    return [cx + Math.cos(angle) * rx, cy + Math.sin(angle) * ry] as Point
-  })
-}
 
 function linePoints(x0: number, y0: number, x1: number, y1: number, step = 14): Point[] {
   const count = Math.max(2, Math.round(Math.hypot(x1 - x0, y1 - y0) / step) + 1)

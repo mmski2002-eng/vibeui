@@ -32,10 +32,10 @@ const STYLES = `
 
 /** Кнопка-кадр галереи: фото с подписью и пропорцией через переменную; скрывается по data-hidden при открытии. */
 export function Button094({
-  aspect,
-  caption,
-  alt,
-  src = "",
+  aspect = "Кадр галереи",
+  caption = "Кадр галереи",
+  alt = "Кадр галереи",
+  src = "/demo/realty/object-01.webp",
   openLabel = "Открыть фото",
   accent,
   className,

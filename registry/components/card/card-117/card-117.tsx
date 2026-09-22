@@ -67,11 +67,11 @@ const STYLES = `
 
 /** Ссылка-карточка гостя для бегущей ленты: фото, имя и подпись. */
 export function Card117({
-  name,
-  href,
-  image,
-  role,
-  episode,
+  name = "Карточка гостя ленты",
+  href = "#",
+  image = "/demo/realty/object-01.webp",
+  role = "Карточка гостя ленты",
+  episode = "Карточка гостя ленты",
   accent,
   className,
   style,

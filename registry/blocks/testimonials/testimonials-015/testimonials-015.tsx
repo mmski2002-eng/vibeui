@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Badge028 } from "@/registry/components/badge/badge-028/badge-028"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Testimonials015Props = {
   quote?: string
@@ -80,6 +79,9 @@ column-gap:2.5rem;row-gap:1rem;
 [data-vibeui-block="testimonials-015"] [data-part="shell"]{padding:5.5rem 2rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-015"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="testimonials-015"] [data-part="logo"]{color:var(--vibeui-testimonials-015-muted);
+font-size:1.0625rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+opacity:0.85;white-space:nowrap;}
 `
 
 const DEFAULT_LOGOS = [
@@ -120,6 +122,36 @@ function initials(text: string) {
     .map((part) => part.charAt(0))
     .join("")
     .toUpperCase()
+}
+
+type LogoProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  logo?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Logo({
+  logo = "Северный путь",
+  accent,
+  className,
+  style,
+  ...props
+}: LogoProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-testimonials-015-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {logo}
+      </li>
+  )
 }
 
 /** Крупная цитата с плашкой компании и строкой логотипов клиентов снизу. */
@@ -175,7 +207,7 @@ export function Testimonials015({
             <p data-part="clients-label">{logosLabel}</p>
             <ul data-part="logos">
               {logos.map((logo) => (
-                <Badge028 key={logo} data-part="logo" logo={logo} accent={accent} />
+                <Logo key={logo} data-part="logo" logo={logo} accent={accent} />
               ))}
             </ul>
           </div>

@@ -39,7 +39,7 @@ const STYLES = `
 /** Строка списка точек на карте: индикатор, город и заметка; подсветка по data-lit. */
 export function Card082({
   city = "Тверь",
-  note,
+  note = "Пункт карты помощи",
   count = 96,
   accent,
   className,

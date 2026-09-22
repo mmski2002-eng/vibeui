@@ -106,7 +106,6 @@ const DEFAULT_REGIONS: Api002Region[] = [
   { name: "Алматы", code: "ala-1", uptime: "99,97 %", latency: 72 },
 ]
 
-
 // Снимок кэшируется: React сверяет getSnapshot дважды за рендер, и секунда
 // не должна «переключиться» между вызовами.
 let current = 0
@@ -131,9 +130,6 @@ function getServerSnapshot(): number | null {
 function pad(value: number) {
   return String(value).padStart(2, "0")
 }
-
-type RegionTexts = { statusLabels: readonly [string, string, string]; uptimeLabel: string; p50Label: string; sparkLabel: string; axisLabels: readonly [string, string, string] }
-
 
 /** Статус-панель API: регионы, лампочки, живые спарклайны. */
 export function Api002({

@@ -47,8 +47,8 @@ const STYLES = `
 export function Card088({
   title = "Осмотр под лампой",
   text = "Заезжаете в бокс, мастер смотрит кузов под софитами, меряет толщину лака, показывает проблемные места и фиксирует цену.",
-  duration,
-  result,
+  duration = "Шаг автосервиса",
+  result = "Шаг автосервиса",
   index = 0,
   accent,
   className,

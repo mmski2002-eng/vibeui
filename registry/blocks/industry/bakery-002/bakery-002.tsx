@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
-import { Word001 } from "@/registry/components/typography/word-001/word-001"
+import type { ComponentProps } from "react"
 
 export type Bakery002Drink = {
   name: string
@@ -82,7 +82,7 @@ container-type:inline-size;
 [data-vibeui-block="bakery-002"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-bakery-002-accent);font-weight:600;margin:0 0 1.1rem}
 [data-vibeui-block="bakery-002"] [data-part="eyebrow"]::before{content:"";width:1.4rem;height:2px;background:var(--vibeui-bakery-002-accent);border-radius:2px}
 [data-vibeui-block="bakery-002"] [data-part="title"]{margin:0;font-family:var(--vibeui-bakery-002-display);font-weight:600;letter-spacing:-.025em;line-height:1.02;font-size:clamp(2.2rem,5cqi,4rem)}
-[data-vibeui-block="bakery-002"][data-shown="true"] [data-vibeui-block="word-001"] i{animation:vibeui-bakery-002-rise .9s var(--vibeui-bakery-002-ease) both;animation-delay:calc(var(--vibeui-bakery-002-n) * .09s)}
+[data-vibeui-block="bakery-002"][data-shown="true"] [data-part="word"] i{animation:vibeui-bakery-002-rise .9s var(--vibeui-bakery-002-ease) both;animation-delay:calc(var(--vibeui-bakery-002-n) * .09s)}
 [data-vibeui-block="bakery-002"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-bakery-002-muted);max-width:34rem;margin:1rem 0 0}
 [data-vibeui-block="bakery-002"] [data-part="lede"],[data-vibeui-block="bakery-002"] [data-part="cupwrap"],[data-vibeui-block="bakery-002"] [data-part="control"]{opacity:0;translate:0 1.5rem}
 [data-vibeui-block="bakery-002"][data-shown="true"] [data-part="lede"]{animation:vibeui-bakery-002-in .8s var(--vibeui-bakery-002-ease) .3s both}
@@ -141,7 +141,13 @@ container-type:inline-size;
 [data-vibeui-block="bakery-002"] [data-part="photos"] img[data-active="true"]{opacity:1;transform:none}
 [data-vibeui-block="bakery-002"] [data-part="photos"][data-slosh="true"] img[data-active="true"]{animation:vibeui-bakery-002-sip .7s cubic-bezier(.3,1.3,.4,1)}
 @keyframes vibeui-bakery-002-sip{0%{transform:scale(.97) rotate(-1.5deg)}60%{transform:scale(1.02) rotate(1deg)}100%{transform:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-002"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-002"] [data-part="lede"],[data-vibeui-block="bakery-002"] [data-part="cupwrap"],[data-vibeui-block="bakery-002"] [data-part="control"]{opacity:1;translate:none}[data-vibeui-block="bakery-002"] [data-part="steam"] i{opacity:.5}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-002"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-002"] [data-part="lede"],[data-vibeui-block="bakery-002"] [data-part="cupwrap"],[data-vibeui-block="bakery-002"] [data-part="control"]{opacity:1;translate:none}[data-vibeui-block="bakery-002"] [data-part="steam"] i{opacity:.5}}
+[data-vibeui-block="bakery-002"] [data-part="word"]{display:inline-block;overflow:clip;vertical-align:top;padding:.04em .06em .14em 0;margin:-.04em 0 -.14em}
+[data-vibeui-block="bakery-002"] [data-part="word"] i{display:inline-block;font-style:normal;transform:translateY(112%)}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="bakery-002"] [data-part="word"] i{transform:none}
+}
+`
 
 function spotlight(event: PointerEvent<HTMLElement>) {
   const rect = event.currentTarget.getBoundingClientRect()
@@ -156,6 +162,36 @@ const DEFAULT_DRINKS: Bakery002Drink[] = [
   { name: "Американо", text: "эспрессо и горячая вода", price: "190 ₽", milk: 0, foam: 0, coffee: 70, volume: "250 мл", water: true, image: "/demo/bakery/cup-espresso.png", imageAlt: "Американо" },
   { name: "Эспрессо", text: "двойной, 18 г в 36 г", price: "160 ₽", milk: 0, foam: 0, coffee: 30, volume: "60 мл", image: "/demo/bakery/cup-espresso.png", imageAlt: "Двойной эспрессо" },
 ]
+
+type WordProps = Omit<ComponentProps<"span">, "title" | "children"> & {
+  word?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Word({
+  word,
+  accent,
+  className,
+  style,
+  ...props
+}: WordProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-bakery-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <span
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <i>{word}</i>
+      </span>
+  )
+}
 
 /** Шкала крепости: ползунок переключает напитки, стакан наполняется слоями. */
 export function Bakery002({
@@ -231,7 +267,7 @@ export function Bakery002({
           <h2 data-part="title">
             {title.split(" ").map((word, position, all) => (
               <span key={`${word}-${position}`}>
-                <Word001 data-part="word" word={word} style={{ ["--vibeui-bakery-002-n" as string]: position }} accent={accent} />
+                <Word data-part="word" word={word} style={{ ["--vibeui-bakery-002-n" as string]: position }} accent={accent} />
                 {position < all.length - 1 ? " " : ""}
               </span>
             ))}

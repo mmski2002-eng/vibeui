@@ -55,13 +55,13 @@ const STYLES = `
 /** Карточка бегущей строки: кнопка видео с обложкой, цитата, аватар, имя со ссылкой и роль. */
 export function Card108({
   name = "Марина Соколова",
-  videoHref,
-  video,
+  videoHref = "Карточка отзыва с видео",
+  video = "/demo/realty/object-02.webp",
   quote = "Самое ценное — ревью. Куратор разобрал мою домашку на 20 минут видео и показал, где я теряю пользователя. На работе так никто не делает.",
-  image,
-  href,
+  image = "/demo/realty/object-01.webp",
+  href = "#",
   role = "UI-дизайнер, Авито",
-  cohort,
+  cohort = "Карточка отзыва с видео",
   videoLabel = "Видео-отзыв",
   onVideo,
   copy = 0,

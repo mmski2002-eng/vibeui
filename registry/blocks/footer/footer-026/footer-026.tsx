@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks021 } from "@/registry/components/navigation/footerlinks-021/footerlinks-021"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer026Link = { label: string; href: string }
 
@@ -72,9 +71,49 @@ container-type:inline-size;
 [data-vibeui-block="footer-026"] [data-part="bottom"]{justify-content:space-between}
 [data-vibeui-block="footer-026"] [data-part="pine"]{width:20rem;height:20rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-026"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-026"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-026"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.2rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-026"] [data-part="links"] a{font-family:var(--vibeui-footer-026-display);font-size:.98rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;opacity:.8;transition:opacity .25s,color .25s}
+[data-vibeui-block="footer-026"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-026-accent)}
+`
 
 const PINE = "M10 130c30-30 60-60 100-90M40 100c-4-12-2-24 2-34M40 100c10-8 22-12 34-12M62 78c-3-11-1-22 3-30M62 78c10-6 22-9 33-8M84 58c-2-10 0-20 4-28M84 58c9-5 20-7 30-6M30 110c-6-10-6-22-3-32M30 110c8-2 18-1 27 2"
+
+export type LinksLink = { label: string; href: string }
+
+type LinksProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  links?: readonly LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  links = [ { label: "История", href: "#story" }, { label: "Вечер", href: "#evening" }, { label: "Дорога", href: "#place" }, { label: "Ответить", href: "#rsvp" }, { label: "Вопросы", href: "#faq" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-026-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
 
 /** Подвал зимней свадьбы: ветки хвои по углам, монограмма со снежинкой, имена и «до встречи в снегу», якоря, хэштег, «ответьте до». */
 export function Footer026({
@@ -142,7 +181,7 @@ export function Footer026({
           </div>
           <div data-part="bottom">
             {links.length > 0 ? (
-              <Footerlinks021 data-part="links" links={links} accent={accent} />
+              <Links data-part="links" links={links} accent={accent} />
             ) : null}
             {hashtag ? (
               <a data-part="tag" href={`https://www.instagram.com/explore/tags/${hashtag.replace(/^#/, "")}/`} target="_blank" rel="noopener noreferrer">

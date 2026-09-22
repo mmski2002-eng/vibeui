@@ -4,7 +4,6 @@ import { Heading001 } from "@/registry/components/typography/heading-001/heading
 
 import { Button016 } from "@/registry/components/button/button-016/button-016"
 
-
 type People005Member = {
   name: string
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -119,14 +118,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
-}
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
 }
 
 /** Сетка команды с карточкой-приглашением «твоё место» и кнопкой вакансий. */

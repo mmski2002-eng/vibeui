@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Card128 } from "@/registry/components/card/card-128/card-128"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type About007Fact = {
   value: string
@@ -68,7 +67,43 @@ container-type:inline-size;
 @container (min-width: 56rem){
 [data-vibeui-block="about-007"] [data-part="shell"]{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:5rem;padding:6rem 2rem;align-items:center}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-007"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-007"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="about-007"] [data-part="fact"] b{display:block;font-family:var(--vibeui-about-007-display);font-size:2rem;font-weight:400;line-height:1;color:var(--vibeui-about-007-accent-ink)}
+[data-vibeui-block="about-007"] [data-part="fact"] span{display:block;margin-top:.3rem;font-size:.78rem;color:var(--vibeui-about-007-muted)}
+`
+
+type FactProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  label?: string
+  value?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Fact({
+  label = "лет на кухне",
+  value = "18",
+  accent,
+  className,
+  style,
+  ...props
+}: FactProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-about-007-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <b>{value}</b>
+        <span>{label}</span>
+      </li>
+  )
+}
 
 /** Шеф: портрет со вторым фото внахлёст, цитата серифом, росчерк и факты. */
 export function About007({
@@ -125,7 +160,7 @@ export function About007({
             {facts.length > 0 ? (
               <ul data-part="facts">
                 {facts.map((fact) => (
-                  <Card128 key={fact.label} data-part="fact" label={fact.label} value={fact.value} accent={accent} />
+                  <Fact key={fact.label} data-part="fact" label={fact.label} value={fact.value} accent={accent} />
                 ))}
               </ul>
             ) : null}

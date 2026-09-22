@@ -15822,6 +15822,20 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "hint",
+            "label": "hint",
+            "type": "text",
+            "default": "Многострочное поле с подпи…",
+            "maxLength": 160
+          },
+          {
+            "prop": "error",
+            "label": "error",
+            "type": "text",
+            "default": "Многострочное поле с подпи…",
+            "maxLength": 160
           }
         ],
         "i18n": {
@@ -15859,11 +15873,21 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "hint": {
+                "label": "hint",
+                "default": "Многострочное поле с подпи…"
+              },
+              "error": {
+                "label": "error",
+                "default": "Многострочное поле с подпи…"
               }
             }
           }
         },
         "cardControls": [
+          "error",
+          "hint",
           "rows",
           "accent"
         ],

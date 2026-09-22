@@ -39,7 +39,7 @@ background:var(--vibeui-card-042-card);}
 export function Card042({
   quote = "Лендинг собрали за вечер: выбрали блоки, отдали агенту, поправили тексты.",
   name = "Анна Ковалёва",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Маркетинг, «Северный путь»",
   accent,
   className,

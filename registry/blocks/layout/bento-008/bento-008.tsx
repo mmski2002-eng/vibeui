@@ -1,6 +1,4 @@
-import type { CSSProperties } from "react"
-import { Badge027 } from "@/registry/components/badge/badge-027/badge-027"
-import { Avatar033 } from "@/registry/components/avatar/avatar-033/avatar-033"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Bento008Segment = {
   label: string
@@ -113,7 +111,16 @@ container-type:inline-size;
 @keyframes vibeui-bento-008-write{0%{clip-path:inset(0 100% 0 0)}60%,90%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 0);opacity:0}}
 @container (min-width: 40rem){[data-vibeui-block="bento-008"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="bento-008"] [data-part="tile"][data-kind="lesson"],[data-vibeui-block="bento-008"] [data-part="tile"][data-kind="homework"]{grid-column:span 2}}
 @container (min-width: 64rem){[data-vibeui-block="bento-008"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}[data-vibeui-block="bento-008"] [data-part="tile"][data-kind="lesson"]{grid-column:span 2;grid-row:span 2}[data-vibeui-block="bento-008"] [data-part="tile"][data-kind="photo"]{grid-row:span 2}[data-vibeui-block="bento-008"] [data-part="tile"][data-kind="homework"]{grid-column:span 2}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-008"] *{animation:none!important;transition:none!important}[data-vibeui-block="bento-008"] p[data-part="ink"]{clip-path:none}[data-vibeui-block="bento-008"] [data-part="needle"]{display:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-008"] *{animation:none!important;transition:none!important}[data-vibeui-block="bento-008"] p[data-part="ink"]{clip-path:none}[data-vibeui-block="bento-008"] [data-part="needle"]{display:none}}
+@keyframes vibeui-bento-008-wave{0%,70%,100%{transform:rotate(0);opacity:0}80%{opacity:1;transform:rotate(-15deg)}90%{opacity:1;transform:rotate(15deg)}}
+@keyframes vibeui-bento-008-hand{0%,70%,100%{transform:translateY(0)}80%,90%{transform:translateY(-5px)}}
+[data-vibeui-block="bento-008"] [data-part="face"]{position:relative;display:grid;place-items:center;width:2.6rem;height:2.6rem;margin-left:-.6rem;border-radius:50%;border:2px solid var(--vibeui-bento-008-paper);background:color-mix(in oklab,var(--vibeui-bento-008-accent) calc(var(--vibeui-bento-008-i) * 12% + 20%),var(--vibeui-bento-008-fg));color:#fff;font-family:var(--vibeui-bento-008-display);font-size:.72rem;font-weight:700}
+[data-vibeui-block="bento-008"] [data-part="face"]:first-child{margin-left:0}
+[data-vibeui-block="bento-008"] [data-part="face"][data-hand="true"]{animation:vibeui-bento-008-hand 3s ease-in-out infinite}
+[data-vibeui-block="bento-008"] [data-part="face"][data-hand="true"]::after{content:"✋";position:absolute;right:-.5rem;top:-.6rem;font-size:.9rem;animation:vibeui-bento-008-wave 3s ease-in-out infinite}
+[data-vibeui-block="bento-008"] [data-part="chip"]{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border-radius:999px;border:1px solid var(--vibeui-bento-008-line);background:var(--vibeui-bento-008-bg);font-size:.8rem;font-weight:600;transform:rotate(calc(var(--vibeui-bento-008-r) * 1deg))}
+[data-vibeui-block="bento-008"] [data-part="chip"]::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-bento-008-accent)}
+`
 
 const DEFAULT_SEGMENTS: Bento008Segment[] = [
   { label: "разогрев", minutes: 5 },
@@ -122,6 +129,66 @@ const DEFAULT_SEGMENTS: Bento008Segment[] = [
   { label: "разговор", minutes: 25 },
   { label: "итоги", minutes: 5 },
 ]
+
+type FaceProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  initials?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Face({
+  initials,
+  accent,
+  className,
+  style,
+  ...props
+}: FaceProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-bento-008-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {initials}
+      </li>
+  )
+}
+
+type ChipProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  label?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Chip({
+  label,
+  accent,
+  className,
+  style,
+  ...props
+}: ChipProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-bento-008-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {label}
+      </li>
+  )
+}
 
 /** Бенто «как проходят занятия»: таймлайн урока, фото, круг, ученики, домашка. */
 export function Bento008({
@@ -213,7 +280,7 @@ export function Bento008({
               <h3>{groupTitle}</h3>
               <ul data-part="faces" aria-hidden="true">
                 {group.map((initials, index) => (
-                  <Avatar033 key={`${initials}-${index}`} data-part="face" initials={initials} data-hand={index === group.length - 2 ? "true" : undefined} style={{ ["--vibeui-bento-008-i" as string]: index }} accent={accent} />
+                  <Face key={`${initials}-${index}`} data-part="face" initials={initials} data-hand={index === group.length - 2 ? "true" : undefined} style={{ ["--vibeui-bento-008-i" as string]: index }} accent={accent} />
                 ))}
               </ul>
               <p>{groupText}</p>
@@ -227,7 +294,7 @@ export function Bento008({
               <p>{nativeText}</p>
               <ul data-part="chips">
                 {natives.map((native, index) => (
-                  <Badge027 key={native} data-part="chip" label={native} style={{ ["--vibeui-bento-008-r" as string]: index % 2 === 0 ? -2 : 2 }} accent={accent} />
+                  <Chip key={native} data-part="chip" label={native} style={{ ["--vibeui-bento-008-r" as string]: index % 2 === 0 ? -2 : 2 }} accent={accent} />
                 ))}
               </ul>
             </article>

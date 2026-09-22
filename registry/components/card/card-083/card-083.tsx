@@ -34,9 +34,9 @@ const STYLES = `
 
 /** Фигура с фото блюда и бейджем; форма маски по data-shape. */
 export function Card083({
-  image,
-  name,
-  badge,
+  image = "/demo/realty/object-01.webp",
+  name = "Фото блюда",
+  badge = "Фото блюда",
   accent,
   className,
   style,

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card166 } from "@/registry/components/card/card-166/card-166"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid016Row = {
@@ -97,6 +96,14 @@ border-top:2px solid var(--vibeui-datagrid-016-accent);
 [data-vibeui-block="datagrid-016"] [data-part="none"]{font-weight:500;color:var(--vibeui-datagrid-016-muted)}
 [data-vibeui-block="datagrid-016"] [data-part="channel"]{color:var(--vibeui-datagrid-016-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-016"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-016"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-016-border);}
+[data-vibeui-block="datagrid-016"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-016"] [data-part="bar"] [data-part="pickerLabel"]{display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-016-muted);}
+[data-vibeui-block="datagrid-016"] [data-part="bar"] select{font:inherit;font-size:0.75rem;color:inherit;padding:0.25rem 0.4375rem;
+border:1px solid var(--vibeui-datagrid-016-border);border-radius:0.4375rem;
+background:transparent;}
+[data-vibeui-block="datagrid-016"] [data-part="bar"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-016-accent);outline-offset:1px}
 `
 
 const DEFAULT_ROWS: Datagrid016Row[] = [
@@ -211,6 +218,65 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка со строкой-итогом по выделенным строкам: функция свёртки
  * переключается на месте. Один файл, ноль зависимостей.
  */
+
+const BarAGGREGATE_TEXT: Record<string, string> = {
+  sum: "Сумма",
+  avg: "Среднее",
+  min: "Минимум",
+  max: "Максимум",
+}
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  pickerText?: string
+  aggregateText?: Record<string, string>
+  mode?: "sum" | "avg" | "min" | "max"
+  setChosen?: (value: Aggregate | null) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Кампании квартала",
+  pickerText = "Свёртка",
+  aggregateText = BarAGGREGATE_TEXT,
+  mode,
+  setChosen = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-016-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <label data-part="pickerLabel">
+          {pickerText}
+          <select
+            value={mode}
+            onChange={(event) => setChosen(event.target.value as Aggregate)}
+          >
+            {AGGREGATES.map((value) => (
+              <option key={value} value={value}>
+                {aggregateText[value] ?? AGGREGATE_TEXT[value]}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+  )
+}
+
 export function Datagrid016({
   rows = DEFAULT_ROWS,
   caption = "Итог в подвале считается только по отмеченным строкам",
@@ -280,7 +346,7 @@ export function Datagrid016({
         className={className}
         style={palette}
       >
-        <Card166 data-part="bar" heading={heading} pickerText={pickerText} aggregateText={aggregateText} mode={mode} setChosen={setChosen} accent={accent} />
+        <Bar data-part="bar" heading={heading} pickerText={pickerText} aggregateText={aggregateText} mode={mode} setChosen={setChosen} accent={accent} />
         <div
           data-part="scroll"
           role="region"

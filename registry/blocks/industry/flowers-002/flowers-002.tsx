@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState, type CSSProperties } from "react"
-import { Card086 } from "@/registry/components/card/card-086/card-086"
+import type { ComponentProps } from "react"
 
 export type Flowers002Flower = {
   name: string
@@ -119,7 +119,19 @@ container-type:inline-size;
 @container (min-width: 40rem){[data-vibeui-block="flowers-002"] [data-part="chips"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 60rem){[data-vibeui-block="flowers-002"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:3rem}[data-vibeui-block="flowers-002"] [data-part="stage"]{position:sticky;top:5.5rem;padding:1.5rem}[data-vibeui-block="flowers-002"] [data-part="chips"]{grid-template-columns:1fr}}
 @container (min-width: 76rem){[data-vibeui-block="flowers-002"] [data-part="chips"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-002"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-002"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="flowers-002"] [data-part="chip"]{display:grid;grid-template-columns:1.4rem minmax(0,1fr) auto;align-items:center;gap:.9rem;padding:.75rem .9rem;border-radius:.9rem;border:1px solid var(--vibeui-flowers-002-line);transition:border-color .25s,background .25s}
+[data-vibeui-block="flowers-002"] [data-part="chip"][data-on="true"]{border-color:var(--vibeui-flowers-002-fg);background:var(--vibeui-flowers-002-paper)}
+[data-vibeui-block="flowers-002"] [data-part="chip"] [data-part="swatch"]{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-flowers-002-c);box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--vibeui-flowers-002-fg) 25%,transparent)}
+[data-vibeui-block="flowers-002"] [data-part="chip"] h3{margin:0;font-family:var(--vibeui-flowers-002-display);font-size:1.35rem;font-weight:600;line-height:1.1}
+[data-vibeui-block="flowers-002"] [data-part="chip"] p{margin:.1rem 0 0;font-size:.8rem;color:var(--vibeui-flowers-002-muted)}
+[data-vibeui-block="flowers-002"] [data-part="chip"] [data-part="count"]{display:inline-flex;align-items:center;gap:.2rem}
+[data-vibeui-block="flowers-002"] [data-part="chip"] [data-part="count"] button{width:2.1rem;height:2.1rem;border-radius:50%;border:1px solid var(--vibeui-flowers-002-fg);background:transparent;color:var(--vibeui-flowers-002-fg);font:inherit;font-size:1.1rem;line-height:1;cursor:pointer;transition:background .2s,color .2s,transform .15s}
+[data-vibeui-block="flowers-002"] [data-part="chip"] [data-part="count"] button:hover{background:var(--vibeui-flowers-002-accent);border-color:var(--vibeui-flowers-002-accent);color:var(--vibeui-flowers-002-on-accent)}
+[data-vibeui-block="flowers-002"] [data-part="chip"] [data-part="count"] button:active{transform:scale(.92)}
+[data-vibeui-block="flowers-002"] [data-part="chip"] [data-part="count"] button:disabled{opacity:.3;cursor:default;background:transparent;color:var(--vibeui-flowers-002-fg);border-color:var(--vibeui-flowers-002-fg)}
+[data-vibeui-block="flowers-002"] [data-part="chip"] [data-part="count"] output{min-width:1.6rem;text-align:center;font-variant-numeric:tabular-nums;font-weight:500}
+`
 
 const DEFAULT_FLOWERS: Flowers002Flower[] = [
   { name: "Пион", price: 390, days: 6, color: "#e9a3b6", kind: "peony", initial: 3, image: "/demo/flowers/stem-peony.png" },
@@ -196,6 +208,76 @@ function Bloom({ kind, color }: { kind: Flowers002Flower["kind"]; color: string 
         )),
       )}
     </g>
+  )
+}
+
+type ChipProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  name?: string
+  color?: string
+  price?: number
+  days?: number
+  stemLine?: string
+  currency?: string
+  dayUnits?: readonly [string, string, string]
+  removeLabel?: string
+  maxStems?: number
+  addLabel?: string
+  count?: number
+  total?: number
+  change?: (name: string, delta: number) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Chip({
+  name = "Пион",
+  color,
+  price = 390,
+  days = 6,
+  stemLine = "{price}/шт · стоит {n} {days}",
+  currency = "₽",
+  dayUnits = ["день", "дня", "дней"],
+  removeLabel = "Убрать: {name}",
+  maxStems = 24,
+  addLabel = "Добавить: {name}",
+  count = 0,
+  total = 0,
+  change,
+  accent,
+  className,
+  style,
+  ...props
+}: ChipProps) {
+  const palette = {
+    ["--vibeui-flowers-002-c" as string]: color ?? "var(--vibeui-flowers-002-accent)",
+    ...(accent ? { "--vibeui-flowers-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props} data-on={count > 0}
+        className={className}
+        style={palette}
+      >
+        <i data-part="swatch" aria-hidden="true" />
+        <div>
+          <h3>{name}</h3>
+          <p>
+            {stemLine.replace("{price}", `${price} ${currency}`).replace("{n}", String(days)).replace("{days}", daysWord(days, dayUnits))}
+          </p>
+        </div>
+        <div data-part="count">
+          <button type="button" onClick={() => change?.(name, -1)} disabled={count === 0} aria-label={removeLabel.replace("{name}", name)}>
+            −
+          </button>
+          <output aria-label={`${name}: ${count}`}>{count}</output>
+          <button type="button" onClick={() => change?.(name, 1)} disabled={total >= maxStems} aria-label={addLabel.replace("{name}", name)}>
+            +
+          </button>
+        </div>
+      </li>
   )
 }
 
@@ -329,7 +411,7 @@ export function Flowers002({
                 {flowers.map((flower) => {
                   const count = counts[flower.name] ?? 0
                   return (
-                    <Card086 key={flower.name} data-part="chip" name={flower.name} color={flower.color} price={flower.price} days={flower.days} stemLine={stemLine} currency={currency} dayUnits={dayUnits} removeLabel={removeLabel} maxStems={maxStems} addLabel={addLabel} count={count} total={total} change={change} accent={accent} />
+                    <Chip key={flower.name} data-part="chip" name={flower.name} color={flower.color} price={flower.price} days={flower.days} stemLine={stemLine} currency={currency} dayUnits={dayUnits} removeLabel={removeLabel} maxStems={maxStems} addLabel={addLabel} count={count} total={total} change={change} accent={accent} />
                   )
                 })}
               </ul>

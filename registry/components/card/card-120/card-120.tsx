@@ -47,12 +47,12 @@ const STYLES = `
 /** Карточка площадки с цветной рамкой: название, адрес, факты и ссылка. */
 export function Card120({
   name = "Главная сцена",
-  href,
-  text,
+  href = "#",
+  text = "Кадр площадки",
   facts = [],
   tags = [],
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   accent,
   className,
   style,

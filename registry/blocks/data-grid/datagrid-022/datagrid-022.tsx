@@ -1,7 +1,6 @@
 "use client"
 
 import { useId, useState } from "react"
-import { Card170 } from "@/registry/components/card/card-170/card-170"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid022Row = {
@@ -103,6 +102,16 @@ margin:0.25rem 0 0.1875rem;font-size:0.6875rem;line-height:1.3;color:transparent
 }
 [data-vibeui-block="datagrid-022"] [data-align="end"] [data-part="input"]{text-align:right;font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-022"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-022"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
+padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-022-border);}
+[data-vibeui-block="datagrid-022"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-022"] [data-part="bar"] [data-part="status"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-022-muted)}
+[data-vibeui-block="datagrid-022"] [data-part="bar"] [data-part="status"][data-bad="true"]{color:var(--vibeui-datagrid-022-bad);font-weight:600}
+[data-vibeui-block="datagrid-022"] [data-part="bar"] [data-part="save"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
+padding:0.375rem 0.75rem;border-radius:0.5rem;border:1px solid transparent;
+background:var(--vibeui-datagrid-022-accent);color:oklch(from var(--vibeui-datagrid-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="datagrid-022"] [data-part="bar"] [data-part="save"]:disabled{opacity:.4;cursor:not-allowed}
+[data-vibeui-block="datagrid-022"] [data-part="bar"] [data-part="save"]:focus-visible{outline:2px solid var(--vibeui-datagrid-022-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid022Row[] = [
@@ -178,6 +187,70 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с валидацией ячейки на месте: ошибка стоит под значением,
  * поле помечено aria-invalid, сохранение заблокировано. Один файл.
  */
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  errorsTemplate?: string
+  savedText?: string
+  okText?: string
+  saveText?: string
+  problems?: readonly unknown[]
+  saved?: boolean
+  setSaved?: (value: boolean) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Табель за март",
+  errorsTemplate = "Ошибок в ячейках: {count}",
+  savedText = "Табель сохранён",
+  okText = "Ошибок нет",
+  saveText = "Сохранить табель",
+  problems = [],
+  saved = false,
+  setSaved = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-022-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p
+          data-part="status"
+          data-bad={problems.length > 0 ? "true" : undefined}
+          role="status"
+          aria-live="polite"
+        >
+          {problems.length > 0
+            ? errorsTemplate.replace("{count}", String(problems.length))
+            : saved
+              ? savedText
+              : okText}
+        </p>
+        <button
+          type="button"
+          data-part="save"
+          disabled={problems.length > 0}
+          onClick={() => setSaved(true)}
+        >
+          {saveText}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid022({
   rows = DEFAULT_ROWS,
   caption = "Ошибка показывается в той же ячейке, где стоит значение",
@@ -313,7 +386,7 @@ export function Datagrid022({
         className={className}
         style={palette}
       >
-        <Card170 data-part="bar" heading={heading} errorsTemplate={errorsTemplate} savedText={savedText} okText={okText} saveText={saveText} problems={problems} saved={saved} setSaved={setSaved} accent={accent} />
+        <Bar data-part="bar" heading={heading} errorsTemplate={errorsTemplate} savedText={savedText} okText={okText} saveText={saveText} problems={problems} saved={saved} setSaved={setSaved} accent={accent} />
         <div
           data-part="scroll"
           role="region"

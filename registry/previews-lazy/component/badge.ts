@@ -99,29 +99,8 @@ export const PREVIEWS = {
   "kbd-006": dynamic(() =>
     import("@/registry/components/badge/kbd-006/kbd-006").then((module) => module.Kbd006),
   ),
-  "badge-026": dynamic(() =>
-    import("@/registry/components/badge/badge-026/badge-026").then((module) => module.Badge026),
-  ),
-  "badge-027": dynamic(() =>
-    import("@/registry/components/badge/badge-027/badge-027").then((module) => module.Badge027),
-  ),
-  "badge-028": dynamic(() =>
-    import("@/registry/components/badge/badge-028/badge-028").then((module) => module.Badge028),
-  ),
-  "badge-029": dynamic(() =>
-    import("@/registry/components/badge/badge-029/badge-029").then((module) => module.Badge029),
-  ),
-  "badge-030": dynamic(() =>
-    import("@/registry/components/badge/badge-030/badge-030").then((module) => module.Badge030),
-  ),
-  "badge-031": dynamic(() =>
-    import("@/registry/components/badge/badge-031/badge-031").then((module) => module.Badge031),
-  ),
   "badge-032": dynamic(() =>
     import("@/registry/components/badge/badge-032/badge-032").then((module) => module.Badge032),
-  ),
-  "badge-033": dynamic(() =>
-    import("@/registry/components/badge/badge-033/badge-033").then((module) => module.Badge033),
   ),
   "badge-034": dynamic(() =>
     import("@/registry/components/badge/badge-034/badge-034").then((module) => module.Badge034),

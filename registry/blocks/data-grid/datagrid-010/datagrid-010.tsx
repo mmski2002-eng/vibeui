@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card160 } from "@/registry/components/card/card-160/card-160"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid010Row = {
@@ -113,6 +112,13 @@ border-color:transparent;background:var(--vibeui-datagrid-010-accent);color:oklc
 [data-vibeui-block="datagrid-010"] [data-part="pages"] button:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-010"] [data-part="pages"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-010-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-010"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-010"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-010-border);}
+[data-vibeui-block="datagrid-010"] [data-part="head"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-010"] [data-part="head"] select{font:inherit;font-size:0.75rem;color:var(--vibeui-datagrid-010-fg);
+padding:0.25rem 0.5rem;border-radius:0.375rem;
+border:1px solid var(--vibeui-datagrid-010-border);background:var(--vibeui-datagrid-010-field);}
+[data-vibeui-block="datagrid-010"] [data-part="head"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-010-accent);outline-offset:1px}
 `
 
 const NAMES = [
@@ -186,6 +192,62 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с пагинацией и выбором размера страницы: диапазон записей,
  * номера страниц с aria-current и навигация в nav. Один файл.
  */
+const SIZES = [5, 10, 20]
+
+type HeadProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  pageSizeLabel?: string
+  setPage?: (value: number) => void
+  setSize?: (value: number) => void
+  size?: number
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Head({
+  heading = "Участники",
+  pageSizeLabel = "Строк на странице",
+  setPage = () => {},
+  setSize = () => {},
+  size,
+  accent,
+  className,
+  style,
+  ...props
+}: HeadProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-010-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <label>
+          {pageSizeLabel}
+          <select
+            value={size}
+            onChange={(event) => {
+              setSize(Number(event.target.value))
+              setPage(1)
+            }}
+          >
+            {SIZES.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+  )
+}
+
 export function Datagrid010({
   rows = DEFAULT_ROWS,
   caption = "Список участников программы",
@@ -238,7 +300,7 @@ export function Datagrid010({
         className={className}
         style={palette}
       >
-        <Card160 data-part="head" heading={heading} pageSizeLabel={pageSizeLabel} setPage={setPage} setSize={setSize} size={size} accent={accent} />
+        <Head data-part="head" heading={heading} pageSizeLabel={pageSizeLabel} setPage={setPage} setSize={setSize} size={size} accent={accent} />
         <div
           data-part="scroll"
           role="region"

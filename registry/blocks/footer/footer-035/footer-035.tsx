@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Sociallinks003 } from "@/registry/components/navigation/sociallinks-003/sociallinks-003"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer035Link = {
   label: string
@@ -86,7 +85,50 @@ container-type:inline-size;
 [data-vibeui-block="footer-035"] a:focus-visible{outline:2px solid var(--vibeui-footer-035-accent);outline-offset:3px}
 @container (min-width: 60rem){
 [data-vibeui-block="footer-035"] [data-part="socials"]{margin-left:0}[data-vibeui-block="footer-035"] [data-part="top"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}[data-vibeui-block="footer-035"] [data-part="contacts"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="footer-035"] [data-part="copy"]{flex-basis:auto;margin-left:auto}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-035"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-035"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-035"] [data-part="socials"]{margin-left:auto}
+`
+
+export type SocialsLink = {
+  label: string
+  href: string
+}
+
+type SocialsProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  socialsLabel?: string
+  socials?: readonly SocialsLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Socials({
+  socialsLabel = "Соцсети",
+  socials = [ { label: "Telegram", href: "https://t.me/" }, { label: "Instagram", href: "https://instagram.com/" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: SocialsProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-035-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props} aria-label={socialsLabel}
+        className={className}
+        style={palette}
+      >
+        {socials.map((link) => (
+          <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+            {link.label}
+          </a>
+        ))}
+      </nav>
+  )
+}
 
 /** Подвал с контактами, картой и огромным контурным именем. */
 export function Footer035({
@@ -197,7 +239,7 @@ export function Footer035({
               ))}
             </nav>
             {socials.length > 0 ? (
-              <Sociallinks003 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
+              <Socials data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
             ) : null}
             <p data-part="copy">{copyright}</p>
           </div>

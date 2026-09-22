@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks008 } from "@/registry/components/navigation/footerlinks-008/footerlinks-008"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer033Link = {
   label: string
@@ -77,13 +76,62 @@ container-type:inline-size;
 [data-vibeui-block="footer-033"] [data-part="bottom"] p{margin:0}
 @container (min-width: 40rem){[data-vibeui-block="footer-033"] [data-part="cols"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="footer-033"] [data-part="top"]{grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:4rem}[data-vibeui-block="footer-033"] [data-part="cols"]{grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.3fr)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-033"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-033"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-033"] [data-part="col"] h3{margin:0 0 .9rem;font-family:var(--vibeui-footer-033-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-footer-033-accent)}
+[data-vibeui-block="footer-033"] [data-part="col"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+[data-vibeui-block="footer-033"] [data-part="col"] a{color:var(--vibeui-footer-033-fg);text-decoration:none;opacity:.8;transition:opacity .2s,color .2s}
+[data-vibeui-block="footer-033"] [data-part="col"] a:hover{opacity:1;color:var(--vibeui-footer-033-accent)}
+`
 
 const DEFAULT_COLUMNS: Footer033Column[] = [
   { title: "Услуги", links: [{ label: "Керамика", href: "#services" }, { label: "Плёнка PPF", href: "#services" }, { label: "Полировка", href: "#services" }, { label: "Химчистка", href: "#services" }] },
   { title: "Студия", links: [{ label: "До / после", href: "#results" }, { label: "Как проходит", href: "#process" }, { label: "Мастера", href: "#team" }, { label: "Отзывы", href: "#reviews" }] },
   { title: "Клиентам", links: [{ label: "Записаться", href: "#booking" }, { label: "Гарантия", href: "#" }, { label: "Памятка по уходу", href: "#" }, { label: "Подарочный сертификат", href: "#" }] },
 ]
+
+export type ColLink = {
+  label: string
+  href: string
+}
+
+type ColProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  title?: string
+  links?: readonly ColLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Col({
+  title = "Услуги",
+  links = [{ label: "Керамика", href: "#services" }, { label: "Плёнка PPF", href: "#services" }, { label: "Полировка", href: "#services" }, { label: "Химчистка", href: "#services" }],
+  accent,
+  className,
+  style,
+  ...props
+}: ColProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-033-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props} aria-label={title}
+        className={className}
+        style={palette}
+      >
+        <h3>{title}</h3>
+        <ul>
+          {links.map((link) => (
+            <li key={link.label}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+  )
+}
 
 /** Подвал автосервиса с огромным контурным словом-маркой. */
 export function Footer033({
@@ -133,7 +181,7 @@ export function Footer033({
             </div>
             <div data-part="cols">
               {columns.map((column) => (
-                <Footerlinks008 key={column.title} data-part="col" title={column.title} links={column.links} accent={accent} />
+                <Col key={column.title} data-part="col" title={column.title} links={column.links} accent={accent} />
               ))}
               <div data-part="col">
                 <h3>{contactsTitle}</h3>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
-import { Button080 } from "@/registry/components/button/button-080/button-080"
+import type { ComponentProps } from "react"
 
 export type Delivery003Zone = {
   id: string
@@ -121,7 +121,11 @@ container-type:inline-size;
 @keyframes vibeui-delivery-003-ring{0%{transform:scale(.2);opacity:.8}100%{transform:scale(1);opacity:0}}
 @keyframes vibeui-delivery-003-pop{from{transform:translateY(8px);opacity:0}}
 @container (min-width: 52rem){[data-vibeui-block="delivery-003"] [data-part="layout"]{grid-template-columns:minmax(0,1.5fr) minmax(16rem,1fr)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="delivery-003"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="delivery-003"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="delivery-003"] [data-part="zone"]{display:inline-flex;align-items:center;gap:.4rem;height:1.9rem;padding:0 .7rem 0 .5rem;border-radius:999px;border:0;background:color-mix(in oklab,var(--vibeui-delivery-003-bg) 85%,transparent);backdrop-filter:blur(8px);color:var(--vibeui-delivery-003-fg);font:inherit;font-size:.72rem;font-weight:600;cursor:pointer}
+[data-vibeui-block="delivery-003"] [data-part="zone"]::before{content:"";width:.7rem;height:.7rem;border-radius:.2rem;background:var(--vibeui-delivery-003-accent);opacity:var(--vibeui-delivery-003-o)}
+[data-vibeui-block="delivery-003"] [data-part="zone"][aria-pressed="true"]{outline:1.5px solid var(--vibeui-delivery-003-fg)}
+`
 
 const DEFAULT_ZONES: Delivery003Zone[] = [
   { id: "near", name: "Центр — до 3 км", minutes: 25, fee: 0, freeFrom: 0 },
@@ -186,6 +190,38 @@ const RIVER_PATH = (() => {
 
 function formatMoney(value: number, currency: string) {
   return `${String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ${currency}`
+}
+
+type ZoneProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  minutes?: number
+  minutesUnit?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Zone({
+  minutes = 25,
+  minutesUnit = "мин",
+  accent,
+  className,
+  style,
+  ...props
+}: ZoneProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-delivery-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props} type="button"
+        className={className}
+        style={palette}
+      >
+        {minutes} {minutesUnit}
+      </button>
+  )
 }
 
 /** Карта зон доставки: клик по кварталу или чип адреса → время и цена. */
@@ -309,7 +345,7 @@ export function Delivery003({
               <ul data-part="legend" aria-label={legendLabel}>
                 {zones.map((item, index) => (
                   <li key={item.id}>
-                    <Button080 data-part="zone" minutes={item.minutes} minutesUnit={minutesUnit} aria-pressed={zoneIndex === index} style={{ ["--vibeui-delivery-003-o" as string]: opacities[index] ?? 0.2 } as CSSProperties} onClick={() => choose(index, null)} accent={accent} />
+                    <Zone data-part="zone" minutes={item.minutes} minutesUnit={minutesUnit} aria-pressed={zoneIndex === index} style={{ ["--vibeui-delivery-003-o" as string]: opacities[index] ?? 0.2 } as CSSProperties} onClick={() => choose(index, null)} accent={accent} />
                   </li>
                 ))}
               </ul>

@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Button105 } from "@/registry/components/button/button-105/button-105"
-import type { CSSProperties } from "react"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Navbar005Link = {
   label: string
@@ -210,6 +209,13 @@ outline:2px solid var(--vibeui-navbar-005-accent);outline-offset:3px;
 [data-vibeui-block="navbar-005"] [data-part="search"]{order:0;flex:1 1 auto;max-width:38rem;margin:0 auto}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-005"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="navbar-005"] [data-part="iconlink"]{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:0.1875rem;
+min-width:3.25rem;padding:0.4375rem 0.5rem;border-radius:0.75rem;
+color:var(--vibeui-navbar-005-ink);text-decoration:none;
+font-size:0.6875rem;font-weight:530;
+transition:background-color var(--vibeui-navbar-005-dur-2) ease,color var(--vibeui-navbar-005-dur-1) ease;}
+[data-vibeui-block="navbar-005"] [data-part="iconlink"]:hover{background:var(--vibeui-navbar-005-hover);color:var(--vibeui-navbar-005-accent);}
+[data-vibeui-block="navbar-005"] [data-part="iconlink"] svg{width:1.375rem;height:1.375rem}
 `
 
 const DEFAULT_CATALOG: Navbar005Link[] = [
@@ -241,23 +247,49 @@ function SearchIcon({ part }: { part?: string }) {
   )
 }
 
-
-function BagIcon() {
+function HeartIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
-        d="M5 8h14l-1 12H6L5 8Z"
+        d="M12 20.5S4 15.5 4 9.9C4 7.2 6.1 5 8.7 5c1.4 0 2.6.6 3.3 1.7C12.7 5.6 14 5 15.3 5 17.9 5 20 7.2 20 9.9c0 5.6-8 10.6-8 10.6Z"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinejoin="round"
       />
-      <path
-        d="M9 10V6.5A3 3 0 0 1 12 3.5a3 3 0 0 1 3 3V10"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
     </svg>
+  )
+}
+
+type IconlinkProps = Omit<ComponentProps<"a">, "title" | "children"> & {
+  favoritesHref?: string
+  favoritesLabel?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Iconlink({
+  favoritesHref = "#favorites",
+  favoritesLabel = "Избранное",
+  accent,
+  className,
+  style,
+  ...props
+}: IconlinkProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-navbar-005-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <a
+        {...props} href={favoritesHref}
+        className={className}
+        style={palette}
+      >
+        <HeartIcon />
+        {favoritesLabel}
+      </a>
   )
 }
 
@@ -375,8 +407,8 @@ export function Navbar005({
           </form>
 
           <div data-part="actions">
-            <Button105 data-part="iconlink" favoritesHref={favoritesHref} favoritesLabel={favoritesLabel} accent={accent} />
-            <Button105 data-part="iconlink" favoritesHref={favoritesHref} favoritesLabel={favoritesLabel} accent={accent} />
+            <Iconlink data-part="iconlink" favoritesHref={favoritesHref} favoritesLabel={favoritesLabel} accent={accent} />
+            <Iconlink data-part="iconlink" favoritesHref={favoritesHref} favoritesLabel={favoritesLabel} accent={accent} />
           </div>
         </div>
       </header>

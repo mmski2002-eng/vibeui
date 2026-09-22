@@ -44,7 +44,7 @@ const STYLES = `
 [data-vibeui-block="chart-031"] [data-part="dial"] svg{width:100%;height:100%;transform:rotate(135deg)}
 [data-vibeui-block="chart-031"] [data-part="dial"] circle{fill:none;stroke-width:7;stroke-linecap:round}
 [data-vibeui-block="chart-031"] [data-part="track"]{stroke:var(--vibeui-chart-031-panel-line)}
-[data-vibeui-block="chart-031"] [data-part="fill"]{stroke:var(--vibeui-chart-031-accent);stroke-dashoffset:var(--vibeui-chart-031-full);transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1)}
+[data-vibeui-block="chart-031"] [data-part="fill"]{stroke:var(--vibeui-chart-031-accent);stroke-dashoffset:var(--vibeui-chart-031-off,var(--vibeui-chart-031-full));transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1)}
 [data-vibeui-block="chart-031"] [data-part="value"]{position:absolute;inset:0;display:grid;place-content:center;font-family:var(--vibeui-chart-031-display);font-weight:900;font-size:clamp(1.3rem,2.6cqi,1.9rem);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 [data-vibeui-block="chart-031"] [data-part="value"] small{display:block;margin-top:.3rem;font-family:var(--vibeui-chart-031-mono);font-weight:400;font-size:.62rem;letter-spacing:.06em;color:var(--vibeui-chart-031-panel-muted)}
 [data-vibeui-block="chart-031"] [data-part="label"]{margin:0;font-weight:600;font-size:.92rem}
@@ -57,8 +57,8 @@ const STYLES = `
 export function Chart031({
   label = "Яркость",
   value = 1200,
-  unit,
-  previousLabel,
+  unit = "Датчик-дуга",
+  previousLabel = "Датчик-дуга",
   previous,
   wasLabel = "было",
   t = 1,

@@ -55,8 +55,8 @@ const STYLES = `
 /** Кнопка-конверт: карман, клапан, печать, штамп с фото, адрес получателя и подпись «открыть». */
 export function Card081({
   name = "Нина Петровна",
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   meta = "84 года · Ржев",
   openLabel = "Открыть письмо",
   stampLines = ["почта", "России"],

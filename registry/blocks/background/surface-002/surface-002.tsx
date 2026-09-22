@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react"
-import { Mockup012 } from "@/registry/components/mockup/mockup-012/mockup-012"
+import type { ComponentProps } from "react"
 
 export type Surface002Props = {
   /** Контент поверх фона. Без него блок показывает демонстрационный пример. */
@@ -72,7 +72,59 @@ padding:2.5rem clamp(1.5rem,6cqi,4rem);display:flex;flex-direction:column;
 [data-vibeui-block="surface-002"] [data-part="frame"]{padding-block:3.5rem;min-height:34rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="surface-002"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="surface-002"] [data-part="ghost"]{display:flex;flex-direction:column;gap:1.75rem;flex:1;justify-content:center;}
+[data-vibeui-block="surface-002"] [data-part="ghost"] [data-part="head"]{display:flex;align-items:center;gap:0.875rem}
+[data-vibeui-block="surface-002"] [data-part="ghost"] [data-part="mark"]{width:1.5rem;height:1.5rem;flex:none;border-radius:0.375rem;
+background:var(--vibeui-surface-002-accent);color:oklch(from var(--vibeui-surface-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="surface-002"] [data-part="ghost"] [data-part="head"] span:not([data-part]){width:4rem;height:0.5rem;border-radius:999px;background:var(--vibeui-surface-002-ghost);}
+[data-vibeui-block="surface-002"] [data-part="ghost"] [data-part="works"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;}
+[data-vibeui-block="surface-002"] [data-part="ghost"] [data-part="works"] span{height:7rem;border-radius:0.75rem;background:var(--vibeui-surface-002-ghost-soft);
+border:1px solid var(--vibeui-surface-002-line);}
+[data-vibeui-block="surface-002"] [data-part="ghost"] [data-part="works"] span:first-child{border-color:color-mix(in oklab,var(--vibeui-surface-002-accent) 45%,transparent);}
+@container (min-width: 48rem){
+[data-vibeui-block="surface-002"] [data-part="ghost"] [data-part="works"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 `
+
+type GhostProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Ghost({
+  accent,
+  className,
+  style,
+  ...props
+}: GhostProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-surface-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props} aria-hidden="true"
+        className={className}
+        style={palette}
+      >
+        <div data-part="head">
+          <span data-part="mark" />
+          <span />
+          <span />
+        </div>
+        <div data-part="works">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+  )
+}
 
 /** Графитовый фон с тёплым светом, следующим за курсором. Статичен на touch. */
 export function Surface002({
@@ -129,7 +181,7 @@ export function Surface002({
         <div data-part="texture" aria-hidden="true" />
         <div data-part="frame">
           {children ?? (
-            <Mockup012 data-part="ghost"  accent={accent} />
+            <Ghost data-part="ghost"  accent={accent} />
           )}
         </div>
       </section>

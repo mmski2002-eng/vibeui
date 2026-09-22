@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState, type CSSProperties, type PointerEvent } from "react"
-import { Button083 } from "@/registry/components/button/button-083/button-083"
+import type { ComponentProps } from "react"
 
 export type Auto002Pair = {
   /** Подпись вкладки: «Фары», «Кузов», «Салон». */
@@ -85,13 +85,47 @@ container-type:inline-size;
 [data-vibeui-block="auto-002"] [data-part="range"]{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;pointer-events:none;-webkit-appearance:none;appearance:none}
 [data-vibeui-block="auto-002"] [data-part="compare"]:has([data-part="range"]:focus-visible){outline:2px solid var(--vibeui-auto-002-accent);outline-offset:3px}
 @container (min-width: 60rem){[data-vibeui-block="auto-002"] [data-part="shell"]{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:3rem;align-items:center}[data-vibeui-block="auto-002"] [data-part="compare"]{aspect-ratio:3/2}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="auto-002"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="auto-002"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="auto-002"] [data-part="tab"]{padding:.6rem 1.1rem;border-radius:999px;border:0;background:transparent;color:var(--vibeui-auto-002-muted);font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;transition:background .25s,color .25s}
+[data-vibeui-block="auto-002"] [data-part="tab"][aria-selected="true"]{background:var(--vibeui-auto-002-accent);color:var(--vibeui-auto-002-on-accent)}
+[data-vibeui-block="auto-002"] [data-part="tab"]:focus-visible{outline:2px solid var(--vibeui-auto-002-accent);outline-offset:2px}
+`
 
 const DEFAULT_PAIRS: Auto002Pair[] = [
   { label: "Фары", before: "/demo/auto/before-lights.webp", after: "/demo/auto/after-lights.webp", work: "Сняли желтизну и паутинку в три абразива, сверху — бронирующая плёнка 200 мкм.", time: "2 часа" },
   { label: "Кузов", before: "/demo/auto/before-body.webp", after: "/demo/auto/after-body.webp", work: "Двухэтапная полировка и керамика 9H в три слоя. Чёрный снова глубокий, без голограмм.", time: "2 дня" },
   { label: "Салон", before: "/demo/auto/before-interior.webp", after: "/demo/auto/after-interior.webp", work: "Химчистка потолка, сидений и ковров, кожа — чистка и кондиционер. Пахнет новой машиной.", time: "5 часов" },
 ]
+
+type TabProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  label?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Tab({
+  label = "Фары",
+  accent,
+  className,
+  style,
+  ...props
+}: TabProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-auto-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props} type="button" role="tab"
+        className={className}
+        style={palette}
+      >
+        {label}
+      </button>
+  )
+}
 
 /** До/после: слайдер сравнения с перетаскиванием и вкладками «фары / кузов / салон». */
 export function Auto002({
@@ -161,7 +195,7 @@ export function Auto002({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="tabs" role="tablist" aria-label={tabsLabel}>
               {pairs.map((pair, index) => (
-                <Button083 key={pair.label} data-part="tab" label={pair.label} aria-selected={tab === index} onClick={() => pick(index)} accent={accent} />
+                <Tab key={pair.label} data-part="tab" label={pair.label} aria-selected={tab === index} onClick={() => pick(index)} accent={accent} />
               ))}
             </div>
             {current ? (

@@ -77,8 +77,8 @@ export function Accordion020({
   group = "vibeui-accordion-020",
   defaultOpen = -1,
   accent,
-  ink,
-  background,
+  ink = "Аккордеон с римскими номер…",
+  background = "Аккордеон с римскими номер…",
   className,
   style,
   ...props

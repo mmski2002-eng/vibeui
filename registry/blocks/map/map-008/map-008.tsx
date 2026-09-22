@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Card139 } from "@/registry/components/card/card-139/card-139"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Map008Point = {
   /** Код точки на карте: «HAV», «CYO». */
@@ -86,7 +85,48 @@ container-type:inline-size;
 [data-vibeui-block="map-008"] [data-part="grid"]{grid-template-columns:minmax(0,1.3fr) minmax(18rem,.7fr);gap:2.5rem}
 [data-vibeui-block="map-008"] [data-part="map"]{min-height:30rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="map-008"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="map-008"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="map-008"] [data-part="point"]{display:grid;grid-template-columns:3.2rem minmax(0,1fr);gap:.1rem .9rem;padding:.8rem .9rem;border-radius:.7rem;background:var(--vibeui-map-008-paper)}
+[data-vibeui-block="map-008"] [data-part="point"] b{grid-row:1 / span 2;align-self:center;font-family:var(--vibeui-map-008-display);font-size:1.15rem;font-weight:700;letter-spacing:.08em;color:var(--vibeui-map-008-sea)}
+[data-vibeui-block="map-008"] [data-part="point"] h3{margin:0;font-family:var(--vibeui-map-008-display);font-size:1.05rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+[data-vibeui-block="map-008"] [data-part="point"] p{margin:0;font-size:.88rem;color:var(--vibeui-map-008-muted)}
+`
+
+type PointProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  code?: string
+  title?: string
+  text?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Point({
+  code = "CYO",
+  title = "Отель на Кайо-Ларго",
+  text = "Бунгало у воды, все номера наши на две ночи",
+  accent,
+  className,
+  style,
+  ...props
+}: PointProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-map-008-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <b>{code}</b>
+        <h3>{title}</h3>
+        <p>{text}</p>
+      </li>
+  )
+}
 
 /** «Где всё будет» для свадьбы за границей: Яндекс Карта с отелем, пляжем и аэропортом, фото отеля на скотче, точки с кодами и трансфер. */
 export function Map008({
@@ -153,7 +193,7 @@ export function Map008({
               ) : null}
               <ul data-part="points">
                 {points.map((point) => (
-                  <Card139 key={point.code} data-part="point" code={point.code} title={point.title} text={point.text} accent={accent} />
+                  <Point key={point.code} data-part="point" code={point.code} title={point.title} text={point.text} accent={accent} />
                 ))}
               </ul>
               <a data-part="open" href={openHref} target="_blank" rel="noopener noreferrer">

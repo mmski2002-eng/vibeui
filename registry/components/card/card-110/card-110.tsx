@@ -89,9 +89,9 @@ const STYLES = `
 export function Card110({
   name = "Марина",
   no = "0412",
-  time,
+  time = "Чек-отзыв",
   lines = ["Тартин ещё тёплый,", "корка хрустит на весь", "трамвай. Соседи смотрели."],
-  sum,
+  sum = "Чек-отзыв",
   reviewLabel = "Отзыв: {name}",
   brand = "Корка",
   place = "Хамовники",

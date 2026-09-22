@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties, type FormEvent, type ReactNode } from "react"
-import { Button095 } from "@/registry/components/button/button-095/button-095"
+import type { ComponentProps } from "react"
 
 export type Api001Place = {
   /** Подстроки, по которым узнаётся запрос (в нижнем регистре). */
@@ -124,7 +124,10 @@ container-type:inline-size;
 @keyframes vibeui-api-001-ping{from{transform:scale(.3);opacity:1}to{transform:scale(2.6);opacity:0}}
 @container (min-width: 40rem){[data-vibeui-block="api-001"] [data-part="form"]{grid-template-columns:1fr auto;align-items:center}[data-vibeui-block="api-001"] [data-part="meta"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @container (min-width: 60rem){[data-vibeui-block="api-001"] [data-part="lab"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:1.25rem;gap:1.25rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="api-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="api-001"] [data-part="response"] [data-part="line"]{opacity:1;transform:none}[data-vibeui-block="api-001"] [data-part="ping"]{display:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="api-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="api-001"] [data-part="response"] [data-part="line"]{opacity:1;transform:none}[data-vibeui-block="api-001"] [data-part="ping"]{display:none}}
+[data-vibeui-block="api-001"] [data-part="suggestion"]{padding:.3rem .65rem;border:1px solid var(--vibeui-api-001-line);border-radius:999px;background:transparent;color:var(--vibeui-api-001-muted);font-family:var(--vibeui-api-001-mono);font-size:.7rem;cursor:pointer;transition:color .2s,border-color .2s}
+[data-vibeui-block="api-001"] [data-part="suggestion"]:hover{color:var(--vibeui-api-001-fg);border-color:var(--vibeui-api-001-fg)}
+`
 
 const DEFAULT_PLACES: Api001Place[] = [
   { keys: ["тверская"], address: "Россия, Москва, Тверская улица, 7", city: "Москва", lat: 55.759853, lon: 37.610127, x: 50, y: 48, precision: "house", latency: 38 },
@@ -166,6 +169,36 @@ function highlight(line: string) {
 
 function formatNumber(value: number) {
   return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+}
+
+type SuggestionProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  item?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Suggestion({
+  item,
+  accent,
+  className,
+  style,
+  ...props
+}: SuggestionProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-api-001-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props} type="button"
+        className={className}
+        style={palette}
+      >
+        {item}
+      </button>
+  )
 }
 
 /** Песочница геокодера: адрес → точка на CSS-карте и JSON-ответ. */
@@ -277,7 +310,7 @@ export function Api001({
                 <ul data-part="chips" aria-label={chipsLabel}>
                   {suggestions.map((item) => (
                     <li key={item}>
-                      <Button095 data-part="suggestion" item={item} onClick={() => pick(item)} accent={accent} />
+                      <Suggestion data-part="suggestion" item={item} onClick={() => pick(item)} accent={accent} />
                     </li>
                   ))}
                 </ul>

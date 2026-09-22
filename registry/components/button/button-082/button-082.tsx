@@ -80,7 +80,7 @@ const STYLES = `
 
 /** Кнопка-заголовок аккордеона: иконка, название и плюс, раскрытие через aria-expanded. */
 export function Button082({
-  icon,
+  icon = "scissors",
   title = "Подрежьте стебли наискосок",
   accent,
   className,

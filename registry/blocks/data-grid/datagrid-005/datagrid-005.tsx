@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card155 } from "@/registry/components/card/card-155/card-155"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid005Row = {
@@ -120,6 +119,19 @@ background:var(--vibeui-datagrid-005-field);
 [data-vibeui-block="datagrid-005"] input:focus{outline:none}
 [data-vibeui-block="datagrid-005"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-005"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-005"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-005-border);}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] [data-part="bar-text"]{margin-inline-end:auto}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] [data-part="hint"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-005-muted);}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] [data-part="status"]{margin:0;font-size:0.75rem;font-weight:600;color:var(--vibeui-datagrid-005-accent);}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] button{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
+padding:0.375rem 0.75rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-005-border);
+background:var(--vibeui-datagrid-005-field);color:var(--vibeui-datagrid-005-fg);}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] button[data-tone="primary"]{border-color:transparent;background:var(--vibeui-datagrid-005-accent);color:oklch(from var(--vibeui-datagrid-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] button:disabled{opacity:.45;cursor:not-allowed}
+[data-vibeui-block="datagrid-005"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-005-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid005Row[] = [
@@ -177,6 +189,79 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с правкой ячейки на месте: Enter подтверждает, Escape отменяет,
  * изменённые ячейки помечены до сохранения. Один файл, ноль зависимостей.
  */
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  statusText?: string
+  hint?: string
+  cancelLabel?: string
+  saveLabel?: string
+  dirty?: readonly [string, string][]
+  save?: () => void
+  setEditing?: (value: string | null) => void
+  setEdits?: (value: Record<string, string>) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Прайс-лист",
+  statusText = "Не сохранено: {count}",
+  hint = "Цена и остаток редактируются",
+  cancelLabel = "Отменить",
+  saveLabel = "Сохранить",
+  dirty = [],
+  save = () => {},
+  setEditing = () => {},
+  setEdits = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-005-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <div data-part="bar-text">
+          <h3 data-part="title">{heading}</h3>
+          {dirty.length > 0 ? (
+            <p data-part="status" aria-live="polite">
+              {statusText.replace("{count}", String(dirty.length))}
+            </p>
+          ) : (
+            <p data-part="hint">{hint}</p>
+          )}
+        </div>
+        <button
+          type="button"
+          disabled={dirty.length === 0}
+          onClick={() => {
+            setEdits({})
+            setEditing(null)
+          }}
+        >
+          {cancelLabel}
+        </button>
+        <button
+          type="button"
+          data-tone="primary"
+          disabled={dirty.length === 0}
+          onClick={save}
+        >
+          {saveLabel}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid005({
   rows = DEFAULT_ROWS,
   caption = "Нажмите на ячейку или дойдите до неё табом и нажмите Enter",
@@ -267,7 +352,7 @@ export function Datagrid005({
         className={className}
         style={palette}
       >
-        <Card155 data-part="bar" heading={heading} statusText={statusText} hint={hint} cancelLabel={cancelLabel} saveLabel={saveLabel} dirty={dirty} save={save} setEditing={setEditing} setEdits={setEdits} accent={accent} />
+        <Bar data-part="bar" heading={heading} statusText={statusText} hint={hint} cancelLabel={cancelLabel} saveLabel={saveLabel} dirty={dirty} save={save} setEditing={setEditing} setEdits={setEdits} accent={accent} />
         <div
           data-part="scroll"
           role="region"

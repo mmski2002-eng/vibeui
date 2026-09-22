@@ -57,9 +57,9 @@ const STYLES = `
 export function Card121({
   time = "15:00",
   title = "Сбор гостей",
-  icon,
-  place,
-  text,
+  icon = "Шаг таймлайна дня",
+  place = "Шаг таймлайна дня",
+  text = "Шаг таймлайна дня",
   accent,
   className,
   style,

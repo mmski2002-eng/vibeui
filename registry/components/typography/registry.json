@@ -64,7 +64,7 @@
             "prop": "eyebrow",
             "label": "Надзаголовок",
             "type": "text",
-            "default": "",
+            "default": "Заголовок секции",
             "maxLength": 24
           },
           {
@@ -112,6 +112,27 @@
             "label": "Текст",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "titleAccent",
+            "label": "titleAccent",
+            "type": "text",
+            "default": "Заголовок секции",
+            "maxLength": 160
+          },
+          {
+            "prop": "lede",
+            "label": "lede",
+            "type": "text",
+            "default": "Заголовок секции",
+            "maxLength": 160
+          },
+          {
+            "prop": "display",
+            "label": "display",
+            "type": "text",
+            "default": "Заголовок секции",
+            "maxLength": 160
           }
         ],
         "i18n": {
@@ -163,6 +184,18 @@
               },
               "ink": {
                 "label": "Ink"
+              },
+              "titleAccent": {
+                "label": "titleAccent",
+                "default": "Заголовок секции"
+              },
+              "lede": {
+                "label": "lede",
+                "default": "Заголовок секции"
+              },
+              "display": {
+                "label": "display",
+                "default": "Заголовок секции"
               }
             },
             "preview": {
@@ -175,6 +208,9 @@
           }
         },
         "cardControls": [
+          "display",
+          "lede",
+          "titleAccent",
           "size",
           "align",
           "accent"
@@ -184,96 +220,6 @@
           "props": {
             "eyebrow": "Вопросы",
             "lede": "Если ответа здесь нет — напишите, мы отвечаем в течение рабочего дня."
-          }
-        }
-      }
-    },
-    {
-      "name": "word-001",
-      "type": "registry:component",
-      "title": "Слово заголовка",
-      "description": "Слово крупного заголовка с задержкой появления по номеру: оборачивает текст, анимацию задаёт блок через переменную.",
-      "categories": [
-        "typography"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "word-001/word-001.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/word-001.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока bakery-002 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-word-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "word",
-          "heading",
-          "reveal",
-          "typography",
-          "bakery"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Word001",
-          "usage": "<Word001  />",
-          "summary": "Слово крупного заголовка с задержкой появления по номеру: оборачивает текст, анимацию задаёт блок через переменную.",
-          "preserve": [
-            "локальную палитру --vibeui-word-001-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            " — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Heading word",
-            "description": "A display-heading word with a reveal delay by index: wraps the text, the block drives the animation through a variable.",
-            "docs": "Extracted from the bakery-002 block as is: one file, no dependencies, its own palette in the --vibeui-word-001-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "A display-heading word with a reveal delay by index: wraps the text, the block drives the animation through a variable.",
-              "usage": "<Word001  />",
-              "preserve": [
-                "the local --vibeui-word-001-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                " — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
-              }
-            }
           }
         }
       }
@@ -304,7 +250,6 @@
           "typography",
           "bakery"
         ],
-        "pro": true,
         "ai": {
           "export": "Counter001",
           "usage": "<Counter001  />",
@@ -369,196 +314,6 @@
       }
     },
     {
-      "name": "mark-001",
-      "type": "registry:component",
-      "title": "Маркер во фразе",
-      "description": "Выделенный фрагмент фразы-заявления: подложка-маркер и акцентный цвет текста.",
-      "categories": [
-        "typography"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "mark-001/mark-001.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/mark-001.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока about-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-mark-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "mark",
-          "highlight",
-          "phrase",
-          "typography",
-          "about"
-        ],
-        "ai": {
-          "export": "Mark001",
-          "usage": "<Mark001 text=\"Мы строим библиотеку, в которой \" />",
-          "summary": "Выделенный фрагмент фразы-заявления: подложка-маркер и акцентный цвет текста.",
-          "preserve": [
-            "локальную палитру --vibeui-mark-001-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "text — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "text",
-            "label": "text",
-            "type": "text",
-            "default": "Мы строим библиотеку, в которой ",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "text",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Phrase highlight",
-            "description": "Highlighted fragment of a statement: marker background and accent text colour.",
-            "docs": "Extracted from the about-001 block as is: one file, no dependencies, its own palette in the --vibeui-mark-001-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Highlighted fragment of a statement: marker background and accent text colour.",
-              "usage": "<Mark001 text=\"Мы строим библиотеку, в которой \" />",
-              "preserve": [
-                "the local --vibeui-mark-001-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "text — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "text": {
-                "label": "text",
-                "default": "Мы строим библиотеку, в которой "
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "underline-001",
-      "type": "registry:component",
-      "title": "Контакт-ссылка с подчёркиванием",
-      "description": "Подпись «связаться» с подчёркиванием в шапке-манифесте.",
-      "categories": [
-        "typography"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "underline-001/underline-001.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/underline-001.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока navbar-013 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-underline-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "contact",
-          "underline",
-          "header",
-          "typography",
-          "navbar"
-        ],
-        "ai": {
-          "export": "Underline001",
-          "usage": "<Underline001  />",
-          "summary": "Подпись «связаться» с подчёркиванием в шапке-манифесте.",
-          "preserve": [
-            "локальную палитру --vibeui-underline-001-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "contactLabel — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Underlined contact",
-            "description": "“Contact” caption with an underline in a manifesto header.",
-            "docs": "Extracted from the navbar-013 block as is: one file, no dependencies, its own palette in the --vibeui-underline-001-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "“Contact” caption with an underline in a manifesto header.",
-              "usage": "<Underline001  />",
-              "preserve": [
-                "the local --vibeui-underline-001-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "contactLabel — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "name": "cell-001",
       "type": "registry:component",
       "title": "Ячейка значения с подписью",
@@ -583,7 +338,6 @@
           "comparison",
           "typography"
         ],
-        "pro": true,
         "ai": {
           "export": "Cell001",
           "usage": "<Cell001 value=\"99,9 %\" />",
@@ -704,6 +458,27 @@
         },
         "controls": [
           {
+            "prop": "eyebrow",
+            "label": "eyebrow",
+            "type": "text",
+            "default": "Тетрадный лист",
+            "maxLength": 160
+          },
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Клетка, линейка или точки",
+            "maxLength": 160
+          },
+          {
+            "prop": "note",
+            "label": "note",
+            "type": "text",
+            "default": "Разлиновка из CSS-градиентов: ничего не грузит и не считает. Шаг, приглушение и крупная клетка — пропсами; содержимое кладётся поверх.",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -711,6 +486,9 @@
           }
         ],
         "cardControls": [
+          "note",
+          "title",
+          "eyebrow",
           "accent"
         ],
         "preview": {
@@ -741,6 +519,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "eyebrow": {
+                "label": "eyebrow",
+                "default": "Тетрадный лист"
+              },
+              "title": {
+                "label": "title",
+                "default": "Клетка, линейка или точки"
+              },
+              "note": {
+                "label": "note",
+                "default": "Разлиновка из CSS-градиентов: ничего не грузит и не считает. Шаг, приглушение и крупная клетка — пропсами; содержимое кладётся поверх."
               }
             }
           }

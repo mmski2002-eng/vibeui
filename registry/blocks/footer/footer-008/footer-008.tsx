@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks016 } from "@/registry/components/navigation/footerlinks-016/footerlinks-016"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Footer008Link = {
   label: string
@@ -97,6 +96,12 @@ transition:border-color var(--vibeui-footer-008-dur-2) ease,color var(--vibeui-f
 [data-vibeui-block="footer-008"] [data-part="bottom"]{grid-column:1 / -1}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-008"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-008"] [data-part="links"]{display:grid;gap:0.5rem;align-content:start;}
+[data-vibeui-block="footer-008"] [data-part="links"] a{color:var(--vibeui-footer-008-ink);text-decoration:none;font-size:0.875rem;
+border-bottom:1px solid var(--vibeui-footer-008-border);
+padding-bottom:0.4375rem;
+transition:color var(--vibeui-footer-008-dur-2) ease,border-color var(--vibeui-footer-008-dur-2) ease;}
+[data-vibeui-block="footer-008"] [data-part="links"] a:hover{color:var(--vibeui-footer-008-accent);border-color:var(--vibeui-footer-008-accent)}
 `
 
 const DEFAULT_LINKS: Footer008Link[] = [
@@ -133,6 +138,54 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+export type LinksLink = {
+  label: string
+  href: string
+}
+
+const LinksDEFAULT_LINKS: LinksLink[] = [
+  { label: "Пользовательское соглашение", href: "#terms" },
+  { label: "Политика обработки персональных данных", href: "#privacy" },
+  { label: "Согласие на рассылку", href: "#consent" },
+  { label: "Публичная оферта", href: "#offer" },
+]
+
+type LinksProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  legalLinksLabel?: string
+  legalLinks?: LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  legalLinksLabel = "Юридические документы",
+  legalLinks = LinksDEFAULT_LINKS,
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-008-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props} aria-label={legalLinksLabel}
+        className={className}
+        style={palette}
+      >
+        {legalLinks.map((link) => (
+          <a key={link.href} href={link.href}>
+            {link.label}
+          </a>
+        ))}
+      </nav>
+  )
 }
 
 /** Юридический подвал: реквизиты, обязательные ссылки, отзыв согласия cookie. */
@@ -183,7 +236,7 @@ export function Footer008({
               ))}
             </dl>
           </div>
-          <Footerlinks016 data-part="links" legalLinksLabel={legalLinksLabel} legalLinks={legalLinks} accent={accent} />
+          <Links data-part="links" legalLinksLabel={legalLinksLabel} legalLinks={legalLinks} accent={accent} />
           <p data-part="disclaimer">{disclaimer}</p>
           <div data-part="bottom">
             <span>{copyright}</span>

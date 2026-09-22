@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Mark001 } from "@/registry/components/typography/mark-001/mark-001"
+import type { CSSProperties, ComponentProps } from "react"
 
 type About001Segment = {
   text: string
@@ -66,6 +65,10 @@ background:var(--vibeui-about-001-accent);color:oklch(from var(--vibeui-about-00
 [data-vibeui-block="about-001"] [data-part="footnote"]{margin-top:2.5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="about-001"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="about-001"] [data-part="mark"]{color:var(--vibeui-about-001-accent);
+background:var(--vibeui-about-001-mark);
+border-radius:0.25em;padding:0 0.12em;
+-webkit-box-decoration-break:clone;box-decoration-break:clone;}
 `
 
 const DEFAULT_SEGMENTS: About001Segment[] = [
@@ -98,6 +101,36 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+type MarkProps = Omit<ComponentProps<"mark">, "title" | "children"> & {
+  text?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Mark({
+  text = "Мы строим библиотеку, в которой ",
+  accent,
+  className,
+  style,
+  ...props
+}: MarkProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-about-001-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <mark
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {text}
+      </mark>
+  )
 }
 
 /** Миссия крупным манифестом с оранжевыми маркерами на опорных словах. */
@@ -136,7 +169,7 @@ export function About001({
           <p data-part="statement">
             {segments.map((segment, index) =>
               segment.highlight ? (
-                <Mark001 key={index} data-part="mark" text={segment.text} accent={accent} />
+                <Mark key={index} data-part="mark" text={segment.text} accent={accent} />
               ) : (
                 <span key={index}>{segment.text}</span>
               ),

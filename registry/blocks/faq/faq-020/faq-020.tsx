@@ -67,8 +67,6 @@ container-type:inline-size;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-020"] *{animation:none!important;transition:none!important}}`
 
-const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
-
 /** Вопросы гостей свадьбы: аккордеон с римскими номерами, один открыт за раз, снизу «спросите организатора». */
 export function Faq020({
   eyebrow = "Вопросы",

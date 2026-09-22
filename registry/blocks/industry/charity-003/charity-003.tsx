@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
-import { Button078 } from "@/registry/components/button/button-078/button-078"
+import type { ComponentProps } from "react"
 
 export type Charity003Item = {
   label: string
@@ -107,7 +107,11 @@ container-type:inline-size;
 [data-vibeui-block="charity-003"] [data-part="report"]:hover{border-color:var(--vibeui-charity-003-accent)}
 @keyframes vibeui-charity-003-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @container (min-width: 56rem){[data-vibeui-block="charity-003"] [data-part="grid"]{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:4rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="charity-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="charity-003"] [data-part="seg"]{stroke-dasharray:var(--vibeui-charity-003-len) 100}[data-vibeui-block="charity-003"] [data-part="track"] i{transform:scaleX(1)}[data-vibeui-block="charity-003"] [data-part="stamp"]{transform:rotate(-14deg);opacity:.9}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="charity-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="charity-003"] [data-part="seg"]{stroke-dasharray:var(--vibeui-charity-003-len) 100}[data-vibeui-block="charity-003"] [data-part="track"] i{transform:scaleX(1)}[data-vibeui-block="charity-003"] [data-part="stamp"]{transform:rotate(-14deg);opacity:.9}}
+[data-vibeui-block="charity-003"] [data-part="year"]{padding:.55rem 1.1rem;border-radius:999px;border:1px solid var(--vibeui-charity-003-line);background:transparent;color:var(--vibeui-charity-003-fg);font:inherit;font-weight:600;font-variant-numeric:tabular-nums;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+[data-vibeui-block="charity-003"] [data-part="year"]:hover{border-color:var(--vibeui-charity-003-accent)}
+[data-vibeui-block="charity-003"] [data-part="year"][aria-pressed="true"]{background:var(--vibeui-charity-003-fg);border-color:var(--vibeui-charity-003-fg);color:var(--vibeui-charity-003-bg)}
+`
 
 const DEFAULT_YEARS: Charity003Year[] = [
   {
@@ -152,6 +156,36 @@ function formatShort(value: number, millionUnit: string, thousandUnit: string, d
   if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1).replace(".0", "").replace(".", decimalSeparator)} ${millionUnit}`
   if (value >= 1_000) return `${Math.round(value / 1_000)} ${thousandUnit}`
   return String(value)
+}
+
+type YearProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  year?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Year({
+  year = "2025",
+  accent,
+  className,
+  style,
+  ...props
+}: YearProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-charity-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props} type="button"
+        className={className}
+        style={palette}
+      >
+        {year}
+      </button>
+  )
 }
 
 /** Отчётность: кольцевая диаграмма по годам и штамп «0 % на рекламу». */
@@ -227,7 +261,7 @@ export function Charity003({
             <ul data-part="years" aria-label={yearsLabel}>
               {years.map((item, index) => (
                 <li key={item.year}>
-                  <Button078 data-part="year" year={item.year} aria-pressed={index === yearIndex} onClick={() => setYearIndex(index)} accent={accent} />
+                  <Year data-part="year" year={item.year} aria-pressed={index === yearIndex} onClick={() => setYearIndex(index)} accent={accent} />
                 </li>
               ))}
             </ul>

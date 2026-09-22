@@ -37,7 +37,7 @@ transition:border-color var(--vibeui-card-053-dur-2) ease;}
 /** Карточка участника для сетки «мы нанимаем»: аватар, имя, роль и одна строка о том, чем занят. */
 export function Card053({
   name = "Тимур Ахметов",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Доступность и качество",
   accent,
   className,

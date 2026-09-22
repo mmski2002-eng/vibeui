@@ -165,9 +165,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-062"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-002/layout-002.tsx",
@@ -175,7 +173,7 @@
           "target": "@components/vibeui/layout-002.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-062 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. CSS Grid с областями: title 2×2, product 2×1, proofA/proofB 1×1 с 64rem; две колонки с 40rem; data-side=right зеркалит. Окно продукта — призрак браузерного окна из градиентов, media ложится в него. Слоты: 01 заголовок и действие, 02 окно продукта, 03 показатель, 04 доказательство — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-002-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. CSS Grid с областями: title 2×2, product 2×1, proofA/proofB 1×1 с 64rem; две колонки с 40rem; data-side=right зеркалит. Окно продукта — призрак браузерного окна из градиентов, media ложится в него. Слоты: 01 заголовок и действие, 02 окно продукта, 03 показатель, 04 доказательство — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-002-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -195,7 +193,7 @@
           "usage": "<Layout002\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Заголовок и действие\", text: \"Коротко о главном.\" },\n    { title: \"Окно продукта\", text: \"Коротко о главном.\" },\n    { title: \"Показатель\", text: \"Коротко о главном.\" },\n    { title: \"Доказательство\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Первый экран как bento на CSS Grid: заголовок с действием в плитке 2×2, окно продукта 2×1, показатель и доказательство 1×1. Слоты через items, призрак без них, container-запросы до одной колонки.",
           "preserve": [
-            "импорты card-062 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-002-* и не подменять её токенами вашей темы",
             "крупную плитку заголовка 2×2 и окно продукта — hero без них превращается в обычную сетку карточек",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -251,11 +249,11 @@
           "en": {
             "title": "Bento Hero",
             "description": "A first screen assembled from tiles: the title and action in a large tile, a product window, two proofs. No full-screen image — the grid holds the hierarchy. For SaaS, apps and tools.",
-            "docs": "A composite block: imports card-062 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. CSS Grid with areas: title 2×2, product 2×1, proofA/proofB 1×1 from 64rem; two columns from 40rem; data-side=right mirrors. The product window is a browser-window ghost of gradients, media drops into it. Slots: 01 title and action, 02 product window, 03 stat, 04 proof — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-002-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. CSS Grid with areas: title 2×2, product 2×1, proofA/proofB 1×1 from 64rem; two columns from 40rem; data-side=right mirrors. The product window is a browser-window ghost of gradients, media drops into it. Slots: 01 title and action, 02 product window, 03 stat, 04 proof — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-002-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A first screen as bento on CSS Grid: a title with an action in a 2×2 tile, a 2×1 product window, a 1×1 stat and proof. Slots via items, a ghost without them, container queries down to one column.",
               "preserve": [
-                "the card-062 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-002-* palette — do not swap it for your theme tokens",
                 "the large 2×2 title tile and the product window — without them the hero becomes a plain card grid",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -303,9 +301,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-063"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-003/layout-003.tsx",
@@ -313,7 +309,7 @@
           "target": "@components/vibeui/layout-003.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-063 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid на 12 колонок: lead span 8 на два ряда, две заметки span 4, три коротких span 4; на узкой ширине всё в одну колонку. Плитки без фона и рамки, линейки — border-top/left (data-rules), номера — типографские индексы над материалом. Слоты: 01 ведущий материал, 02 заметка, 03 заметка, 04 короткий материал, 05 короткий материал, 06 короткий материал — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-003-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid на 12 колонок: lead span 8 на два ряда, две заметки span 4, три коротких span 4; на узкой ширине всё в одну колонку. Плитки без фона и рамки, линейки — border-top/left (data-rules), номера — типографские индексы над материалом. Слоты: 01 ведущий материал, 02 заметка, 03 заметка, 04 короткий материал, 05 короткий материал, 06 короткий материал — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-003-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -334,7 +330,7 @@
           "usage": "<Layout003\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Ведущий материал\", text: \"Коротко о главном.\" },\n    { title: \"Заметка\", text: \"Коротко о главном.\" },\n    { title: \"Заметка\", text: \"Коротко о главном.\" },\n    { title: \"Короткий материал\", text: \"Коротко о главном.\" },\n    { title: \"Короткий материал\", text: \"Коротко о главном.\" },\n    { title: \"Короткий материал\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Редакционная сетка 12 колонок на CSS Grid: ведущий материал 8/12 с кадром, две заметки 4/12, ряд из трёх коротких. Без карточек: тонкие линейки, номера-индексы, hover только на кадре. Слоты через items, призрак без них.",
           "preserve": [
-            "импорты card-063 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-003-* и не подменять её токенами вашей темы",
             "отсутствие карточек: материалы разделяют линейки и воздух, фон и рамки плиток здесь выключены намеренно",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -386,11 +382,11 @@
           "en": {
             "title": "Editorial Grid",
             "description": "A twelve-column editorial grid: a lead story on eight, two margin notes, a row of three short pieces with numbers and rules. Rhythm by size and rules, no cards. For media, magazines, research and collections.",
-            "docs": "A composite block: imports card-063 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A 12-column grid: lead spans 8 over two rows, two notes span 4, three short pieces span 4; on narrow widths everything is one column. Tiles without background or border, rules are border-top/left (data-rules), numbers are typographic indices above the piece. Slots: 01 lead story, 02 note, 03 note, 04 short piece, 05 short piece, 06 short piece — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-003-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A 12-column grid: lead spans 8 over two rows, two notes span 4, three short pieces span 4; on narrow widths everything is one column. Tiles without background or border, rules are border-top/left (data-rules), numbers are typographic indices above the piece. Slots: 01 lead story, 02 note, 03 note, 04 short piece, 05 short piece, 06 short piece — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-003-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A 12-column editorial grid on CSS Grid: a lead story 8/12 with a frame, two 4/12 notes, a row of three short pieces. No cards: thin rules, index numbers, hover only on the frame. Slots via items, a ghost without them.",
               "preserve": [
-                "the card-063 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-003-* palette — do not swap it for your theme tokens",
                 "the absence of cards: pieces are separated by rules and air, tile backgrounds and borders are off on purpose",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -438,9 +434,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-064"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-004/layout-004.tsx",
@@ -448,7 +442,7 @@
           "target": "@components/vibeui/layout-004.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-064 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Каждая карточка position: sticky с общим top (data-offset=header — 5rem под шапку), следующая накрывает предыдущую; в @supports (animation-timeline: view()) уходящая карточка слушает именованный view-timeline следующей (timeline-scope на body) и по её entry уменьшается (scale .92, brightness .7) — data-shrink; свой таймлайн у прилипшей карточки не двигается. Без поддержки — обычная стопка. Каскад плиток выключен. Слоты: 01 карточка, 02 карточка, 03 карточка, 04 карточка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-004-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Каждая карточка position: sticky с общим top (data-offset=header — 5rem под шапку), следующая накрывает предыдущую; в @supports (animation-timeline: view()) уходящая карточка слушает именованный view-timeline следующей (timeline-scope на body) и по её entry уменьшается (scale .92, brightness .7) — data-shrink; свой таймлайн у прилипшей карточки не двигается. Без поддержки — обычная стопка. Каскад плиток выключен. Слоты: 01 карточка, 02 карточка, 03 карточка, 04 карточка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-004-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -469,7 +463,7 @@
           "usage": "<Layout004\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Стопка карточек на CSS: четыре sticky-карточки с общим top наезжают друг на друга при прокрутке, уходящая уменьшается и темнеет по view-timeline следующей карточки (timeline-scope, диапазон entry). Без поддержки — просто стопка. Слоты через items.",
           "preserve": [
-            "импорты card-064 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-004-* и не подменять её токенами вашей темы",
             "position: sticky с одинаковым top у всех карточек — иначе стопка не соберётся; не заменять на JS-скролл-хайджек",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -532,11 +526,11 @@
           "en": {
             "title": "Card Stack",
             "description": "A card stack: sections stick at the same height and slide over each other on scroll, the departing one shrinks and dims. Pure CSS: sticky and scroll-driven animation. For product stories, stages and case studies.",
-            "docs": "A composite block: imports card-064 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. Each card is position: sticky with a shared top (data-offset=header — 5rem under a header), the next covers the previous; inside @supports (animation-timeline: view()) the departing card listens to the next card's named view-timeline (timeline-scope on body) and shrinks on its entry (scale .92, brightness .7) — data-shrink; a stuck card's own timeline does not move. Without support — a plain stack. The tile cascade is off. Slots: 01 card, 02 card, 03 card, 04 card — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-004-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. Each card is position: sticky with a shared top (data-offset=header — 5rem under a header), the next covers the previous; inside @supports (animation-timeline: view()) the departing card listens to the next card's named view-timeline (timeline-scope on body) and shrinks on its entry (scale .92, brightness .7) — data-shrink; a stuck card's own timeline does not move. Without support — a plain stack. The tile cascade is off. Slots: 01 card, 02 card, 03 card, 04 card — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-004-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A CSS card stack: four sticky cards with a shared top slide over each other on scroll, the departing one shrinks and dims on the next card's view-timeline (timeline-scope, entry range). Without support — a plain stack. Slots via items.",
               "preserve": [
-                "the card-064 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-004-* palette — do not swap it for your theme tokens",
                 "position: sticky with the same top on every card — otherwise the stack will not assemble; do not replace with JS scroll hijacking",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -588,9 +582,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-065"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-005/layout-005.tsx",
@@ -598,7 +590,7 @@
           "target": "@components/vibeui/layout-005.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-065 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Фолбэк-основа: body с overflow-x: auto и scroll-snap (data-snap), трек — flex-ряд панелей по 34rem. В @supports (animation-timeline: view()) body становится треком высотой 3 × 22rem (с 64rem — 2.4 × 26rem: ровно на проезд ленты, без пустой прокрутки), окно — sticky, трек едет по view()-таймлайну в диапазоне contain на translateX(-100% + 100cqi). Каскад плиток выключен. Слоты: 01 панель, 02 панель, 03 панель, 04 панель — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-005-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Фолбэк-основа: body с overflow-x: auto и scroll-snap (data-snap), трек — flex-ряд панелей по 34rem. В @supports (animation-timeline: view()) body становится треком высотой 3 × 22rem (с 64rem — 2.4 × 26rem: ровно на проезд ленты, без пустой прокрутки), окно — sticky, трек едет по view()-таймлайну в диапазоне contain на translateX(-100% + 100cqi). Каскад плиток выключен. Слоты: 01 панель, 02 панель, 03 панель, 04 панель — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-005-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -619,7 +611,7 @@
           "usage": "<Layout005\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Горизонтальная лента на CSS: высокий трек, sticky-окно и ряд панелей, едущий по animation-timeline: view() в диапазоне contain. Прокрутка остаётся вертикальной. Без поддержки — горизонтальный скролл со snap. Слоты через items.",
           "preserve": [
-            "импорты card-065 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-005-* и не подменять её токенами вашей темы",
             "родную вертикальную прокрутку — никакого wheel-хайджека и JS-скролла, лента едет от view()-таймлайна",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -671,11 +663,11 @@
           "en": {
             "title": "Horizontal Scroll",
             "description": "A horizontal strip: panels ride sideways while the page scrolls down — no wheel or touch hijacking. Where scroll-driven animations are missing — plain horizontal scrolling with snap. For stages, case studies, product tours.",
-            "docs": "A composite block: imports card-065 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. Fallback base: body with overflow-x: auto and scroll-snap (data-snap), the track is a flex row of 34rem panels. Inside @supports (animation-timeline: view()) body becomes a track 3 × 22rem tall (2.4 × 26rem from 64rem: just enough for the ride, no empty scrolling), the window is sticky, the track rides on the view() timeline in the contain range to translateX(-100% + 100cqi). The tile cascade is off. Slots: 01 panel, 02 panel, 03 panel, 04 panel — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-005-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. Fallback base: body with overflow-x: auto and scroll-snap (data-snap), the track is a flex row of 34rem panels. Inside @supports (animation-timeline: view()) body becomes a track 3 × 22rem tall (2.4 × 26rem from 64rem: just enough for the ride, no empty scrolling), the window is sticky, the track rides on the view() timeline in the contain range to translateX(-100% + 100cqi). The tile cascade is off. Slots: 01 panel, 02 panel, 03 panel, 04 panel — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-005-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A CSS horizontal strip: a tall track, a sticky window and a panel row riding on animation-timeline: view() in the contain range. Scrolling stays vertical. Without support — horizontal scroll with snap. Slots via items.",
               "preserve": [
-                "the card-065 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-005-* palette — do not swap it for your theme tokens",
                 "native vertical scrolling — no wheel hijacking or JS scroll, the strip rides on the view() timeline",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -723,9 +715,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-066"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-006/layout-006.tsx",
@@ -733,7 +723,7 @@
           "target": "@components/vibeui/layout-006.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-066 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid 5/6 с 56rem (data-side=right меняет порядок), сцена — sticky со стопкой из трёх слоёв в одной grid-area; каждая глава объявляет view-timeline-name, body собирает их timeline-scope, слой k анимируется по таймлайну главы k (диапазон entry 20–80%). Media слоя k берётся из items[k].media, иначе из items[0].media. Без поддержки виден первый слой. Каскад плиток выключен. Слоты: 01 кадр (media по главам через слоты 02–04), 02 глава, 03 глава, 04 глава — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-006-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid 5/6 с 56rem (data-side=right меняет порядок), сцена — sticky со стопкой из трёх слоёв в одной grid-area; каждая глава объявляет view-timeline-name, body собирает их timeline-scope, слой k анимируется по таймлайну главы k (диапазон entry 20–80%). Media слоя k берётся из items[k].media, иначе из items[0].media. Без поддержки виден первый слой. Каскад плиток выключен. Слоты: 01 кадр (media по главам через слоты 02–04), 02 глава, 03 глава, 04 глава — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-006-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -754,7 +744,7 @@
           "usage": "<Layout006\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Кадр (media по главам через слоты 02–04)\", text: \"Коротко о главном.\" },\n    { title: \"Глава\", text: \"Коротко о главном.\" },\n    { title: \"Глава\", text: \"Коротко о главном.\" },\n    { title: \"Глава\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Закреплённый кадр на CSS: sticky-сцена из трёх слоёв, каждая глава — именованный view-timeline, timeline-scope на раскладке, слой проявляется по таймлайну своей главы. Без поддержки — первый слой. Слоты через items: 01 кадр, 02–04 главы, media глав становятся слоями.",
           "preserve": [
-            "импорты card-066 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-006-* и не подменять её токенами вашей темы",
             "timeline-scope на раскладке и view-timeline-name на главах — только так слой кадра может слушать чужую главу без JS",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -810,11 +800,11 @@
           "en": {
             "title": "Sticky Media",
             "description": "A sticky frame with chapters: the frame stays on the left, chapters pass on the right, and the frame changes as the reader reaches each. Pure CSS on named view timelines. For product stories, tours and long reads.",
-            "docs": "A composite block: imports card-066 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A 5/6 grid from 56rem (data-side=right swaps the order), the stage is sticky with a stack of three layers in one grid-area; each chapter declares a view-timeline-name, body collects them with timeline-scope, layer k animates on chapter k's timeline (entry 20–80% range). Layer k media comes from items[k].media, else items[0].media. Without support the first layer is visible. The tile cascade is off. Slots: 01 frame (media per chapter via slots 02–04), 02 chapter, 03 chapter, 04 chapter — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-006-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A 5/6 grid from 56rem (data-side=right swaps the order), the stage is sticky with a stack of three layers in one grid-area; each chapter declares a view-timeline-name, body collects them with timeline-scope, layer k animates on chapter k's timeline (entry 20–80% range). Layer k media comes from items[k].media, else items[0].media. Without support the first layer is visible. The tile cascade is off. Slots: 01 frame (media per chapter via slots 02–04), 02 chapter, 03 chapter, 04 chapter — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-006-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A CSS sticky frame: a sticky stage of three layers, each chapter a named view-timeline, timeline-scope on the layout, a layer fades in on its chapter's timeline. Without support — the first layer. Slots via items: 01 frame, 02–04 chapters, chapter media become layers.",
               "preserve": [
-                "the card-066 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-006-* palette — do not swap it for your theme tokens",
                 "timeline-scope on the layout and view-timeline-name on the chapters — the only way a frame layer can listen to another chapter without JS",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -862,9 +852,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-067"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-007/layout-007.tsx",
@@ -872,7 +860,7 @@
           "target": "@components/vibeui/layout-007.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-067 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid 1/2/1 с областями: word по центру на два ряда, tl/tr/bl/br по углам; на узкой ширине слово сверху, блоки парами. Слово разбито на span с индексом от центра (--r): по view() буквы съезжаются из разлёта (диапазон entry 0 — cover 45%), на hover буква приподнимается и поворачивается на r×4°. Размер — clamp(4rem, 20cqi, 17rem). Каскад плиток выключен. Слоты: 01 верхний левый блок, 02 верхний правый блок, 03 нижний левый блок, 04 нижний правый блок — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-007-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid 1/2/1 с областями: word по центру на два ряда, tl/tr/bl/br по углам; на узкой ширине слово сверху, блоки парами. Слово разбито на span с индексом от центра (--r): по view() буквы съезжаются из разлёта (диапазон entry 0 — cover 45%), на hover буква приподнимается и поворачивается на r×4°. Размер — clamp(4rem, 20cqi, 17rem). Каскад плиток выключен. Слоты: 01 верхний левый блок, 02 верхний правый блок, 03 нижний левый блок, 04 нижний правый блок — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-007-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -893,7 +881,7 @@
           "usage": "<Layout007\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Верхний левый блок\", text: \"Коротко о главном.\" },\n    { title: \"Верхний правый блок\", text: \"Коротко о главном.\" },\n    { title: \"Нижний левый блок\", text: \"Коротко о главном.\" },\n    { title: \"Нижний правый блок\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Кинетический заголовок на CSS: слово в clamp(4rem, 20cqi, 17rem) по центру сетки 1/2/1, буквы — span с индексом от центра, съезжаются по animation-timeline: view() и отвечают на hover; четыре слота-блока по углам через items.",
           "preserve": [
-            "импорты card-067 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-007-* и не подменять её токенами вашей темы",
             "слово как настоящий текст в h2 с aria-label, буквы — aria-hidden span: читалка получает слово целиком",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -950,11 +938,11 @@
           "en": {
             "title": "Kinetic Heading",
             "description": "A kinetic heading: a frame-scale word holds the layout, four short blocks sit in the corners. Letters spread on scroll and respond to hover. For studios, portfolios, manifestos and launches.",
-            "docs": "A composite block: imports card-067 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A 1/2/1 grid with areas: word in the center over two rows, tl/tr/bl/br in the corners; on narrow widths the word is on top, blocks in pairs. The word is split into spans with an index from the center (--r): on view() letters converge from a spread (entry 0 — cover 45% range), on hover a letter lifts and rotates by r×4°. Size — clamp(4rem, 20cqi, 17rem). The tile cascade is off. Slots: 01 top-left block, 02 top-right block, 03 bottom-left block, 04 bottom-right block — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-007-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A 1/2/1 grid with areas: word in the center over two rows, tl/tr/bl/br in the corners; on narrow widths the word is on top, blocks in pairs. The word is split into spans with an index from the center (--r): on view() letters converge from a spread (entry 0 — cover 45% range), on hover a letter lifts and rotates by r×4°. Size — clamp(4rem, 20cqi, 17rem). The tile cascade is off. Slots: 01 top-left block, 02 top-right block, 03 bottom-left block, 04 bottom-right block — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-007-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A CSS kinetic heading: a clamp(4rem, 20cqi, 17rem) word in the center of a 1/2/1 grid, letters are spans indexed from the center, converging on animation-timeline: view() and responding to hover; four corner block slots via items.",
               "preserve": [
-                "the card-067 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-007-* palette — do not swap it for your theme tokens",
                 "the word as real text in an h2 with aria-label, letters as aria-hidden spans: a screen reader gets the whole word",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -1003,9 +991,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-068"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-008/layout-008.tsx",
@@ -1013,7 +999,7 @@
           "target": "@components/vibeui/layout-008.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-068 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором и useId для чекбокса сайдбара. Grid auto/1fr с 48rem: сайдбар 16rem на два ряда, топбар, main с overflow: auto — единственный прокручиваемый контейнер, оболочка высотой min(44rem, 100dvh). Сворачивание: скрытый checkbox перед сайдбаром, label в топбаре, :checked ~ aside сужает до 4.5rem и прячет подписи (data-collapsed — начальное состояние). На телефоне сайдбар скрыт, main в две колонки. data-side=right переносит сайдбар вправо. Слоты: 01 навигация сайдбара, 02 топбар, 03 показатель, 04 показатель, 05 график, 06 таблица — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-008-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором и useId для чекбокса сайдбара. Grid auto/1fr с 48rem: сайдбар 16rem на два ряда, топбар, main с overflow: auto — единственный прокручиваемый контейнер, оболочка высотой min(44rem, 100dvh). Сворачивание: скрытый checkbox перед сайдбаром, label в топбаре, :checked ~ aside сужает до 4.5rem и прячет подписи (data-collapsed — начальное состояние). На телефоне сайдбар скрыт, main в две колонки. data-side=right переносит сайдбар вправо. Слоты: 01 навигация сайдбара, 02 топбар, 03 показатель, 04 показатель, 05 график, 06 таблица — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-008-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -1034,7 +1020,7 @@
           "usage": "<Layout008\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Навигация сайдбара\", text: \"Коротко о главном.\" },\n    { title: \"Топбар\", text: \"Коротко о главном.\" },\n    { title: \"Показатель\", text: \"Коротко о главном.\" },\n    { title: \"Показатель\", text: \"Коротко о главном.\" },\n    { title: \"График\", text: \"Коротко о главном.\" },\n    { title: \"Таблица\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Оболочка приложения на CSS Grid: сайдбар на два ряда, топбар, рабочая область с overflow: auto как единственный scroll-root. Сворачивание сайдбара — checkbox + label + :checked ~, без JS. Слоты через items: навигация, топбар, три показателя, таблица.",
           "preserve": [
-            "импорты card-068 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-008-* и не подменять её токенами вашей темы",
             "один владелец прокрутки — main с overflow: auto; оболочка не должна прокручиваться целиком вместе с сайдбаром",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -1097,11 +1083,11 @@
           "en": {
             "title": "App Shell",
             "description": "An app shell: a sidebar, a topbar and a workspace with stats and a table. The sidebar collapses to icons without JS — a checkbox and :has(). The workspace owns the scroll. For dashboards, CRMs, analytics and admin panels.",
-            "docs": "A composite block: imports card-068 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light and useId for the sidebar checkbox. An auto/1fr grid from 48rem: a 16rem sidebar over two rows, a topbar, main with overflow: auto — the only scrolling container, the shell is min(44rem, 100dvh) tall. Collapsing: a hidden checkbox before the sidebar, a label in the topbar, :checked ~ aside narrows to 4.5rem and hides labels (data-collapsed — the initial state). On phones the sidebar is hidden, main in two columns. data-side=right moves the sidebar right. Slots: 01 sidebar navigation, 02 topbar, 03 stat, 04 stat, 05 chart, 06 table — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-008-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light and useId for the sidebar checkbox. An auto/1fr grid from 48rem: a 16rem sidebar over two rows, a topbar, main with overflow: auto — the only scrolling container, the shell is min(44rem, 100dvh) tall. Collapsing: a hidden checkbox before the sidebar, a label in the topbar, :checked ~ aside narrows to 4.5rem and hides labels (data-collapsed — the initial state). On phones the sidebar is hidden, main in two columns. data-side=right moves the sidebar right. Slots: 01 sidebar navigation, 02 topbar, 03 stat, 04 stat, 05 chart, 06 table — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-008-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "An app shell on CSS Grid: a two-row sidebar, a topbar, a workspace with overflow: auto as the only scroll root. Sidebar collapsing — checkbox + label + :checked ~, no JS. Slots via items: navigation, topbar, three stats, a table.",
               "preserve": [
-                "the card-068 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-008-* palette — do not swap it for your theme tokens",
                 "a single scroll owner — main with overflow: auto; the shell must not scroll as a whole with the sidebar",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -1153,9 +1139,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-069"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-009/layout-009.tsx",
@@ -1163,7 +1147,7 @@
           "target": "@components/vibeui/layout-009.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-069 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором и useId для группы radio. Flex-ряд с 48rem (столбик на узкой ширине), каждая панель flex: 1, раскрытая — flex-grow 3.2 с переходом 0.6s. hover: :hover и :focus-within; click (data-expand=click): скрытые radio с общим name и label на всю панель, раскрыта та, у которой :has(input:checked). Подписи панели появляются только в раскрытой (opacity/transform). Слоты: 01 панель, 02 панель, 03 панель, 04 панель, 05 панель — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-009-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором и useId для группы radio. Flex-ряд с 48rem (столбик на узкой ширине), каждая панель flex: 1, раскрытая — flex-grow 3.2 с переходом 0.6s. hover: :hover и :focus-within; click (data-expand=click): скрытые radio с общим name и label на всю панель, раскрыта та, у которой :has(input:checked). Подписи панели появляются только в раскрытой (opacity/transform). Слоты: 01 панель, 02 панель, 03 панель, 04 панель, 05 панель — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-009-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -1184,7 +1168,7 @@
           "usage": "<Layout009\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n    { title: \"Панель\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Раскрывающиеся панели на CSS: flex-ряд из пяти панелей, наведённая растёт по flex-grow с переходом, подписи проявляются; режим click на radio и :has(:checked), работает на touch. Слоты через items с media в каждой панели.",
           "preserve": [
-            "импорты card-069 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-009-* и не подменять её токенами вашей темы",
             "раскрытие через flex-grow и переход — не через JS-измерения ширины; :focus-within даёт раскрытие с клавиатуры",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -1240,11 +1224,11 @@
           "en": {
             "title": "Expanding Panels",
             "description": "Expanding panels: five vertical panels in a row, the hovered one expands, the rest shrink, captions fade in. No JS — flex-grow and :hover, in click mode — radio. For service galleries, directions, portfolios and case studies.",
-            "docs": "A composite block: imports card-069 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light and useId for the radio group. A flex row from 48rem (a column on narrow widths), each panel flex: 1, the expanded one flex-grow 3.2 with a 0.6s transition. hover: :hover and :focus-within; click (data-expand=click): hidden radios with a shared name and a full-panel label, the one with :has(input:checked) is expanded. Panel captions appear only in the expanded one (opacity/transform). Slots: 01 panel, 02 panel, 03 panel, 04 panel, 05 panel — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-009-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light and useId for the radio group. A flex row from 48rem (a column on narrow widths), each panel flex: 1, the expanded one flex-grow 3.2 with a 0.6s transition. hover: :hover and :focus-within; click (data-expand=click): hidden radios with a shared name and a full-panel label, the one with :has(input:checked) is expanded. Panel captions appear only in the expanded one (opacity/transform). Slots: 01 panel, 02 panel, 03 panel, 04 panel, 05 panel — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-009-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "CSS expanding panels: a flex row of five panels, the hovered one grows via flex-grow with a transition, captions fade in; a click mode on radio and :has(:checked), works on touch. Slots via items with media in each panel.",
               "preserve": [
-                "the card-069 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-009-* palette — do not swap it for your theme tokens",
                 "expansion via flex-grow and a transition — not via JS width measurement; :focus-within gives keyboard expansion",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -1292,9 +1276,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-070"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-010/layout-010.tsx",
@@ -1302,7 +1284,7 @@
           "target": "@components/vibeui/layout-010.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-070 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid с grid-auto-rows: 6rem и grid-auto-flow: dense; высота слота — grid-row: span 2–4 по позиции. Две колонки, с 48rem три, data-columns=four — четыре. Порядок DOM сохраняется, dense переставляет визуально только мелкие плитки вперёд. Слоты: 01 плитка, 02 плитка, 03 плитка, 04 плитка, 05 плитка, 06 плитка, 07 плитка, 08 плитка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-010-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid с grid-auto-rows: 6rem и grid-auto-flow: dense; высота слота — grid-row: span 2–4 по позиции. Две колонки, с 48rem три, data-columns=four — четыре. Порядок DOM сохраняется, dense переставляет визуально только мелкие плитки вперёд. Слоты: 01 плитка, 02 плитка, 03 плитка, 04 плитка, 05 плитка, 06 плитка, 07 плитка, 08 плитка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-010-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -1323,7 +1305,7 @@
           "usage": "<Layout010\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n    { title: \"Плитка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Мозаика на CSS Grid: auto-rows 6rem, span 2–4 по слоту, grid-auto-flow: dense заполняет дыры. Две, три или четыре колонки по container-запросам. Восемь слотов через items, призрак без них.",
           "preserve": [
-            "импорты card-070 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-010-* и не подменять её токенами вашей темы",
             "grid-auto-flow: dense и span по слотам — без них появляются дыры; не заменять на CSS columns (ломает порядок чтения) и не на JS-masonry",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -1379,11 +1361,11 @@
           "en": {
             "title": "Masonry",
             "description": "A mosaic: a dense grid of eight tiles of different heights, gaps fill automatically — no experimental masonry and no JS. For galleries, testimonials, feeds and collections.",
-            "docs": "A composite block: imports card-070 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A grid with grid-auto-rows: 6rem and grid-auto-flow: dense; slot height is grid-row: span 2–4 by position. Two columns, three from 48rem, data-columns=four — four. DOM order is kept, dense only moves small tiles forward visually. Slots: 01 tile, 02 tile, 03 tile, 04 tile, 05 tile, 06 tile, 07 tile, 08 tile — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-010-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A grid with grid-auto-rows: 6rem and grid-auto-flow: dense; slot height is grid-row: span 2–4 by position. Two columns, three from 48rem, data-columns=four — four. DOM order is kept, dense only moves small tiles forward visually. Slots: 01 tile, 02 tile, 03 tile, 04 tile, 05 tile, 06 tile, 07 tile, 08 tile — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-010-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A CSS Grid mosaic: 6rem auto-rows, span 2–4 per slot, grid-auto-flow: dense fills the gaps. Two, three or four columns by container queries. Eight slots via items, a ghost without them.",
               "preserve": [
-                "the card-070 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-010-* palette — do not swap it for your theme tokens",
                 "grid-auto-flow: dense and per-slot spans — without them gaps appear; do not replace with CSS columns (breaks reading order) or JS masonry",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -1431,9 +1413,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-071"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-012/layout-012.tsx",
@@ -1441,7 +1421,7 @@
           "target": "@components/vibeui/layout-012.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-071 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Центр — плитка 7rem с ореолом; кольца — абсолютные круги радиуса --r1/--r2 (8/13rem, с 48rem 10/16rem) с dashed-рамкой и keyframe-вращением (40s и 70s в обратную сторону, data-spin); узел — точка на кольце через rotate(--a) translateX(r), плитка узла противовращается тем же keyframe, чтобы иконка стояла прямо. Hover на орбиту — animation-play-state: paused. data-rings=one прячет второе кольцо. Слоты: 01 центр, 02 узел, 03 узел, 04 узел, 05 узел, 06 узел, 07 узел — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-012-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Центр — плитка 7rem с ореолом; кольца — абсолютные круги радиуса --r1/--r2 (8/13rem, с 48rem 10/16rem) с dashed-рамкой и keyframe-вращением (40s и 70s в обратную сторону, data-spin); узел — точка на кольце через rotate(--a) translateX(r), плитка узла противовращается тем же keyframe, чтобы иконка стояла прямо. Hover на орбиту — animation-play-state: paused. data-rings=one прячет второе кольцо. Слоты: 01 центр, 02 узел, 03 узел, 04 узел, 05 узел, 06 узел, 07 узел — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-012-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -1462,7 +1442,7 @@
           "usage": "<Layout012\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Центр\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n    { title: \"Узел\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Орбита на CSS: центр с ореолом, два вращающихся кольца, узлы по углу через rotate/translate с противовращением, пауза на hover. Семь слотов через items: центр и шесть узлов.",
           "preserve": [
-            "импорты card-071 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-012-* и не подменять её токенами вашей темы",
             "противовращение плиток узлов тем же keyframe и той же длительностью — иначе иконки закрутятся вместе с кольцом",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -1525,11 +1505,11 @@
           "en": {
             "title": "Integration Orbit",
             "description": "An integration orbit: a core and six nodes on two rings, the rings slowly rotate, the nodes stay upright, hover pauses. No JS. For 'works with' pages, ecosystems and partners.",
-            "docs": "A composite block: imports card-071 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. The core is a 7rem tile with a halo; the rings are absolute circles of radius --r1/--r2 (8/13rem, 10/16rem from 48rem) with a dashed border and keyframe rotation (40s and 70s reversed, data-spin); a node is a point on the ring via rotate(--a) translateX(r), the node tile counter-rotates with the same keyframe so the icon stays upright. Hover on the orbit — animation-play-state: paused. data-rings=one hides the second ring. Slots: 01 core, 02 node, 03 node, 04 node, 05 node, 06 node, 07 node — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-012-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. The core is a 7rem tile with a halo; the rings are absolute circles of radius --r1/--r2 (8/13rem, 10/16rem from 48rem) with a dashed border and keyframe rotation (40s and 70s reversed, data-spin); a node is a point on the ring via rotate(--a) translateX(r), the node tile counter-rotates with the same keyframe so the icon stays upright. Hover on the orbit — animation-play-state: paused. data-rings=one hides the second ring. Slots: 01 core, 02 node, 03 node, 04 node, 05 node, 06 node, 07 node — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-012-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A CSS orbit: a core with a halo, two rotating rings, nodes by angle via rotate/translate with counter-rotation, paused on hover. Seven slots via items: the core and six nodes.",
               "preserve": [
-                "the card-071 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-012-* palette — do not swap it for your theme tokens",
                 "the counter-rotation of node tiles with the same keyframe and duration — otherwise icons spin with the ring",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -1581,9 +1561,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-072"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-014/layout-014.tsx",
@@ -1591,7 +1569,7 @@
           "target": "@components/vibeui/layout-014.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-072 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Группы «год + события»: grid 1/2 с 48rem (data-side=right — год справа), год position: sticky с align-self: start в пределах своей группы, крупный моноширинный из value слота. События — плитки с точкой на вертикальной линии (::before у списка), точка на hover заливается акцентом. На узкой ширине год — обычный заголовок группы. Слоты: 01 год/этап 1 (value), 02 событие, 03 событие, 04 год/этап 2 (value), 05 событие, 06 год/этап 3 (value), 07 событие — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-014-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Группы «год + события»: grid 1/2 с 48rem (data-side=right — год справа), год position: sticky с align-self: start в пределах своей группы, крупный моноширинный из value слота. События — плитки с точкой на вертикальной линии (::before у списка), точка на hover заливается акцентом. На узкой ширине год — обычный заголовок группы. Слоты: 01 год/этап 1 (value), 02 событие, 03 событие, 04 год/этап 2 (value), 05 событие, 06 год/этап 3 (value), 07 событие — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-014-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -1612,7 +1590,7 @@
           "usage": "<Layout014\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Год/этап 1 (value)\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n    { title: \"Год/этап 2 (value)\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n    { title: \"Год/этап 3 (value)\", text: \"Коротко о главном.\" },\n    { title: \"Событие\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Таймлайн на CSS: три группы, в каждой sticky-год (value слота, крупный моноширинный) и события с точками на линии; grid 1/2 по container-запросу. Семь слотов через items: годы и события.",
           "preserve": [
-            "импорты card-072 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-014-* и не подменять её токенами вашей темы",
             "sticky у года с align-self: start внутри группы — иначе год растянется на высоту группы и закрепляться будет нечему",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -1668,11 +1646,11 @@
           "en": {
             "title": "Sticky Timeline",
             "description": "A timeline with a sticky year: the year or stage on the left holds while its events pass, events with dots on the time line on the right. Pure CSS sticky. For company history, roadmaps, changelogs and biographies.",
-            "docs": "A composite block: imports card-072 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. Groups of 'year + events': a 1/2 grid from 48rem (data-side=right — year on the right), the year is position: sticky with align-self: start within its group, large monospace from the slot's value. Events are tiles with a dot on the vertical line (::before on the list), the dot fills with accent on hover. On narrow widths the year is a plain group heading. Slots: 01 year/stage 1 (value), 02 event, 03 event, 04 year/stage 2 (value), 05 event, 06 year/stage 3 (value), 07 event — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-014-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. Groups of 'year + events': a 1/2 grid from 48rem (data-side=right — year on the right), the year is position: sticky with align-self: start within its group, large monospace from the slot's value. Events are tiles with a dot on the vertical line (::before on the list), the dot fills with accent on hover. On narrow widths the year is a plain group heading. Slots: 01 year/stage 1 (value), 02 event, 03 event, 04 year/stage 2 (value), 05 event, 06 year/stage 3 (value), 07 event — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-014-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A CSS timeline: three groups, each with a sticky year (the slot's value, large monospace) and events with dots on the line; a 1/2 grid by container query. Seven slots via items: years and events.",
               "preserve": [
-                "the card-072 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-014-* palette — do not swap it for your theme tokens",
                 "sticky on the year with align-self: start within the group — otherwise the year stretches to the group height and nothing sticks",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -1720,9 +1698,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-073"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-015/layout-015.tsx",
@@ -1730,7 +1706,7 @@
           "target": "@components/vibeui/layout-015.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-073 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором и undefined. Grid 18rem/1fr с 48rem, высота min(46rem, 100dvh). Ряд — flex с overflow-x: auto и scroll-snap-type x mandatory (data-snap), колонка — flex: 0 0 var(--col) (26/32rem, data-width) с header и внутренним overflow-y: auto. Клик по кнопке — row.scrollTo({left: column.offsetLeft, behavior: smooth}); onScroll через rAF ищет ближайшую колонку по offsetLeft и ставит aria-current; пилюля — абсолютный span с top/height от offsetTop активной кнопки и переходом 0.4s. Ниже 48rem — навигация строкой сверху, колонки во всю ширину. Слот 01 — описание слева (title = имя), 02–06 — колонки: title — заголовок, text — подводка, media — своё содержимое колонки вместо призрака. Слоты: 01 описание слева (title — имя), 02 колонка, 03 колонка, 04 колонка, 05 колонка, 06 колонка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-015-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором и undefined. Grid 18rem/1fr с 48rem, высота min(46rem, 100dvh). Ряд — flex с overflow-x: auto и scroll-snap-type x mandatory (data-snap), колонка — flex: 0 0 var(--col) (26/32rem, data-width) с header и внутренним overflow-y: auto. Клик по кнопке — row.scrollTo({left: column.offsetLeft, behavior: smooth}); onScroll через rAF ищет ближайшую колонку по offsetLeft и ставит aria-current; пилюля — абсолютный span с top/height от offsetTop активной кнопки и переходом 0.4s. Ниже 48rem — навигация строкой сверху, колонки во всю ширину. Слот 01 — описание слева (title = имя), 02–06 — колонки: title — заголовок, text — подводка, media — своё содержимое колонки вместо призрака. Слоты: 01 описание слева (title — имя), 02 колонка, 03 колонка, 04 колонка, 05 колонка, 06 колонка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление своё, см. выше; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-015-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -1752,7 +1728,7 @@
           "usage": "<Layout015\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Описание слева (title — имя)\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n    { title: \"Колонка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Колонки-ленты: закреплённая левая колонка с навигацией и пилюлей, справа flex-ряд колонок с scroll-snap и собственной вертикальной прокруткой каждой; клик везёт ряд smooth-scroll, активная колонка вычисляется по offsetLeft на scroll. Шесть слотов через items: описание и пять колонок.",
           "preserve": [
-            "импорты card-073 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-015-* и не подменять её токенами вашей темы",
             "родную горизонтальную прокрутку ряда с scroll-snap — колёсико, трекпад и touch работают сами, JS только довозит по клику",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -1815,11 +1791,11 @@
           "en": {
             "title": "Column Deck",
             "description": "A column deck: an intro and links on the left, a row of snap-scrolling columns on the right — a link drives the row to its column, the active link follows the scroll, a pill slides to it. Each column scrolls vertically on its own. For personal sites, portfolios and 'second brains'.",
-            "docs": "A composite block: imports card-073 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light and undefined. An 18rem/1fr grid from 48rem, height min(46rem, 100dvh). The row is a flex with overflow-x: auto and scroll-snap-type x mandatory (data-snap), a column is flex: 0 0 var(--col) (26/32rem, data-width) with a header and an inner overflow-y: auto. Clicking a button — row.scrollTo({left: column.offsetLeft, behavior: smooth}); onScroll via rAF finds the nearest column by offsetLeft and sets aria-current; the pill is an absolute span with top/height from the active button's offsetTop and a 0.4s transition. Below 48rem — the nav is a top row, columns are full width. Slot 01 is the left intro (title = name), 02–06 are columns: title — heading, text — lead, media — your own column content instead of the ghost. Slots: 01 the left intro (title — name), 02 column, 03 column, 04 column, 05 column, 06 column — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-015-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light and undefined. An 18rem/1fr grid from 48rem, height min(46rem, 100dvh). The row is a flex with overflow-x: auto and scroll-snap-type x mandatory (data-snap), a column is flex: 0 0 var(--col) (26/32rem, data-width) with a header and an inner overflow-y: auto. Clicking a button — row.scrollTo({left: column.offsetLeft, behavior: smooth}); onScroll via rAF finds the nearest column by offsetLeft and sets aria-current; the pill is an absolute span with top/height from the active button's offsetTop and a 0.4s transition. Below 48rem — the nav is a top row, columns are full width. Slot 01 is the left intro (title = name), 02–06 are columns: title — heading, text — lead, media — your own column content instead of the ghost. Slots: 01 the left intro (title — name), 02 column, 03 column, 04 column, 05 column, 06 column — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is its own, see above; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-015-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A column deck: a pinned left column with navigation and a pill, on the right a flex row of columns with scroll-snap and each column's own vertical scroll; a click drives the row with smooth scroll, the active column is computed by offsetLeft on scroll. Six slots via items: the intro and five columns.",
               "preserve": [
-                "the card-073 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-015-* palette — do not swap it for your theme tokens",
                 "the native horizontal scroll of the row with scroll-snap — wheel, trackpad and touch work on their own, JS only drives on click",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -1871,9 +1847,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-074"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "layout-016/layout-016.tsx",
@@ -1881,7 +1855,7 @@
           "target": "@components/vibeui/layout-016.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-074 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid из трёх рядов (шапка, фильтр, main) высотой min(46rem, 100dvh); main — 15rem/1fr с 56rem (data-sidebar выключает колонку рубрик), сетка карточек 1/2/3 колонки (data-density). Рубрики — слот 02 (список со счётчиками и активной строкой), карточки — слоты 03–06: tile как превью, подпись с кодом VU001–004 и названием из title. Шапка: логотип из items[0].title, счётчик из items[0].text. Каждая карточка — article с рамкой и подсветкой на hover. Слоты: 01 шапка (title — логотип, text — счётчик), 02 рубрики, 03 карточка, 04 карточка, 05 карточка, 06 карточка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-016-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, JS только для света за курсором. Grid из трёх рядов (шапка, фильтр, main) высотой min(46rem, 100dvh); main — 15rem/1fr с 56rem (data-sidebar выключает колонку рубрик), сетка карточек 1/2/3 колонки (data-density). Рубрики — слот 02 (список со счётчиками и активной строкой), карточки — слоты 03–06: tile как превью, подпись с кодом VU001–004 и названием из title. Шапка: логотип из items[0].title, счётчик из items[0].text. Каждая карточка — article с рамкой и подсветкой на hover. Слоты: 01 шапка (title — логотип, text — счётчик), 02 рубрики, 03 карточка, 04 карточка, 05 карточка, 06 карточка — items[i] с title/text/value/media, без них — призрак. Номера (numbers) показывают, какой слот куда ложится. Появление по прокрутке через animation-timeline: view(), без поддержки — каскад при загрузке; наведение — свет за курсором и подсветка кромки в точке указателя. Палитра --vibeui-layout-016-* с light-dark, container-запросы, порядок DOM = порядок чтения.",
       "meta": {
         "tags": [
           "layout",
@@ -1903,7 +1877,7 @@
           "usage": "<Layout016\n  heading=\"Заголовок раскладки\"\n  lead=\"Подзаголовок в одну строку.\"\n  items={[\n    { title: \"Шапка (title — логотип, text — счётчик)\", text: \"Коротко о главном.\" },\n    { title: \"Рубрики\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n    { title: \"Карточка\", text: \"Коротко о главном.\" },\n  ]}\n/>",
           "summary": "Каталог с боковой навигацией: шапка, панель поиска, закреплённые рубрики со счётчиками, сетка карточек с превью и подписью — раскладка VibeUI на CSS Grid с container-запросами. Шесть слотов через items: шапка, рубрики и четыре карточки.",
           "preserve": [
-            "импорты card-074 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-layout-016-* и не подменять её токенами вашей темы",
             "прокрутку только у сетки карточек и колонки рубрик — шапка и фильтр стоят, как у настоящего каталога",
             "container-запросы и порядок DOM как порядок чтения — раскладка сворачивается по своей ширине, Tab идёт по смыслу",
@@ -1966,11 +1940,11 @@
           "en": {
             "title": "Catalog Shell",
             "description": "A showcase layout like VibeUI itself: a header with a logo, sections and actions, a search bar, categories with counters and an active highlight on the left, a card grid with previews and codes on the right. For libraries, catalogs, marketplaces and docs with examples.",
-            "docs": "A composite block: imports card-074 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A three-row grid (header, filter, main) of height min(46rem, 100dvh); main is 15rem/1fr from 56rem (data-sidebar turns the category column off), the card grid has 1/2/3 columns (data-density). Categories are slot 02 (a list with counters and an active row), cards are slots 03–06: the tile as a preview, a caption with codes VU001–004 and the title. Header: the logo from items[0].title, the counter from items[0].text. Each card is an article with a border and a hover highlight. Slots: 01 header (title — logo, text — counter), 02 categories, 03 card, 04 card, 05 card, 06 card — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-016-* with light-dark, container queries, DOM order = reading order.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, JS only for the cursor light. A three-row grid (header, filter, main) of height min(46rem, 100dvh); main is 15rem/1fr from 56rem (data-sidebar turns the category column off), the card grid has 1/2/3 columns (data-density). Categories are slot 02 (a list with counters and an active row), cards are slots 03–06: the tile as a preview, a caption with codes VU001–004 and the title. Header: the logo from items[0].title, the counter from items[0].text. Each card is an article with a border and a hover highlight. Slots: 01 header (title — logo, text — counter), 02 categories, 03 card, 04 card, 05 card, 06 card — items[i] with title/text/value/media, without them — a ghost. Numbers (numbers) show which slot goes where. Entrance is scroll-driven via animation-timeline: view(), without support — a load cascade; hover — cursor light and edge highlight at the pointer. Palette --vibeui-layout-016-* with light-dark, container queries, DOM order = reading order.",
             "ai": {
               "summary": "A catalog shell: a header, a search bar, pinned categories with counters, a card grid with previews and captions — the VibeUI layout on CSS Grid with container queries. Six slots via items: header, categories and four cards.",
               "preserve": [
-                "the card-074 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-layout-016-* palette — do not swap it for your theme tokens",
                 "scrolling only in the card grid and the category column — the header and filter stay, like in a real catalog",
                 "container queries and DOM order as reading order — the layout collapses by its own width, Tab follows meaning",
@@ -2204,9 +2178,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "badge-026"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "bento-002/bento-002.tsx",
@@ -2237,7 +2209,7 @@
           "usage": "<Bento002\n  core=\"Сводка\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>",
           "summary": "Интеграции как орбиты: сервисы кружат вокруг продукта, наведение останавливает и подписывает.",
           "preserve": [
-            "импорты badge-026 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "кольцо крутится keyframes spin за speed секунд, внешнее — speed × 1.5 в обратную сторону",
             "марка — slot повёрнут на угол, sat контрвращается той же анимацией reverse, буквы остаются прямыми",
             ":hover на space ставит animation-play-state:paused всем кольцам и маркам"
@@ -2310,7 +2282,7 @@
             "ai": {
               "summary": "Integrations as orbits: services circle the product, hover pauses and labels them.",
               "preserve": [
-                "the badge-026 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "a ring spins with spin keyframes over speed seconds, the outer one over speed × 1.5 in reverse",
                 "a mark is a slot rotated by its angle, sat counter-rotates with the same animation reversed so letters stay upright",
                 ":hover on space sets animation-play-state:paused on every ring and mark"
@@ -2413,11 +2385,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports badge-026 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует badge-026 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "bento-008",
@@ -2428,10 +2400,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "avatar-033",
-        "badge-027"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "bento-008/bento-008.tsx",
@@ -2465,7 +2434,7 @@
           "usage": "<Bento008\n  title=\"Час, после которого хочется говорить\"\n  image=\"/photos/lesson.webp\"\n  segments={[{ label: \"разогрев\", minutes: 5 }, { label: \"разговор\", minutes: 25 }]}\n  speakShare={70}\n/>",
           "summary": "Бенто для школы или курсов: как устроено занятие — таймлайн, доля разговора, размер группы, домашка, носители.",
           "preserve": [
-            "импорты avatar-033, badge-027 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "таймлайн — flex с flex:minutes у отрезков, тон отрезка через --i в color-mix; игла — блок 100% ширины с keyframes translateX 0→100%",
             "домашка пишется через clip-path inset(0 100% 0 0) → inset(0), в конце цикла гаснет; при reduce-motion clip-path снят",
             "сетка: 1 колонка, от 40rem — 2 (урок и домашка на две), от 64rem — 4, урок 2×2, фото на два ряда"
@@ -2539,7 +2508,7 @@
             "ai": {
               "summary": "A bento for a school or courses: how a lesson works — a timeline, speaking share, group size, homework, native speakers.",
               "preserve": [
-                "the avatar-033, badge-027 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the timeline is a flex row with flex:minutes on segments, segment tone via --i in color-mix; the needle is a 100%-wide block with translateX 0→100% keyframes",
                 "the homework writes itself via clip-path inset(0 100% 0 0) → inset(0) and fades at the end of the loop; under reduce-motion the clip-path is removed",
                 "grid: 1 column, from 40rem — 2 (lesson and homework span two), from 64rem — 4, the lesson 2×2, the photo spans two rows"
@@ -2637,11 +2606,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports avatar-033, badge-027 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует avatar-033, badge-027 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "bento-009",
@@ -2863,9 +2832,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-079"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "bento-010/bento-010.tsx",
@@ -2897,7 +2864,7 @@
           "usage": "<Bento010\n  hero={{ value: 80, suffix: \" %\", label: \"от каждой продажи — автору\" }}\n  stats={[{ value: 4812, label: \"товаров\" }, { value: 2.1, decimals: 1, suffix: \" млн\", label: \"загрузок\" }]}\n  purchases={[{ who: \"Маша из Казани\", what: \"Атлас — UI-кит\", ago: \"только что\" }]}\n/>",
           "summary": "Bento с докручивающимися цифрами для страницы «авторам»: доля, выплаты, счётчики, бегущая строка покупок.",
           "preserve": [
-            "импорты card-079 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "счётчики — одно состояние progress 0→1: IntersectionObserver (threshold .25) запускает rAF на 1.6 с с ease-out кубом, при reduce-motion сразу 1",
             "бегущая строка — два одинаковых ul с translateX(-100%) за 32 с, второй aria-hidden; mask-image по краям, пауза по наведению",
             "раскладка: 1 колонка → 2 от 40rem (hero и feed на две) → 4 от 64rem (hero 2×2, feed на три), grid-auto-flow:dense"
@@ -2970,7 +2937,7 @@
             "ai": {
               "summary": "A bento with counting numbers for an “authors” page: share, payouts, counters, a purchases ticker.",
               "preserve": [
-                "the card-079 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "counters share one progress state 0→1: IntersectionObserver (threshold .25) starts a 1.6s rAF with cubic ease-out, 1 at once under reduce-motion",
                 "the ticker is two identical ul with translateX(-100%) over 32s, the second aria-hidden; mask-image at the edges, paused on hover",
                 "layout: 1 column → 2 from 40rem (hero and feed span two) → 4 from 64rem (hero 2×2, feed spans three), grid-auto-flow:dense"
@@ -3073,11 +3040,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports card-079 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует card-079 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "bento-011",
@@ -3513,9 +3480,7 @@
         "layout"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-080"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "bento-014/bento-014.tsx",
@@ -3552,7 +3517,7 @@
           "usage": "<Bento014\n  portrait=\"/photos/portrait.webp\"\n  numbers={[{ value: 142, label: \"эссе написано\" }]}\n  cities={[{ name: \"Петербург\", years: \"1991–2014\" }]}\n  nowPercent={62}\n/>",
           "summary": "«О себе» для писателя, художника или консультанта: bento из фактов, цифр, городов и того, над чем идёт работа.",
           "preserve": [
-            "импорты card-080 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "сетка — [data-part=grid] с gap:1px и фоном-линией; до 44rem одна колонка, 44–64rem две с grid-auto-flow:dense, от 64rem четыре: портрет data-tall (2 строки), биография/цифры/факт data-span=2, стол data-wide",
             "цифры — IntersectionObserver на корне (threshold .25) один раз запускает requestAnimationFrame с easing 1−(1−t)^4 за 1.8 с, число форматируется с пробелами",
             "полоса черновика — i с transform:scaleX(--vibeui-bento-014-now), растёт при data-live"
@@ -3626,7 +3591,7 @@
             "ai": {
               "summary": "“About” for a writer, artist or consultant: a bento of facts, numbers, cities and what is being worked on.",
               "preserve": [
-                "the card-080 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the grid is [data-part=grid] with gap:1px and a rule-coloured background; one column below 44rem, two with grid-auto-flow:dense at 44–64rem, four from 64rem: portrait data-tall (2 rows), bio/numbers/fact data-span=2, desk data-wide",
                 "numbers: an IntersectionObserver on the root (threshold .25) fires requestAnimationFrame once with easing 1−(1−t)^4 over 1.8 s, formatted with thin spaces",
                 "the draft bar is i with transform:scaleX(--vibeui-bento-014-now), grows on data-live"
@@ -3717,11 +3682,11 @@
                 "nowPercent": 62
               }
             },
-            "docs": "A composite block: imports card-080 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует card-080 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

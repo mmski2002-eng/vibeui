@@ -60,7 +60,7 @@ background:color-mix(in oklab,var(--vibeui-card-049-accent) 8%,var(--vibeui-card
 /** Карточка человека для сетки команды: аватар, имя, роль и ряд ссылок-иконок на почту и профили. */
 export function Card049({
   name = "Алексей Громов",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Основатель, продукт",
   links = [],
   accent,

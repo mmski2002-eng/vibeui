@@ -48,7 +48,7 @@ font-size:1rem;line-height:1.65;}
 export function Card051({
   name = "Алексей Громов",
   quote = "Мы не продаём компоненты — мы продаём вечер, за который маркетолог собирает страницу без разработчика.",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Основатель и продукт",
   accent,
   className,

@@ -47,10 +47,10 @@ const STYLES = `
 /** Полароид участника команды: фото в белой рамке, подпись от руки и роль, лёгкий поворот через переменную. */
 export function Card060({
   name = "Катя Рябова",
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   role = "Старший соцработник",
-  quote,
+  quote = "Полароид с рукописной подп…",
   accent,
   className,
   style,

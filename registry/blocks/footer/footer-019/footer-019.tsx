@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks015 } from "@/registry/components/navigation/footerlinks-015/footerlinks-015"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer019Messenger = {
   /** Значок: telegram, whatsapp, vk, max — или свой short-текст. */
@@ -82,7 +81,11 @@ container-type:inline-size;
 [data-vibeui-block="footer-019"] [data-part="shell"]{padding:4.5rem 2rem 2rem}
 [data-vibeui-block="footer-019"] [data-part="top"]{grid-template-columns:1.3fr 1fr 1.2fr;gap:3rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-019"] *{transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-019"] *{transition:none!important}}
+[data-vibeui-block="footer-019"] [data-part="links"]{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-019"] [data-part="links"] a{color:var(--vibeui-footer-019-fg);opacity:.85}
+[data-vibeui-block="footer-019"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-019-accent)}
+`
 
 const ICONS: Record<NonNullable<Footer019Messenger["kind"]>, string | null> = {
   telegram:
@@ -104,6 +107,50 @@ const DEFAULT_LINKS: Footer019Link[] = [
   { label: "Политика конфиденциальности", href: "#" },
   { label: "Договор оферты", href: "#" },
 ]
+
+export type LinksLink = {
+  label: string
+  href: string
+}
+
+const LinksDEFAULT_LINKS: LinksLink[] = [
+  { label: "Политика конфиденциальности", href: "#" },
+  { label: "Договор оферты", href: "#" },
+]
+
+type LinksProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  links?: readonly LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  links = LinksDEFAULT_LINKS,
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-019-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
 
 /** Подвал агентства: адрес, часы, телефон, почта и мессенджеры значками. */
 export function Footer019({
@@ -193,7 +240,7 @@ export function Footer019({
           <div data-part="bottom">
             {legal ? <p style={{ margin: 0 }}>{legal}</p> : null}
             {links.length > 0 ? (
-              <Footerlinks015 data-part="links" links={links} accent={accent} />
+              <Links data-part="links" links={links} accent={accent} />
             ) : null}
           </div>
         </div>

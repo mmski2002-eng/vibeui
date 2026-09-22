@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card156 } from "@/registry/components/card/card-156/card-156"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid006Row = {
@@ -122,6 +121,16 @@ content:"";width:0.4375rem;height:0.4375rem;border-radius:999px;background:curre
 padding:1.5rem 0.875rem;text-align:center;color:var(--vibeui-datagrid-006-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-006"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-006"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-006-border);}
+[data-vibeui-block="datagrid-006"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-006"] [data-part="bar"] [data-part="found"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-006-muted);}
+[data-vibeui-block="datagrid-006"] [data-part="bar"] [data-part="reset"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.3125rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-006-border);
+background:var(--vibeui-datagrid-006-field);color:var(--vibeui-datagrid-006-fg);}
+[data-vibeui-block="datagrid-006"] [data-part="bar"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed}
+[data-vibeui-block="datagrid-006"] [data-part="bar"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-datagrid-006-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid006Row[] = [
@@ -189,6 +198,86 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с фильтром в шапке каждой колонки: текстовые поля и список
  * статусов стоят под своими заголовками. Один файл, ноль зависимостей.
  */
+export type BarRow = {
+  id: string
+  client: string
+  status: "Новый" | "В работе" | "Оплачен" | "Отменён"
+  amount: number
+}
+
+const BarDEFAULT_ROWS: BarRow[] = [
+  { id: "ORD-8801", client: "Атлас", status: "Оплачен", amount: 96000 },
+  { id: "ORD-8802", client: "Берег", status: "Новый", amount: 12500 },
+  { id: "ORD-8803", client: "Ветка", status: "В работе", amount: 72000 },
+  { id: "ORD-8804", client: "Гранат", status: "Оплачен", amount: 310000 },
+  { id: "ORD-8805", client: "Дельта", status: "Отменён", amount: 7500 },
+  { id: "ORD-8806", client: "Ёлка", status: "В работе", amount: 48000 },
+  { id: "ORD-8807", client: "Атлас", status: "Новый", amount: 21400 },
+]
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  foundText?: string
+  rows?: BarRow[]
+  resetLabel?: string
+  active?: boolean
+  filtered?: readonly BarRow[]
+  setClient?: (value: string) => void
+  setOrder?: (value: string) => void
+  setStatus?: (value: string) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Заказы",
+  foundText = "Найдено {count} из {total}",
+  rows = BarDEFAULT_ROWS,
+  resetLabel = "Сбросить фильтры",
+  active = false,
+  filtered = [],
+  setClient = () => {},
+  setOrder = () => {},
+  setStatus = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-006-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="found" aria-live="polite">
+          {foundText
+            .replace("{count}", String(filtered.length))
+            .replace("{total}", String(rows.length))}
+        </p>
+        <button
+          type="button"
+          data-part="reset"
+          disabled={!active}
+          onClick={() => {
+            setOrder("")
+            setClient("")
+            setStatus("")
+          }}
+        >
+          {resetLabel}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid006({
   rows = DEFAULT_ROWS,
   caption = "Фильтры стоят в шапке: каждое поле относится к своей колонке",
@@ -248,7 +337,7 @@ export function Datagrid006({
         className={className}
         style={palette}
       >
-        <Card156 data-part="bar" heading={heading} foundText={foundText} rows={rows} resetLabel={resetLabel} active={active} filtered={filtered} setClient={setClient} setOrder={setOrder} setStatus={setStatus} accent={accent} />
+        <Bar data-part="bar" heading={heading} foundText={foundText} rows={rows} resetLabel={resetLabel} active={active} filtered={filtered} setClient={setClient} setOrder={setOrder} setStatus={setStatus} accent={accent} />
         <div
           data-part="scroll"
           role="region"

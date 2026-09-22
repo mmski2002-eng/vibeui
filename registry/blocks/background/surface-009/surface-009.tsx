@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react"
-import { Mockup013 } from "@/registry/components/mockup/mockup-013/mockup-013"
+import type { ComponentProps } from "react"
 
 export type Surface009Props = {
   /** Контент поверх фона. Без него блок показывает демонстрационный пример. */
@@ -92,6 +92,19 @@ padding:2rem clamp(1.5rem,6cqi,4rem);display:flex;flex-direction:column;
 [data-vibeui-block="surface-009"] [data-part="ghost-slab"]{min-height:16rem;padding:2.5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="surface-009"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="surface-009"] [data-part="ghost"]{display:flex;flex-direction:column;flex:1;gap:2.5rem}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="nav"]{display:flex;align-items:center;gap:0.75rem}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="mark"]{width:1.5rem;height:1.5rem;flex:none;border-radius:0.375rem;background:var(--vibeui-surface-009-ink)}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="nav"] span:not([data-part]){width:3rem;height:0.5rem;border-radius:999px;background:var(--vibeui-surface-009-ghost-soft)}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="nav"] span:last-child{margin-inline-start:auto;width:4.5rem;height:1.75rem;border-radius:0.5rem;background:var(--vibeui-surface-009-ink)}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="slab"]{position:relative;margin:auto;width:min(40rem,100%);min-height:14rem;padding:2rem;display:flex;flex-direction:column;gap:1rem;justify-content:center;border-radius:1.25rem}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="slab"] span{height:1rem;border-radius:999px;background:var(--vibeui-surface-009-ghost);width:70%}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="slab"] span:nth-child(2){width:45%}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="slab"] span:nth-child(3){height:0.625rem;width:55%;background:var(--vibeui-surface-009-ghost-soft)}
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="slab"] span:last-child{margin-top:1rem;width:7rem;height:2.5rem;border-radius:0.75rem;background:var(--vibeui-surface-009-ink)}
+@container (min-width: 48rem){
+[data-vibeui-block="surface-009"] [data-part="ghost"] [data-part="slab"]{min-height:16rem;padding:2.5rem}
+}
 `
 
 const VERTEX = `#version 300 es
@@ -147,6 +160,48 @@ color=vec4(col,1.);
 const SPEEDS = { still: 0, calm: 1, lively: 2.4 } as const
 const INTENSITIES = { faint: 0.3, soft: 0.55, bright: 1 } as const
 const FROSTS = { clear: 0.25, frosted: 0.7 } as const
+
+type GhostProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  slabRef?: ComponentProps<"div">["ref"]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Ghost({
+  slabRef,
+  accent,
+  className,
+  style,
+  ...props
+}: GhostProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-surface-009-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props} aria-hidden="true"
+        className={className}
+        style={palette}
+      >
+        <div data-part="nav">
+          <span data-part="mark" />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+        <div data-part="slab" ref={slabRef}>
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+  )
+}
 
 /** Цвет из computed-style ("rgb(r, g, b)") → три числа 0…1. */
 function toRgb(value: string, fallback: [number, number, number]) {
@@ -455,7 +510,7 @@ export function Surface009({
               {children}
             </div>
           ) : (
-            <Mockup013 data-part="ghost" slabRef={slabRef} accent={accent} />
+            <Ghost data-part="ghost" slabRef={slabRef} accent={accent} />
           )}
         </div>
       </section>

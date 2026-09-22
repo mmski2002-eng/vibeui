@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks014 } from "@/registry/components/navigation/footerlinks-014/footerlinks-014"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer042Link = {
   label: string
@@ -67,13 +66,62 @@ container-type:inline-size;
 [data-vibeui-block="footer-042"] [data-part="mark"]:hover{color:var(--vibeui-footer-042-accent);-webkit-text-stroke-color:var(--vibeui-footer-042-accent)}
 @keyframes vibeui-footer-042-pulse{0%,100%{opacity:1}50%{opacity:.35}}
 @container (min-width: 56rem){[data-vibeui-block="footer-042"] [data-part="top"]{grid-template-columns:1.2fr 2fr}[data-vibeui-block="footer-042"] [data-part="columns"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-042"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-042"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-042"] [data-part="column"] h3{margin:0 0 .8rem;font-family:var(--vibeui-footer-042-mono);font-weight:500;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-footer-042-muted)}
+[data-vibeui-block="footer-042"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.45rem}
+[data-vibeui-block="footer-042"] [data-part="column"] a{color:var(--vibeui-footer-042-fg);text-decoration:none;transition:color .2s}
+[data-vibeui-block="footer-042"] [data-part="column"] a:hover{color:var(--vibeui-footer-042-accent)}
+`
 
 const DEFAULT_COLUMNS: Footer042Column[] = [
   { title: "Продукт", links: [{ label: "Рассвет", href: "#dawn" }, { label: "Возможности", href: "#features" }, { label: "Устройство", href: "#inside" }, { label: "Характеристики", href: "#specs" }] },
   { title: "Покупка", links: [{ label: "Предзаказ", href: "#preorder" }, { label: "Доставка и гарантия", href: "#faq" }, { label: "Где посмотреть", href: "#stores" }, { label: "Для бизнеса", href: "#b2b" }] },
   { title: "Компания", links: [{ label: "О лаборатории", href: "#about" }, { label: "Прошивки", href: "#firmware" }, { label: "Поддержка", href: "#support" }, { label: "Telegram", href: "#tg" }] },
 ]
+
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  title?: string
+  links?: readonly ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Продукт",
+  links = [{ label: "Рассвет", href: "#dawn" }, { label: "Возможности", href: "#features" }, { label: "Устройство", href: "#inside" }, { label: "Характеристики", href: "#specs" }],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-042-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props} aria-label={title}
+        className={className}
+        style={palette}
+      >
+        <h3>{title}</h3>
+        <ul>
+          {links.map((link) => (
+            <li key={link.href}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+  )
+}
 
 /** Подвал гаджета с гигантским контурным знаком и статусом партии. */
 export function Footer042({
@@ -116,7 +164,7 @@ export function Footer042({
             </div>
             <div data-part="columns">
               {columns.map((column) => (
-                <Footerlinks014 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+                <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
           </div>

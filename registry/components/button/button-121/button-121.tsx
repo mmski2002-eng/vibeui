@@ -90,7 +90,7 @@ color:var(--vibeui-button-121-ink);transition:border-color var(--vibeui-button-1
 
 /** Ссылка-кнопка магазина: иконка платформы, подпись и название. */
 export function Button121({
-  href,
+  href = "#",
   name = "App Store",
   caption = "Загрузить в",
   accent,

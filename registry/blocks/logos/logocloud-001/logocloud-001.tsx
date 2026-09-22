@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Badge029 } from "@/registry/components/badge/badge-029/badge-029"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Logocloud001Item = {
   name: string
@@ -52,7 +51,7 @@ font-size:0.8125rem;font-weight:600;letter-spacing:0.14em;text-transform:upperca
 list-style:none;margin:0;padding:0;min-width:0;
 display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.25rem 2.5rem;
 }
-[data-vibeui-block="logocloud-001"] [data-part="row"] li:hover [data-vibeui-block="badge-029"]{
+[data-vibeui-block="logocloud-001"] [data-part="row"] li:hover [data-part="logo"]{
 color:var(--vibeui-logocloud-001-accent);
 }
 @container (min-width: 52rem){
@@ -62,6 +61,14 @@ grid-template-columns:auto 1fr;align-items:center;gap:2.5rem;text-align:left;pad
 [data-vibeui-block="logocloud-001"] [data-part="row"]{justify-content:space-between}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="logocloud-001"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="logocloud-001"] [data-part="logo"]{color:var(--vibeui-logocloud-001-logo);
+font-size:1.25rem;line-height:1;white-space:nowrap;
+transition:color var(--vibeui-logocloud-001-dur-2) ease;
+font-weight:750;letter-spacing:-0.035em;}
+[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="serif"]{font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:650;letter-spacing:0;}
+[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="mono"]{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-weight:600;letter-spacing:-0.02em;}
+[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="wide"]{font-size:1rem;font-weight:650;letter-spacing:0.28em;text-transform:uppercase;}
+[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="slab"]{font-weight:850;letter-spacing:-0.01em;text-transform:uppercase;}
 `
 
 const DEFAULT_ITEMS: Logocloud001Item[] = [
@@ -95,6 +102,38 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+type LogoProps = Omit<ComponentProps<"span">, "title" | "children"> & {
+  styleKey?: string
+  name?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Logo({
+  styleKey,
+  name = "Nordwind",
+  accent,
+  className,
+  style,
+  ...props
+}: LogoProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-logocloud-001-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <span
+        {...props} data-style={styleKey ?? "sans"}
+        className={className}
+        style={palette}
+      >
+        {name}
+      </span>
+  )
 }
 
 /** Полоса доверия: подпись и ряд приглушённых wordmark, оранжевых под курсором. */
@@ -132,7 +171,7 @@ export function Logocloud001({
           <ul data-part="row">
             {items.map((item) => (
               <li key={item.name}>
-                <Badge029 data-part="logo" styleKey={item.style} name={item.name} accent={accent} />
+                <Logo data-part="logo" styleKey={item.style} name={item.name} accent={accent} />
               </li>
             ))}
           </ul>

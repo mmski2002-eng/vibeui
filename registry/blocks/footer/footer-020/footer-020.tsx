@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks018 } from "@/registry/components/navigation/footerlinks-018/footerlinks-018"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer020Messenger = {
   kind?: "telegram" | "whatsapp" | "vk" | "max"
@@ -91,7 +90,11 @@ container-type:inline-size;
 [data-vibeui-block="footer-020"] [data-part="shell"]{padding:4.5rem 2rem 2rem}
 [data-vibeui-block="footer-020"] [data-part="top"]{grid-template-columns:1.4fr 1fr 1.2fr .9fr;gap:3rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-020"] *{transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-020"] *{transition:none!important}}
+[data-vibeui-block="footer-020"] [data-part="links"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+[data-vibeui-block="footer-020"] [data-part="links"] a{font-size:.95rem;opacity:.85;transition:opacity .2s,color .2s}
+[data-vibeui-block="footer-020"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-020-accent-ink)}
+`
 
 const ICONS: Record<NonNullable<Footer020Messenger["kind"]>, string | null> = {
   telegram:
@@ -100,6 +103,45 @@ const ICONS: Record<NonNullable<Footer020Messenger["kind"]>, string | null> = {
     "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z",
   vk: "M12.785 16.241s.288-.032.436-.194c.136-.148.131-.427.131-.427s-.019-1.307.577-1.5c.588-.19 1.343 1.264 2.143 1.823.604.422 1.063.33 1.063.33l2.137-.03s1.117-.071.587-.964c-.043-.073-.309-.662-1.588-1.87-1.34-1.264-1.16-1.06.454-3.246.983-1.331 1.376-2.145 1.253-2.493-.117-.332-.84-.244-.84-.244l-2.406.015s-.178-.025-.311.056c-.13.079-.213.262-.213.262s-.381 1.03-.889 1.907c-1.07 1.85-1.499 1.948-1.674 1.832-.407-.267-.305-1.075-.305-1.648 0-1.793.267-2.54-.521-2.733-.262-.065-.454-.107-1.123-.114-.858-.009-1.585.003-1.996.208-.274.136-.485.44-.356.457.159.022.518.099.709.363.246.341.237 1.107.237 1.107s.142 2.11-.33 2.371c-.325.18-.77-.187-1.725-1.865-.489-.859-.859-1.81-.859-1.81s-.071-.176-.198-.272c-.154-.115-.37-.151-.37-.151l-2.286.015s-.343.01-.469.161c-.112.135-.009.412-.009.412s1.79 4.258 3.817 6.403c1.858 1.967 3.968 1.838 3.968 1.838h.956z",
   max: null,
+}
+
+export type LinksLink = {
+  label: string
+  href: string
+}
+
+type LinksProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  links?: readonly LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  links = [ { label: "Подарочные сертификаты", href: "#" }, { label: "Банкеты и дальний зал", href: "#" }, { label: "Вакансии", href: "#" }, { label: "Политика конфиденциальности", href: "#" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-020-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
 }
 
 /** Подвал ресторана: адрес, часы по дням, телефон, мессенджеры значками и ссылки. */
@@ -211,7 +253,7 @@ export function Footer020({
             </div>
             <div>
               {linksLabel ? <span data-part="label">{linksLabel}</span> : null}
-              <Footerlinks018 data-part="links" links={links} accent={accent} />
+              <Links data-part="links" links={links} accent={accent} />
             </div>
           </div>
           <div data-part="bottom">{legal ? <p>{legal}</p> : null}</div>

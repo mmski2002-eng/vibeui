@@ -10,9 +10,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "word-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "bakery-001/bakery-001.tsx",
@@ -44,7 +42,7 @@
           "usage": "<Bakery001\n  title=\"Что на полке сейчас\"\n  products={[\n    { id: \"tartine\", name: \"Тартин\", price: \"420 ₽\", image: \"/photos/item-01.webp\", bakedAt: \"08:30\", left: 6 },\n    { id: \"croissant\", name: \"Круассан\", price: \"190 ₽\", image: \"/photos/item-02.webp\", bakedAt: \"07:00\", left: 11 },\n  ]}\n/>",
           "summary": "Товарная полка для пекарни, кофейни или лавки: лента карточек с перетаскиванием, временем выпечки и остатком; кнопка кладёт позицию в коробку через событие window.",
           "preserve": [
-            "импорты word-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "drag-to-scroll без setPointerCapture — иначе клик уходил бы в ленту, а не в кнопку; scroll-padding совпадает с отступом ленты",
             "«испечено в / будет в» и «последние N» считаются от часов посетителя через useSyncExternalStore",
             "события vibeui-box:add и vibeui-box:state связывают полку с блоком коробки без общего состояния"
@@ -110,7 +108,7 @@
             "ai": {
               "summary": "A product shelf for a bakery, café or deli: a draggable card strip with baking time and stock; the button drops an item into the box via a window event.",
               "preserve": [
-                "the word-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "drag-to-scroll without setPointerCapture — otherwise the click would land on the strip, not the button; scroll-padding matches the strip padding",
                 "“baked at / coming at” and “last N” run on the visitor's clock via useSyncExternalStore",
                 "the vibeui-box:add and vibeui-box:state events link the shelf to the box block without shared state"
@@ -155,11 +153,11 @@
                 "fullLabel": "box is full"
               }
             },
-            "docs": "A composite block: imports word-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует word-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "bakery-002",
@@ -170,9 +168,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "word-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "bakery-002/bakery-002.tsx",
@@ -205,7 +201,7 @@
           "usage": "<Bakery002\n  title=\"Насколько крепко?\"\n  drinks={[\n    { name: \"Латте\", price: \"290 ₽\", coffee: 20, milk: 62, foam: 10, volume: \"350 мл\" },\n    { name: \"Эспрессо\", price: \"160 ₽\", coffee: 30, milk: 0, foam: 0, volume: \"60 мл\" },\n  ]}\n  beanImage=\"/photos/beans.webp\"\n/>",
           "summary": "Интерактивное кофейное меню: один ползунок вместо списка, стакан показывает состав напитка. Подходит кофейне, обжарщику, бару.",
           "preserve": [
-            "импорты word-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "фото напитков лежат стопкой img[data-active], активное — opacity 1 и scale 1, смена с keyframes sip; без фото — слои стакана с transition по height и bottom",
             "высота стакана уменьшается к крепким напиткам: 10rem + шаг 1.75rem на позицию",
             "пар — три размытых пятна на keyframes, выключается prefers-reduced-motion"
@@ -270,7 +266,7 @@
             "ai": {
               "summary": "An interactive coffee menu: one slider instead of a list, the cup shows what is inside. Fits a café, a roaster, a bar.",
               "preserve": [
-                "the word-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "drink photos are stacked img[data-active], the active one has opacity 1 and scale 1, switching runs the sip keyframes; without photos the cup layers transition height and bottom",
                 "the cup gets shorter towards strong drinks: 10rem + a 1.75rem step per position",
                 "steam is three blurred blobs on keyframes, disabled by prefers-reduced-motion"
@@ -363,11 +359,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports word-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует word-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "bakery-003",
@@ -378,9 +374,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "word-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "bakery-003/bakery-003.tsx",
@@ -414,7 +408,7 @@
           "usage": "<Bakery003\n  title=\"Соберите коробку к утру\"\n  products={[\n    { id: \"tartine\", name: \"Тартин\", price: 420, image: \"/photos/item-01.webp\" },\n    { id: \"croissant\", name: \"Круассан\", price: 190, image: \"/photos/item-02.webp\" },\n  ]}\n  howImage=\"/photos/box.webp\"\n/>",
           "summary": "Предзаказ набора без корзины: человек собирает коробку глазами, видит сумму и заказывает к утру. Для пекарни, цветочной, сырной лавки.",
           "preserve": [
-            "импорты word-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "крышка — rotateX от -100deg к 0 с perspective на сцене, штамп вылетает с перелётом после закрытия",
             "события vibeui-box:add (вход) и vibeui-box:state (выход) — связь с полкой без общего состояния",
             "кнопка заказа заблокирована, пока коробка не полна; карточка тянется на высоту колонки, подсказка прижата к низу"
@@ -480,7 +474,7 @@
             "ai": {
               "summary": "A set preorder without a cart: the person fills a box visually, sees the total and orders for the morning. For a bakery, a flower shop, a cheese deli.",
               "preserve": [
-                "the word-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the lid is rotateX from -100deg to 0 with perspective on the scene, the stamp pops in with overshoot after closing",
                 "the vibeui-box:add (in) and vibeui-box:state (out) events link it to the shelf without shared state",
                 "the order button stays disabled until the box is full; the card stretches to the column height with the note pinned to the bottom"
@@ -593,11 +587,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports word-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует word-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "bakery-004",
@@ -1353,9 +1347,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-078"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "charity-003/charity-003.tsx",
@@ -1387,7 +1379,7 @@
           "usage": "<Charity003\n  title=\"Куда ушёл каждый рубль\"\n  years={[\n    { year: \"2025\", note: \"аудит пройден\", items: [{ label: \"Продукты и лекарства\", value: 9640000 }, { label: \"Соцработники\", value: 6120000 }] },\n  ]}\n/>",
           "summary": "Кольцевая диаграмма расходов по годам: сегменты растут при появлении и перетекают при смене года, штамп «0 % на рекламу».",
           "preserve": [
-            "импорты button-078 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "сегменты — circle с pathLength=100, stroke-dasharray «len 100» и stroke-dashoffset −start, transition 1.4s на оба свойства",
             "рост из нуля включается data-in после IntersectionObserver (threshold .3); при reduce-motion dasharray сразу целевой",
             "цвета сегментов — --c1…--c6 из акцента и чернил через color-mix, легенда берёт тот же индекс"
@@ -1460,7 +1452,7 @@
             "ai": {
               "summary": "A donut of expenses by year: segments grow on appear and morph on year change, a “0% on ads” stamp.",
               "preserve": [
-                "the button-078 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "segments are circles with pathLength=100, stroke-dasharray “len 100” and stroke-dashoffset −start, a 1.4s transition on both",
                 "growth from zero starts with data-in after IntersectionObserver (threshold .3); the dasharray is final at once under reduce-motion",
                 "segment colours are --c1…--c6 mixed from the accent and ink via color-mix, the legend uses the same index"
@@ -1587,11 +1579,11 @@
                 "reportLabel": "Open the annual report (PDF)"
               }
             },
-            "docs": "A composite block: imports button-078 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-078 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "charity-004",
@@ -2648,9 +2640,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-080"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "delivery-003/delivery-003.tsx",
@@ -2683,7 +2673,7 @@
           "usage": "<Delivery003\n  title=\"Тапни свой квартал\"\n  zones={[\n    { id: \"near\", name: \"Центр\", minutes: 25, fee: 0, freeFrom: 0 },\n    { id: \"mid\", name: \"Внутри ТТК\", minutes: 35, fee: 149, freeFrom: 1500 },\n    { id: \"far\", name: \"До МКАД\", minutes: 50, fee: 249, freeFrom: 2500 },\n  ]}\n  addresses={[{ label: \"Тверская, 12\", zone: \"near\" }, { label: \"Сокол\", zone: \"mid\" }]}\n/>",
           "summary": "Карта зон доставки на SVG-кварталах: клик или адрес показывают, за сколько и почём привезём.",
           "preserve": [
-            "импорты button-080 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "BLOCKS считаются один раз на уровне модуля: сетка 13×9, кварталы у реки (riverX) пропускаются, зона — по расстоянию от CENTER",
             "rect кварталов — tabIndex 0, role button, Enter/Space вызывают choose; data-on подсвечивает всю выбранную зону",
             "choose шлёт vibeui-cart:zone с detail { label, minutes, fee, freeFrom }; кольца-пульс — три circle с keyframes ring и задержками"
@@ -2756,7 +2746,7 @@
             "ai": {
               "summary": "A delivery-area map of SVG blocks: a click or an address shows how fast and for how much we deliver.",
               "preserve": [
-                "the button-080 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "BLOCKS are computed once at module level: a 13×9 grid, blocks near the river (riverX) are skipped, zone by distance from CENTER",
                 "block rects have tabIndex 0, role button, Enter/Space call choose; data-on highlights the whole chosen zone",
                 "choose emits vibeui-cart:zone with detail { label, minutes, fee, freeFrom }; pulse rings are three circles with ring keyframes and delays"
@@ -2852,11 +2842,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports button-080 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-080 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "delivery-004",
@@ -3523,9 +3513,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-086"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "flowers-002/flowers-002.tsx",
@@ -3557,7 +3545,7 @@
           "usage": "<Flowers002\n  vaseImage=\"/photos/vase.png\"\n  title=\"Букет по вашему рецепту\"\n  flowers={[\n    { name: \"Пион\", price: 390, days: 6, color: \"#e9a3b6\", kind: \"peony\", image: \"/photos/stem-peony.png\", initial: 3 },\n    { name: \"Мак\", price: 190, days: 4, color: \"#c2361d\", kind: \"poppy\" },\n  ]}\n  wrapPrice={300}\n  formHref=\"#delivery\"\n/>",
           "summary": "Конструктор с визуальным результатом и расчётом: стебли встают в вазу, цена и срок жизни пересчитываются, состав уходит в форму событием.",
           "preserve": [
-            "импорты card-086 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "с фото: img[data-part=photo] вращается от нижней точки (transform-origin 50% 100%) на --a и масштабируется на --lift, ваза [data-part=jar] стоит спереди с z-index",
             "каждый стебель — g[data-part=stem] с --vibeui-flowers-002-a (угол) и --vibeui-flowers-002-l (длина): rotate и stroke-dasharray в transition .6s, появление — keyframes grow от горлышка (transform-origin 160px 272px)",
             "срок жизни — минимум days среди выбранных цветов; время сборки: ≤6 стеблей — 40 мин, ≤14 — 1,5 ч, дальше — 3 ч",
@@ -3641,7 +3629,7 @@
             "ai": {
               "summary": "A builder with a visual result and a calculation: stems stand in the vase, price and lifetime recompute, the composition goes to the form via an event.",
               "preserve": [
-                "the card-086 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "with photos: img[data-part=photo] rotates from its bottom point (transform-origin 50% 100%) by --a and scales by --lift, the [data-part=jar] vase stands in front with z-index",
                 "each stem is g[data-part=stem] with --vibeui-flowers-002-a (angle) and --vibeui-flowers-002-l (length): rotate and stroke-dasharray transition .6s, entrance is the grow keyframes from the neck (transform-origin 160px 272px)",
                 "lifetime is the minimum days among chosen flowers; assembly time: ≤6 stems — 40 min, ≤14 — 1.5 h, more — 3 h",
@@ -3746,11 +3734,11 @@
                 "orderLabel": "Order this bouquet"
               }
             },
-            "docs": "A composite block: imports card-086 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует card-086 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "flowers-003",
@@ -4659,9 +4647,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-083"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "auto-002/auto-002.tsx",
@@ -4693,7 +4679,7 @@
           "usage": "<Auto002\n  pairs={[{ label: \"Кузов\", before: \"/photos/before-body.webp\", after: \"/photos/after-body.webp\", work: \"Полировка и керамика.\", time: \"2 дня\" }]}\n/>",
           "summary": "До/после для автосервиса: шторка сравнения с перетаскиванием, вкладки по зонам машины.",
           "preserve": [
-            "импорты button-083 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "положение шторки — state position (0–100) в --vibeui-auto-002-pos, «до» режется clip-path:inset(0 calc(100% - pos) 0 0)",
             "перетаскивание — pointerdown ставит setPointerCapture и флаг в ref, pointermove двигает только при флаге; touch-action:pan-y",
             "range лежит поверх с opacity:0 и pointer-events:none — только для клавиатуры, фокус подсвечивает контейнер через :has"
@@ -4767,7 +4753,7 @@
             "ai": {
               "summary": "Before/after for a car service: a draggable comparison curtain, tabs by car zone.",
               "preserve": [
-                "the button-083 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the curtain position is a position state (0–100) in --vibeui-auto-002-pos, “before” is cut by clip-path:inset(0 calc(100% - pos) 0 0)",
                 "dragging: pointerdown sets setPointerCapture and a ref flag, pointermove moves only with the flag; touch-action:pan-y",
                 "the range sits on top with opacity:0 and pointer-events:none — keyboard only, focus highlights the container via :has"
@@ -4836,11 +4822,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports button-083 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-083 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "auto-003",
@@ -5205,9 +5191,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-089"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "course-001/course-001.tsx",
@@ -5215,7 +5199,7 @@
           "target": "@components/vibeui/course-001.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-089 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради активной плитки. <ul role=tablist> из <li> с flex:1; активная — flex-grow:3 и заливка fg, переход .6s cubic-bezier. Знак — span с font-size до 12rem и opacity .12 (.22 у активной). Кнопка role=tab с aria-selected занимает плитку, onMouseEnter/onFocus/onClick меняют индекс. Панель монтируется только у активной: @keyframes въезд и каскад пунктов --n×70ms. До 56rem (container query) плитки колонкой, активная растёт по высоте; от 56rem ряд высотой 26rem, подписи неактивных — writing-mode:vertical-rl. Палитра --vibeui-course-001-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради активной плитки. <ul role=tablist> из <li> с flex:1; активная — flex-grow:3 и заливка fg, переход .6s cubic-bezier. Знак — span с font-size до 12rem и opacity .12 (.22 у активной). Кнопка role=tab с aria-selected занимает плитку, onMouseEnter/onFocus/onClick меняют индекс. Панель монтируется только у активной: @keyframes въезд и каскад пунктов --n×70ms. До 56rem (container query) плитки колонкой, активная растёт по высоте; от 56rem ряд высотой 26rem, подписи неактивных — writing-mode:vertical-rl. Палитра --vibeui-course-001-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -5244,7 +5228,7 @@
           "usage": "<Course001\n  title=\"Курс подстраивается под то, откуда вы приходите\"\n  personas={[\n    { label: \"Начинаю с нуля\", glyph: \"0\", title: \"Вы никогда не открывали Figma\", text: \"Начнём с сетки и компонентов.\", outcomes: [\"Три экрана приложения\", \"Первый проект в портфолио\"], note: \"с нуля до первого проекта\" },\n  ]}\n/>",
           "summary": "Самодостаточная секция «для кого» для курса, сервиса или продукта с несколькими аудиториями: раздвигающиеся плитки-персоны с гигантским знаком и списком результатов. Персоны — массив пропсом.",
           "preserve": [
-            "импорты card-089 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "горизонтальный аккордеон: активная плитка растёт втрое, остальные сжимаются до подписи",
             "гигантский знак-глиф на фоне плитки",
             "каскад галочек при раскрытии"
@@ -5295,11 +5279,11 @@
           "en": {
             "title": "Who it’s for: expanding tiles",
             "description": "“Who it’s for”: three tiles in a row with a giant glyph behind — “0”, “→”, “PM”. The chosen one expands threefold and shows a description and a checklist of outcomes, the rest shrink to a vertical label. Switch on hover, click and keyboard.",
-            "docs": "A composite block: imports card-089 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the active tile. A <ul role=tablist> of <li> with flex:1; the active one gets flex-grow:3 and an fg fill, a .6s cubic-bezier transition. The glyph is a span up to 12rem with opacity .12 (.22 when active). A role=tab button with aria-selected fills the tile; onMouseEnter/onFocus/onClick change the index. The panel mounts only in the active tile: a @keyframes slide-in and a --n×70ms cascade of items. Below 56rem (container query) tiles stack and the active one grows in height; from 56rem a 26rem-tall row, inactive labels in writing-mode:vertical-rl. Palette --vibeui-course-001-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the active tile. A <ul role=tablist> of <li> with flex:1; the active one gets flex-grow:3 and an fg fill, a .6s cubic-bezier transition. The glyph is a span up to 12rem with opacity .12 (.22 when active). A role=tab button with aria-selected fills the tile; onMouseEnter/onFocus/onClick change the index. The panel mounts only in the active tile: a @keyframes slide-in and a --n×70ms cascade of items. Below 56rem (container query) tiles stack and the active one grows in height; from 56rem a 26rem-tall row, inactive labels in writing-mode:vertical-rl. Palette --vibeui-course-001-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained “who it’s for” section for a course, service or multi-audience product: expanding persona tiles with a giant glyph and an outcomes list. Personas come in as a prop array.",
               "preserve": [
-                "the card-089 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the horizontal accordion: the active tile grows threefold, the rest shrink to a label",
                 "the giant glyph behind each tile",
                 "the cascade of checkmarks on expand"
@@ -9743,9 +9727,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-089"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "fintech-001/fintech-001.tsx",
@@ -9778,7 +9760,7 @@
           "usage": "<Fintech001\n  title=\"Деньги видно сразу\"\n  periods={[{ label: \"Неделя\", balance: 1284650, delta: \"+12,4 %\", points: [40, 44, 50, 55, 61, 66, 78], operations: [{ title: \"Ozon · выплата\", note: \"чт\", amount: 184300 }] }]}\n/>",
           "summary": "Живой виджет баланса для финтеха: area-график рисуется при появлении, операции по одной, переключатель периода морфит линию.",
           "preserve": [
-            "импорты button-089 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "появление — IntersectionObserver с threshold .3 ставит data-visible, линия анимируется stroke-dashoffset 1 → 0 при pathLength=1, область — opacity с задержкой",
             "морфинг — точки и баланс интерполируются 700 мс с ease-out через requestAnimationFrame, from берётся из ref, чтобы прерванная анимация продолжалась с текущего места",
             "операции — li с --vibeui-fintech-001-i и animation-delay, ul перемонтируется по key периода; базовая задержка 1s при первом появлении и .1s после клика"
@@ -9851,7 +9833,7 @@
             "ai": {
               "summary": "A live balance widget for fintech: the area chart draws on appear, operations one by one, the period switch morphs the line.",
               "preserve": [
-                "the button-089 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "appearance — an IntersectionObserver with threshold .3 sets data-visible, the line animates stroke-dashoffset 1 → 0 with pathLength=1, the area fades in with a delay",
                 "morphing — points and balance interpolate over 700 ms with ease-out via requestAnimationFrame, the from value comes from a ref so an interrupted animation continues from where it is",
                 "operations are li with --vibeui-fintech-001-i and animation-delay, the ul remounts by the period key; the base delay is 1s on first appearance and .1s after a click"
@@ -10042,11 +10024,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports button-089 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-089 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "fintech-002",
@@ -10441,9 +10423,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-100"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "gadget-001/gadget-001.tsx",
@@ -10478,7 +10458,7 @@
           "usage": "<Gadget001\n  image=\"/photos/lamp-front.png\"\n  title=\"Рассвет за тридцать минут — прямо на столе\"\n  startTime=\"05:30\"\n  endTime=\"06:00\"\n  steps={[{ at: 0, label: \"05:30 · 1 %\", text: \"Тусклый красный, как угли.\" }]}\n/>",
           "summary": "Sticky-сцена по прокрутке: комната светлеет от ночи к утру, лампа разгорается, часы идут.",
           "preserve": [
-            "импорты card-100 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "прогресс = -rect.top / (высота трека − высота окна), считается в requestAnimationFrame по scroll/resize и уходит в переменные -p, -night, -dawn, -day",
             "слои комнаты меняют только opacity и transform: ночные гаснут, дневные проявляются, солнце поднимается translateY",
             "трек min-height: screens × 100svh, сцена position:sticky с min/max-height 100svh; время считается из startTime/endTime по прогрессу"
@@ -10553,7 +10533,7 @@
             "ai": {
               "summary": "A sticky scroll scene: the room brightens from night to morning, the lamp glows up, the clock runs.",
               "preserve": [
-                "the card-100 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "progress = -rect.top / (track height − viewport height), computed in requestAnimationFrame on scroll/resize and pushed into the -p, -night, -dawn, -day variables",
                 "room layers change only opacity and transform: night layers fade out, day layers fade in, the sun rises with translateY",
                 "the track is min-height: screens × 100svh, the stage is position:sticky with min/max-height 100svh; the time is derived from startTime/endTime by progress"
@@ -10616,11 +10596,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports card-100 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует card-100 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "gadget-002",
@@ -11247,9 +11227,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-091"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "language-002/language-002.tsx",
@@ -11280,7 +11258,7 @@
           "usage": "<Language002\n  title=\"Группы, которые стартуют этой осенью\"\n  languages={[{ code: \"en\", label: \"Английский\" }]}\n  levels={[\"A1\", \"A2\", \"B1\"]}\n  groups={[{ lang: \"en\", level: \"A1\", day: 2, time: \"19:30\", start: \"2026-10-05\", teacher: \"Анна\", seats: 3 }]}\n/>",
           "summary": "Расписание групп для школы: сетка неделя × время, фильтры, ближайший старт от сегодняшней даты, подписка на тест уровня.",
           "preserve": [
-            "импорты button-091 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "время — useSyncExternalStore с модульным снимком минуты и серверным null: до гидрации в карточке «считаем…», потом «через N дней»",
             "сетка — grid 3.2rem + 7 колонок от 60rem, строка — display:contents; на узком заголовки скрыты, пустые ячейки display:none, подпись «день · время» через ::before",
             "фильтр уровня выставляется из window-события vibeui-language:level, если уровень есть в levels"
@@ -11346,7 +11324,7 @@
             "ai": {
               "summary": "A group schedule for a school: a week × time grid, filters, the next start from today's date, subscribed to the level test.",
               "preserve": [
-                "the button-091 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "time comes from useSyncExternalStore with a module-level minute snapshot and a server null: “counting…” before hydration, then “in N days”",
                 "the grid is 3.2rem + 7 columns from 60rem, a row is display:contents; on narrow headers hide, empty cells are display:none, the “day · time” label is a ::before",
                 "the level filter is set from the window event vibeui-language:level when the level exists in levels"
@@ -11575,11 +11553,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports button-091 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-091 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "language-003",
@@ -11788,9 +11766,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-092"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "market-001/market-001.tsx",
@@ -11824,7 +11800,7 @@
           "usage": "<Market001\n  title=\"Что покупают на этой неделе\"\n  kinds={[{ key: \"figma\", label: \"Figma\" }, { key: \"fonts\", label: \"Шрифты\" }]}\n  products={[{ name: \"Атлас — UI-кит\", author: \"Лена\", kind: \"figma\", price: 2490, image: \"/covers/atlas.webp\", downloads: 4210 }]}\n/>",
           "summary": "Витрина товаров с живыми фильтрами: FLIP-перестановка, пролистывание обложек, спотлайт, быстрый просмотр с лицензиями.",
           "preserve": [
-            "импорты button-092 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "FLIP: snapshot() пишет rect каждой карточки до setState, useLayoutEffect после считает дельту и играет element.animate от инверсного translate к none; при reduce-motion пропускается",
             "кадры — три img с data-k, keyframes f0/f1/f2 по 2.4s steps(1); без своих frames кадры 1 и 2 — увеличенные кропы обложки (data-crop)",
             "панель быстрого просмотра — grid-template-rows 0fr→1fr, лицензия одна на все карточки, «В набор» dispatch'ит addEvent с detail {name, price, kind, image, license}"
@@ -11897,7 +11873,7 @@
             "ai": {
               "summary": "A product showcase with live filters: FLIP reordering, cover flipping, spotlight, quick view with licenses.",
               "preserve": [
-                "the button-092 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "FLIP: snapshot() records each card's rect before setState, useLayoutEffect afterwards computes the delta and plays element.animate from the inverse translate to none; skipped under reduce-motion",
                 "frames are three img with data-k, keyframes f0/f1/f2 at 2.4s steps(1); without own frames, frames 1 and 2 are zoomed crops of the cover (data-crop)",
                 "the quick-view panel is grid-template-rows 0fr→1fr, one license for all cards, “Add to bundle” dispatches addEvent with detail {name, price, kind, image, license}"
@@ -12060,11 +12036,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports button-092 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-092 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "market-002",
@@ -12501,9 +12477,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-093"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "restaurant-003/restaurant-003.tsx",
@@ -12511,7 +12485,7 @@
           "target": "@components/vibeui/restaurant-003.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует button-093 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради табов и фото. Табы role=tab с aria-selected; под активным — плашка (li data-part=pill), её позиция и размер меряются в useLayoutEffect по offsetLeft/offsetWidth кнопки и пишутся прямо в style плашки (без состояния), переезд transform/width за .5s, ResizeObserver перемеряет на ресайз. Список пересобирается с новым key на смену раздела — @keyframes с задержкой --n×60ms. Строка блюда: название серифом, лидер — flex:1 с пунктирной нижней границей, цена nowrap. Метки получают data-kind по началу слова (вег/hot/шеф) и свой цвет. Фото — один <img> position:fixed, координаты курсора пишутся в CSS-переменные --x/--y на onMouseMove без ререндера; на устройствах без hover скрыт. Сетка блюд в две колонки от 48rem (container query). Палитра --vibeui-restaurant-003-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради табов и фото. Табы role=tab с aria-selected; под активным — плашка (li data-part=pill), её позиция и размер меряются в useLayoutEffect по offsetLeft/offsetWidth кнопки и пишутся прямо в style плашки (без состояния), переезд transform/width за .5s, ResizeObserver перемеряет на ресайз. Список пересобирается с новым key на смену раздела — @keyframes с задержкой --n×60ms. Строка блюда: название серифом, лидер — flex:1 с пунктирной нижней границей, цена nowrap. Метки получают data-kind по началу слова (вег/hot/шеф) и свой цвет. Фото — один <img> position:fixed, координаты курсора пишутся в CSS-переменные --x/--y на onMouseMove без ререндера; на устройствах без hover скрыт. Сетка блюд в две колонки от 48rem (container query). Палитра --vibeui-restaurant-003-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -12536,7 +12510,7 @@
           "usage": "<Restaurant003\n  title=\"Что готовим этой осенью\"\n  sections={[\n    { title: \"Закуски\", note: \"Хлеб печём сами\", dishes: [\n      { name: \"Тартар из оленины\", text: \"можжевельник, желток, ржаные чипсы\", price: \"890 ₽\", tags: [\"шеф\"], image: \"/photos/dish-02.webp\" },\n    ] },\n  ]}\n  fullLabel=\"Полное меню в PDF\"\n  fullHref=\"/menu.pdf\"\n/>",
           "summary": "Самодостаточное меню для ресторана, бара или кафе: разделы табами, блюда с ценами и метками, фото блюда у курсора. Разделы и блюда — массив пропсом.",
           "preserve": [
-            "импорты button-093 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "точечный лидер между названием и ценой — классическая ресторанная строка",
             "плашку, переезжающую под активный таб, и каскадное появление блюд при смене раздела",
             "фото у курсора через CSS-переменные, а не через состояние: без ререндеров на каждое движение мыши"
@@ -12594,11 +12568,11 @@
           "en": {
             "title": "Menu with sections and a cursor photo",
             "description": "A restaurant menu: sections as tabs, dishes as a list with a dotted leader to the price, ingredients and “spicy”, “veg”, “chef” tags. A pill under the active tab slides to the chosen one; switching a section cascades the dishes in; hovering a dish floats its photo by the cursor.",
-            "docs": "A composite block: imports button-093 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for tabs and the photo. Tabs are role=tab with aria-selected; under the active one a pill (li data-part=pill) whose position and size are measured in useLayoutEffect from the button's offsetLeft/offsetWidth and written straight into the pill's style (no state), sliding via transform/width over .5s, a ResizeObserver re-measures on resize. The list remounts with a new key on a section change — @keyframes with a --n×60ms delay. A dish row: a serif name, the leader is flex:1 with a dotted bottom border, the price nowrap. Tags get data-kind by the word start (veg/hot/chef) and their colour. The photo is one position:fixed <img>; cursor coordinates go into the --x/--y CSS variables on onMouseMove without re-rendering; hidden on devices without hover. Two dish columns from 48rem (container query). Palette --vibeui-restaurant-003-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for tabs and the photo. Tabs are role=tab with aria-selected; under the active one a pill (li data-part=pill) whose position and size are measured in useLayoutEffect from the button's offsetLeft/offsetWidth and written straight into the pill's style (no state), sliding via transform/width over .5s, a ResizeObserver re-measures on resize. The list remounts with a new key on a section change — @keyframes with a --n×60ms delay. A dish row: a serif name, the leader is flex:1 with a dotted bottom border, the price nowrap. Tags get data-kind by the word start (veg/hot/chef) and their colour. The photo is one position:fixed <img>; cursor coordinates go into the --x/--y CSS variables on onMouseMove without re-rendering; hidden on devices without hover. Two dish columns from 48rem (container query). Palette --vibeui-restaurant-003-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained menu for a restaurant, bar or cafe: sections as tabs, dishes with prices and tags, a dish photo by the cursor. Sections and dishes come in as a prop array.",
               "preserve": [
-                "the button-093 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the dotted leader between name and price — the classic restaurant line",
                 "the pill sliding under the active tab and the cascading dish appearance on a section change",
                 "the cursor photo via CSS variables, not state: no re-render on every mouse move"
@@ -12979,9 +12953,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-095"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "api-001/api-001.tsx",
@@ -13013,7 +12985,7 @@
           "usage": "<Api001\n  title=\"Попробуйте без ключа\"\n  suggestions={[\"Москва, Тверская, 7\"]}\n  places={[{ keys: [\"тверская\"], address: \"Москва, Тверская улица, 7\", city: \"Москва\", lat: 55.759853, lon: 37.610127, x: 50, y: 48, precision: \"house\", latency: 38 }]}\n/>",
           "summary": "Песочница для API геокодирования: ввёл адрес — точка на карте и JSON без бэкенда.",
           "preserve": [
-            "импорты button-095 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "точка позиционируется transform с cqw/cqh от карты (container-type:size), переход .9s cubic-bezier",
             "ответ приходит через 700 мс после отправки: pending → setTimeout в эффекте → result и count+1",
             "строки JSON и кольцо-пинг перемонтируются по key={count}, чтобы анимация повторялась"
@@ -13087,7 +13059,7 @@
             "ai": {
               "summary": "A sandbox for a geocoding API: type an address — a dot on the map and JSON, no backend.",
               "preserve": [
-                "the button-095 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the dot is positioned with transform in cqw/cqh of the map (container-type:size), a .9s cubic-bezier transition",
                 "the response lands 700 ms after send: pending → setTimeout in an effect → result and count+1",
                 "JSON lines and the ping ring remount via key={count} so the animation replays"
@@ -13196,11 +13168,11 @@
                 "note": "The sandbox answers with canned data: no key needed, the quota is not spent."
               }
             },
-            "docs": "A composite block: imports button-095 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-095 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "api-002",
@@ -13752,9 +13724,7 @@
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-096"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "opensource-001/opensource-001.tsx",
@@ -13784,7 +13754,7 @@
           "usage": "<Opensource001\n  title=\"Попробуйте, не устанавливая\"\n  rows={[\n    { name: \"invoice.pdf\", type: \"pdf\", size: 412, updated: \"сегодня\" },\n    { name: \"logo.svg\", type: \"image\", size: 18, updated: \"вчера\" },\n  ]}\n/>",
           "summary": "Интерактивная демонстрация API для библиотеки: человек щёлкает опции и видит и код, и результат. Данные и опции — пропсами.",
           "preserve": [
-            "импорты button-096 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "сниппет подсвечен через <b>/<i>/<u> без внешних библиотек; новые строки анимируются появлением",
             "таблица настоящая: thead, строки групп colSpan, зебра через nth-child, плотность через data-compact",
             "сортировка — копия массива по size desc; группировка — Set типов в порядке появления"
@@ -13850,7 +13820,7 @@
             "ai": {
               "summary": "An interactive API demo for a library: the person clicks options and sees both the code and the result. Data and options come as props.",
               "preserve": [
-                "the button-096 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the snippet is highlighted via <b>/<i>/<u> with no external libraries; new lines animate in",
                 "the table is real: thead, colSpan group rows, zebra via nth-child, density via data-compact",
                 "sorting is an array copy by size desc; grouping is a Set of types in order of appearance"
@@ -13934,11 +13904,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports button-096 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-096 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "podcast-001",

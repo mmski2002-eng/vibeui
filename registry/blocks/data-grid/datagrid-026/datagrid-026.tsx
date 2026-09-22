@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card173 } from "@/registry/components/card/card-173/card-173"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid026Row = {
@@ -106,6 +105,12 @@ font-size:0.625rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercas
 background:var(--vibeui-datagrid-026-accent);color:oklch(from var(--vibeui-datagrid-026-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-026"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-026"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-026-border);}
+[data-vibeui-block="datagrid-026"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-026"] [data-part="bar"] [data-part="mode"]{display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-026-muted);cursor:pointer;}
+[data-vibeui-block="datagrid-026"] [data-part="bar"] [data-part="mode"] input{accent-color:var(--vibeui-datagrid-026-accent);margin:0;width:0.9375rem;height:0.9375rem}
+[data-vibeui-block="datagrid-026"] [data-part="bar"] [data-part="mode"] input:focus-visible{outline:2px solid var(--vibeui-datagrid-026-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid026Row[] = [
@@ -200,6 +205,50 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с закреплённой строкой сравнения: выбранный эталон липнет под
  * шапкой, остальные строки показывают отклонение. Один файл.
  */
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  deltaToggleText?: string
+  deltas?: boolean
+  setDeltas?: (value: boolean) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Сравнение моделей",
+  deltaToggleText = "Показывать отклонение",
+  deltas,
+  setDeltas = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-026-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <label data-part="mode">
+          <input
+            type="checkbox"
+            checked={deltas}
+            onChange={(event) => setDeltas(event.target.checked)}
+          />
+          {deltaToggleText}
+        </label>
+      </div>
+  )
+}
+
 export function Datagrid026({
   rows = DEFAULT_ROWS,
   caption = "Выберите эталон радиокнопкой — остальные строки покажут отклонение",
@@ -284,7 +333,7 @@ export function Datagrid026({
         className={className}
         style={palette}
       >
-        <Card173 data-part="bar" heading={heading} deltaToggleText={deltaToggleText} deltas={deltas} setDeltas={setDeltas} accent={accent} />
+        <Bar data-part="bar" heading={heading} deltaToggleText={deltaToggleText} deltas={deltas} setDeltas={setDeltas} accent={accent} />
         <form
           data-part="scroll"
           role="region"

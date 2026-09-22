@@ -70,7 +70,7 @@ export function Slider013({
   max = 100,
   step = 1,
   onChange,
-  surface,
+  surface = "Голый ползунок",
   glow = false,
   accent,
   className,

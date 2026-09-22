@@ -69,12 +69,12 @@ const STYLES = `
 /** Карточка бригады в духе штатного расписания: номер, имя, должность, разряд и стаж таблицей. */
 export function Card059({
   name = "Ринат Валеев",
-  photo,
+  photo = "/demo/realty/object-01.webp",
   role = "Плотник, монтаж",
   years,
   objects,
-  text,
-  now,
+  text = "Карточка штатного расписания",
+  now = "Карточка штатного расписания",
   yearsLine = "стаж {n} лет",
   objectsLine = "сдано {n}",
   nowLabel = "сейчас",

@@ -181,7 +181,6 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-navbar-009-accent) 22%,tran
 display:flex;gap:0.5rem;flex:1 1 100%;
 }
 
-
 [data-vibeui-block="navbar-009"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-009-accent);outline-offset:3px;
 }
@@ -212,41 +211,6 @@ function PinIcon() {
         strokeLinejoin="round"
       />
       <circle cx="8" cy="6.4" r="1.7" stroke="currentColor" strokeWidth="1.6" />
-    </svg>
-  )
-}
-
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path
-        d="M5.2 3h2.1l1.2 3-1.6 1.2a9.4 9.4 0 0 0 4.9 4.9L13 10.5l3 1.2v2.1c0 .9-.8 1.6-1.7 1.5C8.1 14.8 5.2 11.9 4.7 5.7 4.6 4.8 5.3 3 5.2 3Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function CalendarIcon() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <rect
-        x="3"
-        y="4.5"
-        width="14"
-        height="12.5"
-        rx="2.5"
-        stroke="currentColor"
-        strokeWidth="1.7"
-      />
-      <path
-        d="M3 8.5h14M7 2.8v3M13 2.8v3"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-      />
     </svg>
   )
 }

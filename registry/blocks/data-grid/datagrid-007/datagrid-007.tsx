@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card157 } from "@/registry/components/card/card-157/card-157"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid007Row = {
@@ -103,6 +102,14 @@ margin-inline-start:auto;font-variant-numeric:tabular-nums;font-size:0.8125rem;
 [data-vibeui-block="datagrid-007"] [data-part="owner"]{color:var(--vibeui-datagrid-007-muted)}
 [data-vibeui-block="datagrid-007"] tfoot td{background:var(--vibeui-datagrid-007-head);font-weight:650}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-007"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-007"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-007-border);}
+[data-vibeui-block="datagrid-007"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-007"] [data-part="bar"] button{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.3125rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-007-border);
+background:var(--vibeui-datagrid-007-field);color:var(--vibeui-datagrid-007-fg);}
+[data-vibeui-block="datagrid-007"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-007-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid007Row[] = [
@@ -148,6 +155,50 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с группировкой строк: у каждой группы строка-заголовок с итогом
  * и сворачиванием. Один файл, ноль зависимостей, собственная палитра.
  */
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  collapseAllLabel?: string
+  expandAllLabel?: string
+  names?: readonly string[]
+  setClosed?: (value: string[]) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Трудозатраты, спринт 14",
+  collapseAllLabel = "Свернуть все",
+  expandAllLabel = "Развернуть все",
+  names = [],
+  setClosed = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-007-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <button type="button" onClick={() => setClosed([...names])}>
+          {collapseAllLabel}
+        </button>
+        <button type="button" onClick={() => setClosed([])}>
+          {expandAllLabel}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid007({
   rows = DEFAULT_ROWS,
   caption = "Часы по задачам, сгруппированные по направлению",
@@ -207,7 +258,7 @@ export function Datagrid007({
         className={className}
         style={palette}
       >
-        <Card157 data-part="bar" names={names} heading={heading} collapseAllLabel={collapseAllLabel} expandAllLabel={expandAllLabel} setClosed={setClosed} accent={accent} />
+        <Bar data-part="bar" names={names} heading={heading} collapseAllLabel={collapseAllLabel} expandAllLabel={expandAllLabel} setClosed={setClosed} accent={accent} />
         <div
           data-part="scroll"
           role="region"

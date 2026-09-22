@@ -10,9 +10,7 @@
         "logos"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "badge-029"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "logocloud-001/logocloud-001.tsx",
@@ -20,7 +18,7 @@
           "target": "@components/vibeui/logocloud-001.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует badge-029 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-logocloud-001-*. Серверный компонент. Логотипы — текстовые wordmark в разных гарнитурах (data-style: sans, serif, mono, wide, slab): одинаковый шрифт сразу выдал бы, что логотипы ненастоящие. В покое ряд приглушён серым и читается фоном, под курсором wordmark загорается акцентом. В узкой колонке подпись и ряд центрированы стопкой, от 52cqi подпись уходит влево, ряд — вправо (container queries).",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-logocloud-001-*. Серверный компонент. Логотипы — текстовые wordmark в разных гарнитурах (data-style: sans, serif, mono, wide, slab): одинаковый шрифт сразу выдал бы, что логотипы ненастоящие. В покое ряд приглушён серым и читается фоном, под курсором wordmark загорается акцентом. В узкой колонке подпись и ряд центрированы стопкой, от 52cqi подпись уходит влево, ряд — вправо (container queries).",
       "meta": {
         "tags": [
           "logos",
@@ -38,7 +36,7 @@
           "usage": "<Logocloud001\n  eyebrow=\"Нам доверяют\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
           "summary": "Полоса доверия: короткая подпись и ряд текстовых wordmark. Логотипы приглушены и оживают акцентом только под курсором, гарнитуры перемешаны, чтобы ряд выглядел как настоящие бренды. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты badge-029 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-logocloud-001-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "приглушённый серый логотипов в покое: полоса — фон страницы, а не её герой",
             "акцент только на hover — постоянно акцентный ряд спорил бы с CTA страницы",
@@ -91,11 +89,11 @@
           "en": {
             "title": "Logo Strip",
             "description": "A trust bar: a “Trusted by” caption and a row of muted text wordmarks that light up accent under the cursor. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports badge-029 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-logocloud-001-* variables. A server component. The logos are text wordmarks in different typefaces (data-style: sans, serif, mono, wide, slab): a single shared font would instantly give away that the logos are fake. At rest the row is muted grey and reads as background; under the cursor a wordmark lights up with the accent. In a narrow column the caption and the row stack centered; from 52cqi the caption moves left and the row right (container queries).",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-logocloud-001-* variables. A server component. The logos are text wordmarks in different typefaces (data-style: sans, serif, mono, wide, slab): a single shared font would instantly give away that the logos are fake. At rest the row is muted grey and reads as background; under the cursor a wordmark lights up with the accent. In a narrow column the caption and the row stack centered; from 52cqi the caption moves left and the row right (container queries).",
             "ai": {
               "summary": "A trust bar: a short caption and a row of text wordmarks. The logos are muted and only come alive with the accent under the cursor; the typefaces are mixed so the row looks like real brands. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the badge-029 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-logocloud-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the muted grey of the logos at rest: the strip is the page background, not its hero",
                 "the accent on hover only — a permanently accent row would compete with the page CTA",
@@ -149,9 +147,7 @@
         "logos"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "badge-030"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "logocloud-002/logocloud-002.tsx",
@@ -159,7 +155,7 @@
           "target": "@components/vibeui/logocloud-002.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует badge-030 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-logocloud-002-*. Серверный компонент. Дорожка состоит из двух одинаковых групп логотипов; keyframes уводит её на translateX(-50%), поэтому цикл бесшовный. Дубль скрыт от скринридеров через aria-hidden. Под курсором animation-play-state: paused — движущийся текст нельзя прочитать. При prefers-reduced-motion анимация выключается, дорожка складывается в обычный ряд с переносами, дубль прячется. Края вьюпорта растворяются mask-image. Скорость — переменная --vibeui-logocloud-002-speed.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-logocloud-002-*. Серверный компонент. Дорожка состоит из двух одинаковых групп логотипов; keyframes уводит её на translateX(-50%), поэтому цикл бесшовный. Дубль скрыт от скринридеров через aria-hidden. Под курсором animation-play-state: paused — движущийся текст нельзя прочитать. При prefers-reduced-motion анимация выключается, дорожка складывается в обычный ряд с переносами, дубль прячется. Края вьюпорта растворяются mask-image. Скорость — переменная --vibeui-logocloud-002-speed.",
       "meta": {
         "tags": [
           "logos",
@@ -177,7 +173,7 @@
           "usage": "<Logocloud002\n  eyebrow=\"Каталогом пользуются\"\n  items={[{ name: \"Nordwind\", style: \"wide\" }, { name: \"Plot\", style: \"serif\" }]}\n/>",
           "summary": "Бегущая строка логотипов на чистом CSS: дорожка из двух одинаковых групп бесшовно зациклена, встаёт на паузу под курсором и превращается в статичный ряд при prefers-reduced-motion. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты badge-030 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-logocloud-002-* — не подменять её токенами темы сайта",
             "дорожку из двух одинаковых групп и translateX(-50%) — только при таком устройстве цикл бесшовный",
             "aria-hidden на дубле группы: скринридер не должен читать список клиентов дважды",
@@ -231,11 +227,11 @@
           "en": {
             "title": "Logo Marquee",
             "description": "A single-line CSS marquee: a ribbon of wordmarks scrolls endlessly, pauses under the cursor and folds into a static row under reduced motion. Self-contained: one file, no dependencies, no client JS.",
-            "docs": "A composite block: imports badge-030 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-logocloud-002-* variables. A server component. The track consists of two identical logo groups; the keyframes move it to translateX(-50%), which makes the loop seamless. The duplicate is hidden from screen readers with aria-hidden. Under the cursor animation-play-state: paused — moving text cannot be read. Under prefers-reduced-motion the animation is disabled, the track folds into an ordinary wrapping row and the duplicate is hidden. The viewport edges dissolve with mask-image. The speed is the --vibeui-logocloud-002-speed variable.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-logocloud-002-* variables. A server component. The track consists of two identical logo groups; the keyframes move it to translateX(-50%), which makes the loop seamless. The duplicate is hidden from screen readers with aria-hidden. Under the cursor animation-play-state: paused — moving text cannot be read. Under prefers-reduced-motion the animation is disabled, the track folds into an ordinary wrapping row and the duplicate is hidden. The viewport edges dissolve with mask-image. The speed is the --vibeui-logocloud-002-speed variable.",
             "ai": {
               "summary": "A pure-CSS logo marquee: a track of two identical groups loops seamlessly, pauses under the cursor and turns into a static row under prefers-reduced-motion. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the badge-030 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-logocloud-002-* palette — do not swap it for your theme tokens",
                 "the track of two identical groups and translateX(-50%) — the loop is only seamless with this construction",
                 "aria-hidden on the duplicate group: a screen reader must not read the client list twice",
@@ -443,9 +439,7 @@
         "logos"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "badge-031"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "logocloud-004/logocloud-004.tsx",
@@ -453,7 +447,7 @@
           "target": "@components/vibeui/logocloud-004.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует badge-031 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-logocloud-004-*. Серверный компонент. По центру — одна цитата в figure/blockquote/figcaption, кавычки добавляются псевдоэлементами. Под разделительной линией — ряд wordmark; логотип цитируемой компании помечен highlight и постоянно горит акцентом, остальные приглушены и окрашиваются в акцентный цвет только на hover. Одна цитата вместо карусели — сознательно: ряд логотипов отвечает за «сколько», цитата — за «почему».",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-logocloud-004-*. Серверный компонент. По центру — одна цитата в figure/blockquote/figcaption, кавычки добавляются псевдоэлементами. Под разделительной линией — ряд wordmark; логотип цитируемой компании помечен highlight и постоянно горит акцентом, остальные приглушены и окрашиваются в акцентный цвет только на hover. Одна цитата вместо карусели — сознательно: ряд логотипов отвечает за «сколько», цитата — за «почему».",
       "meta": {
         "tags": [
           "logos",
@@ -471,7 +465,7 @@
           "usage": "<Logocloud004\n  quote=\"Собрали лендинг за два дня вместе с текстами.\"\n  author=\"Мария Соболева\"\n  role=\"Продюсер, Vetra\"\n  items={[{ name: \"Vetra\", highlight: true }, { name: \"Sturm\", style: \"slab\" }]}\n/>",
           "summary": "Секция доверия из двух слоёв: живая цитата клиента по центру и ряд текстовых wordmark под ней. Логотип цитируемой компании подсвечен акцентом — ряд и цитата читаются одной историей. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты badge-031 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-logocloud-004-* — не подменять её токенами темы сайта",
             "одну цитату, а не карусель: логотипы отвечают за «сколько», цитата — за «почему», второй голос ничего не добавляет",
             "подсветку highlight у цитируемой компании — именно она связывает ряд логотипов с цитатой",
@@ -525,11 +519,11 @@
           "en": {
             "title": "Logos with a Quote",
             "description": "One client quote in the centre and a row of wordmarks below; the quoted company's logo is highlighted in accent, tying the row and the quote into one story. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports badge-031 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-logocloud-004-* variables. A server component. In the centre — a single quote in figure/blockquote/figcaption, with quotation marks added by pseudo-elements. Below a divider — a row of wordmarks; the quoted company's logo carries highlight and glows with the accent permanently, the rest are muted and only turn accent on hover. One quote instead of a carousel is deliberate: the logo row answers “how many”, the quote answers “why”.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-logocloud-004-* variables. A server component. In the centre — a single quote in figure/blockquote/figcaption, with quotation marks added by pseudo-elements. Below a divider — a row of wordmarks; the quoted company's logo carries highlight and glows with the accent permanently, the rest are muted and only turn accent on hover. One quote instead of a carousel is deliberate: the logo row answers “how many”, the quote answers “why”.",
             "ai": {
               "summary": "A two-layer trust section: a living client quote in the centre and a row of text wordmarks below. The quoted company's logo is highlighted with the accent — the row and the quote read as one story. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the badge-031 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-logocloud-004-* palette — do not swap it for your theme tokens",
                 "one quote, not a carousel: the logos answer “how many”, the quote answers “why”, a second voice adds nothing",
                 "the highlight on the quoted company — it is what ties the logo row to the quote",
@@ -1144,9 +1138,7 @@
         "logos"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "badge-033"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "logocloud-014/logocloud-014.tsx",
@@ -1178,7 +1170,7 @@
           "usage": "<Logocloud014\n  title=\"Подключается к тому, чем вы уже пользуетесь\"\n  rows={[[{ name: \"1С:Бухгалтерия\", mark: \"1С\" }, { name: \"Ozon Seller\", mark: \"OZ\" }]]}\n  counters={[{ label: \"переводов за сегодня\", base: 0, perSecond: 3.4 }]}\n/>",
           "summary": "Бегущие строки интеграций с чипами-марками и два живых счётчика, растущие от текущего времени.",
           "preserve": [
-            "импорты badge-033 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ряд — два одинаковых ul (второй aria-hidden), keyframes translateX(-50%) за --vibeui-logocloud-014-t секунд, нечётный ряд reverse, :hover на rows ставит animation-play-state:paused",
             "счётчик = base + perSecond × секунд с начала суток, тик раз в секунду через общий setInterval в subscribe, серверный снимок null → «— — —»",
             "при prefers-reduced-motion ленты становятся статичной сеткой без маски, дубль-лента скрыта"
@@ -1252,7 +1244,7 @@
             "ai": {
               "summary": "Integration marquee rows with mark chips and two live counters growing from the current time.",
               "preserve": [
-                "the badge-033 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "a row is two identical ul (the second aria-hidden), translateX(-50%) keyframes over --vibeui-logocloud-014-t seconds, odd rows reversed, :hover on rows sets animation-play-state:paused",
                 "counter = base + perSecond × seconds since midnight, ticking once a second through a shared setInterval in subscribe, the null server snapshot renders “— — —”",
                 "under prefers-reduced-motion the rows become a static wrapped grid without the mask and the duplicate lane is hidden"
@@ -1377,11 +1369,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports badge-033 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует badge-033 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "pres-001",

@@ -1,7 +1,6 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
-import { Card175 } from "@/registry/components/card/card-175/card-175"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid028Row = {
@@ -111,6 +110,10 @@ border:0;background:transparent;color:var(--vibeui-datagrid-028-fg);
 [data-vibeui-block="datagrid-028"] [data-danger="true"]{color:var(--vibeui-datagrid-028-danger);font-weight:600}
 [data-vibeui-block="datagrid-028"] [data-part="sep"]{margin:0.25rem 0.25rem;border-top:1px solid var(--vibeui-datagrid-028-border)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-028"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-028"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
+padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-028-border);}
+[data-vibeui-block="datagrid-028"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-028"] [data-part="bar"] [data-part="log"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-028-muted)}
 `
 
 const DEFAULT_ROWS: Datagrid028Row[] = [
@@ -193,6 +196,43 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с колонкой действий и меню: клавиатурная навигация по пунктам,
  * Escape возвращает фокус на кнопку. Один файл, ноль зависимостей.
  */
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  emptyLogText?: string
+  log?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Заказы в работе",
+  emptyLogText = "Действие ещё не выбрано",
+  log = "",
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-028-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="log" role="status" aria-live="polite">
+          {log || emptyLogText}
+        </p>
+      </div>
+  )
+}
+
 export function Datagrid028({
   rows = DEFAULT_ROWS,
   caption = "Действия строки убраны в меню, оно управляется стрелками",
@@ -259,7 +299,7 @@ export function Datagrid028({
         className={className}
         style={palette}
       >
-        <Card175 data-part="bar" heading={heading} emptyLogText={emptyLogText} log={log} accent={accent} />
+        <Bar data-part="bar" heading={heading} emptyLogText={emptyLogText} log={log} accent={accent} />
         <div
           data-part="scroll"
           role="region"

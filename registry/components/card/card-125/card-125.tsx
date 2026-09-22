@@ -43,8 +43,8 @@ const STYLES = `
 export function Card125({
   time = "15:30",
   title = "Сбор гостей",
-  place,
-  text,
+  place = "Слот живой программы",
+  text = "Слот живой программы",
   accent,
   className,
   style,

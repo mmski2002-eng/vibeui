@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react"
-import { Button089 } from "@/registry/components/button/button-089/button-089"
+import type { ComponentProps } from "react"
 
 export type Fintech001Operation = {
   title: string
@@ -105,7 +105,11 @@ container-type:inline-size;
 @keyframes vibeui-fintech-001-ping{0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-fintech-001-accent) 60%,transparent)}100%{box-shadow:0 0 0 .5rem transparent}}
 @keyframes vibeui-fintech-001-halo{from{transform:scale(1);opacity:.6}to{transform:scale(3.5);opacity:0}}
 @container (min-width: 60rem){[data-vibeui-block="fintech-001"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:4rem}[data-vibeui-block="fintech-001"] [data-part="widget"]{padding:1.8rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="fintech-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="fintech-001"] [data-part="stroke"]{stroke-dashoffset:0}[data-vibeui-block="fintech-001"] [data-part="area"],[data-vibeui-block="fintech-001"] [data-part="dot"],[data-vibeui-block="fintech-001"] [data-part="op"]{opacity:1;transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="fintech-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="fintech-001"] [data-part="stroke"]{stroke-dashoffset:0}[data-vibeui-block="fintech-001"] [data-part="area"],[data-vibeui-block="fintech-001"] [data-part="dot"],[data-vibeui-block="fintech-001"] [data-part="op"]{opacity:1;transform:none}}
+[data-vibeui-block="fintech-001"] [data-part="period"]{padding:.4rem .85rem;border:0;border-radius:999px;background:transparent;color:var(--vibeui-fintech-001-muted);font:inherit;font-size:.8rem;font-weight:500;cursor:pointer;transition:background .25s,color .2s}
+[data-vibeui-block="fintech-001"] [data-part="period"][aria-pressed="true"]{background:var(--vibeui-fintech-001-accent);color:var(--vibeui-fintech-001-on-accent)}
+[data-vibeui-block="fintech-001"] [data-part="period"]:focus-visible{outline:2px solid var(--vibeui-fintech-001-accent);outline-offset:2px}
+`
 
 const DEFAULT_PERIODS: Fintech001Period[] = [
   {
@@ -183,6 +187,36 @@ function toPath(points: readonly number[]) {
 
 function easeOut(t: number) {
   return 1 - Math.pow(1 - t, 3)
+}
+
+type PeriodProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  label?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Period({
+  label = "День",
+  accent,
+  className,
+  style,
+  ...props
+}: PeriodProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-fintech-001-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props} type="button"
+        className={className}
+        style={palette}
+      >
+        {label}
+      </button>
+  )
 }
 
 /** Живой баланс: график рисуется, операции появляются, период морфит линию. */
@@ -293,7 +327,7 @@ export function Fintech001({
               {periods.length > 1 ? (
                 <div data-part="tabs" role="group" aria-label={tabsLabel}>
                   {periods.map((item, index) => (
-                    <Button089 key={item.label} data-part="period" label={item.label} aria-pressed={index === periodIndex} onClick={() => { setPeriodIndex(index); setTouched(true) }} accent={accent} />
+                    <Period key={item.label} data-part="period" label={item.label} aria-pressed={index === periodIndex} onClick={() => { setPeriodIndex(index); setTouched(true) }} accent={accent} />
                   ))}
                 </div>
               ) : null}

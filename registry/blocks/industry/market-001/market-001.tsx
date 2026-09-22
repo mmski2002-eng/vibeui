@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
-import { Button092 } from "@/registry/components/button/button-092/button-092"
+import type { ComponentProps } from "react"
 
 export type Market001Product = {
   name: string
@@ -155,7 +155,12 @@ container-type:inline-size;
 @container (min-width: 48rem){[data-vibeui-block="market-001"] [data-part="bar"]{grid-template-columns:minmax(0,1fr) auto;align-items:center}}
 @container (min-width: 60rem){[data-vibeui-block="market-001"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 78rem){[data-vibeui-block="market-001"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="market-001"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="market-001"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="market-001"] [data-part="chip"]{height:2.2rem;padding:0 .95rem;border-radius:999px;border:1px solid var(--vibeui-market-001-line);background:transparent;color:var(--vibeui-market-001-fg);font:inherit;font-size:.86rem;font-weight:500;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+[data-vibeui-block="market-001"] [data-part="chip"]:hover{background:var(--vibeui-market-001-soft)}
+[data-vibeui-block="market-001"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-market-001-fg);color:var(--vibeui-market-001-bg);border-color:var(--vibeui-market-001-fg)}
+[data-vibeui-block="market-001"] [data-part="chip"] small{margin-left:.4rem;font-family:var(--vibeui-market-001-mono);font-size:.66rem;opacity:.6}
+`
 
 const DEFAULT_KINDS: Market001Kind[] = [
   { key: "figma", label: "Figma" },
@@ -185,6 +190,39 @@ type SortKey = "popular" | "fresh" | "cheap" | "expensive"
 
 function formatMoney(value: number, currency: string) {
   return `${String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ${currency}`
+}
+
+type ChipProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  label?: string
+  count?: number
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Chip({
+  label = "Figma",
+  count,
+  accent,
+  className,
+  style,
+  ...props
+}: ChipProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-market-001-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props} type="button"
+        className={className}
+        style={palette}
+      >
+        {label}
+        <small>{count}</small>
+      </button>
+  )
 }
 
 /** Витрина с фильтрами, FLIP-перестановкой, пролистыванием обложек и быстрым просмотром лицензий. */
@@ -322,13 +360,13 @@ export function Market001({
           <div data-part="bar">
             <ul data-part="chips" aria-label={chipsLabel}>
               <li>
-                <Button092 data-part="chip" label={allLabel} count={products.length} aria-pressed={kind === "all"} onClick={() => pickKind("all")} accent={accent} />
+                <Chip data-part="chip" label={allLabel} count={products.length} aria-pressed={kind === "all"} onClick={() => pickKind("all")} accent={accent} />
               </li>
               {kinds.map((item) => {
                 const count = counts.get(item.key) ?? 0
                 return (
                   <li key={item.key}>
-                    <Button092 data-part="chip" label={item.label} count={count} aria-pressed={kind === item.key} onClick={() => pickKind(item.key)} accent={accent} />
+                    <Chip data-part="chip" label={item.label} count={count} aria-pressed={kind === item.key} onClick={() => pickKind(item.key)} accent={accent} />
                   </li>
                 )
               })}

@@ -50,7 +50,7 @@ export function Card147({
   href = "#next-case",
   kicker = "Следующий проект",
   look = "warm",
-  src,
+  src = "/demo/realty/object-01.webp",
   title = "Дом на склоне",
   note = "Архитектура · 2026",
   accent,

@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card171 } from "@/registry/components/card/card-171/card-171"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid024Node = {
   id: string
@@ -101,6 +100,14 @@ transition:transform var(--vibeui-datagrid-024-dur-2) ease;
 background:var(--vibeui-datagrid-024-head);font-weight:650;border-top:2px solid var(--vibeui-datagrid-024-accent);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-024"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-024"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-024-border);}
+[data-vibeui-block="datagrid-024"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-024"] [data-part="bar"] [data-part="all"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.3125rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-024-border);
+background:transparent;color:var(--vibeui-datagrid-024-fg);}
+[data-vibeui-block="datagrid-024"] [data-part="bar"] [data-part="all"]:focus-visible{outline:2px solid var(--vibeui-datagrid-024-accent);outline-offset:2px}
 `
 
 const DEFAULT_TREE: Datagrid024Node[] = [
@@ -198,6 +205,57 @@ function collectBranches(nodes: Datagrid024Node[]): string[] {
  * Сетка-дерево с раскрывающимися дочерними строками: уровень объявлен
  * через aria-level, итог родителя считается по ветке. Один файл.
  */
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  collapseAllText?: string
+  expandAllText?: string
+  branches?: string[]
+  open?: string[]
+  setOpen?: Dispatch<SetStateAction<string[]>>
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Смета проекта",
+  collapseAllText = "Свернуть всё",
+  expandAllText = "Развернуть всё",
+  branches = [],
+  open = [],
+  setOpen = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-024-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <button
+          type="button"
+          data-part="all"
+          onClick={() =>
+            setOpen((current) =>
+              current.length === branches.length ? [] : branches,
+            )
+          }
+        >
+          {open.length === branches.length ? collapseAllText : expandAllText}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid024({
   tree = DEFAULT_TREE,
   caption = "Сумма родителя пересчитывается по вложенным строкам",
@@ -301,7 +359,7 @@ export function Datagrid024({
         className={className}
         style={palette}
       >
-        <Card171 data-part="bar" heading={heading} collapseAllText={collapseAllText} expandAllText={expandAllText} branches={branches} open={open} setOpen={setOpen} accent={accent} />
+        <Bar data-part="bar" heading={heading} collapseAllText={collapseAllText} expandAllText={expandAllText} branches={branches} open={open} setOpen={setOpen} accent={accent} />
         <div
           data-part="scroll"
           role="region"

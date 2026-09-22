@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card164 } from "@/registry/components/card/card-164/card-164"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid014Row = {
@@ -115,6 +114,16 @@ color:var(--vibeui-datagrid-014-accent);border-color:var(--vibeui-datagrid-014-a
 [data-vibeui-block="datagrid-014"] [data-part="pin"]:disabled{opacity:.35;cursor:not-allowed}
 [data-vibeui-block="datagrid-014"] [data-part="pin"]:focus-visible{outline:2px solid var(--vibeui-datagrid-014-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-014"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-014"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-014-border);}
+[data-vibeui-block="datagrid-014"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-014"] [data-part="bar"] [data-part="state"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-014-muted)}
+[data-vibeui-block="datagrid-014"] [data-part="bar"] [data-part="clear"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.3125rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-014-border);
+background:transparent;color:var(--vibeui-datagrid-014-fg);}
+[data-vibeui-block="datagrid-014"] [data-part="bar"] [data-part="clear"]:disabled{opacity:.45;cursor:not-allowed}
+[data-vibeui-block="datagrid-014"] [data-part="bar"] [data-part="clear"]:focus-visible{outline:2px solid var(--vibeui-datagrid-014-accent);outline-offset:2px}
 `
 
 type ColumnKey =
@@ -231,6 +240,64 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка, где закрепить колонку решает читатель: булавка в заголовке
  * переводит столбец в position:sticky. Один файл, ноль зависимостей.
  */
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  emptyPinText?: string
+  pinnedTemplate?: string
+  maxPinned?: number
+  clearText?: string
+  ordered?: readonly ColumnKey[]
+  setPinned?: (value: ColumnKey[]) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Продажи по филиалам",
+  emptyPinText = "Закреплённых колонок нет",
+  pinnedTemplate = "Закреплено: {count} из {max}",
+  maxPinned = 2,
+  clearText = "Снять закрепление",
+  ordered = [],
+  setPinned = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-014-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="state" aria-live="polite">
+          {ordered.length === 0
+            ? emptyPinText
+            : pinnedTemplate
+                .replace("{count}", String(ordered.length))
+                .replace("{max}", String(maxPinned))}
+        </p>
+        <button
+          type="button"
+          data-part="clear"
+          disabled={ordered.length === 0}
+          onClick={() => setPinned([])}
+        >
+          {clearText}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid014({
   rows = DEFAULT_ROWS,
   caption = "Нажмите булавку в заголовке, чтобы закрепить колонку слева",
@@ -290,7 +357,7 @@ export function Datagrid014({
         className={className}
         style={palette}
       >
-        <Card164 data-part="bar" heading={heading} emptyPinText={emptyPinText} pinnedTemplate={pinnedTemplate} maxPinned={maxPinned} clearText={clearText} ordered={ordered} setPinned={setPinned} accent={accent} />
+        <Bar data-part="bar" heading={heading} emptyPinText={emptyPinText} pinnedTemplate={pinnedTemplate} maxPinned={maxPinned} clearText={clearText} ordered={ordered} setPinned={setPinned} accent={accent} />
         <div
           data-part="scroll"
           role="region"

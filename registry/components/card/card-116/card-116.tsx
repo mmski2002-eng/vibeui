@@ -56,13 +56,13 @@ const STYLES = `
 
 /** Карточка сотрудника с «свечой»: фото, имя, роль; тёплый свет при наведении. */
 export function Card116({
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   name = "Кристина",
   role = "Свидетельница",
-  text,
-  contactLabel,
-  contactHref,
+  text = "Карточка при свече",
+  contactLabel = "Карточка при свече",
+  contactHref = "Карточка при свече",
   accent,
   className,
   style,

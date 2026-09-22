@@ -87,18 +87,18 @@ padding:1.25rem;color:#fff;
  * Один файл, ноль зависимостей, собственная палитра.
  */
 export function Card025({
-  src = "",
+  src = "/demo/realty/office.webp",
   alt = "",
   ratio = "16/9",
   fit = "cover",
   radius = "md",
-  badge,
-  caption,
+  badge = "Кадр с наложением",
+  caption = "Кадр с наложением",
   scrim = "none",
   drift = false,
   children,
   accent,
-  background,
+  background = "Кадр с наложением",
   className,
   style,
   ...props

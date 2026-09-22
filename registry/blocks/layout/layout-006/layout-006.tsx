@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react"
-import { Card066 } from "@/registry/components/card/card-066/card-066"
+import type { ComponentProps } from "react"
 
 export type Layout006Item = {
   /** Заголовок слота. */
@@ -47,6 +47,8 @@ const GHOST: Record<(typeof SLOTS)[number], string> = {
 
 const STYLES = `
 :where([data-vibeui-block="layout-006"]){
+--vibeui-layout-006-dur-4:340ms;
+--vibeui-layout-006-dur-5:460ms;
 --vibeui-layout-006-bg:light-dark(#f2f2f2,#000000);
 --vibeui-layout-006-tile:light-dark(#ffffff,#1a1a1a);
 --vibeui-layout-006-tile-2:light-dark(#f7f7f7,#222222);
@@ -108,7 +110,7 @@ container-type:inline-size;
 [data-vibeui-block="layout-006"] [data-area="ch1"]{view-timeline-name:--vibeui-layout-006-ch1}
 [data-vibeui-block="layout-006"] [data-area="ch2"]{view-timeline-name:--vibeui-layout-006-ch2}
 [data-vibeui-block="layout-006"] [data-area="ch3"]{view-timeline-name:--vibeui-layout-006-ch3}
-[data-vibeui-block="layout-006"] [data-part="chapters"] [data-vibeui-block="card-066"]{min-height:20rem}
+[data-vibeui-block="layout-006"] [data-part="chapters"] [data-part="tile"]{min-height:20rem}
 [data-vibeui-block="layout-006"] [data-area="media"]{display:none}
 @supports (animation-timeline: view()){
 [data-vibeui-block="layout-006"] [data-part="layer"]{animation:vibeui-layout-006-show linear both;animation-range:entry 20% entry 80%}
@@ -122,14 +124,124 @@ container-type:inline-size;
 [data-vibeui-block="layout-006"][data-side="right"] [data-part="stage"]{order:2}
 [data-vibeui-block="layout-006"] [data-part="stage"]{min-height:30rem}
 [data-vibeui-block="layout-006"] [data-part="stage"] > *{min-height:30rem}
-[data-vibeui-block="layout-006"] [data-part="chapters"] [data-vibeui-block="card-066"]{min-height:26rem}
+[data-vibeui-block="layout-006"] [data-part="chapters"] [data-part="tile"]{min-height:26rem}
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="layout-006"] *{animation:none!important;transition:none!important}
 }
+[data-vibeui-block="layout-006"] [data-part="tile"]{position:relative;overflow:hidden;min-height:10rem;padding:1.5rem;border-radius:var(--vibeui-layout-006-radius);
+background:var(--vibeui-layout-006-tile);border:1px solid var(--vibeui-layout-006-edge);
+display:flex;flex-direction:column;justify-content:flex-end;gap:0.75rem;
+--vibeui-layout-006-mx:50%;--vibeui-layout-006-my:50%;--vibeui-layout-006-on:0;
+transition:transform var(--vibeui-layout-006-dur-5) cubic-bezier(.2,.8,.2,1),border-color var(--vibeui-layout-006-dur-5);}
+[data-vibeui-block="layout-006"] [data-part="tile"]::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(22rem circle at var(--vibeui-layout-006-mx) var(--vibeui-layout-006-my),color-mix(in oklab,var(--vibeui-layout-006-accent) 14%,transparent),transparent 60%);opacity:var(--vibeui-layout-006-on);transition:opacity var(--vibeui-layout-006-dur-5)}
+[data-vibeui-block="layout-006"] [data-part="tile"]::after{content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:inherit;padding:1px;background:radial-gradient(18rem circle at var(--vibeui-layout-006-mx) var(--vibeui-layout-006-my),color-mix(in oklab,var(--vibeui-layout-006-accent) 70%,transparent),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:var(--vibeui-layout-006-on);transition:opacity var(--vibeui-layout-006-dur-5)}
+[data-vibeui-block="layout-006"] [data-part="tile"]:hover{border-color:var(--vibeui-layout-006-edge-hover)}
+[data-vibeui-block="layout-006"] [data-part="tile"] h3{margin:0;font-size:1.125rem;font-weight:600;line-height:1.3}
+[data-vibeui-block="layout-006"] [data-part="tile"] p{margin:0;color:var(--vibeui-layout-006-muted);font-size:0.9375rem;line-height:1.45}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="value"]{font-size:clamp(2.5rem,6cqi,3.5rem);font-weight:650;letter-spacing:-0.03em;line-height:1}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="media"]{position:absolute;inset:0;pointer-events:none}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="media"] > *{width:100%;height:100%;object-fit:cover;display:block}
+[data-vibeui-block="layout-006"] [data-part="tile"] > :not([data-part="media"]):not([data-part="num"]){position:relative}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="num"]{position:absolute;top:1.125rem;left:1.125rem;z-index:1;font:500 0.6875rem/1 var(--vibeui-layout-006-mono);letter-spacing:0.08em;padding:0.375rem 0.5rem;border-radius:999px;color:var(--vibeui-layout-006-muted);border:1px solid var(--vibeui-layout-006-edge);background:color-mix(in oklab,var(--vibeui-layout-006-tile) 70%,transparent);transition:color var(--vibeui-layout-006-dur-4),border-color var(--vibeui-layout-006-dur-4),background-color var(--vibeui-layout-006-dur-4)}
+[data-vibeui-block="layout-006"] [data-part="tile"]:hover [data-part="num"]{color:var(--vibeui-layout-006-on-accent);background:var(--vibeui-layout-006-accent);border-color:var(--vibeui-layout-006-accent)}
+[data-vibeui-block="layout-006"] [data-part="tile"][data-numbers] [data-part="rows"],[data-vibeui-block="layout-006"] [data-part="tile"][data-numbers] [data-part="image"]{margin-top:2rem}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="bar"]{display:block;height:0.875rem;border-radius:999px;background:var(--vibeui-layout-006-ghost-strong);width:70%}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="bar"][data-soft]{background:var(--vibeui-layout-006-ghost);height:0.625rem;width:50%}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="bar"][data-wide]{width:88%}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="bar"][data-big]{height:1.5rem}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="button"]{display:inline-block;width:6.5rem;height:2.5rem;border-radius:0.75rem;background:var(--vibeui-layout-006-accent);margin-top:0.5rem;transition:transform var(--vibeui-layout-006-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-006"] [data-part="tile"]:hover [data-part="button"]{transform:translateX(4px)}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="rows"]{display:flex;flex-direction:column;gap:1rem;flex:1;justify-content:space-evenly;padding-block:0.5rem}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="rows"] span{display:flex;align-items:center;gap:0.75rem}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="rows"] i{width:0.75rem;height:0.75rem;border-radius:999px;background:var(--vibeui-layout-006-accent);flex:none;transition:transform var(--vibeui-layout-006-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="rows"] b{display:block;height:0.625rem;border-radius:999px;background:var(--vibeui-layout-006-ghost);flex:1}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="rows"] span:nth-child(odd) b{max-width:80%}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="rows"][data-table] span{gap:1.25rem;padding:0.5rem 0;border-bottom:1px solid var(--vibeui-layout-006-edge)}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="rows"][data-table] b:first-child{max-width:30%}
+[data-vibeui-block="layout-006"] [data-part="tile"]:hover [data-part="rows"] i{transform:scale(1.35)}
+[data-vibeui-block="layout-006"] [data-part="tile"] [data-part="image"]{display:block;flex:1;min-height:6rem;border-radius:0.75rem;background:radial-gradient(70% 80% at 80% 15%,var(--vibeui-layout-006-glow) 0%,transparent 65%),radial-gradient(60% 70% at 15% 85%,var(--vibeui-layout-006-glow-soft) 0%,transparent 65%),var(--vibeui-layout-006-tile-2);margin-bottom:auto;transition:transform 0.6s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-006"] [data-part="tile"]:hover [data-part="image"]{transform:scale(1.02)}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="layout-006"] [data-part="tile"]:hover{transform:none}
+[data-vibeui-block="layout-006"] [data-part="tile"]::before,[data-vibeui-block="layout-006"] [data-part="tile"]::after{display:none}
+}
 `
 
+function Ghost({ kind }: { kind: string }) {
+  switch (kind) {
+    case "image":
+      return <><span data-part="image" /><span data-part="bar" /><span data-part="bar" data-soft="" /></>
+    case "lead":
+      return <><span data-part="bar" data-wide="" /><span data-part="bar" /><span data-part="bar" data-soft="" /><span data-part="button" /></>
+    case "text":
+      return <><span data-part="bar" data-wide="" /><span data-part="bar" data-soft="" data-wide="" /><span data-part="bar" data-soft="" /><span data-part="bar" data-soft="" data-wide="" /></>
+    case "list":
+      return <><div data-part="rows"><span><i /><b /></span><span><i /><b /></span><span><i /><b /></span><span><i /><b /></span></div><span data-part="bar" data-soft="" /></>
+    default:
+      return null
+  }
+}
 
+type TileProps = Omit<ComponentProps<"article">, "title" | "children"> & {
+  media?: ReactNode
+  value?: string
+  title?: string
+  text?: string
+  numbers?: boolean
+  index?: number
+  ghost?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Tile({
+  media,
+  value,
+  title,
+  text,
+  numbers = true,
+  index = 0,
+  ghost = "",
+  accent,
+  className,
+  style,
+  ...props
+}: TileProps) {
+  const palette = {
+    "--vibeui-layout-006-i": index,
+    ...(accent ? { "--vibeui-layout-006-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+  const filled = Boolean((title || text || value || media))
+
+  return (
+      <article
+          {...props}
+          data-numbers={numbers ? "" : undefined}
+          aria-hidden={filled ? undefined : true}
+          className={className}
+          style={palette}
+        >
+        {media ? <div data-part="media">{media}</div> : null}
+        {numbers ? (
+          <span data-part="num" aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        ) : null}
+        {filled ? (
+          <>
+            {value ? <span data-part="value">{value}</span> : null}
+            {title ? <h3>{title}</h3> : null}
+            {text ? <p>{text}</p> : null}
+          </>
+        ) : (
+          <Ghost kind={ghost} />
+        )}
+      </article>
+  )
+}
 
 /** Закреплённый кадр: кадр стоит, главы идут мимо и меняют его. */
 export function Layout006({
@@ -149,7 +261,7 @@ export function Layout006({
   } as CSSProperties
   const hasHead = Boolean(heading || lead)
   const tile = (area: (typeof SLOTS)[number], className?: string, key?: string) => (
-    <Card066 key={key ?? area} data-part="tile" {...items?.[SLOTS.indexOf(area)]} numbers={numbers} index={SLOTS.indexOf(area)} ghost={GHOST[area]} data-area={area} className={className} accent={accent} />
+    <Tile key={key ?? area} data-part="tile" {...items?.[SLOTS.indexOf(area)]} numbers={numbers} index={SLOTS.indexOf(area)} ghost={GHOST[area]} data-area={area} className={className} accent={accent} />
   )
   const frame = useRef(0)
 

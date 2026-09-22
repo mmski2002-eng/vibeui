@@ -41,7 +41,7 @@ export function Card029({
   name = "Анна Ковалёва",
   highlight,
   quote = "Раньше каждый лендинг начинался с пустого файла и заканчивался спором о кнопке.",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Маркетинг, «Северный путь»",
   accent,
   className,

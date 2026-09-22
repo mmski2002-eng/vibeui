@@ -65,8 +65,8 @@ export function Card024({
   children,
   note = "Отвечаем в течение рабочего дня.",
   accent,
-  ink,
-  background,
+  ink = "Плашка «не нашли ответ»",
+  background = "Плашка «не нашли ответ»",
   className,
   style,
   ...props

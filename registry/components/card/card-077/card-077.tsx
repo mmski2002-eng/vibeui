@@ -177,11 +177,11 @@ const STYLES = `
 export function Card077({
   path = "/v2/geocode",
   wide,
-  method,
+  method = "GET",
   kind = "geocode",
   title = "Прямое геокодирование",
   text = "Строка адреса в любом виде — с опечатками, сокращениями, без индекса — превращается в координаты дома и нормализованный адрес.",
-  meta,
+  meta = "Плитка API-маршрута",
   demoAddress = "«Тверская 7, мск»",
   demoDistance = "7,4 км · 18 мин",
   demoQuery = "Тверск",

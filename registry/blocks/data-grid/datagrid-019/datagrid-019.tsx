@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card179 } from "@/registry/components/card/card-179/card-179"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid019Row = {
@@ -129,6 +128,18 @@ border-top:1px solid var(--vibeui-datagrid-019-border);
 [data-vibeui-block="datagrid-019"] [data-late="true"]{color:var(--vibeui-datagrid-019-danger);font-weight:600}
 [data-vibeui-block="datagrid-019"] [data-part="none"]{padding:1.5rem 0.875rem;text-align:center;color:var(--vibeui-datagrid-019-muted)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-019"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-019"] [data-part="rule"]{clear:both;display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;margin-top:0.5rem}
+[data-vibeui-block="datagrid-019"] [data-part="rule"] select,[data-vibeui-block="datagrid-019"] [data-part="rule"] [data-part="value"]{font:inherit;font-size:0.75rem;color:inherit;padding:0.3125rem 0.5rem;
+border:1px solid var(--vibeui-datagrid-019-border);border-radius:0.4375rem;
+background:transparent;}
+[data-vibeui-block="datagrid-019"] [data-part="rule"] [data-part="value"]{width:8rem;min-width:0}
+[data-vibeui-block="datagrid-019"] [data-part="rule"] select:focus-visible,[data-vibeui-block="datagrid-019"] [data-part="rule"] [data-part="value"]:focus-visible{outline:2px solid var(--vibeui-datagrid-019-accent);outline-offset:1px}
+[data-vibeui-block="datagrid-019"] [data-part="rule"] [data-part="drop"]{appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;line-height:1;
+width:1.75rem;height:1.75rem;border-radius:0.4375rem;
+border:1px solid var(--vibeui-datagrid-019-border);
+background:transparent;color:var(--vibeui-datagrid-019-muted);}
+[data-vibeui-block="datagrid-019"] [data-part="rule"] [data-part="drop"]:hover{color:var(--vibeui-datagrid-019-danger);border-color:var(--vibeui-datagrid-019-danger)}
+[data-vibeui-block="datagrid-019"] [data-part="rule"] [data-part="drop"]:focus-visible{outline:2px solid var(--vibeui-datagrid-019-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid019Row[] = [
@@ -288,6 +299,176 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с конструктором условий: поле, оператор и значение в каждой
  * строке, одна связка «и/или» на весь набор. Один файл, ноль зависимостей.
  */
+
+const RuleFIELD_TEXT: Record<string, string> = {
+  name: "Название",
+  region: "Регион",
+  revenue: "Выручка, тыс.",
+  overdue: "Просрочка, дн.",
+}
+
+const RuleOPERATOR_TEXT: Record<string, string> = {
+  contains: "содержит",
+  equals: "равно",
+  starts: "начинается с",
+  gt: "больше",
+  lt: "меньше",
+  eq: "равно",
+}
+
+const RuleJOINER_OPTION_TEXT: Record<string, string> = {
+  and: "все условия (и)",
+  or: "любое условие (или)",
+}
+
+const RuleNUMBER_OPS = ["gt", "lt", "eq"] as const
+
+type RuleProps = Omit<ComponentProps<"div">, "title" | "children" | "id"> & {
+  field?: string
+  id?: number
+  operator?: string
+  value?: string
+  fieldLabel?: string
+  fieldText?: Record<string, string>
+  operatorLabel?: string
+  operatorText?: Record<string, string>
+  valueLabel?: string
+  removeLabel?: string
+  joinerLabel?: string
+  joinerOptionText?: Record<string, string>
+  join?: "and" | "or"
+  operators?: readonly string[]
+  patch?: (id: number, change: Partial<Rule>) => void
+  setChosen?: (value: "and" | "or" | null) => void
+  setRules?: (next: (current: Rule[]) => Rule[]) => void
+  index?: number
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Rule({
+  field,
+  id = 0,
+  operator,
+  value,
+  fieldLabel = "Поле условия {index}",
+  fieldText = RuleFIELD_TEXT,
+  operatorLabel = "Оператор условия {index}",
+  operatorText = RuleOPERATOR_TEXT,
+  valueLabel = "Значение условия {index}",
+  removeLabel = "Удалить условие {index}",
+  joinerLabel = "Связка между условиями",
+  joinerOptionText = RuleJOINER_OPTION_TEXT,
+  join,
+  operators = RuleNUMBER_OPS,
+  patch = () => {},
+  setChosen = () => {},
+  setRules = () => {},
+  index = 0,
+  accent,
+  className,
+  style,
+  ...props
+}: RuleProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-019-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <select
+          value={field}
+          aria-label={fieldLabel.replace(
+            "{index}",
+            String(index + 1),
+          )}
+          onChange={(event) => {
+            const next = FIELDS.find(
+              (item) => item.key === event.target.value,
+            )
+
+            patch(id, {
+              field: event.target.value as Rule["field"],
+              operator: next?.numeric ? "gt" : "contains",
+              value: "",
+            })
+          }}
+        >
+          {FIELDS.map((item) => (
+            <option key={item.key} value={item.key}>
+              {fieldText[item.key] ?? FIELD_TEXT[item.key]}
+            </option>
+          ))}
+        </select>
+        <select
+          value={operator}
+          aria-label={operatorLabel.replace(
+            "{index}",
+            String(index + 1),
+          )}
+          onChange={(event) =>
+            patch(id, { operator: event.target.value })
+          }
+        >
+          {operators.map((item) => (
+            <option key={item} value={item}>
+              {operatorText[item] ?? OPERATOR_TEXT[item]}
+            </option>
+          ))}
+        </select>
+        <input
+          data-part="value"
+          type={FIELDS.find((item) => item.key === field)?.numeric ? "number" : "text"}
+          value={value}
+          aria-label={valueLabel.replace(
+            "{index}",
+            String(index + 1),
+          )}
+          onChange={(event) =>
+            patch(id, { value: event.target.value })
+          }
+        />
+        <button
+          type="button"
+          data-part="drop"
+          aria-label={removeLabel.replace(
+            "{index}",
+            String(index + 1),
+          )}
+          onClick={() =>
+            setRules((current) =>
+              current.filter((item) => item.id !== id),
+            )
+          }
+        >
+          ×
+        </button>
+        {index === 0 ? (
+          <select
+            value={join}
+            aria-label={joinerLabel}
+            onChange={(event) =>
+              setChosen(event.target.value as "and" | "or")
+            }
+          >
+            <option value="and">
+              {joinerOptionText.and ?? JOINER_OPTION_TEXT.and}
+            </option>
+            <option value="or">
+              {joinerOptionText.or ?? JOINER_OPTION_TEXT.or}
+            </option>
+          </select>
+        ) : null}
+      </div>
+  )
+}
+
 export function Datagrid019({
   rows = DEFAULT_ROWS,
   caption = "Строки отбираются набором условий из конструктора",
@@ -392,7 +573,7 @@ export function Datagrid019({
                     <span hidden>{joinerHint}</span>
                   </p>
                 ) : null}
-                <Card179 data-part="rule" field={rule.field} id={rule.id} operator={rule.operator} value={rule.value} fieldLabel={fieldLabel} fieldText={fieldText} operatorLabel={operatorLabel} operatorText={operatorText} valueLabel={valueLabel} removeLabel={removeLabel} joinerLabel={joinerLabel} joinerOptionText={joinerOptionText} join={join} operators={operators} patch={patch} setChosen={setChosen} setRules={setRules} index={index} accent={accent} />
+                <Rule data-part="rule" field={rule.field} id={rule.id} operator={rule.operator} value={rule.value} fieldLabel={fieldLabel} fieldText={fieldText} operatorLabel={operatorLabel} operatorText={operatorText} valueLabel={valueLabel} removeLabel={removeLabel} joinerLabel={joinerLabel} joinerOptionText={joinerOptionText} join={join} operators={operators} patch={patch} setChosen={setChosen} setRules={setRules} index={index} accent={accent} />
               </div>
             )
           })}

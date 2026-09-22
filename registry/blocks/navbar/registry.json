@@ -624,9 +624,7 @@
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-105"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-005/navbar-005.tsx",
@@ -634,7 +632,7 @@
           "target": "@components/vibeui/navbar-005.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует button-105 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, клиентский компонент. Поле поиска — главный объект шапки, поэтому на фокусе оно меняет фон и получает кольцо, а не тонкую рамку: в момент ввода видно, куда идёт текст. Кнопка каталога морфит полоски в крестик, панель групп закрывается по Escape и по нажатию снаружи, её ссылки вне раскрытия получают tabindex=-1. Счётчик корзины отделён от фона кольцом, поэтому читается и поверх изображения. Форму поиска и состояние корзины обслуживает принимающий проект — здесь только доступная разметка: настоящая <form role=\"search\"> с submit-кнопкой. Палитра --vibeui-navbar-005-*.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, клиентский компонент. Поле поиска — главный объект шапки, поэтому на фокусе оно меняет фон и получает кольцо, а не тонкую рамку: в момент ввода видно, куда идёт текст. Кнопка каталога морфит полоски в крестик, панель групп закрывается по Escape и по нажатию снаружи, её ссылки вне раскрытия получают tabindex=-1. Счётчик корзины отделён от фона кольцом, поэтому читается и поверх изображения. Форму поиска и состояние корзины обслуживает принимающий проект — здесь только доступная разметка: настоящая <form role=\"search\"> с submit-кнопкой. Палитра --vibeui-navbar-005-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -654,7 +652,7 @@
           "usage": "<Navbar005\n  brand=\"Лавка\"\n  notice=\"Доставка от 2 дней\"\n  searchAction=\"/search\"\n  catalogLinks={[{ label: \"Новинки\", href: \"/new\" }]}\n  cartCount={2}\n  cartHref=\"/cart\"\n/>",
           "summary": "Шапка магазина: капсула поиска с кольцом на фокусе, кнопка каталога с раскрытием, избранное и корзина со счётчиком, служебная строка о доставке. Форму и корзину обслуживает проект.",
           "preserve": [
-            "импорты button-105 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-navbar-005-* и не подменять её токенами вашей темы",
             "поиск в центре как главный объект шапки, а не иконку в углу",
             "настоящую <form role=\"search\"> с submit-кнопкой — Enter обязан отправлять запрос",
@@ -724,11 +722,11 @@
           "en": {
             "title": "Shop Navbar with Search",
             "description": "An e-commerce header: a search capsule in the centre with an icon and an accent button inside, a catalog button with groups, favourites and a cart with a counter, and a quiet delivery notice.",
-            "docs": "A composite block: imports button-105 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a client component. The search field is the main object of the header, so on focus it changes its fill and gains a ring rather than a thin border: while typing you can see where the text goes. The catalog button morphs its bars into a cross, the group panel closes on Escape and on an outside click, and its links get tabindex=-1 while closed. The cart counter is separated from the background by a ring, so it stays readable over imagery. The search form and cart state are the host project's job — this is only accessible markup: a real <form role=\"search\"> with a submit button. Palette --vibeui-navbar-005-*.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a client component. The search field is the main object of the header, so on focus it changes its fill and gains a ring rather than a thin border: while typing you can see where the text goes. The catalog button morphs its bars into a cross, the group panel closes on Escape and on an outside click, and its links get tabindex=-1 while closed. The cart counter is separated from the background by a ring, so it stays readable over imagery. The search form and cart state are the host project's job — this is only accessible markup: a real <form role=\"search\"> with a submit button. Palette --vibeui-navbar-005-*.",
             "ai": {
               "summary": "A shop header: a search capsule with a focus ring, a catalog button with a disclosure, favourites and a cart with a counter, a delivery notice. The form and the cart are the project's job.",
               "preserve": [
-                "the button-105 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-navbar-005-* palette — do not swap it for your theme tokens",
                 "the centred search as the main object of the header, not an icon in a corner",
                 "the real <form role=\"search\"> with a submit button — Enter must send the query",
@@ -1012,9 +1010,7 @@
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-142"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-007/navbar-007.tsx",
@@ -1022,7 +1018,7 @@
           "target": "@components/vibeui/navbar-007.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-142 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, клиентский компонент. Плотность здесь важнее воздуха — это рабочий инструмент, и путь помещается в шапку целиком. Текущее пространство помечено галочкой, а не только цветом. Оба раскрытия взаимно закрывают друг друга, закрываются по Escape и по нажатию снаружи, их ссылки вне раскрытия получают tabindex=-1. Cmd/Ctrl+K ставит фокус в поле поиска. Точка непрочитанного отделена от фона кольцом. Состояния аккаунта и проекта передаются снаружи; авторизацию и настоящее переключение реализует принимающее приложение. Палитра --vibeui-navbar-007-*.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, клиентский компонент. Плотность здесь важнее воздуха — это рабочий инструмент, и путь помещается в шапку целиком. Текущее пространство помечено галочкой, а не только цветом. Оба раскрытия взаимно закрывают друг друга, закрываются по Escape и по нажатию снаружи, их ссылки вне раскрытия получают tabindex=-1. Cmd/Ctrl+K ставит фокус в поле поиска. Точка непрочитанного отделена от фона кольцом. Состояния аккаунта и проекта передаются снаружи; авторизацию и настоящее переключение реализует принимающее приложение. Палитра --vibeui-navbar-007-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -1042,7 +1038,7 @@
           "usage": "<Navbar007\n  workspace=\"Контур Лаб\"\n  crumbs={[{ label: \"Проекты\", href: \"/projects\" }, { label: \"Аналитика\" }]}\n  userInitials=\"АК\"\n  unread\n/>",
           "summary": "Шапка кабинета: переключатель пространства с галочкой, крошки контекста, поиск с Cmd/Ctrl+K, уведомления с точкой и меню пользователя. Светлая и графитовая версии.",
           "preserve": [
-            "импорты card-142 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-navbar-007-* и не подменять её токенами вашей темы",
             "плотность рабочей шапки: воздух маркетингового хедера здесь съедает контекст",
             "галочку у текущего пространства: цвета мало, чтобы понять, где находишься",
@@ -1103,11 +1099,11 @@
           "en": {
             "title": "Workspace Navbar",
             "description": "A workspace or CRM header: a workspace switcher with a check on the current one, context breadcrumbs, global search with Cmd/Ctrl+K, notifications with a dot and a user menu with an account card.",
-            "docs": "A composite block: imports card-142 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a client component. Density matters more than air here — this is a working tool, and the whole path fits in the header. The current workspace is marked with a check, not only with color. The two disclosures close each other, close on Escape and on an outside click, and their links get tabindex=-1 while closed. Cmd/Ctrl+K focuses the search field. The unread dot is separated from the background by a ring. Account and project state come from outside; authentication and real switching are implemented by the host application. Palette --vibeui-navbar-007-*.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a client component. Density matters more than air here — this is a working tool, and the whole path fits in the header. The current workspace is marked with a check, not only with color. The two disclosures close each other, close on Escape and on an outside click, and their links get tabindex=-1 while closed. Cmd/Ctrl+K focuses the search field. The unread dot is separated from the background by a ring. Account and project state come from outside; authentication and real switching are implemented by the host application. Palette --vibeui-navbar-007-*.",
             "ai": {
               "summary": "A workspace header: a workspace switcher with a check, context breadcrumbs, search with Cmd/Ctrl+K, notifications with a dot and a user menu. Light and graphite versions.",
               "preserve": [
-                "the card-142 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-navbar-007-* palette — do not swap it for your theme tokens",
                 "the density of a working header: marketing-header air eats the context here",
                 "the check on the current workspace: color alone does not tell you where you are",
@@ -2097,9 +2093,7 @@
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "underline-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-013/navbar-013.tsx",
@@ -2107,7 +2101,7 @@
           "target": "@components/vibeui/navbar-013.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует underline-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, без клиентского JS. Открытие — Popover API (атрибуты popover/popovertarget): нативный top layer, Escape, light-dismiss и возврат фокуса достаются бесплатно. Проявление плоскости и каскад строк тоже без JS — на @starting-style, transition-behavior: allow-discrete и задержках анимации по nth-child; там, где эти возможности не поддержаны, меню просто появляется, и ничего не ломается. Название раздела сдвигается на наведении, номер набран моноширинными цифрами. Всё движение снимается в prefers-reduced-motion. Палитра --vibeui-navbar-013-*.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, без клиентского JS. Открытие — Popover API (атрибуты popover/popovertarget): нативный top layer, Escape, light-dismiss и возврат фокуса достаются бесплатно. Проявление плоскости и каскад строк тоже без JS — на @starting-style, transition-behavior: allow-discrete и задержках анимации по nth-child; там, где эти возможности не поддержаны, меню просто появляется, и ничего не ломается. Название раздела сдвигается на наведении, номер набран моноширинными цифрами. Всё движение снимается в prefers-reduced-motion. Палитра --vibeui-navbar-013-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -2131,7 +2125,7 @@
           "usage": "<Navbar013\n  brand=\"Бюро Тон\"\n  surface=\"black\"\n  links={[{ label: \"Работы\", href: \"/works\", note: \"24 проекта\" }]}\n/>",
           "summary": "Минимальная шапка с полноэкранным типографическим меню на Popover API: крупные названия разделов с номерами, каскад строк и контакт. Чёрная или акцентная плоскость. Без JS.",
           "preserve": [
-            "импорты underline-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-navbar-013-* и не подменять её токенами вашей темы",
             "Popover API вместо самодельного модала: Escape, light-dismiss и фокус достаются бесплатно",
             "минимум в закрытом виде: знак и кнопка, ничего больше",
@@ -2203,11 +2197,11 @@
           "en": {
             "title": "Fullscreen Typographic Menu",
             "description": "A minimal agency or studio header: a wordmark and a Menu button that opens a full-screen black or accent plane with large section names, numbers and a contact. The plane fades in and the rows cascade.",
-            "docs": "A composite block: imports underline-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, no client JS. Opening uses the Popover API (the popover/popovertarget attributes): the native top layer, Escape, light dismiss and focus return come for free. The plane's fade-in and the cascade of rows are also JS-free — built on @starting-style, transition-behavior: allow-discrete and per-nth-child animation delays; where those are unsupported the menu simply appears and nothing breaks. Each section name slides on hover and its number is set in tabular figures. All motion is removed under prefers-reduced-motion. Palette --vibeui-navbar-013-*.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, no client JS. Opening uses the Popover API (the popover/popovertarget attributes): the native top layer, Escape, light dismiss and focus return come for free. The plane's fade-in and the cascade of rows are also JS-free — built on @starting-style, transition-behavior: allow-discrete and per-nth-child animation delays; where those are unsupported the menu simply appears and nothing breaks. Each section name slides on hover and its number is set in tabular figures. All motion is removed under prefers-reduced-motion. Palette --vibeui-navbar-013-*.",
             "ai": {
               "summary": "A minimal header with a full-screen typographic menu on the Popover API: large section names with numbers, cascading rows and a contact. A black or accent plane. No JS.",
               "preserve": [
-                "the underline-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-navbar-013-* palette — do not swap it for your theme tokens",
                 "the Popover API instead of a hand-rolled modal: Escape, light dismiss and focus come free",
                 "the minimum in the closed state: a wordmark and a button, nothing more",
@@ -2844,9 +2838,7 @@
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-108"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-017/navbar-017.tsx",
@@ -2854,7 +2846,7 @@
           "target": "@components/vibeui/navbar-017.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует button-108 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, клиентский компонент. Кнопка билета сделана билетом буквально: вырезы по краям через mask из двух радиальных градиентов и пунктирная линия отрыва внутри — на странице фестиваля она должна читаться как объект, а не как очередная акцентная плашка. Дата и город вынесены в капсулу с точкой акцента. Плакатная версия делает фон чёрным и добавляет акцентное свечение сверху. Каретка раздела считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS раздел подчёркнут статической линией. Состояние продаж функционально: при sales=\"soon\" и \"closed\" вместо кнопки выводится статус с role=\"status\", без таймеров и искусственного дефицита. Палитра --vibeui-navbar-017-*.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, клиентский компонент. Кнопка билета сделана билетом буквально: вырезы по краям через mask из двух радиальных градиентов и пунктирная линия отрыва внутри — на странице фестиваля она должна читаться как объект, а не как очередная акцентная плашка. Дата и город вынесены в капсулу с точкой акцента. Плакатная версия делает фон чёрным и добавляет акцентное свечение сверху. Каретка раздела считается по offsetLeft/offsetWidth и едет за курсором и фокусом; до готовности JS раздел подчёркнут статической линией. Состояние продаж функционально: при sales=\"soon\" и \"closed\" вместо кнопки выводится статус с role=\"status\", без таймеров и искусственного дефицита. Палитра --vibeui-navbar-017-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -2874,7 +2866,7 @@
           "usage": "<Navbar017\n  brand=\"Сетка·Фест\"\n  dateline=\"12–14 октября · Екатеринбург\"\n  sales=\"open\"\n  ticketHref=\"https://tickets.example\"\n/>",
           "summary": "Шапка события: знак, дата и город капсулой, программа с кареткой и кнопка-билет с вырезами. Плакатная чёрная версия со свечением. «Скоро» и «завершено» выводятся вместо кнопки.",
           "preserve": [
-            "импорты button-108 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-navbar-017-* и не подменять её токенами вашей темы",
             "форму билета у кнопки: вырезы и линия отрыва — узнаваемый знак категории",
             "честное состояние продаж вместо таймеров и надписей об исчезающих местах",
@@ -2953,11 +2945,11 @@
           "en": {
             "title": "Event Navbar with Tickets",
             "description": "A conference or festival header: a wordmark with an accent part, the date and city in a chip, the programme with a glider and a ticket button with notched edges. The sales state is honest: \"soon\" and \"event finished\" replace the button.",
-            "docs": "A composite block: imports button-108 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a client component. The ticket button is literally made a ticket: notches at its edges via a mask of two radial gradients and a dashed tear line inside — on a festival page it has to read as an object, not as yet another accent slab. The date and city sit in a chip with an accent dot. The poster version turns the background black and adds an accent glow at the top. The section glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the section keeps a static underline. The sales state is functional: with sales=\"soon\" and \"closed\" a status with role=\"status\" replaces the button, with no timers and no artificial scarcity. Palette --vibeui-navbar-017-*.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a client component. The ticket button is literally made a ticket: notches at its edges via a mask of two radial gradients and a dashed tear line inside — on a festival page it has to read as an object, not as yet another accent slab. The date and city sit in a chip with an accent dot. The poster version turns the background black and adds an accent glow at the top. The section glider is positioned from offsetLeft/offsetWidth and follows cursor and focus; until the JS is ready the section keeps a static underline. The sales state is functional: with sales=\"soon\" and \"closed\" a status with role=\"status\" replaces the button, with no timers and no artificial scarcity. Palette --vibeui-navbar-017-*.",
             "ai": {
               "summary": "An event header: the wordmark, the date and city in a chip, the programme with a glider and a notched ticket button. A black poster version with a glow. \"Soon\" and \"finished\" replace the button.",
               "preserve": [
-                "the button-108 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-navbar-017-* palette — do not swap it for your theme tokens",
                 "the ticket shape of the button: the notches and tear line are a recognisable category sign",
                 "the honest sales state instead of timers and vanishing-seats copy",
@@ -8009,9 +8001,7 @@
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-113"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-044/navbar-044.tsx",
@@ -8044,7 +8034,7 @@
           "usage": "<Navbar044\n  brand=\"Тёплый дом\"\n  note=\"фонд помощи пожилым\"\n  links={[{ label: \"Отчёты\", href: \"#report\" }, { label: \"Волонтёрам\", href: \"#volunteer\" }]}\n  actionLabel=\"Помочь\"\n/>",
           "summary": "Шапка для НКО или фонда: антиква, рукописная пометка, «Помочь» с сердцем, бургер.",
           "preserve": [
-            "импорты button-113 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "сердце в кнопке — svg с keyframes beat по :hover, без сдвига макета",
             "шов — ::after с border-bottom dashed, opacity растёт вместе с data-scrolled",
             "пометка скрыта до 36rem контейнера, ссылки — до 60rem, кнопка «Помочь» видна всегда"
@@ -8122,7 +8112,7 @@
             "ai": {
               "summary": "Header for an NGO or foundation: serif, a handwritten note, “Donate” with a heart, a burger.",
               "preserve": [
-                "the button-113 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the heart in the button is an svg with beat keyframes on :hover, no layout shift",
                 "the seam is an ::after with a dashed border-bottom whose opacity grows with data-scrolled",
                 "the note is hidden below a 36rem container, links below 60rem, the “Donate” button is always visible"
@@ -8189,11 +8179,11 @@
                 "sticky": false
               }
             },
-            "docs": "A composite block: imports button-113 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-113 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "navbar-045",

@@ -1,5 +1,4 @@
 import type { ComponentProps, CSSProperties } from "react"
-import { Card178 } from "@/registry/components/card/card-178/card-178"
 
 export type Datagrid031Row = {
   sku: string
@@ -99,6 +98,10 @@ background:var(--vibeui-datagrid-031-head);
 }
 [data-vibeui-block="datagrid-031"] [data-part="low"]{color:var(--vibeui-datagrid-031-low);font-weight:600}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-031"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-031"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem;
+padding:0.875rem;border-bottom:1px solid var(--vibeui-datagrid-031-border);}
+[data-vibeui-block="datagrid-031"] [data-part="head"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="datagrid-031"] [data-part="head"] [data-part="hint"]{margin:0 0 0 auto;font-size:0.75rem;color:var(--vibeui-datagrid-031-muted);}
 `
 
 const DEFAULT_WAREHOUSES = ["Москва", "Питер", "Казань", "Уфа", "Омск", "Сочи"]
@@ -139,6 +142,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка остатков с закреплёнными разом шапкой и первой колонкой: угловая
  * ячейка липнет по обеим осям. Серверный компонент, один файл.
  */
+type HeadProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  scrollHint?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Head({
+  heading = "Остатки на сегодня",
+  scrollHint = "Прокрутите в любую сторону — шапка и позиция остаются на месте",
+  accent,
+  className,
+  style,
+  ...props
+}: HeadProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-031-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="hint">{scrollHint}</p>
+      </div>
+  )
+}
+
 export function Datagrid031({
   rows = DEFAULT_ROWS,
   warehouses = DEFAULT_WAREHOUSES,
@@ -178,7 +214,7 @@ export function Datagrid031({
         className={className}
         style={palette}
       >
-        <Card178 data-part="head" heading={heading} scrollHint={scrollHint} accent={accent} />
+        <Head data-part="head" heading={heading} scrollHint={scrollHint} accent={accent} />
         <div
           data-part="scroll"
           role="region"

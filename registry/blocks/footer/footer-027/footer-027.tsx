@@ -1,7 +1,7 @@
 "use client"
 
 import { useSyncExternalStore, type CSSProperties } from "react"
-import { Footerlinks005 } from "@/registry/components/navigation/footerlinks-005/footerlinks-005"
+import type { ComponentProps } from "react"
 
 export type Footer027Link = {
   label: string
@@ -91,7 +91,13 @@ container-type:inline-size;
 [data-vibeui-block="footer-027"] [data-part="day"]{animation:vibeui-footer-027-in linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
 }
 @container (min-width: 56rem){[data-vibeui-block="footer-027"] [data-part="top"]{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr)}[data-vibeui-block="footer-027"] [data-part="cols"]{grid-template-columns:repeat(3,1fr)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-027"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-027"] *{animation:none!important;transition:none!important}}
+@keyframes vibeui-footer-027-in{from{opacity:0;translate:0 1.5rem}to{opacity:1;translate:0 0}}
+[data-vibeui-block="footer-027"] [data-part="column"] h4{margin:0 0 .6rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;opacity:.55;font-weight:600}
+[data-vibeui-block="footer-027"] [data-part="column"] a{display:block;width:fit-content;color:inherit;text-decoration:none;font-size:.92rem;opacity:.85;padding:.15rem 0;transition:transform .3s var(--vibeui-footer-027-ease),color .2s,opacity .2s}
+[data-vibeui-block="footer-027"] [data-part="column"] a:hover{opacity:1;color:var(--vibeui-footer-027-warm);transform:translateX(.3rem)}
+[data-vibeui-block="footer-027"] [data-part="column"]{animation:vibeui-footer-027-in linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
+`
 
 const listeners = new Set<() => void>()
 let timer: number | undefined
@@ -113,6 +119,48 @@ function useMinutes(): number | null {
   if (tick === null) return null
   const now = new Date()
   return now.getHours() * 60 + now.getMinutes()
+}
+
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  title?: string
+  links?: readonly ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Разделы",
+  links = [{ label: "Витрина", href: "#shelf" }, { label: "Кофе", href: "#coffee" }, { label: "Коробка к утру", href: "#box" }, { label: "36 часов до буханки", href: "#story" }],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-027-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <h4>{title}</h4>
+        {links.map((link) => (
+          <a key={link.label} href={link.href}>
+            {link.label}
+          </a>
+        ))}
+      </div>
+  )
 }
 
 /** Подвал с полосой рабочего дня. */
@@ -171,7 +219,7 @@ export function Footer027({
             </div>
             <div data-part="cols">
               {columns.map((column) => (
-                <Footerlinks005 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+                <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
           </div>

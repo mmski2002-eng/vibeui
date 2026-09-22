@@ -38,7 +38,7 @@ const STYLES = `
 export function Card094({
   title = "Разговор",
   text = "Слушаем, зачем вам квартира и на сколько лет. Согласуем бюджет и районы.",
-  time,
+  time = "Шаг сделки",
   index = 0,
   accent,
   className,

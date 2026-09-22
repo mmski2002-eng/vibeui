@@ -42,7 +42,7 @@ const STYLES = `
 /** Ссылка-плитка платформы с меткой и названием; наклон за курсором через переменные. */
 export function Button098({
   href = "#",
-  mark,
+  mark = "Плитка платформы",
   name = "Яндекс Музыка",
   accent,
   className,

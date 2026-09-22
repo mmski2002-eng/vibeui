@@ -5981,9 +5981,7 @@
         "hero"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-125"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "hero-032/hero-032.tsx",
@@ -6013,7 +6011,7 @@
           "usage": "<Hero032\n  title=\"Засыпайте за десять минут, а не за час\"\n  rating=\"4,9\"\n  ratingNote=\"12 тыс. оценок\"\n  screenTitle=\"Вечернее дыхание · 4-7-8\"\n  inhale={4}\n  hold={7}\n  exhale={8}\n/>",
           "summary": "Первый экран для мобильного приложения, который показывает продукт живым CSS-макетом вместо картинки. Телефон и экран — часть блока.",
           "preserve": [
-            "импорты button-125 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "фаза и секунды — одно состояние, обновляется setInterval раз в секунду; масштаб круга и длительность перехода — переменные от фазы",
             "телефон — aspect-ratio 9/19, рамка и «чёлка» на псевдоэлементе, экран с радиальным градиентом акцента",
             "звёзды рейтинга выпрыгивают keyframes с задержкой по индексу"
@@ -6079,7 +6077,7 @@
             "ai": {
               "summary": "A hero for a mobile app that shows the product as a live CSS mockup instead of an image. The phone and screen are part of the block.",
               "preserve": [
-                "the button-125 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "phase and seconds are one state updated by a 1 s setInterval; the circle scale and transition duration are variables from the phase",
                 "the phone is aspect-ratio 9/19 with a frame and a pseudo-element notch, the screen has an accent radial gradient",
                 "rating stars pop in with keyframes delayed by index"
@@ -6126,11 +6124,11 @@
                 "exhaleLabel": "exhale"
               }
             },
-            "docs": "A composite block: imports button-125 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-125 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "hero-033",

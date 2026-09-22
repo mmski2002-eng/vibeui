@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card152 } from "@/registry/components/card/card-152/card-152"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid002Row = {
@@ -108,6 +107,22 @@ box-shadow:inset 3px 0 0 var(--vibeui-datagrid-002-accent);
 font-weight:650;background:var(--vibeui-datagrid-002-head);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-002"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-002"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+min-height:3.25rem;padding:0.625rem 0.875rem;
+border-bottom:1px solid var(--vibeui-datagrid-002-border);
+transition:background-color var(--vibeui-datagrid-002-dur-2) ease;}
+[data-vibeui-block="datagrid-002"] [data-part="bar"][data-active="true"]{background:var(--vibeui-datagrid-002-accent-soft);}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="bar-title"]{margin:0;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="bar-note"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-002-muted);}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="bar-text"]{margin-inline-end:auto}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="count"]{font-size:0.875rem;font-weight:650;color:var(--vibeui-datagrid-002-accent);}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.375rem}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="actions"] button{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
+padding:0.375rem 0.75rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-002-border);
+background:var(--vibeui-datagrid-002-btn);color:var(--vibeui-datagrid-002-fg);}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="actions"] button[data-tone="primary"]{border-color:transparent;background:var(--vibeui-datagrid-002-accent);color:oklch(from var(--vibeui-datagrid-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="datagrid-002"] [data-part="bar"] [data-part="actions"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-002-accent);outline-offset:2px;}
 `
 
 const DEFAULT_ROWS: Datagrid002Row[] = [
@@ -152,6 +167,100 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с выбором строк и панелью массовых действий: счётчик, сумма
  * по выбору и промежуточное состояние флажка шапки. Один файл.
  */
+export type BarRow = {
+  id: string
+  client: string
+  plan: string
+  seats: number
+  amount: number
+}
+
+const BarDEFAULT_ROWS: BarRow[] = [
+  { id: "c-1", client: "Атлас", plan: "Команда", seats: 24, amount: 96000 },
+  { id: "c-2", client: "Берег", plan: "Старт", seats: 5, amount: 12500 },
+  { id: "c-3", client: "Ветка", plan: "Команда", seats: 18, amount: 72000 },
+  { id: "c-4", client: "Гранат", plan: "Бизнес", seats: 60, amount: 310000 },
+  { id: "c-5", client: "Дельта", plan: "Старт", seats: 3, amount: 7500 },
+  { id: "c-6", client: "Ёлка", plan: "Команда", seats: 12, amount: 48000 },
+]
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  selectedText?: string
+  rows?: BarRow[]
+  heading?: string
+  countText?: string
+  actionLabel?: string
+  exportLabel?: string
+  clearLabel?: string
+  money?: (value: number) => string
+  selected?: string[]
+  setSelected?: (value: string[]) => void
+  total?: number
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  selectedText = "Выбрано {count} из {total} · {sum}",
+  rows = BarDEFAULT_ROWS,
+  heading = "Договоры на продление",
+  countText = "{count} клиентов",
+  actionLabel = "Выставить счёт",
+  exportLabel = "Экспорт CSV",
+  clearLabel = "Снять выделение",
+  money = () => "",
+  selected = [],
+  setSelected = () => {},
+  total = 0,
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props} data-active={selected.length > 0}
+      className={className}
+      style={palette}
+      >
+        <div data-part="bar-text">
+          {selected.length > 0 ? (
+            <p data-part="count" aria-live="polite">
+              {selectedText
+                .replace("{count}", String(selected.length))
+                .replace("{total}", String(rows.length))
+                .replace("{sum}", money(total))}
+            </p>
+          ) : (
+            <>
+              <h3 data-part="bar-title">{heading}</h3>
+              <p data-part="bar-note">
+                {countText.replace("{count}", String(rows.length))}
+              </p>
+            </>
+          )}
+        </div>
+        {selected.length > 0 ? (
+          <div data-part="actions">
+            <button type="button" data-tone="primary">
+              {actionLabel}
+            </button>
+            <button type="button">{exportLabel}</button>
+            <button type="button" onClick={() => setSelected([])}>
+              {clearLabel}
+            </button>
+          </div>
+        ) : null}
+      </div>
+  )
+}
+
 export function Datagrid002({
   rows = DEFAULT_ROWS,
   caption = "Отметьте строки, чтобы шапка превратилась в панель действий",
@@ -215,7 +324,7 @@ export function Datagrid002({
         className={className}
         style={palette}
       >
-        <Card152 data-part="bar" selectedText={selectedText} rows={rows} heading={heading} countText={countText} actionLabel={actionLabel} exportLabel={exportLabel} clearLabel={clearLabel} money={money} selected={selected} setSelected={setSelected} total={total} accent={accent} />
+        <Bar data-part="bar" selectedText={selectedText} rows={rows} heading={heading} countText={countText} actionLabel={actionLabel} exportLabel={exportLabel} clearLabel={clearLabel} money={money} selected={selected} setSelected={setSelected} total={total} accent={accent} />
         <div
           data-part="scroll"
           role="region"

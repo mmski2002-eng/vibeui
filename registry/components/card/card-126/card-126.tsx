@@ -41,8 +41,8 @@ const STYLES = `
 /** Карточка образа: фото, кому и название. */
 export function Card126({
   who = "Ей",
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   title = "Длинное и тёплое",
   text = "Бархат, шерсть, плотный шёлк — в ночи, бордо или хвое. Шаль дадим на террасе. Каблук можно: в доме паркет.",
   accent,

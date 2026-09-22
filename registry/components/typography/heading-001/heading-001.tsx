@@ -90,18 +90,18 @@ font-size:1rem;line-height:1.6;color:var(--vibeui-heading-001-muted);text-wrap:p
  * шкалой и выравниванием пропсами. Один файл, ноль зависимостей.
  */
 export function Heading001({
-  eyebrow,
+  eyebrow = "Заголовок секции",
   title = "Коротко о том, как это работает",
-  titleAccent,
-  lede,
+  titleAccent = "Заголовок секции",
+  lede = "Заголовок секции",
   level = "h2",
   size = "md",
   align = "start",
-  display,
-  font,
+  display = "Заголовок секции",
+  font = "Заголовок секции",
   ledeWidth,
   accent,
-  ink,
+  ink = "Заголовок секции",
   className,
   style,
   ...props

@@ -56,7 +56,7 @@ color:var(--vibeui-card-027-muted);font-size:0.6875rem;font-weight:600;white-spa
 export function Card027({
   name = "Анна Ковалёва",
   quote = "Раньше на посадочную страницу уходила неделя вёрстки. Сейчас маркетолог собирает её сам за вечер, а мы только проверяем тексты.",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Руководитель маркетинга, «Северный путь»",
   source = "Отзыв в чате",
   accent,

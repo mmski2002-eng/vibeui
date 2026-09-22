@@ -36,10 +36,10 @@ const STYLES = `
 
 /** Кнопка-плитка галереи: фото и подпись; форма по data-shape. */
 export function Button102({
-  src = "",
-  shape,
-  caption,
-  alt,
+  src = "/demo/realty/object-02.webp",
+  shape = "rect",
+  caption = "Плитка галереи",
+  alt = "Плитка галереи",
   accent,
   className,
   style,

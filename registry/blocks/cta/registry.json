@@ -4047,9 +4047,7 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-118"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "cta-025/cta-025.tsx",
@@ -4081,7 +4079,7 @@
           "usage": "<Cta025 title=\"Сегодня вечером — первая практика\" image=\"/photos/night.webp\" seed=\"tishe.app\" appStoreHref=\"https://apps.apple.com/…\" playHref=\"https://play.google.com/…\" />",
           "summary": "Финальный призыв скачать приложение с двумя бейджами и QR-кодом, который не нужно генерировать для витрины.",
           "preserve": [
-            "импорты button-118 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "сетка QR — 441 ячейка из хеша FNV-1a строки seed; угловые маркеры рисуются честно",
             "карточка — тёмная с фото opacity .35 и градиентной тенью слева",
             "бейджи — текстовые, две строки «Скачать в» / «App Store»"
@@ -4147,7 +4145,7 @@
             "ai": {
               "summary": "A closing download call to action with two badges and a QR code you don't need to generate for a showcase.",
               "preserve": [
-                "the button-118 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the QR grid is 441 cells from an FNV-1a hash of the seed string; finder patterns are drawn properly",
                 "the card is dark with a photo at opacity .35 and a gradient shade from the left",
                 "badges are text, two lines “Download on” / “App Store”"
@@ -4189,11 +4187,11 @@
                 "qrNote": "point your camera — the store opens"
               }
             },
-            "docs": "A composite block: imports button-118 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует button-118 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-026",
@@ -5313,9 +5311,7 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-119"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "download-001/download-001.tsx",
@@ -5323,7 +5319,7 @@
           "target": "@components/vibeui/download-001.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует button-119 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-001-*. Серверный компонент. Бейджи собраны своей вёрсткой (мелкая приписка сверху, название магазина крупно) без логотипов Apple или Google — только нейтральные тёмные плашки-ссылки, приподнимающиеся на наведении.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-001-*. Серверный компонент. Бейджи собраны своей вёрсткой (мелкая приписка сверху, название магазина крупно) без логотипов Apple или Google — только нейтральные тёмные плашки-ссылки, приподнимающиеся на наведении.",
       "meta": {
         "tags": [
           "downloads",
@@ -5341,7 +5337,7 @@
           "usage": "<Download001\n  title=\"Скачайте приложение\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
           "summary": "Секция загрузки приложения с бейджами магазинов: приписка сверху и название магазина крупно, нейтральные тёмные плашки без брендовых логотипов. Формат «скачайте приложение» для мобильного лендинга. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
-            "импорты button-119 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-001-* и не подменять её токенами вашей темы",
             "бейджи без логотипов Apple и Google — своя нейтральная вёрстка вместо брендовых ассетов",
             "структуру бейджа: мелкая приписка сверху, название магазина крупно",
@@ -5400,7 +5396,7 @@
             "ai": {
               "summary": "An app download section with store badges: a kicker on top and the store name large, neutral dark plates without brand logos. A download-the-app format for a mobile landing. Zero dependencies, one file, its own palette.",
               "preserve": [
-                "the button-119 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-001-* palette — do not swap it for your theme tokens",
                 "badges without Apple and Google logos — a neutral custom layout instead of brand assets",
                 "the badge structure: a small kicker on top, the store name large",
@@ -5437,7 +5433,7 @@
               }
             },
             "title": "Store Badges",
-            "docs": "A composite block: imports button-119 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-001-* variables. A server component. Badges use a custom layout (small kicker on top, store name large) without Apple or Google logos — just neutral dark link plates that lift on hover."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-001-* variables. A server component. Badges use a custom layout (small kicker on top, store name large) without Apple or Google logos — just neutral dark link plates that lift on hover."
           }
         }
       }
@@ -5451,9 +5447,7 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-120"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "download-002/download-002.tsx",
@@ -5461,7 +5455,7 @@
           "target": "@components/vibeui/download-002.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует button-120 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-002-*. Серверный компонент. QR — декоративный узор из двух repeating-linear-gradient с background-blend-mode:multiply на белом поле, а не считываемый код: у него role=\"img\" с aria-label, настоящий QR подставит приложение.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-002-*. Серверный компонент. QR — декоративный узор из двух repeating-linear-gradient с background-blend-mode:multiply на белом поле, а не считываемый код: у него role=\"img\" с aria-label, настоящий QR подставит приложение.",
       "meta": {
         "tags": [
           "downloads",
@@ -5479,7 +5473,7 @@
           "usage": "<Download002\n  title=\"Наведите камеру\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
           "summary": "Секция загрузки с QR-заглушкой: текст и бейджи магазинов слева, декоративный QR-узор на CSS-градиентах справа. Формат «наведите камеру» для десктопного лендинга. QR декоративный, настоящий подставит приложение. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
-            "импорты button-120 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-002-* и не подменять её токенами вашей темы",
             "QR как декоративный узор с role=\"img\" и aria-label — это заглушка, а не считываемый код",
             "перелом в две колонки по container query: на узком экране всё в столбец",
@@ -5538,7 +5532,7 @@
             "ai": {
               "summary": "A download section with a QR placeholder: text and store badges on the left, a decorative CSS-gradient QR pattern on the right. A point-your-camera format for a desktop landing. The QR is decorative; a real one is wired by the app. Zero dependencies, one file, its own palette.",
               "preserve": [
-                "the button-120 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-002-* palette — do not swap it for your theme tokens",
                 "the QR as a decorative pattern with role=\"img\" and aria-label — it's a placeholder, not a readable code",
                 "the two-column break via container query: everything stacks when narrow",
@@ -5575,7 +5569,7 @@
               }
             },
             "title": "QR & Badges",
-            "docs": "A composite block: imports button-120 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-002-* variables. A server component. The QR is a decorative pattern of two repeating-linear-gradients with background-blend-mode:multiply on a white field, not a readable code: it has role=\"img\" with an aria-label, and a real QR is wired by the app."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-002-* variables. A server component. The QR is a decorative pattern of two repeating-linear-gradients with background-blend-mode:multiply on a white field, not a readable code: it has role=\"img\" with an aria-label, and a real QR is wired by the app."
           }
         }
       }

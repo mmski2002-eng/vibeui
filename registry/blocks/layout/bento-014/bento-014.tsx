@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
-import { Card080 } from "@/registry/components/card/card-080/card-080"
+import type { ComponentProps } from "react"
 
 export type Bento014Number = {
   value: number
@@ -113,7 +113,11 @@ container-type:inline-size;
 [data-vibeui-block="bento-014"] [data-part="now"] output{font-size:.8rem;font-style:italic;color:var(--vibeui-bento-014-muted);font-variant-numeric:tabular-nums}
 @container (min-width: 44rem){[data-vibeui-block="bento-014"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:dense}[data-vibeui-block="bento-014"] [data-part="tile"][data-span="2"]{grid-column:span 2}}
 @container (min-width: 64rem){[data-vibeui-block="bento-014"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(14rem,auto)}[data-vibeui-block="bento-014"] [data-part="tile"][data-span="2"],[data-vibeui-block="bento-014"] [data-part="tile"][data-wide]{grid-column:span 2}[data-vibeui-block="bento-014"] [data-part="tile"][data-tall]{grid-row:span 2}[data-vibeui-block="bento-014"] [data-part="tile"][data-photo]{min-height:0}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-014"] *{animation:none!important;transition:none!important}[data-vibeui-block="bento-014"] [data-part="bar"] i{transform:scaleX(var(--vibeui-bento-014-now))}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-014"] *{animation:none!important;transition:none!important}[data-vibeui-block="bento-014"] [data-part="bar"] i{transform:scaleX(var(--vibeui-bento-014-now))}}
+[data-vibeui-block="bento-014"] [data-part="city"]{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.55rem 0;border-top:1px solid var(--vibeui-bento-014-line);font-family:var(--vibeui-bento-014-display);font-size:1.35rem;transition:padding-left .4s cubic-bezier(.2,.8,.2,1),color .3s}
+[data-vibeui-block="bento-014"] [data-part="city"]:hover{padding-left:.6rem;color:var(--vibeui-bento-014-accent)}
+[data-vibeui-block="bento-014"] [data-part="city"] small{font-family:var(--vibeui-bento-014-font);font-size:.8rem;font-style:italic;color:var(--vibeui-bento-014-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+`
 
 const DEFAULT_NUMBERS: Bento014Number[] = [
   { value: 142, label: "эссе написано" },
@@ -123,6 +127,39 @@ const DEFAULT_NUMBERS: Bento014Number[] = [
 
 function formatNumber(value: number) {
   return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+}
+
+type CityProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  name?: string
+  years?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function City({
+  name = "Петербург",
+  years = "1991–2014",
+  accent,
+  className,
+  style,
+  ...props
+}: CityProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-bento-014-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <span>{name}</span>
+        <small>{years}</small>
+      </li>
+  )
 }
 
 /** «О себе» как bento: портрет, докручивающиеся цифры, города, факт и черновик. */
@@ -280,7 +317,7 @@ export function Bento014({
               <p data-part="label">{citiesLabel}</p>
               <ul data-part="cities">
                 {cities.map((city, i) => (
-                  <Card080 key={city.name + i} data-part="city" name={city.name} years={city.years} accent={accent} />
+                  <City key={city.name + i} data-part="city" name={city.name} years={city.years} accent={accent} />
                 ))}
               </ul>
             </div>

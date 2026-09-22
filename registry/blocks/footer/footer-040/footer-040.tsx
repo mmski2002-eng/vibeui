@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks012 } from "@/registry/components/navigation/footerlinks-012/footerlinks-012"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer040Link = {
   label: string
@@ -72,13 +71,63 @@ container-type:inline-size;
 [data-vibeui-block="footer-040"] a:focus-visible{outline:2px solid var(--vibeui-footer-040-accent);outline-offset:2px}
 @container (min-width: 48rem){[data-vibeui-block="footer-040"] [data-part="columns"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="footer-040"] [data-part="top"]{grid-template-columns:minmax(0,1.2fr) minmax(0,2fr);gap:4rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-040"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-040"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-040"] [data-part="column"] h3{margin:0 0 .7rem;font-family:var(--vibeui-footer-040-mono);font-weight:500;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-040-muted)}
+[data-vibeui-block="footer-040"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.35rem}
+[data-vibeui-block="footer-040"] [data-part="column"] a{position:relative;color:var(--vibeui-footer-040-fg);text-decoration:none;font-weight:500}
+[data-vibeui-block="footer-040"] [data-part="column"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.1rem;height:1px;background:var(--vibeui-footer-040-accent);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+[data-vibeui-block="footer-040"] [data-part="column"] a:hover::after{transform:scaleX(1)}
+`
 
 const DEFAULT_COLUMNS: Footer040Column[] = [
   { title: "Каталог", links: [{ label: "Шаблоны Figma", href: "#catalog" }, { label: "Шаблоны Notion", href: "#catalog" }, { label: "Иконки", href: "#catalog" }, { label: "Шрифты", href: "#catalog" }, { label: "Наборы", href: "#bundle" }] },
   { title: "Слой", links: [{ label: "Авторам", href: "#for-authors" }, { label: "Лицензии", href: "#licenses" }, { label: "Дропы", href: "#drops" }, { label: "Блог", href: "#blog" }] },
   { title: "Помощь", links: [{ label: "Оплата и возвраты", href: "#faq" }, { label: "Как скачать", href: "#faq" }, { label: "Написать", href: "#contact" }] },
 ]
+
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  title?: string
+  links?: readonly ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Каталог",
+  links = [{ label: "Шаблоны Figma", href: "#catalog" }, { label: "Шаблоны Notion", href: "#catalog" }, { label: "Иконки", href: "#catalog" }, { label: "Шрифты", href: "#catalog" }, { label: "Наборы", href: "#bundle" }],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-040-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props} aria-label={title}
+        className={className}
+        style={palette}
+      >
+        <h3>{title}</h3>
+        <ul>
+          {links.map((link) => (
+            <li key={link.label}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+  )
+}
 
 /** Подвал с гигантским wordmark и колонками ссылок. */
 export function Footer040({
@@ -119,7 +168,7 @@ export function Footer040({
             </p>
             <div data-part="columns">
               {columns.map((column) => (
-                <Footerlinks012 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+                <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
           </div>

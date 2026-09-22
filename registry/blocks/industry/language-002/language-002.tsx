@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState, useSyncExternalStore, type CSSProperties } from "react"
-import { Button091 } from "@/registry/components/button/button-091/button-091"
+import type { ComponentProps } from "react"
 
 export type Language002Language = {
   /** Код: «en». Им помечены группы. */
@@ -128,7 +128,12 @@ container-type:inline-size;
 @keyframes vibeui-language-002-fade{from{opacity:0;transform:translateY(8px)}}
 @container (min-width: 44rem){[data-vibeui-block="language-002"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}[data-vibeui-block="language-002"] [data-part="next"]{min-width:16rem}}
 @container (min-width: 60rem){[data-vibeui-block="language-002"] [data-part="filters"]{grid-template-columns:auto auto;justify-content:space-between}[data-vibeui-block="language-002"] [data-part="grid"]{grid-template-columns:3.2rem repeat(7,minmax(0,1fr));gap:1px;padding:1px;border-radius:1rem;background:var(--vibeui-language-002-rule);overflow:hidden}[data-vibeui-block="language-002"] [data-part="dayhead"],[data-vibeui-block="language-002"] [data-part="timehead"]{display:grid;place-items:center;padding:.6rem .3rem;background:var(--vibeui-language-002-bg);font-family:var(--vibeui-language-002-display);font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-language-002-muted)}[data-vibeui-block="language-002"] [data-part="timehead"]{font-variant-numeric:tabular-nums;text-transform:none;align-content:start;padding-top:.8rem}[data-vibeui-block="language-002"] [data-part="cell"]{padding:.4rem;background:var(--vibeui-language-002-bg);min-height:5.5rem}[data-vibeui-block="language-002"] [data-part="cell"][data-empty="true"]{display:block;background-image:radial-gradient(var(--vibeui-language-002-line) 1px,transparent 1px);background-size:.6rem .6rem}[data-vibeui-block="language-002"] [data-part="cell"]::before{display:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="language-002"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="language-002"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="language-002"] [data-part="chip"]{display:inline-flex;align-items:center;padding:.45rem .85rem;border-radius:999px;border:1.5px solid var(--vibeui-language-002-line);background:transparent;color:var(--vibeui-language-002-fg);font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .18s,border-color .2s,background .2s,color .2s}
+[data-vibeui-block="language-002"] [data-part="chip"]:hover{transform:translateY(-1px);border-color:var(--vibeui-language-002-fg)}
+[data-vibeui-block="language-002"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-language-002-fg);color:var(--vibeui-language-002-bg);border-color:transparent}
+[data-vibeui-block="language-002"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-language-002-accent);outline-offset:2px}
+`
 
 const DEFAULT_LANGUAGES: Language002Language[] = [
   { code: "en", label: "Английский" },
@@ -208,6 +213,36 @@ function pluralSeats(count: number, units: readonly [string, string, string]) {
   if (mod10 === 1 && mod100 !== 11) return units[0]
   if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
   return units[2]
+}
+
+type ChipProps = Omit<ComponentProps<"button">, "title" | "children"> & {
+  label?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Chip({
+  label = "Английский",
+  accent,
+  className,
+  style,
+  ...props
+}: ChipProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-language-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <button
+        {...props} type="button"
+        className={className}
+        style={palette}
+      >
+        {label}
+      </button>
+  )
 }
 
 /** Расписание групп: сетка неделя × время, фильтры, «ближайший старт через N дней». */
@@ -318,16 +353,16 @@ export function Language002({
           <div data-part="filters">
             <div data-part="filter" role="group" aria-label={langFilterLabel}>
               <span>{langShort}</span>
-              <Button091 data-part="chip" label={allLabel} aria-pressed={lang === "all"} onClick={() => setLang("all")} accent={accent} />
+              <Chip data-part="chip" label={allLabel} aria-pressed={lang === "all"} onClick={() => setLang("all")} accent={accent} />
               {languages.map((item) => (
-                <Button091 key={item.code} data-part="chip" label={item.label} aria-pressed={lang === item.code} onClick={() => setLang(item.code)} accent={accent} />
+                <Chip key={item.code} data-part="chip" label={item.label} aria-pressed={lang === item.code} onClick={() => setLang(item.code)} accent={accent} />
               ))}
             </div>
             <div data-part="filter" role="group" aria-label={levelFilterLabel}>
               <span>{levelShort}</span>
-              <Button091 data-part="chip" label={anyLabel} aria-pressed={level === "all"} onClick={() => setLevel("all")} accent={accent} />
+              <Chip data-part="chip" label={anyLabel} aria-pressed={level === "all"} onClick={() => setLevel("all")} accent={accent} />
               {levels.map((item) => (
-                <Button091 key={item} data-part="chip" label={item} aria-pressed={level === item} onClick={() => setLevel(item)} accent={accent} />
+                <Chip key={item} data-part="chip" label={item} aria-pressed={level === item} onClick={() => setLevel(item)} accent={accent} />
               ))}
             </div>
           </div>

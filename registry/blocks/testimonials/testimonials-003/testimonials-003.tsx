@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Card041 } from "@/registry/components/card/card-041/card-041"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Testimonials003Metric = {
   value: string
@@ -97,6 +96,9 @@ border-top:1px solid var(--vibeui-testimonials-003-border);
 [data-vibeui-block="testimonials-003"] [data-part="metrics"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-003"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="testimonials-003"] [data-part="metric"] dt{font-size:clamp(1.5rem,3.6cqi,2rem);line-height:1;letter-spacing:-0.03em;font-weight:730;
+color:var(--vibeui-testimonials-003-accent);}
+[data-vibeui-block="testimonials-003"] [data-part="metric"] dd{margin:0.375rem 0 0;color:var(--vibeui-testimonials-003-muted);font-size:0.875rem;line-height:1.45;max-width:26ch;}
 `
 
 const DEFAULT_METRICS: Testimonials003Metric[] = [
@@ -125,6 +127,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+type MetricProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  caption?: string
+  value?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Metric({
+  caption = "страниц собрано за первый квартал",
+  value = "17",
+  accent,
+  className,
+  style,
+  ...props
+}: MetricProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-testimonials-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <dt>{value}</dt>
+        <dd>{caption}</dd>
+      </div>
+  )
 }
 
 /** Инициалы: первые буквы двух первых слов имени. */
@@ -203,7 +238,7 @@ export function Testimonials003({
           </figure>
           <dl data-part="metrics">
             {metrics.map((metric) => (
-              <Card041 key={metric.caption} data-part="metric" caption={metric.caption} value={metric.value} accent={accent} />
+              <Metric key={metric.caption} data-part="metric" caption={metric.caption} value={metric.value} accent={accent} />
             ))}
           </dl>
         </div>

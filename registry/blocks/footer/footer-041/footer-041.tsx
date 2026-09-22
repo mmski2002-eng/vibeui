@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks013 } from "@/registry/components/navigation/footerlinks-013/footerlinks-013"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer041Link = {
   label: string
@@ -79,13 +78,63 @@ container-type:inline-size;
 @keyframes vibeui-footer-041-ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.2);opacity:0}}
 @container (min-width: 44rem){[data-vibeui-block="footer-041"] [data-part="cols"]{grid-template-columns:repeat(3,minmax(0,1fr))}[data-vibeui-block="footer-041"] [data-part="bottom"]{grid-template-columns:auto 1fr auto;align-items:center}[data-vibeui-block="footer-041"] [data-part="legal"]{justify-content:center}}
 @container (min-width: 60rem){[data-vibeui-block="footer-041"] [data-part="shell"]{grid-template-columns:minmax(0,1.2fr) minmax(0,2fr);column-gap:4rem}[data-vibeui-block="footer-041"] [data-part="bottom"]{grid-column:1/-1}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-041"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-041"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-041"] [data-part="column"] h3{margin:0 0 .7rem;font-family:var(--vibeui-footer-041-mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-footer-041-muted)}
+[data-vibeui-block="footer-041"] [data-part="column"] h3::before{content:"// ";color:var(--vibeui-footer-041-accent)}
+[data-vibeui-block="footer-041"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.45rem}
+[data-vibeui-block="footer-041"] [data-part="column"] a{color:var(--vibeui-footer-041-fg);text-decoration:none;transition:color .2s}
+[data-vibeui-block="footer-041"] [data-part="column"] a:hover{color:var(--vibeui-footer-041-accent)}
+`
 
 const DEFAULT_COLUMNS: Footer041Column[] = [
   { title: "Продукт", links: [{ label: "Эндпоинты", href: "#endpoints" }, { label: "Цены", href: "#pricing" }, { label: "Статус", href: "#status" }, { label: "Changelog", href: "#changelog" }] },
   { title: "Разработчикам", links: [{ label: "Документация", href: "#docs" }, { label: "SDK и примеры", href: "#sdk" }, { label: "Песочница", href: "#sandbox" }, { label: "Лимиты и ошибки", href: "#limits" }] },
   { title: "Компания", links: [{ label: "О нас", href: "#about" }, { label: "Поддержка", href: "#support" }, { label: "Договор и SLA", href: "#sla" }, { label: "Telegram-канал", href: "#tg" }] },
 ]
+
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  title?: string
+  links?: readonly ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Продукт",
+  links = [{ label: "Эндпоинты", href: "#endpoints" }, { label: "Цены", href: "#pricing" }, { label: "Статус", href: "#status" }, { label: "Changelog", href: "#changelog" }],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-041-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <h3>{title}</h3>
+        <ul>
+          {links.map((link) => (
+            <li key={link.href}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+  )
+}
 
 /** Подвал API-сервиса с лампочкой статуса и строкой билда. */
 export function Footer041({
@@ -141,7 +190,7 @@ export function Footer041({
           </div>
           <nav data-part="cols" aria-label={navLabel}>
             {columns.map((column) => (
-              <Footerlinks013 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+              <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </nav>
           <div data-part="bottom">

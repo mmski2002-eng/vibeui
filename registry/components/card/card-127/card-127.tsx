@@ -21,7 +21,7 @@ const STYLES = `
 --vibeui-card-127-bg:light-dark(#ffffff,#1a1a1a);
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="card-127"]{color-scheme:dark}
-[data-vibeui-block="card-127"]{box-sizing:border-box}
+[data-vibeui-block="card-127"]{box-sizing:border-box;position:relative;min-height:12rem}
 [data-vibeui-block="card-127"] *{box-sizing:border-box}
 @keyframes vibeui-card-127-in{from{opacity:0;translate:0 2.5rem;scale:.94}to{opacity:1;translate:0 0;scale:1}}
 @keyframes vibeui-card-127-drift{from{translate:0 -5%}to{translate:0 5%}}
@@ -49,9 +49,9 @@ const STYLES = `
 /** Кадр с фото на всю плитку и подписью; размер плитки по data-span. */
 export function Card127({
   src = "/demo/bakery/hands-flour.webp",
-  span,
-  alt,
-  note,
+  span = "big",
+  alt = "Кадр bento-портфолио",
+  note = "Кадр bento-портфолио",
   accent,
   className,
   style,

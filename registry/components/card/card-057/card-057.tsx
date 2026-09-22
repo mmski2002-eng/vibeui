@@ -63,11 +63,11 @@ const STYLES = `
 /** Плитка участника для бенто-сетки: фото на всю плитку, имя и роль внизу, записка на обороте по фокусу. */
 export function Card057({
   name = "Тимур",
-  note,
-  image,
-  imageAlt,
-  role,
-  quote,
+  note = "Бенто-плитка участника",
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
+  role = "Бенто-плитка участника",
+  quote = "Бенто-плитка участника",
   peekLabel = "что в 5 утра?",
   noteLabel = "Записка",
   index = 0,

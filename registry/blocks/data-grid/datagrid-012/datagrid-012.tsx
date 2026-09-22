@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card162 } from "@/registry/components/card/card-162/card-162"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid012Row = {
@@ -105,6 +104,16 @@ to{background-position:-120% 0}
 }
 [data-vibeui-block="datagrid-012"] tfoot td{background:var(--vibeui-datagrid-012-head);font-weight:650}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-012"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-012"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-012-border);}
+[data-vibeui-block="datagrid-012"] [data-part="bar"] [data-part="bar-text"]{margin-inline-end:auto}
+[data-vibeui-block="datagrid-012"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="datagrid-012"] [data-part="bar"] [data-part="status"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-012-muted);}
+[data-vibeui-block="datagrid-012"] [data-part="bar"] button{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
+padding:0.375rem 0.75rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-012-border);
+background:var(--vibeui-datagrid-012-field);color:var(--vibeui-datagrid-012-fg);}
+[data-vibeui-block="datagrid-012"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-012-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid012Row[] = [
@@ -187,6 +196,113 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка со скелетоном загрузки строк: полоски повторяют раскладку колонок,
  * область помечена aria-busy. Один файл, ноль зависимостей.
  */
+export type BarRow = {
+  id: string
+  campaign: string
+  channel: string
+  leads: number
+  cost: number
+}
+
+const BarDEFAULT_ROWS: BarRow[] = [
+  {
+    id: "k1",
+    campaign: "Весенняя витрина",
+    channel: "Поиск",
+    leads: 412,
+    cost: 184000,
+  },
+  {
+    id: "k2",
+    campaign: "Ретаргет корзины",
+    channel: "Соцсети",
+    leads: 268,
+    cost: 96500,
+  },
+  {
+    id: "k3",
+    campaign: "Каталог мебели",
+    channel: "Поиск",
+    leads: 195,
+    cost: 74200,
+  },
+  {
+    id: "k4",
+    campaign: "Рассылка «Новинки»",
+    channel: "Почта",
+    leads: 143,
+    cost: 12800,
+  },
+  {
+    id: "k5",
+    campaign: "Партнёрские обзоры",
+    channel: "Медиа",
+    leads: 88,
+    cost: 58000,
+  },
+  {
+    id: "k6",
+    campaign: "Локальная реклама",
+    channel: "Карты",
+    leads: 61,
+    cost: 23400,
+  },
+]
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  loadingText?: string
+  readyText?: string
+  rows?: BarRow[]
+  showDataLabel?: string
+  showLoadingLabel?: string
+  loading?: boolean
+  setLoading?: (value: boolean) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Кампании",
+  loadingText = "Загружаем строки…",
+  readyText = "Готово, строк: {count}",
+  rows = BarDEFAULT_ROWS,
+  showDataLabel = "Показать данные",
+  showLoadingLabel = "Показать загрузку",
+  loading = true,
+  setLoading = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-012-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <div data-part="bar-text">
+          <h3 data-part="title">{heading}</h3>
+          <p data-part="status" role="status">
+            {loading
+              ? loadingText
+              : readyText.replace("{count}", String(rows.length))}
+          </p>
+        </div>
+        <button type="button" onClick={() => setLoading(!loading)}>
+          {loading ? showDataLabel : showLoadingLabel}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid012({
   rows = DEFAULT_ROWS,
   caption = "Кампании за март",
@@ -237,7 +353,7 @@ export function Datagrid012({
         className={className}
         style={palette}
       >
-        <Card162 data-part="bar" heading={heading} loadingText={loadingText} readyText={readyText} rows={rows} showDataLabel={showDataLabel} showLoadingLabel={showLoadingLabel} loading={loading} setLoading={setLoading} accent={accent} />
+        <Bar data-part="bar" heading={heading} loadingText={loadingText} readyText={readyText} rows={rows} showDataLabel={showDataLabel} showLoadingLabel={showLoadingLabel} loading={loading} setLoading={setLoading} accent={accent} />
         <div
           data-part="scroll"
           role="region"

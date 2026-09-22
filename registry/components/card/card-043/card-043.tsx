@@ -39,10 +39,10 @@ padding-top:1rem;border-top:1px solid var(--vibeui-card-043-border);}
 
 /** Карточка отзыва для панели вкладки по сегменту: цитата, аватар, имя и роль, без собственной рамки. */
 export function Card043({
-  name,
-  quote,
-  image,
-  role,
+  name = "Отзыв в панели сегмента",
+  quote = "Отзыв в панели сегмента",
+  image = "/demo/realty/object-01.webp",
+  role = "Отзыв в панели сегмента",
   accent,
   className,
   style,

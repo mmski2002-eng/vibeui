@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Underline001 } from "@/registry/components/typography/underline-001/underline-001"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Navbar013Link = {
   label: string
@@ -217,6 +216,12 @@ outline-color:#000000;
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="navbar-013"] *{animation:none!important;transition:none!important}
 }
+[data-vibeui-block="navbar-013"] [data-part="contact"]{align-self:flex-start;color:inherit;text-decoration:none;
+font-size:1.0625rem;font-weight:620;
+border-bottom:2px solid currentColor;padding-bottom:0.125rem;
+margin-bottom:1rem;
+transition:opacity var(--vibeui-navbar-013-dur-2) ease;}
+[data-vibeui-block="navbar-013"] [data-part="contact"]:hover{opacity:.66}
 `
 
 const DEFAULT_LINKS: Navbar013Link[] = [
@@ -226,6 +231,34 @@ const DEFAULT_LINKS: Navbar013Link[] = [
   { label: "Журнал", href: "#journal" },
   { label: "Контакт", href: "#contact" },
 ]
+
+type ContactProps = Omit<ComponentProps<"span">, "title" | "children"> & {
+  contactLabel?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Contact({
+  contactLabel = "hello@ton.studio",
+  accent,
+  className,
+  style,
+  ...props
+}: ContactProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-navbar-013-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <span
+        {...props}
+        className={className}
+        style={palette}
+      >{contactLabel}</span>
+  )
+}
 
 /** Минимальная шапка с полноэкранным типографическим меню на Popover API. */
 export function Navbar013({
@@ -288,7 +321,7 @@ export function Navbar013({
                   </span>
                 ))}
               </div>
-              <Underline001 data-part="contact" contactLabel={contactLabel} accent={accent} />
+              <Contact data-part="contact" contactLabel={contactLabel} accent={accent} />
             </div>
           </div>
         ) : null}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent } from "react"
-import { Word001 } from "@/registry/components/typography/word-001/word-001"
+import type { ComponentProps } from "react"
 
 export type Bakery003Product = {
   id: string
@@ -87,7 +87,7 @@ container-type:inline-size;
 [data-vibeui-block="bakery-003"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-bakery-003-accent);font-weight:600;margin:0 0 1.1rem}
 [data-vibeui-block="bakery-003"] [data-part="eyebrow"]::before{content:"";width:1.4rem;height:2px;background:var(--vibeui-bakery-003-accent);border-radius:2px}
 [data-vibeui-block="bakery-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-bakery-003-display);font-weight:600;letter-spacing:-.025em;line-height:1.02;font-size:clamp(2.2rem,5cqi,4rem)}
-[data-vibeui-block="bakery-003"][data-shown="true"] [data-vibeui-block="word-001"] i{animation:vibeui-bakery-003-rise .9s var(--vibeui-bakery-003-ease) both;animation-delay:calc(var(--vibeui-bakery-003-n) * .09s)}
+[data-vibeui-block="bakery-003"][data-shown="true"] [data-part="word"] i{animation:vibeui-bakery-003-rise .9s var(--vibeui-bakery-003-ease) both;animation-delay:calc(var(--vibeui-bakery-003-n) * .09s)}
 [data-vibeui-block="bakery-003"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-bakery-003-muted);max-width:34rem;margin:1rem 0 0}
 [data-vibeui-block="bakery-003"] [data-part="lede"],[data-vibeui-block="bakery-003"] [data-part="scene"],[data-vibeui-block="bakery-003"] [data-part="order"],[data-vibeui-block="bakery-003"][data-shown="false"] [data-part="picker"] button{opacity:0;translate:0 1.5rem}
 [data-vibeui-block="bakery-003"][data-shown="true"] [data-part="lede"]{animation:vibeui-bakery-003-in .8s var(--vibeui-bakery-003-ease) .3s both}
@@ -150,7 +150,13 @@ container-type:inline-size;
 @keyframes vibeui-bakery-003-rise{0%{transform:translateY(112%) scaleY(.8)}70%{transform:translateY(-2%)}100%{transform:none}}
 @keyframes vibeui-bakery-003-in{from{opacity:0;translate:0 1.5rem}to{opacity:1;translate:0 0}}
 @container (min-width: 60rem){[data-vibeui-block="bakery-003"] [data-part="grid"]{grid-template-columns:30rem minmax(0,1fr);gap:4rem;align-items:stretch}[data-vibeui-block="bakery-003"] [data-part="scene"],[data-vibeui-block="bakery-003"] [data-part="picker"]{margin-left:0;margin-right:0}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-003"] [data-part="lede"],[data-vibeui-block="bakery-003"] [data-part="scene"],[data-vibeui-block="bakery-003"] [data-part="order"],[data-vibeui-block="bakery-003"] [data-part="picker"] button{opacity:1;translate:none}[data-vibeui-block="bakery-003"] [data-part="carton"]{transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-003"] [data-part="lede"],[data-vibeui-block="bakery-003"] [data-part="scene"],[data-vibeui-block="bakery-003"] [data-part="order"],[data-vibeui-block="bakery-003"] [data-part="picker"] button{opacity:1;translate:none}[data-vibeui-block="bakery-003"] [data-part="carton"]{transform:none}}
+[data-vibeui-block="bakery-003"] [data-part="word"]{display:inline-block;overflow:clip;vertical-align:top;padding:.04em .06em .14em 0;margin:-.04em 0 -.14em}
+[data-vibeui-block="bakery-003"] [data-part="word"] i{display:inline-block;font-style:normal;transform:translateY(112%)}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="bakery-003"] [data-part="word"] i{transform:none}
+}
+`
 
 // Наклон коробки за курсором: не больше 7° по каждой оси; уход курсора — обратно.
 function tilt(event: PointerEvent<HTMLElement>) {
@@ -183,6 +189,36 @@ const DEFAULT_PRODUCTS: Bakery003Product[] = [
   { id: "baguette", name: "Багет", price: 160, image: "/demo/bakery/item-07.webp" },
   { id: "chocolat", name: "Пан-о-шоколя", price: 210, image: "/demo/bakery/item-08.webp" },
 ]
+
+type WordProps = Omit<ComponentProps<"span">, "title" | "children"> & {
+  word?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Word({
+  word,
+  accent,
+  className,
+  style,
+  ...props
+}: WordProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-bakery-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <span
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <i>{word}</i>
+      </span>
+  )
+}
 
 /** Конструктор коробки: четыре ячейки, крышка со штампом и заказ к утру. */
 export function Bakery003({
@@ -282,7 +318,7 @@ export function Bakery003({
           <h2 data-part="title">
             {title.split(" ").map((word, index, all) => (
               <span key={`${word}-${index}`}>
-                <Word001 data-part="word" word={word} style={{ ["--vibeui-bakery-003-n" as string]: index }} accent={accent} />
+                <Word data-part="word" word={word} style={{ ["--vibeui-bakery-003-n" as string]: index }} accent={accent} />
                 {index < all.length - 1 ? " " : ""}
               </span>
             ))}

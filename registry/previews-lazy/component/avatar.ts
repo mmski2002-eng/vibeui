@@ -168,7 +168,4 @@ export const PREVIEWS = {
   "iconstack-006": dynamic(() =>
     import("@/registry/components/avatar/iconstack-006/iconstack-006").then((module) => module.Iconstack006),
   ),
-  "avatar-033": dynamic(() =>
-    import("@/registry/components/avatar/avatar-033/avatar-033").then((module) => module.Avatar033),
-  ),
 } satisfies PreviewMap

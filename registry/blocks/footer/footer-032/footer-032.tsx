@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks007 } from "@/registry/components/navigation/footerlinks-007/footerlinks-007"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer032Link = {
   label: string
@@ -91,13 +90,64 @@ container-type:inline-size;
 }
 @container (min-width: 44rem){[data-vibeui-block="footer-032"] [data-part="columns"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 60rem){[data-vibeui-block="footer-032"] [data-part="shell"]{grid-template-columns:minmax(0,1.2fr) minmax(0,2fr);align-items:start}[data-vibeui-block="footer-032"] [data-part="bottom"]{grid-column:1/-1}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-032"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-032"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-032"] [data-part="column"] h3{margin:0 0 .8rem;font-family:var(--vibeui-footer-032-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-032-muted)}
+[data-vibeui-block="footer-032"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
+[data-vibeui-block="footer-032"] [data-part="column"] a{position:relative;display:inline-block;color:var(--vibeui-footer-032-fg);text-decoration:none;transition:color .3s,transform .4s var(--vibeui-footer-032-ease)}
+[data-vibeui-block="footer-032"] [data-part="column"] a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--vibeui-footer-032-accent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--vibeui-footer-032-ease)}
+[data-vibeui-block="footer-032"] [data-part="column"] a:hover{color:var(--vibeui-footer-032-accent);transform:translateX(3px)}
+[data-vibeui-block="footer-032"] [data-part="column"] a:hover::after{transform:scaleX(1)}
+`
 
 const DEFAULT_COLUMNS: Footer032Column[] = [
   { title: "Продукт", links: [{ label: "Как работает", href: "#how" }, { label: "Интеграции", href: "#integrations" }, { label: "Цены", href: "#pricing" }, { label: "Что нового", href: "#changelog" }] },
   { title: "Компания", links: [{ label: "О нас", href: "#about" }, { label: "Блог", href: "#blog" }, { label: "Вакансии", href: "#jobs" }, { label: "Контакты", href: "#contact" }] },
   { title: "Помощь", links: [{ label: "Документация", href: "#docs" }, { label: "API", href: "#api" }, { label: "Безопасность", href: "#security" }, { label: "Поддержка", href: "#support" }] },
 ]
+
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  title?: string
+  links?: readonly ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Продукт",
+  links = [{ label: "Как работает", href: "#how" }, { label: "Интеграции", href: "#integrations" }, { label: "Цены", href: "#pricing" }, { label: "Что нового", href: "#changelog" }],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-032-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <h3>{title}</h3>
+        <ul>
+          {links.map((link) => (
+            <li key={link.label}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+  )
+}
 
 /** Подвал AI-сервиса со статусом систем и колонками ссылок. */
 export function Footer032({
@@ -152,7 +202,7 @@ export function Footer032({
           </div>
           <nav data-part="columns" aria-label={navLabel}>
             {columns.map((column) => (
-              <Footerlinks007 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+              <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </nav>
           <div data-part="bottom">

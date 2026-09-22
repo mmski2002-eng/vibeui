@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
-import { Button125 } from "@/registry/components/button/button-125/button-125"
+import type { ComponentProps } from "react"
 
 export type Hero032Props = {
   eyebrow?: string
@@ -122,7 +122,12 @@ container-type:inline-size;
 @keyframes vibeui-hero-032-blink{0%,100%{opacity:.5;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
 @container (min-width: 60rem){[data-vibeui-block="hero-032"] [data-part="shell"]{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:4rem;padding:5rem 2rem 5rem}[data-vibeui-block="hero-032"] [data-part="tilt"]{margin:0 0 0 auto}}
 [data-vibeui-block="hero-032"] [data-part="w"]:not(:last-child)::after{content:"\\00a0"}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-032"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-032"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="hero-032"] [data-part="store"]{display:inline-flex;flex-direction:column;padding:.65rem 1.25rem .7rem;border-radius:1rem;background:var(--vibeui-hero-032-fg);color:var(--vibeui-hero-032-bg);text-decoration:none;line-height:1.1;transform:translate(var(--vibeui-hero-032-mx,0px),var(--vibeui-hero-032-my,0px));transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,box-shadow .35s}
+[data-vibeui-block="hero-032"] [data-part="store"]:hover{background:var(--vibeui-hero-032-accent);color:var(--vibeui-hero-032-on-accent);box-shadow:0 18px 40px -18px color-mix(in oklab,var(--vibeui-hero-032-accent) 70%,transparent)}
+[data-vibeui-block="hero-032"] [data-part="store"] small{font-size:.62rem;opacity:.75;letter-spacing:.04em;text-transform:uppercase}
+[data-vibeui-block="hero-032"] [data-part="store"] b{font-size:1.05rem;font-weight:700}
+`
 
 const DUST = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
@@ -133,6 +138,41 @@ function Words({ text, highlight }: { text: string; highlight: string }) {
       <span data-mark={marks.has(word.toLowerCase().replace(/[,.!?;:«»]/g, "")) ? "" : undefined}>{word}</span>
     </span>
   ))
+}
+
+type StoreProps = Omit<ComponentProps<"a">, "title" | "children"> & {
+  href?: string
+  caption?: string
+  label?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Store({
+  href = "#",
+  caption = "Скачать в",
+  label = "App Store",
+  accent,
+  className,
+  style,
+  ...props
+}: StoreProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-hero-032-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <a
+        {...props} href={href}
+        className={className}
+        style={palette}
+      >
+        <small>{caption}</small>
+        <b>{label}</b>
+      </a>
+  )
 }
 
 /** Первый экран приложения с CSS-телефоном, наклоном за курсором и дышащим кругом. */
@@ -245,10 +285,10 @@ export function Hero032({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="stores">
               {appStoreLabel ? (
-                <Button125 data-part="store" href={appStoreHref} caption={appStoreCaption} label={appStoreLabel} onPointerMove={magnet} onPointerLeave={unmagnet} accent={accent} />
+                <Store data-part="store" href={appStoreHref} caption={appStoreCaption} label={appStoreLabel} onPointerMove={magnet} onPointerLeave={unmagnet} accent={accent} />
               ) : null}
               {playLabel ? (
-                <Button125 data-part="store" href={playHref} caption={playCaption} label={playLabel} onPointerMove={magnet} onPointerLeave={unmagnet} accent={accent} />
+                <Store data-part="store" href={playHref} caption={playCaption} label={playLabel} onPointerMove={magnet} onPointerLeave={unmagnet} accent={accent} />
               ) : null}
             </div>
             {rating ? (

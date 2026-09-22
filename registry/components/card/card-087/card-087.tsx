@@ -47,7 +47,7 @@ const STYLES = `
 export function Card087({
   name = "Январь",
   flowers = ["амариллис", "гиацинт", "тюльпан"],
-  note,
+  note = "Карточка месяца",
   nowLabel = "цветёт сейчас",
   month,
   index = 0,

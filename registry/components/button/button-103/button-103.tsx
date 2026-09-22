@@ -71,13 +71,13 @@ const STYLES = `
 
 /** Кнопка-карточка с переворотом: лицевая сторона с фото и оборот с текстом; перевёрнута по data-flipped. */
 export function Button103({
-  src = "",
-  shape,
-  caption,
-  alt,
-  from,
-  date,
-  back,
+  src = "/demo/realty/district-01.webp",
+  shape = "wide",
+  caption = "Переворачивающаяся карточка",
+  alt = "Переворачивающаяся карточка",
+  from = "Переворачивающаяся карточка",
+  date = "Переворачивающаяся карточка",
+  back = "Переворачивающаяся карточка",
   addressee = "Дорогим гостям",
   flipped = new Set(),
   index = 0,

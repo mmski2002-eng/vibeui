@@ -6663,7 +6663,6 @@
           "chart",
           "bento"
         ],
-        "pro": true,
         "ai": {
           "export": "Chart030",
           "usage": "<Chart030 label=\"CO₂, ppm\" value=\"640\" />",
@@ -6683,6 +6682,15 @@
           ]
         },
         "controls": [
+          {
+            "prop": "percent",
+            "label": "Доля, %",
+            "type": "number",
+            "default": 62,
+            "min": 0,
+            "max": 100,
+            "step": 1
+          },
           {
             "prop": "label",
             "label": "label",
@@ -6745,6 +6753,9 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "percent": {
+                "label": "Share, %"
               }
             }
           }
@@ -6777,7 +6788,6 @@
           "chart",
           "stats"
         ],
-        "pro": true,
         "ai": {
           "export": "Chart031",
           "usage": "<Chart031 label=\"Яркость\" unit=\"лм\" previousLabel=\"Луч 1\" />",
@@ -6819,6 +6829,13 @@
             "maxLength": 160
           },
           {
+            "prop": "wasLabel",
+            "label": "wasLabel",
+            "type": "text",
+            "default": "было",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -6826,6 +6843,7 @@
           }
         ],
         "cardControls": [
+          "wasLabel",
           "label",
           "unit",
           "previousLabel",
@@ -6875,6 +6893,10 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "wasLabel": {
+                "label": "wasLabel",
+                "default": "было"
               }
             }
           }

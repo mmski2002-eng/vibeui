@@ -1402,9 +1402,7 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-139"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "map-008/map-008.tsx",
@@ -1412,7 +1410,7 @@
           "target": "@components/vibeui/map-008.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-139 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр — среднее по точкам, метки в pt через «~», theme по tone или явно; поверх filter saturate(.75) sepia(.2). От 56rem сетка 1.3fr/.7fr, карта min-height 30rem с бумажной рамкой box-shadow. Фото — на белом картоне со скотчем ::before, повёрнуто; точки — карточки с кодом слева; плашка трансфера — тёмно-синяя с иконкой автобуса. Палитра --vibeui-map-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр — среднее по точкам, метки в pt через «~», theme по tone или явно; поверх filter saturate(.75) sepia(.2). От 56rem сетка 1.3fr/.7fr, карта min-height 30rem с бумажной рамкой box-shadow. Фото — на белом картоне со скотчем ::before, повёрнуто; точки — карточки с кодом слева; плашка трансфера — тёмно-синяя с иконкой автобуса. Палитра --vibeui-map-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1445,7 +1443,7 @@
           "usage": "<Map008\n  title=\"Кайо-Ларго и Гавана\"\n  points={[\n    { code: \"CYO\", title: \"Отель на Кайо-Ларго\", text: \"Бунгало у воды\", latitude: 21.6098, longitude: -81.5476 },\n    { code: \"PLY\", title: \"Playa Paraíso\", text: \"Церемония и ужин\", latitude: 21.6245, longitude: -81.5628 },\n    { code: \"HAV\", title: \"Гавана\", text: \"Первая и последняя ночь\", latitude: 23.1375, longitude: -82.3546 },\n  ]}\n  zoom={7}\n  image=\"/photos/hotel.webp\"\n  imageCaption=\"наш отель\"\n  transferTitle=\"Трансферы — на нас\"\n/>",
           "summary": "Самодостаточная карта свадьбы за границей: Яндекс Карта с несколькими метками, фото отеля на скотче, точки с кодами и плашка про трансфер. Координаты и тексты пропсами.",
           "preserve": [
-            "импорты card-139 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "выцветшую карту в бумажной рамке рядом с фото на скотче",
             "список точек с трёхбуквенными кодами, как в бортовом журнале",
             "тёмную плашку «трансферы — на нас» с автобусом"
@@ -1496,11 +1494,11 @@
           "en": {
             "title": "Wedding-abroad map with hotel, beach and transfer",
             "description": "“Where it all happens” for a destination wedding: a muted Yandex Map with pins for the hotel, beach and airport, a taped hotel photo with a handwritten caption and a list of points with codes like an in-flight magazine; a dark “transfers on us” panel below.",
-            "docs": "A composite block: imports card-139 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre is the mean of the points, pins in pt joined by “~”, theme by tone or explicit; a filter saturate(.75) sepia(.2) on top. From 56rem a 1.3fr/.7fr grid, the map min-height 30rem with a paper frame box-shadow. The photo is on white card with a ::before tape, tilted; points are cards with the code on the left; the transfer panel is deep navy with a bus icon. Palette --vibeui-map-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre is the mean of the points, pins in pt joined by “~”, theme by tone or explicit; a filter saturate(.75) sepia(.2) on top. From 56rem a 1.3fr/.7fr grid, the map min-height 30rem with a paper frame box-shadow. The photo is on white card with a ::before tape, tilted; points are cards with the code on the left; the transfer panel is deep navy with a bus icon. Palette --vibeui-map-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained destination-wedding map: a Yandex Map with several pins, a taped hotel photo, coded points and a transfer panel. Coordinates and copy via props.",
               "preserve": [
-                "the card-139 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the muted map in a paper frame next to the taped photo",
                 "the list of points with three-letter codes like an in-flight magazine",
                 "the dark “transfers on us” panel with the bus"
@@ -1755,9 +1753,7 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-141"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "map-010/map-010.tsx",
@@ -1788,7 +1784,7 @@
           "usage": "<Map010\n  mapSrc=\"https://yandex.ru/map-widget/v1/?ll=37.5860,55.7330&z=15&pt=37.5860,55.7330,pm2rdm\"\n  pinTitle=\"Корка · Хамовники\"\n  openHour={7}\n  queue={[6, 9, 7, 4, 3, 5, 6, 4, 2, 2, 3, 4, 5, 3]}\n/>",
           "summary": "Контакты заведения с картой и живой подсказкой «сколько народу сейчас» — по условным данным по часам. Для кафе, пекарни, барбершопа.",
           "preserve": [
-            "импорты card-141 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "час посетителя через useSyncExternalStore с серверным null; до гидрации — второй час работы",
             "столбики — grid с числом колонок из переменной, высота через --vibeui-map-010-v от максимума",
             "карта — iframe с filter: saturate(.7) под палитру; без mapSrc остаётся серая подложка"
@@ -1854,7 +1850,7 @@
             "ai": {
               "summary": "Venue contacts with a map and a live “how busy now” hint from hourly estimates. For a café, bakery or barbershop.",
               "preserve": [
-                "the card-141 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the visitor's hour via useSyncExternalStore with a null server snapshot; before hydration — the second opening hour",
                 "bars are a grid with the column count from a variable, height via --vibeui-map-010-v relative to the max",
                 "the map is an iframe with filter: saturate(.7) to match the palette; without mapSrc a grey plate remains"
@@ -1917,11 +1913,11 @@
                 "warnAfter": "today's bread is almost gone — tomorrow from seven"
               }
             },
-            "docs": "A composite block: imports card-141 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует card-141 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "map-011",

@@ -35,7 +35,7 @@ const STYLES = `
 
 /** Название бренда в ленте: вид по data-kind, дубли скрыты от читалок. */
 export function Badge032({
-  name,
+  name = "Имя в ленте логотипов",
   accent,
   className,
   style,

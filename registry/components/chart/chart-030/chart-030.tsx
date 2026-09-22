@@ -35,7 +35,7 @@ const STYLES = `
 /** Кольцевой индикатор датчика: дуга на процент, значение в центре и подпись под кольцом. */
 export function Chart030({
   label = "CO₂, ppm",
-  percent,
+  percent = 62,
   value = "640",
   accent,
   className,
@@ -60,7 +60,7 @@ export function Chart030({
         style={palette}
       >
         <span data-part="wrap">
-          <i style={{ ["--vibeui-bento-012-v" as string]: `${percent}%` }} aria-hidden="true" />
+          <i style={{ ["--vibeui-chart-030-v" as string]: `${percent}%` }} aria-hidden="true" />
           <b>{value}</b>
         </span>
         {label}

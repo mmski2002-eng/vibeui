@@ -39,8 +39,8 @@ const STYLES = `
 /** Строка списка районов: миниатюра, название с заметкой и цена за м² с числом объектов; активна по data-active. */
 export function Card093({
   name = "Петроградская",
-  image,
-  note,
+  image = "/demo/realty/object-01.webp",
+  note = "Строка района",
   count = "164 объекта",
   price = "285 тыс ₽",
   accent,

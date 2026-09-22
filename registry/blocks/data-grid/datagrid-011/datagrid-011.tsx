@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card161 } from "@/registry/components/card/card-161/card-161"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid011Row = {
   id: string
@@ -120,6 +119,23 @@ border-color:transparent;background:var(--vibeui-datagrid-011-accent);color:oklc
 }
 [data-vibeui-block="datagrid-011"] [data-part="empty-actions"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-011"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-011"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-011-border);}
+[data-vibeui-block="datagrid-011"] [data-part="bar"] [data-part="title"]{margin:0 0.5rem 0 0;font-size:0.875rem;font-weight:650;}
+[data-vibeui-block="datagrid-011"] [data-part="bar"] [data-part="chip"]{display:inline-flex;align-items:center;gap:0.375rem;
+appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.25rem 0.5rem;border-radius:999px;
+color:var(--vibeui-datagrid-011-accent);background:var(--vibeui-datagrid-011-accent-soft);
+border:1px solid transparent;}
+[data-vibeui-block="datagrid-011"] [data-part="bar"] [data-part="chip"]:hover{border-color:var(--vibeui-datagrid-011-accent)}
+[data-vibeui-block="datagrid-011"] [data-part="bar"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-011"] [data-part="bar"] [data-part="reset"]{margin-inline-start:auto;
+appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.3125rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-011-border);
+background:var(--vibeui-datagrid-011-field);color:var(--vibeui-datagrid-011-fg);}
+[data-vibeui-block="datagrid-011"] [data-part="bar"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed}
+[data-vibeui-block="datagrid-011"] [data-part="bar"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid011Row[] = [
@@ -221,6 +237,82 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с пустым состоянием: когда фильтры сошлись в ноль, тело таблицы
  * объясняет причину и предлагает сбросить фильтры. Один файл.
  */
+
+export type BarRow = {
+  id: string
+  request: string
+  city: string
+  status: "Новая" | "В работе" | "Архив"
+  score: number
+}
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  removeFilterLabel?: string
+  resetAllLabel?: string
+  applied?: readonly (typeof FILTERS)[number][]
+  filterLabel?: (id: string) => string
+  setActive?: Dispatch<SetStateAction<string[]>>
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Заявки",
+  removeFilterLabel = "Снять фильтр «{filter}»",
+  resetAllLabel = "Сбросить всё",
+  applied = [],
+  filterLabel = () => "",
+  setActive = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-011-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        {applied.map((one) => (
+          <button
+            key={one.id}
+            type="button"
+            data-part="chip"
+            aria-label={removeFilterLabel.replace(
+              "{filter}",
+              filterLabel(one.id),
+            )}
+            onClick={() =>
+              setActive((current) =>
+                current.filter((value) => value !== one.id),
+              )
+            }
+          >
+            {filterLabel(one.id)}
+            <span aria-hidden="true">×</span>
+          </button>
+        ))}
+        <button
+          type="button"
+          data-part="reset"
+          disabled={applied.length === 0}
+          onClick={() => setActive([])}
+        >
+          {resetAllLabel}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid011({
   rows = DEFAULT_ROWS,
   caption = "Заявки сервисной службы",
@@ -272,7 +364,7 @@ export function Datagrid011({
         className={className}
         style={palette}
       >
-        <Card161 data-part="bar" heading={heading} removeFilterLabel={removeFilterLabel} resetAllLabel={resetAllLabel} applied={applied} filterLabel={filterLabel} setActive={setActive} accent={accent} />
+        <Bar data-part="bar" heading={heading} removeFilterLabel={removeFilterLabel} resetAllLabel={resetAllLabel} applied={applied} filterLabel={filterLabel} setActive={setActive} accent={accent} />
         <div
           data-part="scroll"
           role="region"

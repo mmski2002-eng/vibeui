@@ -91,7 +91,7 @@ export function Card103({
   code = "msk-1",
   uptime = "99,99 %",
   latency = 38,
-  status,
+  status = "ok",
   statusLabels = ["работает", "деградация", "недоступен"],
   uptimeLabel = "аптайм 30 дн.",
   p50Label = "p50 сейчас",

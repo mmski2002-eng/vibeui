@@ -22,7 +22,7 @@ font-size:0.9375rem;line-height:1.5;}
 
 /** Строка списка сравнения «было — стало»: метка-маркер и текст; тон маркера задаёт колонка. */
 export function Card044({
-  point,
+  point = "Пункт «до / после»",
   accent,
   className,
   style,

@@ -49,7 +49,7 @@ const STYLES = `
 export function Card134({
   name = "Вера Лапина",
   image = "/demo/flowers/florist-01.webp",
-  alt,
+  alt = "Карточка с полароидом",
   role = "основатель, флорист",
   quote = "Букет должен пахнуть садом, а не магазином.",
   index = 0,

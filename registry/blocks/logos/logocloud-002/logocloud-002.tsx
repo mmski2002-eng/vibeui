@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Badge030 } from "@/registry/components/badge/badge-030/badge-030"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Logocloud002Item = {
   name: string
@@ -67,7 +66,7 @@ animation-play-state:paused;
 list-style:none;margin:0;padding:0 0 0 3.5rem;
 display:flex;align-items:center;gap:3.5rem;flex:none;
 }
-[data-vibeui-block="logocloud-002"] [data-part="group"] li:hover [data-vibeui-block="badge-030"]{
+[data-vibeui-block="logocloud-002"] [data-part="group"] li:hover [data-part="logo"]{
 color:var(--vibeui-logocloud-002-accent);
 }
 @keyframes vibeui-logocloud-002-scroll{to{transform:translateX(-50%)}}
@@ -81,6 +80,14 @@ color:var(--vibeui-logocloud-002-accent);
 [data-vibeui-block="logocloud-002"] [data-part="group"]{flex-wrap:wrap;justify-content:center;padding:0 1.25rem;gap:1.25rem 2.5rem}
 [data-vibeui-block="logocloud-002"] [data-part="group"][aria-hidden="true"]{display:none}
 }
+[data-vibeui-block="logocloud-002"] [data-part="logo"]{color:var(--vibeui-logocloud-002-logo);
+font-size:1.375rem;line-height:1;white-space:nowrap;
+transition:color var(--vibeui-logocloud-002-dur-2) ease;
+font-weight:750;letter-spacing:-0.035em;}
+[data-vibeui-block="logocloud-002"] [data-part="logo"][data-style="serif"]{font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:650;letter-spacing:0;}
+[data-vibeui-block="logocloud-002"] [data-part="logo"][data-style="mono"]{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-weight:600;letter-spacing:-0.02em;}
+[data-vibeui-block="logocloud-002"] [data-part="logo"][data-style="wide"]{font-size:1.0625rem;font-weight:650;letter-spacing:0.28em;text-transform:uppercase;}
+[data-vibeui-block="logocloud-002"] [data-part="logo"][data-style="slab"]{font-weight:850;letter-spacing:-0.01em;text-transform:uppercase;}
 `
 
 const DEFAULT_ITEMS: Logocloud002Item[] = [
@@ -127,10 +134,42 @@ function LogoGroup({
     <ul data-part="group" aria-hidden={hidden || undefined}>
       {items.map((item) => (
         <li key={item.name}>
-          <Badge030 data-part="logo" styleKey={item.style} name={item.name} accent={accent} />
+          <Logo data-part="logo" styleKey={item.style} name={item.name} accent={accent} />
         </li>
       ))}
     </ul>
+  )
+}
+
+type LogoProps = Omit<ComponentProps<"span">, "title" | "children"> & {
+  styleKey?: string
+  name?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Logo({
+  styleKey,
+  name = "Nordwind",
+  accent,
+  className,
+  style,
+  ...props
+}: LogoProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-logocloud-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <span
+        {...props} data-style={styleKey ?? "sans"}
+        className={className}
+        style={palette}
+      >
+        {name}
+      </span>
   )
 }
 

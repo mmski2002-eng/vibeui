@@ -1,6 +1,4 @@
-import type { CSSProperties } from "react"
-import { Sociallinks002 } from "@/registry/components/navigation/sociallinks-002/sociallinks-002"
-import { Footerlinks017 } from "@/registry/components/navigation/footerlinks-017/footerlinks-017"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Footer013Link = {
   label: string
@@ -73,6 +71,20 @@ outline:2px solid var(--vibeui-footer-013-accent);outline-offset:3px;
 [data-vibeui-block="footer-013"] [data-part="shell"]{padding:4rem 2rem 2rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-013"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-013"] [data-part="links"] ul{margin:0;padding:0;list-style:none;
+display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.5rem;}
+[data-vibeui-block="footer-013"] [data-part="links"] a{color:var(--vibeui-footer-013-muted);text-decoration:none;font-size:0.9375rem;
+transition:color var(--vibeui-footer-013-dur-2) ease;}
+[data-vibeui-block="footer-013"] [data-part="links"] a:hover{color:var(--vibeui-footer-013-accent)}
+[data-vibeui-block="footer-013"] [data-part="social"]{margin:0;padding:0;list-style:none;
+display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;}
+[data-vibeui-block="footer-013"] [data-part="social"] a{display:inline-block;padding:0.3125rem 0.75rem;border-radius:999px;
+border:1px solid var(--vibeui-footer-013-border);
+color:var(--vibeui-footer-013-muted);text-decoration:none;
+font-size:0.8125rem;font-weight:600;
+transition:color var(--vibeui-footer-013-dur-2) ease,border-color var(--vibeui-footer-013-dur-2) ease;}
+[data-vibeui-block="footer-013"] [data-part="social"] a:hover{color:var(--vibeui-footer-013-accent);
+border-color:color-mix(in oklab,var(--vibeui-footer-013-accent) 45%,var(--vibeui-footer-013-border));}
 `
 
 const DEFAULT_LINKS: Footer013Link[] = [
@@ -109,6 +121,100 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+export type LinksLink = {
+  label: string
+  href: string
+}
+
+const LinksDEFAULT_LINKS: LinksLink[] = [
+  { label: "Возможности", href: "#features" },
+  { label: "Тарифы", href: "#pricing" },
+  { label: "Документация", href: "#docs" },
+  { label: "Блог", href: "#blog" },
+  { label: "Контакты", href: "#contacts" },
+]
+
+type LinksProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  links?: LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  links = LinksDEFAULT_LINKS,
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-013-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props} aria-label="Подвал"
+        className={className}
+        style={palette}
+      >
+        <ul>
+          {links.map((link) => (
+            <li key={link.href}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+  )
+}
+
+export type SocialLink = {
+  label: string
+  href: string
+}
+
+const SocialDEFAULT_SOCIAL: SocialLink[] = [
+  { label: "Telegram", href: "#telegram" },
+  { label: "YouTube", href: "#youtube" },
+  { label: "GitHub", href: "#github" },
+]
+
+type SocialProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  social?: SocialLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Social({
+  social = SocialDEFAULT_SOCIAL,
+  accent,
+  className,
+  style,
+  ...props
+}: SocialProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-013-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {social.map((link) => (
+          <li key={link.href}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
 }
 
 /** Минимальный подвал по центру: знак, строка ссылок, соцсети, копирайт. */
@@ -153,8 +259,8 @@ export function Footer013({
             <span data-part="mark" aria-hidden="true" />
             {brand}
           </a>
-          <Footerlinks017 data-part="links" links={links} accent={accent} />
-          <Sociallinks002 data-part="social" social={social} accent={accent} />
+          <Links data-part="links" links={links} accent={accent} />
+          <Social data-part="social" social={social} accent={accent} />
           <p data-part="copyright">{copyright}</p>
         </div>
       </footer>

@@ -1,5 +1,4 @@
-import type { CSSProperties, ReactNode } from "react"
-import { Footerlinks001 } from "@/registry/components/navigation/footerlinks-001/footerlinks-001"
+import type { CSSProperties, ComponentProps, ReactNode } from "react"
 
 import { Button001 } from "@/registry/components/button/button-001/button-001"
 import { Input001 } from "@/registry/components/input/input-001/input-001"
@@ -125,6 +124,12 @@ border-color:color-mix(in oklab,var(--vibeui-footer-009-accent) 45%,var(--vibeui
 [data-vibeui-block="footer-009"] [data-part="columns"]{grid-template-columns:repeat(5,minmax(0,1fr));gap:2rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-009"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-009"] [data-part="column"] [data-part="column-title"]{margin:0 0 0.75rem;color:var(--vibeui-footer-009-ink);
+font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+[data-vibeui-block="footer-009"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:0.5rem}
+[data-vibeui-block="footer-009"] [data-part="column"] a{color:var(--vibeui-footer-009-muted);text-decoration:none;font-size:0.875rem;
+transition:color var(--vibeui-footer-009-dur-2) ease;}
+[data-vibeui-block="footer-009"] [data-part="column"] a:hover{color:var(--vibeui-footer-009-accent)}
 `
 
 // Значок соцсети подбирается по подписи ссылки: список приходит строками, а
@@ -287,6 +292,51 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  title?: string
+  links?: ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Продукт",
+  links = [ { label: "Возможности", href: "#features" }, { label: "Тарифы", href: "#pricing" }, { label: "Интеграции", href: "#integrations" }, { label: "Что нового", href: "#changelog" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-009-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props}
+        aria-label={title}
+        className={className}
+        style={palette}
+      >
+        <p data-part="column-title">{title}</p>
+        <ul>
+          {links.map((link) => (
+            <li key={link.href}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+  )
+}
+
 /** Мега-подвал: подписка сверху, карта сайта в пять колонок, соцссылки внизу. */
 export function Footer009({
   subscribeTitle = "Раз в месяц — письмо о новых секциях",
@@ -342,7 +392,7 @@ export function Footer009({
           </div>
           <div data-part="columns">
             {columns.map((column) => (
-              <Footerlinks001 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+              <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </div>
           <div data-part="bottom">

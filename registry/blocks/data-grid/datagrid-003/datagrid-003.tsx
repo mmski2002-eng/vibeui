@@ -1,5 +1,4 @@
 import type { ComponentProps, CSSProperties } from "react"
-import { Card153 } from "@/registry/components/card/card-153/card-153"
 
 export type Datagrid003Row = {
   region: string
@@ -112,6 +111,10 @@ to{clip-path:inset(0 0 0 -1rem);box-shadow:0 0 0 transparent}
 }
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-003"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-003"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem;
+padding:0.875rem;border-bottom:1px solid var(--vibeui-datagrid-003-border);}
+[data-vibeui-block="datagrid-003"] [data-part="head"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
+[data-vibeui-block="datagrid-003"] [data-part="head"] [data-part="hint"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-003-muted);}
 `
 
 const DEFAULT_WEEKS = [
@@ -184,6 +187,39 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Широкая сетка с закреплёнными крайними колонками: подпись строки слева,
  * действие справа, недели прокручиваются между ними. Серверный компонент.
  */
+type HeadProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  scrollHint?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Head({
+  heading = "Поставки по регионам",
+  scrollHint = "Прокрутите вбок: крайние колонки закреплены",
+  accent,
+  className,
+  style,
+  ...props
+}: HeadProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-003-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="hint">{scrollHint}</p>
+      </div>
+  )
+}
+
 export function Datagrid003({
   rows = DEFAULT_ROWS,
   weeks = DEFAULT_WEEKS,
@@ -221,7 +257,7 @@ export function Datagrid003({
         className={className}
         style={palette}
       >
-        <Card153 data-part="head" heading={heading} scrollHint={scrollHint} accent={accent} />
+        <Head data-part="head" heading={heading} scrollHint={scrollHint} accent={accent} />
         <div
           data-part="scroll"
           role="region"

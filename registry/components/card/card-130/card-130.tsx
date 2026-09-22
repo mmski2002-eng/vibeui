@@ -50,10 +50,10 @@ const STYLES = `
 /** Кадр фотоплёнки: фото в перфорированной рамке, подпись с годом, заголовок и текст. */
 export function Card130({
   title = "Кофе у окна",
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   date = "Октябрь 2021",
-  text,
+  text = "Кадр плёнки",
   index = 0,
   accent,
   className,

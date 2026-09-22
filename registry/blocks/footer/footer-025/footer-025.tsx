@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks020 } from "@/registry/components/navigation/footerlinks-020/footerlinks-020"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer025Link = { label: string; href: string }
 
@@ -77,7 +76,47 @@ container-type:inline-size;
 [data-vibeui-block="footer-025"] [data-part="coords"]{justify-items:end;text-align:right}
 [data-vibeui-block="footer-025"] [data-part="bottom"]{justify-content:space-between}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-025"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-025"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-025"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.2rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-025"] [data-part="links"] a{position:relative;font-family:var(--vibeui-footer-025-display);font-size:.82rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;opacity:.85;transition:opacity .25s,color .25s}
+[data-vibeui-block="footer-025"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-025-sun)}
+`
+
+export type LinksLink = { label: string; href: string }
+
+type LinksProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  links?: readonly LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  links = [ { label: "Маршрут", href: "#route" }, { label: "Три дня", href: "#days" }, { label: "Дорога", href: "#travel" }, { label: "Check-in", href: "#checkin" }, { label: "Вопросы", href: "#faq" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-025-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
 
 /** Подвал свадьбы-путешествия как низ посадочного талона: коды рейса, имена с «¡Hasta la boda!», координаты пляжа, якоря, хэштег. */
 export function Footer025({
@@ -143,7 +182,7 @@ export function Footer025({
           </div>
           <div data-part="bottom">
             {links.length > 0 ? (
-              <Footerlinks020 data-part="links" links={links} accent={accent} />
+              <Links data-part="links" links={links} accent={accent} />
             ) : null}
             {hashtag ? (
               <a data-part="tag" href={`https://www.instagram.com/explore/tags/${hashtag.replace(/^#/, "")}/`} target="_blank" rel="noopener noreferrer">

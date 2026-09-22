@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Card159 } from "@/registry/components/card/card-159/card-159"
 import type { ComponentProps, CSSProperties, PointerEvent } from "react"
 
 export type Datagrid009Row = {
@@ -101,6 +100,14 @@ background:var(--vibeui-datagrid-009-accent);color:oklch(from var(--vibeui-datag
 [data-vibeui-block="datagrid-009"] [data-part="muted"]{color:var(--vibeui-datagrid-009-muted)}
 [data-vibeui-block="datagrid-009"] [data-align="end"]{text-align:right;font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-009"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-009"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-009-border);}
+[data-vibeui-block="datagrid-009"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-009"] [data-part="bar"] button{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.3125rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-009-border);
+background:var(--vibeui-datagrid-009-field);color:var(--vibeui-datagrid-009-fg);}
+[data-vibeui-block="datagrid-009"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-009-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid009Row[] = [
@@ -183,6 +190,44 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с изменением ширины колонок: разделитель тянется мышью и
  * настраивается стрелками с клавиатуры. Один файл, ноль зависимостей.
  */
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  resetLabel?: string
+  setWidths?: (value: Record<Key, number>) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Файлы проекта",
+  resetLabel = "Вернуть ширины",
+  setWidths = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-009-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <button type="button" onClick={() => setWidths(START)}>
+          {resetLabel}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid009({
   rows = DEFAULT_ROWS,
   caption = "Потяните разделитель между заголовками или наведите на него фокус и жмите стрелки",
@@ -251,7 +296,7 @@ export function Datagrid009({
         className={className}
         style={palette}
       >
-        <Card159 data-part="bar" heading={heading} resetLabel={resetLabel} setWidths={setWidths} accent={accent} />
+        <Bar data-part="bar" heading={heading} resetLabel={resetLabel} setWidths={setWidths} accent={accent} />
         <div
           data-part="scroll"
           role="region"

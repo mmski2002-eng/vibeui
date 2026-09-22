@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Card174 } from "@/registry/components/card/card-174/card-174"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid027Row = {
@@ -105,6 +104,19 @@ margin:0;padding:0.5rem 0.875rem 0.625rem;border-top:1px solid var(--vibeui-data
 font-size:0.6875rem;color:var(--vibeui-datagrid-027-muted);
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-027"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-027"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-027-border);}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="switch-form"]{display:contents}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="switch"]{border:1px solid var(--vibeui-datagrid-027-border);border-radius:0.5rem;
+margin:0;padding:0.1875rem;display:flex;gap:0.1875rem;}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="switch"] legend{padding:0 0.25rem;font-size:0.625rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+color:var(--vibeui-datagrid-027-muted);}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="switch"] label{display:inline-flex;align-items:center;gap:0.3125rem;cursor:pointer;
+padding:0.25rem 0.5rem;border-radius:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-027-muted);}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="switch"] label:has(input:checked){background:var(--vibeui-datagrid-027-chip);color:var(--vibeui-datagrid-027-accent);font-weight:600;}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="switch"] input{accent-color:var(--vibeui-datagrid-027-accent);margin:0;width:0.8125rem;height:0.8125rem}
+[data-vibeui-block="datagrid-027"] [data-part="bar"] [data-part="switch"] input:focus-visible{outline:2px solid var(--vibeui-datagrid-027-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid027Row[] = [
@@ -195,6 +207,67 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с переключателем плотности: отступ, кегль и высота строки меняются
  * вместе, на просторной плотности появляется примечание. Один файл.
  */
+const BarDENSITY_TEXT: Record<string, string> = {
+  compact: "Компактно",
+  regular: "Обычно",
+  roomy: "Просторно",
+}
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  densityLegend?: string
+  densityText?: Record<string, string>
+  mode?: (typeof MODES)[number]["value"]
+  setMode?: (value: (typeof MODES)[number]["value"]) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Документы сделки",
+  densityLegend = "Плотность",
+  densityText = BarDENSITY_TEXT,
+  mode,
+  setMode = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-027-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <form data-part="switch-form">
+          <fieldset data-part="switch">
+            <legend>{densityLegend}</legend>
+            {MODES.map((item) => (
+              <label key={item.value}>
+                <input
+                  type="radio"
+                  name="vibeui-datagrid-027-density"
+                  value={item.value}
+                  checked={mode === item.value}
+                  onChange={() => setMode(item.value)}
+                />
+                {densityText[item.value] ?? DENSITY_TEXT[item.value]}
+              </label>
+            ))}
+          </fieldset>
+        </form>
+      </div>
+  )
+}
+
 export function Datagrid027({
   rows = DEFAULT_ROWS,
   caption = "Плотность меняет отступ, кегль и высоту строки одновременно",
@@ -242,7 +315,7 @@ export function Datagrid027({
         className={className}
         style={palette}
       >
-        <Card174 data-part="bar" heading={heading} densityLegend={densityLegend} densityText={densityText} mode={mode} setMode={setMode} accent={accent} />
+        <Bar data-part="bar" heading={heading} densityLegend={densityLegend} densityText={densityText} mode={mode} setMode={setMode} accent={accent} />
         <div
           data-part="scroll"
           role="region"

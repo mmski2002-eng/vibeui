@@ -50,11 +50,11 @@ const STYLES = `
 
 /** Событие таймлайна: точка, дата, заголовок и текст; подсвечено по data-lit и data-now. */
 export function Card132({
-  title,
-  date,
-  image,
-  imageAlt,
-  text,
+  title = "Кадр таймлайна",
+  date = "Кадр таймлайна",
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
+  text = "Кадр таймлайна",
   accent,
   className,
   style,

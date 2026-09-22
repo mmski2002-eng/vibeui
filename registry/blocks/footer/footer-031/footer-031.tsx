@@ -1,6 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks024 } from "@/registry/components/navigation/footerlinks-024/footerlinks-024"
-import { Footerlinks023 } from "@/registry/components/navigation/footerlinks-023/footerlinks-023"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer031Link = {
   label: string
@@ -67,7 +65,94 @@ container-type:inline-size;
 @supports (animation-timeline: view()){
 [data-vibeui-block="footer-031"] [data-part="top"],[data-vibeui-block="footer-031"] [data-part="bottom"]{animation:vibeui-footer-031-in cubic-bezier(.2,.8,.2,1) both;animation-timeline:view();animation-range:entry 0% entry 70%}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-031"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-031"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-031"] [data-part="legal"]{display:flex;gap:1rem;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-031"] [data-part="legal"] a{color:inherit;text-decoration:none}
+[data-vibeui-block="footer-031"] [data-part="legal"] a:hover{color:var(--vibeui-footer-031-fg)}
+[data-vibeui-block="footer-031"] [data-part="links"]{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-031"] [data-part="links"] a{position:relative;color:inherit;text-decoration:none;font-weight:600;opacity:.8;transition:opacity .2s}
+[data-vibeui-block="footer-031"] [data-part="links"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.2rem;height:2px;border-radius:2px;background:var(--vibeui-footer-031-accent);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="footer-031"] [data-part="links"] a:hover{opacity:1}
+[data-vibeui-block="footer-031"] [data-part="links"] a:hover::after{transform:none;transform-origin:left}
+`
+
+export type LegalLink = {
+  label: string
+  href: string
+}
+
+type LegalProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  legal?: readonly LegalLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Legal({
+  legal = [ { label: "Конфиденциальность", href: "#" }, { label: "Условия", href: "#" }, { label: "Поддержка", href: "#" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: LegalProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-031-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {legal.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
+
+export type LinksLink = {
+  label: string
+  href: string
+}
+
+type LinksProps = Omit<ComponentProps<"ul">, "title" | "children"> & {
+  links?: readonly LinksLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Links({
+  links = [ { label: "Что внутри", href: "#features" }, { label: "Результат", href: "#results" }, { label: "Отзывы", href: "#reviews" }, { label: "Тарифы", href: "#pricing" }, { label: "Вопросы", href: "#faq" }, ],
+  accent,
+  className,
+  style,
+  ...props
+}: LinksProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-031-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <ul
+        {...props}
+        className={className}
+        style={palette}
+      >
+        {links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+  )
+}
 
 /** Подвал сайта приложения с бейджами магазинов. */
 export function Footer031({
@@ -120,7 +205,7 @@ export function Footer031({
                 {caption ? <small>{caption}</small> : null}
               </span>
             </div>
-            <Footerlinks023 data-part="links" links={links} accent={accent} />
+            <Links data-part="links" links={links} accent={accent} />
             <div data-part="stores">
               {appStoreLabel ? (
                 <a data-part="store" href={appStoreHref}>
@@ -136,7 +221,7 @@ export function Footer031({
           </div>
           <div data-part="bottom">
             <span>{copyright}</span>
-            <Footerlinks024 data-part="legal" legal={legal} accent={accent} />
+            <Legal data-part="legal" legal={legal} accent={accent} />
           </div>
         </div>
       </footer>

@@ -42,10 +42,10 @@ const STYLES = `
 
 /** Кнопка-плитка мозаики: фото и подпись; форма по data-shape. */
 export function Button104({
-  src = "",
-  shape,
-  caption,
-  alt,
+  src = "/demo/realty/object-03.webp",
+  shape = "rect",
+  caption = "Плитка мозаики фото",
+  alt = "Плитка мозаики фото",
   accent,
   className,
   style,

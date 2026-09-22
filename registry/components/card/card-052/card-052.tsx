@@ -45,7 +45,7 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 /** Строка списка команды: аватар, имя и роль слева, город и стаж справа, тонкий разделитель. */
 export function Card052({
   name = "Алексей Громов",
-  image,
+  image = "/demo/realty/object-01.webp",
   role = "Основатель, продукт",
   city = "Санкт-Петербург",
   since = "с 2021",

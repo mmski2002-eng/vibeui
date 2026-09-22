@@ -61,7 +61,7 @@ const STYLES = `
 export function Card135({
   label = "лет студии",
   value = 11,
-  suffix,
+  suffix = "Неоновое кольцо-показатель",
   active = true,
   accent,
   className,

@@ -541,9 +541,7 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-041"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "testimonials-003/testimonials-003.tsx",
@@ -551,7 +549,7 @@
           "target": "@components/vibeui/testimonials-003.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует card-041 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-003-*. Серверный компонент. Кегль цитаты считается в cqi от собственной ширины блока, строки выравниваются через text-wrap:balance. Кавычка — крупный знак в отдельном слое с pointer-events:none и user-select:none, обрезанный краем секции: это подложка, а не украшение, поэтому она не мешает выделять текст. Цифры размечены списком определений <dl>: значение и подпись — пара, а не два независимых абзаца.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-003-*. Серверный компонент. Кегль цитаты считается в cqi от собственной ширины блока, строки выравниваются через text-wrap:balance. Кавычка — крупный знак в отдельном слое с pointer-events:none и user-select:none, обрезанный краем секции: это подложка, а не украшение, поэтому она не мешает выделять текст. Цифры размечены списком определений <dl>: значение и подпись — пара, а не два независимых абзаца.",
       "meta": {
         "tags": [
           "testimonials",
@@ -571,7 +569,7 @@
           "usage": "<Testimonials003\n  quote=\"Мы перестали спорить о том, как должна выглядеть страница.\"\n  name=\"Елена Ремизова\"\n  role=\"Директор по продукту\"\n  metrics={[{ value: \"4 дня\", caption: \"вместо трёх недель\" }]}\n/>",
           "summary": "Секция с одним крупным отзывом: цитата засечным шрифтом во всю ширину, инициалы автора, должность, название компании и три цифры под чертой. Приём для случая, когда есть один действительно сильный отзыв. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты card-041 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-003-* и не подменять её токенами вашей темы",
             "одну цитату: смысл блока в том, что она одна — добавите вторую, и приём исчезнет",
             "засечную гарнитуру цитаты: она отличает прямую речь от остального текста страницы сильнее, чем размер",
@@ -634,7 +632,7 @@
             "ai": {
               "summary": "A section with a single large testimonial: the quote set in serif across the full width, the author's initials, role, company name and three numbers under a rule. The device for when you have one genuinely strong testimonial. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the card-041 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-003-* palette — do not swap it for your theme tokens",
                 "the single quote: the point of the block is that there is only one — add a second and the device disappears",
                 "the serif face on the quote: it separates direct speech from the rest of the page more strongly than size does",
@@ -704,7 +702,7 @@
                 "avatarImage": "/demo/avatars/pavel-256.webp"
               }
             },
-            "docs": "A composite block: imports card-041 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-003-*. A server component. The type size of the quote is computed in cqi from the block's own width, and the lines are balanced with text-wrap:balance. The quotation mark is a large glyph in a separate layer with pointer-events:none and user-select:none, clipped by the edge of the section: it is a backdrop rather than an ornament, so it does not get in the way of selecting the text. The numbers are marked up as a definition list <dl>: the value and its caption are a pair, not two independent paragraphs.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-003-*. A server component. The type size of the quote is computed in cqi from the block's own width, and the lines are balanced with text-wrap:balance. The quotation mark is a large glyph in a separate layer with pointer-events:none and user-select:none, clipped by the edge of the section: it is a backdrop rather than an ornament, so it does not get in the way of selecting the text. The numbers are marked up as a definition list <dl>: the value and its caption are a pair, not two independent paragraphs.",
             "slots": {
               "shape": "One large full-width serif quote and three numbers",
               "items": [
@@ -3545,9 +3543,7 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "badge-028"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "testimonials-015/testimonials-015.tsx",
@@ -3555,7 +3551,7 @@
           "target": "@components/vibeui/testimonials-015.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует badge-028 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-015-*. Серверный компонент. Центрированная figure: цитата кеглем от собственной ширины блока с акцентными кавычками-псевдоэлементами, под ней плашка-пилюля с инициалами компании, именем и должностью автора. Ниже, за линией, строка логотипов клиентов — словесные метки текстом в приглушённом цвете: чужие SVG в registry-блоке — это обещание прав на чужие знаки, а текст заменяется своим за минуту.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-015-*. Серверный компонент. Центрированная figure: цитата кеглем от собственной ширины блока с акцентными кавычками-псевдоэлементами, под ней плашка-пилюля с инициалами компании, именем и должностью автора. Ниже, за линией, строка логотипов клиентов — словесные метки текстом в приглушённом цвете: чужие SVG в registry-блоке — это обещание прав на чужие знаки, а текст заменяется своим за минуту.",
       "meta": {
         "tags": [
           "testimonials",
@@ -3573,7 +3569,7 @@
           "usage": "<Testimonials015\n  quote=\"Мы собрали новый сайт за спринт.\"\n  name=\"Дмитрий Хан\"\n  role=\"Основатель\"\n  company=\"Студия «Плот»\"\n  logos={[\"Северный путь\", \"Sturm\", \"Плот\"]}\n/>",
           "summary": "Крупная центрированная цитата с акцентными кавычками, под ней плашка компании с инициалами, именем и должностью автора, а внизу за линией — строка текстовых логотипов клиентов. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
-            "импорты badge-028 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-015-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "связку «цитата + строка логотипов»: голос убеждает, логотипы показывают массовость — порознь каждая половина слабее",
             "плашку-пилюлю компании под цитатой: подпись с компанией объясняет, почему этому голосу стоит верить",
@@ -3631,11 +3627,11 @@
           "en": {
             "title": "Quote with Logos",
             "description": "A large quote with the author's company plaque and a row of text client logos below: one voice convinces, the logo row shows it is not the only one. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports badge-028 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-015-*. A server component. A centred figure: the quote sized from the block's own width with accent pseudo-element quotation marks, and below it a pill plaque with the company initials, the author's name and role. Further down, behind a rule, sits the row of client logos — wordmarks set as text in a muted colour: shipping others' SVGs in a registry block is a claim to rights over their marks, while text is replaced with your own in a minute.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-015-*. A server component. A centred figure: the quote sized from the block's own width with accent pseudo-element quotation marks, and below it a pill plaque with the company initials, the author's name and role. Further down, behind a rule, sits the row of client logos — wordmarks set as text in a muted colour: shipping others' SVGs in a registry block is a claim to rights over their marks, while text is replaced with your own in a minute.",
             "ai": {
               "summary": "A large centred quote with accent quotation marks, a company plaque with initials, name and role below it, and a row of text client logos behind a rule at the bottom. Zero dependencies, one file, its own palette.",
               "preserve": [
-                "the badge-028 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-015-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the pairing of the quote and the logo row: the voice convinces, the logos show scale — apart, each half is weaker",
                 "the company pill under the quote: a caption with the company explains why this voice deserves trust",
@@ -5603,9 +5599,7 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-111"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "testimonials-024/testimonials-024.tsx",
@@ -5635,7 +5629,7 @@
           "usage": "<Testimonials024\n  interval={7}\n  quotes={[\n    { text: \"Сделал за три недели то, на что у нас ушло бы полгода.\", name: \"Марина Соколова\", role: \"СЕО\", project: \"магазин\" },\n    { text: \"Дизайнер, который понимает, что такое стейт.\", name: \"Игорь Черных\", role: \"CTO\" },\n  ]}\n/>",
           "summary": "Отзывы для портфолио, агентства, сервиса: по одному, крупно, с честной полосой времени и клавиатурой.",
           "preserve": [
-            "импорты card-111 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "автопрокрутка — setTimeout на interval, перезапускается от индекса; пауза — data-paused по pointerenter/focus",
             "полоса активной точки — keyframes fill на время интервала; пройденные точки залиты через data-done",
             "смена цитаты — key на blockquote, чтобы анимация появления сработала заново"
@@ -5701,7 +5695,7 @@
             "ai": {
               "summary": "Reviews for a portfolio, agency or service: one at a time, big, with an honest time bar and keyboard support.",
               "preserve": [
-                "the card-111 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "autoplay is a setTimeout on interval, restarted from the index; pause is data-paused on pointerenter/focus",
                 "the active dot bar is fill keyframes over the interval; passed dots are filled via data-done",
                 "a key on blockquote so the appear animation re-runs on change"
@@ -5775,7 +5769,7 @@
                 }
               ]
             },
-            "docs": "A composite block: imports card-111 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -5800,7 +5794,7 @@
           ]
         }
       },
-      "docs": "Составной блок: импортирует card-111 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-025",

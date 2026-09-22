@@ -113,8 +113,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Input034({
   label = "Сообщение",
-  hint,
-  error,
+  hint = "Многострочное поле с подпи…",
+  error = "Многострочное поле с подпи…",
   rows = 4,
   background = "",
   accent,

@@ -46,9 +46,9 @@ background:var(--vibeui-card-107-accent);color:oklch(from var(--vibeui-card-107-
 
 /** Одна крупная цитата с кавычками-акцентом и подпись: имя, роль. */
 export function Card107({
-  quote,
+  quote = "Крупная цитата с автором",
   name = "Анна Ковалёва",
-  role,
+  role = "Крупная цитата с автором",
   accent,
   className,
   style,

@@ -10,9 +10,7 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "mockup-011"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "surface-001/surface-001.tsx",
@@ -20,7 +18,7 @@
           "target": "@components/vibeui/surface-001.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует mockup-011 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, без JS. Изображение — обычный <img> с object-fit:cover; точка кадрирования пропом focus (object-position), alt обязателен по смыслу кадра. Без src рисуется стилизованный CSS-пейзаж-заглушка с role=\"img\". Вуаль — заранее выбранный линейный градиент двух сил (data-scrim), не вычисление по пикселям; текст прижат к тёмной зоне (align start/end). Палитра --vibeui-surface-001-*.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, без JS. Изображение — обычный <img> с object-fit:cover; точка кадрирования пропом focus (object-position), alt обязателен по смыслу кадра. Без src рисуется стилизованный CSS-пейзаж-заглушка с role=\"img\". Вуаль — заранее выбранный линейный градиент двух сил (data-scrim), не вычисление по пикселям; текст прижат к тёмной зоне (align start/end). Палитра --vibeui-surface-001-*.",
       "meta": {
         "tags": [
           "background",
@@ -45,7 +43,7 @@
           "usage": "<Surface001 src=\"/photos/mountains.jpg\" alt=\"Хребет на закате\" focus=\"center 30%\" scrim=\"soft\">\n  {/* ваш контент */}\n</Surface001>",
           "summary": "Фотографический фон: <img> во весь блок с object-fit:cover, настраиваемой точкой кадрирования и градиентной вуалью двух сил под текстом. Текстовая зона прижимается к тёмному краю кадра. Без src — CSS-заглушка пейзажа. Действия поверх остаются брендовыми акцентными. Без JS.",
           "preserve": [
-            "импорты mockup-011 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-001-* и не подменять её токенами вашей темы",
             "вуаль как заранее выбранную тёмную зону с проверенным контрастом — не вычислять читаемость смешиванием с пикселями фото",
             "естественные цвета фотографии: не тонировать кадр в акцентный, бренд живёт в действиях",
@@ -105,11 +103,11 @@
           "en": {
             "title": "Photographic Atmosphere",
             "description": "A full-bleed photo background with a gradient scrim under the text: the atmosphere of a hotel, restaurant, architecture or personal brand. The photo keeps its natural colors, the interface on top stays on brand. The image is passed as a prop.",
-            "docs": "A composite block: imports mockup-011 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, no JS. The image is a plain <img> with object-fit:cover; the crop point is the focus prop (object-position), alt is required by the frame's meaning. Without src a stylized CSS landscape placeholder renders with role=\"img\". The scrim is a pre-chosen linear gradient of two strengths (data-scrim), not per-pixel math; the text hugs the dark zone (align start/end). Palette --vibeui-surface-001-*.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, no JS. The image is a plain <img> with object-fit:cover; the crop point is the focus prop (object-position), alt is required by the frame's meaning. Without src a stylized CSS landscape placeholder renders with role=\"img\". The scrim is a pre-chosen linear gradient of two strengths (data-scrim), not per-pixel math; the text hugs the dark zone (align start/end). Palette --vibeui-surface-001-*.",
             "ai": {
               "summary": "A photographic background: a full-bleed <img> with object-fit:cover, a configurable crop point and a two-strength gradient scrim under the text. The text zone hugs the dark edge of the frame. Without src — a CSS landscape placeholder. Actions on top stay brand accent. No JS.",
               "preserve": [
-                "the mockup-011 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-001-* palette — do not swap it for your theme tokens",
                 "the scrim as a pre-chosen dark zone with verified contrast — do not compute readability by mixing with photo pixels",
                 "the photo's natural colors: do not tint the frame accent, the brand lives in the actions",
@@ -164,9 +162,7 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "mockup-012"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "surface-002/surface-002.tsx",
@@ -174,7 +170,7 @@
           "target": "@components/vibeui/surface-002.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует mockup-012 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nЕдинственный клиентский фон набора (\"use client\"), ноль зависимостей кроме react. Координаты пишутся в CSS-переменные --vibeui-surface-002-x/y через requestAnimationFrame без state и перерисовок; обрабатывается только pointerType === \"mouse\" — на touch пятно стоит в стартовой точке. Свет — radial-gradient, сетка материала проявляется маской вокруг пятна. Замены системного курсора нет. Палитра --vibeui-surface-002-*.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nЕдинственный клиентский фон набора (\"use client\"), ноль зависимостей кроме react. Координаты пишутся в CSS-переменные --vibeui-surface-002-x/y через requestAnimationFrame без state и перерисовок; обрабатывается только pointerType === \"mouse\" — на touch пятно стоит в стартовой точке. Свет — radial-gradient, сетка материала проявляется маской вокруг пятна. Замены системного курсора нет. Палитра --vibeui-surface-002-*.",
       "meta": {
         "tags": [
           "background",
@@ -193,7 +189,7 @@
           "usage": "<Surface002 radius=\"large\" strength=\"soft\">\n  {/* ваш контент */}\n</Surface002>",
           "summary": "Тёплое световое пятно следует за мышью и проявляет тонкую сетку графитового материала; координаты пишутся в CSS-переменные через rAF без перерисовок React. На touch — статичная точка. Радиус и сила настройками. Маленький клиентский компонент.",
           "preserve": [
-            "импорты mockup-012 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-002-* и не подменять её токенами вашей темы",
             "обновление через CSS-переменные и rAF — не переписывать на setState: перерисовки убьют плавность",
             "статичную точку на touch и при reduced motion — эффект не условие композиции",
@@ -249,11 +245,11 @@
           "en": {
             "title": "Cursor Spotlight",
             "description": "A graphite background with a warm spot following the pointer and revealing the material's grid. For studios, portfolios and tool presentations. On touch and with reduced motion the light is static — the composition never depends on the effect.",
-            "docs": "A composite block: imports mockup-012 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe set's only client background (\"use client\"), zero npm dependencies besides react. Coordinates are written into the --vibeui-surface-002-x/y CSS variables through requestAnimationFrame with no state or re-renders; only pointerType === \"mouse\" is handled — on touch the spot stays at its start point. The light is a radial-gradient, the material grid is revealed by a mask around the spot. No system cursor replacement. Palette --vibeui-surface-002-*.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe set's only client background (\"use client\"), zero npm dependencies besides react. Coordinates are written into the --vibeui-surface-002-x/y CSS variables through requestAnimationFrame with no state or re-renders; only pointerType === \"mouse\" is handled — on touch the spot stays at its start point. The light is a radial-gradient, the material grid is revealed by a mask around the spot. No system cursor replacement. Palette --vibeui-surface-002-*.",
             "ai": {
               "summary": "A warm light spot follows the mouse and reveals a thin grid in the graphite material; coordinates go into CSS variables via rAF without React re-renders. On touch — a static point. Radius and strength are settings. A tiny client component.",
               "preserve": [
-                "the mockup-012 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-002-* palette — do not swap it for your theme tokens",
                 "updates through CSS variables and rAF — do not rewrite onto setState: re-renders kill the smoothness",
                 "the static point on touch and reduced motion — the effect is not a condition of the composition",
@@ -1094,9 +1090,7 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "mockup-013"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "surface-009/surface-009.tsx",
@@ -1104,7 +1098,7 @@
           "target": "@components/vibeui/surface-009.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует mockup-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-009-*.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-009-*.",
       "meta": {
         "tags": [
           "background",
@@ -1126,7 +1120,7 @@
           "usage": "<Surface009 speed=\"calm\" frost=\"clear\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface009>",
           "summary": "Жидкое стекло на WebGL2: мягкий фон из пятен палитры и плита-линза, чей прямоугольник берётся из DOM-элемента [data-part=\"slab\"] (в нём и живёт контент). Внутри плиты — преломление по SDF скруглённого прямоугольника с расхождением каналов, четырёхточечное размытие по frost, тонировка и краевой блик. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
-            "импорты mockup-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-009-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1198,11 +1192,11 @@
           "en": {
             "title": "Liquid Glass",
             "description": "Live liquid glass: a glass slab under the content refracts the drifting background — at the edges the image bends with chromatic fringing and a highlight runs along the rim. GPU-rendered, zero dependencies. For a first screen with a card, a form or a product panel.",
-            "docs": "A composite block: imports mockup-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-009-*.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-009-*.",
             "ai": {
               "summary": "Liquid glass on WebGL2: a soft background of palette spots and a lens slab whose rectangle comes from the DOM element [data-part=\"slab\"] (where the content lives). Inside the slab — refraction by a rounded-rectangle SDF with channel separation, a four-tap blur by frost, tinting and a rim highlight. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
-                "the mockup-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-009-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",

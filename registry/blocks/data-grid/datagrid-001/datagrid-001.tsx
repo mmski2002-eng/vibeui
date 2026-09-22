@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card151 } from "@/registry/components/card/card-151/card-151"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid001Row = {
   title: string
@@ -115,6 +114,28 @@ color:oklch(from var(--vibeui-datagrid-001-accent) clamp(0,(0.62 - l) * 100,1) 0
 [data-vibeui-block="datagrid-001"] [data-part="team"]{color:var(--vibeui-datagrid-001-muted)}
 [data-vibeui-block="datagrid-001"] [data-part="name"]{padding:var(--vibeui-datagrid-001-pad) 0.875rem;font-weight:500}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-001"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-001"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-001-border);}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="bar-title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto;}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="chips"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;
+margin:0;padding:0;list-style:none;}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="chip"]{display:inline-flex;align-items:center;gap:0.375rem;
+appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.25rem 0.5rem;border-radius:999px;
+color:var(--vibeui-datagrid-001-accent);
+background:var(--vibeui-datagrid-001-accent-soft);
+border:1px solid transparent;
+transition:border-color var(--vibeui-datagrid-001-dur-2) ease;}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="chip"]:hover{border-color:var(--vibeui-datagrid-001-accent)}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-datagrid-001-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="empty-sort"]{font-size:0.75rem;color:var(--vibeui-datagrid-001-muted);}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="reset"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.25rem 0.5rem;border-radius:0.5rem;
+background:none;border:1px solid var(--vibeui-datagrid-001-border);
+color:var(--vibeui-datagrid-001-muted);}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="reset"]:hover:not(:disabled){color:var(--vibeui-datagrid-001-fg)}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed}
+[data-vibeui-block="datagrid-001"] [data-part="bar"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-datagrid-001-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid001Row[] = [
@@ -216,6 +237,85 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с сортировкой по нескольким колонкам сразу: приоритет ключей
  * задаётся порядком кликов и виден цифрой. Один файл, ноль зависимостей.
  */
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  emptySortText?: string
+  removeSortLabel?: string
+  resetText?: string
+  keys?: SortKey[]
+  label?: (column: Column) => string
+  setKeys?: Dispatch<SetStateAction<SortKey[]>>
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Каталог склада",
+  emptySortText = "Сортировка не задана",
+  removeSortLabel = "Убрать сортировку по колонке «{column}»",
+  resetText = "Сбросить",
+  keys = [],
+  label = () => "",
+  setKeys = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-001-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="bar-title">{heading}</h3>
+        {keys.length === 0 ? (
+          <p data-part="empty-sort">{emptySortText}</p>
+        ) : (
+          <ul data-part="chips">
+            {keys.map((key, index) => (
+              <li key={key.column}>
+                <button
+                  type="button"
+                  data-part="chip"
+                  aria-label={removeSortLabel.replace(
+                    "{column}",
+                    label(key.column),
+                  )}
+                  onClick={() =>
+                    setKeys((current) =>
+                      current.filter((item) => item.column !== key.column),
+                    )
+                  }
+                >
+                  <span aria-hidden="true">{index + 1}</span>
+                  {label(key.column)}
+                  <span aria-hidden="true">{ARROW[key.direction]}</span>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <button
+          type="button"
+          data-part="reset"
+          disabled={keys.length === 0}
+          onClick={() => setKeys([])}
+        >
+          {resetText}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid001({
   rows = DEFAULT_ROWS,
   caption = "Клик по заголовку добавляет колонку в сортировку, повторный — меняет направление, третий убирает",
@@ -301,7 +401,7 @@ export function Datagrid001({
         className={className}
         style={palette}
       >
-        <Card151 data-part="bar" heading={heading} emptySortText={emptySortText} removeSortLabel={removeSortLabel} resetText={resetText} keys={keys} label={label} setKeys={setKeys} accent={accent} />
+        <Bar data-part="bar" heading={heading} emptySortText={emptySortText} removeSortLabel={removeSortLabel} resetText={resetText} keys={keys} label={label} setKeys={setKeys} accent={accent} />
         <div
           data-part="scroll"
           role="region"

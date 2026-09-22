@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card177 } from "@/registry/components/card/card-177/card-177"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid029Row = {
   id: string
@@ -118,6 +117,16 @@ background:var(--vibeui-datagrid-029-accent);color:oklch(from var(--vibeui-datag
 [data-vibeui-block="datagrid-029"] [data-part="retry"]:focus-visible{outline:2px solid var(--vibeui-datagrid-029-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-029"] [data-part="tries"]{font-size:0.6875rem!important}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-029"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-029"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
+padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-029-border);}
+[data-vibeui-block="datagrid-029"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-029"] [data-part="bar"] [data-part="state"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-029-muted)}
+[data-vibeui-block="datagrid-029"] [data-part="bar"] [data-part="state"][data-bad="true"]{color:var(--vibeui-datagrid-029-bad);font-weight:600}
+[data-vibeui-block="datagrid-029"] [data-part="bar"] [data-part="sim"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
+padding:0.3125rem 0.625rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-029-border);
+background:transparent;color:var(--vibeui-datagrid-029-fg);}
+[data-vibeui-block="datagrid-029"] [data-part="bar"] [data-part="sim"]:focus-visible{outline:2px solid var(--vibeui-datagrid-029-accent);outline-offset:2px}
 `
 
 const DEFAULT_ROWS: Datagrid029Row[] = [
@@ -184,6 +193,105 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с состоянием ошибки загрузки и повтором: шапка остаётся,
  * в теле стоит код ошибки и кнопка «Повторить». Один файл.
  */
+export type BarRow = {
+  id: string
+  node: string
+  region: string
+  latency: number
+  uptime: string
+}
+
+const BarDEFAULT_ROWS: BarRow[] = [
+  {
+    id: "s1",
+    node: "eu-node-01",
+    region: "Франкфурт",
+    latency: 24,
+    uptime: "99,98 %",
+  },
+  {
+    id: "s2",
+    node: "eu-node-02",
+    region: "Амстердам",
+    latency: 31,
+    uptime: "99,91 %",
+  },
+  {
+    id: "s3",
+    node: "ru-node-11",
+    region: "Москва",
+    latency: 12,
+    uptime: "99,99 %",
+  },
+  {
+    id: "s4",
+    node: "ru-node-12",
+    region: "Новосибирск",
+    latency: 48,
+    uptime: "99,84 %",
+  },
+]
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  heading?: string
+  failedStateText?: string
+  loadedStateText?: string
+  rows?: BarRow[]
+  simulateText?: string
+  failed?: boolean
+  setFailed?: Dispatch<SetStateAction<boolean>>
+  setTries?: (value: number) => void
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Узлы сети",
+  failedStateText = "Данные не загружены",
+  loadedStateText = "Узлов: {count}",
+  rows = BarDEFAULT_ROWS,
+  simulateText = "Симулировать сбой",
+  failed = true,
+  setFailed = () => {},
+  setTries = () => {},
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-029-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="state" data-bad={failed ? "true" : undefined}>
+          {failed
+            ? failedStateText
+            : loadedStateText.replace("{count}", String(rows.length))}
+        </p>
+        <button
+          type="button"
+          data-part="sim"
+          aria-pressed={failed}
+          onClick={() => {
+            setFailed((value) => !value)
+            setTries(0)
+          }}
+        >
+          {simulateText}
+        </button>
+      </div>
+  )
+}
+
 export function Datagrid029({
   rows = DEFAULT_ROWS,
   caption = "Шапка остаётся на месте: понятно, что именно не загрузилось",
@@ -231,7 +339,7 @@ export function Datagrid029({
         className={className}
         style={palette}
       >
-        <Card177 data-part="bar" heading={heading} failedStateText={failedStateText} loadedStateText={loadedStateText} rows={rows} simulateText={simulateText} failed={failed} setFailed={setFailed} setTries={setTries} accent={accent} />
+        <Bar data-part="bar" heading={heading} failedStateText={failedStateText} loadedStateText={loadedStateText} rows={rows} simulateText={simulateText} failed={failed} setFailed={setFailed} setTries={setTries} accent={accent} />
         <div
           data-part="scroll"
           role="region"

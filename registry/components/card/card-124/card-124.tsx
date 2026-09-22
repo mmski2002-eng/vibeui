@@ -39,8 +39,8 @@ const STYLES = `
 /** Карточка образа: фото, кому и название. */
 export function Card124({
   who = "Ей",
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   title = "Лён, миди, плоская подошва",
   text = "Платье или комбинезон в песке, мяте или коралле. Каблуки утонут — сандалии или босиком.",
   accent,

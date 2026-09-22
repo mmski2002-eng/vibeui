@@ -70,8 +70,8 @@ export function Accordion023({
   items = DEFAULT_ITEMS,
   defaultOpen = 0,
   accent,
-  ink,
-  background,
+  ink = "Аккордеон с плюсом-крестиком",
+  background = "Аккордеон с плюсом-крестиком",
   className,
   style,
   ...props

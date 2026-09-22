@@ -42,13 +42,13 @@ const STYLES = `
 
 /** Карточка остановки: фото, название, код и описание; активна по data-active. */
 export function Card131({
-  code,
-  image,
-  imageAlt,
-  city,
-  date,
-  title,
-  text,
+  code = "Остановка маршрута",
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
+  city = "Остановка маршрута",
+  date = "Остановка маршрута",
+  title = "Остановка маршрута",
+  text = "Остановка маршрута",
   accent,
   className,
   style,

@@ -49,8 +49,8 @@ const STYLES = `
 export function Card036({
   pet = "Марсель",
   date = "8 июня",
-  sticker,
-  photo,
+  sticker = "Полароид из дневника питомца",
+  photo = "/demo/realty/object-01.webp",
   text = "Дерматолог нашёл, на что аллергия, за один приём. Три года чесался, месяц — нет.",
   owner = "Ира, хозяйка",
   accent,

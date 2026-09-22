@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Sociallinks001 } from "@/registry/components/navigation/sociallinks-001/sociallinks-001"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Footer006Contact = {
   label: string
@@ -105,6 +104,14 @@ color:var(--vibeui-footer-006-muted);font-size:0.8125rem;
 [data-vibeui-block="footer-006"] [data-part="bottom"]{grid-column:1 / -1}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-006"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-006"] [data-part="socials"]{display:flex;flex-wrap:wrap;gap:0.5rem}
+[data-vibeui-block="footer-006"] [data-part="socials"] [data-part="social"]{display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:0.75rem;
+border:1px solid var(--vibeui-footer-006-border);
+color:var(--vibeui-footer-006-muted);text-decoration:none;
+font-size:0.75rem;font-weight:750;letter-spacing:0.02em;
+transition:background-color var(--vibeui-footer-006-dur-2) ease,color var(--vibeui-footer-006-dur-2) ease,border-color var(--vibeui-footer-006-dur-2) ease;}
+[data-vibeui-block="footer-006"] [data-part="socials"] [data-part="social"]:hover{background:var(--vibeui-footer-006-accent);border-color:var(--vibeui-footer-006-accent);
+color:oklch(from var(--vibeui-footer-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 `
 
 const DEFAULT_CONTACTS: Footer006Contact[] = [
@@ -144,6 +151,60 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
+}
+
+export type SocialsSocial = {
+  label: string
+  short: string
+  href: string
+}
+
+const SocialsDEFAULT_SOCIALS: SocialsSocial[] = [
+  { label: "Телеграм", short: "TG", href: "#telegram" },
+  { label: "ВКонтакте", short: "VK", href: "#vk" },
+  { label: "YouTube", short: "YT", href: "#youtube" },
+  { label: "Дзен", short: "DZ", href: "#dzen" },
+]
+
+type SocialsProps = Omit<ComponentProps<"nav">, "title" | "children"> & {
+  socialsLabel?: string
+  socials?: SocialsSocial[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Socials({
+  socialsLabel = "Мы в социальных сетях",
+  socials = SocialsDEFAULT_SOCIALS,
+  accent,
+  className,
+  style,
+  ...props
+}: SocialsProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-006-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <nav
+        {...props} aria-label={socialsLabel}
+        className={className}
+        style={palette}
+      >
+        {socials.map((social) => (
+          <a
+            key={social.href}
+            data-part="social"
+            href={social.href}
+            aria-label={social.label}
+          >
+            <span aria-hidden="true">{social.short}</span>
+          </a>
+        ))}
+      </nav>
+  )
 }
 
 /** Подвал с контактами и соцсетями: телефон и почта — настоящие ссылки. */
@@ -197,7 +258,7 @@ export function Footer006({
               </div>
             ))}
           </dl>
-          <Sociallinks001 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
+          <Socials data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
           <div data-part="bottom">
             <span>{legal}</span>
           </div>

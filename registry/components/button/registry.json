@@ -2137,6 +2137,13 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "value",
+            "label": "value",
+            "type": "text",
+            "default": "npx shadcn@latest add https://vibeui.ru/r/button-015.json",
+            "maxLength": 160
           }
         ],
         "i18n": {
@@ -2185,6 +2192,10 @@
               },
               "background": {
                 "label": "Background"
+              },
+              "value": {
+                "label": "value",
+                "default": "npx shadcn@latest add https://vibeui.ru/r/button-015.json"
               }
             },
             "title": "Copy Button",
@@ -2198,6 +2209,7 @@
           }
         },
         "cardControls": [
+          "value",
           "label",
           "doneLabel",
           "hold",
@@ -2312,6 +2324,20 @@
             "label": "Фон",
             "type": "color",
             "default": ""
+          },
+          {
+            "prop": "href",
+            "label": "href",
+            "type": "text",
+            "default": "#",
+            "maxLength": 160
+          },
+          {
+            "prop": "externalHint",
+            "label": "externalHint",
+            "type": "text",
+            "default": "(откроется в новой вкладке)",
+            "maxLength": 160
           }
         ],
         "i18n": {
@@ -2368,6 +2394,14 @@
               },
               "size": {
                 "label": "Size"
+              },
+              "href": {
+                "label": "href",
+                "default": "#"
+              },
+              "externalHint": {
+                "label": "externalHint",
+                "default": "(откроется в новой вкладке)"
               }
             },
             "title": "Link Button",
@@ -2381,6 +2415,8 @@
           }
         },
         "cardControls": [
+          "externalHint",
+          "href",
           "label",
           "external",
           "tone",
@@ -14569,6 +14605,13 @@
             "default": "md"
           },
           {
+            "prop": "href",
+            "label": "href",
+            "type": "text",
+            "default": "#",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -14615,11 +14658,16 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "href": {
+                "label": "href",
+                "default": "#"
               }
             }
           }
         },
         "cardControls": [
+          "href",
           "arrow",
           "underline",
           "size",
@@ -14627,198 +14675,6 @@
         ],
         "preview": {
           "width": "auto"
-        }
-      }
-    },
-    {
-      "name": "button-078",
-      "type": "registry:component",
-      "title": "Кнопка года",
-      "description": "Кнопка выбора года отчёта: нажатое состояние через aria-pressed.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-078/button-078.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-078.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока charity-003 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-078-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "year",
-          "tab",
-          "pressed",
-          "button",
-          "charity"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button078",
-          "usage": "<Button078 year=\"2025\" />",
-          "summary": "Кнопка выбора года отчёта: нажатое состояние через aria-pressed.",
-          "preserve": [
-            "локальную палитру --vibeui-button-078-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "year — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "year",
-            "label": "year",
-            "type": "text",
-            "default": "2025",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "year",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Year button",
-            "description": "Report year selector button: pressed state through aria-pressed.",
-            "docs": "Extracted from the charity-003 block as is: one file, no dependencies, its own palette in the --vibeui-button-078-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Report year selector button: pressed state through aria-pressed.",
-              "usage": "<Button078 year=\"2025\" />",
-              "preserve": [
-                "the local --vibeui-button-078-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "year — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "year": {
-                "label": "year",
-                "default": "2025"
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-080",
-      "type": "registry:component",
-      "title": "Кнопка зоны доставки",
-      "description": "Кнопка легенды зоны: квадрат цвета зоны и минуты; выбрана через aria-pressed.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-080/button-080.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-080.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока delivery-003 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-080-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "zone",
-          "legend",
-          "minutes",
-          "button",
-          "delivery"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button080",
-          "usage": "<Button080  />",
-          "summary": "Кнопка легенды зоны: квадрат цвета зоны и минуты; выбрана через aria-pressed.",
-          "preserve": [
-            "локальную палитру --vibeui-button-080-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "minutes, minutesUnit — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Delivery zone button",
-            "description": "Zone legend button: zone colour square and minutes; selected through aria-pressed.",
-            "docs": "Extracted from the delivery-003 block as is: one file, no dependencies, its own palette in the --vibeui-button-080-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Zone legend button: zone colour square and minutes; selected through aria-pressed.",
-              "usage": "<Button080  />",
-              "preserve": [
-                "the local --vibeui-button-080-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "minutes, minutesUnit — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
         }
       }
     },
@@ -14848,7 +14704,6 @@
           "button",
           "flowers"
         ],
-        "pro": true,
         "ai": {
           "export": "Button081",
           "usage": "<Button081 day=\"…\" start=\"…\" />",
@@ -14872,7 +14727,7 @@
             "prop": "day",
             "label": "day",
             "type": "text",
-            "default": "",
+            "default": "Слот времени доставки",
             "maxLength": 160
           },
           {
@@ -14883,6 +14738,20 @@
             "maxLength": 160
           },
           {
+            "prop": "todayLabel",
+            "label": "todayLabel",
+            "type": "text",
+            "default": "сегодня",
+            "maxLength": 160
+          },
+          {
+            "prop": "tomorrowLabel",
+            "label": "tomorrowLabel",
+            "type": "text",
+            "default": "завтра",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -14890,6 +14759,8 @@
           }
         ],
         "cardControls": [
+          "tomorrowLabel",
+          "todayLabel",
           "day",
           "start",
           "accent"
@@ -14930,6 +14801,14 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "todayLabel": {
+                "label": "todayLabel",
+                "default": "сегодня"
+              },
+              "tomorrowLabel": {
+                "label": "tomorrowLabel",
+                "default": "завтра"
               }
             }
           }
@@ -14962,7 +14841,6 @@
           "button",
           "flowers"
         ],
-        "pro": true,
         "ai": {
           "export": "Button082",
           "usage": "<Button082 title=\"Подрежьте стебли наискосок\" />",
@@ -15039,107 +14917,6 @@
       }
     },
     {
-      "name": "button-083",
-      "type": "registry:component",
-      "title": "Вкладка пары до/после",
-      "description": "Кнопка-вкладка выбора пары фото; активна через aria-selected.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-083/button-083.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-083.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока auto-002 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-083-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "tab",
-          "before-after",
-          "button",
-          "auto"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button083",
-          "usage": "<Button083 label=\"Фары\" />",
-          "summary": "Кнопка-вкладка выбора пары фото; активна через aria-selected.",
-          "preserve": [
-            "локальную палитру --vibeui-button-083-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "label — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "label",
-            "label": "label",
-            "type": "text",
-            "default": "Фары",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "label",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Before/after tab",
-            "description": "Tab button for choosing a photo pair; active through aria-selected.",
-            "docs": "Extracted from the auto-002 block as is: one file, no dependencies, its own palette in the --vibeui-button-083-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Tab button for choosing a photo pair; active through aria-selected.",
-              "usage": "<Button083 label=\"Фары\" />",
-              "preserve": [
-                "the local --vibeui-button-083-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "label — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "label": {
-                "label": "label",
-                "default": "Фары"
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "name": "button-084",
       "type": "registry:component",
       "title": "Слот записи",
@@ -15165,7 +14942,6 @@
           "button",
           "auto"
         ],
-        "pro": true,
         "ai": {
           "export": "Button084",
           "usage": "<Button084  />",
@@ -15186,6 +14962,13 @@
         },
         "controls": [
           {
+            "prop": "state",
+            "label": "state",
+            "type": "text",
+            "default": "Слот записи",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -15193,6 +14976,7 @@
           }
         ],
         "cardControls": [
+          "state",
           "accent"
         ],
         "preview": {
@@ -15223,6 +15007,10 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "state": {
+                "label": "state",
+                "default": "Слот записи"
               }
             }
           }
@@ -15254,7 +15042,6 @@
           "radio",
           "button"
         ],
-        "pro": true,
         "ai": {
           "export": "Button085",
           "usage": "<Button085 name=\"Косметический\" note=\"обои, покраска, полы\" />",
@@ -15289,6 +15076,27 @@
             "maxLength": 160
           },
           {
+            "prop": "fromLabel",
+            "label": "fromLabel",
+            "type": "text",
+            "default": "от",
+            "maxLength": 160
+          },
+          {
+            "prop": "currency",
+            "label": "currency",
+            "type": "text",
+            "default": "₽",
+            "maxLength": 160
+          },
+          {
+            "prop": "areaUnit",
+            "label": "areaUnit",
+            "type": "text",
+            "default": "м²",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -15296,6 +15104,9 @@
           }
         ],
         "cardControls": [
+          "areaUnit",
+          "currency",
+          "fromLabel",
           "name",
           "note",
           "accent"
@@ -15339,6 +15150,18 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "fromLabel": {
+                "label": "fromLabel",
+                "default": "от"
+              },
+              "currency": {
+                "label": "currency",
+                "default": "₽"
+              },
+              "areaUnit": {
+                "label": "areaUnit",
+                "default": "м²"
               }
             }
           }
@@ -15370,7 +15193,6 @@
           "button",
           "renovation"
         ],
-        "pro": true,
         "ai": {
           "export": "Button086",
           "usage": "<Button086 name=\"Двушка на Ленинском\" area=\"62 м²\" kindText=\"Капитальный\" />",
@@ -15412,6 +15234,13 @@
             "type": "text"
           },
           {
+            "prop": "weekShort",
+            "label": "weekShort",
+            "type": "text",
+            "default": "нед",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "default": "",
@@ -15419,6 +15248,7 @@
           }
         ],
         "cardControls": [
+          "weekShort",
           "name",
           "area",
           "kindText",
@@ -15468,6 +15298,10 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "weekShort": {
+                "label": "weekShort",
+                "default": "нед"
               }
             }
           }
@@ -15501,7 +15335,6 @@
           "button",
           "vet"
         ],
-        "pro": true,
         "ai": {
           "export": "Button087",
           "usage": "<Button087 label=\"Не ест второй день\" />",
@@ -15603,7 +15436,6 @@
           "button",
           "writer"
         ],
-        "pro": true,
         "ai": {
           "export": "Button088",
           "usage": "<Button088 topic=\"Города\" title=\"Город, который спит на боку\" year=\"2024\" />",
@@ -15645,6 +15477,20 @@
             "maxLength": 160
           },
           {
+            "prop": "lessLabel",
+            "label": "lessLabel",
+            "type": "text",
+            "default": "свернуть",
+            "maxLength": 160
+          },
+          {
+            "prop": "moreLabel",
+            "label": "moreLabel",
+            "type": "text",
+            "default": "читать дальше",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -15652,6 +15498,8 @@
           }
         ],
         "cardControls": [
+          "moreLabel",
+          "lessLabel",
           "topic",
           "title",
           "year",
@@ -15697,108 +15545,14 @@
               },
               "accent": {
                 "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-089",
-      "type": "registry:component",
-      "title": "Кнопка периода",
-      "description": "Кнопка-таблетка выбора периода графика; активна через aria-pressed.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-089/button-089.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-089.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока fintech-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-089-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "period",
-          "pill",
-          "tabs",
-          "button",
-          "fintech"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button089",
-          "usage": "<Button089 label=\"День\" />",
-          "summary": "Кнопка-таблетка выбора периода графика; активна через aria-pressed.",
-          "preserve": [
-            "локальную палитру --vibeui-button-089-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "label — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "label",
-            "label": "label",
-            "type": "text",
-            "default": "День",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "label",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Period button",
-            "description": "Pill button for choosing the chart period; active through aria-pressed.",
-            "docs": "Extracted from the fintech-001 block as is: one file, no dependencies, its own palette in the --vibeui-button-089-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Pill button for choosing the chart period; active through aria-pressed.",
-              "usage": "<Button089 label=\"День\" />",
-              "preserve": [
-                "the local --vibeui-button-089-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "label — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "label": {
-                "label": "label",
-                "default": "День"
               },
-              "accent": {
-                "label": "Accent"
+              "lessLabel": {
+                "label": "lessLabel",
+                "default": "свернуть"
+              },
+              "moreLabel": {
+                "label": "moreLabel",
+                "default": "читать дальше"
               }
             }
           }
@@ -15831,7 +15585,6 @@
           "button",
           "gadget"
         ],
-        "pro": true,
         "ai": {
           "export": "Button090",
           "usage": "<Button090 color=\"#2b2b2b\" name=\"Графит\" />",
@@ -15920,210 +15673,6 @@
       }
     },
     {
-      "name": "button-092",
-      "type": "registry:component",
-      "title": "Чип категории со счётчиком",
-      "description": "Чип фильтра категории с числом товаров; активен через aria-pressed.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-092/button-092.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-092.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока market-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-092-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "chip",
-          "category",
-          "count",
-          "button",
-          "market"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button092",
-          "usage": "<Button092 label=\"Figma\" />",
-          "summary": "Чип фильтра категории с числом товаров; активен через aria-pressed.",
-          "preserve": [
-            "локальную палитру --vibeui-button-092-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "label, count — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "label",
-            "label": "label",
-            "type": "text",
-            "default": "Figma",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "label",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Category chip with count",
-            "description": "Category filter chip with the item count; active through aria-pressed.",
-            "docs": "Extracted from the market-001 block as is: one file, no dependencies, its own palette in the --vibeui-button-092-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Category filter chip with the item count; active through aria-pressed.",
-              "usage": "<Button092 label=\"Figma\" />",
-              "preserve": [
-                "the local --vibeui-button-092-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "label, count — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "label": {
-                "label": "label",
-                "default": "Figma"
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-093",
-      "type": "registry:component",
-      "title": "Вкладка раздела меню",
-      "description": "Кнопка-вкладка раздела меню; активна через aria-selected.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-093/button-093.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-093.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока restaurant-003 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-093-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "tab",
-          "menu",
-          "section",
-          "button",
-          "restaurant"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button093",
-          "usage": "<Button093 title=\"Закуски\" />",
-          "summary": "Кнопка-вкладка раздела меню; активна через aria-selected.",
-          "preserve": [
-            "локальную палитру --vibeui-button-093-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "title — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "title",
-            "label": "title",
-            "type": "text",
-            "default": "Закуски",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "title",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Menu section tab",
-            "description": "Menu section tab button; active through aria-selected.",
-            "docs": "Extracted from the restaurant-003 block as is: one file, no dependencies, its own palette in the --vibeui-button-093-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Menu section tab button; active through aria-selected.",
-              "usage": "<Button093 title=\"Закуски\" />",
-              "preserve": [
-                "the local --vibeui-button-093-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "title — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "title": {
-                "label": "title",
-                "default": "Закуски"
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "name": "button-094",
       "type": "registry:component",
       "title": "Кадр галереи",
@@ -16149,7 +15698,6 @@
           "button",
           "restaurant"
         ],
-        "pro": true,
         "ai": {
           "export": "Button094",
           "usage": "<Button094 aspect=\"3 / 2\" caption=\"бар\" alt=\"…\" />",
@@ -16187,7 +15735,21 @@
             "prop": "alt",
             "label": "alt",
             "type": "text",
-            "default": "",
+            "default": "Кадр галереи",
+            "maxLength": 160
+          },
+          {
+            "prop": "src",
+            "label": "src",
+            "type": "text",
+            "default": "/demo/realty/object-01.webp",
+            "maxLength": 160
+          },
+          {
+            "prop": "openLabel",
+            "label": "openLabel",
+            "type": "text",
+            "default": "Открыть фото",
             "maxLength": 160
           },
           {
@@ -16198,6 +15760,8 @@
           }
         ],
         "cardControls": [
+          "openLabel",
+          "src",
           "aspect",
           "caption",
           "alt",
@@ -16247,198 +15811,14 @@
               },
               "accent": {
                 "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-095",
-      "type": "registry:component",
-      "title": "Подсказка адреса",
-      "description": "Чип-подсказка адреса для строки запроса.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-095/button-095.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-095.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока api-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-095-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "suggestion",
-          "chip",
-          "address",
-          "button",
-          "api"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button095",
-          "usage": "<Button095  />",
-          "summary": "Чип-подсказка адреса для строки запроса.",
-          "preserve": [
-            "локальную палитру --vibeui-button-095-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            " — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Address suggestion",
-            "description": "Address suggestion chip for the query field.",
-            "docs": "Extracted from the api-001 block as is: one file, no dependencies, its own palette in the --vibeui-button-095-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Address suggestion chip for the query field.",
-              "usage": "<Button095  />",
-              "preserve": [
-                "the local --vibeui-button-095-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                " — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-091",
-      "type": "registry:component",
-      "title": "Чип фильтра расписания",
-      "description": "Чип-переключатель языка или уровня; активен через aria-pressed.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-091/button-091.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-091.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока language-002 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-091-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "chip",
-          "filter",
-          "schedule",
-          "button",
-          "language"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button091",
-          "usage": "<Button091 label=\"Английский\" />",
-          "summary": "Чип-переключатель языка или уровня; активен через aria-pressed.",
-          "preserve": [
-            "локальную палитру --vibeui-button-091-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "label — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "label",
-            "label": "label",
-            "type": "text",
-            "default": "Английский",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "label",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Schedule filter chip",
-            "description": "Language or level toggle chip; active through aria-pressed.",
-            "docs": "Extracted from the language-002 block as is: one file, no dependencies, its own palette in the --vibeui-button-091-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Language or level toggle chip; active through aria-pressed.",
-              "usage": "<Button091 label=\"Английский\" />",
-              "preserve": [
-                "the local --vibeui-button-091-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "label — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "label": {
-                "label": "label",
-                "default": "Английский"
               },
-              "accent": {
-                "label": "Accent"
+              "src": {
+                "label": "src",
+                "default": ""
+              },
+              "openLabel": {
+                "label": "openLabel",
+                "default": "Открыть фото"
               }
             }
           }
@@ -16471,7 +15851,6 @@
           "button",
           "podcast"
         ],
-        "pro": true,
         "ai": {
           "export": "Button098",
           "usage": "<Button098 href=\"#\" mark=\"Я\" name=\"Яндекс Музыка\" />",
@@ -16575,108 +15954,6 @@
       }
     },
     {
-      "name": "button-096",
-      "type": "registry:component",
-      "title": "Переключатель песочницы",
-      "description": "Кнопка-переключатель с индикатором; включён через aria-pressed.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-096/button-096.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-096.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока opensource-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-096-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "toggle",
-          "switch",
-          "sandbox",
-          "button",
-          "opensource"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button096",
-          "usage": "<Button096 label=\"…\" />",
-          "summary": "Кнопка-переключатель с индикатором; включён через aria-pressed.",
-          "preserve": [
-            "локальную палитру --vibeui-button-096-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            " — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "label",
-            "label": "label",
-            "type": "text",
-            "default": "",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "label",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Sandbox toggle",
-            "description": "Toggle button with an indicator; on through aria-pressed.",
-            "docs": "Extracted from the opensource-001 block as is: one file, no dependencies, its own palette in the --vibeui-button-096-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Toggle button with an indicator; on through aria-pressed.",
-              "usage": "<Button096 label=\"…\" />",
-              "preserve": [
-                "the local --vibeui-button-096-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                " — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "label": {
-                "label": "label",
-                "default": ""
-              },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
       "name": "button-099",
       "type": "registry:component",
       "title": "Кнопка play/pause",
@@ -16702,7 +15979,6 @@
           "button",
           "podcast"
         ],
-        "pro": true,
         "ai": {
           "export": "Button099",
           "usage": "<Button099  />",
@@ -16723,6 +15999,20 @@
         },
         "controls": [
           {
+            "prop": "pauseLabel",
+            "label": "pauseLabel",
+            "type": "text",
+            "default": "Пауза",
+            "maxLength": 160
+          },
+          {
+            "prop": "playLabel",
+            "label": "playLabel",
+            "type": "text",
+            "default": "Слушать",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -16730,6 +16020,8 @@
           }
         ],
         "cardControls": [
+          "playLabel",
+          "pauseLabel",
           "accent"
         ],
         "preview": {
@@ -16760,6 +16052,14 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "pauseLabel": {
+                "label": "pauseLabel",
+                "default": "Пауза"
+              },
+              "playLabel": {
+                "label": "playLabel",
+                "default": "Слушать"
               }
             }
           }
@@ -16892,7 +16192,6 @@
           "button",
           "event"
         ],
-        "pro": true,
         "ai": {
           "export": "Button100",
           "usage": "<Button100 hex=\"#f1e8d8\" name=\"Крем\" />",
@@ -16927,6 +16226,13 @@
             "maxLength": 160
           },
           {
+            "prop": "copiedLabel",
+            "label": "copiedLabel",
+            "type": "text",
+            "default": "скопировано",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -16934,6 +16240,7 @@
           }
         ],
         "cardControls": [
+          "copiedLabel",
           "hex",
           "name",
           "accent"
@@ -16974,6 +16281,10 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "copiedLabel": {
+                "label": "copiedLabel",
+                "default": "скопировано"
               }
             }
           }
@@ -17005,7 +16316,6 @@
           "tag",
           "button"
         ],
-        "pro": true,
         "ai": {
           "export": "Button101",
           "usage": "<Button101 title=\"…\" styleText=\"…\" image=\"…\" />",
@@ -17043,7 +16353,21 @@
             "prop": "image",
             "label": "image",
             "type": "text",
-            "default": "",
+            "default": "/demo/realty/object-01.webp",
+            "maxLength": 160
+          },
+          {
+            "prop": "imageAlt",
+            "label": "imageAlt",
+            "type": "text",
+            "default": "/demo/realty/object-02.webp",
+            "maxLength": 160
+          },
+          {
+            "prop": "meta",
+            "label": "meta",
+            "type": "text",
+            "default": "Плитка работы с тегом стиля",
             "maxLength": 160
           },
           {
@@ -17054,6 +16378,8 @@
           }
         ],
         "cardControls": [
+          "meta",
+          "imageAlt",
           "title",
           "styleText",
           "image",
@@ -17099,6 +16425,14 @@
               },
               "accent": {
                 "label": "Accent"
+              },
+              "imageAlt": {
+                "label": "imageAlt",
+                "default": "/demo/realty/object-02.webp"
+              },
+              "meta": {
+                "label": "meta",
+                "default": "Плитка работы с тегом стиля"
               }
             }
           }
@@ -17131,7 +16465,6 @@
           "button",
           "portfolio"
         ],
-        "pro": true,
         "ai": {
           "export": "Button102",
           "usage": "<Button102 src=\"\" caption=\"Воскресное утро\" alt=\"…\" />",
@@ -17155,7 +16488,7 @@
             "prop": "src",
             "label": "src",
             "type": "text",
-            "default": "",
+            "default": "/demo/realty/object-02.webp",
             "maxLength": 160
           },
           {
@@ -17169,7 +16502,7 @@
             "prop": "alt",
             "label": "alt",
             "type": "text",
-            "default": "",
+            "default": "Плитка галереи",
             "maxLength": 160
           },
           {
@@ -17283,7 +16616,7 @@
             "prop": "src",
             "label": "src",
             "type": "text",
-            "default": "",
+            "default": "/demo/realty/object-03.webp",
             "maxLength": 160
           },
           {
@@ -17297,7 +16630,7 @@
             "prop": "alt",
             "label": "alt",
             "type": "text",
-            "default": "",
+            "default": "Плитка мозаики фото",
             "maxLength": 160
           },
           {
@@ -17388,7 +16721,6 @@
           "button",
           "portfolio"
         ],
-        "pro": true,
         "ai": {
           "export": "Button103",
           "usage": "<Button103 src=\"\" caption=\"Велосипед на двоих\" alt=\"…\" />",
@@ -17412,7 +16744,7 @@
             "prop": "src",
             "label": "src",
             "type": "text",
-            "default": "",
+            "default": "/demo/realty/district-01.webp",
             "maxLength": 160
           },
           {
@@ -17426,7 +16758,28 @@
             "prop": "alt",
             "label": "alt",
             "type": "text",
-            "default": "",
+            "default": "Переворачивающаяся карточка",
+            "maxLength": 160
+          },
+          {
+            "prop": "from",
+            "label": "from",
+            "type": "text",
+            "default": "Переворачивающаяся карточка",
+            "maxLength": 160
+          },
+          {
+            "prop": "date",
+            "label": "date",
+            "type": "text",
+            "default": "Переворачивающаяся карточка",
+            "maxLength": 160
+          },
+          {
+            "prop": "back",
+            "label": "back",
+            "type": "text",
+            "default": "Переворачивающаяся карточка",
             "maxLength": 160
           },
           {
@@ -17437,6 +16790,9 @@
           }
         ],
         "cardControls": [
+          "back",
+          "date",
+          "from",
           "src",
           "caption",
           "alt",
@@ -17488,95 +16844,18 @@
               },
               "accent": {
                 "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-105",
-      "type": "registry:component",
-      "title": "Ссылка с иконкой",
-      "description": "Ссылка шапки с иконкой и подписью: избранное, корзина.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-105/button-105.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-105.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока navbar-005 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-105-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "iconlink",
-          "header",
-          "icon",
-          "button",
-          "navbar"
-        ],
-        "ai": {
-          "export": "Button105",
-          "usage": "<Button105  />",
-          "summary": "Ссылка шапки с иконкой и подписью: избранное, корзина.",
-          "preserve": [
-            "локальную палитру --vibeui-button-105-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "favoritesHref, favoritesLabel — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Icon link",
-            "description": "Header link with an icon and a label: favourites, cart.",
-            "docs": "Extracted from the navbar-005 block as is: one file, no dependencies, its own palette in the --vibeui-button-105-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Header link with an icon and a label: favourites, cart.",
-              "usage": "<Button105  />",
-              "preserve": [
-                "the local --vibeui-button-105-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "favoritesHref, favoritesLabel — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
+              },
+              "from": {
+                "label": "from",
+                "default": "Переворачивающаяся карточка"
+              },
+              "date": {
+                "label": "date",
+                "default": "Переворачивающаяся карточка"
+              },
+              "back": {
+                "label": "back",
+                "default": "Переворачивающаяся карточка"
               }
             }
           }
@@ -17629,6 +16908,13 @@
         },
         "controls": [
           {
+            "prop": "loginLabel",
+            "label": "loginLabel",
+            "type": "text",
+            "default": "Войти",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -17636,6 +16922,7 @@
           }
         ],
         "cardControls": [
+          "loginLabel",
           "accent"
         ],
         "preview": {
@@ -17666,6 +16953,10 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "loginLabel": {
+                "label": "loginLabel",
+                "default": "Войти"
               }
             }
           }
@@ -17718,6 +17009,20 @@
         },
         "controls": [
           {
+            "prop": "bagHref",
+            "label": "bagHref",
+            "type": "text",
+            "default": "#bag",
+            "maxLength": 160
+          },
+          {
+            "prop": "bagLabel",
+            "label": "bagLabel",
+            "type": "text",
+            "default": "Корзина",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -17725,6 +17030,8 @@
           }
         ],
         "cardControls": [
+          "bagLabel",
+          "bagHref",
           "accent"
         ],
         "preview": {
@@ -17755,95 +17062,14 @@
             "controls": {
               "accent": {
                 "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-108",
-      "type": "registry:component",
-      "title": "Кнопка билетов",
-      "description": "Ссылка-кнопка «билеты» в шапке события: подпись и стрелка, показывается пока продажи открыты.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-108/button-108.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-108.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока navbar-017 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-108-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "ticket",
-          "cta",
-          "header",
-          "button",
-          "navbar"
-        ],
-        "ai": {
-          "export": "Button108",
-          "usage": "<Button108  />",
-          "summary": "Ссылка-кнопка «билеты» в шапке события: подпись и стрелка, показывается пока продажи открыты.",
-          "preserve": [
-            "локальную палитру --vibeui-button-108-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "ticketHref, ticketLabel — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Ticket button",
-            "description": "“Tickets” link button in an event header: label and arrow, shown while sales are open.",
-            "docs": "Extracted from the navbar-017 block as is: one file, no dependencies, its own palette in the --vibeui-button-108-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "“Tickets” link button in an event header: label and arrow, shown while sales are open.",
-              "usage": "<Button108  />",
-              "preserve": [
-                "the local --vibeui-button-108-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "ticketHref, ticketLabel — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
+              },
+              "bagHref": {
+                "label": "bagHref",
+                "default": "#bag"
+              },
+              "bagLabel": {
+                "label": "bagLabel",
+                "default": "Корзина"
               }
             }
           }
@@ -17876,7 +17102,6 @@
           "button",
           "navbar"
         ],
-        "pro": true,
         "ai": {
           "export": "Button110",
           "usage": "<Button110  />",
@@ -17897,6 +17122,27 @@
         },
         "controls": [
           {
+            "prop": "actionHref",
+            "label": "actionHref",
+            "type": "text",
+            "default": "#pricing",
+            "maxLength": 160
+          },
+          {
+            "prop": "actionLabel",
+            "label": "actionLabel",
+            "type": "text",
+            "default": "Записаться",
+            "maxLength": 160
+          },
+          {
+            "prop": "actionPrice",
+            "label": "actionPrice",
+            "type": "text",
+            "default": "49 000 ₽",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -17904,6 +17150,9 @@
           }
         ],
         "cardControls": [
+          "actionPrice",
+          "actionLabel",
+          "actionHref",
           "accent"
         ],
         "preview": {
@@ -17934,6 +17183,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "actionHref": {
+                "label": "actionHref",
+                "default": "#pricing"
+              },
+              "actionLabel": {
+                "label": "actionLabel",
+                "default": "Записаться"
+              },
+              "actionPrice": {
+                "label": "actionPrice",
+                "default": "49 000 ₽"
               }
             }
           }
@@ -17966,7 +17227,6 @@
           "button",
           "navbar"
         ],
-        "pro": true,
         "ai": {
           "export": "Button111",
           "usage": "<Button111  />",
@@ -17987,6 +17247,27 @@
         },
         "controls": [
           {
+            "prop": "actionHref",
+            "label": "actionHref",
+            "type": "text",
+            "default": "#box",
+            "maxLength": 160
+          },
+          {
+            "prop": "actionShort",
+            "label": "actionShort",
+            "type": "text",
+            "default": "Заказать",
+            "maxLength": 160
+          },
+          {
+            "prop": "actionLabel",
+            "label": "actionLabel",
+            "type": "text",
+            "default": "Заказать к утру",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -17994,6 +17275,9 @@
           }
         ],
         "cardControls": [
+          "actionLabel",
+          "actionShort",
+          "actionHref",
           "accent"
         ],
         "preview": {
@@ -18024,96 +17308,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-113",
-      "type": "registry:component",
-      "title": "Кнопка с сердцем",
-      "description": "Ссылка-кнопка шапки с иконкой сердца и подписью.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-113/button-113.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-113.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока navbar-044 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-113-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "action",
-          "heart",
-          "header",
-          "button",
-          "navbar"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button113",
-          "usage": "<Button113  />",
-          "summary": "Ссылка-кнопка шапки с иконкой сердца и подписью.",
-          "preserve": [
-            "локальную палитру --vibeui-button-113-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "actionHref, actionLabel — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Heart action button",
-            "description": "Header link button with a heart icon and a label.",
-            "docs": "Extracted from the navbar-044 block as is: one file, no dependencies, its own palette in the --vibeui-button-113-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Header link button with a heart icon and a label.",
-              "usage": "<Button113  />",
-              "preserve": [
-                "the local --vibeui-button-113-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "actionHref, actionLabel — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
+              },
+              "actionHref": {
+                "label": "actionHref",
+                "default": "#box"
+              },
+              "actionShort": {
+                "label": "actionShort",
+                "default": "Заказать"
+              },
+              "actionLabel": {
+                "label": "actionLabel",
+                "default": "Заказать к утру"
               }
             }
           }
@@ -18146,7 +17352,6 @@
           "button",
           "navbar"
         ],
-        "pro": true,
         "ai": {
           "export": "Button114",
           "usage": "<Button114  />",
@@ -18236,7 +17441,6 @@
           "button",
           "navbar"
         ],
-        "pro": true,
         "ai": {
           "export": "Button112",
           "usage": "<Button112  />",
@@ -18257,6 +17461,27 @@
         },
         "controls": [
           {
+            "prop": "cartHref",
+            "label": "cartHref",
+            "type": "text",
+            "default": "#menu",
+            "maxLength": 160
+          },
+          {
+            "prop": "cartLabel",
+            "label": "cartLabel",
+            "type": "text",
+            "default": "Корзина",
+            "maxLength": 160
+          },
+          {
+            "prop": "countLabel",
+            "label": "countLabel",
+            "type": "text",
+            "default": "В корзине {n}",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -18264,6 +17489,9 @@
           }
         ],
         "cardControls": [
+          "countLabel",
+          "cartLabel",
+          "cartHref",
           "accent"
         ],
         "preview": {
@@ -18294,6 +17522,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "cartHref": {
+                "label": "cartHref",
+                "default": "#menu"
+              },
+              "cartLabel": {
+                "label": "cartLabel",
+                "default": "Корзина"
+              },
+              "countLabel": {
+                "label": "countLabel",
+                "default": "В корзине {n}"
               }
             }
           }
@@ -18458,6 +17698,20 @@
         },
         "controls": [
           {
+            "prop": "copiedLabel",
+            "label": "copiedLabel",
+            "type": "text",
+            "default": "Скопировано",
+            "maxLength": 160
+          },
+          {
+            "prop": "copyLabel",
+            "label": "copyLabel",
+            "type": "text",
+            "default": "Копировать",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -18465,6 +17719,8 @@
           }
         ],
         "cardControls": [
+          "copyLabel",
+          "copiedLabel",
           "accent"
         ],
         "preview": {
@@ -18495,6 +17751,14 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "copiedLabel": {
+                "label": "copiedLabel",
+                "default": "Скопировано"
+              },
+              "copyLabel": {
+                "label": "copyLabel",
+                "default": "Копировать"
               }
             }
           }
@@ -18671,6 +17935,27 @@
         },
         "controls": [
           {
+            "prop": "href",
+            "label": "href",
+            "type": "text",
+            "default": "#pricing",
+            "maxLength": 160
+          },
+          {
+            "prop": "label",
+            "label": "label",
+            "type": "text",
+            "default": "Записаться",
+            "maxLength": 160
+          },
+          {
+            "prop": "price",
+            "label": "price",
+            "type": "text",
+            "default": "49 000 ₽",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -18678,6 +17963,9 @@
           }
         ],
         "cardControls": [
+          "price",
+          "label",
+          "href",
           "accent"
         ],
         "preview": {
@@ -18708,343 +17996,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-118",
-      "type": "registry:component",
-      "title": "Кнопка магазина с подписью",
-      "description": "Ссылка-кнопка магазина: мелкая подпись и название.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-118/button-118.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-118.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока cta-025 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-118-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "store",
-          "button",
-          "app",
-          "cta"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button118",
-          "usage": "<Button118  />",
-          "summary": "Ссылка-кнопка магазина: мелкая подпись и название.",
-          "preserve": [
-            "локальную палитру --vibeui-button-118-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "href, caption, label — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Store button with caption",
-            "description": "Store link button: small caption and name.",
-            "docs": "Extracted from the cta-025 block as is: one file, no dependencies, its own palette in the --vibeui-button-118-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Store link button: small caption and name.",
-              "usage": "<Button118  />",
-              "preserve": [
-                "the local --vibeui-button-118-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "href, caption, label — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-119",
-      "type": "registry:component",
-      "title": "Бейдж загрузки",
-      "description": "Ссылка-бейдж магазина для блока загрузки: иконка, подпись и название.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-119/button-119.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-119.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока download-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-119-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "badge",
-          "download",
-          "store",
-          "button"
-        ],
-        "ai": {
-          "export": "Button119",
-          "usage": "<Button119 name=\"App Store\" href=\"#\" kicker=\"Загрузите в\" />",
-          "summary": "Ссылка-бейдж магазина для блока загрузки: иконка, подпись и название.",
-          "preserve": [
-            "локальную палитру --vibeui-button-119-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "name, href, kicker — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "name",
-            "label": "name",
-            "type": "text",
-            "default": "App Store",
-            "maxLength": 160
-          },
-          {
-            "prop": "href",
-            "label": "href",
-            "type": "text",
-            "default": "#",
-            "maxLength": 160
-          },
-          {
-            "prop": "kicker",
-            "label": "kicker",
-            "type": "text",
-            "default": "Загрузите в",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "name",
-          "href",
-          "kicker",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Download badge",
-            "description": "Store badge link for a download block: icon, caption and name.",
-            "docs": "Extracted from the download-001 block as is: one file, no dependencies, its own palette in the --vibeui-button-119-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Store badge link for a download block: icon, caption and name.",
-              "usage": "<Button119 name=\"App Store\" href=\"#\" kicker=\"Загрузите в\" />",
-              "preserve": [
-                "the local --vibeui-button-119-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "name, href, kicker — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "name": {
-                "label": "name",
-                "default": "App Store"
               },
               "href": {
                 "label": "href",
-                "default": "#"
+                "default": "#pricing"
               },
-              "kicker": {
-                "label": "kicker",
-                "default": "Загрузите в"
+              "label": {
+                "label": "label",
+                "default": "Записаться"
               },
-              "accent": {
-                "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-120",
-      "type": "registry:component",
-      "title": "Бейдж загрузки (тёмный)",
-      "description": "Ссылка-бейдж магазина: иконка, подпись и название.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-120/button-120.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-120.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока download-002 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-120-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "badge",
-          "download",
-          "store",
-          "button"
-        ],
-        "ai": {
-          "export": "Button120",
-          "usage": "<Button120 name=\"App Store\" href=\"#\" kicker=\"Загрузите в\" />",
-          "summary": "Ссылка-бейдж магазина: иконка, подпись и название.",
-          "preserve": [
-            "локальную палитру --vibeui-button-120-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "name, href, kicker — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "name",
-            "label": "name",
-            "type": "text",
-            "default": "App Store",
-            "maxLength": 160
-          },
-          {
-            "prop": "href",
-            "label": "href",
-            "type": "text",
-            "default": "#",
-            "maxLength": 160
-          },
-          {
-            "prop": "kicker",
-            "label": "kicker",
-            "type": "text",
-            "default": "Загрузите в",
-            "maxLength": 160
-          },
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "name",
-          "href",
-          "kicker",
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Download badge (dark)",
-            "description": "Store badge link: icon, caption and name.",
-            "docs": "Extracted from the download-002 block as is: one file, no dependencies, its own palette in the --vibeui-button-120-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Store badge link: icon, caption and name.",
-              "usage": "<Button120 name=\"App Store\" href=\"#\" kicker=\"Загрузите в\" />",
-              "preserve": [
-                "the local --vibeui-button-120-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "name, href, kicker — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "name": {
-                "label": "name",
-                "default": "App Store"
-              },
-              "href": {
-                "label": "href",
-                "default": "#"
-              },
-              "kicker": {
-                "label": "kicker",
-                "default": "Загрузите в"
-              },
-              "accent": {
-                "label": "Accent"
+              "price": {
+                "label": "price",
+                "default": "49 000 ₽"
               }
             }
           }
@@ -19099,7 +18062,7 @@
             "prop": "href",
             "label": "href",
             "type": "text",
-            "default": "",
+            "default": "#",
             "maxLength": 160
           },
           {
@@ -19220,6 +18183,27 @@
         },
         "controls": [
           {
+            "prop": "primaryHref",
+            "label": "primaryHref",
+            "type": "text",
+            "default": "#",
+            "maxLength": 160
+          },
+          {
+            "prop": "platform",
+            "label": "platform",
+            "type": "text",
+            "default": "macOS (Apple Silicon)",
+            "maxLength": 160
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "primaryLabel",
+            "type": "text",
+            "default": "Скачать для",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -19227,6 +18211,9 @@
           }
         ],
         "cardControls": [
+          "primaryLabel",
+          "platform",
+          "primaryHref",
           "accent"
         ],
         "preview": {
@@ -19257,6 +18244,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "primaryHref": {
+                "label": "primaryHref",
+                "default": "#"
+              },
+              "platform": {
+                "label": "platform",
+                "default": "macOS (Apple Silicon)"
+              },
+              "primaryLabel": {
+                "label": "primaryLabel",
+                "default": "Скачать для"
               }
             }
           }
@@ -19289,7 +18288,6 @@
           "button",
           "download"
         ],
-        "pro": true,
         "ai": {
           "export": "Button123",
           "usage": "<Button123 href=\"#appstore\" top=\"Скачать в\" store=\"App Store\" />",
@@ -19435,6 +18433,27 @@
         },
         "controls": [
           {
+            "prop": "prevHref",
+            "label": "prevHref",
+            "type": "text",
+            "default": "#install",
+            "maxLength": 160
+          },
+          {
+            "prop": "prevCaption",
+            "label": "prevCaption",
+            "type": "text",
+            "default": "Назад",
+            "maxLength": 160
+          },
+          {
+            "prop": "prevLabel",
+            "label": "prevLabel",
+            "type": "text",
+            "default": "Установка",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -19442,6 +18461,9 @@
           }
         ],
         "cardControls": [
+          "prevLabel",
+          "prevCaption",
+          "prevHref",
           "accent"
         ],
         "preview": {
@@ -19472,95 +18494,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "button-125",
-      "type": "registry:component",
-      "title": "Магнитная кнопка магазина",
-      "description": "Ссылка-кнопка магазина с подписью, тянется к курсору.",
-      "categories": [
-        "button"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "button-125/button-125.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/button-125.tsx"
-        }
-      ],
-      "docs": "Компонент вынесен из блока hero-032 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-125-*. Раскладку и данные держит блок, компонент получает их пропсами.",
-      "meta": {
-        "tags": [
-          "store",
-          "magnetic",
-          "button",
-          "hero"
-        ],
-        "pro": true,
-        "ai": {
-          "export": "Button125",
-          "usage": "<Button125  />",
-          "summary": "Ссылка-кнопка магазина с подписью, тянется к курсору.",
-          "preserve": [
-            "локальную палитру --vibeui-button-125-* и не подменять её токенами вашей темы",
-            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
-            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
-          ],
-          "adapt": [
-            "href, caption, label — содержимое",
-            "акцент через проп accent",
-            "ширину — её задаёт контейнер"
-          ],
-          "notes": [
-            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "accent",
-            "label": "Акцент",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "cardControls": [
-          "accent"
-        ],
-        "preview": {
-          "width": "full"
-        },
-        "i18n": {
-          "en": {
-            "title": "Magnetic store button",
-            "description": "Store link button with a caption that follows the cursor.",
-            "docs": "Extracted from the hero-032 block as is: one file, no dependencies, its own palette in the --vibeui-button-125-* variables. The block owns the layout and data and passes them as props.",
-            "ai": {
-              "summary": "Store link button with a caption that follows the cursor.",
-              "usage": "<Button125  />",
-              "preserve": [
-                "the local --vibeui-button-125-* palette — do not swap it for your theme tokens",
-                "the markup and order of the card parts: this is the drawing of the block it came from",
-                "the transparent surface by default — the component sits on the block background"
-              ],
-              "adapt": [
-                "href, caption, label — the content",
-                "the accent through the accent prop",
-                "the width — the container sets it"
-              ],
-              "notes": [
-                "The component is a part of a composite block; it installs with it but works on its own too."
-              ]
-            },
-            "controls": {
-              "accent": {
-                "label": "Accent"
+              },
+              "prevHref": {
+                "label": "prevHref",
+                "default": "#install"
+              },
+              "prevCaption": {
+                "label": "prevCaption",
+                "default": "Назад"
+              },
+              "prevLabel": {
+                "label": "prevLabel",
+                "default": "Установка"
               }
             }
           }
@@ -19591,7 +18536,6 @@
           "ai",
           "button"
         ],
-        "pro": true,
         "ai": {
           "export": "Button126",
           "usage": "<Button126  />",
@@ -19612,6 +18556,27 @@
         },
         "controls": [
           {
+            "prop": "runningLabel",
+            "label": "runningLabel",
+            "type": "text",
+            "default": "Думаю…",
+            "maxLength": 160
+          },
+          {
+            "prop": "runLabel",
+            "label": "runLabel",
+            "type": "text",
+            "default": "Сделать сводку",
+            "maxLength": 160
+          },
+          {
+            "prop": "phase",
+            "label": "phase",
+            "type": "text",
+            "default": "idle",
+            "maxLength": 160
+          },
+          {
             "prop": "accent",
             "label": "Акцент",
             "type": "color",
@@ -19619,6 +18584,9 @@
           }
         ],
         "cardControls": [
+          "phase",
+          "runLabel",
+          "runningLabel",
           "accent"
         ],
         "preview": {
@@ -19649,6 +18617,18 @@
             "controls": {
               "accent": {
                 "label": "Accent"
+              },
+              "runningLabel": {
+                "label": "runningLabel",
+                "default": "Думаю…"
+              },
+              "runLabel": {
+                "label": "runLabel",
+                "default": "Сделать сводку"
+              },
+              "phase": {
+                "label": "phase",
+                "default": "idle"
               }
             }
           }
@@ -19681,7 +18661,6 @@
           "button",
           "delivery"
         ],
-        "pro": true,
         "ai": {
           "export": "Button079",
           "usage": "<Button079 name=\"Микс салата\" />",

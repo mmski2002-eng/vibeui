@@ -1,8 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Card142 } from "@/registry/components/card/card-142/card-142"
-import type { CSSProperties } from "react"
+import type { CSSProperties, ComponentProps } from "react"
 
 type Navbar007Link = {
   label: string
@@ -254,6 +253,12 @@ outline:2px solid var(--vibeui-navbar-007-accent);outline-offset:3px;
 [data-vibeui-block="navbar-007"] [data-part="actions"]{margin-left:0}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-007"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="navbar-007"] [data-part="user-card"]{display:flex;flex-direction:column;gap:0.0625rem;
+padding:0.5rem 0.625rem 0.625rem;}
+[data-vibeui-block="navbar-007"] [data-part="user-card"] strong{font-size:0.875rem;font-weight:620;letter-spacing:-0.01em;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+[data-vibeui-block="navbar-007"] [data-part="user-card"] span{font-size:0.75rem;color:var(--vibeui-navbar-007-muted);
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 `
 
 const DEFAULT_WORKSPACES: Navbar007Link[] = [
@@ -304,6 +309,39 @@ function BellIcon() {
         strokeLinecap="round"
       />
     </svg>
+  )
+}
+
+type UserCardProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  userName?: string
+  userEmail?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function UserCard({
+  userName = "Анна Ковалёва",
+  userEmail = "anna@konturlab.ru",
+  accent,
+  className,
+  style,
+  ...props
+}: UserCardProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-navbar-007-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <strong>{userName}</strong>
+        <span>{userEmail}</span>
+      </div>
   )
 }
 
@@ -493,7 +531,7 @@ export function Navbar007({
                 </span>
               </button>
               <div data-part="menu" data-open={userOpen} aria-hidden={!userOpen}>
-                <Card142 data-part="user-card" userName={userName} userEmail={userEmail} accent={accent} />
+                <UserCard data-part="user-card" userName={userName} userEmail={userEmail} accent={accent} />
                 <hr />
                 {userMenu.map((entry) => (
                   <a

@@ -48,7 +48,7 @@ color:var(--vibeui-card-031-accent);}
 export function Card031({
   handle = "@akovaleva",
   name = "Анна Ковалёва",
-  image,
+  image = "/demo/realty/object-01.webp",
   text = "Собрала лендинг курса за вечер. Выбрала блоки в каталоге, скинула агенту — он поставил всё сам. Утром поправила тексты и запустила рекламу.",
   likes = 214,
   accent,

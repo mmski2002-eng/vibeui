@@ -45,13 +45,13 @@ const STYLES = `
 
 /** Карточка сотрудника: фото, имя, роль и короткий текст. */
 export function Card115({
-  image,
-  imageAlt,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
   name = "Ксения",
   role = "Свидетельница",
-  text,
-  contactLabel,
-  contactHref,
+  text = "Карточка человека с фото",
+  contactLabel = "Карточка человека с фото",
+  contactHref = "Карточка человека с фото",
   accent,
   className,
   style,

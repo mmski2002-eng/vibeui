@@ -213,9 +213,6 @@ export const PREVIEWS = {
   "card-040": dynamic(() =>
     import("@/registry/components/card/card-040/card-040").then((module) => module.Card040),
   ),
-  "card-041": dynamic(() =>
-    import("@/registry/components/card/card-041/card-041").then((module) => module.Card041),
-  ),
   "card-042": dynamic(() =>
     import("@/registry/components/card/card-042/card-042").then((module) => module.Card042),
   ),
@@ -237,45 +234,6 @@ export const PREVIEWS = {
   "card-061": dynamic(() =>
     import("@/registry/components/card/card-061/card-061").then((module) => module.Card061),
   ),
-  "card-062": dynamic(() =>
-    import("@/registry/components/card/card-062/card-062").then((module) => module.Card062),
-  ),
-  "card-063": dynamic(() =>
-    import("@/registry/components/card/card-063/card-063").then((module) => module.Card063),
-  ),
-  "card-064": dynamic(() =>
-    import("@/registry/components/card/card-064/card-064").then((module) => module.Card064),
-  ),
-  "card-065": dynamic(() =>
-    import("@/registry/components/card/card-065/card-065").then((module) => module.Card065),
-  ),
-  "card-066": dynamic(() =>
-    import("@/registry/components/card/card-066/card-066").then((module) => module.Card066),
-  ),
-  "card-067": dynamic(() =>
-    import("@/registry/components/card/card-067/card-067").then((module) => module.Card067),
-  ),
-  "card-068": dynamic(() =>
-    import("@/registry/components/card/card-068/card-068").then((module) => module.Card068),
-  ),
-  "card-069": dynamic(() =>
-    import("@/registry/components/card/card-069/card-069").then((module) => module.Card069),
-  ),
-  "card-070": dynamic(() =>
-    import("@/registry/components/card/card-070/card-070").then((module) => module.Card070),
-  ),
-  "card-071": dynamic(() =>
-    import("@/registry/components/card/card-071/card-071").then((module) => module.Card071),
-  ),
-  "card-072": dynamic(() =>
-    import("@/registry/components/card/card-072/card-072").then((module) => module.Card072),
-  ),
-  "card-073": dynamic(() =>
-    import("@/registry/components/card/card-073/card-073").then((module) => module.Card073),
-  ),
-  "card-074": dynamic(() =>
-    import("@/registry/components/card/card-074/card-074").then((module) => module.Card074),
-  ),
   "card-076": dynamic(() =>
     import("@/registry/components/card/card-076/card-076").then((module) => module.Card076),
   ),
@@ -287,12 +245,6 @@ export const PREVIEWS = {
   ),
   "card-075": dynamic(() =>
     import("@/registry/components/card/card-075/card-075").then((module) => module.Card075),
-  ),
-  "card-079": dynamic(() =>
-    import("@/registry/components/card/card-079/card-079").then((module) => module.Card079),
-  ),
-  "card-080": dynamic(() =>
-    import("@/registry/components/card/card-080/card-080").then((module) => module.Card080),
   ),
   "card-081": dynamic(() =>
     import("@/registry/components/card/card-081/card-081").then((module) => module.Card081),
@@ -345,9 +297,6 @@ export const PREVIEWS = {
   "card-099": dynamic(() =>
     import("@/registry/components/card/card-099/card-099").then((module) => module.Card099),
   ),
-  "card-100": dynamic(() =>
-    import("@/registry/components/card/card-100/card-100").then((module) => module.Card100),
-  ),
   "card-101": dynamic(() =>
     import("@/registry/components/card/card-101/card-101").then((module) => module.Card101),
   ),
@@ -378,9 +327,6 @@ export const PREVIEWS = {
   "card-113": dynamic(() =>
     import("@/registry/components/card/card-113/card-113").then((module) => module.Card113),
   ),
-  "card-111": dynamic(() =>
-    import("@/registry/components/card/card-111/card-111").then((module) => module.Card111),
-  ),
   "card-114": dynamic(() =>
     import("@/registry/components/card/card-114/card-114").then((module) => module.Card114),
   ),
@@ -398,15 +344,6 @@ export const PREVIEWS = {
   ),
   "card-117": dynamic(() =>
     import("@/registry/components/card/card-117/card-117").then((module) => module.Card117),
-  ),
-  "card-118": dynamic(() =>
-    import("@/registry/components/card/card-118/card-118").then((module) => module.Card118),
-  ),
-  "card-086": dynamic(() =>
-    import("@/registry/components/card/card-086/card-086").then((module) => module.Card086),
-  ),
-  "card-089": dynamic(() =>
-    import("@/registry/components/card/card-089/card-089").then((module) => module.Card089),
   ),
   "card-119": dynamic(() =>
     import("@/registry/components/card/card-119/card-119").then((module) => module.Card119),
@@ -435,9 +372,6 @@ export const PREVIEWS = {
   "card-127": dynamic(() =>
     import("@/registry/components/card/card-127/card-127").then((module) => module.Card127),
   ),
-  "card-128": dynamic(() =>
-    import("@/registry/components/card/card-128/card-128").then((module) => module.Card128),
-  ),
   "card-129": dynamic(() =>
     import("@/registry/components/card/card-129/card-129").then((module) => module.Card129),
   ),
@@ -456,29 +390,17 @@ export const PREVIEWS = {
   "card-135": dynamic(() =>
     import("@/registry/components/card/card-135/card-135").then((module) => module.Card135),
   ),
-  "card-133": dynamic(() =>
-    import("@/registry/components/card/card-133/card-133").then((module) => module.Card133),
-  ),
   "card-136": dynamic(() =>
     import("@/registry/components/card/card-136/card-136").then((module) => module.Card136),
   ),
   "card-138": dynamic(() =>
     import("@/registry/components/card/card-138/card-138").then((module) => module.Card138),
   ),
-  "card-139": dynamic(() =>
-    import("@/registry/components/card/card-139/card-139").then((module) => module.Card139),
-  ),
   "card-140": dynamic(() =>
     import("@/registry/components/card/card-140/card-140").then((module) => module.Card140),
   ),
-  "card-141": dynamic(() =>
-    import("@/registry/components/card/card-141/card-141").then((module) => module.Card141),
-  ),
   "card-137": dynamic(() =>
     import("@/registry/components/card/card-137/card-137").then((module) => module.Card137),
-  ),
-  "card-142": dynamic(() =>
-    import("@/registry/components/card/card-142/card-142").then((module) => module.Card142),
   ),
   "card-143": dynamic(() =>
     import("@/registry/components/card/card-143/card-143").then((module) => module.Card143),
@@ -504,95 +426,14 @@ export const PREVIEWS = {
   "card-150": dynamic(() =>
     import("@/registry/components/card/card-150/card-150").then((module) => module.Card150),
   ),
-  "card-151": dynamic(() =>
-    import("@/registry/components/card/card-151/card-151").then((module) => module.Card151),
-  ),
-  "card-152": dynamic(() =>
-    import("@/registry/components/card/card-152/card-152").then((module) => module.Card152),
-  ),
-  "card-153": dynamic(() =>
-    import("@/registry/components/card/card-153/card-153").then((module) => module.Card153),
-  ),
   "card-154": dynamic(() =>
     import("@/registry/components/card/card-154/card-154").then((module) => module.Card154),
-  ),
-  "card-155": dynamic(() =>
-    import("@/registry/components/card/card-155/card-155").then((module) => module.Card155),
-  ),
-  "card-157": dynamic(() =>
-    import("@/registry/components/card/card-157/card-157").then((module) => module.Card157),
   ),
   "card-158": dynamic(() =>
     import("@/registry/components/card/card-158/card-158").then((module) => module.Card158),
   ),
-  "card-159": dynamic(() =>
-    import("@/registry/components/card/card-159/card-159").then((module) => module.Card159),
-  ),
-  "card-160": dynamic(() =>
-    import("@/registry/components/card/card-160/card-160").then((module) => module.Card160),
-  ),
-  "card-162": dynamic(() =>
-    import("@/registry/components/card/card-162/card-162").then((module) => module.Card162),
-  ),
-  "card-164": dynamic(() =>
-    import("@/registry/components/card/card-164/card-164").then((module) => module.Card164),
-  ),
-  "card-166": dynamic(() =>
-    import("@/registry/components/card/card-166/card-166").then((module) => module.Card166),
-  ),
-  "card-167": dynamic(() =>
-    import("@/registry/components/card/card-167/card-167").then((module) => module.Card167),
-  ),
-  "card-169": dynamic(() =>
-    import("@/registry/components/card/card-169/card-169").then((module) => module.Card169),
-  ),
-  "card-173": dynamic(() =>
-    import("@/registry/components/card/card-173/card-173").then((module) => module.Card173),
-  ),
-  "card-174": dynamic(() =>
-    import("@/registry/components/card/card-174/card-174").then((module) => module.Card174),
-  ),
-  "card-175": dynamic(() =>
-    import("@/registry/components/card/card-175/card-175").then((module) => module.Card175),
-  ),
-  "card-176": dynamic(() =>
-    import("@/registry/components/card/card-176/card-176").then((module) => module.Card176),
-  ),
-  "card-177": dynamic(() =>
-    import("@/registry/components/card/card-177/card-177").then((module) => module.Card177),
-  ),
-  "card-178": dynamic(() =>
-    import("@/registry/components/card/card-178/card-178").then((module) => module.Card178),
-  ),
-  "card-170": dynamic(() =>
-    import("@/registry/components/card/card-170/card-170").then((module) => module.Card170),
-  ),
-  "card-171": dynamic(() =>
-    import("@/registry/components/card/card-171/card-171").then((module) => module.Card171),
-  ),
   "card-172": dynamic(() =>
     import("@/registry/components/card/card-172/card-172").then((module) => module.Card172),
-  ),
-  "card-161": dynamic(() =>
-    import("@/registry/components/card/card-161/card-161").then((module) => module.Card161),
-  ),
-  "card-179": dynamic(() =>
-    import("@/registry/components/card/card-179/card-179").then((module) => module.Card179),
-  ),
-  "card-180": dynamic(() =>
-    import("@/registry/components/card/card-180/card-180").then((module) => module.Card180),
-  ),
-  "card-181": dynamic(() =>
-    import("@/registry/components/card/card-181/card-181").then((module) => module.Card181),
-  ),
-  "card-156": dynamic(() =>
-    import("@/registry/components/card/card-156/card-156").then((module) => module.Card156),
-  ),
-  "card-163": dynamic(() =>
-    import("@/registry/components/card/card-163/card-163").then((module) => module.Card163),
-  ),
-  "card-168": dynamic(() =>
-    import("@/registry/components/card/card-168/card-168").then((module) => module.Card168),
   ),
   "card-165": dynamic(() =>
     import("@/registry/components/card/card-165/card-165").then((module) => module.Card165),

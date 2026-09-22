@@ -85,6 +85,8 @@ export const ITEM_CODES: Record<string, string> = {
   "filters": "FR",
   "folio": "FB",
   "footer": "FO",
+  "sociallinks": "SL",
+  "footerlinks": "FL",
   "footer-anim": "FN",
   "frame": "FM",
   "geo": "GE",

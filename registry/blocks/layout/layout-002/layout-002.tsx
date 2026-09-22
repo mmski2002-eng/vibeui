@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, type CSSProperties, type PointerEvent, type ReactNode } from "react"
-import { Card062 } from "@/registry/components/card/card-062/card-062"
+import type { ComponentProps } from "react"
 
 export type Layout002Item = {
   /** Заголовок слота. */
@@ -46,6 +46,8 @@ const GHOST: Record<(typeof SLOTS)[number], string> = {
 
 const STYLES = `
 :where([data-vibeui-block="layout-002"]){
+--vibeui-layout-002-dur-4:340ms;
+--vibeui-layout-002-dur-5:460ms;
 --vibeui-layout-002-bg:light-dark(#f2f2f2,#000000);
 --vibeui-layout-002-tile:light-dark(#ffffff,#1a1a1a);
 --vibeui-layout-002-tile-2:light-dark(#f7f7f7,#222222);
@@ -117,9 +119,128 @@ container-type:inline-size;
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="layout-002"] *{animation:none!important;transition:none!important}
 }
+@keyframes vibeui-layout-002-rise{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+[data-vibeui-block="layout-002"] [data-part="tile"]{position:relative;overflow:hidden;min-height:10rem;padding:1.5rem;border-radius:var(--vibeui-layout-002-radius);
+background:var(--vibeui-layout-002-tile);border:1px solid var(--vibeui-layout-002-edge);
+display:flex;flex-direction:column;justify-content:flex-end;gap:0.75rem;
+--vibeui-layout-002-mx:50%;--vibeui-layout-002-my:50%;--vibeui-layout-002-on:0;
+transition:transform var(--vibeui-layout-002-dur-5) cubic-bezier(.2,.8,.2,1),border-color var(--vibeui-layout-002-dur-5);}
+[data-vibeui-block="layout-002"] [data-part="tile"]::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(22rem circle at var(--vibeui-layout-002-mx) var(--vibeui-layout-002-my),color-mix(in oklab,var(--vibeui-layout-002-accent) 14%,transparent),transparent 60%);opacity:var(--vibeui-layout-002-on);transition:opacity var(--vibeui-layout-002-dur-5)}
+[data-vibeui-block="layout-002"] [data-part="tile"]::after{content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:inherit;padding:1px;background:radial-gradient(18rem circle at var(--vibeui-layout-002-mx) var(--vibeui-layout-002-my),color-mix(in oklab,var(--vibeui-layout-002-accent) 70%,transparent),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:var(--vibeui-layout-002-on);transition:opacity var(--vibeui-layout-002-dur-5)}
+[data-vibeui-block="layout-002"] [data-part="tile"]:hover{border-color:var(--vibeui-layout-002-edge-hover)}
+[data-vibeui-block="layout-002"] [data-part="tile"] h3{margin:0;font-size:1.125rem;font-weight:600;line-height:1.3}
+[data-vibeui-block="layout-002"] [data-part="tile"] p{margin:0;color:var(--vibeui-layout-002-muted);font-size:0.9375rem;line-height:1.45}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="value"]{font-size:clamp(2.5rem,6cqi,3.5rem);font-weight:650;letter-spacing:-0.03em;line-height:1}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="media"]{position:absolute;inset:0;pointer-events:none}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="media"] > *{width:100%;height:100%;object-fit:cover;display:block}
+[data-vibeui-block="layout-002"] [data-part="tile"] > :not([data-part="media"]):not([data-part="num"]){position:relative}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="num"]{position:absolute;top:1.125rem;left:1.125rem;z-index:1;font:500 0.6875rem/1 var(--vibeui-layout-002-mono);letter-spacing:0.08em;padding:0.375rem 0.5rem;border-radius:999px;color:var(--vibeui-layout-002-muted);border:1px solid var(--vibeui-layout-002-edge);background:color-mix(in oklab,var(--vibeui-layout-002-tile) 70%,transparent);transition:color var(--vibeui-layout-002-dur-4),border-color var(--vibeui-layout-002-dur-4),background-color var(--vibeui-layout-002-dur-4)}
+[data-vibeui-block="layout-002"] [data-part="tile"]:hover [data-part="num"]{color:var(--vibeui-layout-002-on-accent);background:var(--vibeui-layout-002-accent);border-color:var(--vibeui-layout-002-accent)}
+[data-vibeui-block="layout-002"] [data-part="tile"][data-numbers] [data-part="faces"],[data-vibeui-block="layout-002"] [data-part="tile"][data-numbers] [data-part="window"]{margin-top:2rem}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="bar"]{display:block;height:0.875rem;border-radius:999px;background:var(--vibeui-layout-002-ghost-strong);width:70%}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="bar"][data-soft]{background:var(--vibeui-layout-002-ghost);height:0.625rem;width:50%}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="bar"][data-wide]{width:88%}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="bar"][data-big]{height:1.5rem}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="button"]{display:inline-block;width:6.5rem;height:2.5rem;border-radius:0.75rem;background:var(--vibeui-layout-002-accent);margin-top:0.5rem;transition:transform var(--vibeui-layout-002-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-002"] [data-part="tile"]:hover [data-part="button"]{transform:translateX(4px)}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="big"]{display:block;height:3rem;width:55%;border-radius:0.75rem;background:var(--vibeui-layout-002-ghost-strong)}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="faces"]{display:flex;margin-bottom:auto}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="faces"] i{width:2.5rem;height:2.5rem;border-radius:999px;border:2px solid var(--vibeui-layout-002-tile);background:var(--vibeui-layout-002-ghost-strong);margin-inline-start:-0.625rem;transition:transform var(--vibeui-layout-002-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="faces"] i:first-child{margin-inline-start:0;background:var(--vibeui-layout-002-accent)}
+[data-vibeui-block="layout-002"] [data-part="tile"]:hover [data-part="faces"] i:nth-child(2){transform:translateX(3px)}
+[data-vibeui-block="layout-002"] [data-part="tile"]:hover [data-part="faces"] i:nth-child(3){transform:translateX(6px)}
+[data-vibeui-block="layout-002"] [data-part="tile"]:hover [data-part="faces"] i:nth-child(4){transform:translateX(9px)}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="window"]{display:block;flex:1;min-height:8rem;border-radius:0.75rem 0.75rem 0 0;border:1px solid var(--vibeui-layout-002-edge);border-bottom:0;background:linear-gradient(var(--vibeui-layout-002-tile-2),var(--vibeui-layout-002-tile-2)) 0 0 / 100% 2rem no-repeat,repeating-linear-gradient(to bottom,transparent 0 2.75rem,var(--vibeui-layout-002-ghost) 2.75rem 3.25rem) 1.25rem 0 / calc(100% - 2.5rem) 100% no-repeat,var(--vibeui-layout-002-tile);position:relative;margin-bottom:0}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="window"] i{position:absolute;top:0.7rem;width:0.6rem;height:0.6rem;border-radius:999px;background:var(--vibeui-layout-002-ghost-strong)}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="window"] i:nth-child(1){left:0.75rem;background:var(--vibeui-layout-002-accent)}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="window"] i:nth-child(2){left:1.6rem}
+[data-vibeui-block="layout-002"] [data-part="tile"] [data-part="window"] i:nth-child(3){left:2.45rem}
+[data-vibeui-block="layout-002"] [data-part="tile"]{animation:vibeui-layout-002-rise 0.8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-layout-002-i) * 80ms)}
+@supports (animation-timeline: view()){
+[data-vibeui-block="layout-002"] [data-part="tile"]{animation:vibeui-layout-002-rise linear both;animation-timeline:view();animation-range:entry 0% entry 35%;animation-delay:0s}
+}
+[data-vibeui-block="layout-002"] [data-part="tile"][data-area="product"] [data-part="window"]{margin-top:auto}
+[data-vibeui-block="layout-002"] [data-part="tile"][data-area="product"] [data-part="media"]{inset:1.5rem 1.5rem 0;border-radius:0.75rem 0.75rem 0 0;overflow:hidden}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="layout-002"] [data-part="tile"]:hover{transform:none}
+[data-vibeui-block="layout-002"] [data-part="tile"]::before,[data-vibeui-block="layout-002"] [data-part="tile"]::after{display:none}
+}
 `
 
+function Ghost({ kind }: { kind: string }) {
+  switch (kind) {
+    case "title":
+      return <><span data-part="bar" data-big="" data-wide="" /><span data-part="bar" data-big="" /><span data-part="bar" data-soft="" data-wide="" /><span data-part="button" /></>
+    case "window":
+      return <><span data-part="window"><i /><i /><i /></span></>
+    case "stat":
+      return <><span data-part="big" /><span data-part="bar" data-soft="" /></>
+    case "proof":
+      return <><div data-part="faces"><i /><i /><i /><i /></div><span data-part="bar" data-wide="" /><span data-part="bar" data-soft="" /></>
+    default:
+      return null
+  }
+}
 
+type TileProps = Omit<ComponentProps<"article">, "title" | "children"> & {
+  media?: ReactNode
+  value?: string
+  title?: string
+  text?: string
+  numbers?: boolean
+  index?: number
+  ghost?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Tile({
+  media,
+  value,
+  title,
+  text,
+  numbers = true,
+  index = 0,
+  ghost = "",
+  accent,
+  className,
+  style,
+  ...props
+}: TileProps) {
+  const palette = {
+    "--vibeui-layout-002-i": index,
+    ...(accent ? { "--vibeui-layout-002-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+  const filled = Boolean((title || text || value || media))
+
+  return (
+      <article
+          {...props}
+          data-numbers={numbers ? "" : undefined}
+          aria-hidden={filled ? undefined : true}
+          className={className}
+          style={palette}
+        >
+        {media ? <div data-part="media">{media}</div> : null}
+        {numbers ? (
+          <span data-part="num" aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        ) : null}
+        {filled ? (
+          <>
+            {value ? <span data-part="value">{value}</span> : null}
+            {title ? <h3>{title}</h3> : null}
+            {text ? <p>{text}</p> : null}
+          </>
+        ) : (
+          <Ghost kind={ghost} />
+        )}
+      </article>
+  )
+}
 
 /** Bento-hero: первый экран, собранный из плиток. */
 export function Layout002({
@@ -137,9 +258,8 @@ export function Layout002({
     ...(accent ? { "--vibeui-layout-002-accent": accent } : null),
     ...style,
   } as CSSProperties
-  const hasHead = Boolean(heading || lead)
   const tile = (area: (typeof SLOTS)[number], className?: string, key?: string) => (
-    <Card062 key={key ?? area} data-part="tile" {...items?.[SLOTS.indexOf(area)]} numbers={numbers} index={SLOTS.indexOf(area)} ghost={GHOST[area]} data-area={area} className={className} accent={accent} />
+    <Tile key={key ?? area} data-part="tile" {...items?.[SLOTS.indexOf(area)]} numbers={numbers} index={SLOTS.indexOf(area)} ghost={GHOST[area]} data-area={area} className={className} accent={accent} />
   )
   const frame = useRef(0)
 

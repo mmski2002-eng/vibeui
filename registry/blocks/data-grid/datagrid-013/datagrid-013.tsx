@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Card163 } from "@/registry/components/card/card-163/card-163"
-import type { ComponentProps, CSSProperties } from "react"
+import type { CSSProperties, ComponentProps, Dispatch, SetStateAction } from "react"
 
 export type Datagrid013Row = {
   id: string
@@ -85,6 +84,33 @@ border-top:1px solid var(--vibeui-datagrid-013-border);
 [data-vibeui-block="datagrid-013"] [data-part="sku"]{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem;font-weight:500}
 [data-vibeui-block="datagrid-013"] [data-low="true"]{color:var(--vibeui-datagrid-013-low);font-weight:600}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-013"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="datagrid-013"] [data-part="bar"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
+padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-013-border);}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="count"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-013-muted)}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="menu-wrap"]{position:relative}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="trigger"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
+display:inline-flex;align-items:center;gap:0.375rem;
+padding:0.375rem 0.6875rem;border-radius:0.5rem;
+border:1px solid var(--vibeui-datagrid-013-border);
+background:transparent;color:var(--vibeui-datagrid-013-fg);}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="trigger"][aria-expanded="true"]{border-color:var(--vibeui-datagrid-013-accent);color:var(--vibeui-datagrid-013-accent);}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="trigger"]:focus-visible{outline:2px solid var(--vibeui-datagrid-013-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="trigger"]::after{content:"";width:0.375rem;height:0.375rem;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(45deg)}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="menu"]{position:absolute;inset-inline-end:0;inset-block-start:calc(100% + 0.375rem);z-index:5;
+min-width:12rem;margin:0;padding:0.625rem 0.75rem 0.5rem;
+border:1px solid var(--vibeui-datagrid-013-border);border-radius:0.75rem;
+background:var(--vibeui-datagrid-013-panel);box-shadow:0 12px 28px var(--vibeui-datagrid-013-shadow);}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="menu"] legend{padding:0;font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
+color:var(--vibeui-datagrid-013-muted);}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="option"]{display:flex;align-items:center;gap:0.5rem;padding:0.3125rem 0;font-size:0.8125rem;cursor:pointer;}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="option"]:has(input:disabled){cursor:not-allowed;color:var(--vibeui-datagrid-013-muted)}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="option"] input{accent-color:var(--vibeui-datagrid-013-accent);margin:0;width:0.9375rem;height:0.9375rem}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="option"] input:focus-visible{outline:2px solid var(--vibeui-datagrid-013-accent);outline-offset:2px}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="reset"]{appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;padding:0.25rem 0;margin-top:0.25rem;
+border:0;border-top:1px solid var(--vibeui-datagrid-013-border);width:100%;text-align:start;
+background:transparent;color:var(--vibeui-datagrid-013-accent);}
+[data-vibeui-block="datagrid-013"] [data-part="bar"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-datagrid-013-accent);outline-offset:2px}
 `
 
 type ColumnKey = "product" | "vendor" | "stock" | "price" | "updated"
@@ -186,6 +212,115 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  * Сетка с меню видимости колонок: читатель сам собирает набор столбцов,
  * последняя видимая колонка защищена от выключения. Один файл, ноль зависимостей.
  */
+
+const BarCOLUMN_TEXT: Record<string, string> = {
+  product: "Товар",
+  vendor: "Поставщик",
+  stock: "Остаток",
+  price: "Цена",
+  updated: "Обновлено",
+}
+
+type BarProps = Omit<ComponentProps<"div">, "title" | "children" | "hidden"> & {
+  heading?: string
+  countTemplate?: string
+  menuLabel?: string
+  legendText?: string
+  columnText?: Record<string, string>
+  resetText?: string
+  hidden?: ColumnKey[]
+  last?: boolean
+  open?: boolean
+  setHidden?: Dispatch<SetStateAction<ColumnKey[]>>
+  setOpen?: Dispatch<SetStateAction<boolean>>
+  visible?: readonly (typeof COLUMNS)[number][]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Bar({
+  heading = "Складские остатки",
+  countTemplate = "Показано колонок: {shown} из {total}",
+  menuLabel = "Колонки",
+  legendText = "Видимость колонок",
+  columnText = BarCOLUMN_TEXT,
+  resetText = "Показать все колонки",
+  hidden = [],
+  last = false,
+  open = false,
+  setHidden = () => {},
+  setOpen = () => {},
+  visible = [],
+  accent,
+  className,
+  style,
+  ...props
+}: BarProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-datagrid-013-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+      {...props}
+      className={className}
+      style={palette}
+      >
+        <h3 data-part="title">{heading}</h3>
+        <p data-part="count" aria-live="polite">
+          {countTemplate
+            .replace("{shown}", String(visible.length))
+            .replace("{total}", String(COLUMNS.length))}
+        </p>
+        <div data-part="menu-wrap">
+          <button
+            type="button"
+            data-part="trigger"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {menuLabel}
+          </button>
+          {open ? (
+            <fieldset data-part="menu">
+              <legend>{legendText}</legend>
+              {COLUMNS.map((column) => {
+                const shown = !hidden.includes(column.key)
+
+                return (
+                  <label key={column.key} data-part="option">
+                    <input
+                      type="checkbox"
+                      checked={shown}
+                      disabled={shown && last}
+                      onChange={() =>
+                        setHidden((current) =>
+                          current.includes(column.key)
+                            ? current.filter((key) => key !== column.key)
+                            : [...current, column.key],
+                        )
+                      }
+                    />
+                    {columnText[column.key] ?? COLUMN_TEXT[column.key]}
+                  </label>
+                )
+              })}
+              <button
+                type="button"
+                data-part="reset"
+                onClick={() => setHidden([])}
+              >
+                {resetText}
+              </button>
+            </fieldset>
+          ) : null}
+        </div>
+      </div>
+  )
+}
+
 export function Datagrid013({
   rows = DEFAULT_ROWS,
   caption = "Набор колонок настраивается в меню «Колонки»",
@@ -238,7 +373,7 @@ export function Datagrid013({
           }
         }}
       >
-        <Card163 data-part="bar" heading={heading} countTemplate={countTemplate} menuLabel={menuLabel} legendText={legendText} columnText={columnText} resetText={resetText} hidden={hidden} last={last} open={open} setHidden={setHidden} setOpen={setOpen} visible={visible} accent={accent} />
+        <Bar data-part="bar" heading={heading} countTemplate={countTemplate} menuLabel={menuLabel} legendText={legendText} columnText={columnText} resetText={resetText} hidden={hidden} last={last} open={open} setHidden={setHidden} setOpen={setOpen} visible={visible} accent={accent} />
         <div
           data-part="scroll"
           role="region"

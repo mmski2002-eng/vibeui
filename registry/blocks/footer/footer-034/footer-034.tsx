@@ -1,5 +1,4 @@
-import type { CSSProperties } from "react"
-import { Footerlinks009 } from "@/registry/components/navigation/footerlinks-009/footerlinks-009"
+import type { CSSProperties, ComponentProps } from "react"
 
 export type Footer034Link = {
   label: string
@@ -80,7 +79,12 @@ container-type:inline-size;
 @keyframes vibeui-footer-034-step{0%{opacity:0;scale:.6}6%{opacity:.9;scale:1}45%{opacity:.9}70%,100%{opacity:0}}
 @container (min-width: 40rem){[data-vibeui-block="footer-034"] [data-part="columns"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 60rem){[data-vibeui-block="footer-034"] [data-part="shell"]{grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr);align-items:start}[data-vibeui-block="footer-034"] [data-part="license"],[data-vibeui-block="footer-034"] [data-part="bottom"]{grid-column:1/-1}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-034"] *{animation:none!important;transition:none!important}[data-vibeui-block="footer-034"] [data-part="trail"] svg{opacity:.6}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-034"] *{animation:none!important;transition:none!important}[data-vibeui-block="footer-034"] [data-part="trail"] svg{opacity:.6}}
+[data-vibeui-block="footer-034"] [data-part="column"] h3{margin:0 0 .7rem;font-family:var(--vibeui-footer-034-display);font-weight:800;font-size:.95rem}
+[data-vibeui-block="footer-034"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.4rem}
+[data-vibeui-block="footer-034"] [data-part="column"] a{color:var(--vibeui-footer-034-muted);text-decoration:none;transition:color .2s}
+[data-vibeui-block="footer-034"] [data-part="column"] a:hover{color:var(--vibeui-footer-034-accent)}
+`
 
 const DEFAULT_COLUMNS: Footer034Column[] = [
   { title: "Услуги", links: [{ label: "Терапия", href: "#services" }, { label: "Хирургия", href: "#services" }, { label: "Стоматология", href: "#services" }, { label: "Груминг", href: "#grooming" }, { label: "Экзоты", href: "#services" }] },
@@ -99,6 +103,50 @@ function PawIcon(props: { style?: CSSProperties }) {
       <ellipse cx="20.6" cy="13.2" rx="1.9" ry="2.4" />
       <path d="M12 11.3c3.4 0 6.2 2.7 6.2 5.8 0 2-1.6 3.4-3.6 3.4-1 0-1.7-.5-2.6-.5s-1.6.5-2.6.5c-2 0-3.6-1.4-3.6-3.4 0-3.1 2.8-5.8 6.2-5.8Z" />
     </svg>
+  )
+}
+
+export type ColumnLink = {
+  label: string
+  href: string
+}
+
+type ColumnProps = Omit<ComponentProps<"div">, "title" | "children"> & {
+  title?: string
+  links?: readonly ColumnLink[]
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Column({
+  title = "Услуги",
+  links = [{ label: "Терапия", href: "#services" }, { label: "Хирургия", href: "#services" }, { label: "Стоматология", href: "#services" }, { label: "Груминг", href: "#grooming" }, { label: "Экзоты", href: "#services" }],
+  accent,
+  className,
+  style,
+  ...props
+}: ColumnProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-footer-034-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <div
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <h3>{title}</h3>
+        <ul>
+          {links.map((link) => (
+            <li key={link.label}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
   )
 }
 
@@ -169,7 +217,7 @@ export function Footer034({
           </div>
           <div data-part="columns">
             {columns.map((column) => (
-              <Footerlinks009 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
+              <Column key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </div>
           {license ? <p data-part="license">{license}</p> : null}

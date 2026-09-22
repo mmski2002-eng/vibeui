@@ -10,9 +10,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-002/footer-002.tsx",
@@ -20,7 +18,7 @@
           "target": "@components/vibeui/footer-002.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-002-*. Серверный компонент. Каждая группа ссылок — отдельный <nav> с aria-label, иначе скринридер читает двадцать ссылок подряд одной кашей. Раскладка считается от собственной ширины блока: две колонки, затем четыре, затем бренд уходит в отдельную колонку слева. Точка у строки состояния пульсирует через box-shadow в ключевых кадрах и гаснет при prefers-reduced-motion.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-002-*. Серверный компонент. Каждая группа ссылок — отдельный <nav> с aria-label, иначе скринридер читает двадцать ссылок подряд одной кашей. Раскладка считается от собственной ширины блока: две колонки, затем четыре, затем бренд уходит в отдельную колонку слева. Точка у строки состояния пульсирует через box-shadow в ключевых кадрах и гаснет при prefers-reduced-motion.",
       "meta": {
         "tags": [
           "footer",
@@ -37,7 +35,7 @@
           "usage": "<Footer002\n  brand=\"Контур\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n  status=\"Все системы работают\"\n/>",
           "summary": "Тёмный подвал: слева знак, название и фраза о продукте, справа четыре колонки ссылок, внизу копирайт и ссылка на страницу состояния с пульсирующей точкой. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты footerlinks-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-002-* и не подменять её токенами вашей темы (bg-muted, text-muted-foreground и подобными)",
             "каждую группу ссылок отдельным <nav> с подписью — иначе скринридер читает двадцать ссылок подряд без структуры",
             "строку состояния в нижнем ряду: в подвал за ней спускаются те, у кого что-то не работает",
@@ -97,11 +95,11 @@
         "i18n": {
           "en": {
             "description": "A dark four-column footer: every link group is its own navigation with a label, and the bottom row carries a live service-status line.",
-            "docs": "A composite block: imports footerlinks-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-002-* variables. A server component. Each link group is a separate <nav> with an aria-label, otherwise a screen reader reads twenty links in a row as one undifferentiated run. The layout is computed from the block's own width: two columns, then four, then the brand moves into a separate column on the left. The dot on the status line pulses through box-shadow in keyframes and is switched off under prefers-reduced-motion.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-002-* variables. A server component. Each link group is a separate <nav> with an aria-label, otherwise a screen reader reads twenty links in a row as one undifferentiated run. The layout is computed from the block's own width: two columns, then four, then the brand moves into a separate column on the left. The dot on the status line pulses through box-shadow in keyframes and is switched off under prefers-reduced-motion.",
             "ai": {
               "summary": "A dark footer: the mark, the name and a sentence about the product on the left, four columns of links on the right, and a bottom row with the copyright and a status link with a pulsing dot. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the footerlinks-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-002-* palette — do not swap it for your theme tokens (bg-muted, text-muted-foreground and the like)",
                 "every link group as its own <nav> with a label — otherwise a screen reader reads twenty links in a row with no structure",
                 "the status line in the bottom row: people come down to the footer for it when something is broken",
@@ -261,9 +259,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "sociallinks-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-006/footer-006.tsx",
@@ -271,7 +267,7 @@
           "target": "@components/vibeui/footer-006.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует sociallinks-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-006-*. Серверный компонент. Контакты размечены списком определений <dl>: подпись и значение — пара, а не два независимых абзаца. Телефон и почта остаются настоящими ссылками tel: и mailto: с видимым значением, потому что подвал открывают именно ради них. Адрес обёрнут в <address>. Значки соцсетей — буквенные плашки с aria-label: блок не имеет права тянуть иконочный набор.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-006-*. Серверный компонент. Контакты размечены списком определений <dl>: подпись и значение — пара, а не два независимых абзаца. Телефон и почта остаются настоящими ссылками tel: и mailto: с видимым значением, потому что подвал открывают именно ради них. Адрес обёрнут в <address>. Значки соцсетей — буквенные плашки с aria-label: блок не имеет права тянуть иконочный набор.",
       "meta": {
         "tags": [
           "footer",
@@ -288,7 +284,7 @@
           "usage": "<Footer006\n  brand=\"Ясная\"\n  address=\"Москва, Пресненская набережная, 12\"\n  contacts={[{ label: \"Телефон\", value: \"+7 495 000-11-22\", href: \"tel:+74950001122\" }]}\n/>",
           "summary": "Подвал с контактами: название, адрес и часы работы слева, список контактов ссылками в середине, плашки соцсетей справа, внизу юридическая строка. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты sociallinks-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-006-* и не подменять её токенами вашей темы",
             "видимые значения телефона и почты вместо кнопки «Связаться»: подвал открывают ради номера, а не ради ещё одного перехода",
             "схемы tel: и mailto: у ссылок — на телефоне это звонок в одно касание",
@@ -349,11 +345,11 @@
         "i18n": {
           "en": {
             "description": "A footer with contacts and social links: the phone and email are real tel: and mailto: links with visible values, and the address sits in an address tag.",
-            "docs": "A composite block: imports sociallinks-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-006-* variables. A server component. The contacts are marked up as a definition list, <dl>: the label and the value are a pair, not two independent paragraphs. The phone and the email stay real tel: and mailto: links with a visible value, because that is exactly what the footer is opened for. The address is wrapped in <address>. The social marks are lettered tiles with an aria-label: the block has no right to pull in an icon set.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-006-* variables. A server component. The contacts are marked up as a definition list, <dl>: the label and the value are a pair, not two independent paragraphs. The phone and the email stay real tel: and mailto: links with a visible value, because that is exactly what the footer is opened for. The address is wrapped in <address>. The social marks are lettered tiles with an aria-label: the block has no right to pull in an icon set.",
             "ai": {
               "summary": "A contacts footer: the name, address and opening hours on the left, a list of contact links in the middle, social tiles on the right and a legal line at the bottom. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the sociallinks-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-006-* palette — do not swap it for your theme tokens",
                 "the visible phone and email values instead of a \"Contact us\" button: people open the footer for the number, not for another hop",
                 "the tel: and mailto: schemes on the links — on a phone that is a one-tap call",
@@ -468,9 +464,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-007/footer-007.tsx",
@@ -478,7 +472,7 @@
           "target": "@components/vibeui/footer-007.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-007-*. Серверный компонент. Способы оплаты — текстовые плашки в списке <ul> с aria-label у каждой, а не логотипы платёжных систем: логотипы требуют лицензии, обновляются без предупреждения и утяжеляют страницу. Ряд оплаты стоит отдельной секцией с подписью и отделён чертой, потому что за ним спускаются вниз перед оформлением. Раскладка колонок считается от собственной ширины блока.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-007-*. Серверный компонент. Способы оплаты — текстовые плашки в списке <ul> с aria-label у каждой, а не логотипы платёжных систем: логотипы требуют лицензии, обновляются без предупреждения и утяжеляют страницу. Ряд оплаты стоит отдельной секцией с подписью и отделён чертой, потому что за ним спускаются вниз перед оформлением. Раскладка колонок считается от собственной ширины блока.",
       "meta": {
         "tags": [
           "footer",
@@ -495,7 +489,7 @@
           "usage": "<Footer007\n  brand=\"Дом и лад\"\n  payments={[{ label: \"Система быстрых платежей\", short: \"СБП\" }]}\n  deliveryNote=\"Бесплатная доставка от 5 000 ₽\"\n/>",
           "summary": "Подвал интернет-магазина: четыре колонки ссылок, полоса с условиями доставки, отдельная секция со способами оплаты и пояснением про защищённую страницу банка, внизу реквизиты. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты footerlinks-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-007-* и не подменять её токенами вашей темы",
             "ряд способов оплаты над копирайтом: перед оформлением заказа люди спускаются вниз именно за ним",
             "текстовые плашки вместо логотипов платёжных систем — логотипы требуют лицензии и молча устаревают",
@@ -563,11 +557,11 @@
         "i18n": {
           "en": {
             "description": "A storefront footer: link columns, a delivery strip and a row of payment methods above the copyright — where people look for it before committing to an order.",
-            "docs": "A composite block: imports footerlinks-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-007-* variables. A server component. The payment methods are text tiles in a <ul> list, each with an aria-label, rather than logos of the payment systems: logos require a licence, change without warning and make the page heavier. The payment row stands as a separate section with a label and is set off by a rule, because people scroll down to it before checking out. The column layout is computed from the block's own width.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-007-* variables. A server component. The payment methods are text tiles in a <ul> list, each with an aria-label, rather than logos of the payment systems: logos require a licence, change without warning and make the page heavier. The payment row stands as a separate section with a label and is set off by a rule, because people scroll down to it before checking out. The column layout is computed from the block's own width.",
             "ai": {
               "summary": "An online store footer: four columns of links, a strip with delivery terms, a separate payment-methods section with a note about the bank's secure page, and registration details at the bottom. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the footerlinks-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-007-* palette — do not swap it for your theme tokens",
                 "the payment row above the copyright: before checking out people scroll down exactly for it",
                 "text tiles instead of payment-system logos — logos need licences and go stale silently",
@@ -753,9 +747,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-016"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-008/footer-008.tsx",
@@ -763,7 +755,7 @@
           "target": "@components/vibeui/footer-008.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-008-*. Серверный компонент. Реквизиты размечены списком определений <dl>: это пары «что это — значение», и скринридер обязан читать их парами, а не сплошной строкой цифр. Числовые значения набраны tabular-nums, поэтому колонка цифр не пляшет. Настройки cookie вынесены отдельной ссылкой в нижнем ряду: по регламентам согласие должно отзываться так же просто, как давалось, и прятать эту ссылку в тексте нельзя.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-008-*. Серверный компонент. Реквизиты размечены списком определений <dl>: это пары «что это — значение», и скринридер обязан читать их парами, а не сплошной строкой цифр. Числовые значения набраны tabular-nums, поэтому колонка цифр не пляшет. Настройки cookie вынесены отдельной ссылкой в нижнем ряду: по регламентам согласие должно отзываться так же просто, как давалось, и прятать эту ссылку в тексте нельзя.",
       "meta": {
         "tags": [
           "footer",
@@ -780,7 +772,7 @@
           "usage": "<Footer008\n  company=\"ООО «Ориентир»\"\n  details={[{ term: \"ОГРН\", value: \"1157700000000\" }]}\n  legalLinks={[{ label: \"Публичная оферта\", href: \"/offer\" }]}\n/>",
           "summary": "Юридический подвал: слева название компании и реквизиты парами, справа список обязательных документов, ниже дисклеймер и нижняя строка с копирайтом и ссылкой на настройки cookie. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты footerlinks-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-008-* и не подменять её токенами вашей темы",
             "реквизиты списком определений <dl>: пары «что это — значение» скринридер обязан читать парами",
             "tabular-nums у значений — иначе колонка цифр пляшет по ширине",
@@ -841,11 +833,11 @@
         "i18n": {
           "en": {
             "description": "A legal footer: registration details as a definition list, required documents in their own navigation, a disclaimer and a separate cookie-settings link.",
-            "docs": "A composite block: imports footerlinks-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-008-* variables. A server component. The registration details are marked up as a definition list, <dl>: they are “what it is — value” pairs, and a screen reader has to read them as pairs rather than as a continuous string of digits. Numeric values are set in tabular-nums, so the column of figures does not dance. The cookie settings are pulled out as a separate link in the bottom row: the regulations require consent to be as simple to withdraw as it was to give, and this link must not be buried in the text.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-008-* variables. A server component. The registration details are marked up as a definition list, <dl>: they are “what it is — value” pairs, and a screen reader has to read them as pairs rather than as a continuous string of digits. Numeric values are set in tabular-nums, so the column of figures does not dance. The cookie settings are pulled out as a separate link in the bottom row: the regulations require consent to be as simple to withdraw as it was to give, and this link must not be buried in the text.",
             "ai": {
               "summary": "A legal footer: the company name and registration details as pairs on the left, the list of required documents on the right, a disclaimer below and a bottom row with the copyright and a cookie-settings link. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the footerlinks-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-008-* palette — do not swap it for your theme tokens",
                 "the registration details as a <dl>: a screen reader has to read the label-and-value pairs as pairs",
                 "tabular-nums on the values — otherwise the column of digits jitters in width",
@@ -959,7 +951,6 @@
       "dependencies": [],
       "registryDependencies": [
         "button-001",
-        "footerlinks-001",
         "input-001"
       ],
       "files": [
@@ -969,7 +960,7 @@
           "target": "@components/vibeui/footer-009.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует button-001, footerlinks-001, input-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-009-*. Серверный компонент, клиентского JS нет. Строка подписки стоит первой: до подвала доходят самые вовлечённые посетители, и форма здесь конвертирует лучше, чем в середине страницы. Каждая колонка карты сайта — отдельный <nav> со своей подписью, иначе скринридер читает тридцать ссылок одной кашей. Колонки раскрываются от 2 до 5 по собственной ширине блока через container queries, поэтому в узкой врезке блок честно показывает мобильную раскладку.",
+      "docs": "Составной блок: импортирует button-001, input-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-009-*. Серверный компонент, клиентского JS нет. Строка подписки стоит первой: до подвала доходят самые вовлечённые посетители, и форма здесь конвертирует лучше, чем в середине страницы. Каждая колонка карты сайта — отдельный <nav> со своей подписью, иначе скринридер читает тридцать ссылок одной кашей. Колонки раскрываются от 2 до 5 по собственной ширине блока через container queries, поэтому в узкой врезке блок честно показывает мобильную раскладку.",
       "meta": {
         "tags": [
           "footer",
@@ -987,7 +978,7 @@
           "usage": "<Footer009\n  subscribeTitle=\"Раз в месяц — письмо о новых секциях\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n  social={[{ label: \"Telegram\", href: \"https://t.me/example\" }]}\n/>",
           "summary": "Мега-подвал: сверху строка подписки с полем почты и акцентной кнопкой, под ней карта сайта в пять колонок, внизу копирайт и соцссылки-пилюли. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты button-001, footerlinks-001, input-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты button-001, input-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-009-* и не подменять её токенами вашей темы",
             "строку подписки первой: до подвала доходят самые вовлечённые посетители, форма здесь конвертирует лучше",
             "каждую колонку отдельным <nav> с подписью — иначе скринридер читает тридцать ссылок одной кашей",
@@ -1045,11 +1036,11 @@
           "en": {
             "title": "Mega Footer",
             "description": "A mega footer: a newsletter row on top, a five-column sitemap and a bottom row with the copyright and social links. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports button-001, footerlinks-001, input-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-009-* variables. A server component with no client JS. The newsletter row comes first: the most engaged visitors are the ones who reach the footer, and the form converts better here than in the middle of the page. Each sitemap column is its own <nav> with a label — otherwise a screen reader reads thirty links as one mush. The columns expand from 2 to 5 based on the block's own width via container queries, so in a narrow slot the block honestly shows the mobile layout.",
+            "docs": "A composite block: imports button-001, input-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-009-* variables. A server component with no client JS. The newsletter row comes first: the most engaged visitors are the ones who reach the footer, and the form converts better here than in the middle of the page. Each sitemap column is its own <nav> with a label — otherwise a screen reader reads thirty links as one mush. The columns expand from 2 to 5 based on the block's own width via container queries, so in a narrow slot the block honestly shows the mobile layout.",
             "ai": {
               "summary": "A mega footer: a newsletter row with an email field and an accent button on top, a five-column sitemap below it, and a bottom row with the copyright and pill-shaped social links. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the button-001, footerlinks-001, input-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the button-001, input-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-009-* palette — do not swap it for your theme tokens",
                 "the newsletter row first: the most engaged visitors reach the footer, the form converts better here",
                 "each column as its own <nav> with a label — otherwise a screen reader reads thirty links as one mush",
@@ -1245,9 +1236,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-010/footer-010.tsx",
@@ -1255,7 +1244,7 @@
           "target": "@components/vibeui/footer-010.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-010-*. Серверный компонент. Wordmark набран цветом color-mix от чернил с прозрачностью, а не отдельным серым: так он остаётся различимым на любой подложке и в обеих темах без второй пары значений. Размер задан в cqi и масштабируется от собственной ширины блока; надпись видна целиком и упирается в нижнюю кромку. Wordmark скрыт от скринридера: имя бренда уже есть в копирайте.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-010-*. Серверный компонент. Wordmark набран цветом color-mix от чернил с прозрачностью, а не отдельным серым: так он остаётся различимым на любой подложке и в обеих темах без второй пары значений. Размер задан в cqi и масштабируется от собственной ширины блока; надпись видна целиком и упирается в нижнюю кромку. Wordmark скрыт от скринридера: имя бренда уже есть в копирайте.",
       "meta": {
         "tags": [
           "footer",
@@ -1272,7 +1261,7 @@
           "usage": "<Footer010\n  brand=\"Формат\"\n  tagline=\"Секции для сайтов, которые собирают своими руками.\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Тарифы\", href: \"/pricing\" }] }]}\n/>",
           "summary": "Подвал с гигантским полупрозрачным wordmark внизу: слоган и колонки ссылок сверху, строка копирайта, под ней имя бренда во всю ширину блока. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты footerlinks-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-010-* и не подменять её токенами вашей темы",
             "цвет wordmark через color-mix от чернил с прозрачностью — он различим на любой подложке и в обеих темах без второй пары значений",
             "wordmark во всю ширину блока под строкой копирайта, целиком видимый: он и есть приём, без него это просто подвал с колонками",
@@ -1323,11 +1312,11 @@
           "en": {
             "title": "Big Wordmark Footer",
             "description": "A footer with a giant translucent wordmark: link columns on top, the brand name across the full width below them. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports footerlinks-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-010-* variables. A server component. The wordmark is set in a color-mix of the ink with transparency rather than a separate grey: it stays discernible on any ground and in both themes without a second pair of values. Its size is set in cqi and scales with the block's own width; the wordmark is fully visible and sits on the bottom edge. The wordmark is hidden from screen readers: the brand name is already in the copyright.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-010-* variables. A server component. The wordmark is set in a color-mix of the ink with transparency rather than a separate grey: it stays discernible on any ground and in both themes without a second pair of values. Its size is set in cqi and scales with the block's own width; the wordmark is fully visible and sits on the bottom edge. The wordmark is hidden from screen readers: the brand name is already in the copyright.",
             "ai": {
               "summary": "A footer with a giant translucent wordmark at the bottom: the tagline and link columns on top, the copyright row, and below it the brand name across the full width of the block. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the footerlinks-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-010-* palette — do not swap it for your theme tokens",
                 "the wordmark colour as a color-mix of the ink with transparency — discernible on any ground and in both themes without a second pair of values",
                 "the full-width wordmark under the copyright row, fully visible: it is the whole trick, without it this is just a footer with columns",
@@ -1461,10 +1450,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-017",
-        "sociallinks-002"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-013/footer-013.tsx",
@@ -1472,7 +1458,7 @@
           "target": "@components/vibeui/footer-013.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-017, sociallinks-002 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-013-*. Серверный компонент. Всё содержимое собрано в узкую центральную колонку 44rem: минимализм держится на воздухе, растянутый на всю ширину он разваливается. Ссылки собраны в один <nav> — это одна навигация, а не пять групп, и городить колонки ради пяти ссылок значит претендовать на масштаб, которого нет. Знак нарисован акцентной заливкой через mask-image, поэтому перекрашивается пропом accent без правки SVG. Соцссылки — текстовые пилюли: ради трёх ссылок не тащим набор иконок.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-013-*. Серверный компонент. Всё содержимое собрано в узкую центральную колонку 44rem: минимализм держится на воздухе, растянутый на всю ширину он разваливается. Ссылки собраны в один <nav> — это одна навигация, а не пять групп, и городить колонки ради пяти ссылок значит претендовать на масштаб, которого нет. Знак нарисован акцентной заливкой через mask-image, поэтому перекрашивается пропом accent без правки SVG. Соцссылки — текстовые пилюли: ради трёх ссылок не тащим набор иконок.",
       "meta": {
         "tags": [
           "footer",
@@ -1489,7 +1475,7 @@
           "usage": "<Footer013\n  brand=\"Точка\"\n  links={[{ label: \"Тарифы\", href: \"/pricing\" }]}\n  social={[{ label: \"Telegram\", href: \"https://t.me/example\" }]}\n/>",
           "summary": "Минимальный подвал по центру: круглый знак из акцента, имя бренда, одна строка ссылок, соцссылки-пилюли и копирайт под тонкой линией — всё в узкой центральной колонке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты footerlinks-017, sociallinks-002 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-013-* и не подменять её токенами вашей темы",
             "узкую центральную колонку 44rem: минимализм держится на воздухе, растянутый на всю ширину он разваливается",
             "одну навигацию одним <nav> — это одна строка ссылок, а не пять групп с подписями",
@@ -1546,11 +1532,11 @@
           "en": {
             "title": "Centered Minimal Footer",
             "description": "A minimal centered footer: a mark, the brand name, one row of links, social links and the copyright in a narrow central column. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports footerlinks-017, sociallinks-002 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-013-* variables. A server component. Everything sits in a narrow 44rem central column: minimalism rests on air, and stretched to full width it falls apart. The links live in a single <nav> — this is one navigation, not five groups, and building columns for five links would claim a scale that is not there. The mark is drawn with the accent fill through a mask-image, so the accent prop recolours it without touching any SVG. The social links are text pills: three links do not justify shipping an icon set.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-013-* variables. A server component. Everything sits in a narrow 44rem central column: minimalism rests on air, and stretched to full width it falls apart. The links live in a single <nav> — this is one navigation, not five groups, and building columns for five links would claim a scale that is not there. The mark is drawn with the accent fill through a mask-image, so the accent prop recolours it without touching any SVG. The social links are text pills: three links do not justify shipping an icon set.",
             "ai": {
               "summary": "A minimal centered footer: a round accent mark, the brand name, one row of links, pill-shaped social links and the copyright under a thin rule — all in a narrow central column. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the footerlinks-017, sociallinks-002 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-013-* palette — do not swap it for your theme tokens",
                 "the narrow 44rem central column: minimalism rests on air, stretched to full width it falls apart",
                 "the single navigation as one <nav> — it is one row of links, not five labelled groups",
@@ -1653,9 +1639,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-001"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-014/footer-014.tsx",
@@ -1663,7 +1647,7 @@
           "target": "@components/vibeui/footer-014.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-014-*. Серверный компонент. Даты статей размечены <time datetime>: машиночитаемая дата остаётся в разметке, даже когда подпись человеку — «12 августа». Дата стоит над заголовком: сначала свежесть, потом тема — свежие даты в подвале работают сигналом живости проекта. Вся карточка статьи — одна ссылка с наведением на заголовке. Колонка блога — отдельный <nav> со своей подписью, как и каждая колонка ссылок; двухчастная раскладка включается только от 64rem собственной ширины блока.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-014-*. Серверный компонент. Даты статей размечены <time datetime>: машиночитаемая дата остаётся в разметке, даже когда подпись человеку — «12 августа». Дата стоит над заголовком: сначала свежесть, потом тема — свежие даты в подвале работают сигналом живости проекта. Вся карточка статьи — одна ссылка с наведением на заголовке. Колонка блога — отдельный <nav> со своей подписью, как и каждая колонка ссылок; двухчастная раскладка включается только от 64rem собственной ширины блока.",
       "meta": {
         "tags": [
           "footer",
@@ -1680,7 +1664,7 @@
           "usage": "<Footer014\n  blogTitle=\"В блоге\"\n  posts={[{ title: \"Как мы ускорили сборку\", href: \"/blog/build\", date: \"2026-08-28\", dateLabel: \"28 августа 2026\" }]}\n/>",
           "summary": "Подвал с последними статьями: три колонки ссылок слева, справа колонка «В блоге» с тремя материалами — дата над заголовком — и ссылкой на все статьи, внизу копирайт. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты footerlinks-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-014-* и не подменять её токенами вашей темы",
             "даты в <time dateTime>: машиночитаемая дата остаётся в разметке при любой человеческой подписи",
             "дату над заголовком, а не после него: сначала свежесть, потом тема",
@@ -1738,11 +1722,11 @@
           "en": {
             "title": "Latest Posts Footer",
             "description": "A footer with a “From the blog” column: regular link columns plus three fresh posts with dates and a link to all articles. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports footerlinks-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-014-* variables. A server component. Post dates are marked up with <time datetime>: the machine-readable date stays in the markup even when the human caption is “August 12”. The date sits above the title: freshness first, then the topic — fresh dates in a footer act as a liveness signal for the project. The whole post card is a single link with hover on the title. The blog column is its own <nav> with a label, like every link column; the two-part layout kicks in only from 64rem of the block's own width.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-014-* variables. A server component. Post dates are marked up with <time datetime>: the machine-readable date stays in the markup even when the human caption is “August 12”. The date sits above the title: freshness first, then the topic — fresh dates in a footer act as a liveness signal for the project. The whole post card is a single link with hover on the title. The blog column is its own <nav> with a label, like every link column; the two-part layout kicks in only from 64rem of the block's own width.",
             "ai": {
               "summary": "A footer with the latest posts: three link columns on the left, a “From the blog” column on the right with three posts — date above title — and a link to all articles, with the copyright below. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the footerlinks-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-014-* palette — do not swap it for your theme tokens",
                 "the dates in <time dateTime>: the machine-readable date stays in the markup under any human caption",
                 "the date above the title, not after it: freshness first, then the topic",
@@ -1898,8 +1882,7 @@
       "dependencies": [],
       "registryDependencies": [
         "button-016",
-        "button-077",
-        "footerlinks-001"
+        "button-077"
       ],
       "files": [
         {
@@ -1908,7 +1891,7 @@
           "target": "@components/vibeui/footer-015.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует button-016, button-077, footerlinks-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-015-*. Серверный компонент. CTA-плашка стоит именно в подвале не случайно: это последний экран, и посетитель, долиставший сюда, уже прочитал аргументы — ему нужна не ещё одна выгода, а кнопка. Тёплый тинт и рамка плашки замешаны из акцента через color-mix, поэтому при смене accent панель перекрашивается сама. Вторичное действие — ссылка, а не вторая кнопка: два равных призыва отменяют друг друга. Каждая колонка ссылок — отдельный <nav> со своей подписью.",
+      "docs": "Составной блок: импортирует button-016, button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-footer-015-*. Серверный компонент. CTA-плашка стоит именно в подвале не случайно: это последний экран, и посетитель, долиставший сюда, уже прочитал аргументы — ему нужна не ещё одна выгода, а кнопка. Тёплый тинт и рамка плашки замешаны из акцента через color-mix, поэтому при смене accent панель перекрашивается сама. Вторичное действие — ссылка, а не вторая кнопка: два равных призыва отменяют друг друга. Каждая колонка ссылок — отдельный <nav> со своей подписью.",
       "meta": {
         "tags": [
           "footer",
@@ -1925,7 +1908,7 @@
           "usage": "<Footer015\n  ctaTitle=\"Соберите свой сайт из готовых секций\"\n  ctaButtonLabel=\"Начать бесплатно\"\n  ctaHref=\"/signup\"\n/>",
           "summary": "Подвал с призывом: сверху тёплая CTA-плашка с заголовком, пояснением, акцентной кнопкой и вторичной ссылкой, ниже четыре колонки ссылок и копирайт. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
-            "импорты button-016, button-077, footerlinks-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты button-016, button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-footer-015-* и не подменять её токенами вашей темы",
             "CTA-плашку первой: это последний экран, долиставшему нужна кнопка, а не ещё одна выгода",
             "заливку кнопки фирменным акцентным и почти чёрный текст на ней — контраст этой пары рассчитан",
@@ -1984,11 +1967,11 @@
           "en": {
             "title": "Call-to-Action Footer",
             "description": "A footer with a CTA panel: a warm plate with a heading and an accent button on top, regular link columns and the copyright below. Self-contained: one file, no dependencies.",
-            "docs": "A composite block: imports button-016, button-077, footerlinks-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-015-* variables. A server component. The CTA panel sits in the footer on purpose: this is the last screen, and a visitor who scrolled this far has already read the arguments — they need a button, not one more benefit. The panel's warm tint and border are mixed from the accent via color-mix, so changing accent recolours the panel by itself. The secondary action is a link, not a second button: two equal calls cancel each other out. Each link column is its own <nav> with a label.",
+            "docs": "A composite block: imports button-016, button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-footer-015-* variables. A server component. The CTA panel sits in the footer on purpose: this is the last screen, and a visitor who scrolled this far has already read the arguments — they need a button, not one more benefit. The panel's warm tint and border are mixed from the accent via color-mix, so changing accent recolours the panel by itself. The secondary action is a link, not a second button: two equal calls cancel each other out. Each link column is its own <nav> with a label.",
             "ai": {
               "summary": "A call-to-action footer: a warm CTA panel with a heading, a note, an accent button and a secondary link on top, four link columns and the copyright below. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
-                "the button-016, button-077, footerlinks-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the button-016, button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-footer-015-* palette — do not swap it for your theme tokens",
                 "the CTA panel first: this is the last screen, the visitor who scrolled here needs a button, not one more benefit",
                 "the brand-accent button fill with near-black text on it — the contrast of this pair is calculated",
@@ -2606,9 +2589,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-015"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-019/footer-019.tsx",
@@ -2616,7 +2597,7 @@
           "target": "@components/vibeui/footer-019.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-015 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 56rem (container query) 1.3fr/1fr/1.2fr. Адрес в <address>, часы с точкой акцента через ::before, телефон — <a href=tel:> серифом, почта — mailto. Мессенджеры — <ul> капсул: акцентный кружок со встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), подпись рядом; ссылки target=_blank. Нижняя строка flex space-between: legal и список links. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-realty-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 56rem (container query) 1.3fr/1fr/1.2fr. Адрес в <address>, часы с точкой акцента через ::before, телефон — <a href=tel:> серифом, почта — mailto. Мессенджеры — <ul> капсул: акцентный кружок со встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), подпись рядом; ссылки target=_blank. Нижняя строка flex space-between: legal и список links. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-realty-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2643,7 +2624,7 @@
           "usage": "<Footer019\n  brand=\"Дом на Неве\"\n  address=\"Санкт-Петербург, наб. реки Фонтанки, 24\"\n  hours=\"Ежедневно 10:00–20:00\"\n  phone=\"+7 812 240-00-40\"\n  phoneHref=\"tel:+78122400040\"\n  email=\"hello@domnaneve.ru\"\n  messengers={[\n    { kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/domnaneve\" },\n    { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/78122400040\" },\n    { kind: \"max\", label: \"Max\", href: \"https://max.ru/domnaneve\", short: \"M\" },\n  ]}\n/>",
           "summary": "Самодостаточный подвал для агентства, застройщика или сервиса с живыми контактами: адрес, часы, телефон, почта, мессенджеры значками и документы. Всё содержимое пропсами.",
           "preserve": [
-            "импорты footerlinks-015 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "телефон серифом крупно — в недвижимости звонят",
             "мессенджеры капсулами со значками и подписями, а не голыми иконками: понятно, куда писать",
             "контрастный тёмный фон и адрес в <address>"
@@ -2708,11 +2689,11 @@
           "en": {
             "title": "Footer with messengers",
             "description": "An agency footer on a dark ground: a serif name, address and hours, a large phone, email and messengers with real icons — Telegram, WhatsApp, VK, Max — with labels. Licence and document links at the bottom.",
-            "docs": "A composite block: imports footerlinks-015 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.3fr/1fr/1.2fr from 56rem (container query). The address is an <address>, hours with an accent dot via ::before, the phone a serif <a href=tel:>, email a mailto. Messengers are a <ul> of pills: an accent circle with an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), a label beside; links target=_blank. The bottom row is flex space-between: legal and the links list. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-realty-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.3fr/1fr/1.2fr from 56rem (container query). The address is an <address>, hours with an accent dot via ::before, the phone a serif <a href=tel:>, email a mailto. Messengers are a <ul> of pills: an accent circle with an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), a label beside; links target=_blank. The bottom row is flex space-between: legal and the links list. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-realty-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained footer for an agency, developer or service with live contacts: address, hours, phone, email, messengers with icons and documents. All content via props.",
               "preserve": [
-                "the footerlinks-015 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the large serif phone — in real estate people call",
                 "messengers as pills with icons and labels, not bare icons: it is clear where to write",
                 "the contrasting dark background and the address in <address>"
@@ -2817,9 +2798,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-018"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-020/footer-020.tsx",
@@ -2827,7 +2806,7 @@
           "target": "@components/vibeui/footer-020.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-018 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 60rem (container query) 1.4fr/1fr/1.2fr/.9fr. Часы — <dl> сеткой с tabular-nums, адрес в <address>, телефон — <a href=tel:> серифом. Мессенджеры — капсулы с акцентным кружком и встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), target=_blank. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-footer-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. <footer> с сеткой top: колонкой на узком, от 60rem (container query) 1.4fr/1fr/1.2fr/.9fr. Часы — <dl> сеткой с tabular-nums, адрес в <address>, телефон — <a href=tel:> серифом. Мессенджеры — капсулы с акцентным кружком и встроенным SVG (Telegram, WhatsApp, VK — path внутри файла) или буквой short (Max), target=_blank. Фон тёмный в обеих темах: подвал задуман контрастным. Палитра --vibeui-footer-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2853,7 +2832,7 @@
           "usage": "<Footer020\n  brand=\"Сойка\"\n  address=\"Санкт-Петербург, Большая Пушкарская, 20\"\n  hours={[{ days: \"Пн–Чт\", time: \"12:00–23:00\" }, { days: \"Пт–Сб\", time: \"12:00–01:00\" }]}\n  phone=\"+7 812 305-00-40\"\n  phoneHref=\"tel:+78123050040\"\n  email=\"hello@soyka.ru\"\n  messengers={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/soyka\" }, { kind: \"whatsapp\", label: \"WhatsApp\", href: \"https://wa.me/78123050040\" }]}\n  links={[{ label: \"Подарочные сертификаты\", href: \"/gift\" }, { label: \"Банкеты\", href: \"/events\" }]}\n/>",
           "summary": "Самодостаточный подвал для ресторана, бара или кафе: адрес, часы по дням, телефон, почта, мессенджеры значками и ссылки. Всё содержимое пропсами.",
           "preserve": [
-            "импорты footerlinks-018 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "часы по дням таблицей — первое, что ищут в подвале ресторана",
             "телефон серифом крупно и мессенджеры капсулами со значками и подписями",
             "контрастный тёмный фон и адрес в <address>"
@@ -2911,11 +2890,11 @@
           "en": {
             "title": "Restaurant footer with hours and messengers",
             "description": "A restaurant footer on dark: a serif wordmark and address, hours by day as a table, a large phone, email and messengers with icons and labels, a links column — gift cards, banquets, jobs. Legal details at the bottom.",
-            "docs": "A composite block: imports footerlinks-018 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.4fr/1fr/1.2fr/.9fr from 60rem (container query). Hours are a <dl> grid with tabular-nums, the address in <address>, the phone a serif <a href=tel:>. Messengers are pills with an accent circle and an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), target=_blank. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-footer-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A <footer> with a top grid: a column when narrow, 1.4fr/1fr/1.2fr/.9fr from 60rem (container query). Hours are a <dl> grid with tabular-nums, the address in <address>, the phone a serif <a href=tel:>. Messengers are pills with an accent circle and an inline SVG (Telegram, WhatsApp, VK — paths inside the file) or a short letter (Max), target=_blank. The background is dark in both themes: the footer is meant to contrast. Palette --vibeui-footer-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained footer for a restaurant, bar or cafe: address, hours by day, phone, email, messengers with icons and links. All content via props.",
               "preserve": [
-                "the footerlinks-018 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "hours by day as a table — the first thing people look for in a restaurant footer",
                 "the large serif phone and messengers as pills with icons and labels",
                 "the contrasting dark background and the address in <address>"
@@ -3224,9 +3203,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-003"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-022/footer-022.tsx",
@@ -3234,7 +3211,7 @@
           "target": "@components/vibeui/footer-022.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-003 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Полоска — flex из <i> с flex:1, по наведению flex:3. Иконки — inline SVG для telegram, vk, youtube, instagram по kind; незнакомый kind рисует первую букву. Кружок по наведению приподнимается с поворотом и инвертируется. Колонки 2/5 (container query 60rem). Палитра --vibeui-footer-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Полоска — flex из <i> с flex:1, по наведению flex:3. Иконки — inline SVG для telegram, vk, youtube, instagram по kind; незнакомый kind рисует первую букву. Кружок по наведению приподнимается с поворотом и инвертируется. Колонки 2/5 (container query 60rem). Палитра --vibeui-footer-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3264,7 +3241,7 @@
           "usage": "<Footer022\n  brand=\"тридня\"\n  columns={[{ title: \"Фестиваль\", links: [{ label: \"Программа\", href: \"#program\" }] }]}\n  socials={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/festival\" }]}\n  legal=\"Организатор — АНО «Городские выходные». © 2026.\"\n  stripe={[\"#ffe2d6\", \"#c2df37\", \"#464dff\"]}\n/>",
           "summary": "Самодостаточный подвал для фестиваля, медиа или сообщества: цветная полоска, словомарка, иконки соцсетей, пять колонок и организатор. Всё содержимое пропсами.",
           "preserve": [
-            "импорты footerlinks-003 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "цветную полоску сверху из палитры направлений — подвал повторяет ритм хиро",
             "круглые иконки соцсетей с инверсией по наведению",
             "словомарку с точкой — ту же, что в шапке"
@@ -3315,11 +3292,11 @@
           "en": {
             "title": "Footer with a colour stripe and social icons",
             "description": "A festival footer: a thin colour stripe on top from the strand colours (segments stretch on hover), a wordmark with a dot on the left and round social icons on the right, five link columns, the organiser and year at the bottom.",
-            "docs": "A composite block: imports footerlinks-003 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The stripe is a flex of <i> with flex:1, flex:3 on hover. Icons are inline SVGs for telegram, vk, youtube, instagram by kind; an unknown kind draws the first letter. The circle lifts with a tilt and inverts on hover. Columns 2/5 (container query 60rem). Palette --vibeui-footer-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The stripe is a flex of <i> with flex:1, flex:3 on hover. Icons are inline SVGs for telegram, vk, youtube, instagram by kind; an unknown kind draws the first letter. The circle lifts with a tilt and inverts on hover. Columns 2/5 (container query 60rem). Palette --vibeui-footer-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained footer for a festival, media or community site: a colour stripe, a wordmark, social icons, five columns and the organiser. All content via props.",
               "preserve": [
-                "the footerlinks-003 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the colour stripe on top from the strand palette — the footer echoes the hero rhythm",
                 "round social icons inverting on hover",
                 "the wordmark with a dot — the same as in the header"
@@ -3477,9 +3454,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-004"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-023/footer-023.tsx",
@@ -3487,7 +3462,7 @@
           "target": "@components/vibeui/footer-023.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-004 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Линия — ::before с linear-gradient фуксия→фиолет и box-shadow. Логотип — text-shadow неона. Соцсети — inline SVG по kind (telegram, vk, instagram, youtube), незнакомый — первая буква. Значок 18+ — кружок с акцентной обводкой и свечением. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/auto. Палитра --vibeui-footer-023-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Линия — ::before с linear-gradient фуксия→фиолет и box-shadow. Логотип — text-shadow неона. Соцсети — inline SVG по kind (telegram, vk, instagram, youtube), незнакомый — первая буква. Значок 18+ — кружок с акцентной обводкой и свечением. Сетка top до 56rem (container query) в колонку, от 56rem 1.6fr/1fr/1fr/auto. Палитра --vibeui-footer-023-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3519,7 +3494,7 @@
           "usage": "<Footer023\n  brand=\"Inkra\"\n  address=\"Лиговский пр., 50\"\n  hours=\"ежедневно 12:00–22:00\"\n  phone=\"+7 812 240-70-17\"\n  phoneHref=\"tel:+78122407017\"\n  columns={[{ title: \"Студия\", links: [{ label: \"Работы\", href: \"#works\" }] }]}\n  socials={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/studio\" }]}\n  legal=\"ИП Волкова А. С., лицензия № ЛО-78-01-011245. 18+. © 2026.\"\n/>",
           "summary": "Самодостаточный подвал для тату-студии, бара или клуба: неоновая линия, адрес и часы, ссылки, соцсети, «18+» и лицензия. Всё содержимое пропсами.",
           "preserve": [
-            "импорты footerlinks-004 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "неоновую линию-градиент сверху — ту же, что под шапкой",
             "значок «18+» с обводкой — обязательную маркировку видно",
             "соцсети кружками со свечением по наведению"
@@ -3570,11 +3545,11 @@
           "en": {
             "title": "Footer with a neon line, 18+ and the licence",
             "description": "A tattoo studio footer: a neon gradient line on top, a sign-like logo, address, hours and phone, two link columns, social icons in circles glowing on hover, an “18+” badge, the licence and year at the bottom.",
-            "docs": "A composite block: imports footerlinks-004 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The line is a ::before with a magenta→violet linear-gradient and a box-shadow. The logo has a neon text-shadow. Socials are inline SVGs by kind (telegram, vk, instagram, youtube); an unknown kind draws the first letter. The 18+ badge is a circle with an accent ring and glow. The top grid stacks below 56rem (container query), from 56rem 1.6fr/1fr/1fr/auto. Palette --vibeui-footer-023-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The line is a ::before with a magenta→violet linear-gradient and a box-shadow. The logo has a neon text-shadow. Socials are inline SVGs by kind (telegram, vk, instagram, youtube); an unknown kind draws the first letter. The 18+ badge is a circle with an accent ring and glow. The top grid stacks below 56rem (container query), from 56rem 1.6fr/1fr/1fr/auto. Palette --vibeui-footer-023-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained footer for a tattoo studio, bar or club: a neon line, address and hours, links, socials, “18+” and the licence. All content via props.",
               "preserve": [
-                "the footerlinks-004 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the neon gradient line on top — the same as under the header",
                 "the ringed “18+” badge — the mandatory mark is visible",
                 "social icons in circles glowing on hover"
@@ -3858,9 +3833,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-020"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-025/footer-025.tsx",
@@ -3868,7 +3841,7 @@
           "target": "@components/vibeui/footer-025.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-020 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Перфорация — ::before radial-gradient по верхнему краю. Верхняя строка — сетка 1fr/auto/1fr от 56rem (до — столбиком по центру): коды с самолётиком Oswald, имена капсом с рукописной строкой Lobster, координаты ui-monospace с подписью места. Нижняя строка — якоря капсом, хэштег-капсула на Instagram, «check-in до» с ссылкой. Фон всегда чернильный (light-dark даёт две глубины). Палитра --vibeui-footer-025-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Перфорация — ::before radial-gradient по верхнему краю. Верхняя строка — сетка 1fr/auto/1fr от 56rem (до — столбиком по центру): коды с самолётиком Oswald, имена капсом с рукописной строкой Lobster, координаты ui-monospace с подписью места. Нижняя строка — якоря капсом, хэштег-капсула на Instagram, «check-in до» с ссылкой. Фон всегда чернильный (light-dark даёт две глубины). Палитра --vibeui-footer-025-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3899,7 +3872,7 @@
           "usage": "<Footer025\n  names=\"Соня & Тимур\"\n  script=\"¡Hasta la boda!\"\n  from=\"SVO\"\n  to=\"HAV\"\n  dateLabel=\"12 · 02 · 2027\"\n  place=\"Playa Paraíso, Cayo Largo\"\n  coordinates=\"21°37′28″N 81°33′46″W\"\n  hashtag=\"#сонятимурлетят\"\n  links={[\n    { label: \"Маршрут\", href: \"#route\" },\n    { label: \"Check-in\", href: \"#checkin\" },\n  ]}\n  rsvpLabel=\"до 1 декабря\"\n/>",
           "summary": "Самодостаточный подвал свадьбы-путешествия: коды рейса, имена с «¡Hasta la boda!», координаты пляжа, якоря, хэштег и «check-in до». Всё пропсами, фон всегда чернильный.",
           "preserve": [
-            "импорты footerlinks-020 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "перфорацию линии отрыва по верхнему краю",
             "три колонки талона: коды рейса, имена с рукописной строкой, координаты моноширинным",
             "невысокие две строки — подвал завершает, а не повторяет страницу"
@@ -3957,11 +3930,11 @@
           "en": {
             "title": "Boarding-pass footer with beach coordinates",
             "description": "A destination-wedding footer like the bottom of a boarding pass on ink blue: a perforated tear line on top, flight codes and date on the left, names with a handwritten “¡Hasta la boda!” in the centre, beach coordinates in monospace on the right; below a row of anchors, the hashtag and “check-in by…”. Short.",
-            "docs": "A composite block: imports footerlinks-020 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The perforation is a ::before radial-gradient along the top edge. The top row is a 1fr/auto/1fr grid from 56rem (a centred column below): Oswald codes with a plane, caps names with a Lobster script line, ui-monospace coordinates with the place label. The bottom row has caps anchors, an Instagram hashtag pill and “check-in by” with a link. The background is always ink (light-dark gives two depths). Palette --vibeui-footer-025-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The perforation is a ::before radial-gradient along the top edge. The top row is a 1fr/auto/1fr grid from 56rem (a centred column below): Oswald codes with a plane, caps names with a Lobster script line, ui-monospace coordinates with the place label. The bottom row has caps anchors, an Instagram hashtag pill and “check-in by” with a link. The background is always ink (light-dark gives two depths). Palette --vibeui-footer-025-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained destination-wedding footer: flight codes, names with “¡Hasta la boda!”, beach coordinates, anchors, hashtag and “check-in by”. All via props, always ink.",
               "preserve": [
-                "the footerlinks-020 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the perforated tear line along the top edge",
                 "the three pass columns: flight codes, names with the script line, monospace coordinates",
                 "two short rows — the footer closes rather than repeats the page"
@@ -4040,9 +4013,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-021"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-026/footer-026.tsx",
@@ -4050,7 +4021,7 @@
           "target": "@components/vibeui/footer-026.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует footerlinks-021 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Ветки — два SVG path по углам (правый зеркален scaleX(-1)), хвойный цвет с прозрачностью; на узких экранах меньше. Центр — монограмма с SVG-снежинкой в drop-shadow, имена Cormorant, рукописная строка Marck Script, дата и место капителями с точкой-свечкой. Нижняя строка — якоря капителями, хэштег-капсула на Instagram, «ответьте до» с ссылкой; от 56rem разъезжается по краям. Фон всегда тёмный (light-dark даёт две глубины). Палитра --vibeui-footer-026-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Ветки — два SVG path по углам (правый зеркален scaleX(-1)), хвойный цвет с прозрачностью; на узких экранах меньше. Центр — монограмма с SVG-снежинкой в drop-shadow, имена Cormorant, рукописная строка Marck Script, дата и место капителями с точкой-свечкой. Нижняя строка — якоря капителями, хэштег-капсула на Instagram, «ответьте до» с ссылкой; от 56rem разъезжается по краям. Фон всегда тёмный (light-dark даёт две глубины). Палитра --vibeui-footer-026-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -4079,7 +4050,7 @@
           "usage": "<Footer026\n  initials={[\"В\", \"Д\"]}\n  names=\"Валерия и Дмитрий\"\n  script=\"до встречи в снегу\"\n  dateLabel=\"18 декабря 2027\"\n  place=\"Лесная усадьба\"\n  hashtag=\"#лераидимавснегу\"\n  links={[\n    { label: \"История\", href: \"#story\" },\n    { label: \"Ответить\", href: \"#rsvp\" },\n  ]}\n  rsvpLabel=\"до 1 ноября\"\n/>",
           "summary": "Самодостаточный подвал зимней свадьбы: хвоя по углам, монограмма со снежинкой, имена и «до встречи в снегу», дата и место, якоря, хэштег и «ответьте до». Всё пропсами, фон всегда тёмный.",
           "preserve": [
-            "импорты footerlinks-021 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ветки хвои по углам и монограмму со светящейся снежинкой",
             "рукописную строку под именами и точку-свечку между датой и местом",
             "невысокие две строки — подвал завершает, а не повторяет страницу"
@@ -4137,11 +4108,11 @@
           "en": {
             "title": "Footer with pine branches in the corners and a snowflake monogram",
             "description": "A winter-wedding footer on night blue: pine branches in the corners, a snowflake monogram in the centre, serif names and a handwritten “see you in the snow”, date and place; below a row of anchors, the hashtag and “reply by…”. Short.",
-            "docs": "A composite block: imports footerlinks-021 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The branches are two SVG paths in the corners (the right one mirrored with scaleX(-1)), pine-coloured with transparency; smaller on narrow screens. The centre has the monogram with an SVG snowflake in a drop-shadow, Cormorant names, a Marck Script line, date and place in small caps with a candle dot. The bottom row has small-caps anchors, an Instagram hashtag pill and “reply by” with a link; from 56rem it spreads to the edges. The background is always dark (light-dark gives two depths). Palette --vibeui-footer-026-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The branches are two SVG paths in the corners (the right one mirrored with scaleX(-1)), pine-coloured with transparency; smaller on narrow screens. The centre has the monogram with an SVG snowflake in a drop-shadow, Cormorant names, a Marck Script line, date and place in small caps with a candle dot. The bottom row has small-caps anchors, an Instagram hashtag pill and “reply by” with a link; from 56rem it spreads to the edges. The background is always dark (light-dark gives two depths). Palette --vibeui-footer-026-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained winter-wedding footer: pine in the corners, a snowflake monogram, names and “see you in the snow”, date and place, anchors, hashtag and “reply by”. All via props, always dark.",
               "preserve": [
-                "the footerlinks-021 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the pine branches in the corners and the monogram with a glowing snowflake",
                 "the handwritten line under the names and the candle dot between date and place",
                 "two short rows — the footer closes rather than repeats the page"
@@ -4227,9 +4198,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-005"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-027/footer-027.tsx",
@@ -4259,7 +4228,7 @@
           "usage": "<Footer027\n  brand=\"Корка\"\n  caption=\"кофейня-пекарня · печём с 2019\"\n  openHour={7}\n  closeHour={21}\n  columns={[{ title: \"Разделы\", links: [{ label: \"Витрина\", href: \"#shelf\" }] }]}\n/>",
           "summary": "Тёмный подвал для заведения с часами работы: живая полоса дня показывает, сколько ещё открыто. Для кафе, пекарни, салона.",
           "preserve": [
-            "импорты footerlinks-005 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "прогресс дня считается от часов посетителя через useSyncExternalStore; до гидрации — 9:00",
             "заливка полосы — ::before с width из --vibeui-footer-027-p и transition 1.2s, бегунок — <b> на той же переменной",
             "подписи часов — псевдоэлементы делений через attr(data-h), шаг два часа"
@@ -4323,7 +4292,7 @@
             "ai": {
               "summary": "A dark venue footer with opening hours: a live day bar shows how much longer it's open. For a café, bakery or salon.",
               "preserve": [
-                "the footerlinks-005 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "day progress runs on the visitor's clock via useSyncExternalStore; before hydration — 9:00",
                 "the bar fill is a ::before with width from --vibeui-footer-027-p and a 1.2s transition, the knob is a <b> on the same variable",
                 "hour labels are tick pseudo-elements via attr(data-h), every two hours"
@@ -4425,11 +4394,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports footerlinks-005 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-005 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-028",
@@ -4440,9 +4409,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-027"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-028/footer-028.tsx",
@@ -4474,7 +4441,7 @@
           "usage": "<Footer028\n  brand=\"Тихий час\"\n  hostName=\"Вера Ильина\"\n  hostRole=\"ведущая и продюсер\"\n  hostImage=\"/photos/host.webp\"\n  platforms={[{ label: \"Spotify\", href: \"#\" }]}\n/>",
           "summary": "Подвал для подкаста, канала, медиа: карточка автора, ссылки и словомарка-плакат на всю ширину.",
           "preserve": [
-            "импорты footerlinks-027 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "словомарка — clamp(4rem,19cqi,15rem) от ширины контейнера, background-clip: text, заливка акцентом по hover",
             "карточка ведущей — grid 5rem + текст, портрет со скруглением",
             "колонки — контейнерный запрос: одна колонка → две"
@@ -4538,7 +4505,7 @@
             "ai": {
               "summary": "A footer for a podcast, channel or media: an author card, links and a poster-size wordmark across the width.",
               "preserve": [
-                "the footerlinks-027 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the wordmark is clamp(4rem,19cqi,15rem) from container width, background-clip: text, accent fill on hover",
                 "the host card is a 5rem + text grid with a rounded portrait",
                 "columns via a container query: one → two"
@@ -4604,11 +4571,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports footerlinks-027 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-027 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-029",
@@ -4619,9 +4586,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-006"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-029/footer-029.tsx",
@@ -4651,7 +4616,7 @@
           "usage": "<Footer029\n  brand=\"tabl\"\n  version=\"v2.4.1\"\n  license=\"MIT\"\n  columns={[{ title: \"Проект\", links: [{ label: \"Документация\", href: \"#docs\" }] }]}\n/>",
           "summary": "Подвал для документации библиотеки, CLI, API: версия, лицензия, статус и ссылки в инженерном стиле.",
           "preserve": [
-            "импорты footerlinks-006 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "чипы версии и лицензии — моноширинные, на линии, без заливки",
             "статус — зелёная точка с мягким кольцом box-shadow",
             "колонки 2 → 3 контейнерным запросом"
@@ -4715,7 +4680,7 @@
             "ai": {
               "summary": "A footer for library, CLI or API docs: version, licence, status and links in an engineering style.",
               "preserve": [
-                "the footerlinks-006 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "version and licence chips are monospace, on hairlines, no fill",
                 "status is a green dot with a soft box-shadow ring",
                 "columns 2 → 3 via a container query"
@@ -4820,11 +4785,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports footerlinks-006 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-006 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-030",
@@ -4835,9 +4800,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-022"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-030/footer-030.tsx",
@@ -4865,7 +4828,7 @@
           "usage": "<Footer030 name=\"Даня Лунёв\" caption=\"дизайн и фронтенд · Тбилиси\" year=\"2026\" links={[{ label: \"Проекты\", href: \"#work\" }]} />",
           "summary": "Минимальный подвал для портфолио или личного сайта: имя, ссылки, год, «наверх».",
           "preserve": [
-            "импорты footerlinks-022 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "стрелка «наверх» — keyframes: уезжает на -140%, появляется с +140%, возвращается",
             "три колонки auto 1fr auto от 56rem, ссылки по центру",
             "кнопка по hover заливается акцентом"
@@ -4929,7 +4892,7 @@
             "ai": {
               "summary": "A minimal footer for a portfolio or personal site: name, links, year, “to top”.",
               "preserve": [
-                "the footerlinks-022 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the “to top” arrow is keyframes: leaves at -140%, appears from +140%, returns",
                 "three columns auto 1fr auto from 56rem, links centred",
                 "the button fills with the accent on hover"
@@ -4988,11 +4951,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports footerlinks-022 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-022 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-031",
@@ -5003,10 +4966,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-023",
-        "footerlinks-024"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-031/footer-031.tsx",
@@ -5035,7 +4995,7 @@
           "usage": "<Footer031 brand=\"Тише\" caption=\"сделано, чтобы вы спали\" links={[{ label: \"Тарифы\", href: \"#pricing\" }]} copyright=\"© Тише, 2026\" />",
           "summary": "Подвал для лендинга приложения: ссылки, магазины и правовые пункты в одном ряду.",
           "preserve": [
-            "импорты footerlinks-023, footerlinks-024 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "три колонки auto 1fr auto от 56rem",
             "бейджи — тёмные плитки на цвете текста",
             "правовые ссылки отдельной строкой под линией"
@@ -5099,7 +5059,7 @@
             "ai": {
               "summary": "A footer for an app landing: links, stores and legal items in one row.",
               "preserve": [
-                "the footerlinks-023, footerlinks-024 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "three columns auto 1fr auto from 56rem",
                 "badges are dark tiles on the text colour",
                 "legal links on a separate line under a hairline"
@@ -5175,11 +5135,11 @@
                 ]
               }
             },
-            "docs": "A composite block: imports footerlinks-023, footerlinks-024 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-023, footerlinks-024 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-032",
@@ -5190,9 +5150,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-007"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-032/footer-032.tsx",
@@ -5222,7 +5180,7 @@
           "usage": "<Footer032\n  brand=\"Сводка\"\n  status=\"Все системы работают\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Цены\", href: \"#pricing\" }] }]}\n/>",
           "summary": "Подвал для SaaS: статус «все системы работают» с пульсом, колонки ссылок, правовые ссылки и соцсети.",
           "preserve": [
-            "импорты footerlinks-007 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "статус — ссылка-чип, точка с ::after и keyframes pulse (scale + opacity), цвет --ok",
             "аврора-линия — ::before высотой 1px с градиентом от прозрачного к акценту и обратно",
             "колонки: 2 до 44rem, 3 выше; от 60rem shell двухколоночный, bottom растянут на всю ширину"
@@ -5293,7 +5251,7 @@
             "ai": {
               "summary": "A SaaS footer: an “all systems operational” status with a pulse, link columns, legal links and socials.",
               "preserve": [
-                "the footerlinks-007 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the status is a chip link, a dot with ::after and pulse keyframes (scale + opacity), colour --ok",
                 "the aurora line is a 1px ::before with a gradient from transparent to the accent and back",
                 "columns: 2 below 44rem, 3 above; from 60rem the shell is two-column and bottom spans the full width"
@@ -5417,11 +5375,11 @@
                 "copyright": "© 2026 Recap"
               }
             },
-            "docs": "A composite block: imports footerlinks-007 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-007 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-033",
@@ -5432,9 +5390,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-008"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-033/footer-033.tsx",
@@ -5466,7 +5422,7 @@
           "usage": "<Footer033\n  wordmark=\"Гараж 42\"\n  columns={[{ title: \"Услуги\", links: [{ label: \"Керамика\", href: \"#services\" }] }]}\n  phone=\"+7 (812) 420-42-42\"\n  hours=\"Пн–Сб 9:00–21:00\"\n/>",
           "summary": "Подвал для автосервиса: колонки, контакты, шкала и гигантское контурное слово, которое заливается по hover.",
           "preserve": [
-            "импорты footerlinks-008 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "слово-марка — -webkit-text-stroke + background-clip:text с градиентом 200% высоты, hover сдвигает background-position 0 100% → 0 0",
             "размер марки clamp(2.6rem, 12cqi, 11rem) с white-space:nowrap — считается от ширины контейнера, не окна",
             "шкала — repeating-linear-gradient рисок с mask-image по краям"
@@ -5530,7 +5486,7 @@
             "ai": {
               "summary": "Footer for a car service: columns, contacts, a tick scale and a giant outlined word that fills on hover.",
               "preserve": [
-                "the footerlinks-008 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the wordmark is -webkit-text-stroke + background-clip:text with a 200%-tall gradient, hover shifts background-position 0 100% → 0 0",
                 "the wordmark size is clamp(2.6rem, 12cqi, 11rem) with white-space:nowrap — measured from the container width, not the viewport",
                 "the scale is a repeating-linear-gradient of ticks with a mask-image at the edges"
@@ -5640,11 +5596,11 @@
                 "note": "Prices on the site are a guide, the exact one is fixed after inspection."
               }
             },
-            "docs": "A composite block: imports footerlinks-008 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-008 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-034",
@@ -5655,9 +5611,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-009"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-034/footer-034.tsx",
@@ -5689,7 +5643,7 @@
           "usage": "<Footer034\n  brand=\"Лапа\"\n  phone=\"+7 495 120-24-24\"\n  address=\"Ленинградский проспект, 62 · м. Сокол\"\n  hours=\"Приём 9:00–21:00 · экстренно — круглосуточно\"\n  license=\"Лицензия № 77-ВД-004182\"\n/>",
           "summary": "Подвал клиники: шагающие лапки, телефон, часы, колонки и лицензия.",
           "preserve": [
-            "импорты footerlinks-009 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "дорожка — 12 svg с --i и --tilt, keyframes step по opacity и scale, задержка index × .35s, чётные сдвинуты translate на .6rem",
             "сетка на 60rem контейнера — бренд слева, колонки справа, лицензия и низ на всю ширину через grid-column 1/−1",
             "при reduce-motion лапки стоят с opacity .6, чтобы дорожка не пропадала"
@@ -5760,7 +5714,7 @@
             "ai": {
               "summary": "A clinic footer: stepping paws, phone, hours, columns and a licence line.",
               "preserve": [
-                "the footerlinks-009 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the trail is 12 svgs with --i and --tilt, step keyframes on opacity and scale, delay index × .35s, even ones shifted by a .6rem translate",
                 "on a 60rem container the grid puts the brand left, columns right, licence and bottom full-width via grid-column 1/−1",
                 "under reduce-motion the paws stay at opacity .6 so the trail doesn't vanish"
@@ -5902,11 +5856,11 @@
                 "copyright": "© 2017–2026 Paw"
               }
             },
-            "docs": "A composite block: imports footerlinks-009 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-009 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-035",
@@ -5917,9 +5871,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "sociallinks-003"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-035/footer-035.tsx",
@@ -5951,7 +5903,7 @@
           "usage": "<Footer035\n  brand=\"Стебель\"\n  tagline=\"Цветочная мастерская на Пестеля, 4\"\n  address=\"Санкт-Петербург, ул. Пестеля, 4\"\n  hours=\"ежедневно 9:00–22:00\"\n  phone=\"+7 812 407-24-14\"\n  mapSrc=\"https://yandex.ru/map-widget/v1/?ll=30.3460,59.9425&z=16\"\n/>",
           "summary": "Подвал, который заодно и контакты: карта, часы, телефон и гигантское имя — для локального бизнеса с одним адресом.",
           "preserve": [
-            "импорты sociallinks-003 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "имя — p[data-part=word] с color:transparent и -webkit-text-stroke 1.5px, font-size clamp(4.5rem, 21cqi, 17rem), на hover color заливается за .6s",
             "карта — figure с rotate(1deg), iframe aspect-ratio 4/3 и filter grayscale(.55) sepia(.18) contrast(.92), булавка absolute сверху справа",
             "контакты — dl с колонками от 60rem, ссылки tel:/mailto: с border-bottom"
@@ -6022,7 +5974,7 @@
             "ai": {
               "summary": "A footer that doubles as contacts: map, hours, phone and a giant name — for a local business with one address.",
               "preserve": [
-                "the sociallinks-003 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the name is p[data-part=word] with color:transparent and -webkit-text-stroke 1.5px, font-size clamp(4.5rem, 21cqi, 17rem), on hover the colour fills in over .6s",
                 "the map is a figure with rotate(1deg), an iframe with aspect-ratio 4/3 and filter grayscale(.55) sepia(.18) contrast(.92), the pin absolute at top right",
                 "contacts are a dl with columns from 60rem, tel:/mailto: links with a border-bottom"
@@ -6104,11 +6056,11 @@
                 "copyright": "© 2014–2026 Stem"
               }
             },
-            "docs": "A composite block: imports sociallinks-003 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует sociallinks-003 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-036",
@@ -6119,9 +6071,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-025"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-036/footer-036.tsx",
@@ -6153,7 +6103,7 @@
           "usage": "<Footer036\n  brand=\"Ровно\"\n  caption=\"ремонт квартир · Москва · с 2011\"\n  cells={[{ label: \"Телефон\", value: \"+7 495 120-40-40\", href: \"tel:+74951204040\" }, { label: \"Часы\", value: \"пн–сб 9:00–21:00\" }]}\n  requisites=\"ООО «Ровно» · ИНН 7706412870\"\n/>",
           "summary": "Подвал для сайта подрядчика или инженерной компании: штамп чертежа с контактами, часами, гарантией и реквизитами.",
           "preserve": [
-            "импорты footerlinks-025 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "sheet — рамка 2px + внутренняя 1px через padding .4rem; ячейки dl с border-right/bottom, лишние границы снимаются nth-child по числу колонок",
             "бренд — b с ::after жёлтой чертой 2.4rem × .35rem, uppercase, tracking −.04em",
             "от 64rem — grid-template-areas «brand cells links» / «bottom bottom bottom», bottom с border-top"
@@ -6225,7 +6175,7 @@
             "ai": {
               "summary": "A footer for a contractor or engineering company: a drawing title block with contacts, hours, warranty and requisites.",
               "preserve": [
-                "the footerlinks-025 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the sheet is a 2px frame plus an inner 1px one via .4rem padding; cells are a dl with border-right/bottom, extra borders removed with nth-child by column count",
                 "the brand is a b with a yellow ::after rule 2.4rem × .35rem, uppercase, −.04em tracking",
                 "from 64rem grid-template-areas “brand cells links” / “bottom bottom bottom”, bottom with a border-top"
@@ -6343,11 +6293,11 @@
                 "copyright": "© 2011–2026 Level"
               }
             },
-            "docs": "A composite block: imports footerlinks-025 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-025 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-037",
@@ -6358,9 +6308,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-010"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-037/footer-037.tsx",
@@ -6392,7 +6340,7 @@
           "usage": "<Footer037\n  brand=\"Горячо\"\n  hours=\"Сегодня до 02:00 · без выходных\"\n  phone=\"+7 495 120-28-00\"\n  columns={[{ title: \"Меню\", links: [{ label: \"Бургеры\", href: \"#menu\" }] }]}\n/>",
           "summary": "Подвал для доставки еды: часы, телефон, ссылки и огромное слово-контур с акцентной заливкой.",
           "preserve": [
-            "импорты footerlinks-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "giant — color:transparent с -webkit-text-stroke на p и background-clip:text на span с градиентом-заливкой нижних 38 %",
             "font-size слова clamp(4rem,19cqi,17rem), overflow:hidden на footer и translateY(.14em) прячут нижний край",
             "shell — grid, от 52rem две колонки 1.1fr/1.4fr, колонки ссылок 2 → 3"
@@ -6463,7 +6411,7 @@
             "ai": {
               "summary": "Footer for food delivery: hours, phone, links and a giant outlined word with an accent fill.",
               "preserve": [
-                "the footerlinks-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "giant is color:transparent with -webkit-text-stroke on the p and background-clip:text on the span with a gradient filling the lower 38 %",
                 "the word's font-size is clamp(4rem,19cqi,17rem), overflow:hidden on the footer and translateY(.14em) hide the bottom edge",
                 "shell is a grid, two columns 1.1fr/1.4fr from 52rem, link columns 2 → 3"
@@ -6602,11 +6550,11 @@
                 "copyright": "© 2026 Hot Kitchen LLC. Baker Street 20, London"
               }
             },
-            "docs": "A composite block: imports footerlinks-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-038",
@@ -6617,9 +6565,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-011"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-038/footer-038.tsx",
@@ -6651,7 +6597,7 @@
           "usage": "<Footer038\n  brand=\"Слово\"\n  caption=\"языковая онлайн-школа\"\n  bigWord=\"Слово\"\n  columns={[{ title: \"языки\", links: [{ label: \"Английский\", href: \"#schedule\" }] }]}\n/>",
           "summary": "Подвал для школы или курсов: контакты, колонки, правовое и соцсети, огромное слово-контур внизу.",
           "preserve": [
-            "импорты footerlinks-011 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "линовка сверху — ::before высотой 1.2rem с repeating-linear-gradient в --rule",
             "слово-контур — font-size clamp(4rem,19cqi,15rem), color transparent, -webkit-text-stroke 1.5px, margin-bottom −.35em, чтобы уходило под край",
             "колонки: 2 до 44rem, 3 выше; от 60rem shell двухколоночный, bottom растянут на всю ширину"
@@ -6722,7 +6668,7 @@
             "ai": {
               "summary": "A footer for a school or courses: contacts, columns, legal and socials, a giant outlined word at the bottom.",
               "preserve": [
-                "the footerlinks-011 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the ruled lines on top are a 1.2rem ::before with a repeating-linear-gradient in --rule",
                 "the outlined word is font-size clamp(4rem,19cqi,15rem), transparent color, -webkit-text-stroke 1.5px, margin-bottom −.35em so it slips under the edge",
                 "columns: 2 below 44rem, 3 above; from 60rem the shell is two-column and bottom spans the full width"
@@ -6874,11 +6820,11 @@
                 "copyright": "© 2026 Slovo, Saint Petersburg"
               }
             },
-            "docs": "A composite block: imports footerlinks-011 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-011 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-040",
@@ -6889,9 +6835,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-012"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-040/footer-040.tsx",
@@ -6921,7 +6865,7 @@
           "usage": "<Footer040\n  brand=\"Слой\"\n  caption=\"Маркетплейс дизайн-ассетов.\"\n  columns={[{ title: \"Каталог\", links: [{ label: \"Шаблоны Figma\", href: \"#catalog\" }] }]}\n  note=\"Санкт-Петербург\"\n/>",
           "summary": "Подвал магазина ассетов: колонки ссылок и гигантский wordmark с акцентным квадратом.",
           "preserve": [
-            "импорты footerlinks-012 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "wordmark — font-size clamp(5rem,22cqi,17rem), line-height .78, letter-spacing −.07em, white-space:nowrap, корень с overflow:hidden",
             "акцентный квадрат — <i> внутри [data-part=glyph] с position:relative, размеры в em от кегля wordmark",
             "колонки: 2 → 3 от 48rem; от 64rem подпись слева 1.2fr и колонки справа 2fr"
@@ -6992,7 +6936,7 @@
             "ai": {
               "summary": "Footer for an asset store: link columns and a giant wordmark with an accent square.",
               "preserve": [
-                "the footerlinks-012 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the wordmark is font-size clamp(5rem,22cqi,17rem), line-height .78, letter-spacing −.07em, white-space:nowrap, the root has overflow:hidden",
                 "the accent square is an <i> inside [data-part=glyph] with position:relative, sized in em from the wordmark size",
                 "columns: 2 → 3 from 48rem; from 64rem the caption on the left at 1.2fr and columns on the right at 2fr"
@@ -7117,11 +7061,11 @@
                 "topLabel": "To top"
               }
             },
-            "docs": "A composite block: imports footerlinks-012 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-012 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-041",
@@ -7132,9 +7076,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-013"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-041/footer-041.tsx",
@@ -7165,7 +7107,7 @@
           "usage": "<Footer041\n  brand=\"geokod\"\n  status=\"все системы работают\"\n  build={[\"v2.4.0\", \"msk-1\"]}\n  columns={[{ title: \"Продукт\", links: [{ label: \"Цены\", href: \"#pricing\" }] }]}\n/>",
           "summary": "Подвал для API или dev-tool: статус с лампочкой, колонки ссылок, билд и версия.",
           "preserve": [
-            "импорты footerlinks-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "лампочка — i с ::after-кольцом и keyframes ping 2.2 с",
             "колонки 2 → 3 от 44rem, от 60rem бренд и колонки в два столбца 1.2fr / 2fr, низ на всю ширину",
             "линия сверху — ::before с linear-gradient line → accent → line"
@@ -7236,7 +7178,7 @@
             "ai": {
               "summary": "Footer for an API or dev tool: a status lamp, link columns, build and version.",
               "preserve": [
-                "the footerlinks-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the lamp is an i with an ::after ring and 2.2 s ping keyframes",
                 "columns 2 → 3 from 44rem, from 60rem brand and columns in two 1.2fr / 2fr tracks, the bottom full width",
                 "the top line is a ::before with a linear-gradient line → accent → line"
@@ -7365,11 +7307,11 @@
                 "copyright": "© 2026 Geokod"
               }
             },
-            "docs": "A composite block: imports footerlinks-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-042",
@@ -7380,9 +7322,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-014"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-042/footer-042.tsx",
@@ -7414,7 +7354,7 @@
           "usage": "<Footer042\n  brand=\"Луч\"\n  status=\"партия 2 · отгрузка в октябре\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Рассвет\", href: \"#dawn\" }] }]}\n/>",
           "summary": "Подвал для лендинга железки: огромный контурный знак, статус партии, колонки ссылок.",
           "preserve": [
-            "импорты footerlinks-014 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "знак — color:transparent с -webkit-text-stroke, размер clamp(5rem, 26cqi, 22rem), отрицательный нижний margin -.28em и overflow:hidden корня обрезают его",
             "точка статуса — keyframes opacity 2.4 с и свечение box-shadow цветом акцента",
             "верх — grid 1.2fr 2fr от 56rem контейнера, колонки три от 56rem и две до"
@@ -7485,7 +7425,7 @@
             "ai": {
               "summary": "Footer for a hardware landing: a huge outlined wordmark, a batch status, link columns.",
               "preserve": [
-                "the footerlinks-014 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the wordmark is color:transparent with -webkit-text-stroke, size clamp(5rem, 26cqi, 22rem); a negative bottom margin of -.28em and the root's overflow:hidden crop it",
                 "the status dot is a 2.4 s opacity keyframe with an accent-coloured box-shadow glow",
                 "the top is a 1.2fr 2fr grid from a 56rem container; three columns from 56rem, two below"
@@ -7609,11 +7549,11 @@
                 "copyright": "© 2026 Ray Lab"
               }
             },
-            "docs": "A composite block: imports footerlinks-014 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-014 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-043",
@@ -7624,9 +7564,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "sociallinks-004"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-043/footer-043.tsx",
@@ -7657,7 +7595,7 @@
           "usage": "<Footer043\n  brand=\"Тёплый дом\"\n  requisites={[{ label: \"ИНН\", value: \"6950214477\" }]}\n  documents={[{ label: \"Устав фонда\", href: \"/docs/charter.pdf\" }]}\n  contacts={[{ label: \"help@teplydom.org\", href: \"mailto:help@teplydom.org\" }]}\n/>",
           "summary": "Подвал для НКО: реквизиты плашками, документы, контакты, соцсети и рукописное «спасибо».",
           "preserve": [
-            "импорты sociallinks-004 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "реквизиты — dl с плашками, dd моноширинный с word-break и user-select:all для копирования одним кликом",
             "сетка 1 → 2 колонки от 44rem → 1.3fr 1fr 1fr 1fr от 64rem контейнера",
             "«спасибо» — Caveat с rotate(-2deg) от левого края, шов — hr с dashed border-top"
@@ -7729,7 +7667,7 @@
             "ai": {
               "summary": "Footer for an NGO: requisites on tiles, documents, contacts, socials and a handwritten “thank you”.",
               "preserve": [
-                "the sociallinks-004 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "requisites are a dl with tiles, dd in monospace with word-break and user-select:all for one-click copying",
                 "the grid goes 1 → 2 columns from 44rem → 1.3fr 1fr 1fr 1fr from a 64rem container",
                 "the “thank you” is Caveat rotated −2deg from the left edge, the seam is an hr with a dashed border-top"
@@ -7857,11 +7795,11 @@
                 "copyright": "© 2018–2026 Warm Home Foundation"
               }
             },
-            "docs": "A composite block: imports sociallinks-004 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует sociallinks-004 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "footer-044",
@@ -7872,10 +7810,7 @@
         "footer"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "footerlinks-026",
-        "sociallinks-005"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "footer-044/footer-044.tsx",
@@ -7907,7 +7842,7 @@
           "usage": "<Footer044\n  brand=\"Вера Холодова\"\n  links={[{ label: \"Тексты\", href: \"#texts\" }, { label: \"Книга\", href: \"#book\" }]}\n  colophon=\"Набрано Cormorant Garamond и PT Serif.\"\n/>",
           "summary": "Тихий подвал для писателя, журнала или блога: виньетка, имя, ссылки курсивом, колофон.",
           "preserve": [
-            "импорты footerlinks-026, sociallinks-005 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "все ссылки — курсив с ::after-подчёркиванием scaleX(0→1) от левого края, .35s cubic-bezier",
             "нижняя строка — grid 1fr auto 1fr от 56rem: копирайт слева, «наверх» по центру, колофон справа; до — в столбик по центру",
             "слушает vibeui-writer:theme и ставит data-mode; цвета light-dark(), кроссфейд .6s"
@@ -7978,7 +7913,7 @@
             "ai": {
               "summary": "A quiet footer for a writer, magazine or blog: a fleuron, a name, italic links, a colophon.",
               "preserve": [
-                "the footerlinks-026, sociallinks-005 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "every link is italic with a ::after underline scaleX(0→1) from the left edge, .35s cubic-bezier",
                 "the bottom row is a 1fr auto 1fr grid from 56rem: copyright left, “to the top” centre, colophon right; below — stacked and centred",
                 "listens to vibeui-writer:theme and sets data-mode; colors are light-dark(), .6s crossfade"
@@ -8064,11 +7999,11 @@
                 "topLabel": "To the top"
               }
             },
-            "docs": "A composite block: imports footerlinks-026, sociallinks-005 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
       },
-      "docs": "Составной блок: импортирует footerlinks-026, sociallinks-005 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

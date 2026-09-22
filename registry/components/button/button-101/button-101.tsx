@@ -47,9 +47,9 @@ const STYLES = `
 export function Button101({
   title = "",
   styleText = "",
-  image,
-  imageAlt,
-  meta,
+  image = "/demo/realty/object-01.webp",
+  imageAlt = "/demo/realty/object-02.webp",
+  meta = "Плитка работы с тегом стиля",
   styleLabel = (key) => key,
   accent,
   className,

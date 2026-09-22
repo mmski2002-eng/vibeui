@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react"
-import { Card133 } from "@/registry/components/card/card-133/card-133"
+import type { ComponentProps } from "react"
 
 export type About014Fact = {
   value: string
@@ -93,7 +93,43 @@ container-type:inline-size;
 [data-vibeui-block="about-014"] [data-part="track"] span:nth-of-type(even){font-family:var(--vibeui-about-014-serif);font-style:italic;font-weight:700;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1.5px var(--vibeui-about-014-bg)}
 [data-vibeui-block="about-014"] [data-part="track"] i{width:.5em;height:.5em;border-radius:50%;background:var(--vibeui-about-014-accent);align-self:center;flex:none}
 @container (min-width: 56rem){[data-vibeui-block="about-014"] [data-part="shell"]{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:4rem;align-items:start}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-014"] *{animation:none!important;transition:none!important}[data-vibeui-block="about-014"] [data-part="pic"],[data-vibeui-block="about-014"] [data-part="eyebrow"],[data-vibeui-block="about-014"] [data-rise]{opacity:1;transform:none}[data-vibeui-block="about-014"] [data-part="word"] span{transform:none}[data-vibeui-block="about-014"] [data-part="pic"] img{transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-014"] *{animation:none!important;transition:none!important}[data-vibeui-block="about-014"] [data-part="pic"],[data-vibeui-block="about-014"] [data-part="eyebrow"],[data-vibeui-block="about-014"] [data-rise]{opacity:1;transform:none}[data-vibeui-block="about-014"] [data-part="word"] span{transform:none}[data-vibeui-block="about-014"] [data-part="pic"] img{transform:none}}
+[data-vibeui-block="about-014"] [data-part="fact"] b{display:block;font-family:var(--vibeui-about-014-display);font-weight:800;font-size:clamp(1.8rem,4cqi,2.8rem);letter-spacing:-.04em;line-height:1;color:var(--vibeui-about-014-accent);font-variant-numeric:tabular-nums}
+[data-vibeui-block="about-014"] [data-part="fact"] small{display:block;margin-top:.3rem;font-size:.82rem;color:var(--vibeui-about-014-muted)}
+`
+
+type FactProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  label?: string
+  value?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Fact({
+  label = "лет в продуктах",
+  value = "7",
+  accent,
+  className,
+  style,
+  ...props
+}: FactProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-about-014-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props} data-rise=""
+        className={className}
+        style={palette}
+      >
+        <b>{value}</b>
+        <small>{label}</small>
+      </li>
+  )
+}
 
 /** «Обо мне»: фото с параллаксом, факты-счётчики, кинетическая лента навыков и линия карьеры. */
 export function About014({
@@ -254,7 +290,7 @@ export function About014({
             {facts.length > 0 ? (
               <ul ref={factsList} data-part="facts">
                 {facts.map((fact, index) => (
-                  <Card133 key={fact.label} data-part="fact" label={fact.label} value={fact.value} style={{ ["--vibeui-about-014-i" as string]: index + 1 }} accent={accent} />
+                  <Fact key={fact.label} data-part="fact" label={fact.label} value={fact.value} style={{ ["--vibeui-about-014-i" as string]: index + 1 }} accent={accent} />
                 ))}
               </ul>
             ) : null}

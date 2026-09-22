@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useId, type CSSProperties, type PointerEvent, type ReactNode } from "react"
-import { Card069 } from "@/registry/components/card/card-069/card-069"
+import type { ComponentProps } from "react"
 
 export type Layout009Item = {
   /** Заголовок слота. */
@@ -47,6 +47,8 @@ const GHOST: Record<(typeof SLOTS)[number], string> = {
 
 const STYLES = `
 :where([data-vibeui-block="layout-009"]){
+--vibeui-layout-009-dur-4:340ms;
+--vibeui-layout-009-dur-5:460ms;
 --vibeui-layout-009-bg:light-dark(#f2f2f2,#000000);
 --vibeui-layout-009-tile:light-dark(#ffffff,#1a1a1a);
 --vibeui-layout-009-tile-2:light-dark(#f7f7f7,#222222);
@@ -111,26 +113,125 @@ container-type:inline-size;
 [data-vibeui-block="layout-009"] [data-part="panel"]{position:relative;display:flex;flex:1 1 0;min-height:0;min-width:0;transition:flex-grow 0.6s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="layout-009"] [data-part="panel"] input{position:absolute;opacity:0;pointer-events:none}
 [data-vibeui-block="layout-009"] [data-part="panel"] label{position:absolute;inset:0;cursor:pointer;z-index:1;border-radius:var(--vibeui-layout-009-radius)}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"]{flex:1;min-height:5.5rem;padding:1.25rem}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] > [data-part="image"]{position:absolute;inset:0;border-radius:0;margin:0;min-height:0;opacity:0.9}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] > :not([data-part="image"]):not([data-part="media"]):not([data-part="num"]){position:relative;z-index:1}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] [data-part="bar"]{opacity:0;transform:translateY(8px);transition:opacity var(--vibeui-card-069-dur-5),transform var(--vibeui-card-069-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"]{flex:1;min-height:5.5rem;padding:1.25rem}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"] > [data-part="image"]{position:absolute;inset:0;border-radius:0;margin:0;min-height:0;opacity:0.9}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"] > :not([data-part="image"]):not([data-part="media"]):not([data-part="num"]){position:relative;z-index:1}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"] [data-part="bar"]{opacity:0;transform:translateY(8px);transition:opacity var(--vibeui-card-069-dur-5),transform var(--vibeui-card-069-dur-5) cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="layout-009"] [data-part="panel"] h3,[data-vibeui-block="layout-009"] [data-part="panel"] p{opacity:0;transform:translateY(8px);transition:opacity var(--vibeui-layout-009-dur-5),transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"]:hover{transform:none}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"]:hover{transform:none}
 [data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked),[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within{flex-grow:3.2}
-[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) [data-vibeui-block="card-069"] [data-part="bar"],[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) h3,[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover [data-vibeui-block="card-069"] [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within [data-vibeui-block="card-069"] [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within p{opacity:1;transform:none}
+[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) [data-part="tile"] [data-part="bar"],[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) h3,[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover [data-part="tile"] [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within [data-part="tile"] [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within p{opacity:1;transform:none}
 [data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"] label{display:none}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] [data-part="num"]{z-index:2}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"] [data-part="num"]{z-index:2}
 @container (min-width: 48rem){
 [data-vibeui-block="layout-009"] [data-part="body"]{flex-direction:row;min-height:30rem}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"]{min-height:30rem}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"]{min-height:30rem}
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="layout-009"] *{animation:none!important;transition:none!important}
 }
+@keyframes vibeui-layout-009-rise{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+[data-vibeui-block="layout-009"] [data-part="tile"]{position:relative;overflow:hidden;min-height:10rem;padding:1.5rem;border-radius:var(--vibeui-layout-009-radius);
+background:var(--vibeui-layout-009-tile);border:1px solid var(--vibeui-layout-009-edge);
+display:flex;flex-direction:column;justify-content:flex-end;gap:0.75rem;
+--vibeui-layout-009-mx:50%;--vibeui-layout-009-my:50%;--vibeui-layout-009-on:0;
+transition:transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1),border-color var(--vibeui-layout-009-dur-5);}
+[data-vibeui-block="layout-009"] [data-part="tile"]::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(22rem circle at var(--vibeui-layout-009-mx) var(--vibeui-layout-009-my),color-mix(in oklab,var(--vibeui-layout-009-accent) 14%,transparent),transparent 60%);opacity:var(--vibeui-layout-009-on);transition:opacity var(--vibeui-layout-009-dur-5)}
+[data-vibeui-block="layout-009"] [data-part="tile"]::after{content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:inherit;padding:1px;background:radial-gradient(18rem circle at var(--vibeui-layout-009-mx) var(--vibeui-layout-009-my),color-mix(in oklab,var(--vibeui-layout-009-accent) 70%,transparent),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:var(--vibeui-layout-009-on);transition:opacity var(--vibeui-layout-009-dur-5)}
+[data-vibeui-block="layout-009"] [data-part="tile"]:hover{border-color:var(--vibeui-layout-009-edge-hover)}
+[data-vibeui-block="layout-009"] [data-part="tile"] h3{margin:0;font-size:1.125rem;font-weight:600;line-height:1.3}
+[data-vibeui-block="layout-009"] [data-part="tile"] p{margin:0;color:var(--vibeui-layout-009-muted);font-size:0.9375rem;line-height:1.45}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="value"]{font-size:clamp(2.5rem,6cqi,3.5rem);font-weight:650;letter-spacing:-0.03em;line-height:1}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="media"]{position:absolute;inset:0;pointer-events:none}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="media"] > *{width:100%;height:100%;object-fit:cover;display:block}
+[data-vibeui-block="layout-009"] [data-part="tile"] > :not([data-part="media"]):not([data-part="num"]){position:relative}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="num"]{position:absolute;top:1.125rem;left:1.125rem;z-index:1;font:500 0.6875rem/1 var(--vibeui-layout-009-mono);letter-spacing:0.08em;padding:0.375rem 0.5rem;border-radius:999px;color:var(--vibeui-layout-009-muted);border:1px solid var(--vibeui-layout-009-edge);background:color-mix(in oklab,var(--vibeui-layout-009-tile) 70%,transparent);transition:color var(--vibeui-layout-009-dur-4),border-color var(--vibeui-layout-009-dur-4),background-color var(--vibeui-layout-009-dur-4)}
+[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="num"]{color:var(--vibeui-layout-009-on-accent);background:var(--vibeui-layout-009-accent);border-color:var(--vibeui-layout-009-accent)}
+[data-vibeui-block="layout-009"] [data-part="tile"][data-numbers] [data-part="image"]{margin-top:2rem}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="bar"]{display:block;height:0.875rem;border-radius:999px;background:var(--vibeui-layout-009-ghost-strong);width:70%}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="bar"][data-soft]{background:var(--vibeui-layout-009-ghost);height:0.625rem;width:50%}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="bar"][data-wide]{width:88%}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="bar"][data-big]{height:1.5rem}
+[data-vibeui-block="layout-009"] [data-part="tile"] [data-part="image"]{display:block;flex:1;min-height:6rem;border-radius:0.75rem;background:radial-gradient(70% 80% at 80% 15%,var(--vibeui-layout-009-glow) 0%,transparent 65%),radial-gradient(60% 70% at 15% 85%,var(--vibeui-layout-009-glow-soft) 0%,transparent 65%),var(--vibeui-layout-009-tile-2);margin-bottom:auto;transition:transform 0.6s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="image"]{transform:scale(1.02)}
+[data-vibeui-block="layout-009"] [data-part="tile"]{animation:vibeui-layout-009-rise 0.8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-layout-009-i) * 80ms)}
+@supports (animation-timeline: view()){
+[data-vibeui-block="layout-009"] [data-part="tile"]{animation:vibeui-layout-009-rise linear both;animation-timeline:view();animation-range:entry 0% entry 35%;animation-delay:0s}
+}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="layout-009"] [data-part="tile"]:hover{transform:none}
+[data-vibeui-block="layout-009"] [data-part="tile"]::before,[data-vibeui-block="layout-009"] [data-part="tile"]::after{display:none}
+}
 `
 
+function Ghost({ kind }: { kind: string }) {
+  switch (kind) {
+    case "image":
+      return <><span data-part="image" /><span data-part="bar" /><span data-part="bar" data-soft="" /></>
+    default:
+      return null
+  }
+}
 
+type TileProps = Omit<ComponentProps<"article">, "title" | "children"> & {
+  media?: ReactNode
+  value?: string
+  title?: string
+  text?: string
+  numbers?: boolean
+  index?: number
+  ghost?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Tile({
+  media,
+  value,
+  title,
+  text,
+  numbers = true,
+  index = 0,
+  ghost = "",
+  accent,
+  className,
+  style,
+  ...props
+}: TileProps) {
+  const palette = {
+    "--vibeui-layout-009-i": index,
+    ...(accent ? { "--vibeui-layout-009-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+  const filled = Boolean((title || text || value || media))
+
+  return (
+      <article
+          {...props}
+          data-numbers={numbers ? "" : undefined}
+          aria-hidden={filled ? undefined : true}
+          className={className}
+          style={palette}
+        >
+        {media ? <div data-part="media">{media}</div> : null}
+        {numbers ? (
+          <span data-part="num" aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        ) : null}
+        {filled ? (
+          <>
+            {value ? <span data-part="value">{value}</span> : null}
+            {title ? <h3>{title}</h3> : null}
+            {text ? <p>{text}</p> : null}
+          </>
+        ) : (
+          <Ghost kind={ghost} />
+        )}
+      </article>
+  )
+}
 
 /** Раскрывающиеся панели: наведённая панель расширяется, остальные сжимаются. */
 export function Layout009({
@@ -150,7 +251,7 @@ export function Layout009({
   } as CSSProperties
   const hasHead = Boolean(heading || lead)
   const tile = (area: (typeof SLOTS)[number], className?: string, key?: string) => (
-    <Card069 key={key ?? area} data-part="tile" {...items?.[SLOTS.indexOf(area)]} numbers={numbers} index={SLOTS.indexOf(area)} ghost={GHOST[area]} data-area={area} className={className} accent={accent} />
+    <Tile key={key ?? area} data-part="tile" {...items?.[SLOTS.indexOf(area)]} numbers={numbers} index={SLOTS.indexOf(area)} ghost={GHOST[area]} data-area={area} className={className} accent={accent} />
   )
   const frame = useRef(0)
 

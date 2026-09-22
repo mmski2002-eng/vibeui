@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
-import { Card079 } from "@/registry/components/card/card-079/card-079"
+import type { ComponentProps } from "react"
 
 export type Bento010Stat = {
   value: number
@@ -107,7 +107,11 @@ container-type:inline-size;
 @keyframes vibeui-bento-010-day{0%,100%{box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-bento-010-accent) 45%,transparent)}50%{box-shadow:0 0 0 6px transparent}}
 @container (min-width: 40rem){[data-vibeui-block="bento-010"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="bento-010"] [data-part="tile"][data-tile="hero"],[data-vibeui-block="bento-010"] [data-part="tile"][data-tile="feed"]{grid-column:span 2}}
 @container (min-width: 64rem){[data-vibeui-block="bento-010"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}[data-vibeui-block="bento-010"] [data-part="tile"][data-tile="hero"]{grid-column:span 2;grid-row:span 2}[data-vibeui-block="bento-010"] [data-part="tile"][data-tile="feed"]{grid-column:span 3}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-010"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-010"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="bento-010"] [data-part="purchase"]{display:inline-flex;align-items:center;gap:.5rem;height:2.4rem;padding:0 .9rem;border-radius:999px;background:var(--vibeui-bento-010-bg);border:1px solid var(--vibeui-bento-010-line);white-space:nowrap;font-size:.84rem}
+[data-vibeui-block="bento-010"] [data-part="purchase"] b{font-weight:600}
+[data-vibeui-block="bento-010"] [data-part="purchase"] span{font-family:var(--vibeui-bento-010-mono);font-size:.66rem;color:var(--vibeui-bento-010-muted)}
+`
 
 const DEFAULT_STATS: Bento010Stat[] = [
   { value: 4812, label: "товаров в каталоге" },
@@ -124,12 +128,47 @@ const DEFAULT_PURCHASES: Bento010Purchase[] = [
   { who: "Дина из Алматы", what: "Спринт — трекер продукта", ago: "9 мин" },
 ]
 
-
 function formatNumber(value: number, decimals = 0) {
   const fixed = value.toFixed(decimals)
   const [whole, fraction] = fixed.split(".")
   const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
   return fraction ? `${grouped},${fraction}` : grouped
+}
+
+type PurchaseProps = Omit<ComponentProps<"li">, "title" | "children"> & {
+  who?: string
+  what?: string
+  ago?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Purchase({
+  who = "Маша из Казани",
+  what = "Атлас — UI-кит",
+  ago = "только что",
+  accent,
+  className,
+  style,
+  ...props
+}: PurchaseProps) {
+  const palette = {
+    ...(accent ? { "--vibeui-bento-010-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+
+  return (
+      <li
+        {...props}
+        className={className}
+        style={palette}
+      >
+        <b>{who}</b>
+        {what}
+        <span>{ago}</span>
+      </li>
+  )
 }
 
 /** Bento для авторов: докручивающиеся цифры, календарь выплат, лента покупок. */
@@ -243,7 +282,7 @@ export function Bento010({
                 {[0, 1].map((copy) => (
                   <ul key={copy} aria-hidden={copy === 1 ? true : undefined}>
                     {purchases.map((purchase, index) => (
-                      <Card079 key={index} data-part="purchase" who={purchase.who} what={purchase.what} ago={purchase.ago} accent={accent} />
+                      <Purchase key={index} data-part="purchase" who={purchase.who} what={purchase.what} ago={purchase.ago} accent={accent} />
                     ))}
                   </ul>
                 ))}
