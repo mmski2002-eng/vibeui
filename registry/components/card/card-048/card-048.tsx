@@ -40,7 +40,6 @@ export function Card048({
   quote,
   who,
   role,
-  index = 0,
   accent,
   className,
   style,

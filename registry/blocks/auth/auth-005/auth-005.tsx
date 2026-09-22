@@ -167,7 +167,6 @@ export function Auth005({
   switchText = "Нет аккаунта?",
   switchLink = "Создать",
   emailLabel = "Почта",
-  emailPlaceholder = "name@company.ru",
   passwordLabel = "Пароль",
   background = "",
   accent,

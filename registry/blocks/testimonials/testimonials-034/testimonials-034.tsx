@@ -72,14 +72,6 @@ const DEFAULT_REVIEWS: Testimonials034Review[] = [
   { handle: "@sergey_v", name: "Сергей Волков", role: "Индивидуальный разработчик", text: "Десяти тысяч бесплатных хватает на пет-проект с запасом. Ключ выдали за полминуты, карту не просили. Документация — с примерами на четырёх языках.", stack: ["Node.js"], metric: "0 ₽ уже восемь месяцев" },
 ]
 
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part.charAt(0).toUpperCase())
-    .join("")
-}
-
 /** Отзывы разработчиков карточками-комментариями с чипами стека. */
 export function Testimonials034({
   eyebrow = "Отзывы",

@@ -150,7 +150,6 @@ export function Auth010({
   cooldown = 45,
   steps = DEFAULT_STEPS,
   emailLabel = "Почта аккаунта",
-  emailPlaceholder = "name@company.ru",
   stepsTitle = "Что будет дальше",
   waitTemplate = "Повтор через {left} с",
   sentTemplate = "Если такой адрес зарегистрирован, письмо уже отправлено. Отправить ещё раз можно через {left} с.",

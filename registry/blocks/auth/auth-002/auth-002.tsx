@@ -170,7 +170,6 @@ export function Auth002({
   nameLabel = "Имя",
   nameValue = "Анна Реброва",
   emailLabel = "Рабочая почта",
-  emailPlaceholder = "name@company.ru",
   passwordLabel = "Пароль",
   showLabel = "Показать",
   hideLabel = "Скрыть",

@@ -11,17 +11,6 @@ export type Card117Props = Omit<ComponentProps<"a">, "title" | "children"> & {
   style?: CSSProperties
 }
 
-const DEFAULT_GUESTS: Card117Guest[] = [
-  { name: "Сергей Волков", role: "смотритель маяка", episode: "№ 112", image: "/demo/podcast/guest-01.webp", href: "#episodes" },
-  { name: "Аня Резник", role: "керамист", episode: "№ 111", image: "/demo/podcast/guest-02.webp", href: "#episodes" },
-  { name: "Марат Исмаилов", role: "кардиохирург", episode: "№ 110", image: "/demo/podcast/guest-03.webp", href: "#episodes" },
-  { name: "Лена Царёва", role: "бэкенд-разработчица", episode: "№ 109", image: "/demo/podcast/guest-04.webp", href: "#episodes" },
-  { name: "Игорь Найдёнов", role: "машинист", episode: "№ 108", image: "/demo/podcast/guest-05.webp", href: "#episodes" },
-  { name: "Ольга Мень", role: "библиотекарь", episode: "№ 107", image: "/demo/podcast/guest-06.webp", href: "#episodes" },
-  { name: "Даниил Штерн", role: "шеф-повар", episode: "№ 106", image: "/demo/podcast/guest-07.webp", href: "#episodes" },
-  { name: "Вика Лим", role: "флорист", episode: "№ 105", image: "/demo/podcast/guest-08.webp", href: "#episodes" },
-]
-
 // Часть блока people-013, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
 const STYLES = `

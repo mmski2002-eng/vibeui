@@ -119,7 +119,6 @@ export function Auth003({
   resend = "Отправить ещё раз",
   back = "Вернуться ко входу",
   emailLabel = "Почта",
-  emailPlaceholder = "name@company.ru",
   email = "anna@vibeui.ru",
   state = "form",
   background = "",

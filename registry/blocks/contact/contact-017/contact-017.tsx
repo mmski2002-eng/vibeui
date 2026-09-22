@@ -171,7 +171,6 @@ export function Contact017({
   dateLabel = "Дата",
   slotsUnit = "окна",
   timeLabel = "Время",
-  namePlaceholder = "Как вас зовут",
   nameLabel = "Имя",
   phonePlaceholder = "Телефон или Telegram",
   ideaPlaceholder = "Идея: что, размер, есть ли референсы",

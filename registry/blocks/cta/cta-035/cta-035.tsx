@@ -106,7 +106,6 @@ export function Cta035({
   doneText = "Продублировали на почту. Первый запрос можно делать прямо сейчас — лимит обновится первого числа.",
   docsLabel = "Первый запрос в docs",
   docsHref = "#docs",
-  emailLabel = "Почта",
   copyLabel = "копировать",
   doneLabel = "готово",
   elapsedLine = "готово за {s} с — обещали 30",

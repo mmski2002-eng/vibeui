@@ -40,7 +40,6 @@ export function Card039({
   text,
   name,
   note,
-  index = 0,
   accent,
   className,
   style,

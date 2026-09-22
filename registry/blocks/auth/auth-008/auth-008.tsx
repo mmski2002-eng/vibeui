@@ -207,7 +207,6 @@ export function Auth008({
   lastLabel = "в прошлый раз",
   legalLink = "Подробнее",
   emailLabel = "Почта",
-  emailPlaceholder = "name@company.ru",
   background = "",
   accent,
   className,

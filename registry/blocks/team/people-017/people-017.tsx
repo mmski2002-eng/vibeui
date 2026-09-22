@@ -80,14 +80,6 @@ const DEFAULT_PEOPLE: People017Person[] = [
   { name: "Ринат Валеев", role: "Плотник, монтаж", years: 7, objects: 96, text: "Скрытые двери, встроенная мебель по проекту, короба и ниши." },
 ]
 
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
-}
-
 /** Бригада карточками-«штатным расписанием» с угловыми засечками. */
 export function People017({
   eyebrow = "Бригада",

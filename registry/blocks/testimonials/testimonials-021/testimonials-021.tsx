@@ -121,7 +121,6 @@ export function Testimonials021({
   submitLabel = "Отправить",
   sentLabel = "отправлено",
   action,
-  fromPlaceholder = "Москва",
   tone = "auto",
   accent,
   ink,

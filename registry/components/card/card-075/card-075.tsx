@@ -182,7 +182,6 @@ export function Card075({
   demo,
   sizeOthers = ["другие", "ещё одни"],
   kbUnit = "кб",
-  featureIndex = 0,
   accent,
   className,
   style,

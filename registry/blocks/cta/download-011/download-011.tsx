@@ -166,7 +166,6 @@ export function Download011({
   imageAlt = "",
   copyLabel = "Скопировать",
   copiedLabel = "Скопировано",
-  phoneLabel = "Телефон",
   qrAria = "QR-код приложения",
   tone = "auto",
   accent,

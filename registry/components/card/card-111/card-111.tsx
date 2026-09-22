@@ -16,8 +16,6 @@ export type Card111Props = Omit<ComponentProps<"li">, "title" | "children"> & {
   style?: CSSProperties
 }
 
-const TILTS = [-2.5, 1.5, -1, 2, -1.5, 1]
-
 // Часть блока testimonials-024, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
 const STYLES = `

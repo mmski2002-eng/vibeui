@@ -86,28 +86,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-function StarRow() {
-  return (
-    <>
-      {[0, 1, 2, 3, 4].map((index) => (
-        <svg
-          key={index}
-          data-part="card-star"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M12 2.5l2.95 6.13 6.75.9-4.94 4.7 1.24 6.68L12 17.68l-6 3.23 1.24-6.68-4.94-4.7 6.75-.9L12 2.5Z" />
-        </svg>
-      ))}
-    </>
-  )
-}
-
-function formatScore(score: number) {
-  return score.toFixed(1).replace(".", ",")
-}
-
 /** Ряд карточек с рейтингами продукта на независимых площадках. */
 export function Testimonials011({
   eyebrow = "Рейтинги",

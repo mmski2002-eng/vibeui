@@ -140,7 +140,6 @@ export function Contact023({
   petLabel = "Кто у вас",
   whenLabel = "Когда удобно",
   noteLabel = "Что случилось — коротко",
-  notePlaceholder = "Что случилось",
   fine = "Нажимая кнопку, вы соглашаетесь, что мы перезвоним. Больше ни на что.",
   mapAria = "Карта: {address}",
   tone = "auto",

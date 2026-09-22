@@ -2,7 +2,6 @@ import type { CSSProperties } from "react"
 import { Card027 } from "@/registry/components/card/card-027/card-027"
 import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-
 type Testimonials002Item = {
   quote: string
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -131,14 +130,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
-}
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
 }
 
 /** Ровная сетка отзывов: все карточки равны, источник отзыва подписан. */

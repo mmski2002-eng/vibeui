@@ -75,14 +75,6 @@ const DEFAULT_MEMBERS: People014Member[] = [
   { name: "Даша Орлова", role: "Салон, кожа, химчистка", photo: "/demo/auto/master-03.webp", years: "6 лет", cars: "1 800", skills: ["Кожа", "Алькантара", "Детские кресла"] },
 ]
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
-}
-
 /** Мастера: карточки с фото, наклоном за курсором и бликом. */
 export function People014({
   eyebrow = "Мастера",

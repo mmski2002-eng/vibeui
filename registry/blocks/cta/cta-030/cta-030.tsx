@@ -143,7 +143,6 @@ export function Cta030({
   areaUnit = "м²",
   weekShort = "нед",
   detachLabel = "Открепить смету",
-  phoneLabel = "Телефон",
   channelsLabel = "Как связаться",
   tone = "auto",
   accent,

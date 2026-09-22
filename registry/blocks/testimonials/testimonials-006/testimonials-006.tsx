@@ -2,7 +2,6 @@ import type { CSSProperties } from "react"
 import { Card029 } from "@/registry/components/card/card-029/card-029"
 import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-
 type Testimonials006Item = {
   quote: string
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -116,14 +115,6 @@ const DEFAULT_ITEMS: Testimonials006Item[] = [
     highlight: true,
   },
 ]
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
-}
 
 /** Стена отзывов колонками разной высоты: длина цитаты остаётся как есть. */
 export function Testimonials006({

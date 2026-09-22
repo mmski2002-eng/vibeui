@@ -178,7 +178,6 @@ export function Auth001({
   switchLink = "Создать",
   keepLabel = "Не выходить на этом устройстве",
   orLabel = "или",
-  emailPlaceholder = "name@company.ru",
   background = "",
   accent,
   className,

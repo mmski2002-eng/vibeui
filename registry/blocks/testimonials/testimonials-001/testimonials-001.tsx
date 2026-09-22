@@ -134,16 +134,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Инициалы: первые буквы двух первых слов имени. */
-function initialsOf(name: string) {
-  return name
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((word) => word.charAt(0).toUpperCase())
-    .join("")
-}
-
 /**
  * Секция отзывов с иерархией: один крупный, остальные мелкие.
  * Один файл, ноль зависимостей, собственная палитра.

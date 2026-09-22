@@ -76,10 +76,6 @@ export function Card085({
   style,
   ...props
 }: Card085Props) {
-  const palette = {
-    ...(accent ? { "--vibeui-card-085-accent": accent } : null),
-    ...style,
-  } as CSSProperties
   const [counts, setCounts] = useState<Record<string, number>>(() => ({ ...reactions }))
   const [mine, setMine] = useState<string | null>(null)
   const [pop, setPop] = useState<string | null>(null)
@@ -101,6 +97,11 @@ export function Card085({
   }
 
   const stickerStyle = { ["--vibeui-card-085-r" as string]: `${TILTS[index % TILTS.length]}deg`, ["--vibeui-card-085-t" as string]: `${(index % 2 ? 4 : -3)}deg` } as CSSProperties
+  const palette = {
+    ...stickerStyle,
+    ...(accent ? { "--vibeui-card-085-accent": accent } : null),
+    ...style,
+  } as CSSProperties
 
   return (
     <>
@@ -110,7 +111,7 @@ export function Card085({
       <li
           {...props}
           data-slot="card"
-          data-vibeui-block="card-085" style={stickerStyle}
+          data-vibeui-block="card-085"
           className={className}
           style={palette}
         >

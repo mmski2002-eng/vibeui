@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useState, type CSSProperties, type FormEvent } from "react"
+import { useState, type CSSProperties, type FormEvent } from "react"
 import { Card025 } from "@/registry/components/card/card-025/card-025"
 
 import { Button001 } from "@/registry/components/button/button-001/button-001"
@@ -102,11 +102,9 @@ export function Contact015({
   consentLabel = "Согласен на обработку данных и звонок по этому номеру.",
   action = "",
   addressLabel = "Адрес",
-  addressPlaceholder = "Улица, дом, квартира",
   areaLabel = "Площадь, м²",
   roomsLabel = "Комнат",
   phoneLabel = "Телефон",
-  phonePlaceholder = "+7 999 123-45-67",
   tone = "auto",
   accent,
   ink,
@@ -114,7 +112,6 @@ export function Contact015({
   className,
   style,
 }: Contact015Props) {
-  const id = useId()
   const [done, setDone] = useState(false)
   const palette = {
     ...(accent ? { "--vibeui-contact-015-accent": accent } : null),

@@ -1743,11 +1743,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "input-001",
-        "select-001",
-        "checkbox-001",
         "button-001",
-        "card-025"
+        "card-025",
+        "checkbox-001",
+        "input-001",
+        "select-001"
       ],
       "files": [
         {
@@ -1756,7 +1756,7 @@
           "target": "@components/vibeui/contact-015.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует input-001, select-001, checkbox-001, button-001, card-025 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради состояния «готово». <form> с полями address, area (number), rooms (select), phone (tel), consent (checkbox required); action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. Список обещаний с акцентными точками через ::before. От 56rem (container query) две колонки одной высоты: левая — flex-колонка, фото добирает остаток (flex:1 1 0, min-height 12rem, object-fit:cover), форма тянется на ту же высоту с ровными промежутками (align-content:space-between). Палитра --vibeui-contact-015-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-001, card-025, checkbox-001, input-001, select-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради состояния «готово». <form> с полями address, area (number), rooms (select), phone (tel), consent (checkbox required); action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. Список обещаний с акцентными точками через ::before. От 56rem (container query) две колонки одной высоты: левая — flex-колонка, фото добирает остаток (flex:1 1 0, min-height 12rem, object-fit:cover), форма тянется на ту же высоту с ровными промежутками (align-content:space-between). Палитра --vibeui-contact-015-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1780,7 +1780,7 @@
           "usage": "<Contact015\n  title=\"Узнайте, сколько стоит ваша квартира\"\n  image=\"/photos/office.webp\"\n  promises={[\"Цена, по которой квартира уйдёт за 30 дней\", \"План продажи без обязательств\"]}\n  action=\"/api/valuation\"\n/>",
           "summary": "Самодостаточная форма оценки квартиры для агентства: обещания, фото, поля адреса, метража, комнат и телефона. Поля формы: address, area, rooms, phone, consent.",
           "preserve": [
-            "импорты input-001, select-001, checkbox-001, button-001, card-025 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты button-001, card-025, checkbox-001, input-001, select-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "форму как настоящую <form> с именами полей — обработчик получает address, area, rooms, phone, consent",
             "обещания списком слева от формы: человек понимает, что получит, до того как заполнит",
             "карточку «спасибо» на месте формы, а не alert"
@@ -1838,11 +1838,11 @@
           "en": {
             "title": "Flat appraisal form",
             "description": "A free flat appraisal: promises as a list and an office photo on the left, a form on the right — address, area, rooms, phone, consent. A real form: with action it POSTs, without it shows “thank you” in place.",
-            "docs": "A composite block: imports input-001, select-001, checkbox-001, button-001, card-025 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the done state. A <form> with address, area (number), rooms (select), phone (tel), consent (required checkbox); with empty action submit is intercepted and a done card with role=status renders; with action a normal POST. A promise list with accent dots via ::before. From 56rem (container query) two equal-height columns: the left is a flex column and the photo takes the remainder (flex:1 1 0, min-height 12rem, object-fit:cover), the form stretches to the same height with even spacing (align-content:space-between). Palette --vibeui-contact-015-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-001, card-025, checkbox-001, input-001, select-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the done state. A <form> with address, area (number), rooms (select), phone (tel), consent (required checkbox); with empty action submit is intercepted and a done card with role=status renders; with action a normal POST. A promise list with accent dots via ::before. From 56rem (container query) two equal-height columns: the left is a flex column and the photo takes the remainder (flex:1 1 0, min-height 12rem, object-fit:cover), the form stretches to the same height with even spacing (align-content:space-between). Palette --vibeui-contact-015-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained flat appraisal form for an agency: promises, a photo, address, area, rooms and phone fields. Form fields: address, area, rooms, phone, consent.",
               "preserve": [
-                "the input-001, select-001, checkbox-001, button-001, card-025 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the button-001, card-025, checkbox-001, input-001, select-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the form as a real <form> with field names — the handler gets address, area, rooms, phone, consent",
                 "the promise list left of the form: people know what they get before filling it in",
                 "the “thank you” card in place of the form, not an alert"
