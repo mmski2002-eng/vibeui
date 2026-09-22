@@ -2098,7 +2098,7 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "contact-001"
+        "underline-001"
       ],
       "files": [
         {
@@ -2107,7 +2107,7 @@
           "target": "@components/vibeui/navbar-013.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует contact-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, без клиентского JS. Открытие — Popover API (атрибуты popover/popovertarget): нативный top layer, Escape, light-dismiss и возврат фокуса достаются бесплатно. Проявление плоскости и каскад строк тоже без JS — на @starting-style, transition-behavior: allow-discrete и задержках анимации по nth-child; там, где эти возможности не поддержаны, меню просто появляется, и ничего не ломается. Название раздела сдвигается на наведении, номер набран моноширинными цифрами. Всё движение снимается в prefers-reduced-motion. Палитра --vibeui-navbar-013-*.",
+      "docs": "Составной блок: импортирует underline-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, без клиентского JS. Открытие — Popover API (атрибуты popover/popovertarget): нативный top layer, Escape, light-dismiss и возврат фокуса достаются бесплатно. Проявление плоскости и каскад строк тоже без JS — на @starting-style, transition-behavior: allow-discrete и задержках анимации по nth-child; там, где эти возможности не поддержаны, меню просто появляется, и ничего не ломается. Название раздела сдвигается на наведении, номер набран моноширинными цифрами. Всё движение снимается в prefers-reduced-motion. Палитра --vibeui-navbar-013-*.",
       "meta": {
         "tags": [
           "navbar",
@@ -2131,7 +2131,7 @@
           "usage": "<Navbar013\n  brand=\"Бюро Тон\"\n  surface=\"black\"\n  links={[{ label: \"Работы\", href: \"/works\", note: \"24 проекта\" }]}\n/>",
           "summary": "Минимальная шапка с полноэкранным типографическим меню на Popover API: крупные названия разделов с номерами, каскад строк и контакт. Чёрная или акцентная плоскость. Без JS.",
           "preserve": [
-            "импорты contact-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "импорты underline-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-navbar-013-* и не подменять её токенами вашей темы",
             "Popover API вместо самодельного модала: Escape, light-dismiss и фокус достаются бесплатно",
             "минимум в закрытом виде: знак и кнопка, ничего больше",
@@ -2203,11 +2203,11 @@
           "en": {
             "title": "Fullscreen Typographic Menu",
             "description": "A minimal agency or studio header: a wordmark and a Menu button that opens a full-screen black or accent plane with large section names, numbers and a contact. The plane fades in and the rows cascade.",
-            "docs": "A composite block: imports contact-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, no client JS. Opening uses the Popover API (the popover/popovertarget attributes): the native top layer, Escape, light dismiss and focus return come for free. The plane's fade-in and the cascade of rows are also JS-free — built on @starting-style, transition-behavior: allow-discrete and per-nth-child animation delays; where those are unsupported the menu simply appears and nothing breaks. Each section name slides on hover and its number is set in tabular figures. All motion is removed under prefers-reduced-motion. Palette --vibeui-navbar-013-*.",
+            "docs": "A composite block: imports underline-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, no client JS. Opening uses the Popover API (the popover/popovertarget attributes): the native top layer, Escape, light dismiss and focus return come for free. The plane's fade-in and the cascade of rows are also JS-free — built on @starting-style, transition-behavior: allow-discrete and per-nth-child animation delays; where those are unsupported the menu simply appears and nothing breaks. Each section name slides on hover and its number is set in tabular figures. All motion is removed under prefers-reduced-motion. Palette --vibeui-navbar-013-*.",
             "ai": {
               "summary": "A minimal header with a full-screen typographic menu on the Popover API: large section names with numbers, cascading rows and a contact. A black or accent plane. No JS.",
               "preserve": [
-                "the contact-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the underline-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-navbar-013-* palette — do not swap it for your theme tokens",
                 "the Popover API instead of a hand-rolled modal: Escape, light dismiss and focus come free",
                 "the minimum in the closed state: a wordmark and a button, nothing more",

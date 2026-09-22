@@ -18,8 +18,8 @@ export const PREVIEWS = {
   "mark-001": dynamic(() =>
     import("@/registry/components/typography/mark-001/mark-001").then((module) => module.Mark001),
   ),
-  "contact-001": dynamic(() =>
-    import("@/registry/components/typography/contact-001/contact-001").then((module) => module.Contact001),
+  "underline-001": dynamic(() =>
+    import("@/registry/components/typography/underline-001/underline-001").then((module) => module.Underline001),
   ),
   "cell-001": dynamic(() =>
     import("@/registry/components/typography/cell-001/cell-001").then((module) => module.Cell001),

@@ -470,7 +470,7 @@
       }
     },
     {
-      "name": "contact-001",
+      "name": "underline-001",
       "type": "registry:component",
       "title": "Контакт-ссылка с подчёркиванием",
       "description": "Подпись «связаться» с подчёркиванием в шапке-манифесте.",
@@ -481,12 +481,12 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "contact-001/contact-001.tsx",
+          "path": "underline-001/underline-001.tsx",
           "type": "registry:component",
-          "target": "@components/vibeui/contact-001.tsx"
+          "target": "@components/vibeui/underline-001.tsx"
         }
       ],
-      "docs": "Компонент вынесен из блока navbar-013 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-contact-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "docs": "Компонент вынесен из блока navbar-013 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-underline-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
       "meta": {
         "tags": [
           "contact",
@@ -496,11 +496,11 @@
           "navbar"
         ],
         "ai": {
-          "export": "Contact001",
-          "usage": "<Contact001  />",
+          "export": "Underline001",
+          "usage": "<Underline001  />",
           "summary": "Подпись «связаться» с подчёркиванием в шапке-манифесте.",
           "preserve": [
-            "локальную палитру --vibeui-contact-001-* и не подменять её токенами вашей темы",
+            "локальную палитру --vibeui-underline-001-* и не подменять её токенами вашей темы",
             "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
             "прозрачную подложку по умолчанию — компонент ложится на фон блока"
           ],
@@ -531,12 +531,12 @@
           "en": {
             "title": "Underlined contact",
             "description": "“Contact” caption with an underline in a manifesto header.",
-            "docs": "Extracted from the navbar-013 block as is: one file, no dependencies, its own palette in the --vibeui-contact-001-* variables. The block owns the layout and data and passes them as props.",
+            "docs": "Extracted from the navbar-013 block as is: one file, no dependencies, its own palette in the --vibeui-underline-001-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "“Contact” caption with an underline in a manifesto header.",
-              "usage": "<Contact001  />",
+              "usage": "<Underline001  />",
               "preserve": [
-                "the local --vibeui-contact-001-* palette — do not swap it for your theme tokens",
+                "the local --vibeui-underline-001-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
                 "the transparent surface by default — the component sits on the block background"
               ],

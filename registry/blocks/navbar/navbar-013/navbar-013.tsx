@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react"
-import { Contact001 } from "@/registry/components/typography/contact-001/contact-001"
+import { Underline001 } from "@/registry/components/typography/underline-001/underline-001"
 
 type Navbar013Link = {
   label: string
@@ -288,7 +288,7 @@ export function Navbar013({
                   </span>
                 ))}
               </div>
-              <Contact001 data-part="contact" contactLabel={contactLabel} accent={accent} />
+              <Underline001 data-part="contact" contactLabel={contactLabel} accent={accent} />
             </div>
           </div>
         ) : null}
