@@ -27,6 +27,26 @@ const ACTIVE =
   "bg-shell-elevated text-shell-fg shadow-[inset_2px_0_0_var(--shell-accent)]"
 const IDLE = "text-shell-fg hover:bg-shell-elevated"
 
+/**
+ * CATEGORY_LINK: категории открываются обычной ссылкой, а не <Link>, — и это
+ * не недосмотр.
+ *
+ * Каждый блок несёт свой CSS в <style href precedence="medium">. React
+ * поднимает такие стили в <head> и при размонтировании их не убирает —
+ * это его штатное поведение, и удалить их своими руками нельзя: повторно
+ * он их уже не вставит, компонент останется без оформления. На витрине это
+ * значит, что каждая просмотренная категория оставляет в документе стили
+ * всех своих блоков навсегда. Замер на живом сайте: за семь переходов
+ * <style> в голове выросли с 4 до 56, правил — с 258 до 1486, а полный
+ * пересчёт стилей подорожал с 41 до 84 мс. Дальше — линейно, и человек
+ * это чувствует: чем дольше сидишь, тем тяжелее страница.
+ *
+ * Полная навигация обнуляет накопленное, а заодно оказалась втрое быстрее
+ * клиентского перехода (251 мс против 764 мс до готовой сетки): страницы
+ * каталога статические, и их HTML приезжает быстрее, чем RSC-ответ с
+ * разметкой сотни карточек.
+ */
+
 function itemClass(active: boolean) {
   return (
     "catalog-nav-item flex w-full items-center justify-between gap-2 rounded-md font-medium transition-colors focus-visible:ring-shell-ring focus-visible:ring-2 focus-visible:outline-none " +
@@ -287,7 +307,8 @@ export function CatalogChrome({
               <div className="p-2">
                 <ul className="space-y-1">
                   <li>
-                    <Link
+                    {/* Обычная ссылка, а не Link: см. CATEGORY_LINK ниже. */}
+                    <a
                       href={localePath(locale, base)}
                       aria-current={active === null ? "page" : undefined}
                       className={itemClass(active === null)}
@@ -296,7 +317,7 @@ export function CatalogChrome({
                       <span className="catalog-nav-count tabular-nums">
                         {total}
                       </span>
-                    </Link>
+                    </a>
                   </li>
                 </ul>
 
@@ -326,7 +347,7 @@ export function CatalogChrome({
                     >
                       {popular.map((category) => (
                         <li key={category.slug}>
-                          <Link
+                          <a
                             href={localePath(
                               locale,
                               `${base}/${category.slug}`,
@@ -340,7 +361,7 @@ export function CatalogChrome({
                             <span className="catalog-nav-count tabular-nums">
                               {category.count}
                             </span>
-                          </Link>
+                          </a>
                         </li>
                       ))}
                     </ul>
@@ -364,7 +385,7 @@ export function CatalogChrome({
                 <ul className="catalog-nav-list">
                   {rest.map((category) => (
                     <li key={category.slug}>
-                      <Link
+                      <a
                         href={localePath(locale, `${base}/${category.slug}`)}
                         aria-current={
                           active === category.slug ? "page" : undefined
@@ -375,7 +396,7 @@ export function CatalogChrome({
                         <span className="catalog-nav-count tabular-nums">
                           {category.count}
                         </span>
-                      </Link>
+                      </a>
                     </li>
                   ))}
                 </ul>
