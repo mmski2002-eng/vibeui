@@ -14,6 +14,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react"
 import { CopyForAi } from "@/components/catalog/copy-for-ai"
 import { FitFrame } from "@/components/catalog/fit-frame"
 import { SHELL_THEME_EVENT } from "@/components/catalog/theme-switch"
+import { useNear } from "@/components/catalog/use-near"
 import {
   cardControlIcon,
   cardControlTitle,
@@ -128,6 +129,11 @@ export function CardInteractive({
 
   // Кадр превью: по нему слушаются просьбы блока сменить свет.
   const frameRef = useRef<HTMLDivElement>(null)
+
+  // Кнопки настройки, выдачи и жалобы появляются вместе с самим превью — по
+  // подходу карточки к экрану. До этого карточка отдаёт кадр и подпись:
+  // иначе двести обвязок едут в разметке первой же страницы (см. useNear).
+  const near = useNear(frameRef)
 
   // "auto" — подложку красит CSS по теме оболочки. Так кадр правильный уже в
   // первой отрисовке: раньше карточка стартовала тёмной и перекрашивалась
@@ -276,15 +282,21 @@ export function CardInteractive({
       <div
         ref={frameRef}
         data-preview-theme={theme}
+        // Закреплённая карточка идёт первой (order в .catalog-grid). Метка
+        // стоит на кадре, а не на самом сердце: кнопки далёких карточек
+        // смонтируются только по подходу к экрану, а порядок нужен сразу.
+        data-favourite={pinned?.has(name) ? "true" : undefined}
         style={floor ? { minHeight: floor } : undefined}
         className={`catalog-card-body bg-shell-panel flex min-w-0 flex-1 flex-col rounded-xl border ${pro ? "border-shell-accent/50 ring-shell-accent/20 ring-1" : "border-shell-border"}`}
       >
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
             высота разная, и при переключении настройки содержимое доезжало
             до кнопок и уходило под них. Теперь кадру достаётся своя область. */}
+        {/* min-h держит полосу той же высоты, что и с кнопками: они
+            приезжают по подходу к экрану, и без планки ряд дёргался бы. */}
         <div
           data-part="toolbar"
-          className="border-shell-border bg-shell-panel shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5"
+          className="border-shell-border bg-shell-panel min-h-10 shrink-0 items-center justify-between gap-2 border-b px-1.5 py-1.5"
         >
           <div className="flex min-w-0 flex-1 basis-0 items-center gap-1">
             {pro ? (
@@ -309,7 +321,7 @@ export function CardInteractive({
                 PRO
               </span>
             ) : null}
-            {cardControls.map((control) => {
+            {(near ? cardControls : []).map((control) => {
               const value = values[control.prop]
               const Icon = cardControlIcon(control, value)
               const changed = value !== control.default
@@ -456,7 +468,7 @@ export function CardInteractive({
             })}
           </div>
 
-            {accentControl ? (
+            {near && accentControl ? (
               <span
                 role="group"
                 aria-label={t.card.accent}
@@ -490,140 +502,144 @@ export function CardInteractive({
               </span>
             ) : null}
           <div className="flex flex-1 basis-0 shrink-0 items-center justify-end gap-1">
-            {dirty ? (
-              <button
-                type="button"
-                onClick={() => setValues(defaultValues(controls))}
-                title={t.card.reset}
-                className={TOGGLE}
-              >
-                <RotateCcw className="size-3.5" aria-hidden="true" />
-                <span className="sr-only">{t.card.reset}</span>
-              </button>
-            ) : null}
+            {near ? (
+              <>
+                {dirty ? (
+                  <button
+                    type="button"
+                    onClick={() => setValues(defaultValues(controls))}
+                    title={t.card.reset}
+                    className={TOGGLE}
+                  >
+                    <RotateCcw className="size-3.5" aria-hidden="true" />
+                    <span className="sr-only">{t.card.reset}</span>
+                  </button>
+                ) : null}
 
-            {/* Обе иконки в разметке, видимую выбирает CSS: при "auto"
-                текущая подложка известна только из атрибута на <html>, а
-                читать его в рендере нельзя — сломается гидратация. */}
-            <button
-              type="button"
-              onClick={() => {
-                const shellLight =
-                  document.documentElement.dataset.shellTheme === "light"
-
-                setTheme((current) =>
-                  current === "auto"
-                    ? shellLight
-                      ? "dark"
-                      : "light"
-                    : current === "dark"
-                      ? "light"
-                      : "dark",
-                )
-              }}
-              className={TOGGLE}
-            >
-              <span data-theme-icon="sun">
-                <Sun className="size-3.5" aria-hidden="true" />
-                <span className="sr-only">{t.card.toLight}</span>
-              </span>
-              <span data-theme-icon="moon">
-                <Moon className="size-3.5" aria-hidden="true" />
-                <span className="sr-only">{t.card.toDark}</span>
-              </span>
-            </button>
-
-            {/* Сердце отмечается сразу, а запись в базу идёт следом: ждать
-                ответа сервера ради переключения иконки незачем. Анониму
-                кнопка предлагает завести аккаунт — хранить отметку негде. */}
-            <LikeButton
-              active={favourite}
-              count={favouriteCount}
-              label={t.card.favourite}
-              onClick={() => {
-                if (!signedIn) {
-                  router.push(localePath(locale, "/signup"))
-
-                  return
-                }
-
-                toggleFavourite(name)
-              }}
-              pinned={pinned?.has(name)}
-              className="h-7 min-w-7 px-2"
-            />
-
-            <button
-              ref={reportButtonRef}
-              type="button"
-              popoverTarget={reportId}
-              title={t.card.report}
-              className={TOGGLE}
-            >
-              <CircleAlert className="size-3.5" aria-hidden="true" />
-              <span className="sr-only">{t.card.report}</span>
-            </button>
-
-            <div
-              ref={reportRef}
-              id={reportId}
-              popover="auto"
-              onToggle={(event) => {
-                if (event.newState !== "open") {
-                  return
-                }
-
-                const button = reportButtonRef.current?.getBoundingClientRect()
-
-                if (button) {
-                  setReportAt({
-                    top: button.bottom + 8,
-                    left: Math.max(8, button.right - 280),
-                  })
-                }
-              }}
-              style={{
-                position: "fixed",
-                inset: "auto",
-                top: reportAt.top,
-                left: reportAt.left,
-                margin: 0,
-              }}
-              className="border-shell-border bg-shell-panel text-shell-fg w-70 rounded-xl border p-3 shadow-lg shadow-black/40"
-            >
-              <p className="text-shell-fg mb-2 text-xs font-medium">
-                {t.card.reportTitle}
-              </p>
-              <textarea
-                value={reportText}
-                onChange={(event) => {
-                  setReportText(event.target.value)
-                  setReportSent(false)
-                }}
-                rows={3}
-                placeholder={t.card.reportPlaceholder}
-                className="border-shell-border bg-shell text-shell-fg placeholder:text-shell-muted focus-visible:ring-shell-ring w-full resize-none rounded-lg border px-2 py-1.5 text-xs focus-visible:ring-2 focus-visible:outline-none"
-              />
-              <div className="mt-2 flex items-center justify-between gap-2">
-                <span
-                  role="status"
-                  className="text-shell-muted min-w-0 truncate text-[0.6875rem]"
-                >
-                  {reportSent ? t.card.reportSent : ""}
-                </span>
+                {/* Обе иконки в разметке, видимую выбирает CSS: при "auto"
+                    текущая подложка известна только из атрибута на <html>, а
+                    читать его в рендере нельзя — сломается гидратация. */}
                 <button
                   type="button"
-                  disabled={reportText.trim() === ""}
                   onClick={() => {
-                    setReportSent(true)
-                    setReportText("")
+                    const shellLight =
+                      document.documentElement.dataset.shellTheme === "light"
+
+                    setTheme((current) =>
+                      current === "auto"
+                        ? shellLight
+                          ? "dark"
+                          : "light"
+                        : current === "dark"
+                          ? "light"
+                          : "dark",
+                    )
                   }}
-                  className="border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong focus-visible:ring-shell-ring inline-flex h-7 shrink-0 items-center rounded-md border px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45"
+                  className={TOGGLE}
                 >
-                  {t.card.reportSend}
+                  <span data-theme-icon="sun">
+                    <Sun className="size-3.5" aria-hidden="true" />
+                    <span className="sr-only">{t.card.toLight}</span>
+                  </span>
+                  <span data-theme-icon="moon">
+                    <Moon className="size-3.5" aria-hidden="true" />
+                    <span className="sr-only">{t.card.toDark}</span>
+                  </span>
                 </button>
-              </div>
-            </div>
+
+                {/* Сердце отмечается сразу, а запись в базу идёт следом: ждать
+                    ответа сервера ради переключения иконки незачем. Анониму
+                    кнопка предлагает завести аккаунт — хранить отметку негде. */}
+                <LikeButton
+                  active={favourite}
+                  count={favouriteCount}
+                  label={t.card.favourite}
+                  onClick={() => {
+                    if (!signedIn) {
+                      router.push(localePath(locale, "/signup"))
+
+                      return
+                    }
+
+                    toggleFavourite(name)
+                  }}
+                  pinned={pinned?.has(name)}
+                  className="h-7 min-w-7 px-2"
+                />
+
+                <button
+                  ref={reportButtonRef}
+                  type="button"
+                  popoverTarget={reportId}
+                  title={t.card.report}
+                  className={TOGGLE}
+                >
+                  <CircleAlert className="size-3.5" aria-hidden="true" />
+                  <span className="sr-only">{t.card.report}</span>
+                </button>
+
+                <div
+                  ref={reportRef}
+                  id={reportId}
+                  popover="auto"
+                  onToggle={(event) => {
+                    if (event.newState !== "open") {
+                      return
+                    }
+
+                    const button = reportButtonRef.current?.getBoundingClientRect()
+
+                    if (button) {
+                      setReportAt({
+                        top: button.bottom + 8,
+                        left: Math.max(8, button.right - 280),
+                      })
+                    }
+                  }}
+                  style={{
+                    position: "fixed",
+                    inset: "auto",
+                    top: reportAt.top,
+                    left: reportAt.left,
+                    margin: 0,
+                  }}
+                  className="border-shell-border bg-shell-panel text-shell-fg w-70 rounded-xl border p-3 shadow-lg shadow-black/40"
+                >
+                  <p className="text-shell-fg mb-2 text-xs font-medium">
+                    {t.card.reportTitle}
+                  </p>
+                  <textarea
+                    value={reportText}
+                    onChange={(event) => {
+                      setReportText(event.target.value)
+                      setReportSent(false)
+                    }}
+                    rows={3}
+                    placeholder={t.card.reportPlaceholder}
+                    className="border-shell-border bg-shell text-shell-fg placeholder:text-shell-muted focus-visible:ring-shell-ring w-full resize-none rounded-lg border px-2 py-1.5 text-xs focus-visible:ring-2 focus-visible:outline-none"
+                  />
+                  <div className="mt-2 flex items-center justify-between gap-2">
+                    <span
+                      role="status"
+                      className="text-shell-muted min-w-0 truncate text-[0.6875rem]"
+                    >
+                      {reportSent ? t.card.reportSent : ""}
+                    </span>
+                    <button
+                      type="button"
+                      disabled={reportText.trim() === ""}
+                      onClick={() => {
+                        setReportSent(true)
+                        setReportText("")
+                      }}
+                      className="border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong focus-visible:ring-shell-ring inline-flex h-7 shrink-0 items-center rounded-md border px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45"
+                    >
+                      {t.card.reportSend}
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : null}
           </div>
         </div>
 
@@ -731,28 +747,32 @@ export function CardInteractive({
 
         <div
           data-part="actions"
-          className="relative z-10 shrink-0 items-center gap-1.5"
+          className="relative z-10 h-7 shrink-0 items-center gap-1.5"
         >
-          <button
-            type="button"
-            onClick={() => {
-              setSheetMounted(true)
-              setSheet(true)
-            }}
-            className="border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong focus-visible:ring-shell-ring inline-flex h-7 items-center rounded-md border px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
-          >
-            {t.card.getCode}
-          </button>
-          <CopyForAi
-            name={name}
-            params={docParams.toString()}
-            label={t.card.copy}
-            copiedLabel={t.card.copied}
-            locale={locale}
-            pro={pro}
-            variant="secondary"
-            className="h-7 px-3 text-xs"
-          />
+          {near ? (
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  setSheetMounted(true)
+                  setSheet(true)
+                }}
+                className="border-shell-border text-shell-fg hover:bg-shell-elevated hover:border-shell-border-strong focus-visible:ring-shell-ring inline-flex h-7 items-center rounded-md border px-3 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              >
+                {t.card.getCode}
+              </button>
+              <CopyForAi
+                name={name}
+                params={docParams.toString()}
+                label={t.card.copy}
+                copiedLabel={t.card.copied}
+                locale={locale}
+                pro={pro}
+                variant="secondary"
+                className="h-7 px-3 text-xs"
+              />
+            </>
+          ) : null}
         </div>
       </div>
 

@@ -80,23 +80,17 @@ export function CatalogCard({
       {tags.length > 0 || slots ? (
         <ul data-part="facts" className="flex-wrap gap-1 px-2 pb-2">
           {slots ? (
-            <li className="border-shell-accent-line text-shell-accent rounded border px-1.5 py-0.5 text-[0.6875rem]">
+            <li className="catalog-tag" data-accent="">
               {t.item.density[slots.density]}
             </li>
           ) : null}
           {(slots?.needs ?? []).map((need) => (
-            <li
-              key={need}
-              className="border-shell-accent-line text-shell-accent rounded border px-1.5 py-0.5 text-[0.6875rem]"
-            >
+            <li key={need} className="catalog-tag" data-accent="">
               {t.item.needs[need]}
             </li>
           ))}
           {tags.map((tag) => (
-            <li
-              key={tag}
-              className="border-shell-border text-shell-muted rounded border px-1.5 py-0.5 text-[0.6875rem]"
-            >
+            <li key={tag} className="catalog-tag">
               {tag}
             </li>
           ))}

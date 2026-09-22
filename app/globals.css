@@ -567,6 +567,22 @@
     display: flex;
   }
 
+  /* Признак варианта. Класс, а не утилиты в разметке: строка на сто
+     символов повторялась у каждого тега каждой карточки — четыре сотни
+     раз на страницу, и в разметке, и во флайт-пейлоаде. */
+  .catalog-tag {
+    border: 1px solid var(--color-shell-border);
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.6875rem;
+    color: var(--color-shell-muted);
+  }
+
+  .catalog-tag[data-accent] {
+    border-color: var(--color-shell-accent-line);
+    color: var(--color-shell-accent);
+  }
+
   [data-part="facts"] {
     display: none;
   }
