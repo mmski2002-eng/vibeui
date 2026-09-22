@@ -42,7 +42,7 @@ const STYLES = `
 /** Подпись «текущий / всего» для scroll-истории. */
 export function Counter001({
   frames = DEFAULT_FRAMES,
-  index,
+  index = 0,
   accent,
   className,
   style,

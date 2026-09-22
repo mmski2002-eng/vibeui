@@ -2,7 +2,7 @@ import type { ComponentProps, CSSProperties } from "react"
 
 export type Button081Props = Omit<ComponentProps<"button">, "title" | "children"> & {
   day?: string
-  start?: string
+  start?: number
   todayLabel?: string
   tomorrowLabel?: string
   accent?: string
@@ -44,7 +44,7 @@ const STYLES = `
 /** Кнопка-радио слота доставки: индикатор, время и «сегодня/завтра». */
 export function Button081({
   day,
-  start,
+  start = 0,
   todayLabel = "сегодня",
   tomorrowLabel = "завтра",
   accent,

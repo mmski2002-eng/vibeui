@@ -124,7 +124,7 @@ box-shadow:0 0 0 2px var(--vibeui-button-109-bg);}
 export function Button109({
   href = "#home",
   current,
-  icon,
+  icon = "home",
   label = "Главная",
   badge,
   accent,

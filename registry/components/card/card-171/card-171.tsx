@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type Card171Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   heading?: string
@@ -8,7 +8,7 @@ export type Card171Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   expandAllText?: string
   branches?: string[]
   open?: string[]
-  setOpen?: (value: string[]) => void
+  setOpen?: Dispatch<SetStateAction<string[]>>
   accent?: string
   className?: string
   style?: CSSProperties

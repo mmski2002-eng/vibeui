@@ -15,6 +15,13 @@ export type Card159Props = Omit<ComponentProps<"div">, "title" | "children"> & {
 
 // Часть блока datagrid-009, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
+const START: Record<Key, number> = {
+  file: 260,
+  owner: 130,
+  changed: 160,
+  size: 100,
+}
+
 const STYLES = `
 :where([data-vibeui-block="card-159"]){
 --vibeui-card-159-accent:light-dark(oklch(0.287 0 0),oklch(0.906 0 0));

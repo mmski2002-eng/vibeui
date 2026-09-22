@@ -177,7 +177,7 @@ export function Testimonials024({
           </div>
           <ul data-part="board">
             {quotes.map((quote, i) => (
-              <Card111 key={quote.name} data-part="note" name={quote.name} text={quote.text} role={quote.role} project={quote.project} interval={interval} index={index} count={count} i={i} data-active={i === index} aria-current={i === index ? "true" : undefined} style={{ ["--vibeui-testimonials-024-i" as string]: i, ["--vibeui-testimonials-024-r" as string]: TILTS[i % TILTS.length] }} onClick={() => setIndex(i)} onPointerMove={spot} accent={accent} />
+              <Card111 setIndex={setIndex} key={quote.name} data-part="note" name={quote.name} text={quote.text} role={quote.role} project={quote.project} interval={interval} index={index} count={count} i={i} data-active={i === index} aria-current={i === index ? "true" : undefined} style={{ ["--vibeui-testimonials-024-i" as string]: i, ["--vibeui-testimonials-024-r" as string]: TILTS[i % TILTS.length] }} onClick={() => setIndex(i)} onPointerMove={spot} accent={accent} />
             ))}
           </ul>
         </div>

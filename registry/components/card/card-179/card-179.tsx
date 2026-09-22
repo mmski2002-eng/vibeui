@@ -13,7 +13,7 @@ export type Card179Rule = {
 
 export type Card179Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   field?: string
-  id?: string
+  id?: number
   operator?: string
   value?: string
   fieldLabel?: string
@@ -25,7 +25,7 @@ export type Card179Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   joinerLabel?: string
   joinerOptionText?: Record<string, string>
   join?: "and" | "or"
-  operators?: typeof NUMBER_OPS
+  operators?: readonly string[]
   patch?: (id: number, change: Partial<Rule>) => void
   setChosen?: (value: "and" | "or" | null) => void
   setRules?: (next: (current: Rule[]) => Rule[]) => void
@@ -177,7 +177,7 @@ export function Card179({
         </select>
         <input
           data-part="value"
-          type={field?.numeric ? "number" : "text"}
+          type={FIELDS.find((item) => item.key === field)?.numeric ? "number" : "text"}
           value={value}
           aria-label={valueLabel.replace(
             "{index}",

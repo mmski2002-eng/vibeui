@@ -46,7 +46,7 @@ export function Card095({
   start = 0,
   weeks = 1,
   weeksLabel = "недели {from}–{to}",
-  week,
+  week = 0,
   accent,
   className,
   style,

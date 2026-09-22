@@ -45,8 +45,8 @@ const STYLES = `
 
 /** Кнопка-плитка портфолио: фото, тег стиля и подпись с названием и заметкой. */
 export function Button101({
-  title,
-  styleText,
+  title = "",
+  styleText = "",
   image,
   imageAlt,
   meta,

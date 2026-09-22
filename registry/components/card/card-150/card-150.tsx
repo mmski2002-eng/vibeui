@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, PointerEvent } from "react"
 
 export type Card150Props = Omit<ComponentProps<"li">, "title" | "children"> & {
   title?: string

@@ -15347,7 +15347,7 @@
     },
     {
       "name": "button-086",
-      "type": "registry:component",
+      "kindText": "registry:component",
       "title": "Вкладка объекта",
       "description": "Кнопка-вкладка объекта до/после: название и подпись; активна через aria-selected.",
       "categories": [
@@ -15358,7 +15358,7 @@
       "files": [
         {
           "path": "button-086/button-086.tsx",
-          "type": "registry:component",
+          "kindText": "registry:component",
           "target": "@components/vibeui/button-086.tsx"
         }
       ],
@@ -15382,7 +15382,7 @@
             "прозрачную подложку по умолчанию — компонент ложится на фон блока"
           ],
           "adapt": [
-            "name, area, type, weeks, weekShort — содержимое",
+            "name, area, kindText, weeks, weekShort — содержимое",
             "акцент через проп accent",
             "ширину — её задаёт контейнер"
           ],
@@ -15394,42 +15394,42 @@
           {
             "prop": "name",
             "label": "name",
-            "type": "text",
             "default": "Двушка на Ленинском",
-            "maxLength": 160
+            "maxLength": 160,
+            "type": "text"
           },
           {
             "prop": "area",
             "label": "area",
-            "type": "text",
             "default": "62 м²",
-            "maxLength": 160
+            "maxLength": 160,
+            "type": "text"
           },
           {
-            "prop": "type",
-            "label": "type",
-            "type": "text",
+            "prop": "kindText",
+            "label": "kindText",
             "default": "Капитальный",
-            "maxLength": 160
+            "maxLength": 160,
+            "type": "text"
           },
           {
             "prop": "accent",
             "label": "Акцент",
-            "type": "color",
-            "default": ""
+            "default": "",
+            "type": "color"
           }
         ],
         "cardControls": [
           "name",
           "area",
-          "type",
+          "kindText",
           "accent"
         ],
         "preview": {
           "width": "full",
           "props": {
             "area": "62 м²",
-            "type": "Капитальный"
+            "kindText": "Капитальный"
           }
         },
         "i18n": {
@@ -15446,7 +15446,7 @@
                 "the transparent surface by default — the component sits on the block background"
               ],
               "adapt": [
-                "name, area, type, weeks, weekShort — the content",
+                "name, area, kindText, weeks, weekShort — the content",
                 "the accent through the accent prop",
                 "the width — the container sets it"
               ],
@@ -15463,8 +15463,8 @@
                 "label": "area",
                 "default": "62 м²"
               },
-              "type": {
-                "label": "type",
+              "kindText": {
+                "label": "kindText",
                 "default": "Капитальный"
               },
               "accent": {

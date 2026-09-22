@@ -5,7 +5,7 @@ export type Card049Props = Omit<ComponentProps<"li">, "title" | "children"> & {
   name?: string
   image?: string
   role?: string
-  links?: People001Link[]
+  links?: Card049Link[]
   accent?: string
   className?: string
   style?: CSSProperties
@@ -13,6 +13,12 @@ export type Card049Props = Omit<ComponentProps<"li">, "title" | "children"> & {
 
 // Часть блока people-001, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
+export type Card049Link = {
+  kind: "mail" | "site" | "chat"
+  label: string
+  href: string
+}
+
 const STYLES = `
 :where([data-vibeui-block="card-049"]){
 --vibeui-card-049-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));

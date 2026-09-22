@@ -23412,7 +23412,7 @@
             "прозрачную подложку по умолчанию — компонент ложится на фон блока"
           ],
           "adapt": [
-            "heading, noEditsText, editsTemplate, editLabel, revertAllText, rows, saveAllText, editing, entries, setDraft, setEditing, setSaved, valueOf — содержимое",
+            "heading, noEditsText, editsTemplate, editLabel, revertAllText, rows, saveAllText, editing, entries, setDraft, setEditing, setSaved, cellValue — содержимое",
             "акцент через проп accent",
             "ширину — её задаёт контейнер"
           ],
@@ -23448,7 +23448,7 @@
                 "the transparent surface by default — the component sits on the block background"
               ],
               "adapt": [
-                "heading, noEditsText, editsTemplate, editLabel, revertAllText, rows, saveAllText, editing, entries, setDraft, setEditing, setSaved, valueOf — the content",
+                "heading, noEditsText, editsTemplate, editLabel, revertAllText, rows, saveAllText, editing, entries, setDraft, setEditing, setSaved, cellValue — the content",
                 "the accent through the accent prop",
                 "the width — the container sets it"
               ],

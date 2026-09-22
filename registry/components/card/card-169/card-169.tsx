@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type Card169Row = {
   id: string
@@ -21,11 +21,11 @@ export type Card169Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   rows?: Card169Row[]
   saveAllText?: string
   editing?: boolean
-  entries?: readonly unknown[]
+  entries?: readonly [string, string][]
   setDraft?: (value: Draft) => void
-  setEditing?: (value: boolean) => void
-  setSaved?: (value: Card169Row[] | null) => void
-  valueOf?: (row: Card169Row, key: "quantity" | "price") => string | number
+  setEditing?: Dispatch<SetStateAction<boolean>>
+  setSaved?: Dispatch<SetStateAction<Card169Row[] | null>>
+  cellValue?: (row: Card169Row, key: "quantity" | "price") => string | number
   accent?: string
   className?: string
   style?: CSSProperties
@@ -103,7 +103,7 @@ export function Card169({
   setDraft = () => {},
   setEditing = () => {},
   setSaved = () => {},
-  valueOf = () => null,
+  cellValue = () => "",
   accent,
   className,
   style,
@@ -154,8 +154,8 @@ export function Card169({
             setSaved((current) =>
               (current ?? rows).map((row) => ({
                 ...row,
-                quantity: valueOf(row, "quantity"),
-                price: valueOf(row, "price"),
+                quantity: cellValue(row, "quantity"),
+                price: cellValue(row, "price"),
               })),
             )
             setDraft({})

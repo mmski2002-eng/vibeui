@@ -6,7 +6,7 @@ export type Slider013Props = Omit<
   ComponentProps<"input">,
   "type" | "value" | "onChange" | "min" | "max" | "step"
 > & {
-  value: number
+  value?: number
   min?: number
   max?: number
   step?: number
@@ -65,7 +65,7 @@ box-shadow:0 0 0 6px var(--vibeui-slider-013-halo);cursor:grab;
 
 /** Голый ползунок: дорожка с заливкой и кольцо-ручка, без рамки и подписи. */
 export function Slider013({
-  value,
+  value = 50,
   min = 0,
   max = 100,
   step = 1,

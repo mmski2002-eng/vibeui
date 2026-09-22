@@ -5,7 +5,7 @@ export type Card087Props = Omit<ComponentProps<"li">, "title" | "children"> & {
   flowers?: readonly string[]
   note?: string
   nowLabel?: string
-  month?: number
+  month?: number | null
   index?: number
   accent?: string
   className?: string

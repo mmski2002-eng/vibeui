@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type SortKey = { column: Column; direction: Direction }
 
@@ -23,7 +23,7 @@ export type Card151Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   resetText?: string
   keys?: SortKey[]
   label?: (column: Column) => string
-  setKeys?: (value: SortKey[]) => void
+  setKeys?: Dispatch<SetStateAction<SortKey[]>>
   accent?: string
   className?: string
   style?: CSSProperties

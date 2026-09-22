@@ -3,7 +3,7 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Button086Props = Omit<ComponentProps<"button">, "title" | "children"> & {
   name?: string
   area?: string
-  type?: string
+  kindText?: string
   weeks?: number
   weekShort?: string
   accent?: string
@@ -40,7 +40,7 @@ const STYLES = `
 export function Button086({
   name = "Двушка на Ленинском",
   area,
-  type,
+  kindText,
   weeks,
   weekShort = "нед",
   accent,
@@ -67,7 +67,7 @@ export function Button086({
       >
         <b>{name}</b>
         <span>
-          {[area, type, weeks ? `${weeks} ${weekShort}` : null].filter(Boolean).join(" · ")}
+          {[area, kindText, weeks ? `${weeks} ${weekShort}` : null].filter(Boolean).join(" · ")}
         </span>
       </button>
     </>

@@ -15,7 +15,7 @@ export type Card156Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   rows?: Card156Row[]
   resetLabel?: string
   active?: boolean
-  filtered?: boolean
+  filtered?: readonly Card156Row[]
   setClient?: (value: string) => void
   setOrder?: (value: string) => void
   setStatus?: (value: string) => void
@@ -67,7 +67,7 @@ export function Card156({
   rows = DEFAULT_ROWS,
   resetLabel = "Сбросить фильтры",
   active = false,
-  filtered = false,
+  filtered = [],
   setClient = () => {},
   setOrder = () => {},
   setStatus = () => {},

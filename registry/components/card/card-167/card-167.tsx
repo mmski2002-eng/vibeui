@@ -17,6 +17,7 @@ export type Card167Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   exportLabel?: string
   done?: string
   selected?: Card167Row[]
+  onExport?: () => void
   setDone?: (value: string) => void
   accent?: string
   className?: string
@@ -94,6 +95,7 @@ export function Card167({
   exportLabel = "Экспортировать",
   done = "",
   selected = [],
+  onExport,
   setDone = () => {},
   accent,
   className,
@@ -130,7 +132,7 @@ export function Card167({
           disabled={selected.length === 0}
           onClick={() => {
             setDone("")
-            dialogRef.current?.showModal()
+            onExport?.()
           }}
         >
           {exportLabel}

@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type Card180View = {
   id: string
@@ -22,8 +22,8 @@ export type Card180Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   saveText?: string
   active?: string
   dirty?: unknown
-  setEdited?: (value: Card180View[] | null) => void
-  setState?: (value: ViewState) => void
+  setEdited?: Dispatch<SetStateAction<Card180View[] | null>>
+  setState?: Dispatch<SetStateAction<ViewState>>
   state?: ViewState
   accent?: string
   className?: string

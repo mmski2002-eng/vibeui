@@ -8,7 +8,7 @@ export type Card164Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   pinnedTemplate?: string
   maxPinned?: number
   clearText?: string
-  ordered?: readonly (typeof COLUMNS)[number][]
+  ordered?: readonly ColumnKey[]
   setPinned?: (value: ColumnKey[]) => void
   accent?: string
   className?: string
@@ -27,6 +27,9 @@ const COLUMNS: { key: ColumnKey; numeric: boolean }[] = [
 
 // Часть блока datagrid-014, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
+export type ColumnKey =
+  "city" | "manager" | "plan" | "fact" | "deals" | "churn" | "nps"
+
 const STYLES = `
 :where([data-vibeui-block="card-164"]){
 --vibeui-card-164-accent:light-dark(oklch(0.275 0 0),oklch(0.91 0 0));

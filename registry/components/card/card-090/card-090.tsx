@@ -18,6 +18,14 @@ const ICONS: Record<NonNullable<Card090Lesson["kind"]>, string> = {
 
 // Часть блока course-002, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
+export type Card090Lesson = {
+  title: string
+  /** «40 мин», «лайв 1,5 ч». */
+  length?: string
+  /** Тип урока — иконка: запись, лайв, ревью, текст. */
+  kind?: "video" | "live" | "review" | "text"
+}
+
 const STYLES = `
 :where([data-vibeui-block="card-090"]){
 --vibeui-card-090-accent:light-dark(#1a1a1a,#f2f2f2);
@@ -42,7 +50,7 @@ const STYLES = `
 export function Card090({
   title = "Разбор домашек потока",
   length,
-  kind,
+  kind = "video",
   accent,
   className,
   style,

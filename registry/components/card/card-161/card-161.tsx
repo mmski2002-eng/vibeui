@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type Card161Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   heading?: string
@@ -8,7 +8,7 @@ export type Card161Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   resetAllLabel?: string
   applied?: readonly (typeof FILTERS)[number][]
   filterLabel?: (id: string) => string
-  setActive?: (value: string[]) => void
+  setActive?: Dispatch<SetStateAction<string[]>>
   accent?: string
   className?: string
   style?: CSSProperties
@@ -25,6 +25,14 @@ const FILTERS: {
 
 // Часть блока datagrid-011, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
+export type Card161Row = {
+  id: string
+  request: string
+  city: string
+  status: "Новая" | "В работе" | "Архив"
+  score: number
+}
+
 const STYLES = `
 :where([data-vibeui-block="card-161"]){
 --vibeui-card-161-accent:light-dark(oklch(0.28 0 0),oklch(0.91 0 0));

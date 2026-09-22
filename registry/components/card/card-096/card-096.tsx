@@ -1,7 +1,7 @@
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Card096Props = Omit<ComponentProps<"li">, "title" | "children"> & {
-  day?: string
+  day?: number
   title?: string
   time?: string
   text?: string
@@ -53,7 +53,7 @@ const STYLES = `
 
 /** Запись ленты стройки: день с датой и временем, заголовок, текст, фото и автор; будущие — по data-future. */
 export function Card096({
-  day,
+  day = 1,
   title,
   time,
   text,
@@ -64,7 +64,7 @@ export function Card096({
   plannedLabel = "запланировано",
   future,
   today,
-  dayStart,
+  dayStart = 0,
   accent,
   className,
   style,

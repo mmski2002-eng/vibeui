@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type Card181Row = {
   id: string
@@ -27,11 +27,11 @@ export type Card181Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   okTemplate?: string
   mixedTemplate?: string
   areaId?: string
-  bad?: boolean
+  bad?: readonly Parsed[]
   batch?: number
-  good?: boolean
+  good?: readonly Parsed[]
   parsed?: Parsed[]
-  setAdded?: (value: Card181Row[] | null) => void
+  setAdded?: Dispatch<SetStateAction<Card181Row[] | null>>
   setBatch?: (value: number) => void
   setPasted?: (value: string[]) => void
   setTyped?: (value: string | null) => void
@@ -88,9 +88,9 @@ export function Card181({
   okTemplate = "Разобрано строк: {count}, ошибок нет",
   mixedTemplate = "Готово {good}, с ошибками {bad}",
   areaId = "",
-  bad = false,
+  bad = [],
   batch = 0,
-  good = false,
+  good = [],
   parsed = [],
   setAdded = () => {},
   setBatch = () => {},

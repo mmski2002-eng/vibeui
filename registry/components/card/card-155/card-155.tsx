@@ -8,7 +8,7 @@ export type Card155Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   hint?: string
   cancelLabel?: string
   saveLabel?: string
-  dirty?: boolean
+  dirty?: readonly [string, string][]
   save?: () => void
   setEditing?: (value: string | null) => void
   setEdits?: (value: Record<string, string>) => void
@@ -53,7 +53,7 @@ export function Card155({
   hint = "Цена и остаток редактируются",
   cancelLabel = "Отменить",
   saveLabel = "Сохранить",
-  dirty = false,
+  dirty = [],
   save = () => {},
   setEditing = () => {},
   setEdits = () => {},

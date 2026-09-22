@@ -291,7 +291,6 @@ const newsletter: Subscribe007Props = {
   formText: "Pick what you love — we'll work out when it'll be in the oven and text you. Unsubscribe with one word: «enough».",
   optionLabel: "What you love",
   contactLabel: "Phone or email",
-  contactPlaceholder: "+7 … or name@mail",
   whenLine: "we'll text at {time} — {note}",
   submitLabel: "Set the alarm",
   doneLine: "noted: {label}, {time}",

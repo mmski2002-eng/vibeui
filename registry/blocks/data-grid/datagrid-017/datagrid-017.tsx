@@ -292,7 +292,7 @@ export function Datagrid017({
         className={className}
         style={palette}
       >
-        <Card167 data-part="bar" heading={heading} statusTemplate={statusTemplate} rows={rows} exportLabel={exportLabel} done={done} selected={selected} setDone={setDone} accent={accent} />
+        <Card167 data-part="bar" onExport={() => dialogRef.current?.showModal()} heading={heading} statusTemplate={statusTemplate} rows={rows} exportLabel={exportLabel} done={done} selected={selected} setDone={setDone} accent={accent} />
         <div
           data-part="scroll"
           role="region"

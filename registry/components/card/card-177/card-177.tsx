@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type Card177Row = {
   id: string
@@ -17,7 +17,7 @@ export type Card177Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   rows?: Card177Row[]
   simulateText?: string
   failed?: boolean
-  setFailed?: (value: boolean) => void
+  setFailed?: Dispatch<SetStateAction<boolean>>
   setTries?: (value: number) => void
   accent?: string
   className?: string

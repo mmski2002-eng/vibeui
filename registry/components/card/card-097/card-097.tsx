@@ -40,7 +40,7 @@ export function Card097({
   text,
   name,
   from,
-  slotIndex,
+  slotIndex = 0,
   accent,
   className,
   style,

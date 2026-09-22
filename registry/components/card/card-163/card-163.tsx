@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentProps, CSSProperties } from "react"
+import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "react"
 
 export type ColumnKey = "product" | "vendor" | "stock" | "price" | "updated"
 
@@ -12,10 +12,10 @@ export type Card163Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   columnText?: Record<string, string>
   resetText?: string
   hidden?: ColumnKey[]
-  last?: number
+  last?: boolean
   open?: boolean
-  setHidden?: (value: ColumnKey[]) => void
-  setOpen?: (value: boolean) => void
+  setHidden?: Dispatch<SetStateAction<ColumnKey[]>>
+  setOpen?: Dispatch<SetStateAction<boolean>>
   visible?: readonly (typeof COLUMNS)[number][]
   accent?: string
   className?: string
@@ -91,7 +91,7 @@ export function Card163({
   columnText = COLUMN_TEXT,
   resetText = "Показать все колонки",
   hidden = [],
-  last = 0,
+  last = false,
   open = false,
   setHidden = () => {},
   setOpen = () => {},

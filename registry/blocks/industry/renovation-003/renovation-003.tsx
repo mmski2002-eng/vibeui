@@ -170,7 +170,7 @@ export function Renovation003({
             <ul data-part="tabs" role="tablist" aria-label={tabsLabel}>
               {works.map((item, itemIndex) => (
                 <li key={item.name} role="presentation">
-                  <Button086 data-part="tab" name={item.name} area={item.area} type={item.type} weeks={item.weeks} weekShort={weekShort} aria-selected={itemIndex === index} onClick={() => pick(itemIndex)} accent={accent} />
+                  <Button086 data-part="tab" name={item.name} area={item.area} kindText={item.type} weeks={item.weeks} weekShort={weekShort} aria-selected={itemIndex === index} onClick={() => pick(itemIndex)} accent={accent} />
                 </li>
               ))}
             </ul>

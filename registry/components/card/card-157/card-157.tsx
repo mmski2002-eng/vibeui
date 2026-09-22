@@ -6,6 +6,7 @@ export type Card157Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   heading?: string
   collapseAllLabel?: string
   expandAllLabel?: string
+  names?: readonly string[]
   setClosed?: (value: string[]) => void
   accent?: string
   className?: string
@@ -40,6 +41,7 @@ export function Card157({
   heading = "Трудозатраты, спринт 14",
   collapseAllLabel = "Свернуть все",
   expandAllLabel = "Развернуть все",
+  names = [],
   setClosed = () => {},
   accent,
   className,
@@ -64,7 +66,7 @@ export function Card157({
       style={palette}
       >
         <h3 data-part="title">{heading}</h3>
-        <button type="button" onClick={() => setClosed(names)}>
+        <button type="button" onClick={() => setClosed([...names])}>
           {collapseAllLabel}
         </button>
         <button type="button" onClick={() => setClosed([])}>

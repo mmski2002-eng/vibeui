@@ -9,6 +9,7 @@ export type Card111Props = Omit<ComponentProps<"li">, "title" | "children"> & {
   project?: string
   interval?: number
   index?: number
+  setIndex?: (index: number) => void
   count?: number
   i?: number
   accent?: string
@@ -66,6 +67,7 @@ export function Card111({
   project,
   interval = 7,
   index = 0,
+  setIndex,
   count = 3,
   i = 0,
   accent,
@@ -91,7 +93,7 @@ export function Card111({
         onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
         event.preventDefault()
-        setIndex(i)
+        setIndex?.(index)
         }
         }}
         className={className}

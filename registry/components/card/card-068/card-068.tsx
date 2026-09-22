@@ -108,7 +108,7 @@ export function Card068({
   text,
   numbers = true,
   index = 0,
-  ghost,
+  ghost = "",
   accent,
   className,
   style,

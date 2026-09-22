@@ -95,6 +95,15 @@ function Demo({ kind, sizeOthers, kbUnit }: { kind: NonNullable<Card075Feature["
 
 // Часть блока bento-001, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
+export type Card075Feature = {
+  title: string
+  text: string
+  /** Микродемо на CSS: rows — бегущие строки, sort — строки меняются местами, group — свёртка, types — подсказка типов «печатается», size — линейка, theme — тема переключается, none. */
+  demo?: "rows" | "sort" | "group" | "types" | "size" | "theme" | "none"
+  /** Плитка на две колонки. */
+  wide?: boolean
+}
+
 const STYLES = `
 :where([data-vibeui-block="card-075"]){
 --vibeui-card-075-accent:light-dark(#1a1a1a,#f2f2f2);

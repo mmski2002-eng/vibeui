@@ -42,6 +42,13 @@ function Icon({ kind }: { kind: NonNullable<Card099Layer["icon"]> }) {
 
 // Часть блока fintech-003, вынесенная как есть: разметка и стили карточки
 // живут здесь, блок владеет раскладкой и данными.
+export type Card099Layer = {
+  title: string
+  text: string
+  /** Иконка-линия: biometrics | lock | radar | shield. */
+  icon?: "biometrics" | "lock" | "radar" | "shield"
+}
+
 const STYLES = `
 :where([data-vibeui-block="card-099"]){
 --vibeui-card-099-accent:light-dark(#1a1a1a,#f2f2f2);

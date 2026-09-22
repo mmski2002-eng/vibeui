@@ -207,7 +207,7 @@ export function Datagrid007({
         className={className}
         style={palette}
       >
-        <Card157 data-part="bar" heading={heading} collapseAllLabel={collapseAllLabel} expandAllLabel={expandAllLabel} setClosed={setClosed} accent={accent} />
+        <Card157 data-part="bar" names={names} heading={heading} collapseAllLabel={collapseAllLabel} expandAllLabel={expandAllLabel} setClosed={setClosed} accent={accent} />
         <div
           data-part="scroll"
           role="region"

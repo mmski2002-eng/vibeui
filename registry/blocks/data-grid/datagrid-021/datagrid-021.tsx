@@ -265,7 +265,7 @@ export function Datagrid021({
         className={className}
         style={palette}
       >
-        <Card169 data-part="bar" heading={heading} noEditsText={noEditsText} editsTemplate={editsTemplate} editLabel={editLabel} revertAllText={revertAllText} rows={rows} saveAllText={saveAllText} editing={editing} entries={entries} setDraft={setDraft} setEditing={setEditing} setSaved={setSaved} valueOf={valueOf} accent={accent} />
+        <Card169 data-part="bar" heading={heading} noEditsText={noEditsText} editsTemplate={editsTemplate} editLabel={editLabel} revertAllText={revertAllText} rows={rows} saveAllText={saveAllText} editing={editing} entries={entries} setDraft={setDraft} setEditing={setEditing} setSaved={setSaved} cellValue={valueOf} accent={accent} />
         <div
           data-part="scroll"
           role="region"

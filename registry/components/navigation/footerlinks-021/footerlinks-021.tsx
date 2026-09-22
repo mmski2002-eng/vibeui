@@ -2,47 +2,7 @@ import type { ComponentProps, CSSProperties } from "react"
 
 export type Footerlinks021Link = { label: string; href: string }
 
-export type Footerlinks021Props = {
-  /** Монограмма: две буквы, между ними снежинка. */
-  initials?: readonly [string, string]
-  names?: string
-  dateLabel?: string
-  place?: string
-  /** Рукописная строка: «до встречи в снегу». */
-  script?: string
-  hashtag?: string
-  links?: readonly Footerlinks021Link[]
-  rsvpText?: string
-  rsvpLabel?: string
-  rsvpHref?: string
-  tone?: "auto" | "light" | "dark"
-  accent?: string
-  ink?: string
-  background?: string
-  className?: string
-  style?: CSSProperties
-}
 
-export type Footerlinks021Props = {
-  /** Монограмма: две буквы, между ними снежинка. */
-  initials?: readonly [string, string]
-  names?: string
-  dateLabel?: string
-  place?: string
-  /** Рукописная строка: «до встречи в снегу». */
-  script?: string
-  hashtag?: string
-  links?: readonly Footerlinks021Link[]
-  rsvpText?: string
-  rsvpLabel?: string
-  rsvpHref?: string
-  tone?: "auto" | "light" | "dark"
-  accent?: string
-  ink?: string
-  background?: string
-  className?: string
-  style?: CSSProperties
-}
 
 export type Footerlinks021Props = Omit<ComponentProps<"ul">, "title" | "children"> & {
   links?: readonly Footerlinks021Link[]
