@@ -11,7 +11,7 @@ export type Card179Rule = {
   value: string
 }
 
-export type Card179Props = Omit<ComponentProps<"div">, "title" | "children"> & {
+export type Card179Props = Omit<ComponentProps<"div">, "title" | "children" | "id"> & {
   field?: string
   id?: number
   operator?: string
@@ -96,7 +96,7 @@ background:transparent;color:var(--vibeui-card-179-muted);}
 /** Строка конструктора фильтров: поле, оператор, значение и кнопка удаления. */
 export function Card179({
   field,
-  id,
+  id = 0,
   operator,
   value,
   fieldLabel = "Поле условия {index}",

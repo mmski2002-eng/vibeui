@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction, ComponentProps, CSSProperties } from "re
 
 export type ColumnKey = "product" | "vendor" | "stock" | "price" | "updated"
 
-export type Card163Props = Omit<ComponentProps<"div">, "title" | "children"> & {
+export type Card163Props = Omit<ComponentProps<"div">, "title" | "children" | "hidden"> & {
   heading?: string
   countTemplate?: string
   menuLabel?: string

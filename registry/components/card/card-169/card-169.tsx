@@ -21,11 +21,11 @@ export type Card169Props = Omit<ComponentProps<"div">, "title" | "children"> & {
   rows?: Card169Row[]
   saveAllText?: string
   editing?: boolean
-  entries?: readonly [string, string][]
+  entries?: readonly [string, number][]
   setDraft?: (value: Draft) => void
   setEditing?: Dispatch<SetStateAction<boolean>>
   setSaved?: Dispatch<SetStateAction<Card169Row[] | null>>
-  cellValue?: (row: Card169Row, key: "quantity" | "price") => string | number
+  cellValue?: (row: Card169Row, key: "quantity" | "price") => number
   accent?: string
   className?: string
   style?: CSSProperties
@@ -103,7 +103,7 @@ export function Card169({
   setDraft = () => {},
   setEditing = () => {},
   setSaved = () => {},
-  cellValue = () => "",
+  cellValue = () => 0,
   accent,
   className,
   style,

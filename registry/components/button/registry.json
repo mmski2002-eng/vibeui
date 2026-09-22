@@ -15347,7 +15347,6 @@
     },
     {
       "name": "button-086",
-      "kindText": "registry:component",
       "title": "Вкладка объекта",
       "description": "Кнопка-вкладка объекта до/после: название и подпись; активна через aria-selected.",
       "categories": [
@@ -15358,8 +15357,8 @@
       "files": [
         {
           "path": "button-086/button-086.tsx",
-          "kindText": "registry:component",
-          "target": "@components/vibeui/button-086.tsx"
+          "target": "@components/vibeui/button-086.tsx",
+          "type": "registry:component"
         }
       ],
       "docs": "Компонент вынесен из блока renovation-003 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-button-086-*. Раскладку и данные держит блок, компонент получает их пропсами.",
@@ -15374,7 +15373,7 @@
         "pro": true,
         "ai": {
           "export": "Button086",
-          "usage": "<Button086 name=\"Двушка на Ленинском\" area=\"62 м²\" type=\"Капитальный\" />",
+          "usage": "<Button086 name=\"Двушка на Ленинском\" area=\"62 м²\" kindText=\"Капитальный\" />",
           "summary": "Кнопка-вкладка объекта до/после: название и подпись; активна через aria-selected.",
           "preserve": [
             "локальную палитру --vibeui-button-086-* и не подменять её токенами вашей темы",
@@ -15439,7 +15438,7 @@
             "docs": "Extracted from the renovation-003 block as is: one file, no dependencies, its own palette in the --vibeui-button-086-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Before/after project tab button: name and caption; active through aria-selected.",
-              "usage": "<Button086 name=\"Двушка на Ленинском\" area=\"62 м²\" type=\"Капитальный\" />",
+              "usage": "<Button086 name=\"Двушка на Ленинском\" area=\"62 м²\" kindText=\"Капитальный\" />",
               "preserve": [
                 "the local --vibeui-button-086-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15473,7 +15472,8 @@
             }
           }
         }
-      }
+      },
+      "type": "registry:component"
     },
     {
       "name": "button-087",

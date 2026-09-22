@@ -3,7 +3,7 @@ import type { ComponentProps, CSSProperties } from "react"
 export type Card090Props = Omit<ComponentProps<"li">, "title" | "children"> & {
   title?: string
   length?: string
-  kind?: string
+  kind?: NonNullable<Card090Lesson["kind"]>
   accent?: string
   className?: string
   style?: CSSProperties
