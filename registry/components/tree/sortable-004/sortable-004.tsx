@@ -159,14 +159,27 @@ export function Sortable004({
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<"left" | "right" | null>(null)
   const rows = useRef(new Map<string, HTMLLIElement>())
-  const rects = useRef(new Map<string, DOMRect>())
+  const rects = useRef(new Map<string, { left: number; top: number }>())
 
   // FLIP: после каждого рендера сравниваем прежнее и новое положение элементов
   // и проигрываем сдвиг с прежнего места. Перестановка видна как движение,
   // а не как мгновенная подмена.
   useLayoutEffect(() => {
-    const next = new Map<string, DOMRect>()
-    rows.current.forEach((node, key) => next.set(key, node.getBoundingClientRect()))
+    const next = new Map<string, { left: number; top: number }>()
+    // Положение считается относительно самого компонента, а не окна.
+    // getBoundingClientRect меряет от края экрана: стоило странице
+    // прокрутиться или карточке съехать в сетке между двумя рендерами, как
+    // FLIP принимал это за переезд строк и проигрывал прыжок на всю
+    // величину сдвига — по нажатию на что угодно внутри компонента.
+    const first = rows.current.values().next().value
+    const base = first?.closest("[data-vibeui-block]")?.getBoundingClientRect()
+    rows.current.forEach((node, key) => {
+      const box = node.getBoundingClientRect()
+      next.set(key, {
+        left: box.left - (base?.left ?? 0),
+        top: box.top - (base?.top ?? 0),
+      })
+    })
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (!calm) {
       rows.current.forEach((node, key) => {

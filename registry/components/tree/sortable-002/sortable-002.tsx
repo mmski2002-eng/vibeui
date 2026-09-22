@@ -166,14 +166,27 @@ export function Sortable002({
   const [dragged, setDragged] = useState<string | null>(null)
   const [over, setOver] = useState<string | null>(null)
   const rows = useRef(new Map<string, HTMLLIElement>())
-  const rects = useRef(new Map<string, DOMRect>())
+  const rects = useRef(new Map<string, { left: number; top: number }>())
 
   // FLIP: после каждого рендера сравниваем прежнее и новое положение элементов
   // и проигрываем сдвиг с прежнего места. Перестановка видна как движение,
   // а не как мгновенная подмена.
   useLayoutEffect(() => {
-    const next = new Map<string, DOMRect>()
-    rows.current.forEach((node, key) => next.set(key, node.getBoundingClientRect()))
+    const next = new Map<string, { left: number; top: number }>()
+    // Положение считается относительно самого компонента, а не окна.
+    // getBoundingClientRect меряет от края экрана: стоило странице
+    // прокрутиться или карточке съехать в сетке между двумя рендерами, как
+    // FLIP принимал это за переезд строк и проигрывал прыжок на всю
+    // величину сдвига — по нажатию на что угодно внутри компонента.
+    const first = rows.current.values().next().value
+    const base = first?.closest("[data-vibeui-block]")?.getBoundingClientRect()
+    rows.current.forEach((node, key) => {
+      const box = node.getBoundingClientRect()
+      next.set(key, {
+        left: box.left - (base?.left ?? 0),
+        top: box.top - (base?.top ?? 0),
+      })
+    })
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (!calm) {
       rows.current.forEach((node, key) => {
@@ -194,11 +207,29 @@ export function Sortable002({
 
   // Живая перестановка: элемент встаёт на место того, над которым висит
   // курсор, ещё до отпускания — остальные раздвигаются, а не накладываются.
-  const hover = (target: string) => {
+  // Перестановка ждёт, пока курсор пройдёт середину цели. Иначе ровно на
+  // границе двух строк список дрожал: перестановка подводила под курсор
+  // соседнюю строку, та просила перестановку обратно, и так по кругу.
+  const crossed = (event: DragEvent<HTMLElement>, forward: boolean) => {
+    const box = event.currentTarget.getBoundingClientRect()
+    const self = rows.current.get(dragged ?? "")?.getBoundingClientRect()
+    // Ось берётся из взаимного положения, а не из раскладки: так одна и та же
+    // проверка годится и списку строк, и ряду колонок, и сетке плиток.
+    const vertical =
+      !self || Math.abs(box.top - self.top) >= Math.abs(box.left - self.left)
+    const middle = vertical ? box.top + box.height / 2 : box.left + box.width / 2
+
+    return forward
+      ? (vertical ? event.clientY : event.clientX) >= middle
+      : (vertical ? event.clientY : event.clientX) <= middle
+  }
+
+  const hover = (target: string, event: DragEvent<HTMLElement>) => {
     if (!dragged || dragged === target) return
     const from = order.indexOf(dragged)
     const to = order.indexOf(target)
     if (from < 0 || to < 0 || from === to) return
+    if (!crossed(event, to > from)) return
     const next = [...order]
     next.splice(from, 1)
     next.splice(to, 0, dragged)
@@ -331,7 +362,7 @@ export function Sortable002({
               onDragOver={(event) => {
                 event.preventDefault()
                 setOver(row)
-                hover(row)
+                hover(row, event)
               }}
               onDrop={drop}
             >
