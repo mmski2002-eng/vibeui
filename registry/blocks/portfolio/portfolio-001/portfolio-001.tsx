@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Portfolio001Work = {
   title: string
@@ -23,7 +24,8 @@ export type Portfolio001Props = {
 // тёплый CSS-градиент с номером и подписью. Плитки tall/wide растягиваются
 // на две ячейки через grid-row/column. Формат витрины работ студии; вместо
 // стоковых фото — брендовые градиентные обложки.
-const STYLES = `
+const STYLES = `[data-vibeui-block="portfolio-001"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="portfolio-001"]){
 --vibeui-portfolio-001-bg:transparent;
 --vibeui-portfolio-001-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -44,8 +46,6 @@ display:block;background:var(--vibeui-portfolio-001-bg);color:var(--vibeui-portf
 font-family:var(--vibeui-portfolio-001-font);
 }
 [data-vibeui-block="portfolio-001"] [data-part="shell"]{max-width:72rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="portfolio-001"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-portfolio-001-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="portfolio-001"] [data-part="title"]{margin:0 0 2rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="portfolio-001"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr);grid-auto-rows:12rem}
 [data-vibeui-block="portfolio-001"] [data-part="tile"]{
 position:relative;display:flex;flex-direction:column;justify-content:flex-end;
@@ -137,8 +137,12 @@ export function Portfolio001({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="grid">
             {works.map((work) => (
               <a

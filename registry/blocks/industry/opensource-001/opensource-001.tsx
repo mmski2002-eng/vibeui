@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button096 } from "@/registry/components/button/button-096/button-096"
 
 export type Opensource001Row = {
   name: string
@@ -80,13 +81,6 @@ container-type:inline-size;
 [data-vibeui-block="opensource-001"] [data-reveal]{opacity:0}
 [data-vibeui-block="opensource-001"][data-shown="true"] [data-reveal]{opacity:1;animation:vibeui-opensource-001-up .8s var(--vibeui-opensource-001-ease) backwards;animation-delay:calc(.15s + var(--vibeui-opensource-001-i,0) * .09s)}
 [data-vibeui-block="opensource-001"] [data-part="toggles"]{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.8rem}
-[data-vibeui-block="opensource-001"] [data-part="toggle"]{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .8rem;border-radius:8px;border:1px solid var(--vibeui-opensource-001-line);background:var(--vibeui-opensource-001-panel);color:inherit;font:inherit;font-size:.85rem;font-weight:500;cursor:pointer;transition:border-color .2s,background .3s,transform .3s var(--vibeui-opensource-001-ease),box-shadow .3s}
-[data-vibeui-block="opensource-001"] [data-part="toggle"]:hover{transform:translateY(-2px);box-shadow:0 10px 24px -14px color-mix(in oklab,var(--vibeui-opensource-001-accent) 60%,transparent)}
-[data-vibeui-block="opensource-001"] [data-part="toggle"][aria-pressed="true"]{border-color:var(--vibeui-opensource-001-accent);background:color-mix(in oklab,var(--vibeui-opensource-001-accent) 10%,var(--vibeui-opensource-001-bg))}
-[data-vibeui-block="opensource-001"] [data-part="toggle"] i{width:1.6rem;height:.9rem;border-radius:999px;background:var(--vibeui-opensource-001-line);position:relative;transition:background .25s}
-[data-vibeui-block="opensource-001"] [data-part="toggle"] i::after{content:"";position:absolute;top:.1rem;left:.1rem;width:.7rem;height:.7rem;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgb(0 0 0 / .3);transition:transform .3s var(--vibeui-opensource-001-ease)}
-[data-vibeui-block="opensource-001"] [data-part="toggle"][aria-pressed="true"] i{background:var(--vibeui-opensource-001-accent)}
-[data-vibeui-block="opensource-001"] [data-part="toggle"][aria-pressed="true"] i::after{transform:translateX(.7rem)}
 [data-vibeui-block="opensource-001"] [data-part="scene"]{display:grid;gap:1rem;margin-top:1.4rem}
 [data-vibeui-block="opensource-001"] [data-part="steps"]{display:none;margin:0;padding:0;list-style:none}
 [data-vibeui-block="opensource-001"] [data-part="step"]{display:flex;align-items:center;min-height:52svh}
@@ -264,10 +258,7 @@ export function Opensource001({
           ) : null}
           <div data-part="toggles" data-reveal="" style={index(2)}>
             {toggles.map((label, toggleIndex) => (
-              <button key={label} type="button" data-part="toggle" aria-pressed={values[toggleIndex]} onClick={() => flip(toggleIndex)}>
-                <i aria-hidden="true" />
-                {label}
-              </button>
+              <Button096 key={label} data-part="toggle" label={label} aria-pressed={values[toggleIndex]} onClick={() => flip(toggleIndex)} accent={accent} />
             ))}
           </div>
           <div data-part="scene">

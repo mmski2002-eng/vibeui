@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 export type Testimonials014Props = {
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -23,7 +24,8 @@ export type Testimonials014Props = {
 // Расшифровка рядом обязательна — большинство не нажмёт play, а суть отзыва
 // должна дойти и до них. Кнопка нарисована, но не интерактивна: неработающий
 // настоящий button обманул бы клавиатуру и скринридер.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-014"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="testimonials-014"]){
 --vibeui-testimonials-014-bg:transparent;
 --vibeui-testimonials-014-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -46,14 +48,6 @@ font-family:var(--vibeui-testimonials-014-font);
 }
 [data-vibeui-block="testimonials-014"] [data-part="shell"]{
 max-width:70rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="testimonials-014"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-testimonials-014-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="testimonials-014"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="testimonials-014"] [data-part="layout"]{display:grid;gap:1.5rem;align-items:center}
 [data-vibeui-block="testimonials-014"] [data-part="poster"]{
@@ -178,8 +172,12 @@ export function Testimonials014({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="layout">
             <div
               data-part="poster"

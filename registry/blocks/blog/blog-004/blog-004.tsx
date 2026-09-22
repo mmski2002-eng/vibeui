@@ -1,4 +1,9 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Blog004Props = {
   eyebrow?: string
@@ -55,17 +60,6 @@ font-family:var(--vibeui-blog-004-sans);
 [data-vibeui-block="blog-004"] [data-part="frame"]{
 max-width:68rem;margin:0 auto;padding:3rem 1.25rem;display:grid;gap:1.75rem;align-items:start;
 }
-[data-vibeui-block="blog-004"] [data-part="eyebrow"]{
-font-size:0.75rem;font-weight:650;letter-spacing:0.09em;text-transform:uppercase;
-color:var(--vibeui-blog-004-accent);
-}
-[data-vibeui-block="blog-004"] h2{
-margin:0.5rem 0 0;max-width:18ch;font-weight:680;letter-spacing:-0.02em;
-font-size:clamp(1.5rem,3.8cqi,2.375rem);line-height:1.12;
-}
-[data-vibeui-block="blog-004"] [data-part="lede"]{
-margin:0.625rem 0 0;max-width:46ch;font-size:0.9375rem;line-height:1.65;color:var(--vibeui-blog-004-muted);
-}
 /* Три пункта вместо «полезных материалов»: обещание должно быть проверяемым. */
 [data-vibeui-block="blog-004"] ul{list-style:none;margin:1.125rem 0 0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="blog-004"] li{display:flex;gap:0.5625rem;font-size:0.875rem;line-height:1.55}
@@ -77,37 +71,6 @@ box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--vibeui-blog-004-accent) 60%,
 [data-vibeui-block="blog-004"] [data-part="panel"]{
 display:grid;gap:0.75rem;padding:1.25rem;border-radius:1.125rem;
 background:var(--vibeui-blog-004-panel);border:1px solid var(--vibeui-blog-004-border);
-}
-[data-vibeui-block="blog-004"] label[for]{font-size:0.8125rem;font-weight:640}
-[data-vibeui-block="blog-004"] [data-part="field"]{display:grid;gap:0.375rem}
-[data-vibeui-block="blog-004"] input[type="email"]{
-width:100%;height:2.75rem;padding:0 0.875rem;border-radius:0.75rem;
-border:1px solid var(--vibeui-blog-004-border);
-background:var(--vibeui-blog-004-bg);color:inherit;
-font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="blog-004"] input[type="email"]::placeholder{color:color-mix(in oklab,var(--vibeui-blog-004-muted) 70%,transparent)}
-/* :user-invalid, а не :invalid: пустое поле не должно краснеть заранее. */
-[data-vibeui-block="blog-004"] input[type="email"]:user-invalid{border-color:var(--vibeui-blog-004-alarm)}
-[data-vibeui-block="blog-004"] [data-part="error"]{
-font-size:0.75rem;line-height:1.45;color:var(--vibeui-blog-004-alarm);
-clip-path:inset(50%);position:absolute;width:1px;height:1px;overflow:hidden;
-}
-[data-vibeui-block="blog-004"] input[type="email"]:user-invalid ~ [data-part="error"]{
-position:static;width:auto;height:auto;clip-path:none;
-}
-[data-vibeui-block="blog-004"] button{
-appearance:none;cursor:pointer;border:0;width:100%;
-height:2.75rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-blog-004-accent);color:oklch(from var(--vibeui-blog-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:700;
-}
-[data-vibeui-block="blog-004"] [data-part="consent"]{
-display:flex;gap:0.5625rem;align-items:flex-start;cursor:pointer;
-font-size:0.75rem;line-height:1.5;color:var(--vibeui-blog-004-muted);
-}
-[data-vibeui-block="blog-004"] input[type="checkbox"]{
-flex:none;width:0.9375rem;height:0.9375rem;margin:0.125rem 0 0;accent-color:var(--vibeui-blog-004-accent);
 }
 [data-vibeui-block="blog-004"] [data-part="foot"]{
 display:flex;flex-wrap:wrap;gap:0.5rem 1rem;padding-top:0.75rem;
@@ -166,9 +129,14 @@ export function Blog004({
       >
         <div data-part="frame">
           <div>
-            <span data-part="eyebrow">{eyebrow}</span>
-            <h2>{title}</h2>
-            <p data-part="lede">{description}</p>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={description}
+              ledeWidth={46}
+              accent={accent}
+            />
             <ul>
               {bullets.map((bullet) => (
                 <li key={bullet}>{bullet}</li>
@@ -177,28 +145,20 @@ export function Blog004({
           </div>
 
           <form data-part="panel">
-            <div data-part="field">
-              <label htmlFor="blog-004-email">{emailLabel}</label>
-              <input
-                id="blog-004-email"
-                type="email"
-                name="email"
-                required
-                autoComplete="email"
-                placeholder={placeholder}
-                aria-describedby="blog-004-email-error"
-              />
-              <span id="blog-004-email-error" data-part="error">
-                {errorText}
-              </span>
-            </div>
+            <Input001
+              type="email"
+              name="email"
+              autoComplete="email"
+              required
+              label={emailLabel}
+              accent={accent}
+            />
 
-            <label data-part="consent">
-              <input type="checkbox" name="consent" required />
-              {consentLabel}
-            </label>
+            <Checkbox001 name="consent" required label={consentLabel} description="" accent={accent} />
 
-            <button type="submit">{submitLabel}</button>
+            <Button001 type="submit" size="lg" accent={accent}>
+              {submitLabel}
+            </Button001>
 
             <p data-part="foot">
               <span>{proof}</span>

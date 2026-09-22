@@ -1,6 +1,12 @@
 "use client"
 
 import { useId, useState, type CSSProperties, type FormEvent } from "react"
+import { Card025 } from "@/registry/components/card/card-025/card-025"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Select001 } from "@/registry/components/select/select-001/select-001"
 
 export type Contact015Props = {
   eyebrow?: string
@@ -58,34 +64,24 @@ container-type:inline-size;
 :where([data-vibeui-block="contact-015"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="contact-015"]{box-sizing:border-box;display:block;background:var(--vibeui-contact-015-bg);color:var(--vibeui-contact-015-fg);font-family:var(--vibeui-contact-015-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="contact-015"] *{box-sizing:border-box}
+[data-vibeui-block="contact-015"] [data-part="picture"]{width:100%;margin-top:1.75rem}
 [data-vibeui-block="contact-015"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem;display:grid;gap:2rem}
 [data-vibeui-block="contact-015"] [data-part="eyebrow"]{margin:0 0 .5rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-contact-015-accent);font-weight:600}
-[data-vibeui-block="contact-015"] [data-part="title"]{margin:0;font-family:var(--vibeui-contact-015-display);font-weight:500;font-size:clamp(2rem,4.5cqi,3.25rem);line-height:1.05}
+[data-vibeui-block="contact-015"] [data-part="heading"]{margin:0;font-family:var(--vibeui-contact-015-display);font-weight:500;font-size:clamp(2rem,4.5cqi,3.25rem);line-height:1.05}
 [data-vibeui-block="contact-015"] [data-part="lede"]{margin:.75rem 0 0;max-width:30rem;color:var(--vibeui-contact-015-muted)}
 [data-vibeui-block="contact-015"] [data-part="promises"]{margin:1.5rem 0 0;padding:0;list-style:none;display:grid;gap:.6rem}
 [data-vibeui-block="contact-015"] [data-part="promises"] li{display:flex;gap:.7rem;align-items:flex-start}
 [data-vibeui-block="contact-015"] [data-part="promises"] li::before{content:"";flex:none;width:.5rem;height:.5rem;margin-top:.5rem;border-radius:50%;background:var(--vibeui-contact-015-accent)}
-[data-vibeui-block="contact-015"] [data-part="picture"]{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:1rem;margin-top:1.75rem;background:light-dark(#e7dfd2,#2a2a2a)}
 [data-vibeui-block="contact-015"] [data-part="intro"]{display:flex;flex-direction:column}
+[data-vibeui-block="contact-015"] [data-part="picture"]{margin-top:1.75rem}
 [data-vibeui-block="contact-015"] [data-part="form"]{display:grid;gap:1rem;align-content:start;padding:1.5rem;border-radius:1rem;background:var(--vibeui-contact-015-card);border:1px solid var(--vibeui-contact-015-line)}
-[data-vibeui-block="contact-015"] [data-part="field"]{display:grid;gap:.35rem}
-[data-vibeui-block="contact-015"] [data-part="field"] span{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-contact-015-muted);font-weight:600}
-[data-vibeui-block="contact-015"] input:not([type="checkbox"]),[data-vibeui-block="contact-015"] select{width:100%;height:3rem;padding:0 .9rem;border:1px solid var(--vibeui-contact-015-line);border-radius:.6rem;background:transparent;font:inherit;color:inherit}
-[data-vibeui-block="contact-015"] select{appearance:none;padding-right:2.25rem;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23888' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right .9rem center;cursor:pointer}
-[data-vibeui-block="contact-015"] input:focus-visible,[data-vibeui-block="contact-015"] select:focus-visible{outline:2px solid var(--vibeui-contact-015-accent);outline-offset:1px}
-[data-vibeui-block="contact-015"] input::placeholder{color:var(--vibeui-contact-015-muted);opacity:.7}
 [data-vibeui-block="contact-015"] [data-part="pair"]{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-[data-vibeui-block="contact-015"] [data-part="consent"]{display:flex;gap:.6rem;align-items:flex-start;font-size:.8rem;color:var(--vibeui-contact-015-muted);cursor:pointer}
-[data-vibeui-block="contact-015"] [data-part="consent"] input{margin:.2rem 0 0;accent-color:var(--vibeui-contact-015-accent)}
-[data-vibeui-block="contact-015"] [data-part="submit"]{height:3.25rem;border:0;border-radius:.6rem;background:var(--vibeui-contact-015-accent);color:var(--vibeui-contact-015-on-accent);font:inherit;font-weight:700;cursor:pointer;transition:transform .2s,filter .2s}
-[data-vibeui-block="contact-015"] [data-part="submit"]:hover{transform:translateY(-1px);filter:brightness(1.05)}
-[data-vibeui-block="contact-015"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-contact-015-fg);outline-offset:2px}
 [data-vibeui-block="contact-015"] [data-part="done"]{display:grid;gap:.5rem;padding:2rem 1.5rem;border-radius:1rem;background:var(--vibeui-contact-015-card);border:1px solid var(--vibeui-contact-015-line);text-align:center}
 [data-vibeui-block="contact-015"] [data-part="done"] h3{margin:0;font-family:var(--vibeui-contact-015-display);font-size:2rem;font-weight:600;line-height:1.05}
 [data-vibeui-block="contact-015"] [data-part="done"] p{margin:0;color:var(--vibeui-contact-015-muted)}
 @container (min-width: 56rem){
+[data-vibeui-block="contact-015"] [data-part="picture"]{flex:1 1 0}
 [data-vibeui-block="contact-015"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem;padding:5.5rem 2rem;align-items:stretch}
-[data-vibeui-block="contact-015"] [data-part="picture"]{flex:1 1 0;height:0;min-height:12rem;aspect-ratio:auto}
 [data-vibeui-block="contact-015"] [data-part="form"]{align-self:stretch;align-content:space-between;gap:1.15rem}
 [data-vibeui-block="contact-015"] [data-part="form"],[data-vibeui-block="contact-015"] [data-part="done"]{padding:2rem}
 }
@@ -144,7 +140,7 @@ export function Contact015({
         <div data-part="shell">
           <div data-part="intro">
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2 data-part="title">{title}</h2>
+            <h2 data-part="heading">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
             {promises.length > 0 ? (
               <ul data-part="promises">
@@ -153,7 +149,7 @@ export function Contact015({
                 ))}
               </ul>
             ) : null}
-            {image ? <img data-part="picture" src={image} alt={imageAlt} loading="lazy" /> : null}
+            {image ? <Card025 data-part="picture" src={image} alt={imageAlt} ratio="3/2" /> : null}
           </div>
           {done ? (
             <div data-part="done" role="status">
@@ -162,35 +158,46 @@ export function Contact015({
             </div>
           ) : (
             <form data-part="form" action={action || undefined} method={action ? "post" : undefined} onSubmit={submit}>
-              <label data-part="field">
-                <span>{addressLabel}</span>
-                <input name="address" required placeholder={addressPlaceholder} autoComplete="street-address" />
-              </label>
+              <Input001
+                name="address"
+                autoComplete="street-address"
+                required
+                label={addressLabel}
+                accent={accent}
+              />
               <div data-part="pair">
-                <label data-part="field">
-                  <span>{areaLabel}</span>
-                  <input name="area" type="number" min={10} max={500} required placeholder="64" inputMode="numeric" />
-                </label>
-                <label data-part="field">
-                  <span>{roomsLabel}</span>
-                  <select name="rooms" defaultValue={rooms[1] ?? rooms[0]}>
-                    {rooms.map((room) => (
-                      <option key={room}>{room}</option>
-                    ))}
-                  </select>
-                </label>
+                <Input001
+                  name="area"
+                  type="number"
+                  min={10}
+                  max={500}
+                  inputMode="numeric"
+                  required
+                  label={areaLabel}
+                  accent={accent}
+                />
+                <Select001
+                  label={roomsLabel}
+                  placeholder=""
+                  options={rooms.map((room) => ({ value: room, label: room }))}
+                  name="rooms"
+                  defaultValue={rooms[1] ?? rooms[0]}
+                  accent={accent}
+                />
               </div>
-              <label data-part="field">
-                <span>{phoneLabel}</span>
-                <input id={`${id}-phone`} name="phone" type="tel" required inputMode="tel" autoComplete="tel" placeholder={phonePlaceholder} />
-              </label>
-              <label data-part="consent">
-                <input type="checkbox" name="consent" required />
-                <span>{consentLabel}</span>
-              </label>
-              <button type="submit" data-part="submit">
+              <Input001
+                name="phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                required
+                label={phoneLabel}
+                accent={accent}
+              />
+              <Checkbox001 name="consent" required label={consentLabel} description="" accent={accent} />
+              <Button001 type="submit" size="lg" accent={accent}>
                 {submitLabel}
-              </button>
+              </Button001>
             </form>
           )}
         </div>

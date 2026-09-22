@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero040Transaction = {
   title: string
   note: string
@@ -85,12 +87,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-040"] [data-part="title"] em{font-style:normal;background:var(--vibeui-hero-040-aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
 [data-vibeui-block="hero-040"] [data-part="lede"]{margin:1.4rem 0 0;max-width:32rem;font-size:1.1rem;color:var(--vibeui-hero-040-muted)}
 [data-vibeui-block="hero-040"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:2rem 0 0}
-[data-vibeui-block="hero-040"] [data-part="primary"],[data-vibeui-block="hero-040"] [data-part="secondary"]{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 1.5rem;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .18s,box-shadow .25s,background .2s}
-[data-vibeui-block="hero-040"] [data-part="primary"]{background:var(--vibeui-hero-040-accent);color:var(--vibeui-hero-040-on-accent)}
-[data-vibeui-block="hero-040"] [data-part="primary"]:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px var(--vibeui-hero-040-accent)}
-[data-vibeui-block="hero-040"] [data-part="secondary"]{color:var(--vibeui-hero-040-fg);border:1px solid var(--vibeui-hero-040-line);background:var(--vibeui-hero-040-glass)}
-[data-vibeui-block="hero-040"] [data-part="secondary"]:hover{transform:translateY(-2px);background:color-mix(in oklab,var(--vibeui-hero-040-fg) 10%,transparent)}
-[data-vibeui-block="hero-040"] a:focus-visible,[data-vibeui-block="hero-040"] button:focus-visible{outline:2px solid var(--vibeui-hero-040-accent);outline-offset:2px}
+[data-vibeui-block="hero-040"] button:focus-visible{outline:2px solid var(--vibeui-hero-040-accent);outline-offset:2px}
 [data-vibeui-block="hero-040"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:1.4rem 2.2rem;margin:2.4rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--vibeui-hero-040-line);list-style:none}
 [data-vibeui-block="hero-040"] [data-part="facts"] strong{display:block;font-family:var(--vibeui-hero-040-mono);font-weight:600;font-size:1.25rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 [data-vibeui-block="hero-040"] [data-part="facts"] span{font-size:.82rem;color:var(--vibeui-hero-040-muted)}
@@ -242,14 +239,26 @@ export function Hero040({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
             {facts.length > 0 ? (

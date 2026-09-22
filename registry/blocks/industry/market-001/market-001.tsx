@@ -1,6 +1,7 @@
 "use client"
 
 import { useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button092 } from "@/registry/components/button/button-092/button-092"
 
 export type Market001Product = {
   name: string
@@ -95,10 +96,6 @@ container-type:inline-size;
 [data-vibeui-block="market-001"] [data-part="lede"]{margin:.8rem 0 0;max-width:34rem;color:var(--vibeui-market-001-muted)}
 [data-vibeui-block="market-001"] [data-part="bar"]{display:grid;gap:.8rem;margin:2rem 0 0;padding:1rem 0;border-top:1px solid var(--vibeui-market-001-line);border-bottom:1px solid var(--vibeui-market-001-line)}
 [data-vibeui-block="market-001"] [data-part="chips"],[data-vibeui-block="market-001"] [data-part="sorts"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="market-001"] [data-part="chip"]{height:2.2rem;padding:0 .95rem;border-radius:999px;border:1px solid var(--vibeui-market-001-line);background:transparent;color:var(--vibeui-market-001-fg);font:inherit;font-size:.86rem;font-weight:500;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
-[data-vibeui-block="market-001"] [data-part="chip"]:hover{background:var(--vibeui-market-001-soft)}
-[data-vibeui-block="market-001"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-market-001-fg);color:var(--vibeui-market-001-bg);border-color:var(--vibeui-market-001-fg)}
-[data-vibeui-block="market-001"] [data-part="chip"] small{margin-left:.4rem;font-family:var(--vibeui-market-001-mono);font-size:.66rem;opacity:.6}
 [data-vibeui-block="market-001"] [data-part="sorts"]{align-items:center;font-family:var(--vibeui-market-001-mono);font-size:.72rem}
 [data-vibeui-block="market-001"] [data-part="sorts"] [data-part="sort-label"]{margin-right:.4rem;color:var(--vibeui-market-001-muted);letter-spacing:.06em;text-transform:uppercase}
 [data-vibeui-block="market-001"] [data-part="sort"]{height:2rem;padding:0 .7rem;border-radius:.5rem;border:0;background:transparent;color:var(--vibeui-market-001-muted);font:inherit;cursor:pointer;transition:color .2s,background .2s}
@@ -325,19 +322,16 @@ export function Market001({
           <div data-part="bar">
             <ul data-part="chips" aria-label={chipsLabel}>
               <li>
-                <button data-part="chip" type="button" aria-pressed={kind === "all"} onClick={() => pickKind("all")}>
-                  {allLabel}
-                  <small>{products.length}</small>
-                </button>
+                <Button092 data-part="chip" label={allLabel} count={products.length} aria-pressed={kind === "all"} onClick={() => pickKind("all")} accent={accent} />
               </li>
-              {kinds.map((item) => (
-                <li key={item.key}>
-                  <button data-part="chip" type="button" aria-pressed={kind === item.key} onClick={() => pickKind(item.key)}>
-                    {item.label}
-                    <small>{counts.get(item.key) ?? 0}</small>
-                  </button>
-                </li>
-              ))}
+              {kinds.map((item) => {
+                const count = counts.get(item.key) ?? 0
+                return (
+                  <li key={item.key}>
+                    <Button092 data-part="chip" label={item.label} count={count} aria-pressed={kind === item.key} onClick={() => pickKind(item.key)} accent={accent} />
+                  </li>
+                )
+              })}
             </ul>
             <ul data-part="sorts" aria-label={sortsLabel}>
               <li data-part="sort-label" aria-hidden="true">

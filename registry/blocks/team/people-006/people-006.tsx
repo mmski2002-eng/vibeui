@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type People006Stat = {
   value: string
@@ -24,7 +25,8 @@ export type People006Props = {
 // быстрее любых портретов, а сетка инициалов показывает масштаб, не
 // раскрывая лиц. Счётчики свёрстаны как <dl>: значение и подпись — это
 // пара «термин — определение», а не два абзаца.
-const STYLES = `
+const STYLES = `[data-vibeui-block="people-006"] [data-part="heading"]{margin-bottom:1.75rem}
+
 :where([data-vibeui-block="people-006"]){
 --vibeui-people-006-bg:transparent;
 --vibeui-people-006-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -45,18 +47,6 @@ font-family:var(--vibeui-people-006-font);
 }
 [data-vibeui-block="people-006"] [data-part="shell"]{max-width:70rem;margin:0 auto;padding:3rem 1.25rem}
 [data-vibeui-block="people-006"] [data-part="layout"]{display:grid;gap:2.5rem;align-items:start}
-[data-vibeui-block="people-006"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-people-006-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="people-006"] [data-part="title"]{
-margin:0 0 0.875rem;max-width:20ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="people-006"] [data-part="description"]{
-margin:0 0 1.75rem;max-width:46ch;
-color:var(--vibeui-people-006-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="people-006"] [data-part="faces"]{
 display:flex;flex-wrap:wrap;gap:0.5rem;margin:0;padding:0;list-style:none;
 }
@@ -179,9 +169,14 @@ export function People006({
         <div data-part="shell">
           <div data-part="layout">
             <div data-part="intro">
-              <p data-part="eyebrow">{eyebrow}</p>
-              <h2 data-part="title">{title}</h2>
-              <p data-part="description">{description}</p>
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                lede={description}
+                ledeWidth={46}
+                accent={accent}
+              />
               <ul data-part="faces">
                 {faces.map((name) => (
                   <li key={name} data-part="face" title={name}>

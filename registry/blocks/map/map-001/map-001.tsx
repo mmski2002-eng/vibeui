@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 import type { CSSProperties } from "react"
 
 export type Map001Props = {
@@ -100,17 +101,6 @@ font-family:var(--vibeui-map-001-sans);
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
 }
 [data-vibeui-block="map-001"] [data-part="head"]{max-width:46ch;margin:0 0 1.5rem}
-[data-vibeui-block="map-001"] [data-part="eyebrow"]{
-font-size:0.75rem;font-weight:650;letter-spacing:0.09em;text-transform:uppercase;
-color:var(--vibeui-map-001-accent);
-}
-[data-vibeui-block="map-001"] h2{
-margin:0.5rem 0 0;font-weight:680;letter-spacing:-0.02em;
-font-size:clamp(1.5rem,3.6cqi,2.25rem);line-height:1.14;
-}
-[data-vibeui-block="map-001"] [data-part="lede"]{
-margin:0.625rem 0 0;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-map-001-muted);
-}
 [data-vibeui-block="map-001"] [data-part="stage"]{
 position:relative;overflow:hidden;border-radius:1.5rem;
 color:var(--vibeui-map-001-fg);
@@ -447,9 +437,13 @@ export function Map001({
       >
         <div data-part="frame">
           <div data-part="head">
-            <span data-part="eyebrow">{eyebrow}</span>
-            <h2>{title}</h2>
-            <p data-part="lede">{description}</p>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={description}
+              accent={accent}
+            />
           </div>
 
           <div data-part="stage" style={stageStyle}>

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Sociallinks004 } from "@/registry/components/navigation/sociallinks-004/sociallinks-004"
 
 export type Footer043Link = {
   label: string
@@ -61,6 +62,7 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-043"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-043"]{box-sizing:border-box;padding:3.5rem 0 2rem;background:var(--vibeui-footer-043-bg);color:var(--vibeui-footer-043-fg);font-family:var(--vibeui-footer-043-font);font-size:.95rem;line-height:1.5}
 [data-vibeui-block="footer-043"] *{box-sizing:border-box}
+[data-vibeui-block="footer-043"] [data-part="socials"]{margin:1.2rem 0 0}
 [data-vibeui-block="footer-043"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="footer-043"] [data-part="seam"]{border:0;border-top:2px dashed var(--vibeui-footer-043-line);margin:0 0 3rem}
 [data-vibeui-block="footer-043"] [data-part="grid"]{display:grid;gap:2.5rem}
@@ -78,9 +80,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-043"] [data-part="req"] dd{margin:0;font-family:var(--vibeui-footer-043-mono);font-size:.85rem;word-break:break-all;user-select:all}
 [data-vibeui-block="footer-043"] [data-part="doc"]{display:inline-flex;align-items:center;gap:.5rem}
 [data-vibeui-block="footer-043"] [data-part="doc"] svg{width:1rem;height:1rem;flex-shrink:0;color:var(--vibeui-footer-043-accent)}
-[data-vibeui-block="footer-043"] [data-part="socials"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="footer-043"] [data-part="socials"] a{display:inline-flex;align-items:center;padding:.4rem .8rem;border-radius:999px;border:1px solid var(--vibeui-footer-043-line);font-size:.85rem;font-weight:500;color:var(--vibeui-footer-043-fg);text-decoration:none;transition:border-color .2s,background .2s}
-[data-vibeui-block="footer-043"] [data-part="socials"] a:hover{border-color:var(--vibeui-footer-043-accent);background:var(--vibeui-footer-043-soft)}
 [data-vibeui-block="footer-043"] [data-part="bottom"]{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6rem 1.5rem;margin:3rem 0 0;padding-top:1.2rem;border-top:1px solid var(--vibeui-footer-043-line);font-size:.8rem;color:var(--vibeui-footer-043-muted)}
 [data-vibeui-block="footer-043"] [data-part="bottom"] ul{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="footer-043"] [data-part="bottom"] a{color:inherit;text-decoration:none}
@@ -165,13 +164,7 @@ export function Footer043({
               {legalName ? <p data-part="legal-name">{legalName}</p> : null}
               {thanks ? <p data-part="thanks">{thanks}</p> : null}
               {socials.length > 0 ? (
-                <ul data-part="socials" aria-label={socialsLabel}>
-                  {socials.map((item) => (
-                    <li key={item.label}>
-                      <a href={item.href}>{item.label}</a>
-                    </li>
-                  ))}
-                </ul>
+                <Sociallinks004 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
               ) : null}
             </div>
             <div data-part="col">

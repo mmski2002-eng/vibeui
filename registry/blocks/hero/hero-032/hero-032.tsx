@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button125 } from "@/registry/components/button/button-125/button-125"
 
 export type Hero032Props = {
   eyebrow?: string
@@ -84,10 +85,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-032"] [data-part="w"] span[data-mark]{background:linear-gradient(120deg,var(--vibeui-hero-032-accent),color-mix(in oklab,var(--vibeui-hero-032-accent) 50%,#ff8fd8));-webkit-background-clip:text;background-clip:text;color:transparent}
 [data-vibeui-block="hero-032"] [data-part="lede"]{margin:1.6rem 0 0;max-width:30rem;font-size:1.15rem;color:var(--vibeui-hero-032-muted);animation-delay:.55s}
 [data-vibeui-block="hero-032"] [data-part="stores"]{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem;animation-delay:.7s}
-[data-vibeui-block="hero-032"] [data-part="store"]{display:inline-flex;flex-direction:column;padding:.65rem 1.25rem .7rem;border-radius:1rem;background:var(--vibeui-hero-032-fg);color:var(--vibeui-hero-032-bg);text-decoration:none;line-height:1.1;transform:translate(var(--vibeui-hero-032-mx,0px),var(--vibeui-hero-032-my,0px));transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,box-shadow .35s}
-[data-vibeui-block="hero-032"] [data-part="store"]:hover{background:var(--vibeui-hero-032-accent);color:var(--vibeui-hero-032-on-accent);box-shadow:0 18px 40px -18px color-mix(in oklab,var(--vibeui-hero-032-accent) 70%,transparent)}
-[data-vibeui-block="hero-032"] [data-part="store"] small{font-size:.62rem;opacity:.75;letter-spacing:.04em;text-transform:uppercase}
-[data-vibeui-block="hero-032"] [data-part="store"] b{font-size:1.05rem;font-weight:700}
 [data-vibeui-block="hero-032"] [data-part="rating"]{display:flex;align-items:center;gap:.6rem;margin-top:1.6rem;font-size:.9rem;color:var(--vibeui-hero-032-muted);animation-delay:.85s}
 [data-vibeui-block="hero-032"] [data-part="rating"] b{font-family:var(--vibeui-hero-032-mono);color:var(--vibeui-hero-032-fg)}
 [data-vibeui-block="hero-032"] [data-part="stars"]{display:inline-flex;gap:.1rem;color:var(--vibeui-hero-032-accent)}
@@ -248,16 +245,10 @@ export function Hero032({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="stores">
               {appStoreLabel ? (
-                <a data-part="store" href={appStoreHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                  <small>{appStoreCaption}</small>
-                  <b>{appStoreLabel}</b>
-                </a>
+                <Button125 data-part="store" href={appStoreHref} caption={appStoreCaption} label={appStoreLabel} onPointerMove={magnet} onPointerLeave={unmagnet} accent={accent} />
               ) : null}
               {playLabel ? (
-                <a data-part="store" href={playHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                  <small>{playCaption}</small>
-                  <b>{playLabel}</b>
-                </a>
+                <Button125 data-part="store" href={playHref} caption={playCaption} label={playLabel} onPointerMove={magnet} onPointerLeave={unmagnet} accent={accent} />
               ) : null}
             </div>
             {rating ? (

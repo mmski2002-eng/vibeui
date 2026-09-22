@@ -1,6 +1,7 @@
 "use client"
 
 import { Fragment, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button098 } from "@/registry/components/button/button-098/button-098"
 
 export type Podcast006Stat = {
   /** Число для счётчика. */
@@ -80,19 +81,10 @@ container-type:inline-size;
 [data-vibeui-block="podcast-006"] [data-part="platforms"]{display:grid;grid-template-columns:repeat(auto-fill,minmax(9rem,1fr));gap:.8rem;margin:0;padding:0;list-style:none;perspective:900px}
 [data-vibeui-block="podcast-006"] [data-part="platforms"] li{animation:vibeui-podcast-006-up .7s var(--vibeui-podcast-006-ease) both paused;animation-delay:calc(.7s + var(--vibeui-podcast-006-i) * 70ms)}
 [data-vibeui-block="podcast-006"][data-in="true"] [data-part="eyebrow"],[data-vibeui-block="podcast-006"][data-in="true"] [data-part="w"] i,[data-vibeui-block="podcast-006"][data-in="true"] [data-part="lede"],[data-vibeui-block="podcast-006"][data-in="true"] [data-part="stats"] li,[data-vibeui-block="podcast-006"][data-in="true"] [data-part="plabel"],[data-vibeui-block="podcast-006"][data-in="true"] [data-part="platforms"] li{animation-play-state:running}
-[data-vibeui-block="podcast-006"] [data-part="p"]{position:relative;display:grid;gap:.8rem;padding:1.1rem;border-radius:1rem;background:var(--vibeui-podcast-006-bg);box-shadow:0 0 0 1px var(--vibeui-podcast-006-line);color:inherit;text-decoration:none;overflow:hidden;transform:rotateX(calc(var(--vibeui-podcast-006-ty) * 8deg)) rotateY(calc(var(--vibeui-podcast-006-tx) * -8deg));transition:transform .3s var(--vibeui-podcast-006-ease),box-shadow .3s,background .3s}
-[data-vibeui-block="podcast-006"] [data-part="p"]::before{content:"";position:absolute;inset:0;background:radial-gradient(10rem circle at var(--vibeui-podcast-006-x,50%) var(--vibeui-podcast-006-y,50%),color-mix(in oklab,var(--vibeui-podcast-006-accent) 22%,transparent),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
-[data-vibeui-block="podcast-006"] [data-part="p"]:hover::before{opacity:1}
-[data-vibeui-block="podcast-006"] [data-part="p"] > *{position:relative}
-[data-vibeui-block="podcast-006"] [data-part="p"]:hover{box-shadow:0 0 0 1px var(--vibeui-podcast-006-accent),0 20px 40px -24px color-mix(in oklab,var(--vibeui-podcast-006-accent) 60%,rgb(0 0 0 / .6));background:color-mix(in oklab,var(--vibeui-podcast-006-accent) 8%,var(--vibeui-podcast-006-bg))}
-[data-vibeui-block="podcast-006"] [data-part="p"]:focus-visible{outline:2px solid var(--vibeui-podcast-006-accent);outline-offset:3px}
-[data-vibeui-block="podcast-006"] [data-part="mark"]{width:2.4rem;height:2.4rem;border-radius:.6rem;display:grid;place-items:center;background:var(--vibeui-podcast-006-fg);color:var(--vibeui-podcast-006-bg);font-family:var(--vibeui-podcast-006-display);font-weight:800;font-size:1.1rem;text-transform:uppercase;transition:background .3s,color .3s,transform .4s var(--vibeui-podcast-006-ease)}
-[data-vibeui-block="podcast-006"] [data-part="p"]:hover [data-part="mark"]{background:var(--vibeui-podcast-006-accent);color:var(--vibeui-podcast-006-on-accent);transform:rotate(-8deg) scale(1.1)}
-[data-vibeui-block="podcast-006"] [data-part="p"] span{font-weight:500;font-size:.92rem}
 @keyframes vibeui-podcast-006-word{from{translate:0 110%;rotate:3deg}}
 @keyframes vibeui-podcast-006-up{from{opacity:0;translate:0 1.4rem}}
 @container (min-width: 48rem){[data-vibeui-block="podcast-006"] [data-part="stats"]{grid-template-columns:repeat(3,1fr)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="podcast-006"] *,[data-vibeui-block="podcast-006"] *::before{transition:none!important;animation:none!important}[data-vibeui-block="podcast-006"] [data-part="p"],[data-vibeui-block="podcast-006"] [data-part="mark"]{transform:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="podcast-006"] *,[data-vibeui-block="podcast-006"] *::before{transition:none!important;animation:none!important}}`
 
 const format = (n: number, target: number) => new Intl.NumberFormat("ru-RU", { maximumFractionDigits: Number.isInteger(target) ? 0 : 1, minimumFractionDigits: Number.isInteger(target) ? 0 : 1 }).format(n)
 
@@ -175,14 +167,14 @@ export function Podcast006({
     const rect = event.currentTarget.getBoundingClientRect()
     const x = (event.clientX - rect.left) / rect.width
     const y = (event.clientY - rect.top) / rect.height
-    event.currentTarget.style.setProperty("--vibeui-podcast-006-tx", (x * 2 - 1).toFixed(2))
-    event.currentTarget.style.setProperty("--vibeui-podcast-006-ty", (y * 2 - 1).toFixed(2))
+    event.currentTarget.style.setProperty("--vibeui-button-098-tx", (x * 2 - 1).toFixed(2))
+    event.currentTarget.style.setProperty("--vibeui-button-098-ty", (y * 2 - 1).toFixed(2))
     event.currentTarget.style.setProperty("--vibeui-podcast-006-x", `${(x * 100).toFixed(1)}%`)
     event.currentTarget.style.setProperty("--vibeui-podcast-006-y", `${(y * 100).toFixed(1)}%`)
   }
   const reset = (event: PointerEvent<HTMLAnchorElement>) => {
-    event.currentTarget.style.setProperty("--vibeui-podcast-006-tx", "0")
-    event.currentTarget.style.setProperty("--vibeui-podcast-006-ty", "0")
+    event.currentTarget.style.setProperty("--vibeui-button-098-tx", "0")
+    event.currentTarget.style.setProperty("--vibeui-button-098-ty", "0")
   }
 
   const palette = {
@@ -225,12 +217,7 @@ export function Podcast006({
               <ul data-part="platforms">
                 {platforms.map((platform, index) => (
                   <li key={platform.name} style={{ ["--vibeui-podcast-006-i" as string]: index }}>
-                    <a data-part="p" href={platform.href} onPointerMove={tilt} onPointerLeave={reset} style={{ ["--vibeui-podcast-006-tx" as string]: 0, ["--vibeui-podcast-006-ty" as string]: 0 }}>
-                      <span data-part="mark" aria-hidden="true">
-                        {platform.mark ?? platform.name.charAt(0)}
-                      </span>
-                      <span>{platform.name}</span>
-                    </a>
+                    <Button098 data-part="p" href={platform.href} mark={platform.mark} name={platform.name} onPointerMove={tilt} onPointerLeave={reset} accent={accent} />
                   </li>
                 ))}
               </ul>

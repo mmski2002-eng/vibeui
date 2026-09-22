@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react"
+import { Card036 } from "@/registry/components/card/card-036/card-036"
 
 export type Testimonials027Entry = {
   /** Кличка питомца — заголовок записи. */
@@ -56,6 +57,7 @@ container-type:inline-size;
 :where([data-vibeui-block="testimonials-027"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="testimonials-027"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-testimonials-027-bg);color:var(--vibeui-testimonials-027-fg);font-family:var(--vibeui-testimonials-027-font);font-size:1rem;line-height:1.5;overflow:hidden}
 [data-vibeui-block="testimonials-027"] *{box-sizing:border-box}
+[data-vibeui-block="testimonials-027"] [data-part="card"]{flex:0 0 16rem}
 [data-vibeui-block="testimonials-027"] [data-part="head"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:1rem}
 [data-vibeui-block="testimonials-027"] [data-part="eyebrow"]{margin:0 0 .7rem;font-weight:600;font-size:.85rem;letter-spacing:.02em;color:var(--vibeui-testimonials-027-accent)}
 [data-vibeui-block="testimonials-027"] [data-part="title"]{margin:0;font-family:var(--vibeui-testimonials-027-display);font-weight:900;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1;letter-spacing:-.03em}
@@ -65,19 +67,6 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-027"] [data-part="track"]{display:flex;gap:1.5rem;margin:2.4rem 0 0;padding:1.5rem max(1.25rem,calc((100% - 80rem) / 2 + 1.25rem)) 2rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;user-select:none;-webkit-user-select:none}
 [data-vibeui-block="testimonials-027"] [data-part="track"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="testimonials-027"] [data-part="track"][data-dragging="true"]{scroll-snap-type:none;cursor:grabbing}
-[data-vibeui-block="testimonials-027"] [data-part="card"]{position:relative;flex:0 0 16rem;scroll-snap-align:center;padding:.9rem .9rem 1.1rem;border-radius:.4rem;background:var(--vibeui-testimonials-027-paper);box-shadow:0 1px 0 rgb(255 255 255 / .5) inset,0 20px 40px -24px rgb(0 0 0 / .5),0 0 0 1px var(--vibeui-testimonials-027-line);transform:rotate(var(--vibeui-testimonials-027-r));transition:transform .3s cubic-bezier(.34,1.4,.64,1),box-shadow .3s}
-[data-vibeui-block="testimonials-027"] [data-part="card"]:nth-child(4n+1){--vibeui-testimonials-027-r:-3deg}
-[data-vibeui-block="testimonials-027"] [data-part="card"]:nth-child(4n+2){--vibeui-testimonials-027-r:2deg}
-[data-vibeui-block="testimonials-027"] [data-part="card"]:nth-child(4n+3){--vibeui-testimonials-027-r:-1.5deg}
-[data-vibeui-block="testimonials-027"] [data-part="card"]:nth-child(4n+4){--vibeui-testimonials-027-r:3deg}
-[data-vibeui-block="testimonials-027"] [data-part="card"]:hover{transform:rotate(0) translateY(-8px) scale(1.02);box-shadow:0 30px 50px -24px rgb(0 0 0 / .55),0 0 0 1px var(--vibeui-testimonials-027-line);z-index:2}
-[data-vibeui-block="testimonials-027"] [data-part="tape"]{position:absolute;left:50%;top:-.7rem;width:6rem;height:1.5rem;margin-left:-3rem;background:color-mix(in oklab,var(--vibeui-testimonials-027-accent) 30%,rgb(255 255 255 / .6));opacity:.8;transform:rotate(-2deg);box-shadow:0 1px 3px rgb(0 0 0 / .1)}
-[data-vibeui-block="testimonials-027"] [data-part="photo"]{position:relative;aspect-ratio:4/5;overflow:hidden;background:linear-gradient(160deg,color-mix(in oklab,var(--vibeui-testimonials-027-accent) 25%,var(--vibeui-testimonials-027-bg)),color-mix(in oklab,var(--vibeui-testimonials-027-accent) 60%,var(--vibeui-testimonials-027-fg)))}
-[data-vibeui-block="testimonials-027"] [data-part="photo"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-[data-vibeui-block="testimonials-027"] [data-part="sticker"]{position:absolute;right:-.6rem;top:.8rem;z-index:2;padding:.35rem .7rem;border-radius:999px;background:var(--vibeui-testimonials-027-accent);color:var(--vibeui-testimonials-027-on-accent);font-family:var(--vibeui-testimonials-027-display);font-weight:800;font-size:.75rem;transform:rotate(8deg);box-shadow:0 6px 14px -6px var(--vibeui-testimonials-027-accent)}
-[data-vibeui-block="testimonials-027"] [data-part="caption"]{margin:.8rem 0 0;font-family:var(--vibeui-testimonials-027-hand);font-weight:500;font-size:1.25rem;line-height:1.15;color:var(--vibeui-testimonials-027-fg)}
-[data-vibeui-block="testimonials-027"] [data-part="caption"] b{display:block;font-weight:700;font-size:1.5rem}
-[data-vibeui-block="testimonials-027"] [data-part="meta"]{display:flex;justify-content:space-between;gap:.6rem;margin:.7rem 0 0;font-size:.75rem;color:var(--vibeui-testimonials-027-muted)}
 @keyframes vibeui-testimonials-027-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-027"] *{animation:none!important;transition:none!important}}`
 
@@ -157,19 +146,7 @@ export function Testimonials027({
         </div>
         <ul data-part="track" ref={trackRef} data-dragging={dragging} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} aria-label={trackLabel}>
           {entries.map((entry) => (
-            <li key={entry.pet + entry.date} data-part="card">
-              <i data-part="tape" aria-hidden="true" />
-              {entry.sticker ? <span data-part="sticker">{entry.sticker}</span> : null}
-              <div data-part="photo">{entry.photo ? <img src={entry.photo} alt={entry.pet} loading="lazy" draggable={false} /> : null}</div>
-              <p data-part="caption">
-                <b>{entry.pet}</b>
-                {entry.text}
-              </p>
-              <p data-part="meta">
-                <span>{entry.owner}</span>
-                <span>{entry.date}</span>
-              </p>
-            </li>
+            <Card036 key={entry.pet + entry.date} data-part="card" pet={entry.pet} date={entry.date} sticker={entry.sticker} photo={entry.photo} text={entry.text} owner={entry.owner} accent={accent} />
           ))}
         </ul>
       </section>

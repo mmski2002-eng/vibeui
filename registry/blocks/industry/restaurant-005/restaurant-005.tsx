@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button094 } from "@/registry/components/button/button-094/button-094"
 import { createPortal } from "react-dom"
 
 export type Restaurant005Photo = {
@@ -54,6 +55,7 @@ container-type:inline-size;
 :where([data-vibeui-block="restaurant-005"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="restaurant-005"]{box-sizing:border-box;display:block;background:var(--vibeui-restaurant-005-bg);color:var(--vibeui-restaurant-005-fg);font-family:var(--vibeui-restaurant-005-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="restaurant-005"] *{box-sizing:border-box}
+[data-vibeui-block="restaurant-005"] [data-part="frame"]{width:100%}
 [data-vibeui-block="restaurant-005"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem;overflow:hidden}
 [data-vibeui-block="restaurant-005"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 3rem;margin-bottom:4rem}
 [data-vibeui-block="restaurant-005"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--vibeui-restaurant-005-accent-ink);font-weight:600}
@@ -64,13 +66,6 @@ container-type:inline-size;
 [data-vibeui-block="restaurant-005"] [data-part="column"]:nth-child(1){--vibeui-restaurant-005-k:-1rem}
 [data-vibeui-block="restaurant-005"] [data-part="column"]:nth-child(2){--vibeui-restaurant-005-k:1.5rem}
 [data-vibeui-block="restaurant-005"] [data-part="column"]:nth-child(3){--vibeui-restaurant-005-k:-2rem}
-[data-vibeui-block="restaurant-005"] [data-part="frame"]{position:relative;display:block;width:100%;padding:0;border:0;border-radius:.9rem;overflow:hidden;background:light-dark(#e7dfd2,#231d1a);cursor:zoom-in;aspect-ratio:var(--vibeui-restaurant-005-aspect,3/2)}
-[data-vibeui-block="restaurant-005"] [data-part="frame"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="restaurant-005"] [data-part="frame"]:hover img{transform:scale(1.05)}
-[data-vibeui-block="restaurant-005"] [data-part="frame"][data-hidden="true"] img{visibility:hidden}
-[data-vibeui-block="restaurant-005"] [data-part="frame"]:focus-visible{outline:2px solid var(--vibeui-restaurant-005-accent);outline-offset:3px}
-[data-vibeui-block="restaurant-005"] [data-part="caption"]{position:absolute;left:.75rem;bottom:.75rem;padding:.3rem .6rem;border-radius:.4rem;background:rgb(20 17 16 / .6);color:#f2ebe0;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;backdrop-filter:blur(6px);opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
-[data-vibeui-block="restaurant-005"] [data-part="frame"]:hover [data-part="caption"]{opacity:1;transform:none}
 [data-vibeui-block="restaurant-005"][data-part="layer"]{position:fixed;inset:0;z-index:60;color:#f2ebe0}
 [data-vibeui-block="restaurant-005"] [data-part="backdrop"]{position:absolute;inset:0;background:rgb(20 17 16 / .88);opacity:0;transition:opacity .4s}
 [data-vibeui-block="restaurant-005"][data-phase="open"] [data-part="backdrop"]{opacity:1}
@@ -267,21 +262,9 @@ export function Restaurant005({
             {columns.map((column, columnIndex) => (
               <div key={columnIndex} data-part="column">
                 {column.map(({ photo, index }) => (
-                  <button
-                    key={index}
-                    ref={(element) => {
+                  <Button094 key={index} data-part="frame" aspect={photo.aspect} caption={photo.caption} alt={photo.alt} src={photo.src} openLabel={openLabel} ref={(element) => {
                       frames.current[index] = element
-                    }}
-                    type="button"
-                    data-part="frame"
-                    data-hidden={phase !== "closed" && current === index}
-                    style={{ ["--vibeui-restaurant-005-aspect" as string]: photo.aspect ?? "3 / 2" }}
-                    aria-label={photo.caption ?? photo.alt ?? openLabel}
-                    onClick={() => open(index)}
-                  >
-                    {photo.src ? <img src={photo.src} alt={photo.alt ?? ""} loading="lazy" /> : null}
-                    {photo.caption ? <span data-part="caption">{photo.caption}</span> : null}
-                  </button>
+                    }} data-hidden={phase !== "closed" && current === index} onClick={() => open(index)} accent={accent} />
                 ))}
               </div>
             ))}

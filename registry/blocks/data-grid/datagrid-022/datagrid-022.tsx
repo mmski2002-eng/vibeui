@@ -1,6 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
+import { Card170 } from "@/registry/components/card/card-170/card-170"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid022Row = {
@@ -70,20 +71,6 @@ border:1px solid var(--vibeui-datagrid-022-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-022-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-022"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-022"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
-padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-022-border);
-}
-[data-vibeui-block="datagrid-022"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-022"] [data-part="status"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-022-muted)}
-[data-vibeui-block="datagrid-022"] [data-part="status"][data-bad="true"]{color:var(--vibeui-datagrid-022-bad);font-weight:600}
-[data-vibeui-block="datagrid-022"] [data-part="save"]{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
-padding:0.375rem 0.75rem;border-radius:0.5rem;border:1px solid transparent;
-background:var(--vibeui-datagrid-022-accent);color:oklch(from var(--vibeui-datagrid-022-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-}
-[data-vibeui-block="datagrid-022"] [data-part="save"]:disabled{opacity:.4;cursor:not-allowed}
-[data-vibeui-block="datagrid-022"] [data-part="save"]:focus-visible{outline:2px solid var(--vibeui-datagrid-022-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-022"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-022"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-022-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-022"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -326,29 +313,7 @@ export function Datagrid022({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p
-            data-part="status"
-            data-bad={problems.length > 0 ? "true" : undefined}
-            role="status"
-            aria-live="polite"
-          >
-            {problems.length > 0
-              ? errorsTemplate.replace("{count}", String(problems.length))
-              : saved
-                ? savedText
-                : okText}
-          </p>
-          <button
-            type="button"
-            data-part="save"
-            disabled={problems.length > 0}
-            onClick={() => setSaved(true)}
-          >
-            {saveText}
-          </button>
-        </div>
+        <Card170 data-part="bar" heading={heading} errorsTemplate={errorsTemplate} savedText={savedText} okText={okText} saveText={saveText} problems={problems} saved={saved} setSaved={setSaved} accent={accent} />
         <div
           data-part="scroll"
           role="region"

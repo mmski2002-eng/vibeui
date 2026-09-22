@@ -45,7 +45,8 @@
             "unit — единицу измерения",
             "акцент через проп accent",
             "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "ширину блока"
+            "ширину блока",
+            "format и onChange — печать числа и значение наружу для блока вокруг"
           ],
           "notes": [
             "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
@@ -111,7 +112,8 @@
                 "unit — the unit of measure",
                 "the accent through the accent prop",
                 "background — the component surface; empty means no surface, taking the page colour",
-                "the block width"
+                "the block width",
+                "format and onChange — number formatting and the value out to the surrounding block"
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
@@ -3174,6 +3176,127 @@
         ],
         "preview": {
           "width": "full"
+        }
+      }
+    },
+    {
+      "name": "slider-013",
+      "type": "registry:component",
+      "title": "Голый ползунок",
+      "description": "Ползунок без рамки и подписи: дорожка с закрашенной частью и кольцо-ручка на цвете подложки. Управляемый снаружи — цифру, деления и итог рисует блок вокруг: калькулятор цены, выбор мест, лимит запросов.",
+      "categories": [
+        "slider"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "slider-013/slider-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/slider-013.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-slider-013-*. Клиентский: \"use client\" ради onChange. Управляемый: value и onChange обязаны прийти снаружи, состояние держит блок. Корень — сам input[type=range], поэтому ширину и отступы ему задаёт контейнер. Пройденная часть дорожки закрашена градиентом по проценту (--vibeui-slider-013-fill). Проп surface — цвет ручки внутри кольца: блок передаёт свою подложку, чтобы кольцо стояло на «своём» фоне. Проп glow включает неоновое свечение дорожки и ручки для тёмных блоков.",
+      "meta": {
+        "tags": [
+          "slider",
+          "range",
+          "bare",
+          "controlled",
+          "calculator",
+          "form"
+        ],
+        "ai": {
+          "export": "Slider013",
+          "usage": "<Slider013 value={seats} min={1} max={50} onChange={setSeats} aria-label=\"Места\" />",
+          "summary": "Голый управляемый ползунок: дорожка с заливкой и кольцо-ручка, без рамки, подписи и цифры — их рисует блок вокруг. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-slider-013-* и не подменять её токенами вашей темы",
+            "нативный input[type=range]: перетаскивание, касания и стрелки достаются даром",
+            "управляемость: value и onChange приходят снаружи, у компонента нет своего состояния",
+            "закрашенную часть дорожки: она показывает долю без подсчёта",
+            "кольцо-ручку на цвете подложки: так она читается и на светлом, и на тёмном",
+            "aria-label на ползунке, когда рядом нет видимой <label>",
+            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему"
+          ],
+          "adapt": [
+            "value, min, max и step",
+            "surface — цвет ручки под подложку блока",
+            "glow — неоновое свечение для тёмных блоков",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер, компонент растягивается на 100%"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html — иначе light-dark() всегда вернёт светлую ветку.",
+            "Компонент управляемый: без onChange ручка не сдвинется. Состояние держите в блоке.",
+            "Стилизация ручки идёт через префиксы: правила ::-webkit- и ::-moz- нельзя объединять в один селектор.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "glow",
+            "label": "Свечение",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "glow",
+          "accent"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "value": 40
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Bare slider",
+            "description": "A slider with no frame or label: a track with a filled part and a ring handle on the surface colour. Controlled from outside — the number, ticks and total are drawn by the surrounding block: a price calculator, seat picker, request limit.",
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-slider-013-* variables. Client-side: \"use client\" for onChange. Controlled: value and onChange must come from outside, the block holds the state. The root is the input[type=range] itself, so width and spacing come from the container. The travelled part of the track is filled by a gradient at the percentage (--vibeui-slider-013-fill). The surface prop is the handle colour inside the ring: the block passes its own surface so the ring sits on «its» background. The glow prop switches on a neon glow of the track and handle for dark blocks.",
+            "ai": {
+              "summary": "A bare controlled slider: a filled track and a ring handle, no frame, label or figure — the surrounding block draws those. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-slider-013-* palette — do not swap it for your theme tokens",
+                "the native input[type=range]: dragging, touch and arrow keys come free",
+                "the controlled contract: value and onChange come from outside, the component has no state of its own",
+                "the filled part of the track: it shows the share without arithmetic",
+                "the ring handle on the surface colour: it reads on light and dark alike",
+                "aria-label on the slider when there is no visible <label> next to it",
+                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
+              ],
+              "adapt": [
+                "value, min, max and step",
+                "surface — the handle colour to match the block surface",
+                "glow — a neon glow for dark blocks",
+                "the accent through the accent prop",
+                "the width — the container sets it, the component stretches to 100%"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
+                "The component is controlled: without onChange the handle will not move. Keep the state in the block.",
+                "Thumb styling is vendor-prefixed: ::-webkit- and ::-moz- rules cannot share a selector.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Slider013 value={seats} min={1} max={50} onChange={setSeats} aria-label=\"Seats\" />"
+            },
+            "controls": {
+              "glow": {
+                "label": "Glow"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
         }
       }
     }

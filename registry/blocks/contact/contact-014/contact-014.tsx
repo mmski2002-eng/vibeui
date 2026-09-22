@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Contact014Hours = {
   days: string
@@ -62,9 +63,6 @@ padding:1.75rem;border:1px solid var(--vibeui-contact-014-border);border-radius:
 background:var(--vibeui-contact-014-card);
 }
 [data-vibeui-block="contact-014"] [data-part="head"]{display:grid;gap:0.5rem}
-[data-vibeui-block="contact-014"] [data-part="title"]{
-margin:0;font-size:1.375rem;font-weight:700;letter-spacing:-0.02em;
-}
 [data-vibeui-block="contact-014"] [data-part="status"]{
 display:inline-flex;align-items:center;gap:0.4375rem;justify-self:start;
 padding:0.3125rem 0.75rem;border-radius:999px;
@@ -254,7 +252,11 @@ export function Contact014({
         <div data-part="shell">
           <div data-part="card">
             <div data-part="head">
-              <h2 data-part="title">{title}</h2>
+              <Heading001
+                data-part="heading"
+                title={title}
+                accent={accent}
+              />
               <p data-part="status">
                 <span data-part="dot" aria-hidden="true" />
                 {statusLabel}

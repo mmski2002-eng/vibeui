@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks006 } from "@/registry/components/navigation/footerlinks-006/footerlinks-006"
 
 export type Footer029Link = {
   label: string
@@ -63,10 +64,7 @@ container-type:inline-size;
 [data-vibeui-block="footer-029"] [data-part="chips"]{display:flex;gap:.4rem;margin-top:.9rem}
 [data-vibeui-block="footer-029"] [data-part="chips"] span{font-family:var(--vibeui-footer-029-mono);font-size:.68rem;padding:.2rem .45rem;border-radius:4px;border:1px solid var(--vibeui-footer-029-line);color:var(--vibeui-footer-029-muted)}
 [data-vibeui-block="footer-029"] [data-part="cols"]{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
-[data-vibeui-block="footer-029"] [data-part="cols"] h4{margin:0 0 .6rem;font-family:var(--vibeui-footer-029-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-029-muted)}
-[data-vibeui-block="footer-029"] [data-part="cols"] a{display:block;width:fit-content;color:inherit;text-decoration:none;padding:.15rem 0;opacity:.85;transition:color .2s,opacity .2s,transform .3s var(--vibeui-footer-029-ease)}
-[data-vibeui-block="footer-029"] [data-part="cols"] a:hover{opacity:1;color:var(--vibeui-footer-029-accent);transform:translateX(4px)}
-@supports (animation-timeline: view()){[data-vibeui-block="footer-029"] [data-part="col"]{animation:vibeui-footer-029-up linear both;animation-timeline:view();animation-range:entry calc(var(--vibeui-footer-029-i) * 8%) entry calc(45% + var(--vibeui-footer-029-i) * 8%)}[data-vibeui-block="footer-029"] [data-part="intro"]{animation:vibeui-footer-029-up linear both;animation-timeline:view();animation-range:entry 0% entry 40%}}
+@supports (animation-timeline: view()){[data-vibeui-block="footer-029"] [data-part="intro"]{animation:vibeui-footer-029-up linear both;animation-timeline:view();animation-range:entry 0% entry 40%}}
 @keyframes vibeui-footer-029-up{from{opacity:0;transform:translateY(18px)}}
 @keyframes vibeui-footer-029-cursor{50%{opacity:0}}
 @keyframes vibeui-footer-029-ping{70%,100%{box-shadow:0 0 0 .5rem transparent}}
@@ -128,14 +126,7 @@ export function Footer029({
             </div>
             <div data-part="cols">
               {columns.map((column, index) => (
-                <div key={column.title} data-part="col" style={{ ["--vibeui-footer-029-i" as string]: index }}>
-                  <h4>{column.title}</h4>
-                  {column.links.map((link) => (
-                    <a key={link.label} href={link.href}>
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
+                <Footerlinks006 key={column.title} data-part="col" title={column.title} links={column.links} index={index} accent={accent} />
               ))}
             </div>
           </div>

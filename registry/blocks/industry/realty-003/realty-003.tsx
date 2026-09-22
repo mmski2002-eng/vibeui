@@ -1,6 +1,9 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 import { createPortal } from "react-dom"
 
 export type Realty003Listing = {
@@ -82,6 +85,8 @@ container-type:inline-size;
 :where([data-vibeui-block="realty-003"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="realty-003"]{box-sizing:border-box;display:block;background:var(--vibeui-realty-003-bg);color:var(--vibeui-realty-003-fg);font-family:var(--vibeui-realty-003-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="realty-003"] *{box-sizing:border-box}
+[data-vibeui-block="realty-003"] [data-part="open"]{justify-self:start;margin-top:.6rem}
+[data-vibeui-block="realty-003"] [data-part="more"]{margin-top:2rem}
 [data-vibeui-block="realty-003"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="realty-003"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 2rem;margin-bottom:2rem}
 [data-vibeui-block="realty-003"] [data-part="eyebrow"]{margin:0 0 .5rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-realty-003-accent);font-weight:600}
@@ -121,9 +126,6 @@ container-type:inline-size;
 [data-vibeui-block="realty-003"] [data-part="features"]{margin:.25rem 0 0;padding:0;list-style:none;display:grid;gap:.2rem;font-size:.8rem}
 [data-vibeui-block="realty-003"] [data-part="features"] li{display:flex;gap:.55rem;align-items:flex-start}
 [data-vibeui-block="realty-003"] [data-part="features"] li::before{content:"";flex:none;width:.4rem;height:.4rem;margin-top:.5rem;border-radius:50%;background:var(--vibeui-realty-003-accent)}
-[data-vibeui-block="realty-003"] [data-part="open"]{display:inline-flex;align-items:center;gap:.5rem;justify-self:start;margin-top:.6rem;padding:.65rem 1.1rem;border-radius:999px;background:var(--vibeui-realty-003-accent);color:var(--vibeui-realty-003-on-accent);font-weight:700;font-size:.85rem;text-decoration:none;transition:transform .2s}
-[data-vibeui-block="realty-003"] [data-part="open"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="realty-003"] [data-part="open"]:focus-visible{outline:2px solid var(--vibeui-realty-003-fg);outline-offset:2px}
 [data-vibeui-block="realty-003"] [data-part="close"]{position:absolute;top:1rem;right:1rem;width:2.5rem;height:2.5rem;display:grid;place-items:center;border-radius:50%;border:1px solid var(--vibeui-realty-003-line);background:light-dark(rgb(255 253 249 / .8),rgb(20 33 27 / .72));color:var(--vibeui-realty-003-fg);cursor:pointer;z-index:3;backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);font:inherit;transition:background .2s}
 [data-vibeui-block="realty-003"] [data-part="close"]:hover{background:var(--vibeui-realty-003-card)}
 [data-vibeui-block="realty-003"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-realty-003-accent);outline-offset:2px}
@@ -133,7 +135,6 @@ container-type:inline-size;
 [data-vibeui-block="realty-003"] [data-part="name"]{font-weight:600}
 [data-vibeui-block="realty-003"] [data-part="meta"]{display:flex;flex-wrap:wrap;gap:.25rem .75rem;color:var(--vibeui-realty-003-muted);font-size:.85rem}
 [data-vibeui-block="realty-003"] [data-part="place"]{margin-top:.35rem;padding-top:.6rem;border-top:1px solid var(--vibeui-realty-003-line);display:flex;justify-content:space-between;gap:.5rem;font-size:.8rem;color:var(--vibeui-realty-003-muted)}
-[data-vibeui-block="realty-003"] [data-part="more"]{display:inline-flex;align-items:center;gap:.5rem;margin-top:2rem;color:inherit;font-weight:600;text-decoration:none;border-bottom:1px solid var(--vibeui-realty-003-accent);padding-bottom:.15rem}
 [data-vibeui-block="realty-003"] [data-part="empty"]{margin:2rem 0;color:var(--vibeui-realty-003-muted)}
 @container (min-width: 40rem){[data-vibeui-block="realty-003"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="realty-003"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}[data-vibeui-block="realty-003"] [data-part="shell"]{padding:5.5rem 2rem}}
@@ -395,9 +396,12 @@ export function Realty003({
             </ul>
           )}
           {moreLabel ? (
-            <a href={moreHref} data-part="more">
-              {moreLabel} →
-            </a>
+            <Button077
+              data-part="more"
+              label={moreLabel}
+              href={moreHref}
+              accent={accent}
+            />
           ) : null}
         </div>
       </section>
@@ -447,9 +451,16 @@ export function Realty003({
                       </ul>
                     ) : null}
                     {openLabel ? (
-                      <a href={current.href ?? "#"} data-part="open">
-                        {openLabel} →
-                      </a>
+                      <Button016
+                        data-part="open"
+                        label={openLabel}
+                        href={current.href ?? "#"}
+                        external={false}
+                        arrow
+                        size="md"
+                        tone="accent"
+                        accent={accent}
+                      />
                     ) : null}
                   </div>
                   <button type="button" data-part="close" aria-label={closeLabel} onClick={(event) => { event.stopPropagation(); close() }}>

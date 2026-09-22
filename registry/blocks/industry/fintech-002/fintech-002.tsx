@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card098 } from "@/registry/components/card/card-098/card-098"
+
 
 export type Fintech002Bank = {
   name: string
@@ -78,8 +80,6 @@ container-type:inline-size;
 [data-vibeui-block="fintech-002"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-fintech-002-muted)}
 [data-vibeui-block="fintech-002"] [data-part="panel"]{position:relative;isolation:isolate;display:grid;gap:2rem;padding:1.6rem;border-radius:1.8rem;background:color-mix(in oklab,var(--vibeui-fintech-002-bg) 55%,transparent);border:1px solid color-mix(in oklab,var(--vibeui-fintech-002-fg) 16%,transparent);backdrop-filter:blur(20px);box-shadow:0 1px 0 rgb(255 255 255 / .12) inset,0 40px 80px -40px rgb(0 0 0 / .7)}
 [data-vibeui-block="fintech-002"] [data-part="panel"]::before{content:"";position:absolute;z-index:-1;inset:auto -10% -40% 30%;height:70%;background:radial-gradient(closest-side,var(--vibeui-fintech-002-accent),transparent);opacity:.22;filter:blur(60px);pointer-events:none}
-[data-vibeui-block="fintech-002"] [data-part="label"]{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;font-size:.9rem;color:var(--vibeui-fintech-002-muted)}
-[data-vibeui-block="fintech-002"] [data-part="label"] output{font-family:var(--vibeui-fintech-002-mono);font-weight:600;font-size:1.5rem;color:var(--vibeui-fintech-002-fg);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 [data-vibeui-block="fintech-002"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.5rem;margin:1rem 0 .5rem;border-radius:999px;background:linear-gradient(90deg,var(--vibeui-fintech-002-accent) var(--vibeui-fintech-002-fill),var(--vibeui-fintech-002-line) var(--vibeui-fintech-002-fill));outline:none;cursor:pointer}
 [data-vibeui-block="fintech-002"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-fintech-002-bg);border:3px solid var(--vibeui-fintech-002-accent);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-fintech-002-accent) 20%,transparent);cursor:grab}
 [data-vibeui-block="fintech-002"] [data-part="range"]::-moz-range-thumb{width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-fintech-002-bg);border:3px solid var(--vibeui-fintech-002-accent);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-fintech-002-accent) 20%,transparent);cursor:grab}
@@ -94,13 +94,6 @@ container-type:inline-size;
 [data-vibeui-block="fintech-002"] [data-part="saving"] strong{display:block;margin:.2rem 0 0;font-family:var(--vibeui-fintech-002-mono);font-weight:600;font-size:clamp(2.2rem,6cqi,3.6rem);line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums;background:var(--vibeui-fintech-002-aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
 [data-vibeui-block="fintech-002"] [data-part="saving"] small{display:block;margin:.4rem 0 0;font-size:.82rem}
 [data-vibeui-block="fintech-002"] [data-part="bars"]{display:grid;gap:.9rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="fintech-002"] [data-part="bar"]{display:grid;gap:.4rem;font-size:.85rem}
-[data-vibeui-block="fintech-002"] [data-part="bar"] header{display:flex;justify-content:space-between;gap:1rem;color:var(--vibeui-fintech-002-muted)}
-[data-vibeui-block="fintech-002"] [data-part="bar"][data-ours="true"] header{color:var(--vibeui-fintech-002-fg);font-weight:600}
-[data-vibeui-block="fintech-002"] [data-part="bar"] header b{font-family:var(--vibeui-fintech-002-mono);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
-[data-vibeui-block="fintech-002"] [data-part="track"]{height:.7rem;border-radius:999px;background:var(--vibeui-fintech-002-line);overflow:hidden}
-[data-vibeui-block="fintech-002"] [data-part="fill"]{display:block;height:100%;border-radius:999px;background:color-mix(in oklab,var(--vibeui-fintech-002-fg) 35%,transparent);transform-origin:left;transform:scaleX(var(--vibeui-fintech-002-w));transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="fintech-002"] [data-part="bar"][data-ours="true"] [data-part="fill"]{background:var(--vibeui-fintech-002-aurora);box-shadow:0 0 18px color-mix(in oklab,var(--vibeui-fintech-002-accent) 50%,transparent)}
 [data-vibeui-block="fintech-002"] [data-part="note"]{margin:0;font-size:.76rem;color:var(--vibeui-fintech-002-muted)}
 @container (min-width: 56rem){[data-vibeui-block="fintech-002"] [data-part="panel"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:3rem;padding:2.4rem}[data-vibeui-block="fintech-002"] [data-part="result"]{padding-left:3rem;border-left:1px solid var(--vibeui-fintech-002-line)}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="fintech-002"] *{animation:none!important;transition:none!important}}`
@@ -233,15 +226,7 @@ export function Fintech002({
                 {banks.map((bank) => {
                   const fee = yearlyFee(bank, turnover)
                   return (
-                    <li key={bank.name} data-part="bar" data-ours={bank.ours ? "true" : undefined}>
-                      <header>
-                        <span>{bank.name}</span>
-                        <b>{formatMoney(fee, currency)} {perYearLabel}</b>
-                      </header>
-                      <div data-part="track">
-                        <i data-part="fill" style={{ ["--vibeui-fintech-002-w" as string]: Math.max(0.02, fee / maxFee) }} />
-                      </div>
-                    </li>
+                    <Card098 key={bank.name} data-part="bar" name={bank.name} ours={bank.ours} currency={currency} perYearLabel={perYearLabel} fee={fee} maxFee={maxFee} accent={accent} />
                   )
                 })}
               </ul>

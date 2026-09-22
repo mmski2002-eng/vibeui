@@ -1,6 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 import type { CSSProperties, FormEvent } from "react"
 
 export type Subscribe002Props = {
@@ -8,7 +12,6 @@ export type Subscribe002Props = {
   title?: string
   lead?: string
   emailLabel?: string
-  placeholder?: string
   buttonLabel?: string
   note?: string
   success?: string
@@ -57,52 +60,20 @@ display:block;background:var(--vibeui-subscribe-002-bg);color:var(--vibeui-subsc
 font-family:var(--vibeui-subscribe-002-font);
 }
 [data-vibeui-block="subscribe-002"] *{box-sizing:border-box}
+[data-vibeui-block="subscribe-002"] [data-part="heading"]{margin-bottom:0.75rem}
 [data-vibeui-block="subscribe-002"] [data-part="shell"]{
 max-width:70rem;margin:0 auto;padding:3rem 1.25rem;
 display:grid;gap:2.5rem;align-items:center;
 }
-[data-vibeui-block="subscribe-002"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-subscribe-002-accent-ink);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="subscribe-002"] [data-part="title"]{
-margin:0 0 0.75rem;max-width:22ch;
-font-size:clamp(1.5rem,4.5cqi,2.375rem);line-height:1.1;letter-spacing:-0.02em;font-weight:700;
-}
-[data-vibeui-block="subscribe-002"] [data-part="lead"]{
-margin:0 0 1.5rem;max-width:48ch;
-color:var(--vibeui-subscribe-002-muted);font-size:0.9375rem;line-height:1.55;
-}
 [data-vibeui-block="subscribe-002"] [data-part="form"]{
 display:flex;flex-direction:column;gap:0.625rem;max-width:26rem;
 }
-[data-vibeui-block="subscribe-002"] [data-part="field"]{flex:1 1 auto;display:block}
-[data-vibeui-block="subscribe-002"] [data-part="sr"]{
+/* Поле input-001 растягивается на остаток строки, кнопка — button-001. */
+[data-vibeui-block="subscribe-002"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="subscribe-002"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
+[data-vibeui-block="subscribe-002"] [data-part="visually-hidden"]{
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip:rect(0 0 0 0);white-space:nowrap;border:0;
-}
-[data-vibeui-block="subscribe-002"] [data-part="input"]{
-width:100%;height:2.75rem;padding:0 0.875rem;
-border:1px solid var(--vibeui-subscribe-002-border);border-radius:0.625rem;
-background:var(--vibeui-subscribe-002-field);color:inherit;
-font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="subscribe-002"] [data-part="input"]::placeholder{color:var(--vibeui-subscribe-002-muted)}
-[data-vibeui-block="subscribe-002"] [data-part="input"]:focus-visible{
-outline:2px solid var(--vibeui-subscribe-002-accent);outline-offset:1px;
-}
-[data-vibeui-block="subscribe-002"] [data-part="button"]{
-height:2.75rem;padding:0 1.375rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-subscribe-002-accent);color:oklch(from var(--vibeui-subscribe-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;cursor:pointer;
-transition:background var(--vibeui-subscribe-002-dur-2) ease,transform var(--vibeui-subscribe-002-dur-2) ease;
-}
-[data-vibeui-block="subscribe-002"] [data-part="button"]:hover{
-background:color-mix(in oklab,var(--vibeui-subscribe-002-accent) 90%,black);
-}
-[data-vibeui-block="subscribe-002"] [data-part="button"]:active{transform:translateY(1px)}
-[data-vibeui-block="subscribe-002"] [data-part="button"]:focus-visible{
-outline:2px solid var(--vibeui-subscribe-002-accent-ink);outline-offset:2px;
 }
 [data-vibeui-block="subscribe-002"] [data-part="done"]{
 margin:0;max-width:26rem;min-height:2.75rem;
@@ -110,7 +81,7 @@ display:flex;align-items:center;gap:0.5rem;
 color:var(--vibeui-subscribe-002-ok);font-size:0.9375rem;font-weight:600;
 }
 [data-vibeui-block="subscribe-002"] [data-part="done"]::before{content:"✓";font-weight:700}
-[data-vibeui-block="subscribe-002"] [data-part="note"]{
+[data-vibeui-block="subscribe-002"] [data-part="footnote"]{
 margin:0.875rem 0 0;color:var(--vibeui-subscribe-002-muted);font-size:0.8125rem;
 }
 [data-vibeui-block="subscribe-002"] [data-part="letter"]{
@@ -200,7 +171,6 @@ export function Subscribe002({
   title = "Видно, на что подписываетесь",
   lead = "Каждую пятницу — короткий дайджест: новые блоки каталога, приёмы вёрстки и одна идея для следующего лендинга. Справа — настоящий выпуск.",
   emailLabel = "Электронная почта",
-  placeholder = "you@company.ru",
   buttonLabel = "Получать дайджест",
   note = "Раз в неделю, без спама. Отписка в один клик.",
   success = "Готово! Первый выпуск придёт в пятницу.",
@@ -248,32 +218,33 @@ export function Subscribe002({
       >
         <div data-part="shell">
           <div data-part="copy">
-            <p data-part="eyebrow">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
-            <p data-part="lead">{lead}</p>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              accent={accent}
+              lede={lead}
+            />
             <div aria-live="polite">
               {done ? (
                 <p data-part="done">{success}</p>
               ) : (
                 <form data-part="form" onSubmit={handleSubmit}>
-                  <label data-part="field">
-                    <span data-part="sr">{emailLabel}</span>
-                    <input
-                      data-part="input"
-                      type="email"
-                      name="email"
-                      required
-                      placeholder={placeholder}
-                      autoComplete="email"
-                    />
-                  </label>
-                  <button data-part="button" type="submit">
+                  <Input001
+                    type="email"
+                    name="email"
+                    required
+                    label={emailLabel}
+                    autoComplete="email"
+                    accent={accent}
+                  />
+                  <Button001 type="submit" size="lg" accent={accent}>
                     {buttonLabel}
-                  </button>
+                  </Button001>
                 </form>
               )}
             </div>
-            <p data-part="note">{note}</p>
+            <p data-part="footnote">{note}</p>
           </div>
           <div data-part="letter" aria-hidden="true">
             <div data-part="letter-head">

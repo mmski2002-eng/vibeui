@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react"
+import { Sociallinks002 } from "@/registry/components/navigation/sociallinks-002/sociallinks-002"
+import { Footerlinks017 } from "@/registry/components/navigation/footerlinks-017/footerlinks-017"
 
 type Footer013Link = {
   label: string
@@ -22,7 +24,8 @@ export type Footer013Props = {
 // лендинги и продуктовые страницы, где карта сайта не нужна: пять ссылок
 // в столбик выглядели бы претензией на масштаб, которого нет. Ссылки
 // собраны в один <nav> — это одна навигация, а не пять групп.
-const STYLES = `
+const STYLES = `[data-vibeui-block="footer-013"] [data-part="social"]{margin:0}
+
 :where([data-vibeui-block="footer-013"]){
 --vibeui-footer-013-bg:transparent;
 --vibeui-footer-013-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -57,30 +60,6 @@ font-size:1.125rem;font-weight:720;letter-spacing:-0.02em;
 width:2rem;height:2rem;border-radius:0.625rem;
 background:var(--vibeui-footer-013-accent-fill);
 mask-image:radial-gradient(circle at 50% 50%,transparent 28%,black 29%);
-}
-[data-vibeui-block="footer-013"] [data-part="links"] ul{
-margin:0;padding:0;list-style:none;
-display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.5rem;
-}
-[data-vibeui-block="footer-013"] [data-part="links"] a{
-color:var(--vibeui-footer-013-muted);text-decoration:none;font-size:0.9375rem;
-transition:color var(--vibeui-footer-013-dur-2) ease;
-}
-[data-vibeui-block="footer-013"] [data-part="links"] a:hover{color:var(--vibeui-footer-013-accent)}
-[data-vibeui-block="footer-013"] [data-part="social"]{
-margin:0;padding:0;list-style:none;
-display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;
-}
-[data-vibeui-block="footer-013"] [data-part="social"] a{
-display:inline-block;padding:0.3125rem 0.75rem;border-radius:999px;
-border:1px solid var(--vibeui-footer-013-border);
-color:var(--vibeui-footer-013-muted);text-decoration:none;
-font-size:0.8125rem;font-weight:600;
-transition:color var(--vibeui-footer-013-dur-2) ease,border-color var(--vibeui-footer-013-dur-2) ease;
-}
-[data-vibeui-block="footer-013"] [data-part="social"] a:hover{
-color:var(--vibeui-footer-013-accent);
-border-color:color-mix(in oklab,var(--vibeui-footer-013-accent) 45%,var(--vibeui-footer-013-border));
 }
 [data-vibeui-block="footer-013"] [data-part="copyright"]{
 margin:0.5rem 0 0;padding-top:1.25rem;justify-self:stretch;
@@ -174,22 +153,8 @@ export function Footer013({
             <span data-part="mark" aria-hidden="true" />
             {brand}
           </a>
-          <nav data-part="links" aria-label="Подвал">
-            <ul>
-              {links.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <ul data-part="social">
-            {social.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
+          <Footerlinks017 data-part="links" links={links} accent={accent} />
+          <Sociallinks002 data-part="social" social={social} accent={accent} />
           <p data-part="copyright">{copyright}</p>
         </div>
       </footer>

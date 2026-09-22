@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card128 } from "@/registry/components/card/card-128/card-128"
 
 export type About007Fact = {
   value: string
@@ -64,8 +65,6 @@ container-type:inline-size;
 [data-vibeui-block="about-007"] [data-part="who"]{margin:.5rem 0 0;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-about-007-muted)}
 [data-vibeui-block="about-007"] [data-part="text"]{margin:1.5rem 0 0;max-width:34rem;color:var(--vibeui-about-007-muted)}
 [data-vibeui-block="about-007"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem;margin:2rem 0 0;padding:1.5rem 0 0;list-style:none;border-top:1px solid var(--vibeui-about-007-line)}
-[data-vibeui-block="about-007"] [data-part="fact"] b{display:block;font-family:var(--vibeui-about-007-display);font-size:2rem;font-weight:400;line-height:1;color:var(--vibeui-about-007-accent-ink)}
-[data-vibeui-block="about-007"] [data-part="fact"] span{display:block;margin-top:.3rem;font-size:.78rem;color:var(--vibeui-about-007-muted)}
 @container (min-width: 56rem){
 [data-vibeui-block="about-007"] [data-part="shell"]{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:5rem;padding:6rem 2rem;align-items:center}
 }
@@ -126,10 +125,7 @@ export function About007({
             {facts.length > 0 ? (
               <ul data-part="facts">
                 {facts.map((fact) => (
-                  <li key={fact.label} data-part="fact">
-                    <b>{fact.value}</b>
-                    <span>{fact.label}</span>
-                  </li>
+                  <Card128 key={fact.label} data-part="fact" label={fact.label} value={fact.value} accent={accent} />
                 ))}
               </ul>
             ) : null}

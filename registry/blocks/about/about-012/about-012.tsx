@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card131 } from "@/registry/components/card/card-131/card-131"
 
 export type About012Stop = {
   /** Код города: «MOW». */
@@ -81,18 +82,9 @@ container-type:inline-size;
 [data-vibeui-block="about-012"] [data-part="pin"]:focus-visible circle{stroke:var(--vibeui-about-012-sea);stroke-width:4}
 [data-vibeui-block="about-012"] [data-part="plane"]{offset-path:path("${PATH}");offset-rotate:auto;offset-distance:var(--vibeui-about-012-p,0);fill:var(--vibeui-about-012-fg);transition:offset-distance .2s linear;filter:drop-shadow(0 6px 8px rgb(18 58 75 / .35))}
 [data-vibeui-block="about-012"] [data-part="stops"]{display:grid;gap:1.5rem;margin:2rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="about-012"] [data-part="stop"]{position:relative;display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:1rem;padding:1.1rem;border:1px solid var(--vibeui-about-012-line);border-radius:1rem;background:color-mix(in oklab,var(--vibeui-about-012-sand) 60%,transparent);transition:border-color .3s,transform .3s,box-shadow .3s}
-[data-vibeui-block="about-012"] [data-part="stop"][data-active="true"]{border-color:var(--vibeui-about-012-accent);transform:translateY(-.25rem);box-shadow:0 24px 40px -28px rgb(18 58 75 / .5)}
-[data-vibeui-block="about-012"] [data-part="stop"] figure{margin:0;width:5.5rem;height:5.5rem;border-radius:50%;overflow:hidden;background:var(--vibeui-about-012-sand);box-shadow:0 0 0 3px var(--vibeui-about-012-bg),0 0 0 4px var(--vibeui-about-012-line)}
-[data-vibeui-block="about-012"] [data-part="stop"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="about-012"] [data-part="stop"] small{display:block;padding-right:3.2rem;font-family:var(--vibeui-about-012-display);font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-about-012-sea)}
-[data-vibeui-block="about-012"] [data-part="stop"] h3{margin:.2rem 0 .3rem;font-family:var(--vibeui-about-012-display);font-size:1.35rem;font-weight:600;line-height:1.1;text-transform:uppercase}
-[data-vibeui-block="about-012"] [data-part="stop"] p{margin:0;font-size:.92rem;color:var(--vibeui-about-012-muted)}
-[data-vibeui-block="about-012"] [data-part="stop"] [data-part="code"]{position:absolute;top:.6rem;right:.8rem;font-family:var(--vibeui-about-012-script);font-size:1.2rem;color:var(--vibeui-about-012-accent);opacity:.8}
 @container (min-width:56rem){
 [data-vibeui-block="about-012"] [data-part="shell"]{padding:5rem 2.5rem}
 [data-vibeui-block="about-012"] [data-part="stops"]{grid-template-columns:repeat(4,minmax(0,1fr))}
-[data-vibeui-block="about-012"] [data-part="stop"]{grid-template-columns:1fr;gap:.8rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="about-012"] *{animation:none!important;transition:none!important}[data-vibeui-block="about-012"] [data-part="plane"]{offset-distance:100%}[data-vibeui-block="about-012"] [data-part="done"]{stroke-dashoffset:0}}`
 
@@ -185,19 +177,7 @@ export function About012({
           </div>
           <ol data-part="stops">
             {shown.map((stop, index) => (
-              <li key={stop.code} data-part="stop" data-active={active === index ? "true" : undefined}>
-                <figure>{stop.image ? <img src={stop.image} alt={stop.imageAlt ?? ""} loading="lazy" /> : null}</figure>
-                <div>
-                  <small>
-                    {stop.city} · {stop.date}
-                  </small>
-                  <h3>{stop.title}</h3>
-                  {stop.text ? <p>{stop.text}</p> : null}
-                </div>
-                <span data-part="code" aria-hidden="true">
-                  {stop.code}
-                </span>
-              </li>
+              <Card131 key={stop.code} data-part="stop" code={stop.code} image={stop.image} imageAlt={stop.imageAlt} city={stop.city} date={stop.date} title={stop.title} text={stop.text} data-active={active === index ? "true" : undefined} accent={accent} />
             ))}
           </ol>
         </div>

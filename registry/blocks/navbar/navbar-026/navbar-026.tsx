@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar026Link = {
   label: string
   /** Якорь секции: «#route». По нему считается активный раздел. */
@@ -68,10 +70,12 @@ container-type:inline-size;
 :where([data-vibeui-block="navbar-026"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="navbar-026"]{box-sizing:border-box;position:relative;display:block;color:var(--vibeui-navbar-026-fg);font-family:var(--vibeui-navbar-026-font);font-size:1rem;line-height:1.3}
 [data-vibeui-block="navbar-026"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-026"] [data-part="action"]{display:none}
+[data-vibeui-block="navbar-026"] [data-part="sheet"] [data-part="action"]{margin-top:.75rem;align-self:flex-start}
 [data-vibeui-block="navbar-026"][data-placement="fixed"]{position:fixed;top:0;left:0;right:0;z-index:40}
 [data-vibeui-block="navbar-026"][data-placement="fixed"]:not([data-scrolled="true"]):not([data-open="true"]){--vibeui-navbar-026-fg:#fffaf0!important;--vibeui-navbar-026-muted:rgb(255 250 240 / .78);--vibeui-navbar-026-line:rgb(255 250 240 / .4);text-shadow:0 1px 12px rgb(18 58 75 / .45)}
 [data-vibeui-block="navbar-026"] a{color:inherit;text-decoration:none}
-[data-vibeui-block="navbar-026"] a:focus-visible,[data-vibeui-block="navbar-026"] button:focus-visible{outline:2px solid var(--vibeui-navbar-026-accent);outline-offset:3px;border-radius:.5rem}
+[data-vibeui-block="navbar-026"] button:focus-visible{outline:2px solid var(--vibeui-navbar-026-accent);outline-offset:3px;border-radius:.5rem}
 [data-vibeui-block="navbar-026"] [data-part="veil"]{position:absolute;inset:0;z-index:-1;background:var(--vibeui-navbar-026-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;transition:opacity .35s}
 [data-vibeui-block="navbar-026"] [data-part="veil"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:radial-gradient(circle,var(--vibeui-navbar-026-line) 0 1.5px,transparent 2px) 0 0/10px 2px repeat-x}
 [data-vibeui-block="navbar-026"][data-placement="static"] [data-part="veil"],[data-vibeui-block="navbar-026"][data-scrolled="true"] [data-part="veil"],[data-vibeui-block="navbar-026"][data-open="true"] [data-part="veil"]{opacity:1}
@@ -105,20 +109,15 @@ container-type:inline-size;
 [data-vibeui-block="navbar-026"] [data-part="music"][aria-pressed="true"] [data-part="wave"] i:nth-child(4){animation-delay:-.6s}
 @keyframes vibeui-navbar-026-wave{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
 [data-vibeui-block="navbar-026"] [data-part="music-label"]{display:none}
-[data-vibeui-block="navbar-026"] [data-part="action"]{display:none;align-items:center;gap:.4rem;height:2.5rem;padding:0 1.1rem;border-radius:.5rem;background:var(--vibeui-navbar-026-accent);color:var(--vibeui-navbar-026-on-accent);font-family:var(--vibeui-navbar-026-display);font-size:.9rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;box-shadow:0 10px 24px -14px var(--vibeui-navbar-026-accent);transition:transform .2s,background .25s}
-[data-vibeui-block="navbar-026"] [data-part="action"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-navbar-026-accent) 88%,#000)}
-[data-vibeui-block="navbar-026"] [data-part="action"] svg{width:.9rem;height:.9rem;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="navbar-026"] [data-part="toggle"]{display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid var(--vibeui-navbar-026-line);border-radius:.5rem;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-026"] [data-part="toggle"] svg{width:1.1rem;height:1.1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
 [data-vibeui-block="navbar-026"] [data-part="sheet"]{display:none;flex-direction:column;gap:.1rem;margin:0;padding:.25rem 1.25rem 1.25rem;list-style:none;background:var(--vibeui-navbar-026-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:2px dashed var(--vibeui-navbar-026-line)}
 [data-vibeui-block="navbar-026"][data-open="true"] [data-part="sheet"]{display:flex;animation:vibeui-navbar-026-drop .3s cubic-bezier(.2,.9,.3,1) both}
 @keyframes vibeui-navbar-026-drop{from{opacity:0;transform:translateY(-.5rem)}}
 [data-vibeui-block="navbar-026"] [data-part="sheet"] a{display:block;padding:.6rem 0;border-bottom:1px solid var(--vibeui-navbar-026-line);font-family:var(--vibeui-navbar-026-display);font-size:1.1rem;letter-spacing:.12em;text-transform:uppercase}
-[data-vibeui-block="navbar-026"] [data-part="sheet"] [data-part="action"]{display:inline-flex;margin-top:.75rem;align-self:flex-start;border-bottom:0}
 @container (min-width:60rem){
 [data-vibeui-block="navbar-026"] [data-part="names"]{display:block}
 [data-vibeui-block="navbar-026"] [data-part="links"]{display:flex}
-[data-vibeui-block="navbar-026"] [data-part="row"] [data-part="action"]{display:inline-flex}
 [data-vibeui-block="navbar-026"] [data-part="music-label"]{display:inline}
 [data-vibeui-block="navbar-026"] [data-part="toggle"],[data-vibeui-block="navbar-026"] [data-part="sheet"]{display:none!important}
 }
@@ -230,12 +229,16 @@ export function Navbar026({
   }
 
   const action = actionLabel ? (
-    <a data-part="action" href={actionHref} onClick={() => setOpen(false)}>
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M5 12l5 5L20 7" />
-      </svg>
-      {actionLabel}
-    </a>
+    <Button016
+      data-part="action"
+      onClick={() => setOpen(false)}
+      label={actionLabel}
+      href={actionHref}
+      external={false}
+      size="sm"
+      tone="accent"
+      accent={accent}
+    />
   ) : null
 
   const countdown = days === null || days < 0 ? null : days === 0 ? daysLabels[3] : `${days} ${plural(days, daysLabels)}`

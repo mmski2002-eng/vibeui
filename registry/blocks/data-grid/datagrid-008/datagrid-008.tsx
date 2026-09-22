@@ -1,6 +1,7 @@
 "use client"
 
 import { Fragment, useId, useState } from "react"
+import { Card158 } from "@/registry/components/card/card-158/card-158"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid008Row = {
@@ -65,14 +66,6 @@ border:1px solid var(--vibeui-datagrid-008-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-008-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-008"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-008"] [data-part="head"]{
-display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem;
-padding:0.875rem;border-bottom:1px solid var(--vibeui-datagrid-008-border);
-}
-[data-vibeui-block="datagrid-008"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="datagrid-008"] [data-part="hint"]{
-margin:0 0 0 auto;font-size:0.75rem;color:var(--vibeui-datagrid-008-muted);
-}
 [data-vibeui-block="datagrid-008"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-008"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-008-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-008"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -261,14 +254,7 @@ export function Datagrid008({
         className={className}
         style={palette}
       >
-        <div data-part="head">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="hint">
-            {single
-              ? (hintText.single ?? HINT_LABEL.single)
-              : (hintText.multiple ?? HINT_LABEL.multiple)}
-          </p>
-        </div>
+        <Card158 data-part="head" heading={heading} single={single} hintText={hintText} accent={accent} />
         <div
           data-part="scroll"
           role="region"

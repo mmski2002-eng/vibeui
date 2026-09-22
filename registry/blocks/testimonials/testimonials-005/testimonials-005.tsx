@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card028 } from "@/registry/components/card/card-028/card-028"
 
 type Testimonials005Item = {
   rating: number
@@ -28,7 +29,8 @@ export type Testimonials005Props = {
 // на нужную долю через градиент, поэтому «4 из 5» видно точно, а не
 // приблизительно. Численная оценка продублирована текстом в aria-label:
 // ряд одинаковых значков скринридер прочитает как мусор.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-005"] [data-part="card"]{margin:0}
+
 :where([data-vibeui-block="testimonials-005"]){
 --vibeui-testimonials-005-bg:transparent;
 --vibeui-testimonials-005-card:light-dark(oklch(1 0 0),oklch(0.25 0.014 80));
@@ -66,36 +68,20 @@ margin:0;flex:1 1 14rem;max-width:26ch;
 font-size:1.125rem;line-height:1.3;letter-spacing:-0.015em;font-weight:640;
 }
 [data-vibeui-block="testimonials-005"] [data-part="total"]{color:var(--vibeui-testimonials-005-muted);font-size:0.875rem}
-[data-vibeui-block="testimonials-005"] [data-part="stars"]{
+[data-vibeui-block="testimonials-005"] [data-part="card-stars"]{
 display:inline-flex;gap:0.125rem;
 }
-[data-vibeui-block="testimonials-005"] [data-part="star"]{
+[data-vibeui-block="testimonials-005"] [data-part="card-star"]{
 width:1rem;height:1rem;flex:none;
 clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
 background:var(--vibeui-testimonials-005-empty);
 }
-[data-vibeui-block="testimonials-005"] [data-part="star"][data-filled="full"]{background:var(--vibeui-testimonials-005-accent);color:oklch(from var(--vibeui-testimonials-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="testimonials-005"] [data-part="star"][data-filled="half"]{
+[data-vibeui-block="testimonials-005"] [data-part="card-star"][data-filled="full"]{background:var(--vibeui-testimonials-005-accent);color:oklch(from var(--vibeui-testimonials-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="testimonials-005"] [data-part="card-star"][data-filled="half"]{
 background:linear-gradient(90deg,var(--vibeui-testimonials-005-accent) 50%,var(--vibeui-testimonials-005-empty) 50%);
 }
-[data-vibeui-block="testimonials-005"] [data-part="summary"] [data-part="star"]{width:1.375rem;height:1.375rem}
+[data-vibeui-block="testimonials-005"] [data-part="summary"] [data-part="card-star"]{width:1.375rem;height:1.375rem}
 [data-vibeui-block="testimonials-005"] [data-part="grid"]{display:grid;gap:1rem}
-[data-vibeui-block="testimonials-005"] [data-part="card"]{
-margin:0;padding:1.375rem;
-border:1px solid var(--vibeui-testimonials-005-border);border-radius:1rem;
-background:var(--vibeui-testimonials-005-card);
-}
-[data-vibeui-block="testimonials-005"] [data-part="card-head"]{
-display:flex;align-items:center;gap:0.625rem;margin-bottom:0.625rem;
-}
-[data-vibeui-block="testimonials-005"] [data-part="date"]{margin-left:auto;color:var(--vibeui-testimonials-005-muted);font-size:0.75rem}
-[data-vibeui-block="testimonials-005"] [data-part="card-title"]{
-margin:0 0 0.375rem;font-size:1rem;font-weight:660;line-height:1.35;
-}
-[data-vibeui-block="testimonials-005"] [data-part="quote"]{
-margin:0 0 0.875rem;color:var(--vibeui-testimonials-005-muted);font-size:0.9375rem;line-height:1.6;
-}
-[data-vibeui-block="testimonials-005"] [data-part="name"]{font-size:0.8125rem;font-weight:620}
 @container (min-width: 42rem){
 [data-vibeui-block="testimonials-005"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="testimonials-005"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
@@ -227,14 +213,14 @@ export function Testimonials005({
           <div data-part="summary">
             <span data-part="average">{average}</span>
             <span
-              data-part="stars"
+              data-part="card-stars"
               role="img"
               aria-label={averageLabel.replace("{value}", average)}
             >
               {[0, 1, 2, 3, 4].map((index) => (
                 <span
                   key={index}
-                  data-part="star"
+                  data-part="card-star"
                   data-filled={starState(index, averageValue)}
                 />
               ))}
@@ -244,30 +230,7 @@ export function Testimonials005({
           </div>
           <div data-part="grid">
             {items.map((item) => (
-              <figure key={item.title} data-part="card">
-                <div data-part="card-head">
-                  <span
-                    data-part="stars"
-                    role="img"
-                    aria-label={ratingLabel.replace(
-                      "{value}",
-                      String(item.rating),
-                    )}
-                  >
-                    {[0, 1, 2, 3, 4].map((index) => (
-                      <span
-                        key={index}
-                        data-part="star"
-                        data-filled={starState(index, item.rating)}
-                      />
-                    ))}
-                  </span>
-                  <span data-part="date">{item.date}</span>
-                </div>
-                <p data-part="card-title">{item.title}</p>
-                <blockquote data-part="quote">{item.quote}</blockquote>
-                <figcaption data-part="name">{item.name}</figcaption>
-              </figure>
+              <Card028 key={item.title} data-part="card" title={item.title} rating={item.rating} date={item.date} quote={item.quote} name={item.name} ratingLabel={ratingLabel} accent={accent} />
             ))}
           </div>
         </div>

@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card051 } from "@/registry/components/card/card-051/card-051"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 
 type People003Leader = {
   name: string
@@ -23,7 +26,9 @@ export type People003Props = {
 // здесь важнее регалий: должность говорит, кем человек работает, а цитата —
 // как он думает. Инициалы вместо фотографий: стоковые лица в разделе
 // «Команда» подрывают доверие быстрее, чем их отсутствие.
-const STYLES = `
+const STYLES = `[data-vibeui-block="people-003"] [data-part="heading"]{margin-bottom:2rem}
+[data-vibeui-block="people-003"] [data-part="card"]{margin:0}
+
 :where([data-vibeui-block="people-003"]){
 --vibeui-people-003-bg:transparent;
 --vibeui-people-003-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -45,50 +50,7 @@ display:block;background:var(--vibeui-people-003-bg);color:var(--vibeui-people-0
 font-family:var(--vibeui-people-003-font);
 }
 [data-vibeui-block="people-003"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="people-003"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-people-003-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="people-003"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="people-003"] [data-part="row"]{display:grid;gap:1.25rem}
-[data-vibeui-block="people-003"] [data-part="card"]{
-min-inline-size:0;display:flex;flex-direction:column;gap:1.25rem;margin:0;
-padding:2rem;border:1px solid var(--vibeui-people-003-border);border-radius:1.25rem;
-background:var(--vibeui-people-003-card);
-transition:border-color var(--vibeui-people-003-dur-2) ease,transform var(--vibeui-people-003-dur-2) ease,box-shadow var(--vibeui-people-003-dur-2) ease;
-}
-[data-vibeui-block="people-003"] [data-part="card"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-people-003-accent) 40%,var(--vibeui-people-003-border));
-transform:translateY(-2px);
-box-shadow:0 22px 44px -36px var(--vibeui-people-003-shadow);
-}
-[data-vibeui-block="people-003"] [data-part="person"]{
-display:flex;align-items:center;gap:1rem;order:-1;
-}
-[data-vibeui-block="people-003"] [data-part="avatar"]{
-position:relative;width:4rem;height:4rem;flex:none;border-radius:999px;display:grid;place-items:center;
-color:var(--vibeui-people-003-accent);
-font-size:1.25rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="people-003"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-003-accent) 12%,var(--vibeui-people-003-card));}
-[data-vibeui-block="people-003"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="people-003"] [data-part="who"]{display:grid;gap:0.125rem;min-width:0}
-[data-vibeui-block="people-003"] [data-part="name"]{font-size:1.125rem;font-weight:700;letter-spacing:-0.01em}
-[data-vibeui-block="people-003"] [data-part="role"]{color:var(--vibeui-people-003-muted);font-size:0.875rem;line-height:1.4}
-[data-vibeui-block="people-003"] [data-part="quote"]{
-margin:0;padding-left:1rem;
-border-left:2px solid color-mix(in oklab,var(--vibeui-people-003-accent) 55%,var(--vibeui-people-003-border));
-font-size:1rem;line-height:1.65;
-}
-[data-vibeui-block="people-003"] [data-part="quote"]::before{content:"«"}
-[data-vibeui-block="people-003"] [data-part="quote"]::after{content:"»"}
 @container (min-width: 48rem){
 [data-vibeui-block="people-003"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="people-003"] [data-part="row"]{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -179,34 +141,15 @@ export function People003({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="row">
             {leaders.map((leader) => (
-              <figure key={leader.name} data-part="card">
-                <blockquote data-part="quote">{leader.quote}</blockquote>
-                <figcaption data-part="person">
-                  <span
-                    data-part="avatar"
-                    data-empty={leader.image ? undefined : "true"}
-                    aria-hidden="true"
-                  >
-                    {leader.image ? (
-                      <img
-                        src={leader.image}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : null}
-                    {initials(leader.name)}
-                  </span>
-                  <span data-part="who">
-                    <span data-part="name">{leader.name}</span>
-                    <span data-part="role">{leader.role}</span>
-                  </span>
-                </figcaption>
-              </figure>
+              <Card051 key={leader.name} data-part="card" name={leader.name} quote={leader.quote} image={leader.image} role={leader.role} accent={accent} />
             ))}
           </div>
         </div>

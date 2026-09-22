@@ -1,6 +1,9 @@
 "use client"
 
-import { useId, useState, type CSSProperties, type FormEvent } from "react"
+import { useState, type CSSProperties, type FormEvent } from "react"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Cta032Props = {
   eyebrow?: string
@@ -57,6 +60,7 @@ container-type:inline-size;
 [data-vibeui-block="cta-032"]{box-sizing:border-box;position:relative;overflow:hidden;padding:5rem 0;background:var(--vibeui-cta-032-bg);color:var(--vibeui-cta-032-fg);font-family:var(--vibeui-cta-032-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="cta-032"]::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--vibeui-cta-032-rule) 1px,transparent 1px),linear-gradient(90deg,var(--vibeui-cta-032-rule) 1px,transparent 1px);background-size:2rem 2rem;mask-image:radial-gradient(ellipse 70% 80% at 70% 50%,#000 20%,transparent 100%);pointer-events:none}
 [data-vibeui-block="cta-032"] *{box-sizing:border-box}
+[data-vibeui-block="cta-032"] [data-part="langs"]{display:flex;margin:.2rem 0 0}
 [data-vibeui-block="cta-032"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem;align-items:center}
 [data-vibeui-block="cta-032"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-cta-032-hand);font-size:1.4rem;color:var(--vibeui-cta-032-accent)}
 [data-vibeui-block="cta-032"] [data-part="title"]{margin:0;font-family:var(--vibeui-cta-032-display);font-weight:800;font-size:clamp(2.1rem,5cqi,3.6rem);line-height:1.03;letter-spacing:-.035em;text-wrap:balance}
@@ -68,23 +72,12 @@ container-type:inline-size;
 [data-vibeui-block="cta-032"] [data-part="sheet"]::before{content:"";position:absolute;left:.55rem;top:1.4rem;bottom:1.4rem;width:.45rem;background:repeating-linear-gradient(180deg,var(--vibeui-cta-032-line) 0 .5rem,transparent .5rem 1.6rem);border-radius:999px}
 [data-vibeui-block="cta-032"] [data-part="form"]{display:grid;gap:1.1rem}
 [data-vibeui-block="cta-032"] [data-part="form"] h3{margin:0 0 .2rem;font-family:var(--vibeui-cta-032-hand);font-weight:400;font-size:1.7rem;line-height:1.1;color:var(--vibeui-cta-032-accent)}
-[data-vibeui-block="cta-032"] [data-part="field"]{position:relative}
-[data-vibeui-block="cta-032"] [data-part="field"] input{width:100%;height:3.4rem;padding:1.1rem .2rem 0;border:0;border-bottom:1.5px solid var(--vibeui-cta-032-line);background:transparent;color:var(--vibeui-cta-032-fg);font:inherit;font-size:1.05rem;outline:none;transition:border-color .2s}
-[data-vibeui-block="cta-032"] [data-part="field"] input:focus{border-color:var(--vibeui-cta-032-accent)}
-[data-vibeui-block="cta-032"] [data-part="field"] label{position:absolute;left:.2rem;top:1.05rem;font-size:1rem;color:var(--vibeui-cta-032-muted);pointer-events:none;transform-origin:left;transition:transform .25s cubic-bezier(.2,.8,.2,1),color .2s}
-[data-vibeui-block="cta-032"] [data-part="field"] input:focus + label,[data-vibeui-block="cta-032"] [data-part="field"] input:not(:placeholder-shown) + label{transform:translateY(-.95rem) scale(.72);color:var(--vibeui-cta-032-accent)}
-[data-vibeui-block="cta-032"] [data-part="field"] input::placeholder{color:transparent}
-[data-vibeui-block="cta-032"] [data-part="field"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--vibeui-cta-032-accent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="cta-032"] [data-part="field"]:focus-within::after{transform:scaleX(1)}
 [data-vibeui-block="cta-032"] [data-part="langs"]{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.2rem 0 0}
 [data-vibeui-block="cta-032"] [data-part="langs"] > span{font-size:.78rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-cta-032-muted);margin-right:.2rem}
 [data-vibeui-block="cta-032"] [data-part="chip"]{padding:.5rem .9rem;border-radius:999px;border:1.5px solid var(--vibeui-cta-032-line);background:transparent;color:var(--vibeui-cta-032-fg);font:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:transform .18s,background .2s,color .2s,border-color .2s}
 [data-vibeui-block="cta-032"] [data-part="chip"]:hover{transform:translateY(-1px);border-color:var(--vibeui-cta-032-fg)}
 [data-vibeui-block="cta-032"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-cta-032-accent);color:var(--vibeui-cta-032-on-accent);border-color:transparent}
 [data-vibeui-block="cta-032"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-cta-032-accent);outline-offset:2px}
-[data-vibeui-block="cta-032"] [data-part="submit"]{display:inline-flex;justify-content:center;align-items:center;gap:.5rem;height:3.3rem;margin-top:.4rem;padding:0 1.4rem;border:0;border-radius:1rem;background:var(--vibeui-cta-032-accent);color:var(--vibeui-cta-032-on-accent);font:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="cta-032"] [data-part="submit"]:hover{transform:translateY(-2px) rotate(-.6deg);box-shadow:0 14px 30px -12px var(--vibeui-cta-032-accent)}
-[data-vibeui-block="cta-032"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-cta-032-fg);outline-offset:2px}
 [data-vibeui-block="cta-032"] [data-part="fine"]{margin:0;font-size:.78rem;color:var(--vibeui-cta-032-muted)}
 [data-vibeui-block="cta-032"] [data-part="done"]{display:grid;justify-items:center;gap:.8rem;text-align:center;animation:vibeui-cta-032-pop .5s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="cta-032"] [data-part="done"] svg{width:4.5rem;height:4.5rem;color:var(--vibeui-cta-032-accent)}
@@ -122,7 +115,6 @@ export function Cta032({
 }: Cta032Props) {
   const [done, setDone] = useState(false)
   const [lang, setLang] = useState(0)
-  const id = useId()
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -169,14 +161,8 @@ export function Cta032({
             ) : (
               <form data-part="form" onSubmit={submit}>
                 <h3>{eyebrow || fallbackTitle}</h3>
-                <div data-part="field">
-                  <input id={`${id}-name`} name="name" type="text" required placeholder={nameLabel} autoComplete="name" />
-                  <label htmlFor={`${id}-name`}>{nameLabel}</label>
-                </div>
-                <div data-part="field">
-                  <input id={`${id}-contact`} name="contact" type="text" required placeholder={contactLabel} autoComplete="tel" />
-                  <label htmlFor={`${id}-contact`}>{contactLabel}</label>
-                </div>
+                <Input001 name="name" type="text" required label={nameLabel} autoComplete="name" accent={accent} />
+                <Input001 name="contact" type="text" required label={contactLabel} autoComplete="tel" accent={accent} />
                 {languages.length > 0 ? (
                   <div data-part="langs" role="group" aria-label={langsLabel}>
                     <span>{langsShort}</span>
@@ -187,9 +173,9 @@ export function Cta032({
                     ))}
                   </div>
                 ) : null}
-                <button data-part="submit" type="submit">
+                <Button001 type="submit" size="lg" accent={accent}>
                   {actionLabel}
-                </button>
+                </Button001>
                 {fine ? <p data-part="fine">{fine}</p> : null}
               </form>
             )}

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 import type { CSSProperties } from "react"
 
 export type Blog005Entry = {
@@ -66,14 +67,6 @@ font-family:var(--vibeui-blog-005-sans);
 [data-vibeui-block="blog-005"] *{box-sizing:border-box}
 [data-vibeui-block="blog-005"] [data-part="frame"]{
 max-width:64rem;margin:0 auto;padding:2.75rem 1.25rem;display:grid;gap:1.25rem;
-}
-[data-vibeui-block="blog-005"] [data-part="eyebrow"]{
-font-size:0.75rem;font-weight:650;letter-spacing:0.09em;text-transform:uppercase;
-color:var(--vibeui-blog-005-accent);
-}
-[data-vibeui-block="blog-005"] h2{
-margin:0.4375rem 0 0;font-weight:680;letter-spacing:-0.02em;
-font-size:clamp(1.5rem,3.6cqi,2.25rem);line-height:1.14;
 }
 [data-vibeui-block="blog-005"] [data-part="filters"]{
 display:flex;flex-wrap:wrap;gap:0.375rem;padding-bottom:0.25rem;
@@ -261,8 +254,12 @@ export function Blog005({
       >
         <div data-part="frame">
           <header>
-            <span data-part="eyebrow">{eyebrow}</span>
-            <h2>{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              accent={accent}
+            />
           </header>
 
           <div data-part="filters" role="group" aria-label={filtersLabel}>

@@ -1,9 +1,12 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-type Faq003Entry = {
-  question: string
-  answer: string
-}
+import {
+  Accordion001,
+  type Accordion001Item,
+} from "@/registry/components/accordion/accordion-001/accordion-001"
+
+type Faq003Entry = Accordion001Item
 
 type Faq003Group = {
   label: string
@@ -18,6 +21,7 @@ export type Faq003Props = {
   /** Подпись радио-переключателя. {label} — название раздела. */
   tabLabelText?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
   background?: string
   accent?: string
   className?: string
@@ -29,6 +33,8 @@ export type Faq003Props = {
 // остаётся серверным. Радио спрятаны visually-hidden, но остаются в потоке
 // фокуса, поэтому стрелками вкладки листаются так же, как настоящие tabs.
 // Поддерживается до пяти категорий — по числу правил :nth-of-type ниже.
+// Список вопросов внутри вкладки — accordion-001 (составной блок): блоку
+// остаются вкладки, заголовок и раскладка, компоненту уходят items и accent.
 //
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, она темнеет вместе со страницей.
@@ -62,13 +68,6 @@ font-family:var(--vibeui-faq-003-font);
 [data-vibeui-block="faq-003"] [data-part="shell"]{
 max-width:64rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="faq-003"] [data-part="title"]{
-margin:0;max-width:20ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="faq-003"] [data-part="text"]{
-margin:0.75rem 0 0;max-width:58ch;color:var(--vibeui-faq-003-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="faq-003"] [data-part="deck"]{margin-top:2rem}
 [data-vibeui-block="faq-003"] [data-part="radio"]{
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
@@ -88,29 +87,8 @@ transition:color var(--vibeui-faq-003-dur-2) ease,background-color var(--vibeui-
 }
 [data-vibeui-block="faq-003"] [data-part="tab"]:hover{color:var(--vibeui-faq-003-ink)}
 [data-vibeui-block="faq-003"] [data-part="panel"]{display:none;padding-top:1.25rem}
-[data-vibeui-block="faq-003"] [data-part="row"]{
-border-bottom:1px solid var(--vibeui-faq-003-border);
-}
-[data-vibeui-block="faq-003"] [data-part="row"] summary{
-cursor:pointer;list-style:none;position:relative;
-padding:0.9375rem 2rem 0.9375rem 0;
-font-size:1rem;font-weight:600;line-height:1.4;
-}
-[data-vibeui-block="faq-003"] [data-part="row"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-003"] [data-part="row"] summary::after{
-content:"";position:absolute;right:0.25rem;top:1.25rem;width:0.75rem;height:2px;border-radius:2px;
-background:var(--vibeui-faq-003-accent);
-box-shadow:0 0 0 0 transparent;color:oklch(from var(--vibeui-faq-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="faq-003"] [data-part="row"] summary::before{
-content:"";position:absolute;right:0.5625rem;top:0.875rem;width:2px;height:0.75rem;border-radius:2px;
-background:var(--vibeui-faq-003-accent);
-transition:transform var(--vibeui-faq-003-dur-2) ease,opacity var(--vibeui-faq-003-dur-2) ease;color:oklch(from var(--vibeui-faq-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="faq-003"] [data-part="row"][open] summary::before{transform:scaleY(0);opacity:0}
-[data-vibeui-block="faq-003"] [data-part="row"] summary:focus-visible{outline:2px solid var(--vibeui-faq-003-accent);outline-offset:2px}
-[data-vibeui-block="faq-003"] [data-part="answer"]{
-margin:0;padding:0 0 1.125rem;max-width:64ch;
-color:var(--vibeui-faq-003-muted);font-size:0.9375rem;line-height:1.6;
-}
+/* Список вопросов внутри вкладки — accordion-001, ему отдаётся вся ширина. */
+[data-vibeui-block="faq-003"] [data-part="rows"]{width:100%;max-width:none}
 [data-vibeui-block="faq-003"] [data-part="radio"]:nth-of-type(1):checked ~ [data-part="panels"] > [data-part="panel"]:nth-child(1),
 [data-vibeui-block="faq-003"] [data-part="radio"]:nth-of-type(2):checked ~ [data-part="panels"] > [data-part="panel"]:nth-child(2),
 [data-vibeui-block="faq-003"] [data-part="radio"]:nth-of-type(3):checked ~ [data-part="panels"] > [data-part="panel"]:nth-child(3),
@@ -132,7 +110,6 @@ outline:2px solid var(--vibeui-faq-003-accent);outline-offset:2px;
 }
 @container (min-width: 44rem){
 [data-vibeui-block="faq-003"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="faq-003"] [data-part="row"] summary{font-size:1.0625rem;padding-block:1.125rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-003"] *{animation:none!important;transition:none!important}}
 `
@@ -233,13 +210,14 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Вопросы по категориям-вкладкам: переключение на радио, без JS. */
+/** Вопросы по категориям-вкладкам: переключение на радио, список — accordion-001. */
 export function Faq003({
   title = "Вопросы по разделам",
   description = "Выберите тему — покажем вопросы только по ней. Разделы переключаются без перезагрузки и работают с клавиатуры стрелками.",
   groups = DEFAULT_GROUPS,
   id = "vibeui-faq-003",
   tabLabelText = "Раздел вопросов: {label}",
+  marker = "plus",
   background = "",
   accent,
   className,
@@ -267,8 +245,13 @@ export function Faq003({
         style={palette}
       >
         <div data-part="shell">
-          <h2 data-part="title">{title}</h2>
-          <p data-part="text">{description}</p>
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={description}
+            ledeWidth={58}
+            accent={accent}
+          />
           <form data-part="deck">
             {groups.map((group, index) => (
               <input
@@ -295,12 +278,14 @@ export function Faq003({
             <div data-part="panels">
               {groups.map((group) => (
                 <div key={group.label} data-part="panel">
-                  {group.items.map((entry) => (
-                    <details key={entry.question} data-part="row">
-                      <summary>{entry.question}</summary>
-                      <p data-part="answer">{entry.answer}</p>
-                    </details>
-                  ))}
+                  <Accordion001
+                    marker={marker}
+                    data-part="rows"
+                    items={group.items}
+                    exclusive={false}
+                    divider="line"
+                    accent={accent}
+                  />
                 </div>
               ))}
             </div>

@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Hero015Props = {
   studio?: string
   title?: string
@@ -52,6 +54,7 @@ box-sizing:border-box;background:var(--vibeui-hero-015-bg);color:var(--vibeui-he
 font-family:var(--vibeui-hero-015-sans);
 }
 [data-vibeui-block="hero-015"] *{box-sizing:border-box}
+[data-vibeui-block="hero-015"] [data-part="cta-link"]{margin:2rem 0 0;}
 [data-vibeui-block="hero-015"] [data-part="shell"]{max-width:58rem;width:100%;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="hero-015"] [data-part="studio"]{
 margin:0 0 3rem;padding-bottom:1rem;border-bottom:1px solid var(--vibeui-hero-015-line);
@@ -66,16 +69,6 @@ font-size:clamp(2.25rem,8.5cqi,5rem);line-height:1.02;letter-spacing:-0.035em;te
 margin:2rem 0 0;max-width:32rem;font-size:clamp(0.9375rem,1.5cqi,1.125rem);line-height:1.65;
 color:var(--vibeui-hero-015-muted);text-wrap:pretty;
 }
-[data-vibeui-block="hero-015"] a{
-display:inline-block;margin:2rem 0 0;padding-bottom:0.125rem;
-font-size:1rem;font-weight:600;color:var(--vibeui-hero-015-fg);text-decoration:none;
-background-image:linear-gradient(var(--vibeui-hero-015-accent),var(--vibeui-hero-015-accent));
-background-repeat:no-repeat;background-position:0 100%;background-size:0 1px;
-transition:background-size var(--vibeui-hero-015-dur-3) ease,color var(--vibeui-hero-015-dur-2) ease;
-}
-[data-vibeui-block="hero-015"] a::after{content:" →"}
-[data-vibeui-block="hero-015"] a:hover{background-size:100% 1px;color:var(--vibeui-hero-015-accent)}
-[data-vibeui-block="hero-015"] a:focus-visible{outline:2px solid var(--vibeui-hero-015-accent);outline-offset:4px}
 [data-vibeui-block="hero-015"] dl{
 display:grid;grid-template-columns:1fr;gap:0.75rem 2rem;margin:4rem 0 0;padding-top:1.25rem;
 border-top:1px solid var(--vibeui-hero-015-line);font-size:0.8125rem;
@@ -164,7 +157,7 @@ export function Hero015({
             {title} {titleAccent ? <em>{titleAccent}</em> : null}
           </h1>
           {lede ? <p data-part="lede">{lede}</p> : null}
-          <a href={link.href}>{link.label}</a>
+          <Button077 data-part="cta-link" label={link.label} href={link.href} accent={accent} />
 
           {index.length > 0 ? (
             <dl>

@@ -1,6 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react"
 
 type Navbar010Link = {
@@ -78,6 +80,7 @@ font-family:var(--vibeui-navbar-010-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-010"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-010"] [data-part="action"]{flex:none}
 
 [data-vibeui-block="navbar-010"] [data-part="stage"]{
 position:relative;height:30rem;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;
@@ -176,30 +179,6 @@ opacity:1;
 transition:transform var(--vibeui-navbar-010-dur-4) var(--vibeui-navbar-010-ease),width var(--vibeui-navbar-010-dur-4) var(--vibeui-navbar-010-ease),opacity var(--vibeui-navbar-010-dur-2) ease;
 }
 
-[data-vibeui-block="navbar-010"] [data-part="action"]{
-position:relative;overflow:hidden;flex:none;
-display:inline-flex;align-items:center;
-padding:0.5625rem 1.1875rem;border-radius:999px;
-background:var(--vibeui-navbar-010-accent);color:oklch(from var(--vibeui-navbar-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:0.875rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
-box-shadow:0 0.375rem 1.125rem color-mix(in oklab,var(--vibeui-navbar-010-accent) 42%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 45%,transparent);
-transition:transform var(--vibeui-navbar-010-dur-2) var(--vibeui-navbar-010-ease),box-shadow var(--vibeui-navbar-010-dur-3) ease;
-}
-[data-vibeui-block="navbar-010"] [data-part="action"]::before{
-content:"";position:absolute;inset:0;pointer-events:none;
-background:radial-gradient(6rem 6rem at var(--vibeui-navbar-010-mx,50%) var(--vibeui-navbar-010-my,50%),
-color-mix(in oklab,#ffffff 55%,transparent),transparent 70%);
-opacity:0;transition:opacity var(--vibeui-navbar-010-dur-2) ease;
-}
-[data-vibeui-block="navbar-010"] [data-part="action"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-navbar-010-accent) 52%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 55%,transparent);
-}
-[data-vibeui-block="navbar-010"] [data-part="action"]:hover::before{opacity:1}
-[data-vibeui-block="navbar-010"] [data-part="action"] span{position:relative}
-
 [data-vibeui-block="navbar-010"] [data-part="burger"]{
 flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;
 padding:0.5rem 0.9375rem 0.5rem 0.8125rem;
@@ -251,7 +230,7 @@ transition:background-color var(--vibeui-navbar-010-dur-1) ease;
 background:var(--vibeui-navbar-010-glide);color:var(--vibeui-navbar-010-accent);
 }
 
-[data-vibeui-block="navbar-010"] a:focus-visible,
+
 [data-vibeui-block="navbar-010"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-010-accent);outline-offset:3px;
 }
@@ -287,7 +266,6 @@ background:color-mix(in oklab,#1a1a1a 82%,transparent);border-color:transparent;
 [data-vibeui-block="navbar-010"] [data-part="burger"] span:last-child{
 position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
 }
-[data-vibeui-block="navbar-010"] [data-part="action"]{padding:0.5625rem 0.9375rem}
 [data-vibeui-block="navbar-010"] [data-part="brand"]{padding-right:0.875rem}
 }
 
@@ -463,9 +441,16 @@ export function Navbar010({
           <span>{menuOpen ? closeLabel : menuLabel}</span>
         </button>
 
-        <a data-part="action" href={actionHref} onPointerMove={trackPointer}>
-          <span>{actionLabel}</span>
-        </a>
+        <Button016
+          data-part="action"
+          onPointerMove={trackPointer}
+          label={actionLabel}
+          href={actionHref}
+          external={false}
+          size="sm"
+          tone="accent"
+          accent={accent}
+        />
       </header>
 
       <nav

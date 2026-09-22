@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks018 } from "@/registry/components/navigation/footerlinks-018/footerlinks-018"
 
 export type Footer020Messenger = {
   kind?: "telegram" | "whatsapp" | "vk" | "max"
@@ -65,6 +66,7 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-020"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-020"]{box-sizing:border-box;display:block;background:var(--vibeui-footer-020-bg);color:var(--vibeui-footer-020-fg);font-family:var(--vibeui-footer-020-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="footer-020"] *{box-sizing:border-box}
+[data-vibeui-block="footer-020"] [data-part="links"]{margin:0}
 [data-vibeui-block="footer-020"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="footer-020"] a:focus-visible{outline:2px solid var(--vibeui-footer-020-accent);outline-offset:3px;border-radius:.25rem}
 [data-vibeui-block="footer-020"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:3.5rem 1.25rem 2rem}
@@ -83,9 +85,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-020"] [data-part="messenger"]:hover{border-color:var(--vibeui-footer-020-accent-ink);transform:translateY(-1px)}
 [data-vibeui-block="footer-020"] [data-part="icon"]{display:grid;place-items:center;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--vibeui-footer-020-accent);color:#fff4ee;font-size:.7rem;font-weight:700;box-shadow:0 0 14px rgb(125 42 58 / .5)}
 [data-vibeui-block="footer-020"] [data-part="icon"] svg{width:1rem;height:1rem;fill:currentColor}
-[data-vibeui-block="footer-020"] [data-part="links"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
-[data-vibeui-block="footer-020"] [data-part="links"] a{font-size:.95rem;opacity:.85;transition:opacity .2s,color .2s}
-[data-vibeui-block="footer-020"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-020-accent-ink)}
 [data-vibeui-block="footer-020"] [data-part="bottom"]{padding-top:1.5rem;font-size:.75rem;color:var(--vibeui-footer-020-muted)}
 [data-vibeui-block="footer-020"] [data-part="bottom"] p{margin:0}
 @container (min-width: 60rem){
@@ -212,13 +211,7 @@ export function Footer020({
             </div>
             <div>
               {linksLabel ? <span data-part="label">{linksLabel}</span> : null}
-              <ul data-part="links">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
-                  </li>
-                ))}
-              </ul>
+              <Footerlinks018 data-part="links" links={links} accent={accent} />
             </div>
           </div>
           <div data-part="bottom">{legal ? <p>{legal}</p> : null}</div>

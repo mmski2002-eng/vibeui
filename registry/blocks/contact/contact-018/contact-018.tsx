@@ -2,6 +2,10 @@
 
 import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+
 export type Contact018Option = { value: string; label: string }
 
 export type Contact018Labels = {
@@ -137,21 +141,11 @@ container-type:inline-size;
 @keyframes vibeui-contact-018-in{from{opacity:0;transform:translateY(.5rem)}}
 [data-vibeui-block="contact-018"] [data-part="step"] h3{margin:0 0 .25rem;font-family:var(--vibeui-contact-018-display);font-size:1.7rem;font-weight:500;line-height:1.15;color:var(--vibeui-contact-018-plum)}
 [data-vibeui-block="contact-018"] [data-part="step"] > p{margin:0 0 1.2rem;font-size:.92rem;color:var(--vibeui-contact-018-muted)}
-[data-vibeui-block="contact-018"] label{display:block;margin-bottom:1rem}
-[data-vibeui-block="contact-018"] label > span{display:block;margin-bottom:.35rem;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--vibeui-contact-018-muted)}
-[data-vibeui-block="contact-018"] input[type="text"],[data-vibeui-block="contact-018"] textarea{width:100%;padding:.75rem .9rem;border:1px solid var(--vibeui-contact-018-line);border-radius:.8rem;background:var(--vibeui-contact-018-field);color:inherit;font:inherit;transition:border-color .25s,box-shadow .25s}
-[data-vibeui-block="contact-018"] input[type="text"]:focus,[data-vibeui-block="contact-018"] textarea:focus{outline:none;border-color:var(--vibeui-contact-018-accent);box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-contact-018-accent) 18%,transparent)}
-[data-vibeui-block="contact-018"] textarea{min-height:5.5rem;resize:vertical}
 [data-vibeui-block="contact-018"] [data-part="choices"]{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
 [data-vibeui-block="contact-018"] [data-part="choice"]{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1rem;border:1px solid var(--vibeui-contact-018-line);border-radius:999px;background:var(--vibeui-contact-018-field);color:inherit;font:inherit;font-size:.92rem;cursor:pointer;transition:border-color .25s,background .25s,color .25s,transform .2s}
 [data-vibeui-block="contact-018"] [data-part="choice"]:hover{border-color:var(--vibeui-contact-018-accent);transform:translateY(-1px)}
 [data-vibeui-block="contact-018"] [data-part="choice"][aria-pressed="true"],[data-vibeui-block="contact-018"] [data-part="choice"][aria-checked="true"]{border-color:var(--vibeui-contact-018-accent);background:var(--vibeui-contact-018-accent);color:var(--vibeui-contact-018-on-accent)}
-[data-vibeui-block="contact-018"] [data-part="choice"]:focus-visible,[data-vibeui-block="contact-018"] [data-part="nav"] button:focus-visible{outline:2px solid var(--vibeui-contact-018-accent);outline-offset:3px}
 [data-vibeui-block="contact-018"] [data-part="nav"]{display:flex;justify-content:space-between;gap:.75rem;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--vibeui-contact-018-line)}
-[data-vibeui-block="contact-018"] [data-part="nav"] button{display:inline-flex;align-items:center;gap:.4rem;height:2.9rem;padding:0 1.3rem;border-radius:999px;border:1px solid var(--vibeui-contact-018-line);background:transparent;color:inherit;font:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .2s,background .25s,border-color .25s}
-[data-vibeui-block="contact-018"] [data-part="nav"] button:disabled{opacity:.45;cursor:not-allowed}
-[data-vibeui-block="contact-018"] [data-part="nav"] button[data-primary]{margin-left:auto;background:var(--vibeui-contact-018-accent);border-color:var(--vibeui-contact-018-accent);color:var(--vibeui-contact-018-on-accent)}
-[data-vibeui-block="contact-018"] [data-part="nav"] button:not(:disabled):hover{transform:translateY(-1px)}
 [data-vibeui-block="contact-018"] [data-part="summary"]{align-self:start;padding:1.5rem;border-radius:1.4rem 1.4rem 3rem 1.4rem;background:color-mix(in oklab,var(--vibeui-contact-018-sage) 16%,transparent)}
 [data-vibeui-block="contact-018"] [data-part="summary"] h3{margin:0 0 .8rem;font-family:var(--vibeui-contact-018-display);font-size:1.4rem;font-weight:500;font-style:italic;color:var(--vibeui-contact-018-plum)}
 [data-vibeui-block="contact-018"] [data-part="summary"] dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.4rem .9rem;margin:0;font-size:.9rem}
@@ -169,7 +163,10 @@ container-type:inline-size;
 [data-vibeui-block="contact-018"] [data-part="form"]{padding:2rem 2.25rem}
 [data-vibeui-block="contact-018"] [data-part="summary"]{position:sticky;top:5rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-018"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-018"] *{animation:none!important;transition:none!important}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="contact-018"] [data-part="choice"]:focus-visible{outline:2px solid var(--vibeui-contact-018-accent);outline-offset:3px}
+`
 
 function subscribe() {
   return () => {}
@@ -334,10 +331,15 @@ export function Contact018({
                     <div data-part="step" key="who">
                       <h3>{stepLabels[0]}</h3>
                       <p>{t.whoText}</p>
-                      <label>
-                        <span>{t.nameLabel}</span>
-                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder={t.namePlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={(event) => set("name", event.target.value)}
+                        autoComplete="name"
+                        label={t.nameLabel}
+                        accent={accent}
+                      />
                       <div data-part="choices">
                         {choice(answers.coming === "yes", t.comingYes, () => set("coming", "yes"))}
                         {choice(answers.coming === "no", t.comingNo, () => set("coming", "no"))}
@@ -353,15 +355,21 @@ export function Contact018({
                         {choice(answers.plusOne, t.withPair, () => set("plusOne", true))}
                       </div>
                       {answers.plusOne ? (
-                        <label>
-                          <span>{t.pairName}</span>
-                          <input type="text" value={answers.plusOneName} onChange={(event) => set("plusOneName", event.target.value)} placeholder={t.pairPlaceholder} />
-                        </label>
+                        <Input001
+                          type="text"
+                          value={answers.plusOneName}
+                          onChange={(event) => set("plusOneName", event.target.value)}
+                          label={t.pairName}
+                          accent={accent}
+                        />
                       ) : null}
-                      <label>
-                        <span>{t.children}</span>
-                        <input type="text" value={answers.children} onChange={(event) => set("children", event.target.value)} placeholder={t.childrenPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.children}
+                        onChange={(event) => set("children", event.target.value)}
+                        label={t.children}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   {step === 2 ? (
@@ -374,10 +382,13 @@ export function Contact018({
                       <div data-part="choices" role="group" aria-label={t.drinksLabel}>
                         {drinks.map((item) => choice(answers.drinks.includes(item.value), item.label, () => toggleDrink(item.value), "checkbox"))}
                       </div>
-                      <label>
-                        <span>{t.allergies}</span>
-                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder={t.allergiesPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.allergies}
+                        onChange={(event) => set("allergies", event.target.value)}
+                        label={t.allergies}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   {step === 3 ? (
@@ -394,28 +405,33 @@ export function Contact018({
                     <div data-part="step" key="song">
                       <h3>{stepLabels[4]}</h3>
                       <p>{t.songText}</p>
-                      <label>
-                        <span>{t.songLabel}</span>
-                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder={t.songPlaceholder} />
-                      </label>
-                      <label>
-                        <span>{t.wishLabel}</span>
-                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder={t.wishPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.song}
+                        onChange={(event) => set("song", event.target.value)}
+                        label={t.songLabel}
+                        accent={accent}
+                      />
+                      <Input034
+                        value={answers.wish}
+                        onChange={(event) => set("wish", event.target.value)}
+                        label={t.wishLabel}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   <div data-part="nav">
-                    <button type="button" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
+                    <Button001 type="button" tone="soft" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))} accent={accent}>
                       {t.back}
-                    </button>
+                    </Button001>
                     {step < last ? (
-                      <button type="button" data-primary="" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))}>
+                      <Button001 type="button" tone="solid" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))} accent={accent}>
                         {t.next}
-                      </button>
+                      </Button001>
                     ) : (
-                      <button type="submit" data-primary="">
+                      <Button001 type="submit" size="lg" accent={accent}>
                         {submitLabel}
-                      </button>
+                      </Button001>
                     )}
                   </div>
                 </>

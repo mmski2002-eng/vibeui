@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card092 } from "@/registry/components/card/card-092/card-092"
 
 export type Course004Day = {
   /** «пн», «ср», «сб» — колонка календаря. */
@@ -76,20 +77,7 @@ container-type:inline-size;
 [data-vibeui-block="course-004"] [data-part="col"][data-busy="true"] [data-part="dayname"]{color:var(--vibeui-course-004-fg)}
 [data-vibeui-block="course-004"] [data-part="events"]{display:grid;gap:.5rem;margin:0;padding:0;list-style:none;min-height:3rem}
 [data-vibeui-block="course-004"] [data-part="empty"]{min-height:3rem;border-radius:.75rem;background:repeating-linear-gradient(-45deg,transparent 0 6px,color-mix(in oklab,var(--vibeui-course-004-line) 70%,transparent) 6px 7px)}
-[data-vibeui-block="course-004"] [data-part="event"]{position:relative;padding:.85rem .9rem .85rem 1.1rem;border-radius:.85rem;background:var(--vibeui-course-004-card);border:1px solid var(--vibeui-course-004-line);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s}
-[data-vibeui-block="course-004"] [data-part="event"]::before{content:"";position:absolute;left:0;top:.75rem;bottom:.75rem;width:3px;border-radius:3px;background:var(--vibeui-course-004-accent)}
-[data-vibeui-block="course-004"] [data-part="event"]:hover{transform:translateY(-2px);box-shadow:0 20px 30px -22px rgb(17 24 39 / .4);border-color:color-mix(in oklab,var(--vibeui-course-004-accent) 40%,var(--vibeui-course-004-line))}
-[data-vibeui-block="course-004"] [data-part="event"][data-kind="live"]{background:var(--vibeui-course-004-marker);border-color:transparent;color:#1a2e05}
-[data-vibeui-block="course-004"] [data-part="event"][data-kind="live"]::before{background:#1a2e05}
-[data-vibeui-block="course-004"] [data-part="event"][data-kind="live"] [data-part="text"]{color:#365314}
-[data-vibeui-block="course-004"] [data-part="meta"]{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;margin:0 0 .3rem;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-course-004-muted)}
-[data-vibeui-block="course-004"] [data-part="event"][data-kind="live"] [data-part="meta"]{color:#365314}
-[data-vibeui-block="course-004"] [data-part="pulse"]{position:relative;width:.55rem;height:.55rem;border-radius:50%;background:#1a2e05}
-[data-vibeui-block="course-004"] [data-part="pulse"]::after{content:"";position:absolute;inset:-.3rem;border-radius:50%;border:2px solid #1a2e05;opacity:0;animation:vibeui-course-004-pulse 1.8s ease-out infinite}
 @keyframes vibeui-course-004-pulse{0%{transform:scale(.4);opacity:.8}100%{transform:scale(1.4);opacity:0}}
-[data-vibeui-block="course-004"] [data-part="time"]{font-weight:500;letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums}
-[data-vibeui-block="course-004"] [data-part="daytitle"]{margin:0;font-weight:600;font-size:.9rem;line-height:1.3}
-[data-vibeui-block="course-004"] [data-part="text"]{margin:.3rem 0 0;font-size:.8rem;color:var(--vibeui-course-004-muted)}
 [data-vibeui-block="course-004"] [data-part="side"]{display:grid;gap:1.25rem;margin-top:2.5rem}
 [data-vibeui-block="course-004"] [data-part="picture"]{position:relative;overflow:hidden;border-radius:1.1rem;aspect-ratio:16/9;background:light-dark(#e5e7eb,#1f2430)}
 [data-vibeui-block="course-004"] [data-part="picture"] img{width:100%;height:100%;object-fit:cover;display:block}
@@ -102,7 +90,6 @@ container-type:inline-size;
 [data-vibeui-block="course-004"] [data-part="calendar"]{grid-template-columns:repeat(7,minmax(0,1fr));gap:.6rem}
 [data-vibeui-block="course-004"] [data-part="col"]{grid-template-columns:1fr;gap:.6rem}
 [data-vibeui-block="course-004"] [data-part="events"],[data-vibeui-block="course-004"] [data-part="empty"]{min-height:9rem}
-[data-vibeui-block="course-004"] [data-part="event"]{padding:.9rem .85rem .9rem 1rem}
 [data-vibeui-block="course-004"] [data-part="formats"]{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @container (min-width: 64rem){
@@ -177,15 +164,7 @@ export function Course004({
                     {column.events.map((item) => {
                       const live = item.kind ? LIVE.has(item.kind.toLowerCase()) : false
                       return (
-                        <li key={item.title} data-part="event" data-kind={live ? "live" : undefined}>
-                          <p data-part="meta">
-                            {live ? <span data-part="pulse" aria-hidden="true" /> : null}
-                            {item.kind ? <span>{item.kind}</span> : null}
-                            {item.time ? <span data-part="time">{item.time}</span> : null}
-                          </p>
-                          <p data-part="daytitle">{item.title}</p>
-                          {item.text ? <p data-part="text">{item.text}</p> : null}
-                        </li>
+                        <Card092 key={item.title} data-part="event" title={item.title} kind={item.kind} time={item.time} text={item.text} live={live} accent={accent} />
                       )
                     })}
                   </ul>

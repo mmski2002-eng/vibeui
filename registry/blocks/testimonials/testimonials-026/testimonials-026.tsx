@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card112 } from "@/registry/components/card/card-112/card-112"
 
 export type Testimonials026Stat = {
   /** Число, до которого докручивается счётчик. */
@@ -65,6 +66,7 @@ container-type:inline-size;
 :where([data-vibeui-block="testimonials-026"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="testimonials-026"]{box-sizing:border-box;overflow:hidden;padding:5rem 0;background:var(--vibeui-testimonials-026-bg);color:var(--vibeui-testimonials-026-fg);font-family:var(--vibeui-testimonials-026-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="testimonials-026"] *{box-sizing:border-box}
+[data-vibeui-block="testimonials-026"] [data-part="review"]{width:20rem;margin-right:1rem}
 [data-vibeui-block="testimonials-026"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="testimonials-026"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 .8rem;font-family:var(--vibeui-testimonials-026-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-testimonials-026-accent)}
 [data-vibeui-block="testimonials-026"] [data-part="eyebrow"]::before{content:"";width:2rem;height:1px;background:var(--vibeui-testimonials-026-accent)}
@@ -83,13 +85,6 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-026"] [data-part="track"]{display:flex;width:max-content;margin:0;padding:0;list-style:none;animation:vibeui-testimonials-026-run var(--vibeui-testimonials-026-t,60s) linear infinite}
 [data-vibeui-block="testimonials-026"] [data-part="row"][data-dir="back"] [data-part="track"]{animation-direction:reverse}
 [data-vibeui-block="testimonials-026"] [data-part="row"]:hover [data-part="track"]{animation-play-state:paused}
-[data-vibeui-block="testimonials-026"] [data-part="review"]{display:grid;gap:.6rem;width:20rem;margin-right:1rem;padding:1.2rem 1.3rem;border-radius:1.1rem;border:1px solid var(--vibeui-testimonials-026-line);background:var(--vibeui-testimonials-026-glass)}
-[data-vibeui-block="testimonials-026"] [data-part="stars"]{display:inline-flex;gap:.15rem;color:var(--vibeui-testimonials-026-accent)}
-[data-vibeui-block="testimonials-026"] [data-part="stars"] svg{width:.9rem;height:.9rem}
-[data-vibeui-block="testimonials-026"] [data-part="review"] p{margin:0;font-size:.95rem;line-height:1.45}
-[data-vibeui-block="testimonials-026"] [data-part="who"]{display:grid;margin-top:.2rem;font-size:.82rem}
-[data-vibeui-block="testimonials-026"] [data-part="who"] b{font-weight:600}
-[data-vibeui-block="testimonials-026"] [data-part="who"] span{font-family:var(--vibeui-testimonials-026-mono);font-size:.72rem;color:var(--vibeui-testimonials-026-muted)}
 @keyframes vibeui-testimonials-026-run{to{transform:translateX(-50%)}}
 @container (min-width: 48rem){[data-vibeui-block="testimonials-026"] [data-part="stats"]{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-026"] *{animation:none!important;transition:none!important}[data-vibeui-block="testimonials-026"] [data-part="row"]{overflow-x:auto}}`
@@ -152,31 +147,7 @@ function Counter({ stat, run }: { stat: Testimonials026Stat; run: boolean }) {
   )
 }
 
-function Star() {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-      <path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7z" />
-    </svg>
-  )
-}
 
-function Review({ review, hidden, starsLabel }: { review: Testimonials026Review; hidden?: boolean; starsLabel: string }) {
-  const stars = review.stars ?? 5
-  return (
-    <li data-part="review" aria-hidden={hidden ? true : undefined}>
-      <span data-part="stars" aria-label={starsLabel.replace("{n}", String(stars))}>
-        {Array.from({ length: stars }, (_, index) => (
-          <Star key={index} />
-        ))}
-      </span>
-      <p>{review.text}</p>
-      <span data-part="who">
-        <b>{review.name}</b>
-        <span>{review.car}</span>
-      </span>
-    </li>
-  )
-}
 
 /** Отзывы автосервиса: счётчики докручиваются, марки бегут лентой, отзывы едут в два ряда. */
 export function Testimonials026({
@@ -261,7 +232,7 @@ export function Testimonials026({
               <div key={rowIndex} data-part="row" data-dir={rowIndex % 2 ? "back" : "forth"} style={{ ["--vibeui-testimonials-026-t" as string]: `${speed + rowIndex * 12}s` }}>
                 <ul data-part="track">
                   {[...row, ...row].map((review, index) => (
-                    <Review key={`${review.name}-${index}`} review={review} hidden={index >= row.length} starsLabel={starsLabel} />
+                    <Card112 key={`${review.name}-${index}`} data-part="review" {...review} starsLabel={starsLabel} aria-hidden={index >= row.length ? true : undefined} accent={accent} />
                   ))}
                 </ul>
               </div>

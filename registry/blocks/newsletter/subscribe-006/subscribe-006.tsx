@@ -1,6 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 import type { CSSProperties, FormEvent } from "react"
 
 export type Subscribe006Props = {
@@ -8,7 +12,6 @@ export type Subscribe006Props = {
   title?: string
   lead?: string
   emailLabel?: string
-  placeholder?: string
   buttonLabel?: string
   note?: string
   success?: string
@@ -51,6 +54,7 @@ display:block;background:var(--vibeui-subscribe-006-bg);
 font-family:var(--vibeui-subscribe-006-font);
 }
 [data-vibeui-block="subscribe-006"] *{box-sizing:border-box}
+[data-vibeui-block="subscribe-006"] [data-part="heading"]{margin-bottom:0.625rem}
 [data-vibeui-block="subscribe-006"] [data-part="shell"]{
 max-width:64rem;margin:0 auto;padding:2.5rem 1.25rem;
 display:flex;justify-content:center;
@@ -75,51 +79,22 @@ border:1px solid color-mix(in oklab,var(--vibeui-subscribe-006-accent) 45%,trans
 color:var(--vibeui-subscribe-006-accent);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
 }
-[data-vibeui-block="subscribe-006"] [data-part="title"]{
-margin:0 0 0.625rem;
-font-size:clamp(1.25rem,4cqi,1.625rem);line-height:1.2;letter-spacing:-0.015em;font-weight:700;
-}
-[data-vibeui-block="subscribe-006"] [data-part="lead"]{
-margin:0 0 1.375rem;color:var(--vibeui-subscribe-006-muted);
-font-size:0.875rem;line-height:1.55;
-}
 [data-vibeui-block="subscribe-006"] [data-part="form"]{
 display:flex;flex-direction:column;gap:0.625rem;
 }
-[data-vibeui-block="subscribe-006"] [data-part="field"]{display:block}
-[data-vibeui-block="subscribe-006"] [data-part="sr"]{
+/* Поле input-001 растягивается на остаток строки, кнопка — button-001. */
+[data-vibeui-block="subscribe-006"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="subscribe-006"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
+[data-vibeui-block="subscribe-006"] [data-part="visually-hidden"]{
 position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
 clip:rect(0 0 0 0);white-space:nowrap;border:0;
-}
-[data-vibeui-block="subscribe-006"] [data-part="input"]{
-width:100%;height:2.75rem;padding:0 0.875rem;
-border:1px solid var(--vibeui-subscribe-006-border);border-radius:0.625rem;
-background:var(--vibeui-subscribe-006-field);color:var(--vibeui-subscribe-006-ink);
-font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="subscribe-006"] [data-part="input"]::placeholder{color:var(--vibeui-subscribe-006-muted)}
-[data-vibeui-block="subscribe-006"] [data-part="input"]:focus-visible{
-outline:2px solid var(--vibeui-subscribe-006-accent);outline-offset:1px;
-}
-[data-vibeui-block="subscribe-006"] [data-part="button"]{
-height:2.75rem;padding:0 1.375rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-subscribe-006-accent);color:oklch(from var(--vibeui-subscribe-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;cursor:pointer;
-transition:background var(--vibeui-subscribe-006-dur-2) ease,transform var(--vibeui-subscribe-006-dur-2) ease;
-}
-[data-vibeui-block="subscribe-006"] [data-part="button"]:hover{
-background:color-mix(in oklab,var(--vibeui-subscribe-006-accent) 88%,white);
-}
-[data-vibeui-block="subscribe-006"] [data-part="button"]:active{transform:translateY(1px)}
-[data-vibeui-block="subscribe-006"] [data-part="button"]:focus-visible{
-outline:2px solid var(--vibeui-subscribe-006-ink);outline-offset:2px;
 }
 [data-vibeui-block="subscribe-006"] [data-part="done"]{
 margin:0;min-height:2.75rem;display:flex;align-items:center;gap:0.5rem;
 color:var(--vibeui-subscribe-006-ok);font-size:0.9375rem;font-weight:600;
 }
 [data-vibeui-block="subscribe-006"] [data-part="done"]::before{content:"✓";font-weight:700}
-[data-vibeui-block="subscribe-006"] [data-part="note"]{
+[data-vibeui-block="subscribe-006"] [data-part="footnote"]{
 margin:0.875rem 0 0;color:var(--vibeui-subscribe-006-muted);font-size:0.75rem;
 }
 @container (min-width: 48rem){
@@ -156,7 +131,6 @@ export function Subscribe006({
   title = "Письма, после которых открывают редактор",
   lead = "Раз в неделю: новые блоки VibeUI, приём вёрстки и одна готовая идея для лендинга. Коротко, по делу, с кодом.",
   emailLabel = "Электронная почта",
-  placeholder = "you@company.ru",
   buttonLabel = "Подписаться",
   note = "Без спама. Отписка в один клик в любом письме.",
   success = "Готово! Письмо-подтверждение уже в ящике.",
@@ -196,31 +170,33 @@ export function Subscribe006({
         <div data-part="shell">
           <div data-part="card">
             <p data-part="badge">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
-            <p data-part="lead">{lead}</p>
+            <Heading001
+              data-part="heading"
+              title={title}
+              size="sm"
+              accent={accent}
+              lede={lead}
+            />
             <div aria-live="polite">
               {done ? (
                 <p data-part="done">{success}</p>
               ) : (
                 <form data-part="form" onSubmit={handleSubmit}>
-                  <label data-part="field">
-                    <span data-part="sr">{emailLabel}</span>
-                    <input
-                      data-part="input"
-                      type="email"
-                      name="email"
-                      required
-                      placeholder={placeholder}
-                      autoComplete="email"
-                    />
-                  </label>
-                  <button data-part="button" type="submit">
+                  <Input001
+                    type="email"
+                    name="email"
+                    required
+                    label={emailLabel}
+                    autoComplete="email"
+                    accent={accent}
+                  />
+                  <Button001 type="submit" size="lg" accent={accent}>
                     {buttonLabel}
-                  </button>
+                  </Button001>
                 </form>
               )}
             </div>
-            <p data-part="note">{note}</p>
+            <p data-part="footnote">{note}</p>
           </div>
         </div>
       </section>

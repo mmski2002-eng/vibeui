@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Comparison005Pair = {
   /** Возражение или привычный способ. */
@@ -28,7 +29,8 @@ export type Comparison005Props = {
 // Пары идут в две колонки на широком экране и в одну на узком, но карточка
 // пары не делится: возражение и ответ обязаны оставаться рядом, иначе на
 // телефоне человек прочитает подряд четыре возражения без единого ответа.
-const STYLES = `
+const STYLES = `[data-vibeui-block="comparison-005"] [data-part="heading"]{margin-bottom:0.75rem}
+
 :where([data-vibeui-block="comparison-005"]){
 --vibeui-comparison-005-bg:transparent;
 --vibeui-comparison-005-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -49,8 +51,6 @@ background:var(--vibeui-comparison-005-bg);color:var(--vibeui-comparison-005-ink
 font-family:var(--vibeui-comparison-005-font);
 }
 [data-vibeui-block="comparison-005"] [data-part="shell"]{max-width:60rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="comparison-005"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-comparison-005-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="comparison-005"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;max-width:22ch}
 [data-vibeui-block="comparison-005"] [data-part="lead"]{margin:0 0 2rem;max-width:56ch;color:var(--vibeui-comparison-005-muted);font-size:1rem;line-height:1.6}
 [data-vibeui-block="comparison-005"] [data-part="pairs"]{list-style:none;margin:0;padding:0;display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="comparison-005"] [data-part="pair"]{
@@ -173,8 +173,12 @@ export function Comparison005({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           {lead ? <p data-part="lead">{lead}</p> : null}
 
           <ul data-part="pairs">

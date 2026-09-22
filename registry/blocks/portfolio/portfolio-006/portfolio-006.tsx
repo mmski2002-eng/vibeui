@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 type Portfolio006Work = {
   title: string
@@ -52,13 +55,6 @@ font-family:var(--vibeui-portfolio-006-font);
 }
 [data-vibeui-block="portfolio-006"] [data-part="shell"]{max-width:68rem;margin:0 auto;padding:3rem 1.25rem}
 [data-vibeui-block="portfolio-006"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:2rem}
-[data-vibeui-block="portfolio-006"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-portfolio-006-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="portfolio-006"] [data-part="title"]{margin:0;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;max-width:20ch}
-[data-vibeui-block="portfolio-006"] [data-part="more"]{
-color:var(--vibeui-portfolio-006-ink);font-size:0.9375rem;font-weight:600;text-decoration:none;
-border-bottom:2px solid var(--vibeui-portfolio-006-accent);padding-bottom:0.125rem;
-}
-[data-vibeui-block="portfolio-006"] [data-part="more"]:hover{color:var(--vibeui-portfolio-006-accent)}
 [data-vibeui-block="portfolio-006"] [data-part="grid"]{list-style:none;margin:0;padding:0;display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="portfolio-006"] [data-part="tile"]{min-inline-size:0}
 [data-vibeui-block="portfolio-006"] [data-part="link"]{
@@ -171,13 +167,20 @@ export function Portfolio006({
         <div data-part="shell">
           <div data-part="head">
             <div>
-              <p data-part="eyebrow">{eyebrow}</p>
-              <h2 data-part="title">{title}</h2>
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                accent={accent}
+              />
             </div>
             {moreLabel ? (
-              <a data-part="more" href={moreHref}>
-                {moreLabel}
-              </a>
+              <Button077
+                data-part="more"
+                label={moreLabel}
+                href={moreHref}
+                accent={accent}
+              />
             ) : null}
           </div>
 

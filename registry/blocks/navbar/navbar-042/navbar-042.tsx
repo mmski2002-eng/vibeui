@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar042Link = {
   label: string
   href: string
@@ -75,12 +77,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-042"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.9rem}
 [data-vibeui-block="navbar-042"] [data-part="docs"]{display:none;color:var(--vibeui-navbar-042-muted);text-decoration:none;font-family:var(--vibeui-navbar-042-mono);font-size:.82rem;transition:color .2s}
 [data-vibeui-block="navbar-042"] [data-part="docs"]:hover{color:var(--vibeui-navbar-042-fg)}
-[data-vibeui-block="navbar-042"] [data-part="action"]{display:inline-flex;align-items:center;gap:.35rem;height:2.3rem;padding:0 .9rem;border-radius:.55rem;background:var(--vibeui-navbar-042-accent);color:var(--vibeui-navbar-042-on-accent);text-decoration:none;font-family:var(--vibeui-navbar-042-mono);font-weight:600;font-size:.8rem;white-space:nowrap;transition:box-shadow .25s,transform .18s}
-[data-vibeui-block="navbar-042"] [data-part="action"] i{display:none;font-style:normal;opacity:.7;transition:transform .25s}
-[data-vibeui-block="navbar-042"] [data-part="action"]:hover{box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-navbar-042-accent) 22%,transparent)}
-[data-vibeui-block="navbar-042"] [data-part="action"]:hover i:first-child{transform:translateX(-2px)}
-[data-vibeui-block="navbar-042"] [data-part="action"]:hover i:last-child{transform:translateX(2px)}
-[data-vibeui-block="navbar-042"] a:focus-visible,[data-vibeui-block="navbar-042"] button:focus-visible{outline:2px solid var(--vibeui-navbar-042-accent);outline-offset:2px}
+[data-vibeui-block="navbar-042"] button:focus-visible{outline:2px solid var(--vibeui-navbar-042-accent);outline-offset:2px}
 [data-vibeui-block="navbar-042"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.3rem;height:2.3rem;padding:0;border:1px solid var(--vibeui-navbar-042-line);border-radius:.55rem;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-042"] [data-part="burger"] i{display:block;width:1rem;height:2px;margin:0 auto;background:currentColor;transition:transform .25s,opacity .2s}
 [data-vibeui-block="navbar-042"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -95,7 +92,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-042"] [data-part="menu"] a[data-cta]::before{content:none}
 @keyframes vibeui-navbar-042-ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.2);opacity:0}}
 @keyframes vibeui-navbar-042-menu{from{opacity:0;transform:translateY(-6px)}}
-@container (min-width: 40rem){[data-vibeui-block="navbar-042"] [data-part="docs"]{display:inline}[data-vibeui-block="navbar-042"] [data-part="status"]{display:inline-flex}[data-vibeui-block="navbar-042"] [data-part="version"]{display:inline}[data-vibeui-block="navbar-042"] [data-part="action"] i{display:inline}}
+@container (min-width: 40rem){[data-vibeui-block="navbar-042"] [data-part="docs"]{display:inline}[data-vibeui-block="navbar-042"] [data-part="status"]{display:inline-flex}[data-vibeui-block="navbar-042"] [data-part="version"]{display:inline}}
 @container (min-width: 60rem){[data-vibeui-block="navbar-042"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-042"] [data-part="burger"],[data-vibeui-block="navbar-042"] [data-part="menu"]{display:none}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-042"] *{animation:none!important;transition:none!important}}`
 
@@ -183,11 +180,15 @@ export function Navbar042({
               </a>
             ) : null}
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
-                <i aria-hidden="true">{"<"}</i>
-                {actionLabel}
-                <i aria-hidden="true">{"/>"}</i>
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="sm"
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
             <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-042-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />

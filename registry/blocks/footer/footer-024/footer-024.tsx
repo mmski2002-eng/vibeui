@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks019 } from "@/registry/components/navigation/footerlinks-019/footerlinks-019"
 
 export type Footer024Link = {
   label: string
@@ -50,6 +51,7 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-024"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-024"]{box-sizing:border-box;display:block;background:var(--vibeui-footer-024-bg);color:var(--vibeui-footer-024-fg);font-family:var(--vibeui-footer-024-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="footer-024"] *{box-sizing:border-box}
+[data-vibeui-block="footer-024"] [data-part="links"]{margin:0}
 [data-vibeui-block="footer-024"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="footer-024"] a:focus-visible{outline:2px solid var(--vibeui-footer-024-accent);outline-offset:3px;border-radius:.4rem}
 [data-vibeui-block="footer-024"] [data-part="shell"]{display:grid;gap:1.25rem;max-width:80rem;margin:0 auto;padding:2.5rem 1.25rem 1.5rem}
@@ -60,11 +62,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-024"] [data-part="seal"] em{color:var(--vibeui-footer-024-accent);font-style:italic;margin:0 .05em}
 [data-vibeui-block="footer-024"] [data-part="names"]{margin:0;font-family:var(--vibeui-footer-024-display);font-style:italic;font-size:1.5rem;font-weight:500;line-height:1.1}
 [data-vibeui-block="footer-024"] [data-part="when"]{margin:.15rem 0 0;font-family:var(--vibeui-footer-024-display);font-size:1rem;color:var(--vibeui-footer-024-muted)}
-[data-vibeui-block="footer-024"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.2rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="footer-024"] [data-part="links"] a{position:relative;font-family:var(--vibeui-footer-024-display);font-size:1.1rem;color:var(--vibeui-footer-024-fg);opacity:.85;transition:opacity .25s}
-[data-vibeui-block="footer-024"] [data-part="links"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.1rem;height:1px;background:var(--vibeui-footer-024-accent);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="footer-024"] [data-part="links"] a:hover{opacity:1}
-[data-vibeui-block="footer-024"] [data-part="links"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="footer-024"] [data-part="rsvp"]{margin:0;font-size:.88rem;color:var(--vibeui-footer-024-muted);white-space:nowrap}
 [data-vibeui-block="footer-024"] [data-part="rsvp"] a{font-weight:600;color:var(--vibeui-footer-024-fg);border-bottom:1px solid var(--vibeui-footer-024-accent)}
 [data-vibeui-block="footer-024"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem 1rem;padding-top:1rem;border-top:1px solid var(--vibeui-footer-024-line)}
@@ -75,7 +72,6 @@ container-type:inline-size;
 @container (min-width:56rem){
 [data-vibeui-block="footer-024"] [data-part="shell"]{padding:2.75rem 2.5rem 1.5rem}
 [data-vibeui-block="footer-024"] [data-part="top"]{grid-template-columns:auto 1fr auto;justify-items:stretch;text-align:left}
-[data-vibeui-block="footer-024"] [data-part="links"]{justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-024"] *{animation:none!important;transition:none!important}}`
 
@@ -135,13 +131,7 @@ export function Footer024({
               </div>
             </div>
             {links.length > 0 ? (
-              <ul data-part="links">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
-                  </li>
-                ))}
-              </ul>
+              <Footerlinks019 data-part="links" links={links} accent={accent} />
             ) : null}
             {rsvpLabel ? (
               <p data-part="rsvp">

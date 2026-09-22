@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card145 } from "@/registry/components/card/card-145/card-145"
 
 export type Comparison010Stat = {
   value: number
@@ -71,11 +72,6 @@ container-type:inline-size;
 [data-vibeui-block="comparison-010"] [data-part="title"]{margin:0;font-family:var(--vibeui-comparison-010-display);font-weight:800;font-size:clamp(2rem,5cqi,3.6rem);line-height:1;letter-spacing:-.035em;text-wrap:balance}
 [data-vibeui-block="comparison-010"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-comparison-010-muted)}
 [data-vibeui-block="comparison-010"] [data-part="stats"]{display:grid;gap:0;margin:0 0 2rem;padding:0;list-style:none;border:1px solid var(--vibeui-comparison-010-line);background:color-mix(in oklab,var(--vibeui-comparison-010-bg) 72%,transparent)}
-[data-vibeui-block="comparison-010"] [data-part="stat"]{display:grid;gap:.2rem;padding:1.2rem 1.4rem;border-bottom:1px solid var(--vibeui-comparison-010-line)}
-[data-vibeui-block="comparison-010"] [data-part="stat"]:last-child{border-bottom:0}
-[data-vibeui-block="comparison-010"] [data-part="stat"] b{font-family:var(--vibeui-comparison-010-mono);font-weight:600;font-size:clamp(2.2rem,5cqi,3.4rem);letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
-[data-vibeui-block="comparison-010"] [data-part="stat"] b small{font-size:.5em;letter-spacing:0;color:var(--vibeui-comparison-010-accent);margin-left:.15em}
-[data-vibeui-block="comparison-010"] [data-part="stat"] span{font-family:var(--vibeui-comparison-010-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-comparison-010-muted)}
 [data-vibeui-block="comparison-010"] [data-part="table"]{width:100%;border-collapse:collapse;border:1px solid var(--vibeui-comparison-010-line);background:color-mix(in oklab,var(--vibeui-comparison-010-bg) 72%,transparent);font-size:.92rem}
 [data-vibeui-block="comparison-010"] [data-part="table"] th,[data-vibeui-block="comparison-010"] [data-part="table"] td{padding:.85rem 1rem;border-bottom:1px solid var(--vibeui-comparison-010-line);text-align:left;vertical-align:middle}
 [data-vibeui-block="comparison-010"] [data-part="table"] th{font-family:var(--vibeui-comparison-010-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-comparison-010-muted);font-weight:500}
@@ -93,8 +89,8 @@ container-type:inline-size;
 [data-vibeui-block="comparison-010"] [data-part="mark"][data-kind="no"]{color:var(--vibeui-comparison-010-muted);opacity:.7}
 [data-vibeui-block="comparison-010"] [data-part="cell-text"]{font-family:var(--vibeui-comparison-010-mono);font-size:.78rem;font-weight:500}
 [data-vibeui-block="comparison-010"] [data-part="fine"]{margin:1rem 0 0;font-family:var(--vibeui-comparison-010-mono);font-size:.7rem;color:var(--vibeui-comparison-010-muted)}
-@container (min-width: 40rem){[data-vibeui-block="comparison-010"] [data-part="stats"]{grid-template-columns:repeat(3,minmax(0,1fr))}[data-vibeui-block="comparison-010"] [data-part="stat"]{border-bottom:0;border-right:1px solid var(--vibeui-comparison-010-line)}[data-vibeui-block="comparison-010"] [data-part="stat"]:last-child{border-right:0}[data-vibeui-block="comparison-010"] [data-part="table"] th[data-col],[data-vibeui-block="comparison-010"] [data-part="table"] td[data-col]{width:12rem}}
-@container (min-width: 60rem){[data-vibeui-block="comparison-010"] [data-part="wrap"]{display:grid;grid-template-columns:18rem minmax(0,1fr);gap:2rem;align-items:start}[data-vibeui-block="comparison-010"] [data-part="stats"]{grid-template-columns:1fr;margin:0}[data-vibeui-block="comparison-010"] [data-part="stat"]{border-right:0;border-bottom:1px solid var(--vibeui-comparison-010-line)}[data-vibeui-block="comparison-010"] [data-part="stat"]:last-child{border-bottom:0}[data-vibeui-block="comparison-010"] [data-part="table"] th[data-col],[data-vibeui-block="comparison-010"] [data-part="table"] td[data-col]{width:14rem}}
+@container (min-width: 40rem){[data-vibeui-block="comparison-010"] [data-part="stats"]{grid-template-columns:repeat(3,minmax(0,1fr))}[data-vibeui-block="comparison-010"] [data-part="table"] th[data-col],[data-vibeui-block="comparison-010"] [data-part="table"] td[data-col]{width:12rem}}
+@container (min-width: 60rem){[data-vibeui-block="comparison-010"] [data-part="wrap"]{display:grid;grid-template-columns:18rem minmax(0,1fr);gap:2rem;align-items:start}[data-vibeui-block="comparison-010"] [data-part="stats"]{grid-template-columns:1fr;margin:0}[data-vibeui-block="comparison-010"] [data-part="table"] th[data-col],[data-vibeui-block="comparison-010"] [data-part="table"] td[data-col]{width:14rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="comparison-010"] *{animation:none!important;transition:none!important}[data-vibeui-block="comparison-010"] [data-part="table"] tbody tr{opacity:1;transform:none}[data-vibeui-block="comparison-010"] [data-part="mark"] path{stroke-dashoffset:0}}`
 
 const DEFAULT_STATS: Comparison010Stat[] = [
@@ -114,9 +110,6 @@ const DEFAULT_ROWS: Comparison010Row[] = [
   { criterion: "Оплата по этапам, без предоплаты 50 %", us: true, them: false },
 ]
 
-function formatNumber(value: number) {
-  return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-}
 
 /** Сравнение «мы против типичной бригады» с счётчиками и прорисовкой галочек. */
 export function Comparison010({
@@ -216,13 +209,7 @@ export function Comparison010({
             {stats.length > 0 ? (
               <ul data-part="stats">
                 {stats.map((stat, index) => (
-                  <li key={stat.label} data-part="stat">
-                    <b>
-                      {formatNumber(shown[index] ?? 0)}
-                      {stat.suffix ? <small>{stat.suffix}</small> : null}
-                    </b>
-                    <span>{stat.label}</span>
-                  </li>
+                  <Card145 key={stat.label} data-part="stat" label={stat.label} suffix={stat.suffix} shown={shown} index={index} accent={accent} />
                 ))}
               </ul>
             ) : null}

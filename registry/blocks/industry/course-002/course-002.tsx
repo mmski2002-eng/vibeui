@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card090 } from "@/registry/components/card/card-090/card-090"
 
 export type Course002Lesson = {
   title: string
@@ -126,13 +127,6 @@ container-type:inline-size;
 [data-vibeui-block="course-002"] [data-part="body"]{padding:0 1.25rem 1.25rem}
 [data-vibeui-block="course-002"] [data-part="text"]{margin:0 0 1rem;color:var(--vibeui-course-002-muted)}
 [data-vibeui-block="course-002"] [data-part="lessons"]{margin:0;padding:0;list-style:none;display:grid;gap:.4rem}
-[data-vibeui-block="course-002"] [data-part="lesson"]{display:flex;align-items:center;gap:.75rem;padding:.55rem .75rem;border-radius:.6rem;background:var(--vibeui-course-002-bg);transition:transform .25s}
-[data-vibeui-block="course-002"] [data-part="lesson"]:hover{transform:translateX(3px)}
-[data-vibeui-block="course-002"] [data-part="icon"]{flex:none;width:1.6rem;height:1.6rem;border-radius:.45rem;display:grid;place-items:center;background:color-mix(in oklab,var(--vibeui-course-002-accent) 12%,transparent);color:var(--vibeui-course-002-accent)}
-[data-vibeui-block="course-002"] [data-part="lesson"][data-kind="live"] [data-part="icon"]{background:var(--vibeui-course-002-marker);color:#1a2e05}
-[data-vibeui-block="course-002"] [data-part="icon"] svg{width:.9rem;height:.9rem}
-[data-vibeui-block="course-002"] [data-part="lesson"]>span:nth-child(2){flex:1}
-[data-vibeui-block="course-002"] [data-part="length"]{font-size:.78rem;color:var(--vibeui-course-002-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 [data-vibeui-block="course-002"] [data-part="foot"]{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;margin:1rem 0 0}
 [data-vibeui-block="course-002"] [data-part="homework"]{display:flex;gap:.6rem;align-items:flex-start;flex:1 1 16rem;margin:0;padding:.75rem .9rem;border-radius:.6rem;background:var(--vibeui-course-002-marker);color:#1a2e05;font-size:.85rem}
 [data-vibeui-block="course-002"] [data-part="homework"] b{font-weight:700;white-space:nowrap}
@@ -153,12 +147,6 @@ container-type:inline-size;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="course-002"] *{animation:none!important;transition:none!important}}`
 
-const ICONS: Record<NonNullable<Course002Lesson["kind"]>, string> = {
-  video: "M8 6.5v11l9-5.5z",
-  live: "M12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7",
-  review: "M5 12.5l4 4 10-10",
-  text: "M6 7h12M6 12h12M6 17h8",
-}
 
 function minutes(length?: string) {
   if (!length) return 0
@@ -321,15 +309,7 @@ export function Course002({
                             {week.lessons.map((lesson) => {
                               const kind = lesson.kind ?? "video"
                               return (
-                                <li key={lesson.title} data-part="lesson" data-kind={kind}>
-                                  <span data-part="icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill={kind === "video" ? "currentColor" : "none"} stroke={kind === "video" ? "none" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                      <path d={ICONS[kind]} />
-                                    </svg>
-                                  </span>
-                                  <span>{lesson.title}</span>
-                                  {lesson.length ? <span data-part="length">{lesson.length}</span> : null}
-                                </li>
+                                <Card090 key={lesson.title} data-part="lesson" title={lesson.title} length={lesson.length} kind={kind} accent={accent} />
                               )
                             })}
                           </ul>

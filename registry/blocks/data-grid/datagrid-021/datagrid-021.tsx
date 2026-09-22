@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card169 } from "@/registry/components/card/card-169/card-169"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid021Row = {
@@ -74,19 +75,12 @@ border:1px solid var(--vibeui-datagrid-021-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-021-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-021"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-021"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
-padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-021-border);
-}
-[data-vibeui-block="datagrid-021"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-021"] [data-part="count"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-021-muted)}
 [data-vibeui-block="datagrid-021"] button{
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-021-border);
 background:transparent;color:var(--vibeui-datagrid-021-fg);
 }
-[data-vibeui-block="datagrid-021"] [data-part="primary"]{border-color:transparent;background:var(--vibeui-datagrid-021-accent);color:oklch(from var(--vibeui-datagrid-021-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="datagrid-021"] button:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-021"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-021-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-021"] [data-part="scroll"]{overflow-x:auto}
@@ -271,45 +265,7 @@ export function Datagrid021({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="count" role="status" aria-live="polite">
-            {entries.length === 0
-              ? noEditsText
-              : editsTemplate.replace("{count}", String(entries.length))}
-          </p>
-          <button
-            type="button"
-            aria-pressed={editing}
-            onClick={() => setEditing((value) => !value)}
-          >
-            {editLabel}
-          </button>
-          <button
-            type="button"
-            disabled={entries.length === 0}
-            onClick={() => setDraft({})}
-          >
-            {revertAllText}
-          </button>
-          <button
-            type="button"
-            data-part="primary"
-            disabled={entries.length === 0}
-            onClick={() => {
-              setSaved((current) =>
-                (current ?? rows).map((row) => ({
-                  ...row,
-                  quantity: valueOf(row, "quantity"),
-                  price: valueOf(row, "price"),
-                })),
-              )
-              setDraft({})
-            }}
-          >
-            {saveAllText}
-          </button>
-        </div>
+        <Card169 data-part="bar" heading={heading} noEditsText={noEditsText} editsTemplate={editsTemplate} editLabel={editLabel} revertAllText={revertAllText} rows={rows} saveAllText={saveAllText} editing={editing} entries={entries} setDraft={setDraft} setEditing={setEditing} setSaved={setSaved} valueOf={valueOf} accent={accent} />
         <div
           data-part="scroll"
           role="region"

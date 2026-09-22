@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Card025 } from "@/registry/components/card/card-025/card-025"
 
 export type Blog001Post = {
   title: string
@@ -61,25 +64,14 @@ background:var(--vibeui-blog-001-bg);color:var(--vibeui-blog-001-fg);
 font-family:var(--vibeui-blog-001-sans);
 }
 [data-vibeui-block="blog-001"] *{box-sizing:border-box}
-[data-vibeui-block="blog-001"] [data-part="frame"]{
+[data-vibeui-block="blog-001"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;display:grid;gap:1.75rem;
 }
 [data-vibeui-block="blog-001"] [data-part="intro"]{display:grid;gap:0.5rem}
-[data-vibeui-block="blog-001"] [data-part="eyebrow"]{
-font-size:0.75rem;font-weight:650;letter-spacing:0.09em;text-transform:uppercase;
-color:var(--vibeui-blog-001-accent);
-}
-[data-vibeui-block="blog-001"] h2{
-margin:0;max-width:20ch;font-weight:680;letter-spacing:-0.02em;
-font-size:clamp(1.5rem,3.6cqi,2.375rem);line-height:1.12;
-}
-[data-vibeui-block="blog-001"] [data-part="lede"]{
-margin:0;max-width:52ch;font-size:0.9375rem;line-height:1.65;color:var(--vibeui-blog-001-muted);
-}
 /* Сетка сама набирает максимум колонок под ширину: чем уже карточка, тем
    больше статей в ряд. Ступенчатых брейкпоинтов нет — обложка мельче,
    колонок больше. */
-[data-vibeui-block="blog-001"] [data-part="grid"]{display:grid;gap:1.125rem;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))}
+[data-vibeui-block="blog-001"] [data-part="grid"]{display:grid;gap:1.125rem;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))}
 [data-vibeui-block="blog-001"] article{
 position:relative;display:grid;gap:0;overflow:hidden;
 border:1px solid var(--vibeui-blog-001-border);border-radius:1.125rem;
@@ -89,21 +81,6 @@ transition:border-color var(--vibeui-blog-001-dur-2) ease,transform var(--vibeui
 [data-vibeui-block="blog-001"] article:hover{
 transform:translateY(-2px);
 border-color:color-mix(in oklab,var(--vibeui-blog-001-accent) 40%,var(--vibeui-blog-001-border));
-}
-/* Обложка — градиент от оттенка рубрики: ноль ассетов, ноль баннеров. */
-[data-vibeui-block="blog-001"] [data-part="cover"]{
-position:relative;overflow:hidden;
-aspect-ratio:16 / 10;
-}
-[data-vibeui-block="blog-001"] [data-part="cover"]::after{
-content:"";position:absolute;inset:0;
-background:radial-gradient(120% 100% at 15% 15%,oklch(1 0 0 / 34%),transparent 60%);
-}
-/* Подложка — только когда фотографии нет: блок обязан оставаться
-   полноценным без единого внешнего файла. */
-[data-vibeui-block="blog-001"] [data-part="cover"][data-empty="true"]{background:linear-gradient(135deg, oklch(0.72 0.16 var(--vibeui-blog-001-hue,262)), oklch(0.5 0.19 var(--vibeui-blog-001-hue,262)));}
-[data-vibeui-block="blog-001"] [data-part="cover"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 [data-vibeui-block="blog-001"] [data-part="body"]{display:grid;gap:0.5rem;padding:1rem 1.125rem 1.125rem}
 [data-vibeui-block="blog-001"] [data-part="topic"]{
@@ -135,7 +112,7 @@ font-size:0.875rem;font-weight:640;
 [data-vibeui-block="blog-001"] [data-part="more"]:hover{border-color:var(--vibeui-blog-001-accent);color:var(--vibeui-blog-001-accent)}
 [data-vibeui-block="blog-001"] [data-part="more"]:focus-visible{outline:2px solid var(--vibeui-blog-001-accent);outline-offset:2px}
 @container (min-width: 40rem){
-[data-vibeui-block="blog-001"] [data-part="frame"]{padding:3.75rem 2rem}
+[data-vibeui-block="blog-001"] [data-part="shell"]{padding:3.75rem 2rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="blog-001"] *{animation:none!important;transition:none!important}}
 `
@@ -243,11 +220,16 @@ export function Blog001({
         style={palette}
         aria-label={title}
       >
-        <div data-part="frame">
+        <div data-part="shell">
           <header data-part="intro">
-            <span data-part="eyebrow">{eyebrow}</span>
-            <h2>{title}</h2>
-            <p data-part="lede">{description}</p>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={description}
+              ledeWidth={52}
+              accent={accent}
+            />
           </header>
 
           <div data-part="grid">
@@ -255,21 +237,19 @@ export function Blog001({
               const tone = post.hue ?? hue(post.topic)
               return (
                 <article key={post.title}>
-                  <div
+                  <Card025
                     data-part="cover"
-                    data-empty={post.image ? undefined : "true"}
+                    src={post.image}
+                    alt=""
+                    ratio="3/2"
+                    radius="none"
+                    background={
+                      post.image
+                        ? undefined
+                        : `linear-gradient(135deg, oklch(0.72 0.16 ${tone}), oklch(0.5 0.19 ${tone}))`
+                    }
                     aria-hidden="true"
-                    style={{ "--vibeui-blog-001-hue": tone } as CSSProperties}
-                  >
-                    {post.image ? (
-                      <img
-                        src={post.image}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : null}
-                  </div>
+                  />
                   <div data-part="body">
                     <span data-part="topic">{post.topic}</span>
                     <h3>

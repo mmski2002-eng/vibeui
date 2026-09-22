@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card041 } from "@/registry/components/card/card-041/card-041"
 
 type Testimonials003Metric = {
   value: string
@@ -90,13 +91,6 @@ font-size:0.8125rem;font-weight:640;letter-spacing:0.08em;text-transform:upperca
 [data-vibeui-block="testimonials-003"] [data-part="metrics"]{
 display:grid;gap:1.25rem;margin:2.25rem 0 0;padding:1.5rem 0 0;
 border-top:1px solid var(--vibeui-testimonials-003-border);
-}
-[data-vibeui-block="testimonials-003"] [data-part="metric"] dt{
-font-size:clamp(1.5rem,3.6cqi,2rem);line-height:1;letter-spacing:-0.03em;font-weight:730;
-color:var(--vibeui-testimonials-003-accent);
-}
-[data-vibeui-block="testimonials-003"] [data-part="metric"] dd{
-margin:0.375rem 0 0;color:var(--vibeui-testimonials-003-muted);font-size:0.875rem;line-height:1.45;max-width:26ch;
 }
 @container (min-width: 40rem){
 [data-vibeui-block="testimonials-003"] [data-part="shell"]{padding:5rem 2.5rem}
@@ -209,10 +203,7 @@ export function Testimonials003({
           </figure>
           <dl data-part="metrics">
             {metrics.map((metric) => (
-              <div key={metric.caption} data-part="metric">
-                <dt>{metric.value}</dt>
-                <dd>{metric.caption}</dd>
-              </div>
+              <Card041 key={metric.caption} data-part="metric" caption={metric.caption} value={metric.value} accent={accent} />
             ))}
           </dl>
         </div>

@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 export type Blog006Related = {
   title: string
@@ -59,14 +62,11 @@ font-family:var(--vibeui-blog-006-sans);
 border-top:1px solid var(--vibeui-blog-006-border);
 }
 [data-vibeui-block="blog-006"] *{box-sizing:border-box}
+[data-vibeui-block="blog-006"] [data-part="all"]{justify-self:start}
 [data-vibeui-block="blog-006"] [data-part="frame"]{
 max-width:68rem;margin:0 auto;padding:2.5rem 1.25rem;display:grid;gap:1.125rem;
 }
 [data-vibeui-block="blog-006"] [data-part="head"]{display:grid;gap:0.25rem}
-[data-vibeui-block="blog-006"] h2{
-margin:0;font-size:0.75rem;font-weight:680;letter-spacing:0.09em;text-transform:uppercase;
-color:var(--vibeui-blog-006-muted);
-}
 [data-vibeui-block="blog-006"] [data-part="after"]{
 margin:0;font-size:0.875rem;line-height:1.5;color:var(--vibeui-blog-006-muted);
 }
@@ -107,12 +107,6 @@ display:flex;flex-wrap:wrap;gap:0.4375rem;margin-top:0.125rem;
 font-size:0.75rem;color:var(--vibeui-blog-006-muted);
 }
 [data-vibeui-block="blog-006"] [data-part="dot"]{opacity:.5}
-[data-vibeui-block="blog-006"] [data-part="all"]{
-justify-self:start;font-size:0.8125rem;font-weight:640;
-color:var(--vibeui-blog-006-accent);text-decoration:none;
-}
-[data-vibeui-block="blog-006"] [data-part="all"]:hover{text-decoration:underline}
-[data-vibeui-block="blog-006"] [data-part="all"]:focus-visible{outline:2px solid var(--vibeui-blog-006-accent);outline-offset:2px;border-radius:0.25rem}
 @container (min-width: 44rem){
 [data-vibeui-block="blog-006"] [data-part="frame"]{padding:3rem 2rem}
 [data-vibeui-block="blog-006"] [data-part="grid"]{grid-template-columns:repeat(3,1fr)}
@@ -210,7 +204,12 @@ export function Blog006({
       >
         <div data-part="frame">
           <header data-part="head">
-            <h2>{title}</h2>
+            <Heading001
+              data-part="heading"
+              title={title}
+              size="xs"
+              accent={accent}
+            />
             <p data-part="after">
               {beforeTitle}
               <b>{afterTitle}</b>
@@ -240,9 +239,12 @@ export function Blog006({
             ))}
           </div>
 
-          <a href={allHref} data-part="all">
-            {allLabel}
-          </a>
+          <Button077
+            data-part="all"
+            label={allLabel}
+            href={allHref}
+            accent={accent}
+          />
         </div>
       </aside>
     </>

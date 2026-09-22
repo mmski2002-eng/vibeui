@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState, type CSSProperties } from "react"
+import { Button079 } from "@/registry/components/button/button-079/button-079"
 
 export type Delivery002Option = {
   id: string
@@ -90,12 +91,6 @@ container-type:inline-size;
 [data-vibeui-block="delivery-002"] [data-part="group"] h3{margin:0 0 .6rem;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-delivery-002-muted)}
 [data-vibeui-block="delivery-002"] [data-part="group"] h3 small{font-weight:500;letter-spacing:0;text-transform:none;margin-left:.4rem}
 [data-vibeui-block="delivery-002"] [data-part="chips"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="delivery-002"] [data-part="chip"]{display:inline-flex;align-items:center;gap:.5rem;height:2.5rem;padding:0 .9rem 0 .6rem;border-radius:999px;border:1px solid var(--vibeui-delivery-002-line);background:var(--vibeui-delivery-002-card);color:var(--vibeui-delivery-002-fg);font:inherit;font-weight:600;font-size:.88rem;cursor:pointer;transition:background .2s,border-color .2s,transform .18s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="delivery-002"] [data-part="chip"]::before{content:"";width:1.1rem;height:1.1rem;border-radius:50%;background:var(--vibeui-delivery-002-c);box-shadow:inset 0 -2px 0 rgb(0 0 0 / .18)}
-[data-vibeui-block="delivery-002"] [data-part="chip"] small{font-weight:500;color:var(--vibeui-delivery-002-muted)}
-[data-vibeui-block="delivery-002"] [data-part="chip"]:hover{transform:translateY(-2px);border-color:var(--vibeui-delivery-002-fg)}
-[data-vibeui-block="delivery-002"] [data-part="chip"][aria-pressed="true"],[data-vibeui-block="delivery-002"] [data-part="chip"][aria-checked="true"]{background:var(--vibeui-delivery-002-fg);color:var(--vibeui-delivery-002-on-fg);border-color:transparent}
-[data-vibeui-block="delivery-002"] [data-part="chip"][aria-pressed="true"] small,[data-vibeui-block="delivery-002"] [data-part="chip"][aria-checked="true"] small{color:inherit;opacity:.7}
 [data-vibeui-block="delivery-002"] button:focus-visible{outline:2px solid var(--vibeui-delivery-002-accent);outline-offset:2px}
 [data-vibeui-block="delivery-002"] [data-part="stage"]{position:sticky;top:5rem;display:grid;gap:1.2rem;padding:1.4rem;border-radius:2rem;background:var(--vibeui-delivery-002-card);border:1px solid var(--vibeui-delivery-002-line)}
 [data-vibeui-block="delivery-002"] [data-part="bowl"]{position:relative;width:min(100%,22rem);aspect-ratio:1/.8;margin:0 auto;container-type:inline-size}
@@ -315,17 +310,7 @@ export function Delivery002({
                       const chipStyle = { ["--vibeui-delivery-002-c" as string]: option.color } as CSSProperties
                       return (
                         <li key={option.id}>
-                          {group.mode === "single" ? (
-                            <button data-part="chip" type="button" role="radio" aria-checked={on} style={chipStyle} onClick={() => toggle(group, option.id)}>
-                              {option.name}
-                              <small>{option.price > 0 ? `+${option.price}` : "0"}</small>
-                            </button>
-                          ) : (
-                            <button data-part="chip" type="button" aria-pressed={on} style={chipStyle} onClick={() => toggle(group, option.id)}>
-                              {option.name}
-                              <small>+{option.price}</small>
-                            </button>
-                          )}
+                          <Button079 data-part="chip" name={option.name} price={option.price} role={group.mode === "single" ? "radio" : undefined} aria-checked={group.mode === "single" ? on : undefined} aria-pressed={group.mode === "single" ? undefined : on} style={chipStyle} onClick={() => toggle(group, option.id)} accent={accent} />
                         </li>
                       )
                     })}

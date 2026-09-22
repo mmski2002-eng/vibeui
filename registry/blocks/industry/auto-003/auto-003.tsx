@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card088 } from "@/registry/components/card/card-088/card-088"
 
 export type Auto003Step = {
   title: string
@@ -64,16 +65,7 @@ container-type:inline-size;
 [data-vibeui-block="auto-003"] [data-part="rail"]::before,[data-vibeui-block="auto-003"] [data-part="rail"]::after{content:"";position:absolute;left:1.15rem;top:1.4rem;bottom:1.4rem;width:2px;border-radius:2px}
 [data-vibeui-block="auto-003"] [data-part="rail"]::before{background:var(--vibeui-auto-003-line)}
 [data-vibeui-block="auto-003"] [data-part="rail"]::after{background:var(--vibeui-auto-003-accent);transform-origin:top;transform:scaleY(var(--vibeui-auto-003-progress));box-shadow:0 0 14px var(--vibeui-auto-003-accent)}
-[data-vibeui-block="auto-003"] [data-part="step"]{position:relative;display:grid;gap:.5rem;padding:1.3rem 1.4rem;border-radius:1.2rem;border:1px solid var(--vibeui-auto-003-line);background:var(--vibeui-auto-003-glass);opacity:.45;transform:translateX(.6rem);transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s}
-[data-vibeui-block="auto-003"] [data-part="step"][data-on="true"]{opacity:1;transform:none;border-color:color-mix(in oklab,var(--vibeui-auto-003-accent) 40%,var(--vibeui-auto-003-line))}
-[data-vibeui-block="auto-003"] [data-part="num"]{position:absolute;left:-3.2rem;top:1rem;width:2.3rem;height:2.3rem;border-radius:50%;display:grid;place-items:center;border:2px solid var(--vibeui-auto-003-line);background:var(--vibeui-auto-003-bg);font-family:var(--vibeui-auto-003-mono);font-size:.78rem;font-weight:500;color:var(--vibeui-auto-003-muted);transition:background .4s,color .4s,border-color .4s,box-shadow .4s}
-[data-vibeui-block="auto-003"] [data-part="step"][data-on="true"] [data-part="num"]{background:var(--vibeui-auto-003-accent);border-color:var(--vibeui-auto-003-accent);color:var(--vibeui-auto-003-on-accent);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-auto-003-accent) 20%,transparent)}
-[data-vibeui-block="auto-003"] [data-part="step"] h3{margin:0;font-family:var(--vibeui-auto-003-display);font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
-[data-vibeui-block="auto-003"] [data-part="step"] p{margin:0;color:var(--vibeui-auto-003-muted)}
-[data-vibeui-block="auto-003"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:.4rem .6rem;margin:.3rem 0 0;padding:0;list-style:none;font-family:var(--vibeui-auto-003-mono);font-size:.72rem;color:var(--vibeui-auto-003-muted)}
-[data-vibeui-block="auto-003"] [data-part="facts"] li{padding:.3rem .6rem;border-radius:999px;border:1px solid var(--vibeui-auto-003-line)}
-[data-vibeui-block="auto-003"] [data-part="facts"] li[data-kind="result"]{color:var(--vibeui-auto-003-fg);border-color:color-mix(in oklab,var(--vibeui-auto-003-accent) 50%,transparent)}
-@container (min-width: 56rem){[data-vibeui-block="auto-003"] [data-part="shell"]{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:4rem}[data-vibeui-block="auto-003"] [data-part="aside"]{position:sticky;top:6rem}[data-vibeui-block="auto-003"] [data-part="counter"]{display:flex}[data-vibeui-block="auto-003"] [data-part="rail"]{gap:1.6rem;padding-left:4rem}[data-vibeui-block="auto-003"] [data-part="rail"]::before,[data-vibeui-block="auto-003"] [data-part="rail"]::after{left:1.35rem}[data-vibeui-block="auto-003"] [data-part="num"]{left:-4rem;width:2.7rem;height:2.7rem;font-size:.85rem}[data-vibeui-block="auto-003"] [data-part="step"]{padding:1.6rem 1.8rem}}
+@container (min-width: 56rem){[data-vibeui-block="auto-003"] [data-part="shell"]{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:4rem}[data-vibeui-block="auto-003"] [data-part="aside"]{position:sticky;top:6rem}[data-vibeui-block="auto-003"] [data-part="counter"]{display:flex}[data-vibeui-block="auto-003"] [data-part="rail"]{gap:1.6rem;padding-left:4rem}[data-vibeui-block="auto-003"] [data-part="rail"]::before,[data-vibeui-block="auto-003"] [data-part="rail"]::after{left:1.35rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="auto-003"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_STEPS: Auto003Step[] = [
@@ -157,19 +149,7 @@ export function Auto003({
           </div>
           <ol ref={railRef} data-part="rail">
             {steps.map((step, index) => (
-              <li key={step.title} data-part="step" data-on={index <= active}>
-                <span data-part="num" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-                {step.duration || step.result ? (
-                  <ul data-part="facts">
-                    {step.duration ? <li>{step.duration}</li> : null}
-                    {step.result ? <li data-kind="result">{step.result}</li> : null}
-                  </ul>
-                ) : null}
-              </li>
+              <Card088 key={step.title} data-part="step" title={step.title} text={step.text} duration={step.duration} result={step.result} index={index} data-on={index <= active} accent={accent} />
             ))}
           </ol>
         </div>

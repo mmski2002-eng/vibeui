@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Language001Question = {
   /** Текст вопроса; «___» — пропуск. */
   prompt: string
@@ -114,11 +116,9 @@ container-type:inline-size;
 [data-vibeui-block="language-001"] [data-part="group"]{margin:.8rem 0 0;padding:.9rem 1rem;border-radius:.9rem;background:var(--vibeui-language-001-bg);border:1px dashed color-mix(in oklab,var(--vibeui-language-001-accent) 60%,transparent);font-size:.95rem}
 [data-vibeui-block="language-001"] [data-part="group"] b{font-family:var(--vibeui-language-001-hand);font-weight:400;font-size:1.2rem;color:var(--vibeui-language-001-accent);margin-right:.3rem}
 [data-vibeui-block="language-001"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.4rem 0 0}
-[data-vibeui-block="language-001"] [data-part="action"]{display:inline-flex;align-items:center;padding:.8rem 1.2rem;border-radius:.9rem;background:var(--vibeui-language-001-accent);color:var(--vibeui-language-001-on-accent);font-weight:600;text-decoration:none;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="language-001"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px var(--vibeui-language-001-accent)}
 [data-vibeui-block="language-001"] [data-part="retry"]{display:inline-flex;align-items:center;padding:.8rem 1.2rem;border-radius:.9rem;border:1.5px solid var(--vibeui-language-001-line);background:transparent;color:var(--vibeui-language-001-fg);font:inherit;font-weight:600;cursor:pointer;transition:border-color .2s}
 [data-vibeui-block="language-001"] [data-part="retry"]:hover{border-color:var(--vibeui-language-001-fg)}
-[data-vibeui-block="language-001"] [data-part="action"]:focus-visible,[data-vibeui-block="language-001"] [data-part="retry"]:focus-visible{outline:2px solid var(--vibeui-language-001-accent);outline-offset:2px}
+[data-vibeui-block="language-001"] [data-part="retry"]:focus-visible{outline:2px solid var(--vibeui-language-001-accent);outline-offset:2px}
 @keyframes vibeui-language-001-page{from{opacity:0;transform:translateX(1.2rem) rotateY(-8deg)}to{opacity:1;transform:none}}
 @container (min-width: 60rem){[data-vibeui-block="language-001"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:4rem}[data-vibeui-block="language-001"] [data-part="sheet"]{margin:0 0 0 auto}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="language-001"] *{animation:none!important;transition:none!important}}`
@@ -297,9 +297,15 @@ export function Language001({
                 </p>
                 <div data-part="actions">
                   {actionLabel ? (
-                    <a data-part="action" href={actionHref}>
-                      {actionLabel}
-                    </a>
+                    <Button016
+                      data-part="action"
+                      label={actionLabel}
+                      href={actionHref}
+                      external={false}
+                      size="lg"
+                      tone="accent"
+                      accent={accent}
+                    />
                   ) : null}
                   <button data-part="retry" type="button" onClick={restart}>
                     {retryLabel}

@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Select001 } from "@/registry/components/select/select-001/select-001"
+
 export type Subscribe007Option = {
   id: string
   label: string
@@ -19,7 +23,6 @@ export type Subscribe007Props = {
   formText?: string
   optionLabel?: string
   contactLabel?: string
-  contactPlaceholder?: string
   /** Строка под полем; {time} и {note} подставляются из выбранного варианта. */
   whenLine?: string
   submitLabel?: string
@@ -71,6 +74,7 @@ container-type:inline-size;
 :where([data-vibeui-block="subscribe-007"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="subscribe-007"]{box-sizing:border-box;position:relative;overflow:clip;padding:5.5rem 0;background:var(--vibeui-subscribe-007-panel);color:var(--vibeui-subscribe-007-fg);font-family:var(--vibeui-subscribe-007-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="subscribe-007"] *{box-sizing:border-box}
+[data-vibeui-block="subscribe-007"] [data-part="when"]{margin:0}
 [data-vibeui-block="subscribe-007"] [data-part="glow"]{position:absolute;left:-8rem;bottom:-8rem;width:44rem;height:30rem;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-subscribe-007-accent) 14%,transparent),transparent 70%);filter:blur(40px);pointer-events:none}
 [data-vibeui-block="subscribe-007"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="subscribe-007"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-subscribe-007-accent);font-weight:600;margin:0 0 1.1rem}
@@ -100,18 +104,13 @@ container-type:inline-size;
 [data-vibeui-block="subscribe-007"] [data-part="clock"][data-ring="true"] [data-part="wave"]{animation:vibeui-subscribe-007-wave 1.4s ease-out infinite}
 [data-vibeui-block="subscribe-007"] [data-part="clock"][data-ring="true"] [data-part="wave"]:nth-child(3){animation-delay:.7s}
 [data-vibeui-block="subscribe-007"] form{display:grid;gap:.8rem}
-[data-vibeui-block="subscribe-007"] label{display:grid;gap:.35rem;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in oklab,var(--vibeui-subscribe-007-kraft-ink) 80%,var(--vibeui-subscribe-007-kraft))}
-[data-vibeui-block="subscribe-007"] select,[data-vibeui-block="subscribe-007"] input{font:inherit;font-size:.95rem;padding:.8rem .9rem;border-radius:.8rem;border:1px solid color-mix(in oklab,var(--vibeui-subscribe-007-kraft-ink) 25%,transparent);background:rgb(255 255 255 / .85);color:#1a1a1a;width:100%;transition:box-shadow .3s,transform .3s var(--vibeui-subscribe-007-ease),border-color .3s}
-[data-vibeui-block="subscribe-007"] select:hover,[data-vibeui-block="subscribe-007"] input:hover{border-color:color-mix(in oklab,var(--vibeui-subscribe-007-kraft-ink) 50%,transparent)}
-[data-vibeui-block="subscribe-007"] select:focus-visible,[data-vibeui-block="subscribe-007"] input:focus-visible{outline:0;border-color:var(--vibeui-subscribe-007-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-subscribe-007-accent) 25%,transparent),0 10px 24px -14px rgb(0 0 0 / .5);transform:translateY(-1px)}
-[data-vibeui-block="subscribe-007"] button:focus-visible{outline:2px solid var(--vibeui-subscribe-007-accent);outline-offset:2px}
 [data-vibeui-block="subscribe-007"] [data-part="when"]{font-family:var(--vibeui-subscribe-007-hand);font-size:1.4rem;color:var(--vibeui-subscribe-007-kraft-ink);margin:0}
 [data-vibeui-block="subscribe-007"] [data-part="when"] b{display:inline-block;font-weight:600;animation:vibeui-subscribe-007-tick .5s cubic-bezier(.2,1.4,.4,1)}
 [data-vibeui-block="subscribe-007"] [data-part="stamp"]{position:absolute;right:1.2rem;top:1rem;z-index:1;padding:.5rem .8rem;border:2px solid color-mix(in oklab,var(--vibeui-subscribe-007-kraft-ink) 50%,transparent);border-radius:.6rem;font-family:var(--vibeui-subscribe-007-display);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in oklab,var(--vibeui-subscribe-007-kraft-ink) 70%,transparent);transform:rotate(6deg)}
-[data-vibeui-block="subscribe-007"] [data-part="submit"],[data-vibeui-block="subscribe-007"] [data-part="again"]{display:inline-flex;align-items:center;justify-self:start;border:0;border-radius:999px;padding:.95rem 1.5rem;font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;color:var(--vibeui-subscribe-007-on-accent);background:var(--vibeui-subscribe-007-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-subscribe-007-accent) 70%,transparent);transition:transform .3s var(--vibeui-subscribe-007-ease),filter .18s,box-shadow .3s}
+[data-vibeui-block="subscribe-007"] [data-part="again"]{display:inline-flex;align-items:center;justify-self:start;border:0;border-radius:999px;padding:.95rem 1.5rem;font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;color:var(--vibeui-subscribe-007-on-accent);background:var(--vibeui-subscribe-007-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-subscribe-007-accent) 70%,transparent);transition:transform .3s var(--vibeui-subscribe-007-ease),filter .18s,box-shadow .3s}
 [data-vibeui-block="subscribe-007"] [data-part="again"]{color:var(--vibeui-subscribe-007-kraft-ink);background:rgb(255 255 255 / .8);box-shadow:0 2px 4px rgb(0 0 0 / .08)}
-[data-vibeui-block="subscribe-007"] [data-part="submit"]:hover,[data-vibeui-block="subscribe-007"] [data-part="again"]:hover{transform:translateY(-2px);filter:brightness(1.04);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 16px 30px -12px color-mix(in oklab,var(--vibeui-subscribe-007-accent) 80%,transparent)}
-[data-vibeui-block="subscribe-007"] [data-part="submit"]:active,[data-vibeui-block="subscribe-007"] [data-part="again"]:active{transform:translateY(1px) scale(.97)}
+[data-vibeui-block="subscribe-007"] [data-part="again"]:hover{transform:translateY(-2px);filter:brightness(1.04);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 16px 30px -12px color-mix(in oklab,var(--vibeui-subscribe-007-accent) 80%,transparent)}
+[data-vibeui-block="subscribe-007"] [data-part="again"]:active{transform:translateY(1px) scale(.97)}
 [data-vibeui-block="subscribe-007"] [data-part="ok"]{display:grid;gap:.6rem;justify-items:start;animation:vibeui-subscribe-007-in .6s var(--vibeui-subscribe-007-ease) both}
 [data-vibeui-block="subscribe-007"] [data-part="ok"] svg{width:3.6rem;height:3.6rem;stroke:var(--vibeui-subscribe-007-accent);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="subscribe-007"] [data-part="ok"] svg circle{stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-subscribe-007-draw .7s cubic-bezier(.4,0,.2,1) forwards}
@@ -147,7 +146,6 @@ export function Subscribe007({
   formText = "Выберите, что любите, — мы посчитаем, во сколько это будет в печи, и напишем в мессенджер. Отписаться — одним словом «хватит».",
   optionLabel = "Что любите",
   contactLabel = "Телефон или почта",
-  contactPlaceholder = "+7 … или name@mail",
   whenLine = "напишем в {time} — {note}",
   submitLabel = "Поставить будильник",
   doneLine = "записали: {label}, {time}",
@@ -269,20 +267,15 @@ export function Subscribe007({
                 </div>
               ) : (
                 <form onSubmit={submit} onFocus={() => setRinging(true)} onBlur={() => setRinging(false)}>
-                  <label>
-                    {optionLabel}
-                    <select value={id} onChange={(event) => setId(event.target.value)}>
-                      {options.map((option) => (
-                        <option key={option.id} value={option.id}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label>
-                    {contactLabel}
-                    <input type="text" name="contact" required placeholder={contactPlaceholder} />
-                  </label>
+                  <Select001
+                    label={optionLabel}
+                    placeholder=""
+                    options={options.map((option) => ({ value: option.id, label: option.label }))}
+                    value={id}
+                    onChange={(event) => setId(event.target.value)}
+                    accent={accent}
+                  />
+                  <Input001 type="text" name="contact" required label={contactLabel} accent={accent} />
                   <p data-part="when" aria-live="polite">
                     {chosen
                       ? fill(whenLine)
@@ -290,9 +283,9 @@ export function Subscribe007({
                           .flatMap((part, index, all) => (index < all.length - 1 ? [part, <b key={`${chosen.time}-${index}`}>{chosen.time}</b>] : [part]))
                       : fill(whenLine)}
                   </p>
-                  <button type="submit" data-part="submit">
+                  <Button001 type="submit" size="lg" accent={accent}>
                     {submitLabel}
-                  </button>
+                  </Button001>
                 </form>
               )}
             </div>

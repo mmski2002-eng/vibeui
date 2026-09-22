@@ -10,7 +10,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-001/cta-001.tsx",
@@ -18,19 +21,21 @@
           "target": "@components/vibeui/cta-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-001-*. Кегль заголовка считается в cqi от собственной ширины блока, поэтому секция одинаково верна в миниатюре каталога и на живой странице. Свечение — один радиальный градиент в отдельном слое с pointer-events:none, а не заливка фона. Второе действие намеренно сделано ссылкой, а не второй кнопкой.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-001-*. Кегль заголовка считается в cqi от собственной ширины блока, поэтому секция одинаково верна в миниатюре каталога и на живой странице. Свечение — один радиальный градиент в отдельном слое с pointer-events:none, а не заливка фона. Второе действие намеренно сделано ссылкой, а не второй кнопкой.",
       "meta": {
         "tags": [
           "cta",
           "conversion",
           "landing",
-          "dark"
+          "dark",
+          "composite"
         ],
         "ai": {
           "export": "Cta001",
           "usage": "<Cta001\n  title=\"Соберите первую страницу сегодня\"\n  primaryAction={{ label: \"Начать бесплатно\", href: \"/signup\" }}\n  note=\"Без карты. 14 дней полного доступа.\"\n/>",
           "summary": "Финальная секция призыва: тёмный фон, свет из-за горизонта, надзаголовок-плашка, крупный заголовок, объяснение, одна кнопка и текстовая ссылка рядом. Под кнопками — мелкая строка, снимающая возражение перед кликом. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-001-* — секция остаётся тёмной в обеих ветках light-dark(): контраст с остальной страницей и есть дизайн блока, поэтому подложка здесь не делается прозрачной",
             "одну главную кнопку: второе действие остаётся ссылкой, иначе выбор раздваивается ровно там, где его быть не должно",
             "строку note под кнопками: она снимает возражение в момент решения, а не в разделе с условиями",
@@ -57,10 +62,11 @@
         "i18n": {
           "en": {
             "description": "A closing call to action: a dark block at the end of a light page, one primary action and a line beneath it that answers the last objection.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-001-* variables. The heading size is computed in cqi against the block's own width, so the section is equally correct in a catalogue thumbnail and on a live page. The glow is a single radial gradient in a separate layer with pointer-events:none, not a background fill. The second action is deliberately made a link rather than a second button.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-001-* variables. The heading size is computed in cqi against the block's own width, so the section is equally correct in a catalogue thumbnail and on a live page. The glow is a single radial gradient in a separate layer with pointer-events:none, not a background fill. The second action is deliberately made a link rather than a second button.",
             "ai": {
               "summary": "A closing call-to-action section: a dark ground, light rising from behind the horizon, an eyebrow pill, a large heading, an explanation, one button and a text link beside it. A small line under the buttons removes the last objection before the click. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-001-* palette — the section stays dark in both light-dark() branches: the contrast with the rest of the page is the design of this block, so the background is not made transparent here",
                 "the single primary button: the second action stays a link, otherwise the choice splits exactly where it must not",
                 "the note line under the buttons: it answers the objection at the moment of decision rather than in a terms page",
@@ -158,7 +164,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-002/cta-002.tsx",
@@ -166,13 +175,14 @@
           "target": "@components/vibeui/cta-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-002-*. Серверный компонент. Кегль заголовка считается в cqi от собственной ширины блока, поэтому карточка одинаково верна в миниатюре каталога и на живой странице. Свечение над карточкой — радиальный градиент в background-image самой карточки, отдельного слоя нет. До 40rem кнопки становятся колонкой и растягиваются на всю ширину: на телефоне две кнопки в ряд превращаются в две узкие полоски.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-002-*. Серверный компонент. Кегль заголовка считается в cqi от собственной ширины блока, поэтому карточка одинаково верна в миниатюре каталога и на живой странице. Свечение над карточкой — радиальный градиент в background-image самой карточки, отдельного слоя нет. До 40rem кнопки становятся колонкой и растягиваются на всю ширину: на телефоне две кнопки в ряд превращаются в две узкие полоски.",
       "meta": {
         "tags": [
           "cta",
           "conversion",
           "centered",
-          "landing"
+          "landing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -182,6 +192,7 @@
           "usage": "<Cta002\n  title=\"Соберите первую страницу до конца недели\"\n  primaryLabel=\"Начать бесплатно\"\n  secondaryLabel=\"Посмотреть примеры\"\n  proof={[\"Первый макет за вечер\", \"Отмена в один клик\"]}\n/>",
           "summary": "Центрированная секция призыва на светлой карточке: плашка-надзаголовок, крупный заголовок, короткое объяснение, две кнопки и строка подтверждений под ними. Вторая кнопка контурная, поэтому пара не читается как нерешительность. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-002-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "разный вес кнопок: закрашенная и контурная — иначе две равные кнопки читаются как нерешительность автора",
             "строку подтверждений вместо второго абзаца: в конце страницы читают короткие обещания, а не текст",
@@ -241,10 +252,11 @@
         "i18n": {
           "en": {
             "description": "A light centred call to action on a card: two equally weighted buttons for two honest entry points, and a line of short proofs instead of another paragraph.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-002-* variables. A server component. The heading size is computed in cqi against the block's own width, so the card is equally correct in a catalogue thumbnail and on a live page. The glow above the card is a radial gradient in the card's own background-image; there is no separate layer. Below 40rem the buttons become a column and stretch to the full width: on a phone two buttons in a row turn into two narrow strips.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-002-* variables. A server component. The heading size is computed in cqi against the block's own width, so the card is equally correct in a catalogue thumbnail and on a live page. The glow above the card is a radial gradient in the card's own background-image; there is no separate layer. Below 40rem the buttons become a column and stretch to the full width: on a phone two buttons in a row turn into two narrow strips.",
             "ai": {
               "summary": "A centred call-to-action section on a light card: an eyebrow pill, a large heading, a short explanation, two buttons and a proof line under them. The second button is outlined, so the pair does not read as indecision. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the different weight of the buttons: filled and outlined — two identical buttons read as the author's indecision",
                 "the proof line instead of a second paragraph: at the end of a page people read short promises, not prose",
@@ -324,7 +336,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "cta-003/cta-003.tsx",
@@ -332,13 +347,14 @@
           "target": "@components/vibeui/cta-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-003-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Подпись поля видимая и связана через htmlFor, а не спрятана в placeholder: подпись внутри поля исчезает при заполнении, ровно когда нужнее. От 38rem поле и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого идут колонкой. Заголовок набран засечной гарнитурой — рассылка про интерфейсы обязана выглядеть как текст, а не как форма.",
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-003-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Подпись поля видимая и связана через htmlFor, а не спрятана в placeholder: подпись внутри поля исчезает при заполнении, ровно когда нужнее. От 38rem поле и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого идут колонкой. Заголовок набран засечной гарнитурой — рассылка про интерфейсы обязана выглядеть как текст, а не как форма.",
       "meta": {
         "tags": [
           "cta",
           "newsletter",
           "email",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -348,6 +364,7 @@
           "usage": "<Cta003\n  title=\"Письмо о том, как делают интерфейсы\"\n  submitLabel=\"Подписаться\"\n  frequency=\"Два письма в месяц\"\n  subscribers=\"6 400 читателей\"\n/>",
           "summary": "Секция подписки на рассылку: засечный заголовок, объяснение содержания писем, форма с видимой подписью поля, согласие мелким шрифтом и строка про частоту и число читателей. Форма настоящая и работает без клиентского кода. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-003-* и не подменять её токенами вашей темы (bg-input, ring-ring и подобными)",
             "видимую подпись поля со связью htmlFor: placeholder исчезает при заполнении и перестаёт объяснять поле",
             "type=\"email\" вместе с autoComplete=\"email\" и required — на телефоне это другая клавиатура и проверка без JS",
@@ -415,10 +432,11 @@
         "i18n": {
           "en": {
             "description": "An email capture CTA: a real form with a visible field label, honest consent text and a line about how often letters arrive — instead of a bare input with a button.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-003-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The field label is visible and tied through htmlFor rather than hidden in the placeholder: a label inside the field disappears once the field is filled in, exactly when it is needed most. From 38rem the field and the button stand in one row through grid-template-columns:1fr auto; below that they run as a column. The heading is set in a serif face — a newsletter about interfaces has to look like text, not like a form.",
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-003-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The field label is visible and tied through htmlFor rather than hidden in the placeholder: a label inside the field disappears once the field is filled in, exactly when it is needed most. From 38rem the field and the button stand in one row through grid-template-columns:1fr auto; below that they run as a column. The heading is set in a serif face — a newsletter about interfaces has to look like text, not like a form.",
             "ai": {
               "summary": "A newsletter section: a serif heading, an explanation of what the letters contain, a form with a visible field label, consent in small type and a line about frequency and readership. The form is real and works without client code. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-003-* palette — do not swap it for your theme tokens (bg-input, ring-ring and the like)",
                 "the visible field label tied through htmlFor: a placeholder disappears while typing and stops explaining the field",
                 "type=\"email\" together with autoComplete=\"email\" and required — on a phone that is a different keyboard and validation without JS",
@@ -502,7 +520,11 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "button-077",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-004/cta-004.tsx",
@@ -510,13 +532,14 @@
           "target": "@components/vibeui/cta-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-004-*. Серверный компонент. Узор — два repeating-linear-gradient в отдельном слое с pointer-events:none, погашенный mask-image к левому нижнему углу, поэтому текст всегда лежит на спокойном месте. Плита градиентная, а не одноцветная: сплошная заливка на всю ширину выглядит как ошибка стиля. Раскладка от собственной ширины: до 46rem одна колонка, дальше текст и блок с цифрой встают рядом, причём правая колонка выравнивается по правому краю.",
+      "docs": "Составной блок: импортирует button-016, button-077, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-004-*. Серверный компонент. Узор — два repeating-linear-gradient в отдельном слое с pointer-events:none, погашенный mask-image к левому нижнему углу, поэтому текст всегда лежит на спокойном месте. Плита градиентная, а не одноцветная: сплошная заливка на всю ширину выглядит как ошибка стиля. Раскладка от собственной ширины: до 46rem одна колонка, дальше текст и блок с цифрой встают рядом, причём правая колонка выравнивается по правому краю.",
       "meta": {
         "tags": [
           "cta",
           "color",
           "conversion",
-          "gradient"
+          "gradient",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -526,6 +549,7 @@
           "usage": "<Cta004\n  title=\"Перенесите сайт без остановки продаж\"\n  actionLabel=\"Обсудить переезд\"\n  stat=\"11 дней\"\n  statCaption=\"средний срок переезда магазина\"\n/>",
           "summary": "Секция призыва на цветной плите: надзаголовок, крупный заголовок, объяснение, стеклянная плашка с цифрой-доказательством, белая кнопка и текстовая ссылка рядом. Узор нарисован повторяющимися градиентами и погашен маской, чтобы не мешать тексту. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты button-016, button-077, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-004-* — плита остаётся цветной в обеих ветках light-dark(): сплошная заливка и есть дизайн блока, поэтому подложка здесь не делается прозрачной",
             "узор отдельным слоем с pointer-events:none: в фоне секции он перекрыл бы ссылки",
             "маску узора: без неё сетка идёт под текстом и мешает читать",
@@ -577,10 +601,11 @@
         "i18n": {
           "en": {
             "description": "A call to action on a solid colour slab: one large proof number and a single light button. Change the slab colour, the number, the copy and the button link.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-004-* variables. A server component. The pattern is two repeating-linear-gradients in a separate layer with pointer-events:none, faded by a mask-image towards the lower left corner, so the text always sits on a calm area. The slab is a gradient rather than a single colour: a solid fill across the whole width reads as a mistake of style. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the block with the number stand side by side, with the right column aligned to the right edge.",
+            "docs": "A composite block: imports button-016, button-077, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-004-* variables. A server component. The pattern is two repeating-linear-gradients in a separate layer with pointer-events:none, faded by a mask-image towards the lower left corner, so the text always sits on a calm area. The slab is a gradient rather than a single colour: a solid fill across the whole width reads as a mistake of style. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the block with the number stand side by side, with the right column aligned to the right edge.",
             "ai": {
               "summary": "A CTA section on a colour slab: a kicker, a large heading, an explanation, a glass panel with a proof number, a white button and a text link beside it. The pattern is drawn with repeating gradients and faded by a mask so it never fights the text. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the button-016, button-077, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-004-* palette — the slab stays coloured in both light-dark() branches: the solid fill is the design of this block, so the background is not made transparent here",
                 "the pattern as its own layer with pointer-events:none: in the section background it would cover the links",
                 "the mask over the pattern: without it the grid runs under the text and makes it hard to read",
@@ -651,7 +676,11 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "card-025",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-005/cta-005.tsx",
@@ -659,13 +688,14 @@
           "target": "@components/vibeui/cta-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-005-*. Серверный компонент. Место под картинку задано через aspect-ratio, поэтому раскладка не прыгает, пока изображение грузится. Проп imageSrc необязателен: если его нет, в том же месте рисуется композиция из двух псевдоэлементов с тенями — блок обязан быть полноценным без единого внешнего файла. Раскладка от собственной ширины блока: до 46rem одна колонка, дальше текст и картинка встают рядом равными долями.",
+      "docs": "Составной блок: импортирует button-016, card-025, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-005-*. Серверный компонент. Место под картинку задано через aspect-ratio, поэтому раскладка не прыгает, пока изображение грузится. Проп imageSrc необязателен: если его нет, в том же месте рисуется композиция из двух псевдоэлементов с тенями — блок обязан быть полноценным без единого внешнего файла. Раскладка от собственной ширины блока: до 46rem одна колонка, дальше текст и картинка встают рядом равными долями.",
       "meta": {
         "tags": [
           "cta",
           "split",
           "media",
-          "service"
+          "service",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -678,6 +708,7 @@
           "usage": "<Cta005\n  title=\"Приезжаем на замер завтра\"\n  bullets={[\"Смета в день обращения\", \"Гарантия три года\"]}\n  actionLabel=\"Вызвать замерщика\"\n  imageSrc=\"/photo.jpg\"\n/>",
           "summary": "Секция призыва в две колонки: слева надзаголовок, заголовок, объяснение, три пункта преимуществ и кнопка с приметкой, справа картинка. Без переданного изображения справа рисуется CSS-композиция, поэтому блок никогда не выглядит недоделанным. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, card-025, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-005-* и не подменять её токенами вашей темы",
             "aspect-ratio у места под картинку: без него раскладка прыгает, пока изображение грузится",
             "object-fit:cover у изображения — иначе фотография другого формата растянется",
@@ -737,10 +768,11 @@
         "i18n": {
           "en": {
             "description": "A CTA with a picture beside it: the media slot holds its aspect ratio, and without an image it draws a CSS placeholder — the block looks finished with no external files.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-005-* variables. A server component. The space for the picture is set through aspect-ratio, so the layout does not jump while the image loads. The imageSrc prop is optional: without it, a composition of two pseudo-elements with shadows is drawn in the same place — the block has to be complete without a single external file. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the picture stand side by side in equal shares.",
+            "docs": "A composite block: imports button-016, card-025, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-005-* variables. A server component. The space for the picture is set through aspect-ratio, so the layout does not jump while the image loads. The imageSrc prop is optional: without it, a composition of two pseudo-elements with shadows is drawn in the same place — the block has to be complete without a single external file. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the picture stand side by side in equal shares.",
             "ai": {
               "summary": "A two-column CTA section: on the left an eyebrow, a heading, an explanation, three benefit bullets and a button with a side note; on the right a picture. With no image passed, a CSS composition is drawn instead, so the block never looks unfinished. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, card-025, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-005-* palette — do not swap it for your theme tokens",
                 "aspect-ratio on the media slot: without it the layout jumps while the image loads",
                 "object-fit:cover on the image — otherwise a photo of another format stretches",
@@ -822,7 +854,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-006/cta-006.tsx",
@@ -830,13 +865,14 @@
           "target": "@components/vibeui/cta-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-006-*. Серверный компонент. Условия размечены списком определений <dl>/<dt>/<dd>: это пары «условие — пояснение», а не абзацы, и скринридер читает их как пары. Печать — круг с коническим градиентом и вложенным белым кругом, отдельного изображения нет. На широкой раскладке условия отделяются вертикальной чертой слева, на узкой — горизонтальной сверху: одна и та же граница меняет сторону вместе с раскладкой.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-006-*. Серверный компонент. Условия размечены списком определений <dl>/<dt>/<dd>: это пары «условие — пояснение», а не абзацы, и скринридер читает их как пары. Печать — круг с коническим градиентом и вложенным белым кругом, отдельного изображения нет. На широкой раскладке условия отделяются вертикальной чертой слева, на узкой — горизонтальной сверху: одна и та же граница меняет сторону вместе с раскладкой.",
       "meta": {
         "tags": [
           "cta",
           "guarantee",
           "trust",
-          "legal"
+          "legal",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -846,6 +882,7 @@
           "usage": "<Cta006\n  badge=\"60 дней гарантии\"\n  title=\"Попробуйте спокойно: деньги вернём без объяснений\"\n  terms={[{ term: \"Возврат 60 дней\", detail: \"Возвращаем полную сумму.\" }]}\n  actionLabel=\"Оформить подписку\"\n/>",
           "summary": "Секция призыва с гарантией: круглая печать со сроком, заголовок и объяснение, три условия списком определений, кнопка со ссылкой на полные условия и абзац мелкого шрифта. Мелкий текст набран читаемым кеглем и стоит там, где его ищут. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-006-* и не подменять её токенами вашей темы",
             "разметку условий через <dl>, <dt> и <dd>: это пары «условие — пояснение», и скринридер обязан читать их парами",
             "читаемый кегль мелкого шрифта: гарантия, набранная восемью пикселями, читается как обман",
@@ -905,10 +942,11 @@
         "i18n": {
           "en": {
             "description": "A CTA with a guarantee: a round seal, the terms as a definition list and honest small print set at a readable size, right where people look for it.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-006-* variables. A server component. The terms are marked up as a definition list, <dl>/<dt>/<dd>: they are “term — explanation” pairs, not paragraphs, and a screen reader reads them as pairs. The seal is a circle with a conic gradient and a nested white circle; there is no separate image. On the wide layout the terms are set off by a vertical rule on the left, on the narrow one by a horizontal rule on top: the same border changes side along with the layout.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-006-* variables. A server component. The terms are marked up as a definition list, <dl>/<dt>/<dd>: they are “term — explanation” pairs, not paragraphs, and a screen reader reads them as pairs. The seal is a circle with a conic gradient and a nested white circle; there is no separate image. On the wide layout the terms are set off by a vertical rule on the left, on the narrow one by a horizontal rule on top: the same border changes side along with the layout.",
             "ai": {
               "summary": "A guarantee CTA section: a round seal with the period, a heading and an explanation, three terms as a definition list, a button with a link to the full terms and a small-print paragraph. The small print is set at a readable size and stands where people look for it. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-006-* palette — do not swap it for your theme tokens",
                 "the terms marked up with <dl>, <dt> and <dd>: these are term-and-explanation pairs and a screen reader has to read them as pairs",
                 "the readable size of the small print: a guarantee set in eight pixels reads as a trick",
@@ -998,7 +1036,11 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-007/cta-007.tsx",
@@ -1006,14 +1048,15 @@
           "target": "@components/vibeui/cta-007.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-007-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Подпись поля скрыта визуально, но связана через htmlFor — однострочная форма не терпит видимой подписи, а скринридер обязан её слышать. От 34rem поле и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого идут колонкой.",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-007-*. Серверный компонент: поле неуправляемое, форма отправляется обычным POST и работает до гидратации. Подпись поля скрыта визуально, но связана через htmlFor — однострочная форма не терпит видимой подписи, а скринридер обязан её слышать. От 34rem поле и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого идут колонкой.",
       "meta": {
         "tags": [
           "cta",
           "email",
           "form",
           "inline",
-          "conversion"
+          "conversion",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1023,6 +1066,7 @@
           "usage": "<Cta007\n  title=\"Оставьте почту — пришлём доступ к каталогу\"\n  submitLabel=\"Получить доступ\"\n  note=\"Никакого спама: одно письмо, отписка не понадобится.\"\n/>",
           "summary": "Центрированный призыв с формой почты в одну строку: надзаголовок, заголовок, короткое объяснение, поле с акцентной кнопкой рядом и строка против страха спама. Форма настоящая и работает без клиентского кода. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-007-* и не подменять её токенами вашей темы (bg-input, ring-ring и подобными)",
             "скрытую подпись поля со связью htmlFor: капсула в одну строку не оставляет места видимой подписи, но скринридер обязан слышать, что это за поле",
             "type=\"email\" вместе с autoComplete=\"email\" и required — на телефоне это другая клавиатура и проверка без JS",
@@ -1082,10 +1126,11 @@
           "en": {
             "title": "Inline Email CTA",
             "description": "A compact CTA with a one-line email form: the field and the accent button stand side by side as capsules, with one phrase beneath that removes the fear of spam.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-007-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The field label is visually hidden but tied through htmlFor — a one-line form leaves no room for a visible label, yet a screen reader has to hear it. From 34rem the field and the button stand in one row through grid-template-columns:1fr auto; below that they run as a column.",
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-007-* variables. A server component: the field is uncontrolled, the form is submitted by a plain POST and works before hydration. The field label is visually hidden but tied through htmlFor — a one-line form leaves no room for a visible label, yet a screen reader has to hear it. From 34rem the field and the button stand in one row through grid-template-columns:1fr auto; below that they run as a column.",
             "ai": {
               "summary": "A centred CTA with a one-line email form: an eyebrow, a heading, a short explanation, a field with an accent button beside it and a line against the fear of spam. The form is real and works without client code. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-007-* palette — do not swap it for your theme tokens (bg-input, ring-ring and the like)",
                 "the hidden field label tied through htmlFor: a one-line capsule leaves no room for a visible label, yet a screen reader has to hear what the field is",
                 "type=\"email\" together with autoComplete=\"email\" and required — on a phone that is a different keyboard and validation without JS",
@@ -1160,7 +1205,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-008/cta-008.tsx",
@@ -1168,14 +1216,15 @@
           "target": "@components/vibeui/cta-008.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-008-*. Серверный компонент: отсчёт намеренно статический, дни, часы и минуты приходят строковыми пропсами. Тикающий таймер потребовал бы клиентского кода и всё равно врал бы до гидратации — честнее отдать цифры проекту. Плитки набраны с font-variant-numeric:tabular-nums, чтобы значения разной ширины не расшатывали раскладку, двоеточия между ними скрыты от скринридера.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-008-*. Серверный компонент: отсчёт намеренно статический, дни, часы и минуты приходят строковыми пропсами. Тикающий таймер потребовал бы клиентского кода и всё равно врал бы до гидратации — честнее отдать цифры проекту. Плитки набраны с font-variant-numeric:tabular-nums, чтобы значения разной ширины не расшатывали раскладку, двоеточия между ними скрыты от скринридера.",
       "meta": {
         "tags": [
           "cta",
           "countdown",
           "deadline",
           "urgency",
-          "launch"
+          "launch",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1185,6 +1234,7 @@
           "usage": "<Cta008\n  title=\"Цена вырастет после запуска\"\n  days=\"02\"\n  hours=\"14\"\n  minutes=\"45\"\n  actionLabel=\"Забрать по старой цене\"\n/>",
           "summary": "Центрированный призыв с отсчётом: надзаголовок, заголовок, объяснение, три плитки времени с подписями, одна кнопка и строка-примечание. Цифры статичны и приходят пропсами, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-008-* и не подменять её токенами вашей темы",
             "статические цифры пропсами: серверный компонент не может тикать, а таймер в registry-блоке всё равно врал бы до гидратации — тикание добавляется обёрткой проекта",
             "font-variant-numeric:tabular-nums у значений — иначе «11» уже «44» и плитки дышат при смене цифр",
@@ -1244,10 +1294,11 @@
           "en": {
             "title": "Countdown CTA",
             "description": "A deadline countdown CTA: three tiles for days, hours and minutes above a single button. The digits are static and come through props — ticking stays with the project.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-008-* variables. A server component: the countdown is deliberately static, the days, hours and minutes arrive as string props. A ticking timer would require client code and would still lie before hydration — handing the digits to the project is more honest. The tiles are set with font-variant-numeric:tabular-nums so values of different widths do not rock the layout, and the colons between them are hidden from screen readers.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-008-* variables. A server component: the countdown is deliberately static, the days, hours and minutes arrive as string props. A ticking timer would require client code and would still lie before hydration — handing the digits to the project is more honest. The tiles are set with font-variant-numeric:tabular-nums so values of different widths do not rock the layout, and the colons between them are hidden from screen readers.",
             "ai": {
               "summary": "A centred countdown CTA: an eyebrow, a heading, an explanation, three time tiles with captions, one button and a small note. The digits are static and come through props; there is no client JS. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-008-* palette — do not swap it for your theme tokens",
                 "the static digits through props: a server component cannot tick, and a timer inside a registry block would lie before hydration anyway — ticking is added by a project wrapper",
                 "font-variant-numeric:tabular-nums on the values — otherwise \"11\" and \"44\" differ in width and the tiles breathe as digits change",
@@ -1326,7 +1377,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-009/cta-009.tsx",
@@ -1334,14 +1388,15 @@
           "target": "@components/vibeui/cta-009.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-009-*. Серверный компонент. Собственный акцентный фон — осознанное исключение из правила «прозрачной подложки»: контраст полосы с остальной страницей и есть дизайн блока. Текст фиксированно тёмный в обеих темах — полоса не темнеет вместе со страницей, иначе она перестаёт быть полосой. От 44rem текст и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого кнопка уходит под текст.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-009-*. Серверный компонент. Собственный акцентный фон — осознанное исключение из правила «прозрачной подложки»: контраст полосы с остальной страницей и есть дизайн блока. Текст фиксированно тёмный в обеих темах — полоса не темнеет вместе со страницей, иначе она перестаёт быть полосой. От 44rem текст и кнопка встают в один ряд через grid-template-columns:1fr auto, до этого кнопка уходит под текст.",
       "meta": {
         "tags": [
           "cta",
           "banner",
           "brand",
           "color",
-          "conversion"
+          "conversion",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1351,6 +1406,7 @@
           "usage": "<Cta009\n  title=\"Хватит листать — соберите свою страницу\"\n  actionLabel=\"Открыть каталог\"\n  actionHref=\"/components\"\n/>",
           "summary": "Полоса призыва во всю ширину на сплошной акцентной заливке: заголовок с коротким объяснением слева, одна белая кнопка справа. Тёмная типографика фиксирована в обеих темах. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-009-* — полоса остаётся акцентной в обеих ветках light-dark(): собственный фон здесь осознанное исключение из правила прозрачной подложки, контраст полосы со страницей и есть дизайн блока",
             "фиксированно тёмный текст: полоса не темнеет вместе с темой, иначе перестаёт быть полосой",
             "белую кнопку — акцентная кнопка на акцентной полосе исчезает",
@@ -1406,10 +1462,11 @@
           "en": {
             "title": "Accent Band CTA",
             "description": "A full-width band of the brand accent: black typography, one white button and not a single extra element.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-009-* variables. A server component. The own accent background is a deliberate exception to the transparent-background rule: the contrast between the band and the rest of the page is the design of this block. The text is fixed dark in both themes — the band does not darken with the page, otherwise it stops being a band. From 44rem the text and the button stand in one row through grid-template-columns:1fr auto; below that the button drops under the text.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-009-* variables. A server component. The own accent background is a deliberate exception to the transparent-background rule: the contrast between the band and the rest of the page is the design of this block. The text is fixed dark in both themes — the band does not darken with the page, otherwise it stops being a band. From 44rem the text and the button stand in one row through grid-template-columns:1fr auto; below that the button drops under the text.",
             "ai": {
               "summary": "A full-width CTA band on a solid accent fill: a heading with a short explanation on the left, one white button on the right. The dark typography is fixed in both themes. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-009-* palette — the band stays accent in both light-dark() branches: the own background is a deliberate exception to the transparent-background rule here, the contrast between the band and the page is the design of this block",
                 "the fixed dark text: the band does not darken with the theme, otherwise it stops being a band",
                 "the white button — an accent button on an accent band disappears",
@@ -1476,7 +1533,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-010/cta-010.tsx",
@@ -1484,14 +1544,15 @@
           "target": "@components/vibeui/cta-010.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-010-*. Серверный компонент. Галочка — псевдоэлемент с двумя границами, повёрнутый на 42 градуса, на круге из тёплого тинта через color-mix: иконочная библиотека ради четырёх галочек сломала бы правило одного файла. Раскладка от собственной ширины: до 46rem одна колонка, дальше текст и чек-лист встают рядом в пропорции 1.2:1.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-010-*. Серверный компонент. Галочка — псевдоэлемент с двумя границами, повёрнутый на 42 градуса, на круге из тёплого тинта через color-mix: иконочная библиотека ради четырёх галочек сломала бы правило одного файла. Раскладка от собственной ширины: до 46rem одна колонка, дальше текст и чек-лист встают рядом в пропорции 1.2:1.",
       "meta": {
         "tags": [
           "cta",
           "checklist",
           "benefits",
           "split",
-          "conversion"
+          "conversion",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1501,6 +1562,7 @@
           "usage": "<Cta010\n  title=\"Всё, что нужно для первой страницы\"\n  actionLabel=\"Начать бесплатно\"\n  items={[\"Готовые секции\", \"Один файл на блок\", \"Инструкция для AI\", \"Тёмная тема\"]}\n/>",
           "summary": "Двухколоночный призыв: слева надзаголовок, заголовок, объяснение, кнопка и приметка, справа список из четырёх выгод с акцентными галочками. Галочки нарисованы CSS, клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-010-* и не подменять её токенами вашей темы",
             "галочку CSS-уголком на тинтованном круге, а не иконку из библиотеки: блок обязан оставаться одним файлом и переживать смену акцента вместе с палитрой",
             "тёплый тинт круга через color-mix от акцента — сплошная акцентная заливка под каждой галочкой превратила бы список в светофор",
@@ -1560,10 +1622,11 @@
           "en": {
             "title": "Checklist CTA",
             "description": "A two-column CTA: a promise with a button on the left, four benefit checkmarks on the right. The checks are drawn with a CSS corner — no icon library.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-010-* variables. A server component. The checkmark is a pseudo-element with two borders rotated 42 degrees, sitting on a circle of warm tint made with color-mix: an icon library for four checkmarks would break the one-file rule. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the checklist stand side by side in a 1.2:1 ratio.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-010-* variables. A server component. The checkmark is a pseudo-element with two borders rotated 42 degrees, sitting on a circle of warm tint made with color-mix: an icon library for four checkmarks would break the one-file rule. The layout is driven by the block's own width: below 46rem one column, beyond that the text and the checklist stand side by side in a 1.2:1 ratio.",
             "ai": {
               "summary": "A two-column CTA: on the left an eyebrow, a heading, an explanation, a button and a note; on the right a list of four benefits with accent checkmarks. The checks are drawn in CSS, there is no client JS. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-010-* palette — do not swap it for your theme tokens",
                 "the checkmark as a CSS corner on a tinted circle rather than a library icon: the block has to stay a single file and survive an accent change together with the palette",
                 "the warm circle tint through color-mix from the accent — a solid accent fill under every check would turn the list into a traffic light",
@@ -1642,7 +1705,11 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "button-077",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-011/cta-011.tsx",
@@ -1650,14 +1717,15 @@
           "target": "@components/vibeui/cta-011.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-011-*. Серверный компонент. Код-плашка тёмная в обеих темах: терминал не бывает светло-серым, и команда должна читаться как команда. Панель для команд подкрашена тёплым тинтом через color-mix — веса панелей различаются, но обе остаются настоящими входами. Длинная команда прокручивается по горизонтали, а не ломает раскладку. От 44rem панели встают рядом равными долями.",
+      "docs": "Составной блок: импортирует button-016, button-077, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-011-*. Серверный компонент. Код-плашка тёмная в обеих темах: терминал не бывает светло-серым, и команда должна читаться как команда. Панель для команд подкрашена тёплым тинтом через color-mix — веса панелей различаются, но обе остаются настоящими входами. Длинная команда прокручивается по горизонтали, а не ломает раскладку. От 44rem панели встают рядом равными долями.",
       "meta": {
         "tags": [
           "cta",
           "developers",
           "teams",
           "demo",
-          "split"
+          "split",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1667,6 +1735,7 @@
           "usage": "<Cta011\n  title=\"Начните так, как удобно вам\"\n  command=\"npx shadcn@latest add @vibeui/cta-011\"\n  teamActionLabel=\"Запросить демо\"\n/>",
           "summary": "Секция с двумя путями к продукту: панель для разработчиков с командой npx в тёмной код-плашке и ссылкой на документацию, панель для команд с кнопкой демо. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, button-077, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-011-* и не подменять её токенами вашей темы",
             "два разных входа — команду и кнопку демо: аудитории принимают решения по-разному, и сводить оба пути к двум одинаковым кнопкам значит потерять обоих",
             "код-плашку тёмной в обеих темах: терминал не бывает светло-серым, команда обязана читаться как команда",
@@ -1726,10 +1795,11 @@
           "en": {
             "title": "Two Paths CTA",
             "description": "Two panels for two audiences: a developer gets an npx command in a code plate, a team gets a demo button. The entries differ because decisions are made differently.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-011-* variables. A server component. The code plate is dark in both themes: a terminal is never light grey, and a command has to read as a command. The teams panel is tinted warm through color-mix — the panels differ in weight, yet both remain real entry points. A long command scrolls horizontally instead of breaking the layout. From 44rem the panels stand side by side in equal shares.",
+            "docs": "A composite block: imports button-016, button-077, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-011-* variables. A server component. The code plate is dark in both themes: a terminal is never light grey, and a command has to read as a command. The teams panel is tinted warm through color-mix — the panels differ in weight, yet both remain real entry points. A long command scrolls horizontally instead of breaking the layout. From 44rem the panels stand side by side in equal shares.",
             "ai": {
               "summary": "A section with two paths to the product: a developers panel with an npx command in a dark code plate and a documentation link, and a teams panel with a demo button. No client JS. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, button-077, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-011-* palette — do not swap it for your theme tokens",
                 "the two different entries — a command and a demo button: the audiences decide differently, and collapsing both paths into two identical buttons loses both",
                 "the code plate dark in both themes: a terminal is never light grey, a command has to read as a command",
@@ -1805,7 +1875,11 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "avatar-003",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "cta-012/cta-012.tsx",
@@ -1813,14 +1887,15 @@
           "target": "@components/vibeui/cta-012.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-012-*. Серверный компонент. Аватары — круги с инициалами, вычисленными из имён: без внешних файлов и без стоковых лиц. Стопка накладывается отрицательным отступом, кольцо вокруг каждого круга нарисовано box-shadow и имитирует цвет страницы. Вся стопка помечена aria-hidden: скринридеру важна строка доказательства, а не декорация.",
+      "docs": "Составной блок: импортирует button-016, avatar-003, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-012-*. Серверный компонент. Аватары — круги с инициалами, вычисленными из имён: без внешних файлов и без стоковых лиц. Стопка накладывается отрицательным отступом, кольцо вокруг каждого круга нарисовано box-shadow и имитирует цвет страницы. Вся стопка помечена aria-hidden: скринридеру важна строка доказательства, а не декорация.",
       "meta": {
         "tags": [
           "cta",
           "social-proof",
           "trust",
           "avatars",
-          "conversion"
+          "conversion",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1833,6 +1908,7 @@
           "usage": "<Cta012\n  title=\"Стройте страницы вместе с теми, кто уже строит\"\n  actionLabel=\"Присоединиться\"\n  proof=\"5 000+ команд уже строят на VibeUI\"\n/>",
           "summary": "Центрированный призыв: надзаголовок, заголовок, объяснение, одна кнопка, а под ней стопка аватаров-инициалов и строка социального доказательства. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, avatar-003, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-012-* и не подменять её токенами вашей темы",
             "аватары-инициалы, вычисленные из имён, а не фотографии: без внешних файлов, и инициалы честнее стоковых лиц, которые всё равно никто не разглядывает",
             "aria-hidden на стопке аватаров — скринридеру важна строка доказательства, а не декоративные круги",
@@ -1892,10 +1968,11 @@
           "en": {
             "title": "Social Proof CTA",
             "description": "A CTA with social proof: under the button a stack of initial avatars and a line saying \"5,000+ teams already build\". The avatars are drawn from names, no images.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-012-* variables. A server component. The avatars are circles with initials computed from names: no external files and no stock faces. The stack overlaps through a negative margin, and the ring around each circle is drawn with box-shadow to imitate the page colour. The whole stack is aria-hidden: what matters to a screen reader is the proof line, not the decoration.",
+            "docs": "A composite block: imports button-016, avatar-003, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-012-* variables. A server component. The avatars are circles with initials computed from names: no external files and no stock faces. The stack overlaps through a negative margin, and the ring around each circle is drawn with box-shadow to imitate the page colour. The whole stack is aria-hidden: what matters to a screen reader is the proof line, not the decoration.",
             "ai": {
               "summary": "A centred CTA: an eyebrow, a heading, an explanation, one button, and beneath it a stack of initial avatars with a social proof line. No client JS. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, avatar-003, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-012-* palette — do not swap it for your theme tokens",
                 "the initial avatars computed from names rather than photos: no external files, and initials are more honest than stock faces nobody examines anyway",
                 "aria-hidden on the avatar stack — a screen reader needs the proof line, not the decorative circles",
@@ -1976,7 +2053,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "cta-013/cta-013.tsx",
@@ -1984,14 +2063,15 @@
           "target": "@components/vibeui/cta-013.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-013-*. Серверный компонент, размечен как <aside>: полоса — дополнение к странице, а не её раздел. Позиционирование намеренно статическое — прилипание задаётся снаружи через className (position:sticky и top, z-index по вкусу проекта). Фон бара — тёплый тинт от акцента через color-mix поверх прозрачного, поэтому полоса заметна на любом цвете страницы, не пряча его.",
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-013-*. Серверный компонент, размечен как <aside>: полоса — дополнение к странице, а не её раздел. Позиционирование намеренно статическое — прилипание задаётся снаружи через className (position:sticky и top, z-index по вкусу проекта). Фон бара — тёплый тинт от акцента через color-mix поверх прозрачного, поэтому полоса заметна на любом цвете страницы, не пряча его.",
       "meta": {
         "tags": [
           "cta",
           "banner",
           "announcement",
           "sticky",
-          "bar"
+          "bar",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2001,6 +2081,7 @@
           "usage": "<Cta013\n  message=\"В каталоге девять новых секций призыва.\"\n  actionLabel=\"Смотреть\"\n  className=\"sticky top-0 z-50\"\n/>",
           "summary": "Тонкая полоса-анонс: жирное сообщение, приглушённое пояснение и маленькая акцентная кнопка в одной строке. Позиция статическая, прилипание добавляется снаружи. Клиентского JS нет. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-013-* и не подменять её токенами вашей темы",
             "статическое позиционирование: где полосе липнуть, решает страница — прилипание задаётся снаружи через className, а зашитый в блок position:fixed воевал бы с любым макетом",
             "тёплый тинт бара через color-mix от акцента поверх прозрачного — полоса заметна на любом цвете страницы, не закрашивая его",
@@ -2058,10 +2139,11 @@
           "en": {
             "title": "Sticky Bar CTA",
             "description": "A thin announcement bar with one message and one button. The positioning is static: where the bar sticks — top, bottom, above the footer — is the page's decision.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-013-* variables. A server component marked up as <aside>: the bar is an addition to the page, not a section of it. The positioning is deliberately static — sticking is applied from outside through className (position:sticky with top, z-index to the project's taste). The bar background is a warm accent tint through color-mix over transparency, so the bar stays visible on any page colour without hiding it.",
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-013-* variables. A server component marked up as <aside>: the bar is an addition to the page, not a section of it. The positioning is deliberately static — sticking is applied from outside through className (position:sticky with top, z-index to the project's taste). The bar background is a warm accent tint through color-mix over transparency, so the bar stays visible on any page colour without hiding it.",
             "ai": {
               "summary": "A thin announcement bar: a bold message, a muted detail and a small accent button in one line. The position is static; sticking is added from outside. No client JS. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-013-* palette — do not swap it for your theme tokens",
                 "the static positioning: where the bar sticks is the page's decision — sticking is applied from outside through className, while a position:fixed baked into the block would fight any layout",
                 "the warm bar tint through color-mix from the accent over transparency — the bar stays visible on any page colour without painting over it",
@@ -2130,7 +2212,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-115"
+      ],
       "files": [
         {
           "path": "cta-014/cta-014.tsx",
@@ -2138,14 +2222,15 @@
           "target": "@components/vibeui/cta-014.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-014-*. Клиентский компонент — копирование через navigator.clipboard без JS не бывает, и это единственная причина \"use client\"; без пропсов блок рендерится полностью. Плашка тёмная в обеих темах: терминал не бывает светло-серым. Подпись кнопки меняется на «Скопировано» и возвращается через две секунды, повторные клики сбрасывают таймер через ref.",
+      "docs": "Составной блок: импортирует button-115 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-014-*. Клиентский компонент — копирование через navigator.clipboard без JS не бывает, и это единственная причина \"use client\"; без пропсов блок рендерится полностью. Плашка тёмная в обеих темах: терминал не бывает светло-серым. Подпись кнопки меняется на «Скопировано» и возвращается через две секунды, повторные клики сбрасывают таймер через ref.",
       "meta": {
         "tags": [
           "cta",
           "terminal",
           "developers",
           "clipboard",
-          "install"
+          "install",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2155,6 +2240,7 @@
           "usage": "<Cta014\n  title=\"Одна команда — и секция в проекте\"\n  command=\"npx shadcn@latest add @vibeui/cta-014\"\n  copyLabel=\"Копировать\"\n/>",
           "summary": "Центрированный призыв для разработчиков: заголовок, объяснение и терминальная плашка с шапкой-окном, командой npx и кнопкой копирования. Кнопка подтверждает копирование сменой подписи. Ноль зависимостей, один файл, своя палитра, клиентский код — только clipboard.",
           "preserve": [
+            "импорты button-115 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-014-* и не подменять её токенами вашей темы",
             "\"use client\" ровно ради navigator.clipboard: копирование без JS не бывает, но других причин клиентского кода в блоке нет — не добавляйте их",
             "терминальную плашку тёмной в обеих темах: терминал не бывает светло-серым, команда обязана читаться как команда",
@@ -2214,10 +2300,11 @@
           "en": {
             "title": "Install Command CTA",
             "description": "A terminal plate with an npx command and a Copy button: the button label flips to \"Copied\" and returns by itself. The only client block of the category.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-014-* variables. A client component — copying via navigator.clipboard does not exist without JS, and that is the only reason for \"use client\"; the block renders fully without props. The plate is dark in both themes: a terminal is never light grey. The button label flips to \"Copied\" and returns after two seconds; repeated clicks reset the timer through a ref.",
+            "docs": "A composite block: imports button-115 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-014-* variables. A client component — copying via navigator.clipboard does not exist without JS, and that is the only reason for \"use client\"; the block renders fully without props. The plate is dark in both themes: a terminal is never light grey. The button label flips to \"Copied\" and returns after two seconds; repeated clicks reset the timer through a ref.",
             "ai": {
               "summary": "A centred developer CTA: a heading, an explanation and a terminal plate with a window header, an npx command and a copy button. The button confirms the copy by changing its label. Zero dependencies, one file, its own palette; the only client code is the clipboard.",
               "preserve": [
+                "the button-115 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-014-* palette — do not swap it for your theme tokens",
                 "\"use client\" exactly for navigator.clipboard: copying does not exist without JS, but there is no other reason for client code in the block — do not add any",
                 "the terminal plate dark in both themes: a terminal is never light grey, a command has to read as a command",
@@ -2292,7 +2379,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-116"
+      ],
       "files": [
         {
           "path": "cta-015/cta-015.tsx",
@@ -2300,14 +2389,15 @@
           "target": "@components/vibeui/cta-015.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-cta-015-*. Серверный компонент. QR-заглушка — шахматный узор repeating-conic-gradient и три угловых маркера из псевдоэлементов, помечена aria-hidden: это макет места под настоящий код. Плата под QR всегда белая, узор всегда тёмный — сканеру нужен тёмный рисунок на светлом, темнить плату вместе с темой нельзя. Плашки сторов нарисованы текстом, без брендовых логотипов. От 46rem текст и QR встают рядом.",
+      "docs": "Составной блок: импортирует button-116 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-cta-015-*. Серверный компонент. QR-заглушка — шахматный узор repeating-conic-gradient и три угловых маркера из псевдоэлементов, помечена aria-hidden: это макет места под настоящий код. Плата под QR всегда белая, узор всегда тёмный — сканеру нужен тёмный рисунок на светлом, темнить плату вместе с темой нельзя. Плашки сторов нарисованы текстом, без брендовых логотипов. От 46rem текст и QR встают рядом.",
       "meta": {
         "tags": [
           "cta",
           "mobile",
           "app",
           "qr",
-          "download"
+          "download",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2317,6 +2407,7 @@
           "usage": "<Cta015\n  title=\"Смотрите секции с телефона\"\n  qrCaption=\"Наведите камеру\"\n  badges={[{ caption: \"Скачать для\", store: \"iOS\", href: \"#ios\" }]}\n/>",
           "summary": "Двухколоночный призыв поставить приложение: слева заголовок, объяснение и плашки сторов, справа белая плата с QR-заглушкой и подписью. QR и плашки нарисованы CSS, внешних файлов нет. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты button-116 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-cta-015-* и не подменять её токенами вашей темы",
             "aria-hidden на QR-заглушке: это макет места под настоящий код, скринридеру там читать нечего",
             "белую плату и тёмный узор QR в обеих темах — сканеру нужен тёмный рисунок на светлом, QR, потемневший вместе с темой, перестаёт сканироваться",
@@ -2377,10 +2468,11 @@
           "en": {
             "title": "App QR CTA",
             "description": "An app-install CTA: store plaques without brand logos and a QR placeholder drawn as a CSS pattern on a white plate.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-cta-015-* variables. A server component. The QR placeholder is a repeating-conic-gradient checker pattern with three corner finder markers made of pseudo-elements, marked aria-hidden: it is a mock of the place for a real code. The plate under the QR is always white and the pattern always dark — a scanner needs a dark drawing on a light ground, and darkening the plate with the theme is not allowed. The store plaques are drawn as text, with no brand logos. From 46rem the text and the QR stand side by side.",
+            "docs": "A composite block: imports button-116 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-cta-015-* variables. A server component. The QR placeholder is a repeating-conic-gradient checker pattern with three corner finder markers made of pseudo-elements, marked aria-hidden: it is a mock of the place for a real code. The plate under the QR is always white and the pattern always dark — a scanner needs a dark drawing on a light ground, and darkening the plate with the theme is not allowed. The store plaques are drawn as text, with no brand logos. From 46rem the text and the QR stand side by side.",
             "ai": {
               "summary": "A two-column app-install CTA: on the left a heading, an explanation and store plaques; on the right a white plate with a QR placeholder and a caption. The QR and the plaques are drawn in CSS, no external files. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the button-116 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-cta-015-* palette — do not swap it for your theme tokens",
                 "aria-hidden on the QR placeholder: it is a mock of the place for a real code, a screen reader has nothing to read there",
                 "the white plate and the dark QR pattern in both themes — a scanner needs a dark drawing on a light ground, and a QR darkened with the theme stops scanning",
@@ -2465,7 +2557,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "cta-016/cta-016.tsx",
@@ -2473,7 +2567,7 @@
           "target": "@components/vibeui/cta-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <aside> с полосой: grid, от 52rem (container query) три колонки auto/1fr/auto. Блик — ::after с градиентом, skewX(-20deg) и @keyframes по left за 7s (60 % времени стоит за краем). Фото — маленький квадрат 3.5rem с тенью. Цвета плашки — акцент и on-accent, фон секции — фон страницы. Палитра --vibeui-cta-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. <aside> с полосой: grid, от 52rem (container query) три колонки auto/1fr/auto. Блик — ::after с градиентом, skewX(-20deg) и @keyframes по left за 7s (60 % времени стоит за краем). Фото — маленький квадрат 3.5rem с тенью. Цвета плашки — акцент и on-accent, фон секции — фон страницы. Палитра --vibeui-cta-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2486,7 +2580,8 @@
           "banner",
           "offer",
           "promo",
-          "band"
+          "band",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -2502,6 +2597,7 @@
           "usage": "<Cta016\n  label=\"Вино недели\"\n  title=\"Riesling Kabinett, Мозель, 2022\"\n  text=\"Сухой, минеральный, с яблоком и лаймом.\"\n  price=\"650 ₽ / бокал\"\n  actionLabel=\"Смотреть бар\"\n  actionHref=\"#menu\"\n  image=\"/photos/dish-06.webp\"\n/>",
           "summary": "Самодостаточная плашка спецпредложения для ресторана, бара или магазина: одна строка между секциями с ценой и ссылкой. Всё содержимое пропсами.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "одну строку между секциями вместо целого блока — предложение, а не секция",
             "блик, проходящий по акцентной полосе раз в несколько секунд",
             "цену серифом и кнопку контрастного цвета справа"
@@ -2566,10 +2662,11 @@
           "en": {
             "title": "“Wine of the week” band with a shine",
             "description": "A narrow accent band between sections: a small-caps “Wine of the week” and a photo on the left, name and description in the centre, a serif price and a link on the right. A shine sweeps the band every seven seconds.",
-            "docs": "One file, zero dependencies, a server component. An <aside> with a band: grid, from 52rem (container query) three columns auto/1fr/auto. The shine is an ::after with a gradient, skewX(-20deg) and a @keyframes on left over 7s (parked beyond the edge 60 % of the time). The photo is a small 3.5rem square with a shadow. Band colours are accent and on-accent, the section background is the page background. Palette --vibeui-cta-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. An <aside> with a band: grid, from 52rem (container query) three columns auto/1fr/auto. The shine is an ::after with a gradient, skewX(-20deg) and a @keyframes on left over 7s (parked beyond the edge 60 % of the time). The photo is a small 3.5rem square with a shadow. Band colours are accent and on-accent, the section background is the page background. Palette --vibeui-cta-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained special-offer band for a restaurant, bar or shop: one line between sections with a price and a link. All content via props.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "one line between sections instead of a whole block — an offer, not a section",
                 "the shine sweeping the accent band every few seconds",
                 "the serif price and the contrasting button on the right"
@@ -2641,7 +2738,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "cta-017/cta-017.tsx",
@@ -2649,7 +2749,7 @@
           "target": "@components/vibeui/cta-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер отдаётся нулями с aria-hidden — нет hydration mismatch. Каждая цифра — span с key=значение в плашке с perspective:600px: смена значения перемонтирует span с @keyframes rotateX(-80deg)→0, линия посередине — ::after. Halo — ::before обёртки wrap с inset:-.5rem, conic-gradient(from var(--a)) и blur(28px), угол — @property <angle>, 14 с; пятна — ::before/::after карточки с blur и @keyframes drift. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, показывается done. От 60rem (container query) две колонки 1.1fr/1fr. Палитра --vibeui-cta-017-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради таймера и формы. Время берётся только на клиенте (useEffect + setInterval раз в секунду), на сервере таймер отдаётся нулями с aria-hidden — нет hydration mismatch. Каждая цифра — span с key=значение в плашке с perspective:600px: смена значения перемонтирует span с @keyframes rotateX(-80deg)→0, линия посередине — ::after. Halo — ::before обёртки wrap с inset:-.5rem, conic-gradient(from var(--a)) и blur(28px), угол — @property <angle>, 14 с; пятна — ::before/::after карточки с blur и @keyframes drift. Форма: <input type=email name=email required>, кнопка submit; action пустой — submit перехватывается, показывается done. От 60rem (container query) две колонки 1.1fr/1fr. Палитра --vibeui-cta-017-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2662,7 +2762,8 @@
           "timer",
           "flip",
           "form",
-          "glow"
+          "glow",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2681,6 +2782,7 @@
           "usage": "<Cta017\n  title=\"Старт 6 октября. Следующий поток — только в феврале\"\n  startsAt=\"2026-10-06T10:00:00+03:00\"\n  seats=\"Осталось 12 мест из 60\"\n  submitLabel=\"Забронировать место\"\n  action=\"/api/enroll\"\n/>",
           "summary": "Самодостаточный финальный призыв для курса, вебинара или запуска: обратный отсчёт до даты, места и форма с email. Дата старта — пропсом в ISO.",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "flip-часы: плашки переворачиваются по оси X, а не просто меняют цифру",
             "halo из conic-свечения за карточкой и плывущие пятна внутри",
             "форму с email и состоянием «место за вами» без action"
@@ -2738,10 +2840,11 @@
           "en": {
             "title": "Final call with flip clock and glow",
             "description": "The course's final call: a dark card in a coloured halo — a conic glow behind the card and two drifting spots inside, a countdown as a flip clock (days, hours, minutes, seconds flip on the X axis), a “seats left” tag, a form with email and a button. With action it POSTs, without it shows “your seat is reserved”.",
-            "docs": "One file, zero dependencies, “use client” for the timer and the form. Time is read only on the client (useEffect + setInterval every second); on the server the timer renders zeros with aria-hidden — no hydration mismatch. Each figure is a span keyed by value inside a tile with perspective:600px: a change remounts it with @keyframes rotateX(-80deg)→0, the middle line is an ::after. The halo is the wrap's ::before with inset:-.5rem, conic-gradient(from var(--a)) and blur(28px), the angle an @property <angle> over 14 s; the spots are the card's ::before/::after with blur and a drift @keyframes. The form: <input type=email name=email required>, a submit button; with an empty action submit is intercepted and done is shown. From 60rem (container query) two columns 1.1fr/1fr. Palette --vibeui-cta-017-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the timer and the form. Time is read only on the client (useEffect + setInterval every second); on the server the timer renders zeros with aria-hidden — no hydration mismatch. Each figure is a span keyed by value inside a tile with perspective:600px: a change remounts it with @keyframes rotateX(-80deg)→0, the middle line is an ::after. The halo is the wrap's ::before with inset:-.5rem, conic-gradient(from var(--a)) and blur(28px), the angle an @property <angle> over 14 s; the spots are the card's ::before/::after with blur and a drift @keyframes. The form: <input type=email name=email required>, a submit button; with an empty action submit is intercepted and done is shown. From 60rem (container query) two columns 1.1fr/1fr. Palette --vibeui-cta-017-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained final call for a course, webinar or launch: a countdown to a date, seats and an email form. The start date comes in as an ISO prop.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the flip clock: tiles flip on the X axis rather than merely changing the figure",
                 "the conic halo behind the card and the drifting spots inside",
                 "the email form with a “your seat is reserved” state without action"
@@ -2805,7 +2908,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-117"
+      ],
       "files": [
         {
           "path": "cta-018/cta-018.tsx",
@@ -2813,7 +2918,7 @@
           "target": "@components/vibeui/cta-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради видимости. Корень — position:fixed внизу с safe-area, pointer-events:none; плашка — pointer-events:auto, translateY(100 %)→0 за .55 с при data-show. showAfter — селектор порога: IntersectionObserver ставит passed, когда элемент выше вьюпорта; hideNear — селекторы блоков, при пересечении которых (rootMargin -20 % снизу) кнопка прячется; hideAtBottom прячет у низа страницы. Без showAfter кнопка видна сразу. placement=static кладёт кнопку в поток (для превью и документации). Подпись показывается от 40rem (container query). Скрытая плашка — aria-hidden и tabIndex=-1 у ссылки. Палитра --vibeui-cta-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-117 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради видимости. Корень — position:fixed внизу с safe-area, pointer-events:none; плашка — pointer-events:auto, translateY(100 %)→0 за .55 с при data-show. showAfter — селектор порога: IntersectionObserver ставит passed, когда элемент выше вьюпорта; hideNear — селекторы блоков, при пересечении которых (rootMargin -20 % снизу) кнопка прячется; hideAtBottom прячет у низа страницы. Без showAfter кнопка видна сразу. placement=static кладёт кнопку в поток (для превью и документации). Подпись показывается от 40rem (container query). Скрытая плашка — aria-hidden и tabIndex=-1 у ссылки. Палитра --vibeui-cta-018-* с light-dark: белый и холодный серый, акцент индиго, лаймовый маркер для выделений; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "tags": [
           "course",
@@ -2824,7 +2929,8 @@
           "floating",
           "sticky",
           "button",
-          "price"
+          "price",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2844,6 +2950,7 @@
           "usage": "<Cta018\n  label=\"Записаться\"\n  price=\"49 000 ₽\"\n  href=\"#pricing\"\n  caption=\"Старт 6 октября\"\n  showAfter=\"#hero\"\n  hideNear=\"#pricing, #enroll, #footer\"\n/>",
           "summary": "Самодостаточная плавающая кнопка для лендинга курса, вебинара или продукта с одной целью: появляется после первого экрана, прячется у тарифов и подвала, цена в капсуле.",
           "preserve": [
+            "импорты button-117 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "появление после первого экрана и скрытие у тарифов — кнопка не мешает там, где уже есть цены",
             "капсулу с ценой внутри кнопки",
             "плашку в pointer-events:none корне — не перекрывает клики вокруг"
@@ -2902,10 +3009,11 @@
           "en": {
             "title": "Floating enroll button with a price",
             "description": "A floating enroll button: pinned to the bottom of the screen, it slides up once the first screen has scrolled out of view and hides while pricing or the final call are on screen — so the button isn't duplicated next to prices. A caption with a green dot on the left, the price in a pill on the right.",
-            "docs": "One file, zero dependencies, “use client” for visibility. The root is position:fixed at the bottom with safe-area, pointer-events:none; the bar is pointer-events:auto, translateY(100 %)→0 over .55 s on data-show. showAfter is the threshold selector: an IntersectionObserver sets passed once the element is above the viewport; hideNear lists selectors whose intersection (rootMargin -20 % at the bottom) hides the button; hideAtBottom hides it near the page bottom. Without showAfter the button is visible at once. placement=static puts the button in the flow (for previews and docs). The caption shows from 40rem (container query). A hidden bar is aria-hidden with tabIndex=-1 on the link. Palette --vibeui-cta-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-117 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for visibility. The root is position:fixed at the bottom with safe-area, pointer-events:none; the bar is pointer-events:auto, translateY(100 %)→0 over .55 s on data-show. showAfter is the threshold selector: an IntersectionObserver sets passed once the element is above the viewport; hideNear lists selectors whose intersection (rootMargin -20 % at the bottom) hides the button; hideAtBottom hides it near the page bottom. Without showAfter the button is visible at once. placement=static puts the button in the flow (for previews and docs). The caption shows from 40rem (container query). A hidden bar is aria-hidden with tabIndex=-1 on the link. Palette --vibeui-cta-018-* with light-dark: white and cool grey, an indigo accent, a lime marker for highlights; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained floating button for a course, webinar or single-goal product landing: appears after the first screen, hides near pricing and the footer, the price in a pill.",
               "preserve": [
+                "the button-117 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "appearing after the first screen and hiding near pricing — the button stays out of the way where prices already are",
                 "the price pill inside the button",
                 "the bar inside a pointer-events:none root — it doesn't block clicks around it"
@@ -2939,9 +3047,6 @@
               },
               "accent": {
                 "label": "Accent"
-              },
-              "background": {
-                "label": "Background"
               }
             },
             "preview": {
@@ -2968,7 +3073,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "card-025"
+      ],
       "files": [
         {
           "path": "cta-019/cta-019.tsx",
@@ -2976,7 +3084,7 @@
           "target": "@components/vibeui/cta-019.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Баннер — flex-колонка min-height 18rem (14rem от 60rem) с isolation:isolate; фото position:absolute z-index:-1 с @keyframes drift 24 с (scale и сдвиг), затемнение градиентом через ::before. Плашка и вторичная капсула — backdrop-filter blur, главная — акцент с on-accent. Необязательный title крупно слева внизу с text-shadow. Палитра --vibeui-cta-019-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-016, card-025 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Баннер — flex-колонка min-height 18rem (14rem от 60rem) с isolation:isolate; фото position:absolute z-index:-1 с @keyframes drift 24 с (scale и сдвиг), затемнение градиентом через ::before. Плашка и вторичная капсула — backdrop-filter blur, главная — акцент с on-accent. Необязательный title крупно слева внизу с text-shadow. Палитра --vibeui-cta-019-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2988,7 +3096,8 @@
           "cta",
           "banner",
           "photo",
-          "buttons"
+          "buttons",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -3005,6 +3114,7 @@
           "usage": "<Cta019\n  eyebrow=\"Продолжение следует\"\n  image=\"/photos/banner.webp\"\n  label=\"22–24 августа\"\n  secondaryLabel=\"Программа\"\n  secondaryHref=\"#program\"\n  primaryLabel=\"Купить билет →\"\n  primaryHref=\"#tickets\"\n/>",
           "summary": "Самодостаточный баннер-призыв для фестиваля, медиа или продукта: фото на всю ширину, матовая плашка и две капсулы. Всё содержимое пропсами.",
           "preserve": [
+            "импорты button-016, card-025 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "фото на всю ширину со скруглением вместо цветной плашки",
             "две капсулы: стеклянную вторичную и акцентную главную, справа снизу",
             "медленный дрейф фото и подпись-линию над баннером"
@@ -3062,10 +3172,11 @@
           "en": {
             "title": "Photo banner with two action pills",
             "description": "A call-to-action banner: a full-width rounded photo, a frosted label with dates top left, two pills bottom right — a glass secondary “Programme” and an accent primary “Buy a ticket →”. The photo drifts slowly, pills lift on hover.",
-            "docs": "One file, zero dependencies, a server component. The banner is a flex column with min-height 18rem (14rem from 60rem) and isolation:isolate; the photo is position:absolute z-index:-1 with a 24 s drift @keyframes (scale and shift), darkened by a ::before gradient. The label and secondary pill use backdrop-filter blur, the primary is the accent with on-accent. An optional title large bottom left with a text-shadow. Palette --vibeui-cta-019-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-016, card-025 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The banner is a flex column with min-height 18rem (14rem from 60rem) and isolation:isolate; the photo is position:absolute z-index:-1 with a 24 s drift @keyframes (scale and shift), darkened by a ::before gradient. The label and secondary pill use backdrop-filter blur, the primary is the accent with on-accent. An optional title large bottom left with a text-shadow. Palette --vibeui-cta-019-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained call-to-action banner for a festival, media or product: a full-width photo, a frosted label and two pills. All content via props.",
               "preserve": [
+                "the button-016, card-025 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the full-width rounded photo instead of a colour plate",
                 "two pills: a glass secondary and an accent primary, bottom right",
                 "the slow photo drift and the rule label above the banner"
@@ -3122,7 +3233,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "cta-020/cta-020.tsx",
@@ -3130,7 +3243,7 @@
           "target": "@components/vibeui/cta-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Табличка — span с border 3px акцента, text-shadow и box-shadow в три слоя (снаружи и inset), @keyframes flicker с редкими провалами. Пятна — ::before/::after секции с blur(90px) и @keyframes drift. Телефон — <a href=tel> в mono с text-shadow. Мессенджеры — inline SVG по kind (telegram, whatsapp, phone), незнакомый — без иконки. От 60rem (container query) табличка слева, текст справа. Палитра --vibeui-cta-020-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Табличка — span с border 3px акцента, text-shadow и box-shadow в три слоя (снаружи и inset), @keyframes flicker с редкими провалами. Пятна — ::before/::after секции с blur(90px) и @keyframes drift. Телефон — <a href=tel> в mono с text-shadow. Мессенджеры — inline SVG по kind (telegram, whatsapp, phone), незнакомый — без иконки. От 60rem (container query) табличка слева, текст справа. Палитра --vibeui-cta-020-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3142,7 +3255,8 @@
           "cta",
           "sign",
           "contacts",
-          "messengers"
+          "messengers",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -3161,6 +3275,7 @@
           "usage": "<Cta020\n  sign=\"Open\"\n  title=\"Бесплатная консультация — сегодня\"\n  phone=\"+7 812 240-70-17\"\n  phoneHref=\"tel:+78122407017\"\n  channels={[{ kind: \"telegram\", label: \"Telegram\", href: \"https://t.me/studio\" }]}\n  hours=\"ежедневно 12:00–22:00 · Лиговский, 50\"\n/>",
           "summary": "Самодостаточный призыв для тату-студии, бара или салона: неоновая табличка, телефон, часы и мессенджеры. Всё содержимое пропсами.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "табличку OPEN с трубкой-рамкой и мерцанием — главный жест блока",
             "телефон крупно циановым с href=tel",
             "плывущие пятна фуксии и фиолета на фоне"
@@ -3218,10 +3333,11 @@
           "en": {
             "title": "Neon OPEN sign with a phone and messengers",
             "description": "A tattoo studio call to action: a neon “OPEN” sign with a tube frame and flicker, next to it a heading, the phone large in cyan, hours and address, messengers as glowing pills. Two drifting magenta and violet spots in the background.",
-            "docs": "One file, zero dependencies, a server component. The sign is a span with a 3px accent border, a three-layer text-shadow and box-shadow (outer and inset), a flicker @keyframes with rare dips. The spots are the section’s ::before/::after with blur(90px) and a drift @keyframes. The phone is an <a href=tel> in mono with a text-shadow. Messengers are inline SVGs by kind (telegram, whatsapp, phone); an unknown kind has no icon. From 60rem (container query) the sign on the left, text on the right. Palette --vibeui-cta-020-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The sign is a span with a 3px accent border, a three-layer text-shadow and box-shadow (outer and inset), a flicker @keyframes with rare dips. The spots are the section’s ::before/::after with blur(90px) and a drift @keyframes. The phone is an <a href=tel> in mono with a text-shadow. Messengers are inline SVGs by kind (telegram, whatsapp, phone); an unknown kind has no icon. From 60rem (container query) the sign on the left, text on the right. Palette --vibeui-cta-020-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained call to action for a tattoo studio, bar or salon: a neon sign, a phone, hours and messengers. All content via props.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the OPEN sign with a tube frame and flicker — the block’s main gesture",
                 "the phone large in cyan with href=tel",
                 "the drifting magenta and violet spots in the background"
@@ -3278,7 +3394,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-015"
+      ],
       "files": [
         {
           "path": "cta-021/cta-021.tsx",
@@ -3286,7 +3404,7 @@
           "target": "@components/vibeui/cta-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.8 с состояния «скопировано» с зелёной сменой кнопки и иконки). Карточка — полупрозрачный крем с backdrop-filter, светлой верхней кромкой и тенью, реквизиты serif'ом в блоке с dashed-рамкой, печать absolute на верхнем правом углу radial-gradient с монограммой, transform scale(.92) по data-copied; свечение — ::before секции radial-gradient акцента. От 56rem две колонки 1fr/1fr по центру. Палитра --vibeui-cta-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-015 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.8 с состояния «скопировано» с зелёной сменой кнопки и иконки). Карточка — полупрозрачный крем с backdrop-filter, светлой верхней кромкой и тенью, реквизиты serif'ом в блоке с dashed-рамкой, печать absolute на верхнем правом углу radial-gradient с монограммой, transform scale(.92) по data-copied; свечение — ::before секции radial-gradient акцента. От 56rem две колонки 1fr/1fr по центру. Палитра --vibeui-cta-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3299,7 +3417,8 @@
           "glass",
           "cta",
           "serif",
-          "cream"
+          "cream",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3316,6 +3435,7 @@
           "usage": "<Cta021\n  title=\"Лучший подарок — вы\"\n  lede=\"Если очень хочется — мы собираем на медовый месяц в Португалии.\"\n  fundTitle=\"Вклад в путешествие\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"Телефон для СБП · Артём З.\"\n  seal=\"В&А\"\n/>",
           "summary": "Самодостаточный блок подарков для свадебного сайта: вклад в путешествие с копированием реквизитов по клику, стеклянная карточка и восковая печать. Тексты и реквизиты пропсами.",
           "preserve": [
+            "импорты button-015 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "стеклянную карточку вклада с реквизитами в пунктирной рамке и печатью на углу",
             "кнопку «скопировать», зеленеющую на 1.8 с с галочкой",
             "мягкое акцентное свечение за карточкой"
@@ -3373,10 +3493,11 @@
           "en": {
             "title": "Gifts: a honeymoon fund with a seal",
             "description": "Gifts without awkwardness: on the left “the best gift is you” and an honest paragraph about the honeymoon, on the right a glass travel-fund card with the details in a dashed frame and a “copy” button, a wax seal with the monogram on the corner that presses down when copying. A soft accent glow behind the card.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 1.8 s “copied” state with the button and icon turning green). The card is translucent cream with backdrop-filter, a light top edge and a shadow, the details in serif inside a dashed-border box, the seal absolute on the top-right corner as a radial-gradient with the monogram, transform scale(.92) on data-copied; the glow is the section's ::before accent radial-gradient. From 56rem two centred 1fr/1fr columns. Palette --vibeui-cta-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-015 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for copying (navigator.clipboard, a 1.8 s “copied” state with the button and icon turning green). The card is translucent cream with backdrop-filter, a light top edge and a shadow, the details in serif inside a dashed-border box, the seal absolute on the top-right corner as a radial-gradient with the monogram, transform scale(.92) on data-copied; the glow is the section's ::before accent radial-gradient. From 56rem two centred 1fr/1fr columns. Palette --vibeui-cta-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained gifts block for a wedding site: a honeymoon fund with one-click copying of the details, a glass card and a wax seal. Copy and details via props.",
               "preserve": [
+                "the button-015 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the glass fund card with the details in a dashed frame and the seal on the corner",
                 "the “copy” button turning green for 1.8 s with a tick",
                 "the soft accent glow behind the card"
@@ -3438,7 +3559,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-015"
+      ],
       "files": [
         {
           "path": "cta-022/cta-022.tsx",
@@ -3446,7 +3569,7 @@
           "target": "@components/vibeui/cta-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.2 с состояния «скопировано» и штамп по data-copied). Билет — карточка с морской полосой слева ::before и перфорацией ::after между кодами и телом; коды крупным Oswald с самолётиком; реквизиты в dashed-рамке; штамп «PAID» — рамка с keyframes уменьшения и mix-blend-mode:multiply. Свечение — ::before секции. От 56rem две колонки по центру. Палитра --vibeui-cta-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-015 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.2 с состояния «скопировано» и штамп по data-copied). Билет — карточка с морской полосой слева ::before и перфорацией ::after между кодами и телом; коды крупным Oswald с самолётиком; реквизиты в dashed-рамке; штамп «PAID» — рамка с keyframes уменьшения и mix-blend-mode:multiply. Свечение — ::before секции. От 56rem две колонки по центру. Палитра --vibeui-cta-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3459,7 +3582,8 @@
           "stamp",
           "cta",
           "cuba",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3476,6 +3600,7 @@
           "usage": "<Cta022\n  title=\"Лучший подарок — вы на Кубе\"\n  fundTitle=\"На следующий рейс\"\n  from=\"HAV\"\n  to=\"???\"\n  toCity=\"решим вместе\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"СБП · Тимур К.\"\n  joke=\"Или привезите бутылку рома.\"\n/>",
           "summary": "Самодостаточный блок подарков для свадьбы-путешествия: карточка-билет «на следующий рейс» с копированием реквизитов и штампом «PAID», шутка про ром. Тексты и реквизиты пропсами.",
           "preserve": [
+            "импорты button-015 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "карточку-билет с кодами «HAV → ???» и перфорацией",
             "штамп «PAID», который печатается при копировании",
             "рукописную шутливую строку под текстом"
@@ -3533,10 +3658,11 @@
           "en": {
             "title": "Gifts: a “next flight” ticket with a stamp",
             "description": "Gifts for a destination wedding: on the left “the best gift — you in Cuba” and a rum joke, on the right a “HAV → ???” ticket card with the details and a “copy” button — a click prints a “PAID” stamp. A sun glow behind the card.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.2 s “copied” state and the stamp on data-copied). The ticket is a card with a sea stripe ::before on the left and a ::after perforation between codes and body; codes in big Oswald with a plane; details in a dashed frame; the “PAID” stamp is a frame with a shrinking keyframe and mix-blend-mode:multiply. The glow is the section's ::before. From 56rem two centred columns. Palette --vibeui-cta-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-015 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for copying (navigator.clipboard, a 2.2 s “copied” state and the stamp on data-copied). The ticket is a card with a sea stripe ::before on the left and a ::after perforation between codes and body; codes in big Oswald with a plane; details in a dashed frame; the “PAID” stamp is a frame with a shrinking keyframe and mix-blend-mode:multiply. The glow is the section's ::before. From 56rem two centred columns. Palette --vibeui-cta-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained gifts block for a destination wedding: a “next flight” ticket card with copyable details and a “PAID” stamp, a rum joke. Copy and details via props.",
               "preserve": [
+                "the button-015 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the ticket card with “HAV → ???” codes and perforation",
                 "the “PAID” stamp printed on copy",
                 "the handwritten joke line under the text"
@@ -3599,7 +3725,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-015"
+      ],
       "files": [
         {
           "path": "cta-023/cta-023.tsx",
@@ -3607,7 +3735,7 @@
           "target": "@components/vibeui/cta-023.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.4 с состояния и штамп по data-copied). Камин — карточка: [data-part=mantel] полка с толстой нижней кромкой, реквизиты в dashed-рамке лайнинг-цифрами, кнопка со свечением; [data-part=fire] — тёмный портал с кирпичной кладкой repeating-linear-gradient, поленья из двух градиентов, четыре язычка на keyframes разной длительности, тёплое пятно ::after усиливается при копировании. Штамп — рукописный, keyframes уменьшения. От 56rem две колонки. Палитра --vibeui-cta-023-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-015 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 2.4 с состояния и штамп по data-copied). Камин — карточка: [data-part=mantel] полка с толстой нижней кромкой, реквизиты в dashed-рамке лайнинг-цифрами, кнопка со свечением; [data-part=fire] — тёмный портал с кирпичной кладкой repeating-linear-gradient, поленья из двух градиентов, четыре язычка на keyframes разной длительности, тёплое пятно ::after усиливается при копировании. Штамп — рукописный, keyframes уменьшения. От 56rem две колонки. Палитра --vibeui-cta-023-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -3619,7 +3747,8 @@
           "copy",
           "stamp",
           "cta",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3636,6 +3765,7 @@
           "usage": "<Cta023\n  title=\"Лучший подарок — вы у камина\"\n  fundTitle=\"На камин\"\n  fundText=\"Перевод по номеру телефона.\"\n  requisite=\"+7 900 000-00-00\"\n  requisiteLabel=\"СБП · Дмитрий В.\"\n  joke=\"Цветы в декабре замёрзнут по дороге.\"\n/>",
           "summary": "Самодостаточный блок подарков зимней свадьбы: карточка-камин с живым огнём, реквизиты на полке, копирование ставит штамп «Спасибо!». Тексты и реквизиты пропсами.",
           "preserve": [
+            "импорты button-015 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "карточку-камин с полкой и живым огнём из язычков на keyframes",
             "вспышку огня и рукописный штамп при копировании",
             "рукописную шутливую строку под текстом"
@@ -3693,10 +3823,11 @@
           "en": {
             "title": "“For the fireplace” gifts: a hearth card with a live fire",
             "description": "Winter-wedding gifts: on the left “the best gift — you by the fire” and a handwritten flowers joke, on the right a hearth card — a mantel with the details and a “copy” button, below it a brick portal with a live fire of four flames. A click makes the fire flare and prints a handwritten “Thank you!” stamp on the card.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, a 2.4 s state and the stamp on data-copied). The hearth is a card: a [data-part=mantel] shelf with a thick bottom edge, details in a dashed frame with lining numerals, a glowing button; [data-part=fire] is a dark portal with a repeating-linear-gradient brick pattern, logs from two gradients, four flames on keyframes of different durations, a warm ::after pool that intensifies on copy. The stamp is handwritten with a shrinking keyframe. Two columns from 56rem. Palette --vibeui-cta-023-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-015 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for copying (navigator.clipboard, a 2.4 s state and the stamp on data-copied). The hearth is a card: a [data-part=mantel] shelf with a thick bottom edge, details in a dashed frame with lining numerals, a glowing button; [data-part=fire] is a dark portal with a repeating-linear-gradient brick pattern, logs from two gradients, four flames on keyframes of different durations, a warm ::after pool that intensifies on copy. The stamp is handwritten with a shrinking keyframe. Two columns from 56rem. Palette --vibeui-cta-023-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained winter-wedding gifts block: a hearth card with a live fire, details on the mantel, copying prints a “Thank you!” stamp. Copy and details via props.",
               "preserve": [
+                "the button-015 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the hearth card with the mantel and the live fire of keyframe flames",
                 "the fire flare and the handwritten stamp on copy",
                 "the handwritten joke line under the text"
@@ -3759,7 +3890,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "button-015"
+      ],
       "files": [
         {
           "path": "cta-024/cta-024.tsx",
@@ -3777,7 +3911,8 @@
           "sponsors",
           "call to action",
           "developer",
-          "hover"
+          "hover",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3788,6 +3923,7 @@
           "usage": "<Cta024\n  title=\"Одна звезда — плюс один мейнтейнер\"\n  primaryLabel=\"Star on GitHub\"\n  primaryHref=\"https://github.com/…\"\n  command=\"npm i tabl\"\n  sponsors={[{ name: \"Vercel\" }, { name: \"Selectel\" }]}\n/>",
           "summary": "Финальный призыв для open-source проекта: звезда, кнопки и спонсоры — всё на CSS, без состояния.",
           "preserve": [
+            "импорты button-016, button-015 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "заливка звезды — второй path с clip-path inset(100% 0 0 0) → inset(0) по :hover карточки",
             "покачивание — keyframes wiggle на обёртке звезды при hover",
             "спонсоры — текстовые ссылки с нижней линией, «стать спонсором» — акцентом"
@@ -3853,6 +3989,7 @@
             "ai": {
               "summary": "A closing call to action for an open-source project: a star, buttons and sponsors — all CSS, no state.",
               "preserve": [
+                "the button-016, button-015 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the star fill is a second path with clip-path inset(100% 0 0 0) → inset(0) on card :hover",
                 "the wiggle is keyframes on the star wrapper on hover",
                 "sponsors are text links with an underline, “become a sponsor” in the accent"
@@ -3894,10 +4031,12 @@
                 "sponsorsLabel": "Sponsors",
                 "sponsorLabel": "become a sponsor"
               }
-            }
+            },
+            "docs": "A composite block: imports button-016, button-015 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-016, button-015 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-025",
@@ -3908,7 +4047,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-118"
+      ],
       "files": [
         {
           "path": "cta-025/cta-025.tsx",
@@ -3926,7 +4067,8 @@
           "app store",
           "google play",
           "mobile",
-          "call to action"
+          "call to action",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -3939,6 +4081,7 @@
           "usage": "<Cta025 title=\"Сегодня вечером — первая практика\" image=\"/photos/night.webp\" seed=\"tishe.app\" appStoreHref=\"https://apps.apple.com/…\" playHref=\"https://play.google.com/…\" />",
           "summary": "Финальный призыв скачать приложение с двумя бейджами и QR-кодом, который не нужно генерировать для витрины.",
           "preserve": [
+            "импорты button-118 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "сетка QR — 441 ячейка из хеша FNV-1a строки seed; угловые маркеры рисуются честно",
             "карточка — тёмная с фото opacity .35 и градиентной тенью слева",
             "бейджи — текстовые, две строки «Скачать в» / «App Store»"
@@ -4004,6 +4147,7 @@
             "ai": {
               "summary": "A closing download call to action with two badges and a QR code you don't need to generate for a showcase.",
               "preserve": [
+                "the button-118 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the QR grid is 441 cells from an FNV-1a hash of the seed string; finder patterns are drawn properly",
                 "the card is dark with a photo at opacity .35 and a gradient shade from the left",
                 "badges are text, two lines “Download on” / “App Store”"
@@ -4044,10 +4188,12 @@
                 "text": "Install in a minute, turn on breathing before bed. Tell us in the morning how you slept.",
                 "qrNote": "point your camera — the store opens"
               }
-            }
+            },
+            "docs": "A composite block: imports button-118 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-118 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-026",
@@ -4058,7 +4204,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-003"
+      ],
       "files": [
         {
           "path": "cta-026/cta-026.tsx",
@@ -4077,7 +4226,8 @@
           "aurora",
           "saas",
           "ai",
-          "free-trial"
+          "free-trial",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4088,6 +4238,7 @@
           "usage": "<Cta026\n  title=\"Следующий созвон уже можно не конспектировать\"\n  actionLabel=\"Начать бесплатно\"\n  fine={[\"Без карты\", \"5 встреч бесплатно\"]}\n/>",
           "summary": "Призыв для AI-сервиса: одно поле почты на стекле поверх аврор, после отправки — прорисованная галочка.",
           "preserve": [
+            "импорты input-001, button-003 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "пятна — три i с blur(60px) и keyframes float в alternate, разные задержки; isolation:isolate на рамке",
             "submit делает preventDefault и переключает done; карточка с aria-live сообщает смену состояния",
             "галочка — svg circle и path с stroke-dasharray, прорисовка keyframes draw последовательно"
@@ -4160,6 +4311,7 @@
             "ai": {
               "summary": "A call to action for an AI service: one email field on glass over auroras, a drawn tick after submit.",
               "preserve": [
+                "the input-001, button-003 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the blobs are three i with blur(60px) and alternate float keyframes, different delays; isolation:isolate on the frame",
                 "submit calls preventDefault and flips done; the card has aria-live to announce the state change",
                 "the tick is an svg circle and path with stroke-dasharray, drawn by draw keyframes in sequence"
@@ -4212,10 +4364,12 @@
                 "doneTitle": "Email sent",
                 "doneText": "The workspace link arrives in a minute. Check spam, just in case."
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-003 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-003 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-030",
@@ -4226,7 +4380,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "cta-030/cta-030.tsx",
@@ -4248,7 +4405,8 @@
           "construction",
           "custom event",
           "estimate",
-          "hazard"
+          "hazard",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4259,6 +4417,7 @@
           "usage": "<Cta030\n  title=\"Замер бесплатный, смета — в тот же день\"\n  actionLabel=\"Записаться на замер\"\n  channels={[{ id: \"call\", label: \"Позвоните мне\", promise: \"Перезвоним за 15 минут\" }, { id: \"telegram\", label: \"Telegram\", promise: \"Напишем в Telegram\" }]}\n  eventName=\"vibeui-renovation:estimate\"\n/>",
           "summary": "Финальная заявка для сайта подрядчика: телефон и способ связи, смета из калькулятора прикрепляется сама, успех с прорисованной галочкой.",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "useEffect подписывается на window[eventName] и кладёт event.detail в estimate; чип рендерится из number, area, type, price, weeks, currency",
             "полосы ограждения — ::before/::after плиты с repeating-linear-gradient −45° цветом on-accent, ширина .9rem",
             "успех — rect и path с pathLength=1, stroke-dashoffset 1→0 keyframes, номер заявки считается из последних цифр телефона"
@@ -4331,6 +4490,7 @@
             "ai": {
               "summary": "A final request for a contractor site: phone and contact channel, the calculator's estimate attaches itself, success with a drawn check mark.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "useEffect subscribes to window[eventName] and stores event.detail in estimate; the chip renders from number, area, type, price, weeks, currency",
                 "hazard stripes are the plate's ::before/::after with a −45° repeating-linear-gradient in on-accent, .9rem wide",
                 "success is a rect and a path with pathLength=1 and stroke-dashoffset 1→0 keyframes, the request number derives from the phone's last digits"
@@ -4396,10 +4556,12 @@
                 "doneTitle": "Request received",
                 "fine": "No newsletters: one call or one message, to the point."
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-032",
@@ -4410,7 +4572,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "cta-032/cta-032.tsx",
@@ -4430,7 +4595,8 @@
           "lead",
           "floating-label",
           "notebook",
-          "success"
+          "success",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4441,6 +4607,7 @@
           "usage": "<Cta032\n  title=\"Приходите поговорить. Просто поговорить\"\n  languages={[\"Английский\", \"Испанский\", \"Итальянский\"]}\n  actionLabel=\"Записаться на пробный\"\n  doneTitle=\"записали!\"\n/>",
           "summary": "Форма записи для школы или курсов: тетрадный лист, плавающие ярлыки, чипы языка, анимированное «записали».",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "плавающий ярлык — label после input, поднимается по input:focus и input:not(:placeholder-shown); placeholder прозрачный",
             "акцентная линия поля — ::after с scaleX 0→1 по :focus-within; кружок и галочка успеха — stroke-dasharray/dashoffset с задержкой 0.5 с",
             "id полей из useId, submit только preventDefault + setDone — обработчик подключается в проекте"
@@ -4513,6 +4680,7 @@
             "ai": {
               "summary": "A sign-up form for a school or courses: a ruled sheet, floating labels, language chips, an animated “booked”.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the floating label is a label after the input, raised on input:focus and input:not(:placeholder-shown); the placeholder is transparent",
                 "the field's accent line is an ::after with scaleX 0→1 on :focus-within; the success circle and tick use stroke-dasharray/dashoffset with a 0.5 s delay",
                 "field ids come from useId, submit is only preventDefault + setDone — the handler is wired in the project"
@@ -4572,10 +4740,12 @@
                 "doneTitle": "booked!",
                 "doneText": "We'll write within an hour and offer two or three time slots. Check Telegram."
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-034",
@@ -4586,7 +4756,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "cta-034/cta-034.tsx",
@@ -4606,7 +4779,8 @@
           "marketplace",
           "form",
           "outline",
-          "marquee"
+          "marquee",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4617,6 +4791,7 @@
           "usage": "<Cta034\n  title=\"Новые товары — по четвергам в полдень\"\n  dropDay={4}\n  dropHour={12}\n  word=\"ДРОП\"\n  actionLabel=\"Получать дропы\"\n/>",
           "summary": "Подписка на дропы: таймер до четверга 12:00, одно поле — одна кнопка, контурное слово бежит фоном.",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "таймер — useSyncExternalStore с интервалом 1 с и серверным снимком null: на сервере «--», на клиенте цифры без расхождений гидрации",
             "nextDrop считает ближайший dropDay (1 — понедельник) в dropHour по местному времени; если сегодня и час прошёл — через неделю",
             "контурное слово — -webkit-text-stroke, два span по 40 с translateX(-100%); галочка — stroke-dashoffset, при reduce-motion сразу нарисована"
@@ -4697,6 +4872,7 @@
             "ai": {
               "summary": "Drop subscription: a countdown to Thursday 12:00, one field — one button, an outlined word runs in the background.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the timer is useSyncExternalStore with a 1s interval and a null server snapshot: “--” on the server, digits on the client without hydration mismatches",
                 "nextDrop finds the nearest dropDay (1 is Monday) at dropHour local time; if today and the hour has passed — a week later",
                 "the outlined word is -webkit-text-stroke, two spans over 40s with translateX(-100%); the check is stroke-dashoffset, drawn at once under reduce-motion"
@@ -4753,10 +4929,12 @@
                 "doneTitle": "You're on the list",
                 "doneText": "The first email arrives on Thursday at 12:00 sharp."
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-035",
@@ -4767,7 +4945,12 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "button-015",
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "cta-035/cta-035.tsx",
@@ -4787,7 +4970,8 @@
           "typing",
           "developer",
           "dark",
-          "monospace"
+          "monospace",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4798,6 +4982,7 @@
           "usage": "<Cta035\n  title=\"Ключ за 30 секунд\"\n  keyPrefix=\"gk_live_\"\n  actionLabel=\"Получить ключ\"\n  fine={[\"Без карты\", \"10 000 запросов бесплатно\"]}\n/>",
           "summary": "Призыв для API: одно поле почты — и ключ печатается прямо на странице.",
           "preserve": [
+            "импорты button-077, button-015, input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ключ — 24 символа из abcdef0123456789, генерируется в обработчике submit (Math.random только там)",
             "печать — счётчик typed в setTimeout по 45 мс; elapsed считается в эффекте после готовности из Date.now",
             "галочка — circle и path с stroke-dasharray и keyframes draw, кнопка «скопировать» проявляется по data-ready"
@@ -4869,6 +5054,7 @@
             "ai": {
               "summary": "Call to action for an API: one email field — and the key types right on the page.",
               "preserve": [
+                "the button-077, button-015, input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the key is 24 characters from abcdef0123456789, generated in the submit handler (Math.random only there)",
                 "typing is a typed counter in a 45 ms setTimeout; elapsed is computed in an effect after ready from Date.now",
                 "the check is a circle and path with stroke-dasharray and draw keyframes, the copy button fades in via data-ready"
@@ -4921,10 +5107,12 @@
                 "doneText": "We also sent it by email. You can make the first request right now — the quota resets on the 1st.",
                 "docsLabel": "First request in docs"
               }
-            }
+            },
+            "docs": "A composite block: imports button-077, button-015, input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-077, button-015, input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "cta-037",
@@ -4935,7 +5123,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-025",
+        "button-001"
+      ],
       "files": [
         {
           "path": "cta-037/cta-037.tsx",
@@ -4955,7 +5146,8 @@
           "chips",
           "nonprofit",
           "handwritten",
-          "paper"
+          "paper",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4966,6 +5158,7 @@
           "usage": "<Cta037\n  title=\"Одна среда в месяц — это вы\"\n  amounts={[300, 500, 1000, 2000, 5000]}\n  defaultAmount={1000}\n  monthlyNote=\"за год — {year}. Это 12 визитов\"\n  image=\"/photos/hands.webp\"\n/>",
           "summary": "Бланк пожертвования: сумма чипами или своя, «ежемесячно» показывает ×12 за год, сердце рисуется после отправки.",
           "preserve": [
+            "импорты card-025, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "переключатель — data-monthly двигает ::before на translateX(100%), кнопки с aria-pressed",
             "годовая сумма — requestAnimationFrame 900 мс от value к value×12 при каждом изменении; при reduce-motion сразу",
             "window.addEventListener(\"vibeui-charity:amount\") подставляет detail.amount и сбрасывает своё поле; submit только при value > 0"
@@ -5039,6 +5232,7 @@
             "ai": {
               "summary": "A donation form: amount by chips or custom, “monthly” shows ×12 per year, a heart draws after submit.",
               "preserve": [
+                "the card-025, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the switch moves its ::before with translateX(100%) via data-monthly, buttons carry aria-pressed",
                 "the yearly total is a 900 ms requestAnimationFrame from value to value×12 on every change; at once under reduce-motion",
                 "window.addEventListener(\"vibeui-charity:amount\") fills detail.amount and clears the custom field; submit only when value > 0"
@@ -5103,10 +5297,12 @@
                 "doneText": "The receipt will arrive by email, and in a month — a letter about where the money went.",
                 "caption": "Viktor and Igor, delivery run in Torzhok"
               }
-            }
+            },
+            "docs": "A composite block: imports card-025, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-025, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "download-001",
@@ -5117,7 +5313,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-119"
+      ],
       "files": [
         {
           "path": "download-001/download-001.tsx",
@@ -5125,14 +5323,15 @@
           "target": "@components/vibeui/download-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-001-*. Серверный компонент. Бейджи собраны своей вёрсткой (мелкая приписка сверху, название магазина крупно) без логотипов Apple или Google — только нейтральные тёмные плашки-ссылки, приподнимающиеся на наведении.",
+      "docs": "Составной блок: импортирует button-119 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-001-*. Серверный компонент. Бейджи собраны своей вёрсткой (мелкая приписка сверху, название магазина крупно) без логотипов Apple или Google — только нейтральные тёмные плашки-ссылки, приподнимающиеся на наведении.",
       "meta": {
         "tags": [
           "downloads",
           "app",
           "store",
           "mobile",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5142,6 +5341,7 @@
           "usage": "<Download001\n  title=\"Скачайте приложение\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
           "summary": "Секция загрузки приложения с бейджами магазинов: приписка сверху и название магазина крупно, нейтральные тёмные плашки без брендовых логотипов. Формат «скачайте приложение» для мобильного лендинга. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-119 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-001-* и не подменять её токенами вашей темы",
             "бейджи без логотипов Apple и Google — своя нейтральная вёрстка вместо брендовых ассетов",
             "структуру бейджа: мелкая приписка сверху, название магазина крупно",
@@ -5200,6 +5400,7 @@
             "ai": {
               "summary": "An app download section with store badges: a kicker on top and the store name large, neutral dark plates without brand logos. A download-the-app format for a mobile landing. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-119 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-001-* palette — do not swap it for your theme tokens",
                 "badges without Apple and Google logos — a neutral custom layout instead of brand assets",
                 "the badge structure: a small kicker on top, the store name large",
@@ -5236,7 +5437,7 @@
               }
             },
             "title": "Store Badges",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-001-* variables. A server component. Badges use a custom layout (small kicker on top, store name large) without Apple or Google logos — just neutral dark link plates that lift on hover."
+            "docs": "A composite block: imports button-119 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-001-* variables. A server component. Badges use a custom layout (small kicker on top, store name large) without Apple or Google logos — just neutral dark link plates that lift on hover."
           }
         }
       }
@@ -5250,7 +5451,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-120"
+      ],
       "files": [
         {
           "path": "download-002/download-002.tsx",
@@ -5258,14 +5461,15 @@
           "target": "@components/vibeui/download-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-002-*. Серверный компонент. QR — декоративный узор из двух repeating-linear-gradient с background-blend-mode:multiply на белом поле, а не считываемый код: у него role=\"img\" с aria-label, настоящий QR подставит приложение.",
+      "docs": "Составной блок: импортирует button-120 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-002-*. Серверный компонент. QR — декоративный узор из двух repeating-linear-gradient с background-blend-mode:multiply на белом поле, а не считываемый код: у него role=\"img\" с aria-label, настоящий QR подставит приложение.",
       "meta": {
         "tags": [
           "downloads",
           "qr",
           "app",
           "store",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5275,6 +5479,7 @@
           "usage": "<Download002\n  title=\"Наведите камеру\"\n  stores={[{ kicker: \"Загрузите в\", name: \"App Store\", href: \"#\" }]}\n/>",
           "summary": "Секция загрузки с QR-заглушкой: текст и бейджи магазинов слева, декоративный QR-узор на CSS-градиентах справа. Формат «наведите камеру» для десктопного лендинга. QR декоративный, настоящий подставит приложение. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-120 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-002-* и не подменять её токенами вашей темы",
             "QR как декоративный узор с role=\"img\" и aria-label — это заглушка, а не считываемый код",
             "перелом в две колонки по container query: на узком экране всё в столбец",
@@ -5333,6 +5538,7 @@
             "ai": {
               "summary": "A download section with a QR placeholder: text and store badges on the left, a decorative CSS-gradient QR pattern on the right. A point-your-camera format for a desktop landing. The QR is decorative; a real one is wired by the app. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-120 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-002-* palette — do not swap it for your theme tokens",
                 "the QR as a decorative pattern with role=\"img\" and aria-label — it's a placeholder, not a readable code",
                 "the two-column break via container query: everything stacks when narrow",
@@ -5369,7 +5575,7 @@
               }
             },
             "title": "QR & Badges",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-002-* variables. A server component. The QR is a decorative pattern of two repeating-linear-gradients with background-blend-mode:multiply on a white field, not a readable code: it has role=\"img\" with an aria-label, and a real QR is wired by the app."
+            "docs": "A composite block: imports button-120 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-002-* variables. A server component. The QR is a decorative pattern of two repeating-linear-gradients with background-blend-mode:multiply on a white field, not a readable code: it has role=\"img\" with an aria-label, and a real QR is wired by the app."
           }
         }
       }
@@ -5383,7 +5589,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "download-003/download-003.tsx",
@@ -5391,14 +5600,15 @@
           "target": "@components/vibeui/download-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-003-*. Серверный компонент. Карточки платформ с глифом из первой буквы (без брендовых логотипов), типом файла и весом. Платформа с флагом primary выделена брендовой рамкой и заливкой кнопки. Число колонок считает container query.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-003-*. Серверный компонент. Карточки платформ с глифом из первой буквы (без брендовых логотипов), типом файла и весом. Платформа с флагом primary выделена брендовой рамкой и заливкой кнопки. Число колонок считает container query.",
       "meta": {
         "tags": [
           "downloads",
           "desktop",
           "platforms",
           "app",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5408,6 +5618,7 @@
           "usage": "<Download003\n  platforms={[{ name: \"macOS\", detail: \".dmg · 48 МБ\", href: \"#\", primary: true }]}\n/>",
           "summary": "Загрузка десктопного приложения по платформам: карточки macOS, Windows, Linux с типом файла и весом. Платформа под систему пользователя выделена брендовой рамкой через флаг primary. Иконки — CSS-глифы без брендовых логотипов. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-003-* и не подменять её токенами вашей темы",
             "выделение своей платформы через data-primary — рамка и заливка кнопки",
             "глиф из первой буквы вместо брендового логотипа платформы",
@@ -5466,6 +5677,7 @@
             "ai": {
               "summary": "A desktop app download by platform: macOS, Windows, Linux cards with file type and size. The platform for the user's system is highlighted with a brand border via the primary flag. Icons are CSS glyphs, no brand logos. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-003-* palette — do not swap it for your theme tokens",
                 "highlighting the user's platform via data-primary — border and button fill",
                 "the first-letter glyph instead of a platform brand logo",
@@ -5502,7 +5714,7 @@
               }
             },
             "title": "Platform Builds",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-003-* variables. A server component. Platform cards with a first-letter glyph (no brand logos), file type and size. The platform with the primary flag is highlighted with a brand border and button fill. Column count is driven by a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-003-* variables. A server component. Platform cards with a first-letter glyph (no brand logos), file type and size. The platform with the primary flag is highlighted with a brand border and button fill. Column count is driven by a container query."
           }
         }
       }
@@ -5516,7 +5728,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-121"
+      ],
       "files": [
         {
           "path": "download-004/download-004.tsx",
@@ -5524,7 +5738,7 @@
           "target": "@components/vibeui/download-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-004-*. Серверный компонент. Рамка телефона нарисована рамкой, радиусами и тенью, без картинки устройства: оно декорация, и тащить ради него изображение незачем. Скриншот необязателен — без него внутри рамки живёт градиентная заглушка, а сама рамка помечается aria-hidden, чтобы скринридер не читал пустое устройство.",
+      "docs": "Составной блок: импортирует button-121 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-004-*. Серверный компонент. Рамка телефона нарисована рамкой, радиусами и тенью, без картинки устройства: оно декорация, и тащить ради него изображение незачем. Скриншот необязателен — без него внутри рамки живёт градиентная заглушка, а сама рамка помечается aria-hidden, чтобы скринридер не читал пустое устройство.",
       "meta": {
         "tags": [
           "downloads",
@@ -5532,7 +5746,8 @@
           "mobile",
           "stores",
           "device",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -5545,6 +5760,7 @@
           "usage": "<Download004\n  screenshot=\"/app.png\"\n  facts={[{ value: \"4,8\", label: \"оценка\" }]}\n/>",
           "summary": "Секция загрузки приложения: слева рамка телефона со скриншотом, справа заголовок, факты (оценка, установки, размер) и бейджи магазинов. Рамка устройства нарисована на CSS, скриншот необязателен. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-121 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-004-* и не подменять её токенами вашей темы",
             "рамку устройства на CSS: блок не тянет картинку телефона и не зависит от неё",
             "заглушку экрана и aria-hidden на пустой рамке — скринридеру нечего читать в декорации",
@@ -5609,10 +5825,11 @@
           "en": {
             "title": "App screen and stores",
             "description": "A download section with a phone frame: the app screenshot on the left, facts and store badges on the right. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-004-* variables. A server component. The phone frame is drawn with a border, radii and a shadow rather than a device image: the device is decoration and does not deserve an asset. The screenshot is optional — without it a gradient placeholder lives inside the frame and the frame is marked aria-hidden so a screen reader does not announce an empty device.",
+            "docs": "A composite block: imports button-121 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-004-* variables. A server component. The phone frame is drawn with a border, radii and a shadow rather than a device image: the device is decoration and does not deserve an asset. The screenshot is optional — without it a gradient placeholder lives inside the frame and the frame is marked aria-hidden so a screen reader does not announce an empty device.",
             "ai": {
               "summary": "An app download section: a phone frame with a screenshot on the left, the heading, facts (rating, installs, size) and store badges on the right. The device frame is pure CSS and the screenshot is optional. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-121 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-004-* palette — do not swap it for your theme tokens",
                 "the CSS device frame: the block pulls no phone image and does not depend on one",
                 "the screen placeholder and aria-hidden on an empty frame — there is nothing to announce in decoration",
@@ -5671,7 +5888,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "button-077"
+      ],
       "files": [
         {
           "path": "download-005/download-005.tsx",
@@ -5679,14 +5899,15 @@
           "target": "@components/vibeui/download-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-005-*. Серверный компонент. Это одна карточка, а не секция во весь экран: её ставят между разделами страницы продукта, и высокий блок разорвал бы ритм. Номер версии набран моноширинным и подсвечен акцентом, изменения идут списком с маркерами на псевдоэлементах.",
+      "docs": "Составной блок: импортирует button-016, button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-005-*. Серверный компонент. Это одна карточка, а не секция во весь экран: её ставят между разделами страницы продукта, и высокий блок разорвал бы ритм. Номер версии набран моноширинным и подсвечен акцентом, изменения идут списком с маркерами на псевдоэлементах.",
       "meta": {
         "tags": [
           "downloads",
           "release",
           "version",
           "changelog",
-          "update"
+          "update",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5696,6 +5917,7 @@
           "usage": "<Download005\n  version=\"2.4.0\"\n  date=\"12 марта\"\n  changes={[\"Офлайн-режим\", \"Быстрый поиск\"]}\n/>",
           "summary": "Компактная полоса релиза: номер версии, дата, три-четыре пункта «что нового» и кнопка загрузки с приметкой о платформе и размере. Формат для страницы продукта, где секция загрузки уже была выше. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-005-* и не подменять её токенами вашей темы",
             "компактность: это карточка между разделами, а не секция во весь экран",
             "моноширинный номер версии — он читается как версия, а не как заголовок",
@@ -5767,10 +5989,11 @@
           "en": {
             "title": "Release strip",
             "description": "A compact update card: version, date, what's new and the download button. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-005-* variables. A server component. It is a single card rather than a full-height section: it goes between the sections of a product page, and a tall block would break the rhythm. The version number is monospaced and tinted with the accent, and the changes are a list with pseudo-element bullets.",
+            "docs": "A composite block: imports button-016, button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-005-* variables. A server component. It is a single card rather than a full-height section: it goes between the sections of a product page, and a tall block would break the rhythm. The version number is monospaced and tinted with the accent, and the changes are a list with pseudo-element bullets.",
             "ai": {
               "summary": "A compact release strip: version number, date, three or four what's-new points and a download button with a note about the platform and size. A format for a product page where the download section already appeared above. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-005-* palette — do not swap it for your theme tokens",
                 "the compactness: this is a card between sections, not a full-height section",
                 "the monospaced version number — it reads as a version, not a heading",
@@ -5828,7 +6051,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-122"
+      ],
       "files": [
         {
           "path": "download-006/download-006.tsx",
@@ -5836,14 +6061,15 @@
           "target": "@components/vibeui/download-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-download-006-*. Серверный компонент. Платформа приходит пропом, а не определяется по navigator: блок остаётся серверным и не мигает подменой подписи после гидратации. Проекту, которому нужен автовыбор, достаточно подставить значение самому. Контрольная сумма набрана моноширинным и переносится по любому символу, поэтому не растягивает секцию на узком экране.",
+      "docs": "Составной блок: импортирует button-122 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-download-006-*. Серверный компонент. Платформа приходит пропом, а не определяется по navigator: блок остаётся серверным и не мигает подменой подписи после гидратации. Проекту, которому нужен автовыбор, достаточно подставить значение самому. Контрольная сумма набрана моноширинным и переносится по любому символу, поэтому не растягивает секцию на узком экране.",
       "meta": {
         "tags": [
           "downloads",
           "desktop",
           "platform",
           "install",
-          "checksum"
+          "checksum",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5853,6 +6079,7 @@
           "usage": "<Download006\n  platform=\"Windows\"\n  buildNote=\"версия 2.4.0 · 80 МБ\"\n  checksum=\"9f2c…c1d8\"\n/>",
           "summary": "Секция загрузки с одной крупной кнопкой под нужную платформу: девять из десяти человек скачивают сборку для своей системы, и она уже в кнопке. Остальные сборки — мелкими ссылками ниже, под ними контрольная сумма. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-122 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-download-006-* и не подменять её токенами вашей темы",
             "платформу пропом, а не определением по navigator: иначе серверный блок мигает подменой подписи",
             "иерархию: одна крупная кнопка и мелкие ссылки, а не сетка равных карточек",
@@ -5924,10 +6151,11 @@
           "en": {
             "title": "Platform-aware button",
             "description": "One large button for the right platform, small links to the other builds and a checksum. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-download-006-* variables. A server component. The platform arrives as a prop rather than being sniffed from navigator: the block stays server-rendered and never flashes a swapped label after hydration. A project that wants auto-detection just passes the value itself. The checksum is monospaced and wraps at any character, so it never stretches the section on a narrow screen.",
+            "docs": "A composite block: imports button-122 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-download-006-* variables. A server component. The platform arrives as a prop rather than being sniffed from navigator: the block stays server-rendered and never flashes a swapped label after hydration. A project that wants auto-detection just passes the value itself. The checksum is monospaced and wraps at any character, so it never stretches the section on a narrow screen.",
             "ai": {
               "summary": "A download section with a single large button for the right platform: nine out of ten people take the build for their own system, and it is already in the button. The other builds are small links below, with the checksum underneath. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-122 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-download-006-* palette — do not swap it for your theme tokens",
                 "the platform as a prop rather than navigator sniffing: otherwise a server block flashes a swapped label",
                 "the hierarchy: one large button and small links, not a grid of equal cards",
@@ -5985,7 +6213,10 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "download-011/download-011.tsx",
@@ -6006,7 +6237,8 @@
           "google-play",
           "sms",
           "delivery",
-          "food"
+          "food",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6017,6 +6249,7 @@
           "usage": "<Download011\n  title=\"−20 % на первый заказ в приложении\"\n  code=\"GORYACHO20\"\n  image=\"/photos/box.webp\"\n  appStoreHref=\"https://apps.apple.com/…\"\n  googlePlayHref=\"https://play.google.com/…\"\n/>",
           "summary": "Промо мобильного приложения: скидка, промокод с копированием, магазины, SMS и QR-стикер.",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "QR — modules(qrSeed): три finder-паттерна настоящие, остальные модули из LCG по FNV-хэшу seed, path с shape-rendering crispEdges",
             "copy — navigator.clipboard.writeText в try/catch, copied держится 1.8 с; проценты в title ищутся регуляркой и оборачиваются в em",
             "фото — img в блобе с keyframes morph (border-radius + rotate), QR-стикер повёрнут на −4° и выпрямляется по hover"
@@ -6089,6 +6322,7 @@
             "ai": {
               "summary": "Mobile app promo: a discount, a promo code with copy, stores, SMS and a QR sticker.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "QR is modules(qrSeed): the three finder patterns are real, the other modules come from an LCG seeded by an FNV hash, a path with shape-rendering crispEdges",
                 "copy uses navigator.clipboard.writeText in try/catch, copied stays for 1.8 s; percentages in title are found by regex and wrapped in em",
                 "the photo is an img in a blob with morph keyframes (border-radius + rotate), the QR sticker is rotated −4° and straightens on hover"
@@ -6140,10 +6374,12 @@
                 "doneText": "The link is in your SMS",
                 "imageAlt": ""
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "download-013",
@@ -6154,7 +6390,9 @@
         "cta"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-123"
+      ],
       "files": [
         {
           "path": "download-013/download-013.tsx",
@@ -6175,7 +6413,8 @@
           "phone",
           "mockup",
           "fintech",
-          "css"
+          "css",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6186,6 +6425,7 @@
           "usage": "<Download013\n  title=\"Банк, который помещается в карман\"\n  qrSeed=\"https://os.example/app\"\n  badges={[{ top: \"Скачать в\", store: \"App Store\", href: \"#appstore\" }, { top: \"Скачать из\", store: \"RuStore\", href: \"#rustore\" }]}\n/>",
           "summary": "Секция приложения для финтеха: декоративный QR из SVG, бейджи магазинов и CSS-телефон с балансом.",
           "preserve": [
+            "импорты button-123 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "QR — path из модулей 25×25: три искателя 7×7, разделители, синхродорожки в 6-й строке и колонке, остальные модули из xorshift, засеянного FNV-хешем qrSeed; на сервере и клиенте узор одинаковый",
             "сканирующая линия — ::after кода с translateY от -2.5rem до 11rem за 2.8s, при reduce-motion скрыта",
             "телефон — aspect-ratio 9/18 с ::before-чёлкой, экран с сиянием, столбики scaleY по --vibeui-download-013-i; раскладка 1 → 2 (44rem) → 3 колонки (64rem)"
@@ -6258,6 +6498,7 @@
             "ai": {
               "summary": "An app section for fintech: a decorative SVG QR, store badges and a CSS phone with a balance.",
               "preserve": [
+                "the button-123 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the QR is a path of 25×25 modules: three 7×7 finders, separators, timing tracks in row and column 6, the other modules from an xorshift seeded by an FNV hash of qrSeed; the pattern is identical on server and client",
                 "the scanning line is the code's ::after moving by translateY from -2.5rem to 11rem over 2.8s, hidden under reduce-motion",
                 "the phone is aspect-ratio 9/18 with a ::before notch, a glowing screen, scaleY bars by --vibeui-download-013-i; the layout goes 1 → 2 (44rem) → 3 columns (64rem)"
@@ -6324,10 +6565,12 @@
                 "phoneBalance": "1,284,650 ₽",
                 "phoneCaption": "Main account"
               }
-            }
+            },
+            "docs": "A composite block: imports button-123 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-123 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

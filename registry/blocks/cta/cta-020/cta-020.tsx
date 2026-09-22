@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Cta020Channel = {
   /** telegram | whatsapp | phone | max — иконка; иначе первая буква. */
@@ -48,23 +49,24 @@ container-type:inline-size;
 :where([data-vibeui-block="cta-020"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="cta-020"]{box-sizing:border-box;position:relative;display:block;overflow:hidden;isolation:isolate;background:var(--vibeui-cta-020-bg);color:var(--vibeui-cta-020-fg);font-family:var(--vibeui-cta-020-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="cta-020"] *{box-sizing:border-box}
+[data-vibeui-block="cta-020"] [data-part="phone"]{margin:1.5rem 0 0}
+[data-vibeui-block="cta-020"] [data-part="hours"]{margin:.5rem 0 0}
 [data-vibeui-block="cta-020"]::before,[data-vibeui-block="cta-020"]::after{content:"";position:absolute;z-index:-1;width:40rem;height:40rem;border-radius:50%;filter:blur(90px);opacity:.35;pointer-events:none}
 [data-vibeui-block="cta-020"]::before{left:-15rem;top:-15rem;background:var(--vibeui-cta-020-accent);animation:vibeui-cta-020-drift 14s ease-in-out infinite alternate}
 [data-vibeui-block="cta-020"]::after{right:-15rem;bottom:-20rem;background:var(--vibeui-cta-020-accent-2);animation:vibeui-cta-020-drift 18s ease-in-out infinite alternate-reverse}
 @keyframes vibeui-cta-020-drift{from{transform:translate(0,0)}to{transform:translate(8rem,4rem)}}
+/* Поверхность тёмная в обеих темах: части внутри переключаются в тёмную схему. */
+[data-vibeui-block="cta-020"] [data-part="shell"]{color-scheme:dark}
 [data-vibeui-block="cta-020"] [data-part="shell"]{display:grid;gap:2.5rem;max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="cta-020"] [data-part="sign"]{justify-self:start;padding:1rem 2rem;border:3px solid var(--vibeui-cta-020-accent);border-radius:1rem;font-family:var(--vibeui-cta-020-display);font-size:clamp(2.6rem,8cqi,5.5rem);font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1;color:var(--vibeui-cta-020-accent);text-shadow:0 0 8px var(--vibeui-cta-020-accent),0 0 24px var(--vibeui-cta-020-accent),0 0 60px color-mix(in oklab,var(--vibeui-cta-020-accent) 60%,transparent);box-shadow:0 0 12px var(--vibeui-cta-020-accent),inset 0 0 12px var(--vibeui-cta-020-accent),0 0 60px color-mix(in oklab,var(--vibeui-cta-020-accent) 45%,transparent);animation:vibeui-cta-020-flicker 6s infinite}
 @keyframes vibeui-cta-020-flicker{0%,91%,100%{opacity:1}92%{opacity:.45}93%{opacity:1}95%{opacity:.7}96%{opacity:1}}
 [data-vibeui-block="cta-020"] [data-part="title"]{margin:0;font-family:var(--vibeui-cta-020-display);font-size:clamp(1.8rem,3.8cqi,2.8rem);font-weight:700;line-height:1.05;letter-spacing:-.02em;text-transform:uppercase}
 [data-vibeui-block="cta-020"] [data-part="text"]{margin:.75rem 0 0;max-width:32rem;color:var(--vibeui-cta-020-muted)}
-[data-vibeui-block="cta-020"] [data-part="phone"]{display:inline-block;margin:1.5rem 0 0;font-family:var(--vibeui-cta-020-mono);font-size:clamp(1.5rem,3.4cqi,2.4rem);font-weight:700;letter-spacing:-.02em;color:var(--vibeui-cta-020-cyan);text-decoration:none;text-shadow:0 0 14px color-mix(in oklab,var(--vibeui-cta-020-cyan) 70%,transparent);transition:text-shadow .3s}
-[data-vibeui-block="cta-020"] [data-part="phone"]:hover{text-shadow:0 0 20px var(--vibeui-cta-020-cyan),0 0 50px color-mix(in oklab,var(--vibeui-cta-020-cyan) 60%,transparent)}
 [data-vibeui-block="cta-020"] [data-part="hours"]{margin:.5rem 0 0;font-family:var(--vibeui-cta-020-mono);font-size:.8rem;letter-spacing:.08em;color:var(--vibeui-cta-020-muted)}
 [data-vibeui-block="cta-020"] [data-part="channels"]{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.5rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="cta-020"] [data-part="channel"]{display:inline-flex;align-items:center;gap:.55rem;height:3rem;padding:0 1.2rem 0 .9rem;border-radius:.6rem;border:1px solid color-mix(in oklab,var(--vibeui-cta-020-accent) 55%,transparent);color:inherit;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .3s,background .3s}
 [data-vibeui-block="cta-020"] [data-part="channel"]:hover{transform:translateY(-2px);background:color-mix(in oklab,var(--vibeui-cta-020-accent) 14%,transparent);box-shadow:0 0 20px color-mix(in oklab,var(--vibeui-cta-020-accent) 50%,transparent)}
 [data-vibeui-block="cta-020"] [data-part="channel"] svg{width:1.15rem;height:1.15rem;fill:currentColor}
-[data-vibeui-block="cta-020"] a:focus-visible{outline:2px solid var(--vibeui-cta-020-cyan);outline-offset:3px}
 @container (min-width: 60rem){
 [data-vibeui-block="cta-020"] [data-part="shell"]{grid-template-columns:auto minmax(0,1fr);gap:4rem;padding:5.5rem 2rem;align-items:center}
 }
@@ -118,9 +120,7 @@ export function Cta020({
             <h2 data-part="title">{title}</h2>
             {text ? <p data-part="text">{text}</p> : null}
             {phone ? (
-              <a data-part="phone" href={phoneHref}>
-                {phone}
-              </a>
+              <Button016 data-part="phone" label={phone} href={phoneHref} external={false} size="lg" tone="accent" accent={accent} />
             ) : null}
             {hours ? <p data-part="hours">{hours}</p> : null}
             {channels.length > 0 ? (

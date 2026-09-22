@@ -1,6 +1,9 @@
 "use client"
 
 import { Fragment, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button013 } from "@/registry/components/button/button-013/button-013"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing023Tier = {
   name: string
@@ -67,6 +70,7 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-023"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-023"]{box-sizing:border-box;position:relative;overflow:hidden;padding:6rem 0;background:var(--vibeui-pricing-023-bg);color:var(--vibeui-pricing-023-fg);font-family:var(--vibeui-pricing-023-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="pricing-023"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-023"] [data-part="action"]{margin-top:auto}
 [data-vibeui-block="pricing-023"] [data-part="photo"]{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;opacity:.35;filter:saturate(.6);animation:vibeui-pricing-023-zoom 1.6s var(--vibeui-pricing-023-ease) both paused}
 [data-vibeui-block="pricing-023"] [data-part="shade"]{position:absolute;inset:0;background:linear-gradient(180deg,var(--vibeui-pricing-023-bg),transparent 40%,transparent 60%,var(--vibeui-pricing-023-bg)),radial-gradient(60% 50% at 50% 60%,color-mix(in oklab,var(--vibeui-pricing-023-accent) 10%,transparent),transparent 70%)}
 [data-vibeui-block="pricing-023"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
@@ -75,11 +79,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-023"] [data-part="w"]{display:inline-block;overflow:hidden;vertical-align:top;padding:.04em .08em .12em 0;margin:-.04em 0 -.12em 0}
 [data-vibeui-block="pricing-023"] [data-part="w"] i{display:inline-block;font-style:normal;animation:vibeui-pricing-023-word .9s var(--vibeui-pricing-023-ease) both paused;animation-delay:calc(var(--vibeui-pricing-023-i) * 80ms)}
 [data-vibeui-block="pricing-023"] [data-part="lede"]{margin:1.2rem 0 0;max-width:34rem;color:var(--vibeui-pricing-023-muted);animation:vibeui-pricing-023-up .8s var(--vibeui-pricing-023-ease) .3s both paused}
-[data-vibeui-block="pricing-023"] [data-part="switch"]{display:inline-flex;align-items:center;gap:.25rem;margin-top:2rem;padding:.3rem;border-radius:999px;background:var(--vibeui-pricing-023-card);box-shadow:0 0 0 1px var(--vibeui-pricing-023-line);backdrop-filter:blur(10px);animation:vibeui-pricing-023-up .8s var(--vibeui-pricing-023-ease) .4s both paused}
-[data-vibeui-block="pricing-023"] [data-part="switch"] button{border:0;border-radius:999px;padding:.55rem 1rem;font:inherit;font-weight:500;font-size:.9rem;background:none;color:inherit;cursor:pointer;transition:background .25s,color .25s,transform .2s}
-[data-vibeui-block="pricing-023"] [data-part="switch"] button:hover{transform:translateY(-1px)}
-[data-vibeui-block="pricing-023"] [data-part="switch"] button[aria-pressed="true"]{background:var(--vibeui-pricing-023-accent);color:var(--vibeui-pricing-023-on-accent)}
-[data-vibeui-block="pricing-023"] [data-part="switch"] small{font-family:var(--vibeui-pricing-023-mono);font-size:.68rem;color:var(--vibeui-pricing-023-accent);padding:0 .6rem 0 .2rem}
 [data-vibeui-block="pricing-023"] [data-part="grid"]{display:grid;gap:1rem;margin-top:2.5rem;align-items:end}
 [data-vibeui-block="pricing-023"] [data-part="tier"]{position:relative;display:flex;flex-direction:column;gap:1rem;padding:1.6rem;border-radius:1.4rem;background:var(--vibeui-pricing-023-card);backdrop-filter:blur(14px);box-shadow:0 0 0 1px var(--vibeui-pricing-023-line),0 30px 60px -40px rgb(0 0 0 / .8);overflow:hidden;transition:transform .4s var(--vibeui-pricing-023-ease),box-shadow .4s;animation:vibeui-pricing-023-up .9s var(--vibeui-pricing-023-ease) both paused;animation-delay:calc(.45s + var(--vibeui-pricing-023-i) * 130ms)}
 [data-vibeui-block="pricing-023"] [data-part="tier"]::before{content:"";position:absolute;inset:0;background:radial-gradient(22rem circle at var(--vibeui-pricing-023-x,50%) var(--vibeui-pricing-023-y,0%),color-mix(in oklab,var(--vibeui-pricing-023-accent) 16%,transparent),transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none}
@@ -96,12 +95,7 @@ container-type:inline-size;
 [data-vibeui-block="pricing-023"] [data-part="perks"]{margin:0;padding:0;list-style:none;display:grid;gap:.45rem;font-size:.9rem}
 [data-vibeui-block="pricing-023"] [data-part="perks"] li{display:flex;gap:.55rem;align-items:flex-start}
 [data-vibeui-block="pricing-023"] [data-part="perks"] li::before{content:"";flex:none;width:.55rem;height:.55rem;margin-top:.45rem;border-radius:50%;background:var(--vibeui-pricing-023-accent);box-shadow:0 0 8px color-mix(in oklab,var(--vibeui-pricing-023-accent) 60%,transparent)}
-[data-vibeui-block="pricing-023"] [data-part="action"]{margin-top:auto;display:inline-flex;justify-content:center;align-items:center;border-radius:999px;padding:.95rem 1.4rem;font-weight:600;text-decoration:none;color:inherit;box-shadow:0 0 0 1px var(--vibeui-pricing-023-line) inset;translate:var(--vibeui-pricing-023-mx,0) var(--vibeui-pricing-023-my,0);transition:background .25s,color .25s,translate .3s var(--vibeui-pricing-023-ease),scale .3s var(--vibeui-pricing-023-ease),box-shadow .3s}
-[data-vibeui-block="pricing-023"] [data-part="tier"][data-featured="true"] [data-part="action"],[data-vibeui-block="pricing-023"] [data-part="action"]:hover{background:var(--vibeui-pricing-023-accent);color:var(--vibeui-pricing-023-on-accent);box-shadow:0 12px 30px -12px var(--vibeui-pricing-023-accent)}
-[data-vibeui-block="pricing-023"] [data-part="action"]:hover{scale:1.03}
-[data-vibeui-block="pricing-023"] [data-part="action"]:active{scale:.98}
 [data-vibeui-block="pricing-023"] button:focus-visible,[data-vibeui-block="pricing-023"] a:focus-visible{outline:2px solid var(--vibeui-pricing-023-accent);outline-offset:3px}
-[data-vibeui-block="pricing-023"][data-in="true"] [data-part="photo"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="eyebrow"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="w"] i,[data-vibeui-block="pricing-023"][data-in="true"] [data-part="lede"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="switch"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="tier"]{animation-play-state:running}
 @keyframes vibeui-pricing-023-flip{from{transform:translateY(60%);opacity:0}to{transform:none;opacity:1}}
 @keyframes vibeui-pricing-023-word{from{translate:0 110%;rotate:3deg}}
 @keyframes vibeui-pricing-023-up{from{opacity:0;translate:0 1.6rem}}
@@ -112,7 +106,10 @@ container-type:inline-size;
 [data-vibeui-block="pricing-023"][data-in="true"] [data-part="tier"][data-featured="true"]::after{animation:vibeui-pricing-023-glow 3.6s ease-in-out 1.6s infinite}
 @container (min-width: 56rem){[data-vibeui-block="pricing-023"] [data-part="grid"]{grid-template-columns:repeat(3,1fr)}[data-vibeui-block="pricing-023"] [data-part="tier"][data-featured="true"]{transform:translateY(-1rem)}[data-vibeui-block="pricing-023"] [data-part="tier"][data-featured="true"]:hover{transform:translateY(-1.4rem)}}
 [data-vibeui-block="pricing-023"][data-in="true"] [data-part="tier"][data-featured="true"]{animation:vibeui-pricing-023-up .9s var(--vibeui-pricing-023-ease) calc(.45s + var(--vibeui-pricing-023-i) * 130ms) both,vibeui-pricing-023-breathe 3.6s ease-in-out 1.6s infinite}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-023"] *,[data-vibeui-block="pricing-023"] *::before,[data-vibeui-block="pricing-023"] *::after{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-023"] *,[data-vibeui-block="pricing-023"] *::before,[data-vibeui-block="pricing-023"] *::after{animation:none!important;transition:none!important}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="pricing-023"][data-in="true"] [data-part="photo"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="eyebrow"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="w"] i,[data-vibeui-block="pricing-023"][data-in="true"] [data-part="lede"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="switch"],[data-vibeui-block="pricing-023"][data-in="true"] [data-part="tier"]{animation-play-state:running}
+`
 
 const DEFAULT_TIERS: Pricing023Tier[] = [
   { name: "Слушатель", monthly: "0 ₽", yearly: "0 ₽", text: "Всё, что выходит в эфир.", perks: ["новый эпизод каждый четверг", "письмо после выпуска", "чат слушателей"], action: "Так и оставить", href: "#" },
@@ -209,12 +206,15 @@ export function Pricing023({
           </h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="switch" role="group" aria-label={periodLabel}>
-            <button type="button" aria-pressed={!yearly} onClick={() => setYearly(false)}>
-              {monthlyLabel}
-            </button>
-            <button type="button" aria-pressed={yearly} onClick={() => setYearly(true)}>
-              {yearlyLabel}
-            </button>
+            {/* Переключатель — button-013; блок держит только флаг. */}
+            <Button013
+              data-part="toggle"
+              options={[monthlyLabel, yearlyLabel]}
+              defaultValue={yearly ? yearlyLabel : monthlyLabel}
+              label=""
+              onChange={(value) => setYearly(value === yearlyLabel)}
+              accent={accent}
+            />
             {yearlyNote ? <small>{yearlyNote}</small> : null}
           </div>
           <div data-part="grid">
@@ -233,9 +233,17 @@ export function Pricing023({
                   ))}
                 </ul>
                 {tier.action ? (
-                  <a data-part="action" href={tier.href ?? "#"} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                    {tier.action}
-                  </a>
+                  <Button016
+                    data-part="action"
+                    size="lg"
+                    onPointerMove={magnet}
+                    onPointerLeave={unmagnet}
+                    label={tier.action}
+                    href={tier.href ?? "#"}
+                    external={false}
+                    tone="accent"
+                    accent={accent}
+                  />
                 ) : null}
               </article>
             ))}

@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Cta002Props = {
   eyebrow?: string
@@ -24,6 +27,7 @@ export type Cta002Props = {
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, карточка темнеет вместе со страницей.
 const STYLES = `
+
 :where([data-vibeui-block="cta-002"]){
 --vibeui-cta-002-bg:transparent;
 --vibeui-cta-002-card:light-dark(oklch(1 0 0),oklch(0.24 0 265));
@@ -54,39 +58,9 @@ padding:2.25rem 1.5rem;border:1px solid var(--vibeui-cta-002-border);border-radi
 background:var(--vibeui-cta-002-card);
 background-image:radial-gradient(60% 90% at 50% -10%,color-mix(in oklab,var(--vibeui-cta-002-accent) 12%,transparent),transparent 70%);
 }
-[data-vibeui-block="cta-002"] [data-part="eyebrow"]{
-display:inline-block;margin:0 0 0.875rem;padding:0.25rem 0.6875rem;border-radius:999px;
-background:color-mix(in oklab,var(--vibeui-cta-002-accent) 12%,transparent);
-color:var(--vibeui-cta-002-accent);
-font-size:0.75rem;font-weight:640;letter-spacing:0.04em;text-transform:uppercase;
-}
-[data-vibeui-block="cta-002"] [data-part="title"]{
-margin:0 auto;max-width:18ch;
-font-size:clamp(1.75rem,6cqi,3rem);line-height:1.06;letter-spacing:-0.03em;font-weight:720;
-}
-[data-vibeui-block="cta-002"] [data-part="text"]{
-margin:0.875rem auto 0;max-width:52ch;
-color:var(--vibeui-cta-002-muted);font-size:clamp(0.9375rem,1.6cqi,1.0625rem);line-height:1.55;
-}
 [data-vibeui-block="cta-002"] [data-part="actions"]{
 display:flex;flex-direction:column;gap:0.625rem;margin-top:1.75rem;
 }
-[data-vibeui-block="cta-002"] [data-part="primary"],
-[data-vibeui-block="cta-002"] [data-part="secondary"]{
-display:inline-flex;align-items:center;justify-content:center;
-min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.875rem;
-text-decoration:none;font-size:1rem;font-weight:640;
-transition:background-color var(--vibeui-cta-002-dur-2) ease,border-color var(--vibeui-cta-002-dur-2) ease,transform var(--vibeui-cta-002-dur-2) ease;
-}
-[data-vibeui-block="cta-002"] [data-part="primary"]{
-background:var(--vibeui-cta-002-accent);color:oklch(from var(--vibeui-cta-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-box-shadow:0 14px 30px -18px color-mix(in oklab,var(--vibeui-cta-002-accent) 92%,black);
-}
-[data-vibeui-block="cta-002"] [data-part="primary"]:hover{background:color-mix(in oklab,var(--vibeui-cta-002-accent) 88%,black);transform:translateY(-1px)}
-[data-vibeui-block="cta-002"] [data-part="secondary"]{
-border:1px solid var(--vibeui-cta-002-border);color:var(--vibeui-cta-002-ink);background:transparent;
-}
-[data-vibeui-block="cta-002"] [data-part="secondary"]:hover{border-color:var(--vibeui-cta-002-accent);color:var(--vibeui-cta-002-accent)}
 [data-vibeui-block="cta-002"] [data-part="proof"]{
 display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.25rem;
 margin:1.5rem 0 0;padding:0;list-style:none;
@@ -96,7 +70,6 @@ color:var(--vibeui-cta-002-muted);font-size:0.8125rem;
 [data-vibeui-block="cta-002"] [data-part="proof"] li::before{
 content:"";width:0.375rem;height:0.375rem;border-radius:999px;flex:none;
 background:var(--vibeui-cta-002-accent);color:oklch(from var(--vibeui-cta-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="cta-002"] a:focus-visible{outline:2px solid var(--vibeui-cta-002-accent);outline-offset:3px}
 @container (min-width: 40rem){
 [data-vibeui-block="cta-002"] [data-part="shell"]{padding:5rem 2rem}
 [data-vibeui-block="cta-002"] [data-part="card"]{padding:3.5rem 3rem}
@@ -171,16 +144,35 @@ export function Cta002({
       >
         <div data-part="shell">
           <div data-part="card">
-            <p data-part="eyebrow">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
-            <p data-part="text">{description}</p>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={description}
+              size="lg"
+              align="center"
+              ledeWidth={52}
+              accent={accent}
+            />
             <div data-part="actions">
-              <a data-part="primary" href={primaryHref}>
-                {primaryLabel}
-              </a>
-              <a data-part="secondary" href={secondaryHref}>
-                {secondaryLabel}
-              </a>
+              <Button016
+                data-part="primary"
+                label={primaryLabel}
+                href={primaryHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
+              <Button016
+                data-part="secondary"
+                label={secondaryLabel}
+                href={secondaryHref}
+                external={false}
+                size="lg"
+                tone="neutral"
+                accent={accent}
+              />
             </div>
             <ul data-part="proof">
               {proof.map((item) => (

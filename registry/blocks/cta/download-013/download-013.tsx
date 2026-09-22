@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Button123 } from "@/registry/components/button/button-123/button-123"
 
 export type Download013Badge = {
   /** Верхняя строка: «Скачать в». */
@@ -65,12 +66,6 @@ container-type:inline-size;
 [data-vibeui-block="download-013"] [data-part="title"]{margin:0;font-family:var(--vibeui-download-013-display);font-weight:800;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
 [data-vibeui-block="download-013"] [data-part="lede"]{margin:1rem 0 0;max-width:28rem;color:var(--vibeui-download-013-muted)}
 [data-vibeui-block="download-013"] [data-part="badges"]{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.6rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="download-013"] [data-part="badge"]{display:inline-grid;grid-template-columns:auto 1fr;align-items:center;gap:.6rem;padding:.55rem .9rem .55rem .7rem;border-radius:.8rem;background:var(--vibeui-download-013-fg);color:var(--vibeui-download-013-bg);text-decoration:none;line-height:1.1;transition:transform .18s,box-shadow .25s}
-[data-vibeui-block="download-013"] [data-part="badge"]:hover{transform:translateY(-2px);box-shadow:0 12px 30px -12px var(--vibeui-download-013-accent)}
-[data-vibeui-block="download-013"] [data-part="badge"]:focus-visible{outline:2px solid var(--vibeui-download-013-accent);outline-offset:2px}
-[data-vibeui-block="download-013"] [data-part="badge"] svg{width:1.5rem;height:1.5rem;grid-row:span 2}
-[data-vibeui-block="download-013"] [data-part="badge"] small{display:block;font-size:.62rem;opacity:.7}
-[data-vibeui-block="download-013"] [data-part="badge"] b{display:block;font-family:var(--vibeui-download-013-display);font-weight:700;font-size:.98rem}
 [data-vibeui-block="download-013"] [data-part="rating"]{display:flex;align-items:center;gap:.6rem;margin:1.4rem 0 0;font-size:.85rem;color:var(--vibeui-download-013-muted)}
 [data-vibeui-block="download-013"] [data-part="rating"] strong{font-family:var(--vibeui-download-013-mono);font-size:1.1rem;color:var(--vibeui-download-013-fg)}
 [data-vibeui-block="download-013"] [data-part="rating"] svg{width:.9rem;height:.9rem;color:var(--vibeui-download-013-accent)}
@@ -208,14 +203,7 @@ export function Download013({
               <ul data-part="badges">
                 {badges.map((badge) => (
                   <li key={badge.store}>
-                    <a data-part="badge" href={badge.href}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
-                        <path d="M12 8v6M9.5 11.5 12 14l2.5-2.5M11 18.5h2" />
-                      </svg>
-                      <small>{badge.top}</small>
-                      <b>{badge.store}</b>
-                    </a>
+                    <Button123 data-part="badge" href={badge.href} top={badge.top} store={badge.store} accent={accent} />
                   </li>
                 ))}
               </ul>

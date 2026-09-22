@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card180 } from "@/registry/components/card/card-180/card-180"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid020Row = {
@@ -103,27 +104,6 @@ color:var(--vibeui-datagrid-020-accent);
 margin-inline-start:auto;font-size:0.6875rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;
 color:var(--vibeui-datagrid-020-accent);
 }
-[data-vibeui-block="datagrid-020"] [data-part="tools"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-020-border);
-background:var(--vibeui-datagrid-020-panel);
-}
-[data-vibeui-block="datagrid-020"] [data-part="tools"] label{
-display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-020-muted);
-}
-[data-vibeui-block="datagrid-020"] select{
-font:inherit;font-size:0.75rem;color:inherit;padding:0.25rem 0.4375rem;
-border:1px solid var(--vibeui-datagrid-020-border);border-radius:0.4375rem;
-background:transparent;
-}
-[data-vibeui-block="datagrid-020"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-020-accent);outline-offset:1px}
-[data-vibeui-block="datagrid-020"] [data-part="save"]{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;margin-inline-start:auto;
-padding:0.3125rem 0.625rem;border-radius:0.4375rem;border:1px solid var(--vibeui-datagrid-020-accent);
-background:transparent;color:var(--vibeui-datagrid-020-accent);
-}
-[data-vibeui-block="datagrid-020"] [data-part="save"]:disabled{opacity:.4;cursor:not-allowed}
-[data-vibeui-block="datagrid-020"] [data-part="save"]:focus-visible{outline:2px solid var(--vibeui-datagrid-020-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-020"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-020"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-020-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-020"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -205,7 +185,6 @@ const VIEWS: Datagrid020View[] = [
 
 const STAGES = ["Квалификация", "Предложение", "Переговоры", "Закрыта"]
 
-const SORTS: Datagrid020Sort[] = ["deal", "amount", "stage"]
 
 const SORT_TEXT: Record<string, string> = {
   deal: "по названию",
@@ -365,59 +344,7 @@ export function Datagrid020({
             </span>
           ) : null}
         </nav>
-        <div data-part="tools">
-          <label>
-            {stageLabel}
-            <select
-              value={state.stage}
-              onChange={(event) =>
-                setState((current) => ({
-                  ...current,
-                  stage: event.target.value,
-                }))
-              }
-            >
-              <option value="">{anyStageText}</option>
-              {stages.map((stage) => (
-                <option key={stage} value={stage}>
-                  {stage}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            {sortLabel}
-            <select
-              value={state.sort}
-              onChange={(event) =>
-                setState((current) => ({
-                  ...current,
-                  sort: event.target.value as ViewState["sort"],
-                }))
-              }
-            >
-              {SORTS.map((item) => (
-                <option key={item} value={item}>
-                  {sortText[item] ?? SORT_TEXT[item]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            type="button"
-            data-part="save"
-            disabled={!dirty}
-            onClick={() =>
-              setEdited((current) =>
-                (current ?? views).map((view) =>
-                  view.id === active ? { ...view, state } : view,
-                ),
-              )
-            }
-          >
-            {saveText}
-          </button>
-        </div>
+        <Card180 data-part="tools" stageLabel={stageLabel} anyStageText={anyStageText} stages={stages} sortLabel={sortLabel} sortText={sortText} views={views} saveText={saveText} active={active} dirty={dirty} setEdited={setEdited} setState={setState} state={state} accent={accent} />
         <div
           data-part="scroll"
           role="region"

@@ -10,7 +10,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "map-001/map-001.tsx",
@@ -18,7 +20,7 @@
           "target": "@components/vibeui/map-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-001-*. Карта настоящая без всякой настройки: по умолчанию встраивается штатный виджет Яндекс Карт (yandex.ru/map-widget/v1), которому не нужен ключ, а тёмная схема включается параметром theme. Если задан apiKey, вместо виджета поднимается JS API v3: тогда картой можно управлять из кода, а точку искать по адресу через ymaps3.search. Координаты важнее адреса: заданы latitude и longitude — виджет ставит метку по ним, не заданы — ищет по строке адреса. Если JS API не загрузился, блок возвращается к виджету и пишет об этом плашкой.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-001-*. Карта настоящая без всякой настройки: по умолчанию встраивается штатный виджет Яндекс Карт (yandex.ru/map-widget/v1), которому не нужен ключ, а тёмная схема включается параметром theme. Если задан apiKey, вместо виджета поднимается JS API v3: тогда картой можно управлять из кода, а точку искать по адресу через ymaps3.search. Координаты важнее адреса: заданы latitude и longitude — виджет ставит метку по ним, не заданы — ищет по строке адреса. Если JS API не загрузился, блок возвращается к виджету и пишет об этом плашкой.",
       "meta": {
         "tags": [
           "map",
@@ -26,7 +28,8 @@
           "location",
           "address",
           "directions",
-          "contacts"
+          "contacts",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -36,6 +39,7 @@
           "usage": "<Map001 address=\"Москва, Пресненская наб., 12\" latitude={55.7495} longitude={37.5372} theme=\"auto\" />",
           "summary": "Секция «как добраться»: карта Яндекса во всю ширину и карточка с адресом, ориентирами и кнопкой маршрута. Без ключа работает штатный виджет Яндекс Карт со светлой и тёмной схемой; с apiKey подключается JS API v3.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-map-001-* — не подменять её токенами темы проекта",
             "виджет Яндекс Карт как режим по умолчанию: карта обязана работать без ключа, иначе на странице пустой кадр",
             "переключение схемы: параметр theme у виджета и тема слоя у JS API — тёмный сайт с белой картой выглядит сломанным",
@@ -106,10 +110,11 @@
           "en": {
             "title": "Yandex Map With A Pin",
             "description": "A directions section: a full-width Yandex Maps widget with an address card, landmarks and a route button.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-001-*. The map is real with no setup: by default it embeds the standard Yandex Maps widget (yandex.ru/map-widget/v1), which needs no key, and its dark scheme is switched on by the theme parameter. When apiKey is set, the JS API v3 replaces the widget: the map becomes scriptable and the point can be looked up through ymaps3.search. Coordinates win over the address: with latitude and longitude the widget pins them, without them it searches the address string. If the JS API fails to load, the block falls back to the widget and says so on a small plate.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-map-001-*. The map is real with no setup: by default it embeds the standard Yandex Maps widget (yandex.ru/map-widget/v1), which needs no key, and its dark scheme is switched on by the theme parameter. When apiKey is set, the JS API v3 replaces the widget: the map becomes scriptable and the point can be looked up through ymaps3.search. Coordinates win over the address: with latitude and longitude the widget pins them, without them it searches the address string. If the JS API fails to load, the block falls back to the widget and says so on a small plate.",
             "ai": {
               "summary": "A directions section: a full-width Yandex map with an address card, landmarks and a route button. With no key the standard Yandex Maps widget works, in light and dark; with apiKey the JS API v3 takes over.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-map-001-* palette — do not swap it for your theme tokens",
                 "the Yandex Maps widget as the default mode: the map must work without a key, otherwise the page shows an empty frame",
                 "the scheme switch: the widget's theme parameter and the JS API layer theme — a dark site with a white map looks broken",
@@ -194,7 +199,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "map-002/map-002.tsx",
@@ -202,7 +209,7 @@
           "target": "@components/vibeui/map-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-002-*. Карта настоящая без всякой настройки: по умолчанию встраивается google.com/maps в режиме output=embed — ключ не нужен, метка встаёт по адресу из пропа, поэтому смена адреса двигает точку. Если задан apiKey, вместо встроенной карты поднимается JavaScript API: тогда работают тёмная схема (массив styles, а не облачный mapId), геокодер и управление картой из кода. Две колонки включает container query, поэтому блок одинаково живёт и в узкой колонке, и во всю ширину страницы.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточный: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-002-*. Карта настоящая без всякой настройки: по умолчанию встраивается google.com/maps в режиме output=embed — ключ не нужен, метка встаёт по адресу из пропа, поэтому смена адреса двигает точку. Если задан apiKey, вместо встроенной карты поднимается JavaScript API: тогда работают тёмная схема (массив styles, а не облачный mapId), геокодер и управление картой из кода. Две колонки включает container query, поэтому блок одинаково живёт и в узкой колонке, и во всю ширину страницы.",
       "meta": {
         "tags": [
           "map",
@@ -210,7 +217,8 @@
           "location",
           "address",
           "office",
-          "contacts"
+          "contacts",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -220,6 +228,7 @@
           "usage": "<Map002 address=\"Москва, 1-й Красногвардейский проезд, 21с1\" facts={[{ label: \"Часы\", value: \"Пн–Пт, 10:00–19:00\" }]} />",
           "summary": "Секция адреса: карта Google слева и панель справки справа — часы, телефон, почта и как найти вход. Без ключа работает встроенная карта Google, метка встаёт по адресу; с apiKey подключается JavaScript API с тёмной схемой и геокодером.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-map-002-* — не подменять её токенами темы проекта",
             "встроенную карту как режим по умолчанию: карта обязана работать без ключа, иначе на странице пустой кадр",
             "панель справки рядом с картой: часы и телефон спрашивают чаще, чем разглядывают метку",
@@ -279,10 +288,11 @@
           "en": {
             "title": "Google Map Beside The Details",
             "description": "A Google map and a details panel in one row: the address, hours, phone and entrance stay readable without covering the map.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-002-*. The map is real with no setup: by default it embeds google.com/maps with output=embed — no key needed, and the pin follows the address prop, so changing the address moves the point. When apiKey is set, the JavaScript API replaces the embed: the dark scheme (a styles array rather than a cloud mapId), the geocoder and scripting become available. The two columns are switched on by a container query, so the block works in a narrow column as well as full width.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-map-002-*. The map is real with no setup: by default it embeds google.com/maps with output=embed — no key needed, and the pin follows the address prop, so changing the address moves the point. When apiKey is set, the JavaScript API replaces the embed: the dark scheme (a styles array rather than a cloud mapId), the geocoder and scripting become available. The two columns are switched on by a container query, so the block works in a narrow column as well as full width.",
             "ai": {
               "summary": "An address section: a Google map on the left and a details panel on the right — hours, phone, email and how to find the entrance. With no key the standard Google embed works and the pin follows the address; with apiKey the JavaScript API adds the dark scheme and the geocoder.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-map-002-* palette — do not swap it for your theme tokens",
                 "the embedded map as the default mode: the map must work without a key, otherwise the page shows an empty frame",
                 "the details panel beside the map: hours and phone are asked for far more often than the pin is studied",
@@ -377,7 +387,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "map-003/map-003.tsx",
@@ -385,7 +397,7 @@
           "target": "@components/vibeui/map-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-003-*. Карта настоящая без настройки: по умолчанию встраивается OpenStreetMap (iframe openstreetmap.org/export/embed.html), ключ не нужен — рамка bbox считается из zoom, метка ставится по координатам, в тёмной теме подложка инвертируется CSS-фильтром. Старый виджет widgets.2gis.com закрыт (отдаёт 451), а 2gis.ru запрещает себя во фрейме, поэтому без ключа 2ГИС недоступен. Готовую ссылку на любую встраиваемую карту можно передать через embedUrl. Если задан apiKey, вместо OSM подключается MapGL 2ГИС: карта 2ГИС, тёмный стиль по идентификатору и управление картой из кода. Если MapGL не загрузился, блок возвращается к OSM и пишет об этом на плашке.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, ноль зависимостей, собственная палитра в локальных переменных --vibeui-map-003-*. Карта настоящая без настройки: по умолчанию встраивается OpenStreetMap (iframe openstreetmap.org/export/embed.html), ключ не нужен — рамка bbox считается из zoom, метка ставится по координатам, в тёмной теме подложка инвертируется CSS-фильтром. Старый виджет widgets.2gis.com закрыт (отдаёт 451), а 2gis.ru запрещает себя во фрейме, поэтому без ключа 2ГИС недоступен. Готовую ссылку на любую встраиваемую карту можно передать через embedUrl. Если задан apiKey, вместо OSM подключается MapGL 2ГИС: карта 2ГИС, тёмный стиль по идентификатору и управление картой из кода. Если MapGL не загрузился, блок возвращается к OSM и пишет об этом на плашке.",
       "meta": {
         "tags": [
           "map",
@@ -393,7 +405,8 @@
           "mapgl",
           "location",
           "address",
-          "branch"
+          "branch",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -403,6 +416,7 @@
           "usage": "<Map003 address=\"Москва, Пресненская наб., 6с2\" latitude={55.7482} longitude={37.539} city=\"moscow\" />",
           "summary": "Секция адреса филиала: карта во всю ширину и строка справки под ней — адрес, часы, вход и ссылка «Открыть в 2ГИС». Без ключа работает OpenStreetMap; с apiKey подключается MapGL 2ГИС с тёмным стилем.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-map-003-* — не подменять её токенами своей темы",
             "OpenStreetMap как режим по умолчанию: карта обязана работать без ключа, иначе страница покажет пустую рамку",
             "строку справки под картой, а не поверх неё: на телефоне плашка поверх закрывает как раз нужный квартал",
@@ -461,10 +475,11 @@
           "en": {
             "title": "Map with an address bar: OSM without a key, 2GIS with one",
             "description": "A full-width map with a bar underneath: the address, hours and entrance sit below the map instead of covering the block you came to see. Without a key it shows OpenStreetMap; with a MapGL key — a 2GIS map with a dark style; the “Open in 2GIS” link is always there.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-map-003-*. The map is real with no setup: by default it embeds OpenStreetMap (an openstreetmap.org/export/embed.html iframe), no key needed — the bbox is computed from zoom, the marker is placed by coordinates, in the dark theme the tiles are inverted with a CSS filter. The old widgets.2gis.com widget is gone (returns 451) and 2gis.ru refuses to be framed, so 2GIS is unavailable without a key. A ready link to any embeddable map can be passed through embedUrl. When apiKey is set, MapGL 2GIS replaces OSM: a 2GIS map, a dark style by id and scripting. If MapGL fails to load, the block falls back to OSM and says so on a small plate.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-map-003-*. The map is real with no setup: by default it embeds OpenStreetMap (an openstreetmap.org/export/embed.html iframe), no key needed — the bbox is computed from zoom, the marker is placed by coordinates, in the dark theme the tiles are inverted with a CSS filter. The old widgets.2gis.com widget is gone (returns 451) and 2gis.ru refuses to be framed, so 2GIS is unavailable without a key. A ready link to any embeddable map can be passed through embedUrl. When apiKey is set, MapGL 2GIS replaces OSM: a 2GIS map, a dark style by id and scripting. If MapGL fails to load, the block falls back to OSM and says so on a small plate.",
             "ai": {
               "summary": "A branch address section: a full-width map with a details bar underneath — address, hours, entrance and an “Open in 2GIS” link. With no key OpenStreetMap works; with apiKey MapGL 2GIS takes over and adds the dark style.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-map-003-* palette — do not swap it for your theme tokens",
                 "OpenStreetMap as the default mode: the map must work without a key, otherwise the page shows an empty frame",
                 "the details bar under the map rather than over it: on a phone an overlay covers exactly the block people came to see",
@@ -551,7 +566,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-136"
+      ],
       "files": [
         {
           "path": "map-004/map-004.tsx",
@@ -559,7 +576,7 @@
           "target": "@components/vibeui/map-004.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт (yandex.ru/map-widget/v1) с центром ll, зумом z, метками pt через «~» (стиль pm2dgm) и схемой theme; ключ не нужен. С apiKey — JS API v3: один <script> на адрес (loadScript), YMap с YMapDefaultSchemeLayer и YMapDefaultFeaturesLayer, метки YMapMarker — свои плашки <button>/<a> с ценой и названием; наведение на карточку и на метку выставляет общий active, метка получает data-active. Тема карты в режиме auto следует странице (класс dark, color-scheme, prefers-color-scheme) через MutationObserver. Центр — среднее точек, если latitude/longitude не заданы. Раскладка: карта и список карточек колонкой, от 56rem (container query) 1.4fr/1fr, список растянут по высоте карты. Палитра --vibeui-realty-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-136 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт (yandex.ru/map-widget/v1) с центром ll, зумом z, метками pt через «~» (стиль pm2dgm) и схемой theme; ключ не нужен. С apiKey — JS API v3: один <script> на адрес (loadScript), YMap с YMapDefaultSchemeLayer и YMapDefaultFeaturesLayer, метки YMapMarker — свои плашки <button>/<a> с ценой и названием; наведение на карточку и на метку выставляет общий active, метка получает data-active. Тема карты в режиме auto следует странице (класс dark, color-scheme, prefers-color-scheme) через MutationObserver. Центр — среднее точек, если latitude/longitude не заданы. Раскладка: карта и список карточек колонкой, от 56rem (container query) 1.4fr/1fr, список растянут по высоте карты. Палитра --vibeui-realty-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -573,7 +590,8 @@
           "yandex",
           "districts",
           "pins",
-          "markers"
+          "markers",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -623,6 +641,7 @@
           "usage": "<Map004\n  title=\"Где вы будете жить\"\n  zoom={11}\n  points={[\n    { name: \"Петроградская\", price: \"285 тыс ₽\", count: \"164 объекта\", note: \"модерн, тихие дворы\", image: \"/photos/district-01.webp\", latitude: 59.9632, longitude: 30.3117, href: \"/districts/petrogradskaya\" },\n  ]}\n/>",
           "summary": "Самодостаточная секция «районы на карте» для агентства или застройщика: настоящая Яндекс Карта с метками без ключа и карточки районов с ценой за метр. Точки — массив пропсом с координатами.",
           "preserve": [
+            "импорты card-136 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "настоящую Яндекс Карту вместо картинки: виджет без ключа, JS API с ключом — код умеет оба режима",
             "взаимную подсветку карточки и метки через общий active (в режиме JS API)",
             "цену за метр серифом в карточке и плашке-метке"
@@ -681,10 +700,11 @@
           "en": {
             "title": "Districts on a Yandex Map",
             "description": "Districts or listings on a real Yandex Map: pins on the map and cards beside it with a photo, price per metre and listing count. Without a key the stock widget with pins works; with a key the JS API draws price tags and highlights pin and card together.",
-            "docs": "One file, zero dependencies, “use client”. Without apiKey — an <iframe> of the Yandex Maps widget (yandex.ru/map-widget/v1) with centre ll, zoom z, pins pt joined with “~” (style pm2dgm) and the theme scheme; no key needed. With apiKey — JS API v3: one <script> per URL (loadScript), a YMap with YMapDefaultSchemeLayer and YMapDefaultFeaturesLayer, YMapMarker pins as custom <button>/<a> tags with price and name; hovering a card or a pin sets a shared active, the pin gets data-active. In auto mode the map theme follows the page (dark class, color-scheme, prefers-color-scheme) via a MutationObserver. The centre is the mean of the points unless latitude/longitude are given. Layout: map and card list stacked, from 56rem (container query) 1.4fr/1fr with the list stretched to the map height. Palette --vibeui-realty-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-136 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client”. Without apiKey — an <iframe> of the Yandex Maps widget (yandex.ru/map-widget/v1) with centre ll, zoom z, pins pt joined with “~” (style pm2dgm) and the theme scheme; no key needed. With apiKey — JS API v3: one <script> per URL (loadScript), a YMap with YMapDefaultSchemeLayer and YMapDefaultFeaturesLayer, YMapMarker pins as custom <button>/<a> tags with price and name; hovering a card or a pin sets a shared active, the pin gets data-active. In auto mode the map theme follows the page (dark class, color-scheme, prefers-color-scheme) via a MutationObserver. The centre is the mean of the points unless latitude/longitude are given. Layout: map and card list stacked, from 56rem (container query) 1.4fr/1fr with the list stretched to the map height. Palette --vibeui-realty-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained “districts on a map” section for an agency or developer: a real Yandex Map with pins and no key, and district cards with price per metre. Points come in as a prop array with coordinates.",
               "preserve": [
+                "the card-136 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "a real Yandex Map instead of an image: the widget without a key, the JS API with one — the code handles both",
                 "the mutual highlight of card and pin through a shared active (in JS API mode)",
                 "the serif price per metre in the card and in the pin tag"
@@ -784,7 +804,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-137"
+      ],
       "files": [
         {
           "path": "map-005/map-005.tsx",
@@ -792,7 +814,7 @@
           "target": "@components/vibeui/map-005.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт с меткой pt и схемой theme; с apiKey — JS API v3 (loadScript один раз на адрес, YMap, слои, YMapMarker с акцентной меткой). Тема карты в auto следует странице через MutationObserver. Карточка — на узком под картой, от 56rem (container query) absolute слева поверх карты с прокруткой. Часы — <dl> сеткой auto/1fr с tabular-nums, адрес в <address>. Палитра --vibeui-map-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-137 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». Без apiKey — <iframe> виджета Яндекс Карт с меткой pt и схемой theme; с apiKey — JS API v3 (loadScript один раз на адрес, YMap, слои, YMapMarker с акцентной меткой). Тема карты в auto следует странице через MutationObserver. Карточка — на узком под картой, от 56rem (container query) absolute слева поверх карты с прокруткой. Часы — <dl> сеткой auto/1fr с tabular-nums, адрес в <address>. Палитра --vibeui-map-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -806,7 +828,8 @@
           "yandex",
           "directions",
           "hours",
-          "address"
+          "address",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -817,6 +840,7 @@
           "usage": "<Map005\n  title=\"Большая Пушкарская, 20\"\n  address=\"Санкт-Петербург, Большая Пушкарская, 20, вход со двора\"\n  latitude={59.9585}\n  longitude={30.3085}\n  hours={[{ days: \"Пн–Чт\", time: \"12:00–23:00\" }, { days: \"Пт–Сб\", time: \"12:00–01:00\" }]}\n  details={[\"м. «Горьковская» — 7 минут пешком\", \"Парковка во дворе по брони\"]}\n  phone=\"+7 812 305-00-40\"\n/>",
           "summary": "Самодостаточная секция «как добраться» для ресторана, бара или салона: настоящая Яндекс Карта без ключа и карточка с адресом, часами и маршрутом. Всё содержимое пропсами.",
           "preserve": [
+            "импорты card-137 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "настоящую Яндекс Карту вместо картинки: виджет без ключа, JS API с ключом",
             "карточку поверх карты с часами по дням и кнопкой маршрута — ответ на вопрос «как доехать»",
             "адрес в <address> и часы в <dl>"
@@ -875,10 +899,11 @@
           "en": {
             "title": "Directions with a map and hours",
             "description": "Directions: a full-width Yandex Map with a pin and a card on top with the address, hours by day, landmarks (metro, parking, entrance) and “Build a route” and phone buttons. Works without a key via the stock widget.",
-            "docs": "One file, zero dependencies, “use client”. Without apiKey — an <iframe> of the Yandex Maps widget with a pt pin and the theme scheme; with apiKey — JS API v3 (loadScript once per URL, YMap, layers, YMapMarker with an accent pin). In auto the map theme follows the page via a MutationObserver. The card sits under the map when narrow, from 56rem (container query) absolute on the left over the map with scrolling. Hours are a <dl> grid auto/1fr with tabular-nums, the address in <address>. Palette --vibeui-map-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-137 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client”. Without apiKey — an <iframe> of the Yandex Maps widget with a pt pin and the theme scheme; with apiKey — JS API v3 (loadScript once per URL, YMap, layers, YMapMarker with an accent pin). In auto the map theme follows the page via a MutationObserver. The card sits under the map when narrow, from 56rem (container query) absolute on the left over the map with scrolling. Hours are a <dl> grid auto/1fr with tabular-nums, the address in <address>. Palette --vibeui-map-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained “directions” section for a restaurant, bar or salon: a real keyless Yandex Map and a card with address, hours and a route. All content via props.",
               "preserve": [
+                "the card-137 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "a real Yandex Map instead of an image: the widget without a key, the JS API with one",
                 "the card over the map with hours by day and a route button — the answer to “how do I get there”",
                 "the address in <address> and hours in <dl>"
@@ -960,7 +985,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "map-006/map-006.tsx",
@@ -968,7 +995,7 @@
           "target": "@components/vibeui/map-006.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Виджет map-widget/v1 без ключа: центр — среднее координат points, метки — pt через «~» (pm2dgm), не кодировать; theme=light|dark, в auto следует за tone. Легенда — капсулы с point.color в --dot. Маршруты — <li> с route.color в --route и ink в --ink, стикер на квадрате color-mix(var(--route) 82 %, #000). От 60rem (container query) карта 1.5fr и колонка 1fr, кадр 16/11. Палитра --vibeui-map-006-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Виджет map-widget/v1 без ключа: центр — среднее координат points, метки — pt через «~» (pm2dgm), не кодировать; theme=light|dark, в auto следует за tone. Легенда — капсулы с point.color в --dot. Маршруты — <li> с route.color в --route и ink в --ink, стикер на квадрате color-mix(var(--route) 82 %, #000). От 60rem (container query) карта 1.5fr и колонка 1fr, кадр 16/11. Палитра --vibeui-map-006-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -980,7 +1007,8 @@
           "map",
           "yandex",
           "directions",
-          "legend"
+          "legend",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -997,6 +1025,7 @@
           "usage": "<Map006\n  title=\"Парк «Остров», три входа\"\n  points={[\n    { name: \"Главная сцена\", latitude: 55.7467, longitude: 37.6178, color: \"#c2df37\" },\n    { name: \"Фуд-корт\", latitude: 55.7455, longitude: 37.6205, color: \"#ffa5b1\" },\n  ]}\n  routes={[{ mode: \"Метро\", text: \"«Парк культуры», 7 минут пешком\", emoji: \"🚇\", color: \"#ffe2d6\" }]}\n/>",
           "summary": "Самодостаточная карта для фестиваля, кампуса или парка: Яндекс Карта с метками площадок, цветная легенда и цветные строки «как добраться». Точки и маршруты — массивы пропсом.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "несколько меток площадок на одной карте с цветной легендой",
             "строки «как добраться» на цветных капсулах со стикерами — цвет в данных",
             "виджет без ключа: карта работает сразу"
@@ -1055,10 +1084,11 @@
           "en": {
             "title": "Venue map with a legend and “how to get there”",
             "description": "A festival map: a keyless Yandex Map with pins for all venues, on the right a legend with colour dots and a “how to get there” list — metro, bus, bike, car — each row on its own colour pill with an emoji sticker. An “Open in Yandex Maps” button.",
-            "docs": "One file, zero dependencies, a server component. The keyless map-widget/v1: the centre is the mean of points, pins are pt joined with “~” (pm2dgm), not encoded; theme=light|dark, in auto it follows tone. The legend is pills with point.color in --dot. Routes are <li> with route.color in --route and ink in --ink, the sticker on a color-mix(var(--route) 82 %, #000) square. From 60rem (container query) the map is 1.5fr and the column 1fr, the frame 16/11. Palette --vibeui-map-006-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The keyless map-widget/v1: the centre is the mean of points, pins are pt joined with “~” (pm2dgm), not encoded; theme=light|dark, in auto it follows tone. The legend is pills with point.color in --dot. Routes are <li> with route.color in --route and ink in --ink, the sticker on a color-mix(var(--route) 82 %, #000) square. From 60rem (container query) the map is 1.5fr and the column 1fr, the frame 16/11. Palette --vibeui-map-006-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained map for a festival, campus or park: a Yandex Map with venue pins, a colour legend and colour “how to get there” rows. Points and routes come in as prop arrays.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "several venue pins on one map with a colour legend",
                 "“how to get there” rows on colour pills with stickers — colour in the data",
                 "the keyless widget: the map works at once"
@@ -1173,7 +1203,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-138"
+      ],
       "files": [
         {
           "path": "map-007/map-007.tsx",
@@ -1181,7 +1213,7 @@
           "target": "@components/vibeui/map-007.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр и метка из latitude/longitude, theme по tone или явно; поверх filter saturate(.7) sepia(.15), чтобы карта не спорила с кремом. Верх от 56rem — сетка .9fr/1.1fr, карта min-height 26rem. Способы — <ul> карточек 3 в ряд от 56rem, иконки inline SVG по way.icon: car, bus, taxi, train. Отели — карточки с иконкой кровати, названием serif'ом и подписью, две в ряд от 56rem. Арка фото — border-radius 50%/30%. Палитра --vibeui-map-007-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-138 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр и метка из latitude/longitude, theme по tone или явно; поверх filter saturate(.7) sepia(.15), чтобы карта не спорила с кремом. Верх от 56rem — сетка .9fr/1.1fr, карта min-height 26rem. Способы — <ul> карточек 3 в ряд от 56rem, иконки inline SVG по way.icon: car, bus, taxi, train. Отели — карточки с иконкой кровати, названием serif'ом и подписью, две в ряд от 56rem. Арка фото — border-radius 50%/30%. Палитра --vibeui-map-007-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1196,7 +1228,8 @@
           "accommodation",
           "estate",
           "serif",
-          "cream"
+          "cream",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1216,6 +1249,7 @@
           "usage": "<Map007\n  title=\"Усадьба Марфино, Подмосковье\"\n  venue=\"Усадьба Марфино\"\n  address=\"Московская область, село Марфино\"\n  timeNote=\"Сбор гостей в 15:00\"\n  latitude={56.07}\n  longitude={37.56}\n  image=\"/photos/venue-01.webp\"\n  ways={[\n    { mode: \"На машине\", text: \"45 минут от МКАД, парковка у ворот.\", icon: \"car\" },\n    { mode: \"Трансфер\", text: \"Автобус от метро в 13:30 и 14:15.\", icon: \"bus\" },\n  ]}\n  stays={[{ name: \"Гостевой дом «Липы»\", text: \"5 минут пешком\", href: \"#\" }]}\n/>",
           "summary": "Самодостаточный блок «как добраться» для свадьбы за городом: фото места в арке, Яндекс Карта, три способа доехать и где переночевать. Координаты, способы и отели пропсами.",
           "preserve": [
+            "импорты card-138 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "фото места в арке рядом с приглушённой картой — пара «настроение + факты»",
             "три способа доехать карточками с иконками в одну строку от 56rem",
             "«где переночевать» карточками с иконкой кровати под способами"
@@ -1273,10 +1307,11 @@
           "en": {
             "title": "Directions to a countryside wedding with a map and hotels",
             "description": "“Venue” for a countryside wedding: on the left the estate photo in an arch, the name, address and a “guests arrive at 15:00” pill, on the right a muted Yandex Map with one pin. Below, three ways to get there — car, shuttle, taxi — as icon cards, and “where to stay” with a couple of nearby hotels.",
-            "docs": "One file, zero dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre and pin from latitude/longitude, theme by tone or explicit; a filter saturate(.7) sepia(.15) keeps the map from fighting the cream. From 56rem the top is a .9fr/1.1fr grid, the map min-height 26rem. Ways are a <ul> of cards, 3 in a row from 56rem, inline SVG icons by way.icon: car, bus, taxi, train. Hotels are cards with a bed icon, a serif name and a caption, two per row from 56rem. The photo arch is border-radius 50%/30%. Palette --vibeui-map-007-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-138 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre and pin from latitude/longitude, theme by tone or explicit; a filter saturate(.7) sepia(.15) keeps the map from fighting the cream. From 56rem the top is a .9fr/1.1fr grid, the map min-height 26rem. Ways are a <ul> of cards, 3 in a row from 56rem, inline SVG icons by way.icon: car, bus, taxi, train. Hotels are cards with a bed icon, a serif name and a caption, two per row from 56rem. The photo arch is border-radius 50%/30%. Palette --vibeui-map-007-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained “how to get there” block for a countryside wedding: an arched venue photo, a Yandex Map, three ways to travel and where to stay. Coordinates, ways and hotels via props.",
               "preserve": [
+                "the card-138 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the arched venue photo next to the muted map — a “mood + facts” pair",
                 "the three travel options as icon cards in one row from 56rem",
                 "“where to stay” as bed-icon cards under the options"
@@ -1367,7 +1402,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-139"
+      ],
       "files": [
         {
           "path": "map-008/map-008.tsx",
@@ -1375,7 +1412,7 @@
           "target": "@components/vibeui/map-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр — среднее по точкам, метки в pt через «~», theme по tone или явно; поверх filter saturate(.75) sepia(.2). От 56rem сетка 1.3fr/.7fr, карта min-height 30rem с бумажной рамкой box-shadow. Фото — на белом картоне со скотчем ::before, повёрнуто; точки — карточки с кодом слева; плашка трансфера — тёмно-синяя с иконкой автобуса. Палитра --vibeui-map-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-139 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: центр — среднее по точкам, метки в pt через «~», theme по tone или явно; поверх filter saturate(.75) sepia(.2). От 56rem сетка 1.3fr/.7fr, карта min-height 30rem с бумажной рамкой box-shadow. Фото — на белом картоне со скотчем ::before, повёрнуто; точки — карточки с кодом слева; плашка трансфера — тёмно-синяя с иконкой автобуса. Палитра --vibeui-map-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1388,7 +1425,8 @@
           "airport",
           "transfer",
           "cuba",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1407,6 +1445,7 @@
           "usage": "<Map008\n  title=\"Кайо-Ларго и Гавана\"\n  points={[\n    { code: \"CYO\", title: \"Отель на Кайо-Ларго\", text: \"Бунгало у воды\", latitude: 21.6098, longitude: -81.5476 },\n    { code: \"PLY\", title: \"Playa Paraíso\", text: \"Церемония и ужин\", latitude: 21.6245, longitude: -81.5628 },\n    { code: \"HAV\", title: \"Гавана\", text: \"Первая и последняя ночь\", latitude: 23.1375, longitude: -82.3546 },\n  ]}\n  zoom={7}\n  image=\"/photos/hotel.webp\"\n  imageCaption=\"наш отель\"\n  transferTitle=\"Трансферы — на нас\"\n/>",
           "summary": "Самодостаточная карта свадьбы за границей: Яндекс Карта с несколькими метками, фото отеля на скотче, точки с кодами и плашка про трансфер. Координаты и тексты пропсами.",
           "preserve": [
+            "импорты card-139 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "выцветшую карту в бумажной рамке рядом с фото на скотче",
             "список точек с трёхбуквенными кодами, как в бортовом журнале",
             "тёмную плашку «трансферы — на нас» с автобусом"
@@ -1457,10 +1496,11 @@
           "en": {
             "title": "Wedding-abroad map with hotel, beach and transfer",
             "description": "“Where it all happens” for a destination wedding: a muted Yandex Map with pins for the hotel, beach and airport, a taped hotel photo with a handwritten caption and a list of points with codes like an in-flight magazine; a dark “transfers on us” panel below.",
-            "docs": "One file, zero dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre is the mean of the points, pins in pt joined by “~”, theme by tone or explicit; a filter saturate(.75) sepia(.2) on top. From 56rem a 1.3fr/.7fr grid, the map min-height 30rem with a paper frame box-shadow. The photo is on white card with a ::before tape, tilted; points are cards with the code on the left; the transfer panel is deep navy with a bus icon. Palette --vibeui-map-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-139 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: centre is the mean of the points, pins in pt joined by “~”, theme by tone or explicit; a filter saturate(.75) sepia(.2) on top. From 56rem a 1.3fr/.7fr grid, the map min-height 30rem with a paper frame box-shadow. The photo is on white card with a ::before tape, tilted; points are cards with the code on the left; the transfer panel is deep navy with a bus icon. Palette --vibeui-map-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained destination-wedding map: a Yandex Map with several pins, a taped hotel photo, coded points and a transfer panel. Coordinates and copy via props.",
               "preserve": [
+                "the card-139 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the muted map in a paper frame next to the taped photo",
                 "the list of points with three-letter codes like an in-flight magazine",
                 "the dark “transfers on us” panel with the bus"
@@ -1540,7 +1580,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-140"
+      ],
       "files": [
         {
           "path": "map-009/map-009.tsx",
@@ -1548,7 +1590,7 @@
           "target": "@components/vibeui/map-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: ll и pt из latitude/longitude, theme по tone или явно; поверх filter saturate(.7) и внутренняя тень. От 56rem сетка 1.3fr/.7fr, карта min-height 28rem. Фото — в рамке с инеем по углам (radial-gradient, screen); адрес и ссылка «открыть в Яндекс Картах». Карточки дороги — inline SVG по way.icon: car, bus, bed, parking; 2 в ряд от 56rem, 4 от 72rem; наведение — акцентная рамка. Палитра --vibeui-map-009-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-140 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Карта — iframe yandex.ru/map-widget/v1 без ключа: ll и pt из latitude/longitude, theme по tone или явно; поверх filter saturate(.7) и внутренняя тень. От 56rem сетка 1.3fr/.7fr, карта min-height 28rem. Фото — в рамке с инеем по углам (radial-gradient, screen); адрес и ссылка «открыть в Яндекс Картах». Карточки дороги — inline SVG по way.icon: car, bus, bed, parking; 2 в ряд от 56rem, 4 от 72rem; наведение — акцентная рамка. Палитра --vibeui-map-009-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -1560,7 +1602,8 @@
           "parking",
           "hotel",
           "venue",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1579,6 +1622,7 @@
           "usage": "<Map009\n  title=\"Лесная усадьба\"\n  address=\"Московская область, деревня Лесная, 12\"\n  latitude={55.9107}\n  longitude={36.8624}\n  zoom={11}\n  image=\"/photos/house.webp\"\n  imageCaption=\"дом, где всё случится\"\n  ways={[\n    { icon: \"car\", title: \"На машине\", text: \"Час от центра.\" },\n    { icon: \"bus\", title: \"Трансфер\", text: \"От метро в 14:30 и 15:15.\" },\n    { icon: \"bed\", title: \"Ночёвка\", text: \"Двенадцать комнат.\" },\n  ]}\n/>",
           "summary": "Самодостаточный блок «как доехать»: тёмная Яндекс Карта с домом, фото в морозной раме, адрес и карточки «машина / трансфер / ночёвка / парковка». Координаты и тексты пропсами.",
           "preserve": [
+            "импорты card-140 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "тёмную карту с внутренней тенью рядом с фото в морозной раме",
             "карточки дороги с иконками в светящихся кольцах",
             "адрес и ссылку «открыть в Яндекс Картах» под фото"
@@ -1629,10 +1673,11 @@
           "en": {
             "title": "Getting there: a dark map, the house in a frosted frame and four travel cards",
             "description": "“Getting there” for a winter wedding: a dark Yandex Map with a single house pin, a house photo in a frosted frame with a handwritten caption and the address; below, “by car”, “shuttle”, “staying over” and “parking” cards with icons in glowing rings.",
-            "docs": "One file, zero dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: ll and pt from latitude/longitude, theme by tone or explicit; a filter saturate(.7) and an inner shadow on top. From 56rem a 1.3fr/.7fr grid, the map min-height 28rem. The photo sits in a frame with corner frost (radial-gradient, screen); the address and an “open in Yandex Maps” link. Travel cards are inline SVGs by way.icon: car, bus, bed, parking; 2 per row from 56rem, 4 from 72rem; hover gives an accent border. Palette --vibeui-map-009-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-140 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The map is a yandex.ru/map-widget/v1 iframe without a key: ll and pt from latitude/longitude, theme by tone or explicit; a filter saturate(.7) and an inner shadow on top. From 56rem a 1.3fr/.7fr grid, the map min-height 28rem. The photo sits in a frame with corner frost (radial-gradient, screen); the address and an “open in Yandex Maps” link. Travel cards are inline SVGs by way.icon: car, bus, bed, parking; 2 per row from 56rem, 4 from 72rem; hover gives an accent border. Palette --vibeui-map-009-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained “getting there” block: a dark Yandex Map with the house, a photo in a frosted frame, the address and “car / shuttle / stay / parking” cards. Coordinates and copy via props.",
               "preserve": [
+                "the card-140 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the dark map with an inner shadow next to the photo in a frosted frame",
                 "the travel cards with icons in glowing rings",
                 "the address and the “open in Yandex Maps” link under the photo"
@@ -1710,7 +1755,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-141"
+      ],
       "files": [
         {
           "path": "map-010/map-010.tsx",
@@ -1729,7 +1776,8 @@
           "cafe",
           "bakery",
           "chart",
-          "address"
+          "address",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -1740,6 +1788,7 @@
           "usage": "<Map010\n  mapSrc=\"https://yandex.ru/map-widget/v1/?ll=37.5860,55.7330&z=15&pt=37.5860,55.7330,pm2rdm\"\n  pinTitle=\"Корка · Хамовники\"\n  openHour={7}\n  queue={[6, 9, 7, 4, 3, 5, 6, 4, 2, 2, 3, 4, 5, 3]}\n/>",
           "summary": "Контакты заведения с картой и живой подсказкой «сколько народу сейчас» — по условным данным по часам. Для кафе, пекарни, барбершопа.",
           "preserve": [
+            "импорты card-141 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "час посетителя через useSyncExternalStore с серверным null; до гидрации — второй час работы",
             "столбики — grid с числом колонок из переменной, высота через --vibeui-map-010-v от максимума",
             "карта — iframe с filter: saturate(.7) под палитру; без mapSrc остаётся серая подложка"
@@ -1805,6 +1854,7 @@
             "ai": {
               "summary": "Venue contacts with a map and a live “how busy now” hint from hourly estimates. For a café, bakery or barbershop.",
               "preserve": [
+                "the card-141 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the visitor's hour via useSyncExternalStore with a null server snapshot; before hydration — the second opening hour",
                 "bars are a grid with the column count from a variable, height via --vibeui-map-010-v relative to the max",
                 "the map is an iframe with filter: saturate(.7) to match the palette; without mapSrc a grey plate remains"
@@ -1866,10 +1916,12 @@
                 "warnBefore": "bread runs out by 14:00 — come before",
                 "warnAfter": "today's bread is almost gone — tomorrow from seven"
               }
-            }
+            },
+            "docs": "A composite block: imports card-141 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-141 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "map-011",
@@ -1880,7 +1932,9 @@
         "map"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "map-011/map-011.tsx",
@@ -1901,7 +1955,8 @@
           "svg",
           "directions",
           "hours",
-          "phone"
+          "phone",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -1912,6 +1967,7 @@
           "usage": "<Map011\n  title=\"Бокс на Обводном, ворота 42\"\n  address=\"наб. Обводного канала, 150, корп. 3\"\n  facts={[{ label: \"Телефон\", value: \"+7 (812) 420-42-42\", href: \"tel:+78124204242\" }]}\n  mapsHref=\"https://yandex.ru/maps/...\"\n/>",
           "summary": "Контакты и схема проезда для автосервиса: svg-карта с маршрутом и пульсирующей меткой, кнопки в навигаторы.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "маршрут — path с pathLength=1, keyframes 5 с: dashoffset 1 → 0, пауза, затухание, снова",
             "кольца — два circle с transform-box:fill-box, scale .4 → 2.6 с opacity, второе с задержкой 1,2 с",
             "svg с preserveAspectRatio slice в контейнере aspect-ratio 3/2; подписи — html поверх в процентах от контейнера"
@@ -1984,6 +2040,7 @@
             "ai": {
               "summary": "Contacts and directions for a car service: an svg map with a route and a pulsing pin, navigator buttons.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the route is a path with pathLength=1, 5 s keyframes: dashoffset 1 → 0, hold, fade, again",
                 "the rings are two circles with transform-box:fill-box, scale .4 → 2.6 with opacity, the second delayed 1.2 s",
                 "the svg uses preserveAspectRatio slice in an aspect-ratio 3/2 container; labels are html on top in container percentages"
@@ -2052,10 +2109,12 @@
                 "pinLabel": "Garage 42",
                 "fromLabel": "Embarcadero station · 7 min"
               }
-            }
+            },
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

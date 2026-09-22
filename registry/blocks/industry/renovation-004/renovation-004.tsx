@@ -1,6 +1,7 @@
 "use client"
 
 import { useSyncExternalStore, type CSSProperties } from "react"
+import { Card096 } from "@/registry/components/card/card-096/card-096"
 
 export type Renovation004Report = {
   /** День стройки, с 1. */
@@ -102,16 +103,6 @@ container-type:inline-size;
 [data-vibeui-block="renovation-004"] [data-part="meta"] dt{font-family:var(--vibeui-renovation-004-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-renovation-004-muted);padding-top:.15rem}
 [data-vibeui-block="renovation-004"] [data-part="meta"] dd{margin:0;font-variant-numeric:tabular-nums}
 [data-vibeui-block="renovation-004"] [data-part="feed"]{position:relative;display:grid;gap:0;margin:0;padding:0 0 0 1.4rem;list-style:none;border-left:1px dashed color-mix(in oklab,var(--vibeui-renovation-004-fg) 35%,transparent)}
-[data-vibeui-block="renovation-004"] [data-part="report"]{position:relative;display:grid;gap:.5rem;padding:0 0 1.6rem}
-[data-vibeui-block="renovation-004"] [data-part="report"]::before{content:"";position:absolute;left:-1.4rem;top:.35rem;width:.7rem;height:.7rem;margin-left:-.35rem;background:var(--vibeui-renovation-004-accent);border:2px solid var(--vibeui-renovation-004-bg);box-shadow:0 0 0 1px var(--vibeui-renovation-004-fg)}
-[data-vibeui-block="renovation-004"] [data-part="report"][data-future="true"]{opacity:.55}
-[data-vibeui-block="renovation-004"] [data-part="report"][data-future="true"]::before{background:transparent}
-[data-vibeui-block="renovation-004"] [data-part="when"]{display:flex;flex-wrap:wrap;gap:.3rem .8rem;margin:0;font-family:var(--vibeui-renovation-004-mono);font-size:.7rem;letter-spacing:.04em;color:var(--vibeui-renovation-004-muted);font-variant-numeric:tabular-nums}
-[data-vibeui-block="renovation-004"] [data-part="when"] b{font-weight:600;color:var(--vibeui-renovation-004-fg)}
-[data-vibeui-block="renovation-004"] [data-part="report"] h3{margin:0;font-family:var(--vibeui-renovation-004-display);font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
-[data-vibeui-block="renovation-004"] [data-part="report"] p{margin:0;font-size:.92rem;color:var(--vibeui-renovation-004-muted)}
-[data-vibeui-block="renovation-004"] [data-part="report"] img{display:block;width:100%;max-width:26rem;aspect-ratio:3/2;object-fit:cover;border:1px solid var(--vibeui-renovation-004-line);margin-top:.3rem}
-[data-vibeui-block="renovation-004"] [data-part="by"]{font-family:var(--vibeui-renovation-004-mono);font-size:.68rem;color:var(--vibeui-renovation-004-muted)}
 @keyframes vibeui-renovation-004-pulse{to{box-shadow:0 0 0 .6rem transparent}}
 @container (min-width: 60rem){[data-vibeui-block="renovation-004"] [data-part="grid"]{grid-template-columns:22rem minmax(0,1fr);gap:2.5rem}[data-vibeui-block="renovation-004"] [data-part="card"]{position:sticky;top:5.5rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="renovation-004"] *{animation:none!important;transition:none!important}}`
@@ -242,18 +233,7 @@ export function Renovation004({
               {feed.map((report) => {
                 const future = today !== null && report.day > day
                 return (
-                  <li key={`${report.day}-${report.title}`} data-part="report" data-future={future}>
-                    <p data-part="when">
-                      <b>{dayLabel.replace("{n}", String(report.day))}</b>
-                      <span>{today === null ? "" : formatDay(dayStart, report.day, months)}</span>
-                      {report.time ? <span>{report.time}</span> : null}
-                      {future ? <span>{plannedLabel}</span> : null}
-                    </p>
-                    <h3>{report.title}</h3>
-                    <p>{report.text}</p>
-                    {report.photo && !future ? <img src={report.photo} alt={report.title} loading="lazy" /> : null}
-                    {report.by ? <span data-part="by">— {report.by}</span> : null}
-                  </li>
+                  <Card096 key={`${report.day}-${report.title}`} data-part="report" day={report.day} title={report.title} time={report.time} text={report.text} photo={report.photo} by={report.by} dayLabel={dayLabel} months={months} plannedLabel={plannedLabel} future={future} today={today} dayStart={dayStart} accent={accent} />
                 )
               })}
             </ol>

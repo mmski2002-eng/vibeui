@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties, type MouseEvent } from "react"
+import { Button099 } from "@/registry/components/button/button-099/button-099"
 
 export type Podcast007Track = {
   id: string
@@ -67,6 +68,7 @@ const STYLES = `
 [data-vibeui-block="podcast-007"][data-open="true"]{transform:translate(-50%,0) scale(1);transition:transform .7s var(--vibeui-podcast-007-spring)}
 [data-vibeui-block="podcast-007"][data-docked="false"]{position:relative;left:auto;bottom:auto;width:100%;transform:none;padding:1rem}
 [data-vibeui-block="podcast-007"] *{box-sizing:border-box}
+[data-vibeui-block="podcast-007"] [data-part="play"]{width:2.8rem}
 [data-vibeui-block="podcast-007"] [data-part="halo"]{position:absolute;inset:-40% -10% -60%;border-radius:50%;background:radial-gradient(ellipse at 50% 100%,color-mix(in oklab,var(--vibeui-podcast-007-accent) 45%,transparent),transparent 65%);filter:blur(30px);opacity:0;transition:opacity .8s;pointer-events:none;z-index:-1}
 [data-vibeui-block="podcast-007"][data-playing="true"] [data-part="halo"]{opacity:1;animation:vibeui-podcast-007-breathe 2.6s ease-in-out infinite}
 [data-vibeui-block="podcast-007"] [data-part="bar"]{position:relative;display:grid;grid-template-columns:auto auto 1fr auto;gap:.9rem;align-items:center;padding:.6rem .8rem .6rem .6rem;border-radius:1.2rem;background:color-mix(in oklab,var(--vibeui-podcast-007-bg) 86%,transparent);backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 30px 60px -30px rgb(0 0 0 / .7),0 0 0 1px var(--vibeui-podcast-007-line),0 0 0 0 color-mix(in oklab,var(--vibeui-podcast-007-accent) 30%,transparent);transition:box-shadow .5s}
@@ -81,10 +83,6 @@ const STYLES = `
 [data-vibeui-block="podcast-007"][data-playing="true"] [data-part="eq"] i{animation:vibeui-podcast-007-eq .7s ease-in-out infinite alternate}
 [data-vibeui-block="podcast-007"] [data-part="eq"] i:nth-child(2){animation-delay:-.25s}
 [data-vibeui-block="podcast-007"] [data-part="eq"] i:nth-child(3){animation-delay:-.45s}
-[data-vibeui-block="podcast-007"] [data-part="play"]{width:2.8rem;height:2.8rem;border-radius:50%;border:0;background:var(--vibeui-podcast-007-accent);color:var(--vibeui-podcast-007-on-accent);display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px -8px var(--vibeui-podcast-007-accent);transition:transform .25s var(--vibeui-podcast-007-spring),box-shadow .3s}
-[data-vibeui-block="podcast-007"] [data-part="play"]:hover{transform:scale(1.1)}
-[data-vibeui-block="podcast-007"] [data-part="play"]:active{transform:scale(.94)}
-[data-vibeui-block="podcast-007"] [data-part="play"] svg{width:1.1rem;height:1.1rem;fill:currentColor}
 [data-vibeui-block="podcast-007"] [data-part="info"]{min-width:0}
 [data-vibeui-block="podcast-007"] [data-part="name"]{font-family:var(--vibeui-podcast-007-display);font-weight:700;font-size:1.15rem;text-transform:uppercase;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 [data-vibeui-block="podcast-007"] [data-part="sub"]{font-size:.78rem;color:var(--vibeui-podcast-007-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.15rem}
@@ -184,18 +182,7 @@ export function Podcast007({ initial, playLabel = "Слушать", pauseLabel =
               <i />
             </span>
           </div>
-          <button type="button" data-part="play" aria-label={playing ? pauseLabel : playLabel} aria-pressed={playing} onClick={() => setPlaying((value) => !value)}>
-            {playing ? (
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="6" y="5" width="4" height="14" rx="1" />
-                <rect x="14" y="5" width="4" height="14" rx="1" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M8 5.5v13l11-6.5z" />
-              </svg>
-            )}
-          </button>
+          <Button099 data-part="play" pauseLabel={pauseLabel} playLabel={playLabel} playing={playing} onClick={() => setPlaying((value) => !value)} accent={accent} />
           <div data-part="info">
             <div data-part="name">{track?.title ?? ""}</div>
             <div data-part="sub">

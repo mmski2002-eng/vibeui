@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react"
+import { Footerlinks001 } from "@/registry/components/navigation/footerlinks-001/footerlinks-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 type Footer015Link = {
   label: string
@@ -76,42 +80,15 @@ font-size:0.9375rem;line-height:1.55;max-width:48ch;
 [data-vibeui-block="footer-015"] [data-part="cta-actions"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem 1.25rem;
 }
-[data-vibeui-block="footer-015"] [data-part="cta-button"]{
-display:inline-block;
-padding:0.6875rem 1.375rem;border-radius:0.75rem;
-background:var(--vibeui-footer-015-accent-fill);color:var(--vibeui-footer-015-accent-fg);
-text-decoration:none;font-size:0.9375rem;font-weight:680;
-transition:filter var(--vibeui-footer-015-dur-2) ease,transform var(--vibeui-footer-015-dur-2) ease;
-}
-[data-vibeui-block="footer-015"] [data-part="cta-button"]:hover{filter:brightness(1.06);transform:translateY(-1px)}
-[data-vibeui-block="footer-015"] [data-part="cta-secondary"]{
-color:var(--vibeui-footer-015-accent);text-decoration:none;
-font-size:0.9375rem;font-weight:650;
-transition:opacity var(--vibeui-footer-015-dur-2) ease;
-}
-[data-vibeui-block="footer-015"] [data-part="cta-secondary"]:hover{opacity:0.8}
 [data-vibeui-block="footer-015"] [data-part="columns"]{
 display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.75rem 1.25rem;
 padding-bottom:2.25rem;
 }
-[data-vibeui-block="footer-015"] [data-part="column-title"]{
-margin:0 0 0.75rem;
-font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-}
-[data-vibeui-block="footer-015"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:0.5rem}
-[data-vibeui-block="footer-015"] [data-part="column"] a{
-color:var(--vibeui-footer-015-muted);text-decoration:none;font-size:0.875rem;
-transition:color var(--vibeui-footer-015-dur-2) ease;
-}
-[data-vibeui-block="footer-015"] [data-part="column"] a:hover{color:var(--vibeui-footer-015-accent)}
 [data-vibeui-block="footer-015"] [data-part="bottom"]{
 padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-015-border);
 }
 [data-vibeui-block="footer-015"] [data-part="copyright"]{
 margin:0;color:var(--vibeui-footer-015-muted);font-size:0.8125rem;
-}
-[data-vibeui-block="footer-015"] a:focus-visible{
-outline:2px solid var(--vibeui-footer-015-accent);outline-offset:3px;
 }
 @container (min-width: 40rem){
 [data-vibeui-block="footer-015"] [data-part="shell"]{padding:3.5rem 2rem 1.75rem}
@@ -233,30 +210,26 @@ export function Footer015({
               <p data-part="cta-note">{ctaNote}</p>
             </div>
             <div data-part="cta-actions">
-              <a data-part="cta-button" href={ctaHref}>
-                {ctaButtonLabel}
-              </a>
-              <a data-part="cta-secondary" href={ctaSecondaryHref}>
-                {ctaSecondaryLabel}
-              </a>
+              <Button016
+                data-part="cta-button"
+                label={ctaButtonLabel}
+                href={ctaHref}
+                external={false}
+                size="md"
+                tone="accent"
+                accent={accent}
+              />
+              <Button077
+                data-part="cta-secondary"
+                label={ctaSecondaryLabel}
+                href={ctaSecondaryHref}
+                accent={accent}
+              />
             </div>
           </div>
           <div data-part="columns">
             {columns.map((column) => (
-              <nav
-                key={column.title}
-                data-part="column"
-                aria-label={column.title}
-              >
-                <p data-part="column-title">{column.title}</p>
-                <ul>
-                  {column.links.map((link) => (
-                    <li key={link.href}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <Footerlinks001 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </div>
           <div data-part="bottom">

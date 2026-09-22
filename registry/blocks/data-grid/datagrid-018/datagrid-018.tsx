@@ -1,6 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
+import { Card168 } from "@/registry/components/card/card-168/card-168"
 import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Datagrid018Row = {
@@ -65,30 +66,6 @@ border:1px solid var(--vibeui-datagrid-018-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-018-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-018"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-018"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-018-border);
-}
-[data-vibeui-block="datagrid-018"] [data-part="field"]{
-display:flex;align-items:center;gap:0.375rem;flex:1 1 12rem;min-width:9rem;
-padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-018-border);background:transparent;
-}
-[data-vibeui-block="datagrid-018"] [data-part="field"]:focus-within{border-color:var(--vibeui-datagrid-018-accent)}
-[data-vibeui-block="datagrid-018"] [data-part="field"]::before{
-content:"";flex:none;width:0.75rem;height:0.75rem;border-radius:999px;
-border:1.5px solid var(--vibeui-datagrid-018-muted);
-box-shadow:0.375rem 0.375rem 0 -0.28rem var(--vibeui-datagrid-018-muted);
-}
-[data-vibeui-block="datagrid-018"] [data-part="field"] input{
-flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:0.8125rem;color:inherit;
-}
-[data-vibeui-block="datagrid-018"] [data-part="only"]{
-display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-018-muted);cursor:pointer;
-}
-[data-vibeui-block="datagrid-018"] [data-part="only"] input{accent-color:var(--vibeui-datagrid-018-accent);margin:0;width:0.9375rem;height:0.9375rem}
-[data-vibeui-block="datagrid-018"] [data-part="only"] input:focus-visible{outline:2px solid var(--vibeui-datagrid-018-accent);outline-offset:2px}
-[data-vibeui-block="datagrid-018"] [data-part="count"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-018-muted);flex:none}
 [data-vibeui-block="datagrid-018"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-018"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-018-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-018"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -295,35 +272,7 @@ export function Datagrid018({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <span data-part="field">
-            <label htmlFor={inputId} hidden>
-              {searchLabel}
-            </label>
-            <input
-              id={inputId}
-              type="search"
-              value={query}
-              placeholder={placeholder}
-              onChange={(event) => setTyped(event.target.value)}
-            />
-          </span>
-          <label data-part="only">
-            <input
-              type="checkbox"
-              checked={onlyHits}
-              onChange={(event) => setOnlyHits(event.target.checked)}
-            />
-            {onlyText}
-          </label>
-          <p data-part="count" role="status" aria-live="polite">
-            {needle === ""
-              ? rowsTemplate.replace("{count}", String(rows.length))
-              : matchTemplate
-                  .replace("{matches}", String(total))
-                  .replace("{rows}", String(matched.length))}
-          </p>
-        </div>
+        <Card168 data-part="bar" searchLabel={searchLabel} placeholder={placeholder} onlyText={onlyText} rowsTemplate={rowsTemplate} rows={rows} matchTemplate={matchTemplate} inputId={inputId} matched={matched} needle={needle} onlyHits={onlyHits} query={query} setOnlyHits={setOnlyHits} setTyped={setTyped} total={total} accent={accent} />
         <div
           data-part="scroll"
           role="region"

@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react"
+import { Card078 } from "@/registry/components/card/card-078/card-078"
+import { Chart030 } from "@/registry/components/chart/chart-030/chart-030"
 
 export type Bento012Sensor = {
   label: string
@@ -84,22 +86,8 @@ container-type:inline-size;
 [data-vibeui-block="bento-012"] [data-part="eq"]{display:flex;align-items:flex-end;gap:.35rem;height:7rem;margin-top:1.5rem}
 [data-vibeui-block="bento-012"] [data-part="eq"] i{flex:1;border-radius:.3rem .3rem 0 0;background:linear-gradient(180deg,var(--vibeui-bento-012-accent),color-mix(in oklab,var(--vibeui-bento-012-accent) 40%,transparent));transform-origin:bottom;transform:scaleY(var(--vibeui-bento-012-h));animation:vibeui-bento-012-eq 1.3s ease-in-out infinite alternate;animation-delay:var(--vibeui-bento-012-d);height:100%}
 [data-vibeui-block="bento-012"] [data-part="rings"]{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.5rem}
-[data-vibeui-block="bento-012"] [data-part="ring"]{display:grid;gap:.4rem;justify-items:center;font-family:var(--vibeui-bento-012-mono);font-size:.68rem;color:var(--vibeui-bento-012-muted);text-align:center}
-[data-vibeui-block="bento-012"] [data-part="ring"] i{display:block;position:relative;width:4.2rem;height:4.2rem;border-radius:50%;background:conic-gradient(var(--vibeui-bento-012-accent) var(--vibeui-bento-012-v),var(--vibeui-bento-012-line) 0);mask:radial-gradient(farthest-side,transparent 70%,#000 72%);-webkit-mask:radial-gradient(farthest-side,transparent 70%,#000 72%);animation:vibeui-bento-012-fill 1.6s cubic-bezier(.2,.7,.2,1) both}
-[data-vibeui-block="bento-012"] [data-part="ring"] b{position:absolute;inset:0;display:grid;place-items:center;font-weight:500;font-size:.72rem;color:var(--vibeui-bento-012-fg)}
-[data-vibeui-block="bento-012"] [data-part="ring"] [data-part="wrap"]{position:relative;display:block;width:4.2rem;height:4.2rem}
 [data-vibeui-block="bento-012"] [data-part="phone"]{margin:.5rem auto 0;width:min(100%,13rem);border-radius:1.6rem;border:.4rem solid color-mix(in oklab,var(--vibeui-bento-012-fg) 85%,#000);background:var(--vibeui-bento-012-bg);padding:1.4rem .9rem 1rem;box-shadow:0 30px 50px -30px rgb(0 0 0/.6)}
 [data-vibeui-block="bento-012"] [data-part="phone"]::before{content:"";display:block;width:2.6rem;height:.4rem;margin:-.8rem auto .8rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-bento-012-fg) 85%,#000)}
-[data-vibeui-block="bento-012"] [data-part="alarm"]{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.55rem 0;border-top:1px solid var(--vibeui-bento-012-line)}
-[data-vibeui-block="bento-012"] [data-part="alarm"]:first-of-type{border-top:0}
-[data-vibeui-block="bento-012"] [data-part="alarm"] b{display:block;font-family:var(--vibeui-bento-012-mono);font-weight:500;font-size:1.05rem;letter-spacing:-.02em}
-[data-vibeui-block="bento-012"] [data-part="alarm"] small{display:block;font-size:.66rem;color:var(--vibeui-bento-012-muted)}
-[data-vibeui-block="bento-012"] [data-part="toggle"]{position:relative;flex-shrink:0;width:2rem;height:1.15rem;border-radius:999px;background:var(--vibeui-bento-012-line)}
-[data-vibeui-block="bento-012"] [data-part="toggle"]::after{content:"";position:absolute;top:.15rem;left:.15rem;width:.85rem;height:.85rem;border-radius:50%;background:var(--vibeui-bento-012-bg);box-shadow:0 1px 3px rgb(0 0 0/.4);transition:transform .3s}
-[data-vibeui-block="bento-012"] [data-part="toggle"][data-on="true"]{background:var(--vibeui-bento-012-accent)}
-[data-vibeui-block="bento-012"] [data-part="toggle"][data-on="true"]::after{transform:translateX(.85rem)}
-[data-vibeui-block="bento-012"] [data-part="toggle"][data-live="true"]{animation:vibeui-bento-012-toggle 4s ease-in-out infinite}
-[data-vibeui-block="bento-012"] [data-part="toggle"][data-live="true"]::after{animation:vibeui-bento-012-knob 4s ease-in-out infinite}
 [data-vibeui-block="bento-012"] [data-part="spectrum"]{position:relative;height:1.4rem;margin-top:1.5rem;border-radius:999px;background:linear-gradient(90deg,#ff8a2a,#ffb454,#fff1d0,#dbe9ff,#b8d3ff)}
 [data-vibeui-block="bento-012"] [data-part="spectrum"] i{position:absolute;top:-.3rem;left:0;right:0;height:2rem;animation:vibeui-bento-012-marker 5s cubic-bezier(.45,0,.55,1) infinite alternate}
 [data-vibeui-block="bento-012"] [data-part="spectrum"] i::before{content:"";position:absolute;left:0;top:0;width:2rem;height:2rem;border-radius:50%;border:3px solid var(--vibeui-bento-012-fg);background:var(--vibeui-bento-012-bg);box-shadow:0 4px 10px rgb(0 0 0/.3)}
@@ -190,13 +178,7 @@ export function Bento012({
             <article data-part="tile" data-kind="sensors">
               <div data-part="rings">
                 {sensors.map((sensor) => (
-                  <div key={sensor.label} data-part="ring">
-                    <span data-part="wrap">
-                      <i style={{ ["--vibeui-bento-012-v" as string]: `${sensor.percent}%` }} aria-hidden="true" />
-                      <b>{sensor.value}</b>
-                    </span>
-                    {sensor.label}
-                  </div>
+                  <Chart030 key={sensor.label} data-part="ring" label={sensor.label} percent={sensor.percent} value={sensor.value} accent={accent} />
                 ))}
               </div>
               <div data-part="text">
@@ -206,13 +188,7 @@ export function Bento012({
             <article data-part="tile" data-kind="app">
               <div data-part="phone" aria-hidden="true">
                 {alarms.map((alarm, index) => (
-                  <div key={alarm.time} data-part="alarm">
-                    <span>
-                      <b>{alarm.time}</b>
-                      <small>{alarm.label}</small>
-                    </span>
-                    <i data-part="toggle" data-on={alarm.on ? "true" : "false"} data-live={index === alarms.length - 1 ? "true" : undefined} />
-                  </div>
+                  <Card078 key={alarm.time} data-part="alarm" time={alarm.time} label={alarm.label} on={alarm.on} live={index === alarms.length - 1} accent={accent} />
                 ))}
               </div>
               <div data-part="text">

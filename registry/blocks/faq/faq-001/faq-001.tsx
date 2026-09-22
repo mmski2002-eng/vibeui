@@ -1,9 +1,13 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-type Faq001Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion002,
+  type Accordion002Item,
+} from "@/registry/components/accordion/accordion-002/accordion-002"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
+type Faq001Item = Accordion002Item
 
 export type Faq001Props = {
   eyebrow?: string
@@ -14,6 +18,8 @@ export type Faq001Props = {
   contactLabel?: string
   contactHref?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
+  elevation?: "lift" | "ring" | "flat"
   background?: string
   accent?: string
   className?: string
@@ -26,22 +32,21 @@ export type Faq001Props = {
 // колонки включается от ширины блока, а не окна, поэтому миниатюра каталога
 // показывает настоящий дизайн.
 //
-// Раскрытие держат нативные details/summary: ответ доступен поиску по странице
-// (браузер раскрывает найденный раздел) и работает до гидратации. Разделы
-// независимы намеренно — на странице вопросов люди открывают несколько сразу.
+// Составной блок: список вопросов — accordion-002 (карточки на нативных
+// details, разделы независимы: на странице вопросов открывают несколько
+// сразу), ссылка «задать вопрос» — button-077. Блок владеет раскладкой и
+// заголовком, частям передаёт только пропсы.
 //
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, она темнеет вместе со страницей.
-const STYLES = `
+const STYLES = `[data-vibeui-block="faq-001"] [data-part="contact"]{margin-top:0.375rem}
+
 :where([data-vibeui-block="faq-001"]){
 --vibeui-faq-001-bg:transparent;
---vibeui-faq-001-card:light-dark(oklch(1 0 0),oklch(0.24 0 265));
 --vibeui-faq-001-ink:light-dark(oklch(0.22 0 265),oklch(0.95 0 265));
 --vibeui-faq-001-muted:light-dark(oklch(0.5 0 265),oklch(0.72 0 265));
---vibeui-faq-001-border:light-dark(oklch(0.91 0 265),oklch(0.34 0 265));
 --vibeui-faq-001-accent:light-dark(oklch(0.28 0 0),oklch(0.903 0 0));
 --vibeui-faq-001-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
---vibeui-faq-001-dur-2:180ms;
 container-type:inline-size;
 }
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
@@ -58,62 +63,16 @@ font-family:var(--vibeui-faq-001-sans);
 max-width:76rem;margin:0 auto;padding:3.5rem 1.5rem;
 display:grid;gap:2rem;
 }
-[data-vibeui-block="faq-001"] [data-part="intro"]{display:flex;flex-direction:column;gap:0.625rem}
-[data-vibeui-block="faq-001"] [data-part="eyebrow"]{
-font-size:0.75rem;font-weight:650;letter-spacing:0.09em;text-transform:uppercase;
-color:var(--vibeui-faq-001-accent);
-}
-[data-vibeui-block="faq-001"] [data-part="title"]{
-margin:0;max-width:18ch;
-font-size:clamp(1.625rem,3.6cqi,2.5rem);line-height:1.1;letter-spacing:-0.02em;font-weight:670;
-}
-[data-vibeui-block="faq-001"] [data-part="description"]{
-margin:0;max-width:44ch;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-faq-001-muted);
-}
-[data-vibeui-block="faq-001"] [data-part="list"]{display:flex;flex-direction:column;gap:0.625rem}
-[data-vibeui-block="faq-001"] details{
-border:1px solid var(--vibeui-faq-001-border);border-radius:0.875rem;
-background:var(--vibeui-faq-001-card);
-transition:border-color var(--vibeui-faq-001-dur-2) ease;
-}
-[data-vibeui-block="faq-001"] details[open]{border-color:color-mix(in oklab,var(--vibeui-faq-001-accent) 35%,var(--vibeui-faq-001-border))}
-[data-vibeui-block="faq-001"] summary{
-display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
-padding:1rem 1.125rem;cursor:pointer;list-style:none;
-font-size:1rem;font-weight:560;line-height:1.4;
-}
-[data-vibeui-block="faq-001"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-001"] summary:focus-visible{outline:2px solid var(--vibeui-faq-001-accent);outline-offset:-2px;border-radius:0.875rem}
-/* Знак «плюс» из двух полос: вертикальная гаснет при раскрытии. */
-[data-vibeui-block="faq-001"] [data-part="sign"]{
-position:relative;flex:none;width:0.875rem;height:0.875rem;margin-top:0.3125rem;
-}
-[data-vibeui-block="faq-001"] [data-part="sign"]::before,
-[data-vibeui-block="faq-001"] [data-part="sign"]::after{
-content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;
-background:var(--vibeui-faq-001-muted);
-transition:transform var(--vibeui-faq-001-dur-2) ease,opacity var(--vibeui-faq-001-dur-2) ease;
-}
-[data-vibeui-block="faq-001"] [data-part="sign"]::after{transform:rotate(90deg)}
-[data-vibeui-block="faq-001"] details[open] [data-part="sign"]::after{transform:rotate(90deg) scaleX(0);opacity:0}
-[data-vibeui-block="faq-001"] details[open] [data-part="sign"]::before{background:var(--vibeui-faq-001-accent);color:oklch(from var(--vibeui-faq-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="faq-001"] [data-part="answer"]{
-margin:0;padding:0 1.125rem 1.125rem;
-font-size:0.9375rem;line-height:1.65;color:var(--vibeui-faq-001-muted);max-width:62ch;
-}
-[data-vibeui-block="faq-001"] [data-part="contact"]{
-display:inline-flex;align-items:center;gap:0.375rem;margin-top:0.375rem;
-color:var(--vibeui-faq-001-accent);text-decoration:none;font-size:0.9375rem;font-weight:560;
-}
-[data-vibeui-block="faq-001"] [data-part="contact"]:hover{text-decoration:underline}
-[data-vibeui-block="faq-001"] [data-part="contact"]:focus-visible{outline:2px solid var(--vibeui-faq-001-accent);outline-offset:3px}
+[data-vibeui-block="faq-001"] [data-part="intro"]{display:flex;flex-direction:column;align-items:flex-start;gap:0.625rem}
+[data-vibeui-block="faq-001"] [data-part="contact"]{margin-top:0.375rem}
+/* Карточки аккордеона получают всю правую колонку. */
+[data-vibeui-block="faq-001"] [data-part="list"]{width:100%;max-width:none}
 /* От 56rem — вопросы справа, заголовок слева и остаётся на месте. */
 @container (min-width: 56rem){
 [data-vibeui-block="faq-001"] [data-part="frame"]{
 grid-template-columns:22rem 1fr;gap:3rem;padding:5rem 3rem;
 }
 [data-vibeui-block="faq-001"] [data-part="intro"]{position:sticky;top:2rem;align-self:start}
-[data-vibeui-block="faq-001"] [data-part="title"]{font-size:clamp(2rem,2.9cqi,2.75rem)}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-001"] *{animation:none!important;transition:none!important}}
 `
@@ -170,8 +129,8 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 }
 
 /**
- * Секция вопросов и ответов на нативных details: раскрытие без JS.
- * Один файл, ноль зависимостей, собственная палитра.
+ * Секция вопросов и ответов из компонентов каталога: accordion-002 и
+ * button-077. Ставится одной командой вместе со своими частями.
  */
 export function Faq001({
   eyebrow = "Вопросы",
@@ -180,6 +139,8 @@ export function Faq001({
   items = DEFAULT_ITEMS,
   contactLabel = "Задать свой вопрос",
   contactHref = "#contact",
+  marker = "plus",
+  elevation = "ring",
   background = "",
   accent,
   className,
@@ -208,26 +169,29 @@ export function Faq001({
       >
         <div data-part="frame">
           <div data-part="intro">
-            {eyebrow ? <span data-part="eyebrow">{eyebrow}</span> : null}
-            <h2 data-part="title">{title}</h2>
-            {description ? <p data-part="description">{description}</p> : null}
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={description}
+              accent={accent}
+            />
             {contactLabel ? (
-              <a data-part="contact" href={contactHref}>
-                {contactLabel}
-              </a>
+              <Button077
+                data-part="contact"
+                label={contactLabel}
+                href={contactHref}
+                accent={accent}
+              />
             ) : null}
           </div>
-          <div data-part="list">
-            {items.map((item) => (
-              <details key={item.question}>
-                <summary>
-                  {item.question}
-                  <span data-part="sign" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
+          <Accordion002
+            elevation={elevation}
+            marker={marker}
+            data-part="list"
+            items={items}
+            accent={accent}
+          />
         </div>
       </section>
     </>

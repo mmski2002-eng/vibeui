@@ -66,6 +66,21 @@ export async function GET(
   const link = signRegistryLink(item.name)
   const query = `exp=${link.exp}&sig=${link.sig}`
   const registryUrl = `${siteUrl}/r/pro/${item.name}.json?${query}`
+  // Части составного блока — своими подписями: `/f/<dep>.tsx` проверяет имя.
+  const partFiles = (item.registryDependencies ?? []).flatMap((name) => {
+    const target = getCatalogItem(name)?.files?.[0]?.target
+
+    if (!target) return []
+
+    const partLink = signRegistryLink(name)
+
+    return [
+      {
+        target: target.replace(/^@/, ""),
+        url: `${siteUrl}/f/${name}.tsx?exp=${partLink.exp}&sig=${partLink.sig}`,
+      },
+    ]
+  })
 
   const brief = buildAgentBrief(item, {
     installCommand: `npx shadcn@latest add ${registryUrl}`,
@@ -73,6 +88,7 @@ export async function GET(
     kind,
     pageUrl: `${siteUrl}${pagePath}/${item.name}`,
     fileUrl: `${siteUrl}/f/${item.name}.tsx?${query}`,
+    partFiles,
     values,
     locale,
     theme,

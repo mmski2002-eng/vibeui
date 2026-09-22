@@ -1,5 +1,8 @@
 import type { CSSProperties, ReactNode } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 type Contact007Item = {
   label: string
   description: string
@@ -24,7 +27,8 @@ export type Contact007Props = {
 // Три канала связи равными карточками: назначение, обещанное время ответа и
 // одно действие. Время ответа вынесено отдельной плашкой, а не спрятано в
 // описании — именно оно решает, каким каналом воспользоваться.
-const STYLES = `
+const STYLES = `[data-vibeui-block="contact-007"] [data-part="link"]{margin-top:0.25rem}
+
 :where([data-vibeui-block="contact-007"]){
 --vibeui-contact-007-bg:transparent;
 --vibeui-contact-007-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
@@ -47,18 +51,6 @@ display:block;background:var(--vibeui-contact-007-bg);color:var(--vibeui-contact
 font-family:var(--vibeui-contact-007-font);
 }
 [data-vibeui-block="contact-007"] [data-part="shell"]{max-width:70rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="contact-007"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-contact-007-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="contact-007"] [data-part="title"]{
-margin:0;max-width:24ch;
-font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="contact-007"] [data-part="description"]{
-margin:0.875rem 0 0;max-width:52ch;color:var(--vibeui-contact-007-muted);
-font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="contact-007"] [data-part="grid"]{display:grid;gap:1rem;margin:2rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="contact-007"] [data-part="card"]{
 min-inline-size:0;display:flex;flex-direction:column;gap:0.875rem;
@@ -85,17 +77,6 @@ font-size:0.75rem;font-weight:650;letter-spacing:0.01em;
 [data-vibeui-block="contact-007"] [data-part="reply"]::before{
 content:"";width:0.4375rem;height:0.4375rem;border-radius:999px;flex:none;
 background:var(--vibeui-contact-007-accent);color:oklch(from var(--vibeui-contact-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="contact-007"] [data-part="link"]{
-margin-top:0.25rem;padding-top:0.875rem;border-top:1px solid var(--vibeui-contact-007-border);
-display:flex;align-items:center;gap:0.375rem;
-color:var(--vibeui-contact-007-accent);font-size:0.9375rem;font-weight:650;text-decoration:none;
-}
-[data-vibeui-block="contact-007"] [data-part="link"]::after{content:"→";transition:translate var(--vibeui-contact-007-dur-2) ease}
-[data-vibeui-block="contact-007"] [data-part="link"]:hover{text-decoration:underline;text-underline-offset:0.25em}
-[data-vibeui-block="contact-007"] [data-part="link"]:hover::after{translate:0.25rem 0}
-[data-vibeui-block="contact-007"] [data-part="link"]:focus-visible{
-outline:2px solid var(--vibeui-contact-007-accent);outline-offset:3px;border-radius:0.25rem;
-}
 @container (min-width: 40rem){
 [data-vibeui-block="contact-007"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="contact-007"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
@@ -231,9 +212,14 @@ export function Contact007({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={description}
+            ledeWidth={52}
+            accent={accent}
+          />
           <ul data-part="grid">
             {items.map((item) => (
               <li key={item.label} data-part="card">
@@ -243,9 +229,12 @@ export function Contact007({
                 <h3 data-part="name">{item.label}</h3>
                 <p data-part="text">{item.description}</p>
                 <span data-part="reply">{item.reply}</span>
-                <a data-part="link" href={item.href}>
-                  {item.linkLabel}
-                </a>
+                <Button077
+                  data-part="link"
+                  label={item.linkLabel}
+                  href={item.href}
+                  accent={accent}
+                />
               </li>
             ))}
           </ul>

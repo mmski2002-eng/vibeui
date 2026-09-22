@@ -1,6 +1,7 @@
 "use client"
 
 import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react"
+import { Button093 } from "@/registry/components/button/button-093/button-093"
 
 export type Restaurant003Dish = {
   name: string
@@ -72,10 +73,6 @@ container-type:inline-size;
 [data-vibeui-block="restaurant-003"] [data-part="tabs"]{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem;margin:0 0 2.5rem;padding:0;list-style:none}
 [data-vibeui-block="restaurant-003"] [data-part="pill"]{position:absolute;top:0;left:0;height:0;width:0;border-radius:999px;background:var(--vibeui-restaurant-003-accent);box-shadow:var(--vibeui-restaurant-003-glow);opacity:0;transform:translate(var(--vibeui-restaurant-003-px,0),var(--vibeui-restaurant-003-py,0));transition:transform .5s cubic-bezier(.3,.9,.2,1),width .5s cubic-bezier(.3,.9,.2,1),height .5s cubic-bezier(.3,.9,.2,1),opacity .3s;pointer-events:none}
 [data-vibeui-block="restaurant-003"] [data-part="pill"][data-ready="true"]{opacity:1}
-[data-vibeui-block="restaurant-003"] [data-part="tab"]{position:relative;z-index:1;appearance:none;border:1px solid var(--vibeui-restaurant-003-line);border-radius:999px;background:transparent;padding:.6rem 1.1rem;font:inherit;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-restaurant-003-fg);cursor:pointer;transition:color .35s,border-color .35s}
-[data-vibeui-block="restaurant-003"] [data-part="tab"]:hover{border-color:var(--vibeui-restaurant-003-accent-ink)}
-[data-vibeui-block="restaurant-003"] [data-part="tab"][aria-selected="true"]{color:var(--vibeui-restaurant-003-on-accent);border-color:transparent}
-[data-vibeui-block="restaurant-003"] [data-part="tab"]:focus-visible{outline:2px solid var(--vibeui-restaurant-003-accent);outline-offset:2px}
 [data-vibeui-block="restaurant-003"] [data-part="note"]{margin:-1.5rem 0 2rem;text-align:center;font-size:.85rem;font-style:italic;font-family:var(--vibeui-restaurant-003-display);color:var(--vibeui-restaurant-003-muted)}
 [data-vibeui-block="restaurant-003"] [data-part="list"]{margin:0;padding:0;list-style:none;display:grid;gap:1.35rem}
 [data-vibeui-block="restaurant-003"] [data-part="dish"]{display:grid;gap:.3rem;animation:vibeui-restaurant-003-in .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-restaurant-003-n) * 60ms);cursor:default}
@@ -224,18 +221,10 @@ export function Restaurant003({
             <li ref={pill} aria-hidden="true" data-part="pill" />
             {sections.map((item, index) => (
               <li key={item.title} role="presentation">
-                <button
-                  type="button"
-                  role="tab"
-                  data-part="tab"
-                  aria-selected={index === active}
-                  onClick={() => {
+                <Button093 data-part="tab" title={item.title} aria-selected={index === active} onClick={() => {
                     setActive(index)
                     setImage(null)
-                  }}
-                >
-                  {item.title}
-                </button>
+                  }} accent={accent} />
               </li>
             ))}
           </ul>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button078 } from "@/registry/components/button/button-078/button-078"
 
 export type Charity003Item = {
   label: string
@@ -78,9 +79,6 @@ container-type:inline-size;
 [data-vibeui-block="charity-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-charity-003-display);font-weight:500;font-size:clamp(2rem,4.6cqi,3.4rem);line-height:1.08;letter-spacing:-.02em}
 [data-vibeui-block="charity-003"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-charity-003-muted)}
 [data-vibeui-block="charity-003"] [data-part="years"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:2rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="charity-003"] [data-part="year"]{padding:.55rem 1.1rem;border-radius:999px;border:1px solid var(--vibeui-charity-003-line);background:transparent;color:var(--vibeui-charity-003-fg);font:inherit;font-weight:600;font-variant-numeric:tabular-nums;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
-[data-vibeui-block="charity-003"] [data-part="year"]:hover{border-color:var(--vibeui-charity-003-accent)}
-[data-vibeui-block="charity-003"] [data-part="year"][aria-pressed="true"]{background:var(--vibeui-charity-003-fg);border-color:var(--vibeui-charity-003-fg);color:var(--vibeui-charity-003-bg)}
 [data-vibeui-block="charity-003"] button:focus-visible,[data-vibeui-block="charity-003"] a:focus-visible{outline:2px solid var(--vibeui-charity-003-accent);outline-offset:2px}
 [data-vibeui-block="charity-003"] [data-part="grid"]{display:grid;gap:2.5rem;margin:2.5rem 0 0;align-items:center}
 [data-vibeui-block="charity-003"] [data-part="chart"]{position:relative;width:min(100%,22rem);margin:0 auto}
@@ -229,9 +227,7 @@ export function Charity003({
             <ul data-part="years" aria-label={yearsLabel}>
               {years.map((item, index) => (
                 <li key={item.year}>
-                  <button data-part="year" type="button" aria-pressed={index === yearIndex} onClick={() => setYearIndex(index)}>
-                    {item.year}
-                  </button>
+                  <Button078 data-part="year" year={item.year} aria-pressed={index === yearIndex} onClick={() => setYearIndex(index)} accent={accent} />
                 </li>
               ))}
             </ul>

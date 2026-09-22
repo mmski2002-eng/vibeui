@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card157 } from "@/registry/components/card/card-157/card-157"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid007Row = {
@@ -66,18 +67,6 @@ border:1px solid var(--vibeui-datagrid-007-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-007-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-007"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-007"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-007-border);
-}
-[data-vibeui-block="datagrid-007"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-007"] [data-part="bar"] button{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
-padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-007-border);
-background:var(--vibeui-datagrid-007-field);color:var(--vibeui-datagrid-007-fg);
-}
-[data-vibeui-block="datagrid-007"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-007-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-007"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-007"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-007-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-007"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -218,15 +207,7 @@ export function Datagrid007({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <button type="button" onClick={() => setClosed(names)}>
-            {collapseAllLabel}
-          </button>
-          <button type="button" onClick={() => setClosed([])}>
-            {expandAllLabel}
-          </button>
-        </div>
+        <Card157 data-part="bar" heading={heading} collapseAllLabel={collapseAllLabel} expandAllLabel={expandAllLabel} setClosed={setClosed} accent={accent} />
         <div
           data-part="scroll"
           role="region"

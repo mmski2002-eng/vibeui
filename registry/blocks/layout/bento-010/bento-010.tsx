@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card079 } from "@/registry/components/card/card-079/card-079"
 
 export type Bento010Stat = {
   value: number
@@ -94,9 +95,6 @@ container-type:inline-size;
 [data-vibeui-block="bento-010"] [data-part="marquee"]{display:flex;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 [data-vibeui-block="bento-010"] [data-part="marquee"] ul{display:flex;flex-shrink:0;gap:.6rem;margin:0;padding:0 .3rem;list-style:none;animation:vibeui-bento-010-run 32s linear infinite}
 [data-vibeui-block="bento-010"] [data-part="tile"][data-tile="feed"]:hover [data-part="marquee"] ul{animation-play-state:paused}
-[data-vibeui-block="bento-010"] [data-part="marquee"] li{display:inline-flex;align-items:center;gap:.5rem;height:2.4rem;padding:0 .9rem;border-radius:999px;background:var(--vibeui-bento-010-bg);border:1px solid var(--vibeui-bento-010-line);white-space:nowrap;font-size:.84rem}
-[data-vibeui-block="bento-010"] [data-part="marquee"] li b{font-weight:600}
-[data-vibeui-block="bento-010"] [data-part="marquee"] li span{font-family:var(--vibeui-bento-010-mono);font-size:.66rem;color:var(--vibeui-bento-010-muted)}
 [data-vibeui-block="bento-010"] [data-part="tile"][data-tile="cta"]{background:var(--vibeui-bento-010-fg);color:var(--vibeui-bento-010-bg);border-color:transparent;text-decoration:none}
 [data-vibeui-block="bento-010"] [data-part="tile"][data-tile="cta"]:hover{transform:translateY(-3px)}
 [data-vibeui-block="bento-010"] [data-part="tile"][data-tile="cta"] h3{font-size:1.6rem}
@@ -245,11 +243,7 @@ export function Bento010({
                 {[0, 1].map((copy) => (
                   <ul key={copy} aria-hidden={copy === 1 ? true : undefined}>
                     {purchases.map((purchase, index) => (
-                      <li key={index}>
-                        <b>{purchase.who}</b>
-                        {purchase.what}
-                        <span>{purchase.ago}</span>
-                      </li>
+                      <Card079 key={index} data-part="purchase" who={purchase.who} what={purchase.what} ago={purchase.ago} accent={accent} />
                     ))}
                   </ul>
                 ))}

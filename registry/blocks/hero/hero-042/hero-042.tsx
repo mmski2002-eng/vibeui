@@ -2,6 +2,9 @@
 
 import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button015 } from "@/registry/components/button/button-015/button-015"
+
 export type Hero042Sample = {
   /** Подпись вкладки: «curl», «JS». */
   label: string
@@ -76,6 +79,8 @@ container-type:inline-size;
 [data-vibeui-block="hero-042"]{box-sizing:border-box;position:relative;overflow:hidden;background:var(--vibeui-hero-042-bg);color:var(--vibeui-hero-042-fg);font-family:var(--vibeui-hero-042-display);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-042"]::before{content:"";position:absolute;inset:0;background-image:radial-gradient(color-mix(in oklab,var(--vibeui-hero-042-fg) 16%,transparent) 1px,transparent 1.5px);background-size:24px 24px;mask-image:radial-gradient(ellipse 70% 80% at 60% 40%,#000 20%,transparent 75%);pointer-events:none}
 [data-vibeui-block="hero-042"] *{box-sizing:border-box}
+[data-vibeui-block="hero-042"] [data-part="code"]{margin:0}
+[data-vibeui-block="hero-042"] [data-part="copy-button"]{margin-left:auto}
 [data-vibeui-block="hero-042"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:4rem 1.25rem 4.5rem;display:grid;gap:2.5rem;align-items:center}
 [data-vibeui-block="hero-042"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;margin:0 0 1.2rem;padding:.35rem .7rem;border:1px solid var(--vibeui-hero-042-line);border-radius:999px;font-family:var(--vibeui-hero-042-mono);font-size:.72rem;letter-spacing:.04em;color:var(--vibeui-hero-042-muted)}
 [data-vibeui-block="hero-042"] [data-part="eyebrow"]::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:var(--vibeui-hero-042-accent);box-shadow:0 0 8px var(--vibeui-hero-042-accent)}
@@ -83,12 +88,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-042"] [data-part="title"] em{font-style:normal;color:var(--vibeui-hero-042-accent)}
 [data-vibeui-block="hero-042"] [data-part="lede"]{margin:1.3rem 0 0;max-width:32rem;font-size:1.08rem;color:var(--vibeui-hero-042-muted)}
 [data-vibeui-block="hero-042"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.8rem 0 0}
-[data-vibeui-block="hero-042"] [data-part="primary"],[data-vibeui-block="hero-042"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.4rem;height:2.9rem;padding:0 1.2rem;border-radius:.6rem;font-family:var(--vibeui-hero-042-mono);font-weight:600;font-size:.88rem;text-decoration:none;transition:box-shadow .25s,background .2s,transform .18s}
-[data-vibeui-block="hero-042"] [data-part="primary"]{background:var(--vibeui-hero-042-accent);color:var(--vibeui-hero-042-on-accent)}
-[data-vibeui-block="hero-042"] [data-part="primary"]:hover{box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-hero-042-accent) 22%,transparent),0 0 40px -8px var(--vibeui-hero-042-accent)}
-[data-vibeui-block="hero-042"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-042-line);color:var(--vibeui-hero-042-fg)}
-[data-vibeui-block="hero-042"] [data-part="secondary"]:hover{background:var(--vibeui-hero-042-panel)}
-[data-vibeui-block="hero-042"] a:focus-visible,[data-vibeui-block="hero-042"] button:focus-visible{outline:2px solid var(--vibeui-hero-042-accent);outline-offset:2px}
+[data-vibeui-block="hero-042"] button:focus-visible{outline:2px solid var(--vibeui-hero-042-accent);outline-offset:2px}
 [data-vibeui-block="hero-042"] [data-part="stats"]{display:flex;flex-wrap:wrap;gap:.5rem 1.8rem;margin:2.2rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="hero-042"] [data-part="stats"] li{display:grid;gap:.1rem}
 [data-vibeui-block="hero-042"] [data-part="stats"] b{font-family:var(--vibeui-hero-042-mono);font-weight:600;font-size:1.05rem;letter-spacing:-.02em}
@@ -101,17 +101,13 @@ container-type:inline-size;
 [data-vibeui-block="hero-042"] [data-part="tabs"] button{padding:.3rem .65rem;border:0;border-radius:.4rem;background:transparent;color:var(--vibeui-hero-042-muted);font:inherit;font-size:.74rem;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
 [data-vibeui-block="hero-042"] [data-part="tabs"] button:hover{color:var(--vibeui-hero-042-fg)}
 [data-vibeui-block="hero-042"] [data-part="tabs"] button[aria-selected="true"]{background:color-mix(in oklab,var(--vibeui-hero-042-accent) 16%,transparent);color:var(--vibeui-hero-042-accent)}
-[data-vibeui-block="hero-042"] [data-part="copy"]{margin-left:auto;display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .6rem;border:1px solid var(--vibeui-hero-042-line);border-radius:.4rem;background:transparent;color:var(--vibeui-hero-042-muted);font:inherit;font-size:.7rem;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s}
-[data-vibeui-block="hero-042"] [data-part="copy"]:hover{color:var(--vibeui-hero-042-fg);border-color:var(--vibeui-hero-042-fg)}
-[data-vibeui-block="hero-042"] [data-part="copy"][data-done="true"]{color:var(--vibeui-hero-042-accent);border-color:var(--vibeui-hero-042-accent)}
-[data-vibeui-block="hero-042"] [data-part="copy"] svg{width:.8rem;height:.8rem}
 [data-vibeui-block="hero-042"] [data-part="code"]{margin:0;padding:1rem 1.1rem;min-height:9.5rem;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--vibeui-hero-042-fg)}
 [data-vibeui-block="hero-042"] [data-part="code"] [data-t="s"]{color:var(--vibeui-hero-042-string)}
 [data-vibeui-block="hero-042"] [data-part="code"] [data-t="k"]{color:var(--vibeui-hero-042-accent);font-weight:600}
 [data-vibeui-block="hero-042"] [data-part="code"] [data-t="f"]{color:var(--vibeui-hero-042-number)}
 [data-vibeui-block="hero-042"] [data-part="code"] [data-t="c"]{color:var(--vibeui-hero-042-muted)}
 [data-vibeui-block="hero-042"] [data-part="cursor"]{display:inline-block;width:.55em;height:1.1em;margin-left:1px;vertical-align:-.2em;background:var(--vibeui-hero-042-accent);animation:vibeui-hero-042-blink 1s steps(2,start) infinite}
-[data-vibeui-block="hero-042"] [data-part="out"]{border-top:1px dashed var(--vibeui-hero-042-line);padding:.8rem 1.1rem 1rem;min-height:16rem}
+[data-vibeui-block="hero-042"] [data-part="output"]{border-top:1px dashed var(--vibeui-hero-042-line);padding:.8rem 1.1rem 1rem;min-height:16rem}
 [data-vibeui-block="hero-042"] [data-part="status"]{display:flex;align-items:center;gap:.6rem;margin:0 0 .5rem;font-size:.72rem;color:var(--vibeui-hero-042-muted);opacity:0;animation:vibeui-hero-042-in .4s ease-out forwards}
 [data-vibeui-block="hero-042"] [data-part="status"] b{font-weight:600;color:var(--vibeui-hero-042-accent)}
 [data-vibeui-block="hero-042"] [data-part="latency"]{padding:.1rem .45rem;border-radius:.3rem;background:color-mix(in oklab,var(--vibeui-hero-042-accent) 16%,transparent);color:var(--vibeui-hero-042-accent);font-weight:600}
@@ -242,7 +238,6 @@ export function Hero042({
 }: Hero042Props) {
   const [active, setActive] = useState(0)
   const [typed, setTyped] = useState(0)
-  const [copied, setCopied] = useState(false)
   const sample = samples[Math.min(active, samples.length - 1)]
   const full = useMemo(() => (sample ? sample.code.join("\n") : ""), [sample])
   const done = typed >= full.length
@@ -268,12 +263,6 @@ export function Hero042({
     setArrived(false)
   }
 
-  const copy = () => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) void navigator.clipboard.writeText(full).catch(() => undefined)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1500)
-  }
-
   const shown = full.slice(0, typed).split("\n")
 
   const palette = {
@@ -297,14 +286,26 @@ export function Hero042({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel} <span aria-hidden="true">→</span>
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
             {stats.length > 0 ? (
@@ -332,12 +333,7 @@ export function Hero042({
                   </button>
                 ))}
               </div>
-              <button data-part="copy" type="button" data-done={copied} onClick={copy} aria-live="polite">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  {copied ? <path d="M5 13l4 4L19 7" /> : <><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>}
-                </svg>
-                {copied ? copiedLabel : copyLabel}
-              </button>
+              <Button015 data-part="copy-button" value={full} label={copyLabel} doneLabel={copiedLabel} />
             </div>
             <pre data-part="code" aria-label={codeLabel.replace("{lang}", sample?.label ?? "")}>
               {shown.map((line, index) => (
@@ -348,7 +344,7 @@ export function Hero042({
               ))}
               {!done ? <span data-part="cursor" aria-hidden="true" /> : null}
             </pre>
-            <div data-part="out" aria-live="polite">
+            <div data-part="output" aria-live="polite">
               {arrived ? (
                 <>
                   <p data-part="status">

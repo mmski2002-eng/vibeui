@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
+import { Button111 } from "@/registry/components/button/button-111/button-111"
 
 export type Navbar028Link = {
   label: string
@@ -90,18 +91,12 @@ container-type:inline-size;
 [data-vibeui-block="navbar-028"] [data-part="status"] i{width:.55rem;height:.55rem;border-radius:50%;background:var(--vibeui-navbar-028-open);box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-navbar-028-open) 50%,transparent);animation:vibeui-navbar-028-pulse 2.4s ease-out infinite}
 [data-vibeui-block="navbar-028"] [data-part="status"][data-open="false"] i{background:var(--vibeui-navbar-028-wait);animation:none}
 [data-vibeui-block="navbar-028"] [data-part="status"] span{color:var(--vibeui-navbar-028-muted);display:none}
-[data-vibeui-block="navbar-028"] [data-part="action"]{display:inline-flex;align-items:center;border-radius:999px;padding:.65rem .9rem;font-weight:600;font-size:.88rem;text-decoration:none;color:var(--vibeui-navbar-028-on-accent);background:var(--vibeui-navbar-028-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-navbar-028-accent) 70%,transparent);white-space:nowrap;transform:translate(var(--vibeui-navbar-028-mx,0px),var(--vibeui-navbar-028-my,0px));transition:transform .35s var(--vibeui-navbar-028-ease),filter .18s,box-shadow .35s}
-[data-vibeui-block="navbar-028"] [data-part="action"]:hover{filter:brightness(1.05);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 14px 28px -12px color-mix(in oklab,var(--vibeui-navbar-028-accent) 90%,transparent)}
-[data-vibeui-block="navbar-028"] [data-part="action"]:active{transform:translate(var(--vibeui-navbar-028-mx,0px),var(--vibeui-navbar-028-my,0px)) scale(.97)}
-[data-vibeui-block="navbar-028"] [data-part="action"] span{display:none}
 [data-vibeui-block="navbar-028"] a:focus-visible{outline:2px solid var(--vibeui-navbar-028-accent);outline-offset:3px}
 @keyframes vibeui-navbar-028-pulse{0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--vibeui-navbar-028-open) 50%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
 @keyframes vibeui-navbar-028-breathe{0%,100%{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-navbar-028-accent) 14%,transparent)}50%{box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-navbar-028-accent) 26%,transparent)}}
 @keyframes vibeui-navbar-028-drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
 @container (min-width: 40rem){
 [data-vibeui-block="navbar-028"] [data-part="status"] span{display:inline}
-[data-vibeui-block="navbar-028"] [data-part="action"] span{display:inline}
-[data-vibeui-block="navbar-028"] [data-part="action"]{padding:.7rem 1.1rem}
 [data-vibeui-block="navbar-028"] [data-part="right"]{gap:.75rem}
 }
 @container (min-width: 52rem){[data-vibeui-block="navbar-028"] [data-part="nav"]{display:flex}}
@@ -272,10 +267,7 @@ export function Navbar028({
               {main} <span>· {extra}</span>
             </div>
             {actionLabel ? (
-              <a data-part="action" href={actionHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                {actionShort}
-                <span>{" "}{(actionLabel.startsWith(actionShort) ? actionLabel.slice(actionShort.length) : actionLabel).trim()}</span>
-              </a>
+              <Button111 data-part="action" actionHref={actionHref} actionShort={actionShort} actionLabel={actionLabel} onPointerMove={magnet} onPointerLeave={unmagnet} accent={accent} />
             ) : null}
           </div>
           <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-028-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>

@@ -10,7 +10,9 @@
         "ai"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-150"
+      ],
       "files": [
         {
           "path": "ai-001/ai-001.tsx",
@@ -29,7 +31,8 @@
           "flow",
           "glass",
           "animation",
-          "saas"
+          "saas",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -40,6 +43,7 @@
           "usage": "<Ai001\n  title=\"Три шага, ни одного вашего\"\n  steps={[\n    { title: \"Слушает\", text: \"Заходит на созвон участником.\", kind: \"wave\", meta: \"во время\" },\n    { title: \"Понимает\", text: \"Решения, задачи, риски.\", kind: \"text\" },\n    { title: \"Раскладывает\", text: \"Задачи — в трекер.\", kind: \"tasks\" },\n  ]}\n/>",
           "summary": "Три шага AI-продукта как живой конвейер: каждый узел анимирован, между ними бегут точки.",
           "preserve": [
+            "импорты card-150 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "шаг — li с display:contents, чтобы узлы и линии легли в одну сетку 1fr auto 1fr auto 1fr",
             "линия — блок с ::after, keyframes flow-v на узком и flow-h от 56rem контейнера",
             "kind узла задаёт микроанимацию: wave — 24 полоски, text — три строки scaleX, tasks — галочки с задержкой"
@@ -104,6 +108,7 @@
             "ai": {
               "summary": "Three steps of an AI product as a live pipeline: every node animated, dots running between them.",
               "preserve": [
+                "the card-150 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "a step is an li with display:contents so nodes and links share one 1fr auto 1fr auto 1fr grid",
                 "the link is a block with ::after, flow-v keyframes on narrow and flow-h from a 56rem container",
                 "the node kind picks the micro-animation: wave — 24 bars, text — three scaleX lines, tasks — delayed ticks"
@@ -162,10 +167,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports card-150 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-150 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "ai-002",
@@ -176,7 +183,9 @@
         "ai"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-126"
+      ],
       "files": [
         {
           "path": "ai-002/ai-002.tsx",
@@ -196,7 +205,8 @@
           "textarea",
           "copy",
           "saas",
-          "interactive"
+          "interactive",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -207,6 +217,7 @@
           "usage": "<Ai002\n  sample=\"Лена: релиз переносим на четверг.\"\n  result={[\"# Решения\", \"Релиз перенесён на четверг.\", \"# Задачи\", \"Марк — миграция до среды.\"]}\n  runLabel=\"Сделать сводку\"\n/>",
           "summary": "Песочница для сайта AI-сервиса: посетитель нажимает кнопку и видит, как ответ печатается по секциям.",
           "preserve": [
+            "импорты button-126 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "фазы idle → running → done; в running токены result выводятся setTimeout'ом, tokens мемоизированы",
             "строки result, начинающиеся с #, становятся заголовками секций с акцентной меткой",
             "копирование — navigator.clipboard с подписью copiedLabel на две секунды; «Заново» возвращает idle"
@@ -279,6 +290,7 @@
             "ai": {
               "summary": "A sandbox for an AI service site: the visitor presses a button and watches the answer type out in sections.",
               "preserve": [
+                "the button-126 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "phases idle → running → done; in running the result tokens print via setTimeout, tokens are memoised",
                 "result lines starting with # become section headings with an accent mark",
                 "copying uses navigator.clipboard with copiedLabel shown for two seconds; “Reset” returns to idle"
@@ -340,10 +352,12 @@
                   "Payment provider maintenance window Wednesday night — check status Thursday at 9:00."
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-126 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-126 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

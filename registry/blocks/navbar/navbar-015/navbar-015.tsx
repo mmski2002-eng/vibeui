@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Button107 } from "@/registry/components/button/button-107/button-107"
 import type { CSSProperties } from "react"
 
 type Navbar015Link = {
@@ -126,7 +127,6 @@ transition:letter-spacing var(--vibeui-navbar-015-dur-5) var(--vibeui-navbar-015
 }
 [data-vibeui-block="navbar-015"] [data-part="brand"]:hover{letter-spacing:0.42em;text-indent:0.42em}
 
-[data-vibeui-block="navbar-015"] [data-part="bag"],
 [data-vibeui-block="navbar-015"] [data-part="bag-mobile"]{
 position:relative;
 display:inline-flex;align-items:center;gap:0.4375rem;padding:0.4375rem 0;
@@ -134,10 +134,10 @@ color:var(--vibeui-navbar-015-muted);text-decoration:none;
 font-size:0.75rem;font-weight:580;letter-spacing:0.16em;text-transform:uppercase;
 transition:color var(--vibeui-navbar-015-dur-2) ease;
 }
-[data-vibeui-block="navbar-015"] [data-part="bag"]:hover,
+
 [data-vibeui-block="navbar-015"] [data-part="bag-mobile"]:hover{color:var(--vibeui-navbar-015-ink)}
 [data-vibeui-block="navbar-015"] [data-part="bag-mobile"]{grid-column:3;justify-self:end}
-[data-vibeui-block="navbar-015"] [data-part="count"]{
+[data-vibeui-block="navbar-015"] [data-part="bag-count"]{
 min-width:1.125rem;height:1.125rem;padding:0 0.3125rem;
 display:inline-flex;align-items:center;justify-content:center;border-radius:999px;
 background:var(--vibeui-navbar-015-accent);color:oklch(from var(--vibeui-navbar-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
@@ -168,13 +168,13 @@ border-bottom:1px solid var(--vibeui-navbar-015-line);
 outline:2px solid var(--vibeui-navbar-015-accent);outline-offset:4px;
 }
 @container (min-width: 56rem){
+[data-vibeui-block="navbar-015"] [data-part="bag"]{margin-left:1.25rem}
 [data-vibeui-block="navbar-015"] [data-part="shell"]{padding:1.5rem 2.5rem}
 [data-vibeui-block="navbar-015"] [data-part="left"],
 [data-vibeui-block="navbar-015"] [data-part="right"]{display:flex}
 [data-vibeui-block="navbar-015"] [data-part="menu"],
 [data-vibeui-block="navbar-015"] [data-part="sheet"],
 [data-vibeui-block="navbar-015"] [data-part="bag-mobile"]{display:none}
-[data-vibeui-block="navbar-015"] [data-part="bag"]{margin-left:1.25rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-015"] *{animation:none!important;transition:none!important}}
 `
@@ -284,20 +284,13 @@ export function Navbar015({
                 {link.label}
               </a>
             ))}
-            <a data-part="bag" href={bagHref}>
-              {bagLabel}
-              {bagCount > 0 ? (
-                <span data-part="count" aria-hidden="true">
-                  {bagCount}
-                </span>
-              ) : null}
-            </a>
+            <Button107 data-part="bag" bagHref={bagHref} bagLabel={bagLabel} bagCount={bagCount} accent={accent} />
           </nav>
 
           <a data-part="bag-mobile" href={bagHref}>
             {bagLabel}
             {bagCount > 0 ? (
-              <span data-part="count" aria-hidden="true">
+              <span data-part="bag-count" aria-hidden="true">
                 {bagCount}
               </span>
             ) : null}

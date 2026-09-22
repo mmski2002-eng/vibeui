@@ -10,7 +10,13 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "select-001",
+        "input-001",
+        "input-034",
+        "checkbox-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-001/contact-001.tsx",
@@ -18,13 +24,14 @@
           "target": "@components/vibeui/contact-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-001-*. Серверный: валидация нативная — required, type=\"email\", minLength у сообщения. Ошибка показывается по :user-invalid, а не :invalid: пустое поле не должно краснеть до первого ввода. Текст ошибки всегда есть в разметке, визуально скрыт clip-path и связан с полем через aria-describedby. Две колонки включаются container query. Отправку реализует вызывающий код.",
+      "docs": "Составной блок: импортирует select-001, input-001, input-034, checkbox-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-001-*. Серверный: валидация нативная — required, type=\"email\", minLength у сообщения. Ошибка показывается по :user-invalid, а не :invalid: пустое поле не должно краснеть до первого ввода. Текст ошибки всегда есть в разметке, визуально скрыт clip-path и связан с полем через aria-describedby. Две колонки включаются container query. Отправку реализует вызывающий код.",
       "meta": {
         "tags": [
           "contact",
           "form",
           "support",
-          "topics"
+          "topics",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -34,6 +41,7 @@
           "usage": "<Contact001 topics={[\"Новый проект\", \"Вопрос по счёту\"]} submitLabel=\"Отправить обращение\" />",
           "summary": "Секция связи: тема обращения списком, имя, почта и задача плюс прямые контакты рядом. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты select-001, input-001, input-034, checkbox-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-001-* и не подменять её токенами вашей темы",
             "тему обращения первым полем: без неё письмо попадает не в тот отдел и лежит два дня",
             ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
@@ -93,6 +101,7 @@
             "ai": {
               "summary": "A contact section: topic select, name, email and the task, plus direct contacts alongside. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the select-001, input-001, input-034, checkbox-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-001-* palette — do not swap it for your theme tokens",
                 "the topic as the first field: without it the message lands in the wrong inbox and sits for two days",
                 ":user-invalid instead of :invalid — an untouched field must not turn red",
@@ -183,7 +192,7 @@
                 }
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-001-*. Server-side: the validation is native — required, type=\"email\", minLength on the message. The error is shown through :user-invalid rather than :invalid: an empty field must not turn red before the first input. The error text is always present in the markup, hidden visually with clip-path and tied to the field through aria-describedby. The two columns are turned on by a container query. Submission is implemented by the calling code."
+            "docs": "A composite block: imports select-001, input-001, input-034, checkbox-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-001-*. Server-side: the validation is native — required, type=\"email\", minLength on the message. The error is shown through :user-invalid rather than :invalid: an empty field must not turn red before the first input. The error text is always present in the markup, hidden visually with clip-path and tied to the field through aria-describedby. The two columns are turned on by a container query. Submission is implemented by the calling code."
           }
         },
         "cardControls": [
@@ -203,7 +212,10 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "card-025"
+      ],
       "files": [
         {
           "path": "contact-002/contact-002.tsx",
@@ -211,13 +223,14 @@
           "target": "@components/vibeui/contact-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-002-*. Серверный: хуков нет. Карта нарисована повторяющимися градиентами и не подключает внешний iframe — блок не тянет чужие скрипты и не ставит куки. Заглушка помечена aria-hidden, смысл несёт адрес текстом. Часы работы размечены таблицей с заголовками строк, телефон и почта — настоящими ссылками tel: и mailto:.",
+      "docs": "Составной блок: импортирует button-077, card-025 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-002-*. Серверный: хуков нет. Карта нарисована повторяющимися градиентами и не подключает внешний iframe — блок не тянет чужие скрипты и не ставит куки. Заглушка помечена aria-hidden, смысл несёт адрес текстом. Часы работы размечены таблицей с заголовками строк, телефон и почта — настоящими ссылками tel: и mailto:.",
       "meta": {
         "tags": [
           "contact",
           "office",
           "map",
-          "hours"
+          "hours",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -230,6 +243,7 @@
           "usage": "<Contact002 address=\"Москва, Большая Дмитровка, 14\" hours={[{ days: \"Пн–Чт\", time: \"10:00 — 19:00\" }]} mapHref=\"https://maps.example\" />",
           "summary": "Контакты офиса: адрес с подсказкой про вход, телефон, почта, часы работы, транспорт и заглушка карты со ссылкой в приложение. Ноль зависимостей, один файл.",
           "preserve": [
+            "импорты button-077, card-025 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-002-* и не подменять её токенами вашей темы",
             "адрес текстом рядом с картинкой: заглушка декоративна и помечена aria-hidden",
             "подсказку про вход и этаж — теряются на последних тридцати метрах",
@@ -289,6 +303,7 @@
             "ai": {
               "summary": "Office contacts: address with an entrance hint, phone, email, opening hours, travel notes and a map placeholder linking out to a maps app. Zero dependencies, one file.",
               "preserve": [
+                "the button-077, card-025 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-002-* palette — do not swap it for your theme tokens",
                 "the address in text beside the picture: the placeholder is decorative and aria-hidden",
                 "the hint about the entrance and floor — people get lost in the last thirty metres",
@@ -371,7 +386,7 @@
                 "image": "/demo/places/place-03.webp"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-002-*. Server-side: no hooks. The map is drawn with repeating gradients and pulls in no external iframe — the block loads no third-party scripts and sets no cookies. The placeholder is marked aria-hidden, the meaning is carried by the address as text. The opening hours are marked up as a table with row headers, the phone and the email as real tel: and mailto: links."
+            "docs": "A composite block: imports button-077, card-025 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-002-*. Server-side: no hooks. The map is drawn with repeating gradients and pulls in no external iframe — the block loads no third-party scripts and sets no cookies. The placeholder is marked aria-hidden, the meaning is carried by the address as text. The opening hours are marked up as a table with row headers, the phone and the email as real tel: and mailto: links."
           }
         },
         "cardControls": [
@@ -391,7 +406,11 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "select-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-003/contact-003.tsx",
@@ -399,13 +418,14 @@
           "target": "@components/vibeui/contact-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-003-*. Серверный: валидация нативная, ошибка показывается по :user-invalid и связана с полем через aria-describedby. Цель встречи выбирается радиогруппой в чипах, состояние читается через :has(input:checked), радиокнопка уменьшена, но не спрятана. Шаги пронумерованы CSS-счётчиком. Поля встают попарно по container query.",
+      "docs": "Составной блок: импортирует input-001, select-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-003-*. Серверный: валидация нативная, ошибка показывается по :user-invalid и связана с полем через aria-describedby. Цель встречи выбирается радиогруппой в чипах, состояние читается через :has(input:checked), радиокнопка уменьшена, но не спрятана. Шаги пронумерованы CSS-счётчиком. Поля встают попарно по container query.",
       "meta": {
         "tags": [
           "contact",
           "demo",
           "lead",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -415,6 +435,7 @@
           "usage": "<Contact003 badge=\"30 минут\" goals={[\"Посмотреть возможности\", \"Обсудить внедрение\"]} submitLabel=\"Записаться на демо\" />",
           "summary": "Форма заявки на демо: три шага встречи, контакты, размер команды и цель встречи чипами. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты input-001, select-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-003-* и не подменять её токенами вашей темы",
             "шаги над формой: решение оставлять заявку принимают до заполнения полей",
             "цель встречи чипами, а не свободным полем — свободное заполняют словом «интересно»",
@@ -474,6 +495,7 @@
             "ai": {
               "summary": "A demo request form: three meeting steps, contacts, team size and the goal of the call as chips. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the input-001, select-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-003-* palette — do not swap it for your theme tokens",
                 "the steps above the form: the decision to apply is made before the fields",
                 "the goal as chips rather than a free field — a free field gets filled with «curious»",
@@ -556,7 +578,7 @@
                 }
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-003-*. Server-side: the validation is native, the error is shown through :user-invalid and tied to the field through aria-describedby. The goal of the meeting is picked by a radio group in chips, the state is read through :has(input:checked), and the radio button is shrunk rather than hidden. The steps are numbered with a CSS counter. The fields pair up through a container query."
+            "docs": "A composite block: imports input-001, select-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-003-*. Server-side: the validation is native, the error is shown through :user-invalid and tied to the field through aria-describedby. The goal of the meeting is picked by a radio group in chips, the state is read through :has(input:checked), and the radio button is shrunk rather than hidden. The steps are numbered with a CSS counter. The fields pair up through a container query."
           }
         },
         "cardControls": [
@@ -576,7 +598,11 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-004/contact-004.tsx",
@@ -584,13 +610,14 @@
           "target": "@components/vibeui/contact-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-004-*. Серверный: раскрытие держат нативные details/summary, поэтому браузер сам раскрывает раздел, найденный поиском по странице. Знак «плюс» собран из двух полос псевдоэлементами. Форма на три поля с нативной валидацией и ошибками по :user-invalid. На широком блоке container query делает форму липкой сбоку.",
+      "docs": "Составной блок: импортирует input-001, input-034, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-004-*. Серверный: раскрытие держат нативные details/summary, поэтому браузер сам раскрывает раздел, найденный поиском по странице. Знак «плюс» собран из двух полос псевдоэлементами. Форма на три поля с нативной валидацией и ошибками по :user-invalid. На широком блоке container query делает форму липкой сбоку.",
       "meta": {
         "tags": [
           "contact",
           "faq",
           "support",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -600,6 +627,7 @@
           "usage": "<Contact004 questions={[{ question: \"Сколько занимает подключение?\", answer: \"…\" }]} formTitle=\"Не нашли ответ?\" />",
           "summary": "Секция поддержки: раскрывающиеся вопросы с ответами и короткая форма для тех, кто ответа не нашёл. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты input-001, input-034, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-004-* и не подменять её токенами вашей темы",
             "порядок «сначала ответы, потом форма»: форма вместо списка возвращает те же вопросы в поддержку",
             "нативные details: браузер раскрывает раздел, найденный поиском по странице",
@@ -659,6 +687,7 @@
             "ai": {
               "summary": "A support section: expandable questions with answers and a short form for whoever did not find the answer. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the input-001, input-034, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-004-* palette — do not swap it for your theme tokens",
                 "the order «answers first, form second»: a form instead of a list sends the same questions back to support",
                 "the native details: the browser expands a section found by page search",
@@ -743,7 +772,7 @@
                 }
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-004-*. Server-side: native details/summary hold the disclosure, so the browser opens a section found by the page search on its own. The plus sign is assembled from two bars with pseudo-elements. The form has three fields with native validation and errors through :user-invalid. On a wide block a container query makes the form sticky at the side."
+            "docs": "A composite block: imports input-001, input-034, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-004-*. Server-side: native details/summary hold the disclosure, so the browser opens a section found by the page search on its own. The plus sign is assembled from two bars with pseudo-elements. The form has three fields with native validation and errors through :user-invalid. On a wide block a container query makes the form sticky at the side."
           }
         },
         "cardControls": [
@@ -763,7 +792,12 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "select-001",
+        "checkbox-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-006/contact-006.tsx",
@@ -771,13 +805,14 @@
           "target": "@components/vibeui/contact-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-006-*. Серверный: день и слот выбираются радиогруппами, состояние читается через :has(input:checked), фокус — через :has(input:focus-visible). Радиокнопки визуально убраны, но остаются в потоке фокуса. Телефон — input type=\"tel\" с inputMode и pattern, ошибка показывается по :user-invalid. Сетка слотов строится auto-fill, поля встают попарно по container query.",
+      "docs": "Составной блок: импортирует input-001, select-001, checkbox-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-006-*. Серверный: день и слот выбираются радиогруппами, состояние читается через :has(input:checked), фокус — через :has(input:focus-visible). Радиокнопки визуально убраны, но остаются в потоке фокуса. Телефон — input type=\"tel\" с inputMode и pattern, ошибка показывается по :user-invalid. Сетка слотов строится auto-fill, поля встают попарно по container query.",
       "meta": {
         "tags": [
           "contact",
           "callback",
           "schedule",
-          "phone"
+          "phone",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -787,6 +822,7 @@
           "usage": "<Contact006 days={[{ label: \"Сегодня\", note: \"14 мая\" }]} slots={[{ time: \"10:00\" }, { time: \"11:00\", taken: true }]} />",
           "summary": "Форма обратного звонка: выбор дня, сетка временных окон с занятыми, телефон, часовой пояс и согласие. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты input-001, select-001, checkbox-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-006-* и не подменять её токенами вашей темы",
             "занятый слот на месте и с подписью: пустое место читается как «сюда можно»",
             "подпись «занято» рядом с disabled — серым цветом занятость не передать",
@@ -846,6 +882,7 @@
             "ai": {
               "summary": "A callback form: day picker, a grid of time windows including taken ones, phone, time zone and consent. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the input-001, select-001, checkbox-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-006-* palette — do not swap it for your theme tokens",
                 "the taken slot kept in place and labelled: an empty gap reads as «available»",
                 "the «taken» caption next to disabled — grey alone cannot carry unavailability",
@@ -957,7 +994,7 @@
                 }
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-006-*. Server-side: the day and the slot are picked by radio groups, the state is read through :has(input:checked) and the focus through :has(input:focus-visible). The radio buttons are removed visually but stay in the focus order. The phone is an input type=\"tel\" with inputMode and pattern, and the error is shown through :user-invalid. The grid of slots is built with auto-fill, and the fields pair up through a container query."
+            "docs": "A composite block: imports input-001, select-001, checkbox-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-006-*. Server-side: the day and the slot are picked by radio groups, the state is read through :has(input:checked) and the focus through :has(input:focus-visible). The radio buttons are removed visually but stay in the focus order. The phone is an input type=\"tel\" with inputMode and pattern, and the error is shown through :user-invalid. The grid of slots is built with auto-fill, and the fields pair up through a container query."
           }
         },
         "cardControls": [
@@ -977,7 +1014,10 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001",
+        "button-077"
+      ],
       "files": [
         {
           "path": "contact-007/contact-007.tsx",
@@ -985,14 +1025,15 @@
           "target": "@components/vibeui/contact-007.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-007-*. Серверный: хуков нет. Иконки — inline-SVG внутри файла, пакетов иконок не тянут. Время ответа вынесено плашкой с точкой-маркером, действие — настоящая ссылка: mailto:, tel: или якорь чата. Сетка встаёт в три колонки по container query.",
+      "docs": "Составной блок: импортирует heading-001, button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-007-*. Серверный: хуков нет. Иконки — inline-SVG внутри файла, пакетов иконок не тянут. Время ответа вынесено плашкой с точкой-маркером, действие — настоящая ссылка: mailto:, tel: или якорь чата. Сетка встаёт в три колонки по container query.",
       "meta": {
         "tags": [
           "contact",
           "channels",
           "chat",
           "email",
-          "phone"
+          "phone",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1002,6 +1043,7 @@
           "usage": "<Contact007 items={[{ label: \"Чат\", description: \"Быстрые вопросы по установке.\", reply: \"Отвечаем за 10 минут\", linkLabel: \"Написать в чат\", href: \"#chat\", icon: \"chat\" }]} />",
           "summary": "Три карточки каналов: чат, почта и телефон — у каждого назначение, время ответа и одно действие. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001, button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-007-* и не подменять её токенами вашей темы",
             "время ответа отдельной плашкой: именно оно решает, каким каналом воспользоваться",
             "одно действие на карточку — два равных линка заставляют выбирать дважды",
@@ -1059,6 +1101,7 @@
             "ai": {
               "summary": "Three channel cards: chat, email and phone — each with a purpose, a reply time and one action. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001, button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-007-* palette — do not swap it for your theme tokens",
                 "the reply time as a separate badge: it is what decides which channel to use",
                 "one action per card — two equal links force people to choose twice",
@@ -1133,7 +1176,7 @@
                 ]
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-007-*. Server-side: no hooks. The icons are inline SVG inside the file and pull in no icon packages. The reply time sits in a badge with a dot marker, and the action is a real link: mailto:, tel: or a chat anchor. The grid goes into three columns through a container query."
+            "docs": "A composite block: imports heading-001, button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-007-*. Server-side: no hooks. The icons are inline SVG inside the file and pull in no icon packages. The reply time sits in a badge with a dot marker, and the action is a real link: mailto:, tel: or a chat anchor. The grid goes into three columns through a container query."
           }
         },
         "cardControls": [
@@ -1153,7 +1196,9 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "contact-009/contact-009.tsx",
@@ -1161,13 +1206,14 @@
           "target": "@components/vibeui/contact-009.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-009-*. Серверный: хуков нет и времени он не считает — время приходит пропсами статикой, поэтому подпись под сеткой прямо говорит, что это ориентир по поясам, а не живые часы. Цифры набраны tabular-nums, чтобы карточки не прыгали. Адрес размечен элементом address. Сетка 1→2→3 колонки по container query.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-009-*. Серверный: хуков нет и времени он не считает — время приходит пропсами статикой, поэтому подпись под сеткой прямо говорит, что это ориентир по поясам, а не живые часы. Цифры набраны tabular-nums, чтобы карточки не прыгали. Адрес размечен элементом address. Сетка 1→2→3 колонки по container query.",
       "meta": {
         "tags": [
           "contact",
           "offices",
           "timezones",
-          "locations"
+          "locations",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1177,6 +1223,7 @@
           "usage": "<Contact009 offices={[{ city: \"Москва\", role: \"Штаб-квартира\", time: \"14:05\", zone: \"UTC+3\", address: \"Большая Дмитровка, 14\" }]} />",
           "summary": "Карточки офисов: город, роль, локальное время крупно, часовой пояс и адрес. Время статично из данных. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-009-* и не подменять её токенами вашей темы",
             "tabular-nums у времени: без них цифры разной ширины ломают ровный ряд карточек",
             "подпись часового пояса рядом со временем — по ней читатель сам поймёт, рабочий ли час",
@@ -1234,6 +1281,7 @@
             "ai": {
               "summary": "Office cards: city, role, the local time set large, the time zone and the address. The time is static data. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-009-* palette — do not swap it for your theme tokens",
                 "tabular-nums on the time: without them digits of different widths break the even row of cards",
                 "the time zone label beside the time — it lets the reader work out whether it is a working hour",
@@ -1309,7 +1357,7 @@
                 "footNote": "The times on the cards are static and set in the block data — a time-zone reference, not live clocks."
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-009-*. Server-side: no hooks and no time computation — the time arrives as static props, so the caption under the grid says outright that it is a time-zone reference, not a live clock. The digits are set in tabular-nums so the cards do not jump. The address is marked up with the address element. The grid goes 1→2→3 columns through container queries."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-009-*. Server-side: no hooks and no time computation — the time arrives as static props, so the caption under the grid says outright that it is a time-zone reference, not a live clock. The digits are set in tabular-nums so the cards do not jump. The address is marked up with the address element. The grid goes 1→2→3 columns through container queries."
           }
         },
         "cardControls": [
@@ -1329,7 +1377,12 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "contact-012/contact-012.tsx",
@@ -1337,13 +1390,14 @@
           "target": "@components/vibeui/contact-012.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-012-*. Серверный: дропзона — label вокруг нативного input type=\"file\": клик по всей пунктирной области открывает диалог, кнопка выбора стилизована через ::file-selector-button, а имя выбранного файла показывает сам нативный контрол — без JS его иначе не показать. Фокус на зоне виден через :has(input:focus-visible), ошибки полей — по :user-invalid.",
+      "docs": "Составной блок: импортирует input-001, input-034, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-012-*. Серверный: дропзона — label вокруг нативного input type=\"file\": клик по всей пунктирной области открывает диалог, кнопка выбора стилизована через ::file-selector-button, а имя выбранного файла показывает сам нативный контрол — без JS его иначе не показать. Фокус на зоне виден через :has(input:focus-visible), ошибки полей — по :user-invalid.",
       "meta": {
         "tags": [
           "contact",
           "form",
           "upload",
-          "attachment"
+          "attachment",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1353,6 +1407,7 @@
           "usage": "<Contact012 dropTitle=\"Выберите файл или перетащите его на кнопку\" dropHint=\"PNG, PDF или ZIP до 10 МБ\" submitLabel=\"Отправить обращение\" />",
           "summary": "Форма поддержки с вложением: почта, описание и пунктирная зона на нативном input file. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты input-001, input-034, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-012-* и не подменять её токенами вашей темы",
             "видимый нативный input file: спрятанный контрол лишает пользователя имени выбранного файла",
             "label вокруг всей зоны — маленькая кнопка «выбрать файл» промахивается на телефоне",
@@ -1412,6 +1467,7 @@
             "ai": {
               "summary": "A support form with an attachment: email, description and a dashed zone built on a native file input. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the input-001, input-034, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-012-* palette — do not swap it for your theme tokens",
                 "the visible native file input: a hidden control robs the user of the chosen file name",
                 "the label around the whole zone — a small «choose file» button gets missed on a phone",
@@ -1474,7 +1530,7 @@
                 }
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-012-*. Server-side: the drop area is a label around a native input type=\"file\": a click anywhere on the dashed area opens the dialog, the choose button is styled through ::file-selector-button, and the chosen file name is shown by the native control itself — there is no other way to show it without JS. Focus on the zone is visible through :has(input:focus-visible), field errors go through :user-invalid."
+            "docs": "A composite block: imports input-001, input-034, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-012-*. Server-side: the drop area is a label around a native input type=\"file\": a click anywhere on the dashed area opens the dialog, the choose button is styled through ::file-selector-button, and the chosen file name is shown by the native control itself — there is no other way to show it without JS. Focus on the zone is visible through :has(input:focus-visible), field errors go through :user-invalid."
           }
         },
         "cardControls": [
@@ -1494,7 +1550,9 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "contact-014/contact-014.tsx",
@@ -1502,14 +1560,15 @@
           "target": "@components/vibeui/contact-014.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-contact-014-*. Серверный: хуков нет. Статус — данные блока, а не проверка смены: точка пульсирует CSS-анимацией и глушится prefers-reduced-motion. Часы размечены таблицей с заголовками строк и caption. Кнопки каналов — настоящие ссылки: якорь чата, mailto: и tel:; главный канал залит акцентом. Иконки — inline-SVG.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-contact-014-*. Серверный: хуков нет. Статус — данные блока, а не проверка смены: точка пульсирует CSS-анимацией и глушится prefers-reduced-motion. Часы размечены таблицей с заголовками строк и caption. Кнопки каналов — настоящие ссылки: якорь чата, mailto: и tel:; главный канал залит акцентом. Иконки — inline-SVG.",
       "meta": {
         "tags": [
           "contact",
           "support",
           "status",
           "hours",
-          "channels"
+          "channels",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1519,6 +1578,7 @@
           "usage": "<Contact014 statusLabel=\"Сейчас онлайн\" hours={[{ days: \"Пн–Пт\", time: \"10:00 — 19:00\" }]} channels={[{ label: \"Чат\", href: \"#chat\", icon: \"chat\", primary: true }]} />",
           "summary": "Карточка поддержки: статус онлайн точкой, часы работы таблицей по дням и кнопки каналов. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-contact-014-* и не подменять её токенами вашей темы",
             "зелёный только у статуса: это семантика доступности, а не декоративный акцент",
             "подпись статуса словом рядом с точкой — одним цветом статус не передать",
@@ -1577,6 +1637,7 @@
             "ai": {
               "summary": "A support card: an online status dot, opening hours as a per-day table and channel buttons. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-contact-014-* palette — do not swap it for your theme tokens",
                 "green reserved for the status: it is availability semantics, not a decorative accent",
                 "the status spelled out beside the dot — colour alone cannot carry a status",
@@ -1661,7 +1722,7 @@
                 "note": "Outside the shift the chat still takes messages: they are handled first in the morning."
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-contact-014-*. Server-side: no hooks. The status is block data, not a shift check: the dot pulses with a CSS animation silenced by prefers-reduced-motion. The hours are marked up as a table with row headers and a caption. The channel buttons are real links: a chat anchor, mailto: and tel:; the primary channel is filled with the accent. The icons are inline SVG."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-contact-014-*. Server-side: no hooks. The status is block data, not a shift check: the dot pulses with a CSS animation silenced by prefers-reduced-motion. The hours are marked up as a table with row headers and a caption. The channel buttons are real links: a chat anchor, mailto: and tel:; the primary channel is filled with the accent. The icons are inline SVG."
           }
         },
         "cardControls": [
@@ -1681,7 +1742,13 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "select-001",
+        "checkbox-001",
+        "button-001",
+        "card-025"
+      ],
       "files": [
         {
           "path": "contact-015/contact-015.tsx",
@@ -1689,7 +1756,7 @@
           "target": "@components/vibeui/contact-015.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради состояния «готово». <form> с полями address, area (number), rooms (select), phone (tel), consent (checkbox required); action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. Список обещаний с акцентными точками через ::before. От 56rem (container query) две колонки одной высоты: левая — flex-колонка, фото добирает остаток (flex:1 1 0, min-height 12rem, object-fit:cover), форма тянется на ту же высоту с ровными промежутками (align-content:space-between). Палитра --vibeui-contact-015-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует input-001, select-001, checkbox-001, button-001, card-025 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради состояния «готово». <form> с полями address, area (number), rooms (select), phone (tel), consent (checkbox required); action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. Список обещаний с акцентными точками через ::before. От 56rem (container query) две колонки одной высоты: левая — flex-колонка, фото добирает остаток (flex:1 1 0, min-height 12rem, object-fit:cover), форма тянется на ту же высоту с ровными промежутками (align-content:space-between). Палитра --vibeui-contact-015-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1699,7 +1766,8 @@
           "apartment",
           "agency",
           "listing",
-          "realty"
+          "realty",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -1712,6 +1780,7 @@
           "usage": "<Contact015\n  title=\"Узнайте, сколько стоит ваша квартира\"\n  image=\"/photos/office.webp\"\n  promises={[\"Цена, по которой квартира уйдёт за 30 дней\", \"План продажи без обязательств\"]}\n  action=\"/api/valuation\"\n/>",
           "summary": "Самодостаточная форма оценки квартиры для агентства: обещания, фото, поля адреса, метража, комнат и телефона. Поля формы: address, area, rooms, phone, consent.",
           "preserve": [
+            "импорты input-001, select-001, checkbox-001, button-001, card-025 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "форму как настоящую <form> с именами полей — обработчик получает address, area, rooms, phone, consent",
             "обещания списком слева от формы: человек понимает, что получит, до того как заполнит",
             "карточку «спасибо» на месте формы, а не alert"
@@ -1769,10 +1838,11 @@
           "en": {
             "title": "Flat appraisal form",
             "description": "A free flat appraisal: promises as a list and an office photo on the left, a form on the right — address, area, rooms, phone, consent. A real form: with action it POSTs, without it shows “thank you” in place.",
-            "docs": "One file, zero dependencies, “use client” for the done state. A <form> with address, area (number), rooms (select), phone (tel), consent (required checkbox); with empty action submit is intercepted and a done card with role=status renders; with action a normal POST. A promise list with accent dots via ::before. From 56rem (container query) two equal-height columns: the left is a flex column and the photo takes the remainder (flex:1 1 0, min-height 12rem, object-fit:cover), the form stretches to the same height with even spacing (align-content:space-between). Palette --vibeui-contact-015-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports input-001, select-001, checkbox-001, button-001, card-025 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the done state. A <form> with address, area (number), rooms (select), phone (tel), consent (required checkbox); with empty action submit is intercepted and a done card with role=status renders; with action a normal POST. A promise list with accent dots via ::before. From 56rem (container query) two equal-height columns: the left is a flex column and the photo takes the remainder (flex:1 1 0, min-height 12rem, object-fit:cover), the form stretches to the same height with even spacing (align-content:space-between). Palette --vibeui-contact-015-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained flat appraisal form for an agency: promises, a photo, address, area, rooms and phone fields. Form fields: address, area, rooms, phone, consent.",
               "preserve": [
+                "the input-001, select-001, checkbox-001, button-001, card-025 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the form as a real <form> with field names — the handler gets address, area, rooms, phone, consent",
                 "the promise list left of the form: people know what they get before filling it in",
                 "the “thank you” card in place of the form, not an alert"
@@ -1851,7 +1921,13 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "checkbox-001",
+        "button-001",
+        "button-018"
+      ],
       "files": [
         {
           "path": "contact-016/contact-016.tsx",
@@ -1859,7 +1935,7 @@
           "target": "@components/vibeui/contact-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». Чипы — <button aria-pressed>, клик пишет time и, если пусто, date=сегодня. Поля: date (min=сегодня), time (step 900), скрытый guests из степпера с границами minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. От 56rem (container query) две колонки 1fr/1.1fr. Палитра --vibeui-contact-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует input-001, input-034, checkbox-001, button-001, button-018 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». Чипы — <button aria-pressed>, клик пишет time и, если пусто, date=сегодня. Поля: date (min=сегодня), time (step 900), скрытый guests из степпера с границами minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). action пустой — submit перехватывается и рендерится карточка done с role=status; с action — обычная отправка POST. От 56rem (container query) две колонки 1fr/1.1fr. Палитра --vibeui-contact-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1872,7 +1948,8 @@
           "booking",
           "reservation",
           "form",
-          "table"
+          "table",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -1883,6 +1960,7 @@
           "usage": "<Contact016\n  title=\"Оставьте стол за собой\"\n  slots={[\"18:00\", \"18:30\", \"19:30\", \"21:30\"]}\n  notes={[\"Стол держим 15 минут после брони\", \"Терраса открыта с мая\"]}\n  maxGuests={12}\n  action=\"/api/book\"\n/>",
           "summary": "Самодостаточная форма брони для ресторана, бара или кафе: свободные окна чипами, дата, время, гости, телефон. Поля формы: date, time, guests, name, phone, note, consent.",
           "preserve": [
+            "импорты input-001, input-034, checkbox-001, button-001, button-018 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "чипы свободных окон, подставляющие время в форму — бронь в два клика",
             "степпер гостей вместо поля ввода и настоящие имена полей — обработчик получает date, time, guests, name, phone, note, consent",
             "карточку «стол ваш» на месте формы, а не alert"
@@ -1940,10 +2018,11 @@
           "en": {
             "title": "Table booking with free slots",
             "description": "Table booking: free slots for today as chips and notes on the left, a form on the right — date, time, guests with a ± stepper, name, phone, wishes, consent. A chip click fills the time and today's date. A real form: with action it POSTs, without it shows “the table is yours” in place.",
-            "docs": "One file, zero dependencies, “use client”. Chips are <button aria-pressed>; a click writes time and, if empty, date=today. Fields: date (min=today), time (step 900), a hidden guests from the stepper bounded by minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). With empty action submit is intercepted and a done card with role=status renders; with action a normal POST. From 56rem (container query) two columns 1fr/1.1fr. Palette --vibeui-contact-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports input-001, input-034, checkbox-001, button-001, button-018 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client”. Chips are <button aria-pressed>; a click writes time and, if empty, date=today. Fields: date (min=today), time (step 900), a hidden guests from the stepper bounded by minGuests/maxGuests, name, phone (tel), note (textarea), consent (required). With empty action submit is intercepted and a done card with role=status renders; with action a normal POST. From 56rem (container query) two columns 1fr/1.1fr. Palette --vibeui-contact-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained booking form for a restaurant, bar or cafe: free slots as chips, date, time, guests, phone. Form fields: date, time, guests, name, phone, note, consent.",
               "preserve": [
+                "the input-001, input-034, checkbox-001, button-001, button-018 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the free-slot chips filling the time in the form — booking in two clicks",
                 "the guests stepper instead of an input and real field names — the handler gets date, time, guests, name, phone, note, consent",
                 "the “table is yours” card in place of the form, not an alert"
@@ -2015,7 +2094,11 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-017/contact-017.tsx",
@@ -2023,7 +2106,7 @@
           "target": "@components/vibeui/contact-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради шагов и выбора. Степпер — <ol> с полосками ::before, data-active и data-done красят их акцентом со свечением. Выбор — кнопки с aria-pressed; мастер красит капсулу своим цветом через --neon, слоты — data-free лаймом. Значения дублируются в hidden-полях artist, zone, date, time, поля третьего шага — name, phone, idea, reference (file). «Дальше» disabled, пока шаг не заполнен. Сводка — aside aria-live, от 60rem (container query) колонка 1fr справа, position:sticky. Палитра --vibeui-contact-017-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует input-001, input-034, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради шагов и выбора. Степпер — <ol> с полосками ::before, data-active и data-done красят их акцентом со свечением. Выбор — кнопки с aria-pressed; мастер красит капсулу своим цветом через --neon, слоты — data-free лаймом. Значения дублируются в hidden-полях artist, zone, date, time, поля третьего шага — name, phone, idea, reference (file). «Дальше» disabled, пока шаг не заполнен. Сводка — aside aria-live, от 60rem (container query) колонка 1fr справа, position:sticky. Палитра --vibeui-contact-017-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2035,7 +2118,8 @@
           "booking",
           "form",
           "stepper",
-          "slots"
+          "slots",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2054,6 +2138,7 @@
           "usage": "<Contact017\n  artists={[{ key: \"asya\", name: \"Ася\", styles: \"олд-скул\", color: \"#ff2bd6\" }]}\n  zones={[\"рука\", \"нога\", \"спина\"]}\n  slots={[{ date: \"21 сен\", times: [\"11:00\", \"14:00\"] }]}\n  action=\"/api/booking\"\n/>",
           "summary": "Самодостаточная форма записи для тату-студии, салона или мастерской: три шага, капсулы выбора, свободные слоты, сводка справа и отправка на action. Мастера, зоны и слоты — массивы пропсом.",
           "preserve": [
+            "импорты input-001, input-034, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "три шага с неоновым прогрессом вместо одной длинной формы",
             "свободные слоты лаймом — видно, что окна есть",
             "липкую сводку выбора справа"
@@ -2104,10 +2189,11 @@
           "en": {
             "title": "Three-step booking with a neon stepper",
             "description": "Tattoo studio booking: three steps with a neon progress stepper — artist and zone as pills, date and time (free slots in lime), idea and contacts with a reference. Steps slide in, the choice gathers in a sticky summary on the right. With action it POSTs, without it shows “we have your request”.",
-            "docs": "One file, zero dependencies, “use client” for steps and choices. The stepper is an <ol> with ::before bars; data-active and data-done paint them with the glowing accent. Choices are buttons with aria-pressed; the artist tints its pill via --neon, slots use data-free in lime. Values duplicate into hidden fields artist, zone, date, time; step three has name, phone, idea, reference (file). “Next” is disabled until the step is filled. The summary is an aria-live aside; from 60rem (container query) a 1fr right column, position:sticky. Palette --vibeui-contact-017-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports input-001, input-034, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for steps and choices. The stepper is an <ol> with ::before bars; data-active and data-done paint them with the glowing accent. Choices are buttons with aria-pressed; the artist tints its pill via --neon, slots use data-free in lime. Values duplicate into hidden fields artist, zone, date, time; step three has name, phone, idea, reference (file). “Next” is disabled until the step is filled. The summary is an aria-live aside; from 60rem (container query) a 1fr right column, position:sticky. Palette --vibeui-contact-017-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained booking form for a tattoo studio, salon or workshop: three steps, choice pills, free slots, a summary on the right and submission to action. Artists, zones and slots come in as prop arrays.",
               "preserve": [
+                "the input-001, input-034, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "three steps with neon progress instead of one long form",
                 "free slots in lime — it shows there are openings",
                 "the sticky choice summary on the right"
@@ -2235,7 +2321,11 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-018/contact-018.tsx",
@@ -2243,7 +2333,7 @@
           "target": "@components/vibeui/contact-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги рендерятся по одному с fade-in, «Дальше» на первом шаге заблокировано без имени и ответа «буду/не смогу». Выборы — кнопки-капсулы с aria-pressed (одиночный) и role=checkbox/aria-checked (напитки). Имя из адреса читается useSyncExternalStore (на сервере пусто, гидрация без расхождений), greeting с {name} заменяет заголовок; lede принимает {deadline}. Форма — стекло: полупрозрачный крем с backdrop-filter и светлой кромкой, за ней шалфейное свечение ::before секции. Сводка — <dl> с aria-live=polite, пустые значения показывают «—». Отправка: без action — preventDefault и экран «спасибо», с action — обычный POST с hidden-полями guest и answers (JSON). Печать — radial-gradient со «штампом» keyframes. От 56rem сетка 1.4fr/.7fr, сводка sticky. Палитра --vibeui-contact-018-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует input-001, input-034, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги рендерятся по одному с fade-in, «Дальше» на первом шаге заблокировано без имени и ответа «буду/не смогу». Выборы — кнопки-капсулы с aria-pressed (одиночный) и role=checkbox/aria-checked (напитки). Имя из адреса читается useSyncExternalStore (на сервере пусто, гидрация без расхождений), greeting с {name} заменяет заголовок; lede принимает {deadline}. Форма — стекло: полупрозрачный крем с backdrop-filter и светлой кромкой, за ней шалфейное свечение ::before секции. Сводка — <dl> с aria-live=polite, пустые значения показывают «—». Отправка: без action — preventDefault и экран «спасибо», с action — обычный POST с hidden-полями guest и answers (JSON). Печать — radial-gradient со «штампом» keyframes. От 56rem сетка 1.4fr/.7fr, сводка sticky. Палитра --vibeui-contact-018-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2260,7 +2350,8 @@
           "transfer",
           "song request",
           "serif",
-          "cream"
+          "cream",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2280,6 +2371,7 @@
           "usage": "<Contact018\n  title=\"Скажите, что придёте\"\n  greeting=\"{name}, привет!\"\n  deadline=\"до 1 августа\"\n  menu={[\n    { value: \"meat\", label: \"Мясо\" },\n    { value: \"fish\", label: \"Рыба\" },\n    { value: \"veg\", label: \"Вегетарианское\" },\n  ]}\n  drinks={[\n    { value: \"wine\", label: \"Вино\" },\n    { value: \"none\", label: \"Без алкоголя\" },\n  ]}\n  action=\"/api/rsvp\"\n/>\n{/* персональная ссылка: /?guest=Ольга#rsvp */}",
           "summary": "Самодостаточная RSVP-анкета свадьбы: пять шагов с прогрессом, опросами по меню, напиткам, трансферу и песне, сводка справа и «спасибо» с печатью. Имя гостя — из ?guest= или пропсом, отправка POST'ом на action.",
           "preserve": [
+            "импорты input-001, input-034, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "пять шагов по одному с полосками прогресса и блокировкой «Дальше» без ответа",
             "липкую сводку справа, которая заполняется по ходу",
             "финал «спасибо» с восковой печатью и штампом"
@@ -2344,10 +2436,11 @@
           "en": {
             "title": "Five-step wedding RSVP form",
             "description": "An RSVP in five steps: who and whether they're coming, with whom (plus one, children), menu and drinks with allergies, whether a shuttle is needed, a dance-floor song and a wish. Progress bars on top, a sticky summary on the right that fills as you go, and a “thank you” finale with a wax seal. The guest's name comes from ?guest= in the URL — the link can be sent personally.",
-            "docs": "One file, zero dependencies, “use client”. State is the answers object and the step index; steps render one at a time with a fade-in, “Next” on the first step is disabled without a name and a yes/no. Choices are pill buttons with aria-pressed (single) and role=checkbox/aria-checked (drinks). The name from the URL is read via useSyncExternalStore (empty on the server, hydration without mismatch); greeting with {name} replaces the title; lede accepts {deadline}. The form is glass: translucent cream with backdrop-filter and a light edge, with a sage ::before glow of the section behind it. The summary is a <dl> with aria-live=polite, empty values show “—”. Submission: without action — preventDefault and the “thank you” screen; with action — a plain POST with hidden guest and answers (JSON) fields. The seal is a radial-gradient with a “stamp” keyframe. From 56rem a 1.4fr/.7fr grid, the summary sticky. Palette --vibeui-contact-018-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports input-001, input-034, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client”. State is the answers object and the step index; steps render one at a time with a fade-in, “Next” on the first step is disabled without a name and a yes/no. Choices are pill buttons with aria-pressed (single) and role=checkbox/aria-checked (drinks). The name from the URL is read via useSyncExternalStore (empty on the server, hydration without mismatch); greeting with {name} replaces the title; lede accepts {deadline}. The form is glass: translucent cream with backdrop-filter and a light edge, with a sage ::before glow of the section behind it. The summary is a <dl> with aria-live=polite, empty values show “—”. Submission: without action — preventDefault and the “thank you” screen; with action — a plain POST with hidden guest and answers (JSON) fields. The seal is a radial-gradient with a “stamp” keyframe. From 56rem a 1.4fr/.7fr grid, the summary sticky. Palette --vibeui-contact-018-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained wedding RSVP form: five steps with progress, polls on menu, drinks, shuttle and song, a summary on the right and a sealed “thank you”. The guest's name comes from ?guest= or a prop, submission POSTs to action.",
               "preserve": [
+                "the input-001, input-034, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "five steps shown one at a time with progress bars and “Next” disabled until answered",
                 "the sticky summary on the right that fills as you go",
                 "the “thank you” finale with the wax seal stamp"
@@ -2449,7 +2542,11 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-019/contact-019.tsx",
@@ -2457,7 +2554,7 @@
           "target": "@components/vibeui/contact-019.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги по одному с fade-in, «Дальше» на первом заблокировано без имени и «лечу/не смогу». Выборы — кнопки с aria-pressed. Имя из адреса — useSyncExternalStore (на сервере пусто), greeting с {name} заменяет заголовок; lede принимает {deadline}. Сводка — <aside data-part=pass> с тёмной шапкой «SVO → HAV», <dl> в две колонки, штрих-кодом и штампом, который data-sent печатает keyframes с уменьшением. Отправка: без action — preventDefault и экран «вы на борту»; с action — POST с hidden-полями guest и answers (JSON). От 56rem сетка 1.4fr/.7fr, талон sticky. Палитра --vibeui-contact-019-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует input-001, input-034, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги по одному с fade-in, «Дальше» на первом заблокировано без имени и «лечу/не смогу». Выборы — кнопки с aria-pressed. Имя из адреса — useSyncExternalStore (на сервере пусто), greeting с {name} заменяет заголовок; lede принимает {deadline}. Сводка — <aside data-part=pass> с тёмной шапкой «SVO → HAV», <dl> в две колонки, штрих-кодом и штампом, который data-sent печатает keyframes с уменьшением. Отправка: без action — preventDefault и экран «вы на борту»; с action — POST с hidden-полями guest и answers (JSON). От 56rem сетка 1.4fr/.7fr, талон sticky. Палитра --vibeui-contact-019-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2473,7 +2570,8 @@
           "menu",
           "song request",
           "cuba",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2493,6 +2591,7 @@
           "usage": "<Contact019\n  title=\"Зарегистрируйтесь на рейс\"\n  greeting=\"{name}, добро пожаловать на борт\"\n  deadline=\"до 1 декабря\"\n  from=\"SVO\"\n  to=\"HAV\"\n  menu={[\n    { value: \"fish\", label: \"Рыба и лобстер\" },\n    { value: \"chicken\", label: \"Курица\" },\n    { value: \"veg\", label: \"Вегетарианское\" },\n  ]}\n  action=\"/api/checkin\"\n/>\n{/* персональная ссылка: /?guest=Ольга#checkin */}",
           "summary": "Самодостаточная дорожная RSVP-анкета: пять шагов про перелёт, даты, отель, меню и песню, сводка-посадочный талон и штамп «Checked in». Имя гостя из ?guest= или пропсом, отправка POST'ом на action.",
           "preserve": [
+            "импорты input-001, input-034, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "пять шагов по одному с полосками прогресса и подписями",
             "сводку-посадочный талон с тёмной шапкой, штрих-кодом и штампом «Checked in»",
             "дорожные вопросы: даты и рейс, отель, меню — вместо обычных «плюс один»"
@@ -2550,10 +2649,11 @@
           "en": {
             "title": "Check-in: a five-step travel RSVP",
             "description": "A destination-wedding RSVP as flight check-in: five steps — are you flying, arrival and departure dates with the flight number, hotel (book for you?), menu and allergies, a song for the beach. A boarding-pass summary on the right fills as you go; the finale is a “CHECKED IN” stamp. The guest's name comes from ?guest= in the URL.",
-            "docs": "One file, zero dependencies, “use client”. State is the answers object and the step index; steps one at a time with a fade-in, “Next” on the first is disabled without a name and a flying/not choice. Choices are aria-pressed buttons. The name from the URL is read via useSyncExternalStore (empty on the server); greeting with {name} replaces the title; lede accepts {deadline}. The summary is an <aside data-part=pass> with a dark “SVO → HAV” header, a two-column <dl>, a barcode and a stamp that data-sent prints with a shrinking keyframe. Submission: without action — preventDefault and the “on board” screen; with action — POST with hidden guest and answers (JSON). From 56rem a 1.4fr/.7fr grid, the pass sticky. Palette --vibeui-contact-019-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports input-001, input-034, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client”. State is the answers object and the step index; steps one at a time with a fade-in, “Next” on the first is disabled without a name and a flying/not choice. Choices are aria-pressed buttons. The name from the URL is read via useSyncExternalStore (empty on the server); greeting with {name} replaces the title; lede accepts {deadline}. The summary is an <aside data-part=pass> with a dark “SVO → HAV” header, a two-column <dl>, a barcode and a stamp that data-sent prints with a shrinking keyframe. Submission: without action — preventDefault and the “on board” screen; with action — POST with hidden guest and answers (JSON). From 56rem a 1.4fr/.7fr grid, the pass sticky. Palette --vibeui-contact-019-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained travel RSVP: five steps about the flight, dates, hotel, menu and song, a boarding-pass summary and a “Checked in” stamp. Guest name from ?guest= or a prop, POSTs to action.",
               "preserve": [
+                "the input-001, input-034, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "five steps shown one at a time with labelled progress bars",
                 "the boarding-pass summary with the dark header, barcode and “Checked in” stamp",
                 "the travel questions: dates and flight, hotel, menu — instead of the usual plus-one"
@@ -2638,7 +2738,11 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-020/contact-020.tsx",
@@ -2646,7 +2750,7 @@
           "target": "@components/vibeui/contact-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги по одному с fade-in, «Дальше» на первом заблокировано без имени и «приеду/не смогу». Выборы — кнопки-капсулы с aria-pressed; на шаге дороги при трансфере появляется выбор времени. Бумага — светлая карточка с внутренней рамкой (color-scheme:light, свои переменные), поля с рукописным шрифтом и подчёркиванием бордо. Имя из адреса — useSyncExternalStore (на сервере пусто), greeting с {name} заменяет заголовок; lede принимает {deadline}. Конверт — <aside> с клапаном (диагонали ::before/::after) и сургучом с инициалами, <dl> в две колонки рукописным, штамп по data-sent с keyframes уменьшения. Отправка: без action — preventDefault и экран «письмо получено»; с action — POST с hidden-полями guest и answers (JSON). От 56rem сетка 1.4fr/.7fr, конверт sticky. Палитра --vibeui-contact-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует input-001, input-034, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». Состояние — объект ответов и номер шага; шаги по одному с fade-in, «Дальше» на первом заблокировано без имени и «приеду/не смогу». Выборы — кнопки-капсулы с aria-pressed; на шаге дороги при трансфере появляется выбор времени. Бумага — светлая карточка с внутренней рамкой (color-scheme:light, свои переменные), поля с рукописным шрифтом и подчёркиванием бордо. Имя из адреса — useSyncExternalStore (на сервере пусто), greeting с {name} заменяет заголовок; lede принимает {deadline}. Конверт — <aside> с клапаном (диагонали ::before/::after) и сургучом с инициалами, <dl> в две колонки рукописным, штамп по data-sent с keyframes уменьшения. Отправка: без action — preventDefault и экран «письмо получено»; с action — POST с hidden-полями guest и answers (JSON). От 56rem сетка 1.4fr/.7fr, конверт sticky. Палитра --vibeui-contact-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -2659,7 +2763,8 @@
           "wax seal",
           "menu",
           "song request",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2679,6 +2784,7 @@
           "usage": "<Contact020\n  title=\"Напишите, что приедете\"\n  greeting=\"{name}, мы ждём ваш ответ\"\n  deadline=\"до 1 ноября\"\n  seal=\"В·Д\"\n  menu={[\n    { value: \"duck\", label: \"Утка с яблоками\" },\n    { value: \"fish\", label: \"Форель\" },\n    { value: \"veg\", label: \"Вегетарианское\" },\n  ]}\n  action=\"/api/rsvp\"\n/>\n{/* персональная ссылка: /?guest=Анна#rsvp */}",
           "summary": "Самодостаточное письмо-ответ: пять шагов про гостей, ночёвку, дорогу, меню и песню на светлой бумаге, конверт-сводка с сургучом и штамп «Ждём». Имя гостя из ?guest= или пропсом, отправка POST'ом на action.",
           "preserve": [
+            "импорты input-001, input-034, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "светлую бумагу формы на тёмной странице — единственное светлое пятно",
             "конверт-сводку с клапаном, сургучом и рукописными ответами",
             "штамп «Ждём» со снежинкой при отправке"
@@ -2736,10 +2842,11 @@
           "en": {
             "title": "Reply letter: a five-step RSVP on paper with an envelope and wax seal",
             "description": "A winter-wedding RSVP as a letter: five steps on light paper — who and with whom, staying in the house or not, shuttle or car, menu and allergies, a song and a few words. On the right an envelope summary with a wax seal fills in handwriting as you go; the finale is a “Waiting” stamp with a snowflake. The guest's name comes from ?guest= in the URL.",
-            "docs": "One file, zero dependencies, “use client”. State is the answers object and the step index; steps one at a time with a fade-in, “Next” on the first is disabled without a name and a coming/not choice. Choices are aria-pressed pill buttons; on the travel step a time choice appears for the shuttle. The paper is a light card with an inner frame (color-scheme:light, its own variables), fields in a handwritten font with a burgundy underline. The name from the URL is read via useSyncExternalStore (empty on the server); greeting with {name} replaces the title; lede accepts {deadline}. The envelope is an <aside> with a flap (::before/::after diagonals) and an initials wax seal, a two-column handwritten <dl>, a stamp on data-sent with a shrinking keyframe. Submission: without action — preventDefault and the “letter received” screen; with action — POST with hidden guest and answers (JSON). From 56rem a 1.4fr/.7fr grid, the envelope sticky. Palette --vibeui-contact-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports input-001, input-034, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client”. State is the answers object and the step index; steps one at a time with a fade-in, “Next” on the first is disabled without a name and a coming/not choice. Choices are aria-pressed pill buttons; on the travel step a time choice appears for the shuttle. The paper is a light card with an inner frame (color-scheme:light, its own variables), fields in a handwritten font with a burgundy underline. The name from the URL is read via useSyncExternalStore (empty on the server); greeting with {name} replaces the title; lede accepts {deadline}. The envelope is an <aside> with a flap (::before/::after diagonals) and an initials wax seal, a two-column handwritten <dl>, a stamp on data-sent with a shrinking keyframe. Submission: without action — preventDefault and the “letter received” screen; with action — POST with hidden guest and answers (JSON). From 56rem a 1.4fr/.7fr grid, the envelope sticky. Palette --vibeui-contact-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained reply letter: five steps about guests, staying over, travel, menu and song on light paper, an envelope summary with a wax seal and a “Waiting” stamp. Guest name from ?guest= or a prop, POSTs to action.",
               "preserve": [
+                "the input-001, input-034, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the light paper form on the dark page — the only light spot",
                 "the envelope summary with the flap, wax seal and handwritten answers",
                 "the “Waiting” stamp with a snowflake on submit"
@@ -2825,7 +2932,11 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "button-003"
+      ],
       "files": [
         {
           "path": "contact-021/contact-021.tsx",
@@ -2843,7 +2954,8 @@
           "personal",
           "social",
           "clock",
-          "freelance"
+          "freelance",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -2856,6 +2968,7 @@
           "usage": "<Contact021\n  email=\"hi@lunev.design\"\n  city=\"Тбилиси\"\n  timeZone=\"Asia/Tbilisi\"\n  links={[{ label: \"Телеграм\", href: \"#\", handle: \"@lunev\" }]}\n  image=\"/photos/portrait-02.webp\"\n/>",
           "summary": "Контакт для личного сайта без формы: почта одним кликом, время, обещание и соцсети.",
           "preserve": [
+            "импорты input-001, input-034, button-003 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "копирование через navigator.clipboard, откат — mailto; подпись под адресом меняется на 2 с",
             "часы — useSyncExternalStore с серверным null и Intl по timeZone",
             "ссылки соцсетей сдвигаются влево-вправо по hover через padding-left"
@@ -2919,6 +3032,7 @@
             "ai": {
               "summary": "A contact section for a personal site with no form: one-click email, time, a promise and socials.",
               "preserve": [
+                "the input-001, input-034, button-003 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "copying via navigator.clipboard, mailto fallback; the caption under the address changes for 2 s",
                 "the clock is useSyncExternalStore with a null server snapshot and Intl by timeZone",
                 "social links nudge via padding-left on hover"
@@ -2984,10 +3098,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, input-034, button-003 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, input-034, button-003 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "contact-023",
@@ -2998,7 +3114,12 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "input-034",
+        "select-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "contact-023/contact-023.tsx",
@@ -3018,7 +3139,8 @@
           "vet",
           "clinic",
           "hours",
-          "address"
+          "address",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3029,6 +3151,7 @@
           "usage": "<Contact023\n  title=\"Приходите, мы уже гладим стол\"\n  address=\"Ленинградский проспект, 62\"\n  metro=\"Сокол · 6 минут пешком\"\n  phone=\"+7 495 120-24-24\"\n  hours={[{ label: \"Приём\", value: \"9:00–21:00\" }, { label: \"Экстренно\", value: \"круглосуточно\" }]}\n/>",
           "summary": "Запись на приём с плавающими ярлыками и живой SVG-картой рядом.",
           "preserve": [
+            "импорты input-001, input-034, select-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ярлык — span после поля, уезжает через :not(:placeholder-shown) + span и :focus + span; placeholder прозрачный, чтобы приём работал",
             "успех — done в стейте, svg-галочка рисуется stroke-dashoffset с задержкой после круга",
             "карта — svg viewBox 400×300 с улицами из card/line, парк из --park; пин absolute 56%/46% с keyframes bounce и кольцом"
@@ -3101,6 +3224,7 @@
             "ai": {
               "summary": "Appointment booking with floating labels and a live SVG map next to it.",
               "preserve": [
+                "the input-001, input-034, select-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the label is a span after the field, it floats via :not(:placeholder-shown) + span and :focus + span; the placeholder is transparent so the trick works",
                 "success is done in state, the svg tick draws via stroke-dashoffset with a delay after the circle",
                 "the map is an svg viewBox 400×300 with streets from card/line, the park from --park; the pin is absolute at 56%/46% with bounce keyframes and a ring"
@@ -3177,10 +3301,12 @@
                 "doneTitle": "Booked",
                 "doneText": "We'll call back within 15 minutes. If it's urgent — call us, the duty vet is in."
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, input-034, select-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, input-034, select-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "contact-033",
@@ -3191,7 +3317,10 @@
         "contact"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "button-015"
+      ],
       "files": [
         {
           "path": "contact-033/contact-033.tsx",
@@ -3212,7 +3341,8 @@
           "tilt",
           "copy",
           "press kit",
-          "serif"
+          "serif",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3223,6 +3353,7 @@
           "usage": "<Contact033\n  rights={[{ name: \"Перевод\", status: \"свободны\" }, { name: \"Экранизация\", status: \"свободны\" }]}\n  agentName=\"Дарья Ланина\"\n  email=\"daria@polosa.agency\"\n/>",
           "summary": "Контакты для деловых запросов: права и агент, визитка в 3D-наклоне, почта копируется одним нажатием.",
           "preserve": [
+            "импорты button-077, button-015 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "наклон — onPointerMove на [data-part=stage] пишет --vibeui-contact-033-rx/ry (±7°/±5°) и gx/gy для блика прямо в style карточки через ref; onPointerLeave снимает rx/ry, transition .5s",
             "копирование — navigator.clipboard?.writeText(email) в обработчике, кнопка на 2 с получает data-done и меняет текст",
             "статус права подсвечивается акцентом, если начинается со «свободны» (data-free)"
@@ -3295,6 +3426,7 @@
             "ai": {
               "summary": "Contacts for business enquiries: rights and an agent, a 3D-tilting card, email copied in one click.",
               "preserve": [
+                "the button-077, button-015 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the tilt: onPointerMove on [data-part=stage] writes --vibeui-contact-033-rx/ry (±7°/±5°) and gx/gy for the glint straight into the card's style via ref; onPointerLeave removes rx/ry, .5s transition",
                 "copying is navigator.clipboard?.writeText(email) in the handler; the button gets data-done for 2 s and changes its text",
                 "a right's status is accent-coloured when it starts with “free” (data-free)"
@@ -3363,10 +3495,12 @@
                 "authorEmail": "vera@kholodova.ru",
                 "pressKitLabel": "Press kit: photos, bio, cover (zip, 14 MB)"
               }
-            }
+            },
+            "docs": "A composite block: imports button-077, button-015 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-077, button-015 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

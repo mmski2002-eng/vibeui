@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card179 } from "@/registry/components/card/card-179/card-179"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid019Row = {
@@ -88,6 +89,7 @@ border:1px solid var(--vibeui-datagrid-019-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-019-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-019"] *{box-sizing:border-box}
+[data-vibeui-block="datagrid-019"] [data-part="rule"]{margin-top:0.5rem}
 [data-vibeui-block="datagrid-019"] [data-part="builder"]{
 border:0;margin:0;padding:0.75rem 0.875rem;background:var(--vibeui-datagrid-019-panel);
 border-bottom:1px solid var(--vibeui-datagrid-019-border);
@@ -96,30 +98,11 @@ border-bottom:1px solid var(--vibeui-datagrid-019-border);
 padding:0;font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-datagrid-019-muted);float:left;width:100%;
 }
-/* legend с float:left увёл бы следующие flex-строки в обтекание. */
-[data-vibeui-block="datagrid-019"] [data-part="rule"]{clear:both;display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;margin-top:0.5rem}
 [data-vibeui-block="datagrid-019"] [data-part="joiner"]{
 clear:both;display:flex;align-items:center;gap:0.375rem;margin-top:0.5rem;
 font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--vibeui-datagrid-019-accent);
 }
 [data-vibeui-block="datagrid-019"] [data-part="joiner"]::after{content:"";flex:1;height:1px;background:var(--vibeui-datagrid-019-border)}
-[data-vibeui-block="datagrid-019"] select,
-[data-vibeui-block="datagrid-019"] [data-part="value"]{
-font:inherit;font-size:0.75rem;color:inherit;padding:0.3125rem 0.5rem;
-border:1px solid var(--vibeui-datagrid-019-border);border-radius:0.4375rem;
-background:transparent;
-}
-[data-vibeui-block="datagrid-019"] [data-part="value"]{width:8rem;min-width:0}
-[data-vibeui-block="datagrid-019"] select:focus-visible,
-[data-vibeui-block="datagrid-019"] [data-part="value"]:focus-visible{outline:2px solid var(--vibeui-datagrid-019-accent);outline-offset:1px}
-[data-vibeui-block="datagrid-019"] [data-part="drop"]{
-appearance:none;cursor:pointer;font:inherit;font-size:0.875rem;line-height:1;
-width:1.75rem;height:1.75rem;border-radius:0.4375rem;
-border:1px solid var(--vibeui-datagrid-019-border);
-background:transparent;color:var(--vibeui-datagrid-019-muted);
-}
-[data-vibeui-block="datagrid-019"] [data-part="drop"]:hover{color:var(--vibeui-datagrid-019-danger);border-color:var(--vibeui-datagrid-019-danger)}
-[data-vibeui-block="datagrid-019"] [data-part="drop"]:focus-visible{outline:2px solid var(--vibeui-datagrid-019-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-019"] [data-part="add"]{
 clear:both;appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
 margin-top:0.625rem;padding:0.3125rem 0.625rem;border-radius:0.4375rem;
@@ -409,91 +392,7 @@ export function Datagrid019({
                     <span hidden>{joinerHint}</span>
                   </p>
                 ) : null}
-                <div data-part="rule">
-                  <select
-                    value={rule.field}
-                    aria-label={fieldLabel.replace(
-                      "{index}",
-                      String(index + 1),
-                    )}
-                    onChange={(event) => {
-                      const next = FIELDS.find(
-                        (item) => item.key === event.target.value,
-                      )
-
-                      patch(rule.id, {
-                        field: event.target.value as Rule["field"],
-                        operator: next?.numeric ? "gt" : "contains",
-                        value: "",
-                      })
-                    }}
-                  >
-                    {FIELDS.map((item) => (
-                      <option key={item.key} value={item.key}>
-                        {fieldText[item.key] ?? FIELD_TEXT[item.key]}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={rule.operator}
-                    aria-label={operatorLabel.replace(
-                      "{index}",
-                      String(index + 1),
-                    )}
-                    onChange={(event) =>
-                      patch(rule.id, { operator: event.target.value })
-                    }
-                  >
-                    {operators.map((item) => (
-                      <option key={item} value={item}>
-                        {operatorText[item] ?? OPERATOR_TEXT[item]}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    data-part="value"
-                    type={field?.numeric ? "number" : "text"}
-                    value={rule.value}
-                    aria-label={valueLabel.replace(
-                      "{index}",
-                      String(index + 1),
-                    )}
-                    onChange={(event) =>
-                      patch(rule.id, { value: event.target.value })
-                    }
-                  />
-                  <button
-                    type="button"
-                    data-part="drop"
-                    aria-label={removeLabel.replace(
-                      "{index}",
-                      String(index + 1),
-                    )}
-                    onClick={() =>
-                      setRules((current) =>
-                        current.filter((item) => item.id !== rule.id),
-                      )
-                    }
-                  >
-                    ×
-                  </button>
-                  {index === 0 ? (
-                    <select
-                      value={join}
-                      aria-label={joinerLabel}
-                      onChange={(event) =>
-                        setChosen(event.target.value as "and" | "or")
-                      }
-                    >
-                      <option value="and">
-                        {joinerOptionText.and ?? JOINER_OPTION_TEXT.and}
-                      </option>
-                      <option value="or">
-                        {joinerOptionText.or ?? JOINER_OPTION_TEXT.or}
-                      </option>
-                    </select>
-                  ) : null}
-                </div>
+                <Card179 data-part="rule" field={rule.field} id={rule.id} operator={rule.operator} value={rule.value} fieldLabel={fieldLabel} fieldText={fieldText} operatorLabel={operatorLabel} operatorText={operatorText} valueLabel={valueLabel} removeLabel={removeLabel} joinerLabel={joinerLabel} joinerOptionText={joinerOptionText} join={join} operators={operators} patch={patch} setChosen={setChosen} setRules={setRules} index={index} accent={accent} />
               </div>
             )
           })}

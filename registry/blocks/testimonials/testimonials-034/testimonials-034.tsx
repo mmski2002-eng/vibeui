@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card038 } from "@/registry/components/card/card-038/card-038"
 
 export type Testimonials034Review = {
   /** Ник разработчика: «@lena_dev». */
@@ -58,21 +59,8 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-034"] [data-part="title"]{margin:0;font-weight:800;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1.02;letter-spacing:-.04em}
 [data-vibeui-block="testimonials-034"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-testimonials-034-muted)}
 [data-vibeui-block="testimonials-034"] [data-part="grid"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-034"] [data-part="card"]{display:grid;gap:.9rem;padding:1.2rem;border:1px solid var(--vibeui-testimonials-034-line);border-radius:1rem;background:var(--vibeui-testimonials-034-bg);transition:border-color .3s,box-shadow .3s,transform .3s}
-[data-vibeui-block="testimonials-034"] [data-part="card"]:hover{border-color:color-mix(in oklab,var(--vibeui-testimonials-034-accent) 55%,transparent);box-shadow:0 0 50px -20px var(--vibeui-testimonials-034-accent);transform:translateY(-3px)}
-[data-vibeui-block="testimonials-034"] [data-part="who"]{display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:center}
-[data-vibeui-block="testimonials-034"] [data-part="avatar"]{display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:.55rem;background:color-mix(in oklab,var(--vibeui-testimonials-034-accent) 16%,transparent);color:var(--vibeui-testimonials-034-accent);font-family:var(--vibeui-testimonials-034-mono);font-weight:600;font-size:.8rem}
-[data-vibeui-block="testimonials-034"] [data-part="handle"]{font-family:var(--vibeui-testimonials-034-mono);font-size:.82rem;font-weight:600}
-[data-vibeui-block="testimonials-034"] [data-part="role"]{font-size:.76rem;color:var(--vibeui-testimonials-034-muted)}
-[data-vibeui-block="testimonials-034"] [data-part="quote"]{margin:0;font-size:.98rem;line-height:1.55}
-[data-vibeui-block="testimonials-034"] [data-part="quote"]::before{content:"“";color:var(--vibeui-testimonials-034-accent);margin-right:.1em}
-[data-vibeui-block="testimonials-034"] [data-part="quote"]::after{content:"”";color:var(--vibeui-testimonials-034-accent);margin-left:.1em}
-[data-vibeui-block="testimonials-034"] [data-part="stack"]{display:flex;flex-wrap:wrap;gap:.3rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-034"] [data-part="stack"] li{padding:.15rem .5rem;border:1px solid var(--vibeui-testimonials-034-line);border-radius:.35rem;font-family:var(--vibeui-testimonials-034-mono);font-size:.66rem;color:var(--vibeui-testimonials-034-muted)}
-[data-vibeui-block="testimonials-034"] [data-part="metric"]{margin:0;padding-top:.8rem;border-top:1px dashed var(--vibeui-testimonials-034-line);font-family:var(--vibeui-testimonials-034-mono);font-size:.76rem;color:var(--vibeui-testimonials-034-accent)}
-[data-vibeui-block="testimonials-034"] [data-part="metric"]::before{content:"$ ";color:var(--vibeui-testimonials-034-muted)}
 @container (min-width: 44rem){[data-vibeui-block="testimonials-034"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@container (min-width: 64rem){[data-vibeui-block="testimonials-034"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}[data-vibeui-block="testimonials-034"] [data-part="card"]:nth-child(3n+2){transform:translateY(1.5rem)}[data-vibeui-block="testimonials-034"] [data-part="card"]:nth-child(3n+2):hover{transform:translateY(calc(1.5rem - 3px))}}
+@container (min-width: 64rem){[data-vibeui-block="testimonials-034"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-034"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_REVIEWS: Testimonials034Review[] = [
@@ -128,28 +116,7 @@ export function Testimonials034({
           </div>
           <ul data-part="grid">
             {reviews.map((review) => (
-              <li key={review.handle} data-part="card">
-                <div data-part="who">
-                  <span data-part="avatar" aria-hidden="true">
-                    {initials(review.name)}
-                  </span>
-                  <div>
-                    <div data-part="handle">{review.handle}</div>
-                    <div data-part="role">
-                      {review.name} · {review.role}
-                    </div>
-                  </div>
-                </div>
-                <blockquote data-part="quote">{review.text}</blockquote>
-                {review.stack && review.stack.length > 0 ? (
-                  <ul data-part="stack" aria-label={stackLabel}>
-                    {review.stack.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                ) : null}
-                {review.metric ? <p data-part="metric">{review.metric}</p> : null}
-              </li>
+              <Card038 key={review.handle} data-part="card" handle={review.handle} name={review.name} role={review.role} text={review.text} stack={review.stack} metric={review.metric} stackLabel={stackLabel} accent={accent} />
             ))}
           </ul>
         </div>

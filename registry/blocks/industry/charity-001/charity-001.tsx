@@ -2,6 +2,9 @@
 
 import { useState, type CSSProperties } from "react"
 
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Charity001Icon = "bag" | "visit" | "pills" | "tools" | "home"
 
 export type Charity001Tier = {
@@ -63,6 +66,7 @@ container-type:inline-size;
 :where([data-vibeui-block="charity-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="charity-001"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-charity-001-bg);color:var(--vibeui-charity-001-fg);font-family:var(--vibeui-charity-001-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="charity-001"] *{box-sizing:border-box}
+[data-vibeui-block="charity-001"] [data-part="action"]{margin-top:.4rem}
 [data-vibeui-block="charity-001"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem;align-items:center}
 [data-vibeui-block="charity-001"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-charity-001-accent)}
 [data-vibeui-block="charity-001"] [data-part="title"]{margin:0;font-family:var(--vibeui-charity-001-display);font-weight:500;font-size:clamp(2rem,4.6cqi,3.4rem);line-height:1.08;letter-spacing:-.02em}
@@ -71,13 +75,12 @@ container-type:inline-size;
 [data-vibeui-block="charity-001"] [data-part="chip"]{padding:.6rem 1rem;border-radius:999px;border:1px solid var(--vibeui-charity-001-line);background:transparent;color:var(--vibeui-charity-001-fg);font:inherit;font-weight:600;font-size:.95rem;font-variant-numeric:tabular-nums;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .2s}
 [data-vibeui-block="charity-001"] [data-part="chip"]:hover{border-color:var(--vibeui-charity-001-accent);transform:translateY(-1px)}
 [data-vibeui-block="charity-001"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-charity-001-accent);border-color:var(--vibeui-charity-001-accent);color:var(--vibeui-charity-001-on-accent)}
-[data-vibeui-block="charity-001"] [data-part="chip"]:focus-visible,[data-vibeui-block="charity-001"] [data-part="range"]:focus-visible,[data-vibeui-block="charity-001"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-charity-001-accent);outline-offset:2px}
+[data-vibeui-block="charity-001"] [data-part="chip"]:focus-visible,[data-vibeui-block="charity-001"] [data-part="range"]:focus-visible{outline:2px solid var(--vibeui-charity-001-accent);outline-offset:2px}
 [data-vibeui-block="charity-001"] [data-part="slider"]{margin:1.4rem 0 0;display:grid;gap:.5rem}
 [data-vibeui-block="charity-001"] [data-part="slider"] label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--vibeui-charity-001-muted)}
 [data-vibeui-block="charity-001"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.45rem;margin:0;border-radius:999px;background:linear-gradient(90deg,var(--vibeui-charity-001-accent) var(--vibeui-charity-001-fill),var(--vibeui-charity-001-line) var(--vibeui-charity-001-fill));outline:none;cursor:pointer}
 [data-vibeui-block="charity-001"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-charity-001-bg);border:3px solid var(--vibeui-charity-001-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-charity-001-accent) 18%,transparent);cursor:grab}
 [data-vibeui-block="charity-001"] [data-part="range"]::-moz-range-thumb{width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-charity-001-bg);border:3px solid var(--vibeui-charity-001-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-charity-001-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="charity-001"] [data-part="hint"]{margin:1.2rem 0 0;font-family:var(--vibeui-charity-001-hand);font-size:1.4rem;line-height:1.1;color:var(--vibeui-charity-001-accent);transform:rotate(-2deg);transform-origin:left}
 [data-vibeui-block="charity-001"] [data-part="stage"]{position:relative;padding:1rem .5rem}
 [data-vibeui-block="charity-001"] [data-part="card"]{position:relative;max-width:26rem;margin:0 auto;padding:2rem 1.8rem 1.8rem;background:var(--vibeui-charity-001-bg);border:1px solid var(--vibeui-charity-001-line);box-shadow:0 30px 60px -30px rgb(0 0 0 / .45),0 1px 0 var(--vibeui-charity-001-line);transform:rotate(-1.5deg);display:grid;gap:1rem}
 [data-vibeui-block="charity-001"] [data-part="card"]::before{content:"";position:absolute;top:-.7rem;right:2rem;width:5rem;height:1.4rem;transform:rotate(4deg);background:color-mix(in oklab,var(--vibeui-charity-001-second) 55%,transparent);opacity:.85}
@@ -93,8 +96,6 @@ container-type:inline-size;
 [data-vibeui-block="charity-001"] [data-part="what"]{margin:0;font-family:var(--vibeui-charity-001-display);font-weight:500;font-size:1.5rem;line-height:1.15;animation:vibeui-charity-001-in .5s cubic-bezier(.2,.8,.2,1) .08s both}
 [data-vibeui-block="charity-001"] [data-part="text"]{margin:0;color:var(--vibeui-charity-001-muted);font-size:.95rem;animation:vibeui-charity-001-in .5s cubic-bezier(.2,.8,.2,1) .16s both}
 [data-vibeui-block="charity-001"] [data-part="note"]{margin:.2rem 0 0;font-family:var(--vibeui-charity-001-hand);font-size:1.35rem;line-height:1.1;color:var(--vibeui-charity-001-accent);animation:vibeui-charity-001-in .5s cubic-bezier(.2,.8,.2,1) .24s both}
-[data-vibeui-block="charity-001"] [data-part="action"]{position:relative;z-index:1;display:inline-flex;justify-content:center;align-items:center;margin-top:.4rem;padding:.85rem 1.3rem;border-radius:999px;background:var(--vibeui-charity-001-accent);color:var(--vibeui-charity-001-on-accent);text-decoration:none;font-weight:600;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="charity-001"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 12px 30px -12px var(--vibeui-charity-001-accent)}
 @keyframes vibeui-charity-001-draw{to{stroke-dashoffset:0}}
 @keyframes vibeui-charity-001-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @container (min-width: 56rem){[data-vibeui-block="charity-001"] [data-part="shell"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:4rem}[data-vibeui-block="charity-001"] [data-part="stage"]{padding:1.5rem}}
@@ -217,9 +218,15 @@ export function Charity001({
                 <p data-part="text">{tier.text}</p>
                 {tier.note ? <p data-part="note">— {tier.note}</p> : null}
                 {actionLabel ? (
-                  <a data-part="action" href={actionHref}>
-                    {actionLabel}
-                  </a>
+                  <Button016
+                    data-part="action"
+                    label={actionLabel}
+                    href={actionHref}
+                    external={false}
+                    size="lg"
+                    tone="accent"
+                    accent={accent}
+                  />
                 ) : null}
               </article>
             ) : null}

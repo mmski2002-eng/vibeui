@@ -2,6 +2,8 @@
 
 import { useEffect, useId, useState, useSyncExternalStore, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero025Props = {
   /** Имена через « & »: «Василиса & Артём». Амперсанд подкрашивается. */
   names?: string
@@ -91,13 +93,9 @@ container-type:inline-size;
 [data-vibeui-block="hero-025"] [data-part="countdown"] b{font-family:var(--vibeui-hero-025-display);font-size:clamp(1.6rem,3.4cqi,2.3rem);font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:var(--vibeui-hero-025-plum)}
 [data-vibeui-block="hero-025"] [data-part="countdown"] span{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-hero-025-muted)}
 [data-vibeui-block="hero-025"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
-[data-vibeui-block="hero-025"] [data-part="primary"],[data-vibeui-block="hero-025"] [data-part="calendar"]{display:inline-flex;align-items:center;gap:.5rem;height:3rem;padding:0 1.4rem;border-radius:999px;font:inherit;font-weight:600;font-size:.92rem;text-decoration:none;cursor:pointer;transition:transform .2s,background .25s,border-color .25s}
-[data-vibeui-block="hero-025"] [data-part="primary"]{background:var(--vibeui-hero-025-accent);color:var(--vibeui-hero-025-on-accent);border:1px solid var(--vibeui-hero-025-accent);box-shadow:0 12px 30px -14px color-mix(in oklab,var(--vibeui-hero-025-accent) 80%,transparent)}
-[data-vibeui-block="hero-025"] [data-part="primary"]:hover{transform:translateY(-2px);background:color-mix(in oklab,var(--vibeui-hero-025-accent) 88%,#000)}
 [data-vibeui-block="hero-025"] [data-part="calendar"]{background:color-mix(in oklab,var(--vibeui-hero-025-card) 45%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--vibeui-hero-025-fg);border:1px solid color-mix(in oklab,var(--vibeui-hero-025-card) 80%,transparent)}
 [data-vibeui-block="hero-025"] [data-part="calendar"]:hover{border-color:var(--vibeui-hero-025-fg);transform:translateY(-2px)}
 [data-vibeui-block="hero-025"] [data-part="calendar"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-[data-vibeui-block="hero-025"] [data-part="primary"]:focus-visible,[data-vibeui-block="hero-025"] [data-part="calendar"]:focus-visible,[data-vibeui-block="hero-025"] [data-part="seal"]:focus-visible{outline:2px solid var(--vibeui-hero-025-accent);outline-offset:3px}
 [data-vibeui-block="hero-025"] [data-part="photo"]{position:relative;justify-self:center;width:min(100%,24rem);margin:0}
 [data-vibeui-block="hero-025"] [data-part="arch"]{display:block;aspect-ratio:4/5;border-radius:50% 50% 1.2rem 1.2rem / 38% 38% 1.2rem 1.2rem;overflow:hidden;background:var(--vibeui-hero-025-sand);box-shadow:0 30px 60px -30px rgb(43 26 36 / .45),0 0 0 .6rem color-mix(in oklab,var(--vibeui-hero-025-card) 60%,transparent),0 0 0 .65rem color-mix(in oklab,var(--vibeui-hero-025-accent) 25%,transparent)}
 [data-vibeui-block="hero-025"] [data-part="arch"] img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(.98)}
@@ -165,7 +163,10 @@ container-type:inline-size;
 [data-vibeui-block="hero-025"] [data-part="frame"]{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center;padding:8.5rem 2.5rem 4rem;min-height:40rem}
 [data-vibeui-block="hero-025"] [data-part="photo"]{justify-self:end;width:min(100%,28rem)}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-025"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-025"] [data-part="envelope"]{display:none}[data-vibeui-block="hero-025"][data-sealed="true"] [data-part="letter"],[data-vibeui-block="hero-025"][data-sealed="true"] [data-part="photo"]{opacity:1}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-025"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-025"] [data-part="envelope"]{display:none}[data-vibeui-block="hero-025"][data-sealed="true"] [data-part="letter"],[data-vibeui-block="hero-025"][data-sealed="true"] [data-part="photo"]{opacity:1}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="hero-025"] [data-part="calendar"]:focus-visible,[data-vibeui-block="hero-025"] [data-part="seal"]:focus-visible{outline:2px solid var(--vibeui-hero-025-accent);outline-offset:3px}
+`
 
 const ZERO = ["00", "00", "00", "00"] as const
 
@@ -319,9 +320,15 @@ export function Hero025({
             )}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {calendarLabel && !Number.isNaN(target) ? (
                 <button type="button" data-part="calendar" onClick={downloadCalendar}>

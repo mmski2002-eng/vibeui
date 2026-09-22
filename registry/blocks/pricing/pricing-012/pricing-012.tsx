@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing012Props = {
   eyebrow?: string
@@ -87,12 +90,6 @@ content:"";position:absolute;inset:0.4375rem;border-radius:9999px;border:1px das
 }
 [data-vibeui-block="pricing-012"] [data-part="sealnum"]{position:relative;font-size:2.75rem;line-height:1;font-weight:700;letter-spacing:-0.05em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-012"] [data-part="seallabel"]{position:relative;margin-top:0.25rem;font-size:0.75rem;font-weight:650;letter-spacing:0.06em;text-transform:uppercase}
-[data-vibeui-block="pricing-012"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-012-accent);
-}
-[data-vibeui-block="pricing-012"] h2{margin:0;max-width:22ch;font-size:clamp(1.375rem,3.6cqi,2rem);line-height:1.16;letter-spacing:-0.025em;font-weight:700;text-wrap:balance}
-[data-vibeui-block="pricing-012"] [data-part="lede"]{margin:0.75rem 0 0;max-width:34rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-012-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-012"] ol{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:1rem}
 [data-vibeui-block="pricing-012"] li{display:flex;gap:0.75rem}
 [data-vibeui-block="pricing-012"] [data-part="num"]{
@@ -108,13 +105,6 @@ border-top:1px solid var(--vibeui-pricing-012-line);
 }
 [data-vibeui-block="pricing-012"] [data-part="price"]{margin:0;font-size:1.125rem;font-weight:700;font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-012"] [data-part="period"]{font-size:0.8125rem;font-weight:500;color:var(--vibeui-pricing-012-muted)}
-[data-vibeui-block="pricing-012"] a{
-display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.5rem;border-radius:0.75rem;
-background:var(--vibeui-pricing-012-accent);color:oklch(from var(--vibeui-pricing-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-012-dur-2) ease;
-}
-[data-vibeui-block="pricing-012"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-012-accent) 86%,black)}
-[data-vibeui-block="pricing-012"] a:focus-visible{outline:2px solid var(--vibeui-pricing-012-accent);outline-offset:3px}
 [data-vibeui-block="pricing-012"] [data-part="terms"]{margin:1.25rem 0 0;font-size:0.75rem;line-height:1.55;color:var(--vibeui-pricing-012-muted)}
 @container (min-width: 34rem){
 [data-vibeui-block="pricing-012"] [data-part="shell"]{padding:5rem 2rem}
@@ -192,9 +182,14 @@ export function Pricing012({
             </div>
 
             <div>
-              {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-              <h2>{title}</h2>
-              {lede ? <p data-part="lede">{lede}</p> : null}
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                lede={lede}
+                size="sm"
+                accent={accent}
+              />
 
               <ol>
                 {steps.slice(0, 4).map((step, index) => (
@@ -214,7 +209,7 @@ export function Pricing012({
                 <p data-part="price">
                   {price} <span data-part="period">{period}</span>
                 </p>
-                <a href={action.href}>{action.label}</a>
+                <Button016 label={action.label} href={action.href} external={false} size="lg" tone="accent" accent={accent} />
               </div>
 
               {terms ? <p data-part="terms">{terms}</p> : null}

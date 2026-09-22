@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+
+
 export type Auth006Props = {
   /** Фото. Без него на том же месте остаётся цветная подложка. */
   avatarImage?: string
@@ -64,6 +67,7 @@ border:1px solid var(--vibeui-auth-006-border);border-radius:1rem;
 font-family:var(--vibeui-auth-006-sans);color:var(--vibeui-auth-006-fg);
 }
 [data-vibeui-block="auth-006"] *{box-sizing:border-box}
+[data-vibeui-block="auth-006"] [data-part="accept"]{flex:1 1 10rem}
 [data-vibeui-block="auth-006"] [data-part="who"]{
 display:flex;align-items:center;gap:0.625rem;margin-bottom:0.875rem;
 }
@@ -108,18 +112,6 @@ font-size:0.5625rem;line-height:1;
 margin:0 0 0.875rem;font-size:0.75rem;color:var(--vibeui-auth-006-muted);
 }
 [data-vibeui-block="auth-006"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem}
-[data-vibeui-block="auth-006"] button{
-appearance:none;cursor:pointer;height:2.5rem;padding:0 1rem;border-radius:0.625rem;
-font:inherit;font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="auth-006"] [data-part="accept"]{
-flex:1 1 10rem;border:0;background:var(--vibeui-auth-006-accent);color:oklch(from var(--vibeui-auth-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-}
-/* Отказ — обычная кнопка рядом: это такой же законный исход. */
-[data-vibeui-block="auth-006"] [data-part="decline"]{
-border:1px solid var(--vibeui-auth-006-border);background:none;color:inherit;
-}
-[data-vibeui-block="auth-006"] button:focus-visible{outline:2px solid var(--vibeui-auth-006-accent);outline-offset:2px}
 [data-vibeui-block="auth-006"] [data-part="expires"]{
 margin:0.75rem 0 0;font-size:0.6875rem;color:var(--vibeui-auth-006-muted);
 }
@@ -264,12 +256,12 @@ export function Auth006({
         </p>
 
         <div data-part="actions">
-          <button type="button" data-part="accept">
+          <Button001 data-part="accept" type="button" size="lg" tone="solid" accent={accent}>
             {accept}
-          </button>
-          <button type="button" data-part="decline">
+          </Button001>
+          <Button001 data-part="decline" type="button" size="lg" tone="outline" accent={accent}>
             {decline}
-          </button>
+          </Button001>
         </div>
 
         <p data-part="expires">{expires}</p>

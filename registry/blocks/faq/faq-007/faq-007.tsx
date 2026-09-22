@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Accordion007 } from "@/registry/components/accordion/accordion-007/accordion-007"
 
 type Faq007Item = {
   question: string
@@ -20,6 +23,7 @@ export type Faq007Props = {
   /** Имя группы радио: на странице с двумя блоками должно различаться. */
   id?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
   background?: string
   accent?: string
   className?: string
@@ -29,10 +33,11 @@ export type Faq007Props = {
 // Фильтр по категориям на радио-кнопках: выбранный чип прячет чужие вопросы
 // правилами :checked ~, поэтому клиентского JS нет вовсе. Раскладка считается
 // от собственной ширины блока (container queries), а не от ширины окна.
+// Составной блок: вопросы каждой категории — свой accordion-007 с меткой
+// группы, блоку остаются чипы и заголовок.
 const STYLES = `
 :where([data-vibeui-block="faq-007"]){
 --vibeui-faq-007-bg:transparent;
---vibeui-faq-007-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
 --vibeui-faq-007-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
 --vibeui-faq-007-muted:light-dark(oklch(0.45 0 0),oklch(0.7 0 0));
 --vibeui-faq-007-border:light-dark(oklch(0.9 0 0),oklch(0.33 0 0));
@@ -40,7 +45,6 @@ const STYLES = `
 --vibeui-faq-007-accent-fill:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-faq-007-on-accent:oklch(from var(--vibeui-faq-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-faq-007-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
---vibeui-faq-007-dur-2:180ms;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="faq-007"]{color-scheme:dark}
@@ -50,11 +54,7 @@ display:block;background:var(--vibeui-faq-007-bg);color:var(--vibeui-faq-007-ink
 font-family:var(--vibeui-faq-007-font);
 }
 [data-vibeui-block="faq-007"] [data-part="shell"]{max-width:52rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="faq-007"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-faq-007-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="faq-007"] [data-part="title"]{
+[data-vibeui-block="faq-007"] [data-part="heading"]{
 margin:0 0 1.75rem;max-width:24ch;
 font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
@@ -90,55 +90,18 @@ color:var(--vibeui-faq-007-on-accent);
 [data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(5):focus-visible ~ [data-part="chips"] [data-part="chip"]:nth-of-type(5){
 outline:2px solid var(--vibeui-faq-007-accent);outline-offset:2px;
 }
-[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(2):checked ~ [data-part="list"] [data-part="item"]:not([data-group="1"]),
-[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(3):checked ~ [data-part="list"] [data-part="item"]:not([data-group="2"]),
-[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(4):checked ~ [data-part="list"] [data-part="item"]:not([data-group="3"]),
-[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(5):checked ~ [data-part="list"] [data-part="item"]:not([data-group="4"]){
+/* Каждая категория — свой accordion-007 с меткой группы справа; выбранный
+   чип прячет чужие группы целиком. */
+[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(2):checked ~ [data-part="list"] > [data-group]:not([data-group="1"]),
+[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(3):checked ~ [data-part="list"] > [data-group]:not([data-group="2"]),
+[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(4):checked ~ [data-part="list"] > [data-group]:not([data-group="3"]),
+[data-vibeui-block="faq-007"] [data-part="radio"]:nth-of-type(5):checked ~ [data-part="list"] > [data-group]:not([data-group="4"]){
 display:none;
 }
 [data-vibeui-block="faq-007"] [data-part="list"]{display:grid;gap:0.625rem}
-[data-vibeui-block="faq-007"] [data-part="item"]{
-border:1px solid var(--vibeui-faq-007-border);border-radius:0.875rem;
-background:var(--vibeui-faq-007-card);
-transition:border-color var(--vibeui-faq-007-dur-2) ease;
-}
-[data-vibeui-block="faq-007"] [data-part="item"][open],
-[data-vibeui-block="faq-007"] [data-part="item"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-faq-007-accent) 40%,var(--vibeui-faq-007-border));
-}
-[data-vibeui-block="faq-007"] [data-part="question"]{
-display:flex;align-items:baseline;gap:0.75rem;
-padding:1rem 1.125rem;cursor:pointer;list-style:none;
-font-size:0.9375rem;font-weight:640;line-height:1.4;
-}
-[data-vibeui-block="faq-007"] [data-part="question"]::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-007"] [data-part="question"]:focus-visible{
-outline:2px solid var(--vibeui-faq-007-accent);outline-offset:2px;border-radius:0.875rem;
-}
-[data-vibeui-block="faq-007"] [data-part="tag"]{
-margin-left:auto;flex:none;
-color:var(--vibeui-faq-007-muted);font-size:0.6875rem;font-weight:600;
-letter-spacing:0.04em;text-transform:uppercase;
-}
-[data-vibeui-block="faq-007"] [data-part="sign"]{
-flex:none;align-self:center;width:0.875rem;height:0.875rem;position:relative;
-color:var(--vibeui-faq-007-accent);
-transition:transform var(--vibeui-faq-007-dur-2) ease;
-}
-[data-vibeui-block="faq-007"] [data-part="sign"]::before,
-[data-vibeui-block="faq-007"] [data-part="sign"]::after{
-content:"";position:absolute;inset:0;margin:auto;background:currentColor;border-radius:1px;
-}
-[data-vibeui-block="faq-007"] [data-part="sign"]::before{width:100%;height:2px}
-[data-vibeui-block="faq-007"] [data-part="sign"]::after{width:2px;height:100%}
-[data-vibeui-block="faq-007"] [data-part="item"][open] [data-part="sign"]{transform:rotate(45deg)}
-[data-vibeui-block="faq-007"] [data-part="answer"]{
-margin:0;padding:0 1.125rem 1.125rem;max-width:62ch;
-color:var(--vibeui-faq-007-muted);font-size:0.9375rem;line-height:1.6;
-}
+[data-vibeui-block="faq-007"] [data-part="list"] > [data-group]{width:100%;max-width:none}
 @container (min-width: 40rem){
 [data-vibeui-block="faq-007"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="faq-007"] [data-part="question"]{font-size:1rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-007"] *{animation:none!important;transition:none!important}}
 `
@@ -213,13 +176,14 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Вопросы с фильтром-чипами по категориям: радио-CSS, без клиентского JS. */
+/** Вопросы с фильтром-чипами: радио-CSS без JS, списки — accordion-007. */
 export function Faq007({
   eyebrow = "Вопросы",
   title = "Ответы по каждой части сделки",
   allLabel = "Все",
   groups = DEFAULT_GROUPS,
   id = "vibeui-faq-007",
+  marker = "plus",
   background = "",
   accent,
   className,
@@ -254,8 +218,12 @@ export function Faq007({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="filter">
             <input
               data-part="radio"
@@ -288,22 +256,20 @@ export function Faq007({
               ))}
             </nav>
             <div data-part="list">
-              {visibleGroups.flatMap((group, groupIndex) =>
-                group.items.map((item) => (
-                  <details
-                    key={item.question}
-                    data-part="item"
-                    data-group={String(groupIndex + 1)}
-                  >
-                    <summary data-part="question">
-                      <span data-part="sign" aria-hidden="true" />
-                      <span>{item.question}</span>
-                      <span data-part="tag">{group.label}</span>
-                    </summary>
-                    <p data-part="answer">{item.answer}</p>
-                  </details>
-                )),
-              )}
+              {visibleGroups.map((group, groupIndex) => (
+                <Accordion007
+                  marker={marker}
+                  key={group.label}
+                  data-group={String(groupIndex + 1)}
+                  items={group.items.map((item) => ({
+                    title: item.question,
+                    body: item.answer,
+                    badge: group.label,
+                  }))}
+                  badge
+                  accent={accent}
+                />
+              ))}
             </div>
           </div>
         </div>

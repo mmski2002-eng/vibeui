@@ -63,4 +63,7 @@ export const PREVIEWS = {
   "range-007": dynamic(() =>
     import("@/registry/components/slider/range-007/range-007").then((module) => module.Range007),
   ),
+  "slider-013": dynamic(() =>
+    import("@/registry/components/slider/slider-013/slider-013").then((module) => module.Slider013),
+  ),
 } satisfies PreviewMap

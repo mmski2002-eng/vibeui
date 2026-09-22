@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Cta009Props = {
   title?: string
@@ -17,7 +20,8 @@ export type Cta009Props = {
 // «прозрачной подложки»: контраст полосы с остальной страницей и есть
 // дизайн блока. Текст фиксированно тёмный в обеих темах: полоса не темнеет
 // вместе со страницей, иначе она перестаёт быть полосой.
-const STYLES = `
+const STYLES = `[data-vibeui-block="cta-009"] [data-part="action"]{justify-self:start}
+
 :where([data-vibeui-block="cta-009"]){
 --vibeui-cta-009-bg:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-cta-009-ink:oklch(0.15 0 0);
@@ -36,38 +40,18 @@ min-width:min(100%,16rem);
 display:block;background:var(--vibeui-cta-009-bg);color:var(--vibeui-cta-009-ink);
 font-family:var(--vibeui-cta-009-font);
 }
+/* Поверхность тёмная в обеих темах: части внутри переключаются в тёмную схему. */
+[data-vibeui-block="cta-009"] [data-part="shell"]{color-scheme:dark}
 [data-vibeui-block="cta-009"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:2.5rem 1.25rem;
 display:grid;gap:1.5rem;align-items:center;
 }
 [data-vibeui-block="cta-009"] [data-part="copy"]{display:grid;gap:0.5rem}
-[data-vibeui-block="cta-009"] [data-part="title"]{
-margin:0;max-width:26ch;
-font-size:clamp(1.5rem,4.5cqi,2.25rem);line-height:1.1;letter-spacing:-0.025em;font-weight:750;
-}
-[data-vibeui-block="cta-009"] [data-part="description"]{
-margin:0;max-width:56ch;
-color:var(--vibeui-cta-009-muted);font-size:1rem;line-height:1.55;
-}
-[data-vibeui-block="cta-009"] [data-part="action"]{
-justify-self:start;display:inline-block;
-padding:0.875rem 1.75rem;border-radius:999px;
-background:var(--vibeui-cta-009-button);color:var(--vibeui-cta-009-button-ink);
-font-size:0.9375rem;font-weight:650;text-decoration:none;white-space:nowrap;
-transition:transform var(--vibeui-cta-009-dur-2) ease,box-shadow var(--vibeui-cta-009-dur-2) ease;
-}
-[data-vibeui-block="cta-009"] [data-part="action"]:hover{
-transform:translateY(-1px);
-box-shadow:0 10px 24px -14px oklch(0.15 0 0 / 60%);
-}
-[data-vibeui-block="cta-009"] [data-part="action"]:focus-visible{
-outline:2px solid var(--vibeui-cta-009-ink);outline-offset:3px;
-}
 @container (min-width: 44rem){
+[data-vibeui-block="cta-009"] [data-part="action"]{justify-self:end}
 [data-vibeui-block="cta-009"] [data-part="shell"]{
 grid-template-columns:1fr auto;padding:3rem 2rem;
 }
-[data-vibeui-block="cta-009"] [data-part="action"]{justify-self:end}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-009"] *{animation:none!important;transition:none!important}}
 `
@@ -101,12 +85,23 @@ export function Cta009({
       >
         <div data-part="shell">
           <div data-part="copy">
-            <h2 data-part="title">{title}</h2>
-            <p data-part="description">{description}</p>
+            <Heading001
+              data-part="heading"
+              title={title}
+              lede={description}
+              ledeWidth={56}
+              accent={accent}
+            />
           </div>
-          <a data-part="action" href={actionHref}>
-            {actionLabel}
-          </a>
+          <Button016
+            data-part="action"
+            label={actionLabel}
+            href={actionHref}
+            external={false}
+            size="lg"
+            tone="accent"
+            accent={accent}
+          />
         </div>
       </section>
     </>

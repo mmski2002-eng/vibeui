@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card156 } from "@/registry/components/card/card-156/card-156"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid006Row = {
@@ -74,22 +75,6 @@ border:1px solid var(--vibeui-datagrid-006-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-006-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-006"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-006"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-006-border);
-}
-[data-vibeui-block="datagrid-006"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-006"] [data-part="found"]{
-margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-006-muted);
-}
-[data-vibeui-block="datagrid-006"] [data-part="reset"]{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
-padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-006-border);
-background:var(--vibeui-datagrid-006-field);color:var(--vibeui-datagrid-006-fg);
-}
-[data-vibeui-block="datagrid-006"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed}
-[data-vibeui-block="datagrid-006"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-datagrid-006-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-006"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-006"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-006-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-006"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -263,26 +248,7 @@ export function Datagrid006({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="found" aria-live="polite">
-            {foundText
-              .replace("{count}", String(filtered.length))
-              .replace("{total}", String(rows.length))}
-          </p>
-          <button
-            type="button"
-            data-part="reset"
-            disabled={!active}
-            onClick={() => {
-              setOrder("")
-              setClient("")
-              setStatus("")
-            }}
-          >
-            {resetLabel}
-          </button>
-        </div>
+        <Card156 data-part="bar" heading={heading} foundText={foundText} rows={rows} resetLabel={resetLabel} active={active} filtered={filtered} setClient={setClient} setOrder={setOrder} setStatus={setStatus} accent={accent} />
         <div
           data-part="scroll"
           role="region"

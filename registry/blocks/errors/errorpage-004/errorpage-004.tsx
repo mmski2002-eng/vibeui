@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Errorpage004Props = {
   code?: string
@@ -78,43 +81,12 @@ margin:1.75rem 0 0;
 color:var(--vibeui-errorpage-004-accent);
 font-size:0.875rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
 }
-[data-vibeui-block="errorpage-004"] [data-part="title"]{
-margin:0.5rem 0 0;
-font-size:clamp(1.625rem,6cqi,2.5rem);line-height:1.1;letter-spacing:-0.02em;font-weight:700;
-}
-[data-vibeui-block="errorpage-004"] [data-part="description"]{
-margin:0.875rem 0 0;max-width:44ch;
-color:var(--vibeui-errorpage-004-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="errorpage-004"] [data-part="actions"]{
 margin-top:1.75rem;display:flex;flex-wrap:wrap;justify-content:center;gap:0.625rem;
-}
-[data-vibeui-block="errorpage-004"] [data-part="switch"]{
-display:inline-block;text-decoration:none;
-padding:0.625rem 1.375rem;border-radius:0.75rem;
-background:var(--vibeui-errorpage-004-accent-fill);color:var(--vibeui-errorpage-004-accent-ink);
-font-size:0.9375rem;font-weight:650;
-transition:filter var(--vibeui-errorpage-004-dur-2) ease;
-}
-[data-vibeui-block="errorpage-004"] [data-part="switch"]:hover{filter:brightness(1.06)}
-[data-vibeui-block="errorpage-004"] [data-part="request"]{
-display:inline-block;text-decoration:none;
-padding:0.625rem 1.375rem;border-radius:0.75rem;
-border:1px solid var(--vibeui-errorpage-004-border);
-color:inherit;font-size:0.9375rem;font-weight:550;
-background:var(--vibeui-errorpage-004-card);
-transition:border-color var(--vibeui-errorpage-004-dur-2) ease,color var(--vibeui-errorpage-004-dur-2) ease;
-}
-[data-vibeui-block="errorpage-004"] [data-part="request"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-errorpage-004-accent) 50%,var(--vibeui-errorpage-004-border));
-color:var(--vibeui-errorpage-004-accent);
 }
 [data-vibeui-block="errorpage-004"] [data-part="hint"]{
 margin:1.5rem 0 0;
 color:var(--vibeui-errorpage-004-muted);font-size:0.8125rem;line-height:1.5;
-}
-[data-vibeui-block="errorpage-004"] a:focus-visible{
-outline:2px solid var(--vibeui-errorpage-004-accent);outline-offset:2px;
 }
 @container (min-width: 48rem){
 [data-vibeui-block="errorpage-004"] [data-part="frame"]{padding:6rem 2rem}
@@ -186,15 +158,31 @@ export function Errorpage004({
             <div data-part="body" />
           </div>
           <p data-part="code">{code}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={description}
+            accent={accent}
+          />
           <div data-part="actions">
-            <a data-part="switch" href={switchHref}>
-              {switchLabel}
-            </a>
-            <a data-part="request" href={requestHref}>
-              {requestLabel}
-            </a>
+            <Button016
+              data-part="switch"
+              label={switchLabel}
+              href={switchHref}
+              external={false}
+              size="lg"
+              tone="accent"
+              accent={accent}
+            />
+            <Button016
+              data-part="request"
+              label={requestLabel}
+              href={requestHref}
+              external={false}
+              size="lg"
+              tone="neutral"
+              accent={accent}
+            />
           </div>
           <p data-part="hint">{hint}</p>
         </div>

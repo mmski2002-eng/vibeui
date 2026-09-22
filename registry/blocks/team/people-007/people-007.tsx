@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card054 } from "@/registry/components/card/card-054/card-054"
 
 export type People007Agent = {
   name: string
@@ -56,19 +57,6 @@ container-type:inline-size;
 [data-vibeui-block="people-007"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-007-display);font-weight:500;font-size:clamp(2rem,4.5cqi,3.25rem);line-height:1.05;letter-spacing:-.01em}
 [data-vibeui-block="people-007"] [data-part="lede"]{margin:.75rem 0 0;max-width:36rem;color:var(--vibeui-people-007-muted)}
 [data-vibeui-block="people-007"] [data-part="grid"]{display:grid;gap:1.5rem;margin:2.5rem 0 0;padding:0;list-style:none;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr))}
-[data-vibeui-block="people-007"] [data-part="card"]{display:flex;flex-direction:column;overflow:hidden;border-radius:1rem;background:var(--vibeui-people-007-card);border:1px solid var(--vibeui-people-007-line);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
-[data-vibeui-block="people-007"] [data-part="card"]:hover{transform:translateY(-4px);box-shadow:0 30px 40px -28px rgb(20 33 27 / .5)}
-[data-vibeui-block="people-007"] [data-part="media"]{position:relative;aspect-ratio:4/5;overflow:hidden;background:light-dark(#e7dfd2,#2a2a2a)}
-[data-vibeui-block="people-007"] [data-part="media"] img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="people-007"] [data-part="card"]:hover [data-part="media"] img{transform:scale(1.04)}
-[data-vibeui-block="people-007"] [data-part="fact"]{position:absolute;left:.75rem;bottom:.75rem;padding:.3rem .65rem;border-radius:999px;background:var(--vibeui-people-007-card);color:var(--vibeui-people-007-fg);font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-[data-vibeui-block="people-007"] [data-part="body"]{display:grid;gap:.25rem;padding:1rem 1.1rem 1.15rem}
-[data-vibeui-block="people-007"] [data-part="name"]{margin:0;font-family:var(--vibeui-people-007-display);font-size:1.5rem;font-weight:600;line-height:1.1}
-[data-vibeui-block="people-007"] [data-part="role"]{margin:0;color:var(--vibeui-people-007-muted);font-size:.85rem}
-[data-vibeui-block="people-007"] [data-part="links"]{display:flex;flex-wrap:wrap;gap:.35rem 1rem;margin-top:.6rem;padding-top:.7rem;border-top:1px solid var(--vibeui-people-007-line);font-size:.85rem;font-weight:600}
-[data-vibeui-block="people-007"] [data-part="links"] a{color:inherit;text-decoration:none;border-bottom:1px solid var(--vibeui-people-007-accent);padding-bottom:.1rem;transition:color .2s}
-[data-vibeui-block="people-007"] [data-part="links"] a:hover{color:var(--vibeui-people-007-accent)}
-[data-vibeui-block="people-007"] [data-part="links"] a:focus-visible{outline:2px solid var(--vibeui-people-007-accent);outline-offset:3px;border-radius:.2rem}
 @container (min-width: 64rem){[data-vibeui-block="people-007"] [data-part="shell"]{padding:5.5rem 2rem}[data-vibeui-block="people-007"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="people-007"] *{transition:none!important}}`
 
@@ -112,22 +100,7 @@ export function People007({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <ul data-part="grid">
             {agents.map((agent) => (
-              <li key={agent.name} data-part="card">
-                <div data-part="media">
-                  {agent.image ? <img src={agent.image} alt={agent.name} loading="lazy" /> : null}
-                  {agent.fact ? <span data-part="fact">{agent.fact}</span> : null}
-                </div>
-                <div data-part="body">
-                  <h3 data-part="name">{agent.name}</h3>
-                  <p data-part="role">{agent.role}</p>
-                  {agent.phone || agent.chatLabel ? (
-                    <div data-part="links">
-                      {agent.phone ? <a href={agent.phoneHref ?? `tel:${agent.phone.replace(/[^\d+]/g, "")}`}>{agent.phone}</a> : null}
-                      {agent.chatLabel ? <a href={agent.chatHref ?? "#"}>{agent.chatLabel}</a> : null}
-                    </div>
-                  ) : null}
-                </div>
-              </li>
+              <Card054 key={agent.name} data-part="card" name={agent.name} image={agent.image} fact={agent.fact} role={agent.role} phone={agent.phone} chatLabel={agent.chatLabel} phoneHref={agent.phoneHref} chatHref={agent.chatHref} accent={accent} />
             ))}
           </ul>
         </div>

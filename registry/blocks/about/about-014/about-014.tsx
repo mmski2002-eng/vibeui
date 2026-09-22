@@ -1,6 +1,7 @@
 "use client"
 
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card133 } from "@/registry/components/card/card-133/card-133"
 
 export type About014Fact = {
   value: string
@@ -76,11 +77,9 @@ container-type:inline-size;
 [data-vibeui-block="about-014"] [data-part="word"] span{display:inline-block;transform:translateY(130%);transition:transform .9s var(--vibeui-about-014-ease);transition-delay:calc(var(--vibeui-about-014-i) * .06s)}
 [data-vibeui-block="about-014"][data-in="true"] [data-part="word"] span{transform:none}
 [data-vibeui-block="about-014"] [data-part="text"]{display:block;margin:1.2rem 0 0;font-size:1.1rem;max-width:34rem}
-[data-vibeui-block="about-014"] [data-part="rise"]{opacity:0;transform:translateY(1.2rem);transition:opacity .8s var(--vibeui-about-014-ease),transform .8s var(--vibeui-about-014-ease);transition-delay:calc(.2s + var(--vibeui-about-014-i,0) * .08s)}
-[data-vibeui-block="about-014"][data-in="true"] [data-part="rise"]{opacity:1;transform:none}
+[data-vibeui-block="about-014"] [data-rise]{opacity:0;transform:translateY(1.2rem);transition:opacity .8s var(--vibeui-about-014-ease),transform .8s var(--vibeui-about-014-ease);transition-delay:calc(.2s + var(--vibeui-about-014-i,0) * .08s)}
+[data-vibeui-block="about-014"][data-in="true"] [data-rise]{opacity:1;transform:none}
 [data-vibeui-block="about-014"] [data-part="facts"]{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="about-014"] [data-part="facts"] b{display:block;font-family:var(--vibeui-about-014-display);font-weight:800;font-size:clamp(1.8rem,4cqi,2.8rem);letter-spacing:-.04em;line-height:1;color:var(--vibeui-about-014-accent);font-variant-numeric:tabular-nums}
-[data-vibeui-block="about-014"] [data-part="facts"] small{display:block;margin-top:.3rem;font-size:.82rem;color:var(--vibeui-about-014-muted)}
 [data-vibeui-block="about-014"] [data-part="label"]{margin:2rem 0 .6rem;font-family:var(--vibeui-about-014-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-about-014-muted)}
 [data-vibeui-block="about-014"] [data-part="path"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
 [data-vibeui-block="about-014"] [data-part="path"] li{display:grid;grid-template-columns:7rem 1fr;gap:1rem;padding:.6rem 0;border-top:1px solid var(--vibeui-about-014-line);font-size:.92rem}
@@ -94,7 +93,7 @@ container-type:inline-size;
 [data-vibeui-block="about-014"] [data-part="track"] span:nth-of-type(even){font-family:var(--vibeui-about-014-serif);font-style:italic;font-weight:700;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1.5px var(--vibeui-about-014-bg)}
 [data-vibeui-block="about-014"] [data-part="track"] i{width:.5em;height:.5em;border-radius:50%;background:var(--vibeui-about-014-accent);align-self:center;flex:none}
 @container (min-width: 56rem){[data-vibeui-block="about-014"] [data-part="shell"]{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:4rem;align-items:start}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-014"] *{animation:none!important;transition:none!important}[data-vibeui-block="about-014"] [data-part="pic"],[data-vibeui-block="about-014"] [data-part="eyebrow"],[data-vibeui-block="about-014"] [data-part="rise"]{opacity:1;transform:none}[data-vibeui-block="about-014"] [data-part="word"] span{transform:none}[data-vibeui-block="about-014"] [data-part="pic"] img{transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-014"] *{animation:none!important;transition:none!important}[data-vibeui-block="about-014"] [data-part="pic"],[data-vibeui-block="about-014"] [data-part="eyebrow"],[data-vibeui-block="about-014"] [data-rise]{opacity:1;transform:none}[data-vibeui-block="about-014"] [data-part="word"] span{transform:none}[data-vibeui-block="about-014"] [data-part="pic"] img{transform:none}}`
 
 /** «Обо мне»: фото с параллаксом, факты-счётчики, кинетическая лента навыков и линия карьеры. */
 export function About014({
@@ -246,7 +245,7 @@ export function About014({
               ))}
             </h2>
             {text ? (
-              <p data-part="rise" style={{ ["--vibeui-about-014-i" as string]: 0 }}>
+              <p data-rise="" style={{ ["--vibeui-about-014-i" as string]: 0 }}>
                 <span data-part="text">
                   {text}
                 </span>
@@ -255,10 +254,7 @@ export function About014({
             {facts.length > 0 ? (
               <ul ref={factsList} data-part="facts">
                 {facts.map((fact, index) => (
-                  <li key={fact.label} data-part="rise" style={{ ["--vibeui-about-014-i" as string]: index + 1 }}>
-                    <b>{fact.value}</b>
-                    <small>{fact.label}</small>
-                  </li>
+                  <Card133 key={fact.label} data-part="fact" label={fact.label} value={fact.value} style={{ ["--vibeui-about-014-i" as string]: index + 1 }} accent={accent} />
                 ))}
               </ul>
             ) : null}
@@ -267,7 +263,7 @@ export function About014({
                 <p data-part="label">{pathLabel}</p>
                 <ol data-part="path">
                   {path.map((step, index) => (
-                    <li key={step.years} data-part="rise" style={{ ["--vibeui-about-014-i" as string]: index + 4 }}>
+                    <li key={step.years} data-rise="" style={{ ["--vibeui-about-014-i" as string]: index + 4 }}>
                       <span>{step.years}</span>
                       <span>
                         <b>{step.place}</b>

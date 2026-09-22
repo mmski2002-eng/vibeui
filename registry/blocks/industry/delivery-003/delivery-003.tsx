@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Button080 } from "@/registry/components/button/button-080/button-080"
 
 export type Delivery003Zone = {
   id: string
@@ -106,9 +107,6 @@ container-type:inline-size;
 [data-vibeui-block="delivery-003"] [data-part="kitchen"]{fill:var(--vibeui-delivery-003-fg)}
 [data-vibeui-block="delivery-003"] [data-part="kitchen-label"]{fill:var(--vibeui-delivery-003-fg);font-family:var(--vibeui-delivery-003-font);font-weight:700;font-size:12px;letter-spacing:.04em;paint-order:stroke;stroke:var(--vibeui-delivery-003-street);stroke-width:5;stroke-linejoin:round}
 [data-vibeui-block="delivery-003"] [data-part="legend"]{position:absolute;left:1rem;bottom:1rem;display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="delivery-003"] [data-part="legend"] button{display:inline-flex;align-items:center;gap:.4rem;height:1.9rem;padding:0 .7rem 0 .5rem;border-radius:999px;border:0;background:color-mix(in oklab,var(--vibeui-delivery-003-bg) 85%,transparent);backdrop-filter:blur(8px);color:var(--vibeui-delivery-003-fg);font:inherit;font-size:.72rem;font-weight:600;cursor:pointer}
-[data-vibeui-block="delivery-003"] [data-part="legend"] button::before{content:"";width:.7rem;height:.7rem;border-radius:.2rem;background:var(--vibeui-delivery-003-accent);opacity:var(--vibeui-delivery-003-o)}
-[data-vibeui-block="delivery-003"] [data-part="legend"] button[aria-pressed="true"]{outline:1.5px solid var(--vibeui-delivery-003-fg)}
 [data-vibeui-block="delivery-003"] button:focus-visible{outline:2px solid var(--vibeui-delivery-003-accent);outline-offset:2px}
 [data-vibeui-block="delivery-003"] [data-part="result"]{display:grid;align-content:start;gap:1rem;padding:1.6rem;border-radius:2rem;background:var(--vibeui-delivery-003-card);border:1px solid var(--vibeui-delivery-003-line)}
 [data-vibeui-block="delivery-003"] [data-part="result"] h3{margin:0;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-delivery-003-muted)}
@@ -311,9 +309,7 @@ export function Delivery003({
               <ul data-part="legend" aria-label={legendLabel}>
                 {zones.map((item, index) => (
                   <li key={item.id}>
-                    <button type="button" aria-pressed={zoneIndex === index} style={{ ["--vibeui-delivery-003-o" as string]: opacities[index] ?? 0.2 } as CSSProperties} onClick={() => choose(index, null)}>
-                      {item.minutes} {minutesUnit}
-                    </button>
+                    <Button080 data-part="zone" minutes={item.minutes} minutesUnit={minutesUnit} aria-pressed={zoneIndex === index} style={{ ["--vibeui-delivery-003-o" as string]: opacities[index] ?? 0.2 } as CSSProperties} onClick={() => choose(index, null)} accent={accent} />
                   </li>
                 ))}
               </ul>

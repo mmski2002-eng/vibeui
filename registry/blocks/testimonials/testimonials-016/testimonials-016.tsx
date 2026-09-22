@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card033 } from "@/registry/components/card/card-033/card-033"
 
 export type Testimonials016Review = {
   quote: string
@@ -63,16 +64,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-016"] [data-part="score"] b{font-family:var(--vibeui-testimonials-016-display);font-size:3.5rem;font-weight:600;line-height:1;color:var(--vibeui-testimonials-016-accent)}
 [data-vibeui-block="testimonials-016"] [data-part="score"] span{font-size:.8rem;color:var(--vibeui-testimonials-016-muted);max-width:10rem;line-height:1.3}
 [data-vibeui-block="testimonials-016"] [data-part="list"]{display:grid;gap:1.25rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-016"] [data-part="card"]{position:relative;display:flex;flex-direction:column;gap:1rem;padding:1.5rem 1.5rem 1.25rem;border-radius:1rem;background:var(--vibeui-testimonials-016-card);border:1px solid var(--vibeui-testimonials-016-line);animation:vibeui-testimonials-016-in .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-testimonials-016-n) * 90ms)}
 @keyframes vibeui-testimonials-016-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-[data-vibeui-block="testimonials-016"] [data-part="mark"]{position:absolute;top:.4rem;right:1rem;font-family:var(--vibeui-testimonials-016-display);font-size:5rem;line-height:1;color:var(--vibeui-testimonials-016-accent);opacity:.35;pointer-events:none}
-[data-vibeui-block="testimonials-016"] [data-part="stars"]{display:flex;gap:.15rem;color:var(--vibeui-testimonials-016-accent);font-size:.9rem;letter-spacing:.05em}
-[data-vibeui-block="testimonials-016"] [data-part="quote"]{margin:0;font-family:var(--vibeui-testimonials-016-display);font-size:1.35rem;font-weight:500;line-height:1.3;font-style:italic}
-[data-vibeui-block="testimonials-016"] [data-part="who"]{display:flex;align-items:center;gap:.75rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--vibeui-testimonials-016-line)}
-[data-vibeui-block="testimonials-016"] [data-part="who"] img{width:2.5rem;height:2.5rem;border-radius:50%;object-fit:cover;flex:none;background:light-dark(#e7dfd2,#2a2a2a)}
-[data-vibeui-block="testimonials-016"] [data-part="who"] b{display:block;font-size:.9rem}
-[data-vibeui-block="testimonials-016"] [data-part="who"] span{display:block;font-size:.8rem;color:var(--vibeui-testimonials-016-muted)}
-[data-vibeui-block="testimonials-016"] [data-part="source"]{margin-left:auto;flex:none;padding:.25rem .6rem;border:1px solid var(--vibeui-testimonials-016-line);border-radius:999px;font-size:.7rem;font-weight:600;color:var(--vibeui-testimonials-016-muted)}
 @container (min-width: 48rem){[data-vibeui-block="testimonials-016"] [data-part="list"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="testimonials-016"] [data-part="shell"]{padding:5.5rem 2rem}[data-vibeui-block="testimonials-016"] [data-part="list"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-016"] *{animation:none!important}}`
@@ -129,25 +121,7 @@ export function Testimonials016({
           </div>
           <ul data-part="list">
             {reviews.map((review, index) => (
-              <li key={review.name + review.deal} data-part="card" style={{ "--vibeui-testimonials-016-n": index } as CSSProperties}>
-                <span data-part="mark" aria-hidden="true">
-                  ”
-                </span>
-                {review.rating ? (
-                  <span data-part="stars" aria-label={ratingLabel.replace("{n}", String(review.rating))}>
-                    {"★".repeat(Math.max(0, Math.min(5, Math.round(review.rating))))}
-                  </span>
-                ) : null}
-                <blockquote data-part="quote">{review.quote}</blockquote>
-                <div data-part="who">
-                  {review.image ? <img src={review.image} alt="" loading="lazy" /> : null}
-                  <div>
-                    <b>{review.name}</b>
-                    <span>{review.deal}</span>
-                  </div>
-                  {review.source ? <span data-part="source">{review.source}</span> : null}
-                </div>
-              </li>
+              <Card033 key={review.name + review.deal} data-part="card" name={review.name} deal={review.deal} rating={review.rating} quote={review.quote} image={review.image} source={review.source} ratingLabel={ratingLabel} index={index} accent={accent} />
             ))}
           </ul>
         </div>

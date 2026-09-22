@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks022 } from "@/registry/components/navigation/footerlinks-022/footerlinks-022"
 
 export type Footer030Link = {
   label: string
@@ -47,14 +48,10 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-030"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-030"]{box-sizing:border-box;padding:2.5rem 0;background:var(--vibeui-footer-030-bg);color:var(--vibeui-footer-030-fg);font-family:var(--vibeui-footer-030-font);font-size:.92rem;line-height:1.5;border-top:1px solid var(--vibeui-footer-030-line)}
 [data-vibeui-block="footer-030"] *{box-sizing:border-box}
+[data-vibeui-block="footer-030"] [data-part="links"]{margin:0}
 [data-vibeui-block="footer-030"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:1.5rem;align-items:center}
 [data-vibeui-block="footer-030"] [data-part="name"]{font-family:var(--vibeui-footer-030-display);font-weight:800;font-size:1.4rem;letter-spacing:-.04em;line-height:1}
 [data-vibeui-block="footer-030"] [data-part="name"] small{display:block;margin-top:.3rem;font-family:var(--vibeui-footer-030-mono);font-weight:400;font-size:.72rem;letter-spacing:0;color:var(--vibeui-footer-030-muted)}
-[data-vibeui-block="footer-030"] [data-part="links"]{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="footer-030"] [data-part="links"] a{position:relative;display:inline-block;padding:.2rem 0;color:inherit;text-decoration:none;font-weight:500;opacity:.8;transition:opacity .2s,color .2s,transform .3s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="footer-030"] [data-part="links"] a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--vibeui-footer-030-accent);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="footer-030"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-030-accent);transform:translateY(-2px)}
-[data-vibeui-block="footer-030"] [data-part="links"] a:hover::after{transform:none;transform-origin:left}
 [data-vibeui-block="footer-030"] [data-part="right"]{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:var(--vibeui-footer-030-mono);font-size:.72rem;color:var(--vibeui-footer-030-muted)}
 [data-vibeui-block="footer-030"] [data-part="top"]{display:inline-grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;border:1px solid var(--vibeui-footer-030-line);color:inherit;text-decoration:none;overflow:hidden;transition:background .2s,color .2s,border-color .2s,transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
 [data-vibeui-block="footer-030"] [data-part="top"] i{font-style:normal;display:block;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
@@ -62,7 +59,7 @@ container-type:inline-size;
 [data-vibeui-block="footer-030"] [data-part="top"]:hover i{animation:vibeui-footer-030-up .5s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="footer-030"] a:focus-visible{outline:2px solid var(--vibeui-footer-030-accent);outline-offset:3px}
 @keyframes vibeui-footer-030-up{0%{transform:translateY(0)}45%{transform:translateY(-140%)}50%{transform:translateY(140%)}100%{transform:translateY(0)}}
-@container (min-width: 56rem){[data-vibeui-block="footer-030"] [data-part="shell"]{grid-template-columns:auto 1fr auto;gap:3rem}[data-vibeui-block="footer-030"] [data-part="links"]{justify-content:center}}
+@container (min-width: 56rem){[data-vibeui-block="footer-030"] [data-part="shell"]{grid-template-columns:auto 1fr auto;gap:3rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-030"] *{animation:none!important;transition:none!important}}`
 
 /** Подвал личного сайта в одну полосу с кнопкой «наверх». */
@@ -105,13 +102,7 @@ export function Footer030({
             {name}
             {caption ? <small>{caption}</small> : null}
           </div>
-          <ul data-part="links">
-            {links.map((link) => (
-              <li key={link.label}>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
+          <Footerlinks022 data-part="links" links={links} accent={accent} />
           <div data-part="right">
             <span>
               © {year}

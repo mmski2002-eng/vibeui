@@ -1,4 +1,7 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Footer018Link = {
   label: string
@@ -69,21 +72,9 @@ background:linear-gradient(rgb(0 0 0 / 20%),transparent 30%,rgb(0 0 0 / 74%) 78%
 position:relative;max-width:80rem;margin:0 auto;min-height:32rem;
 padding:5rem 1rem 1.5rem;display:flex;flex-direction:column;justify-content:flex-end;gap:1.5rem;
 }
-[data-vibeui-block="footer-018"] [data-part="title"]{
-margin:0;max-width:16ch;
-font-size:clamp(2.25rem,7cqi,4.75rem);line-height:1;letter-spacing:-0.03em;font-weight:730;
-text-shadow:0 1px 28px rgb(0 0 0 / 40%);
-}
 [data-vibeui-block="footer-018"] [data-part="row"]{
 display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;
 }
-[data-vibeui-block="footer-018"] [data-part="action"]{
-display:inline-flex;align-items:center;min-height:2.875rem;padding:0.375rem 1.5rem;
-background:var(--vibeui-footer-018-accent);color:oklch(from var(--vibeui-footer-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:1rem;font-weight:660;
-transition:filter var(--vibeui-footer-018-dur-2) ease;
-}
-[data-vibeui-block="footer-018"] [data-part="action"]:hover{filter:brightness(1.06)}
 [data-vibeui-block="footer-018"] [data-part="nav"]{
 display:flex;align-items:center;gap:0.25rem 1.25rem;flex-wrap:wrap;
 }
@@ -104,9 +95,6 @@ transition:color var(--vibeui-footer-018-dur-2) ease;
 }
 [data-vibeui-block="footer-018"] [data-part="legal"] a:hover{color:var(--vibeui-footer-018-ink)}
 [data-vibeui-block="footer-018"] [data-part="legal"] span{margin-left:auto}
-[data-vibeui-block="footer-018"] a:focus-visible{
-outline:2px solid var(--vibeui-footer-018-accent);outline-offset:3px;
-}
 @container (min-width: 52rem){
 [data-vibeui-block="footer-018"] [data-part="shell"]{padding:7rem 2rem 2rem;min-height:38rem}
 }
@@ -163,11 +151,22 @@ export function Footer018({
         )}
         <div data-part="scrim" aria-hidden="true" />
         <div data-part="shell">
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            title={title}
+            size="xl"
+            accent={accent}
+          />
           <div data-part="row">
-            <a data-part="action" href={actionHref}>
-              {actionLabel}
-            </a>
+            <Button016
+              data-part="action"
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="md"
+              tone="accent"
+              accent={accent}
+            />
             <nav data-part="nav" aria-label={navLabel}>
               {links.map((link) => (
                 <a key={link.href} href={link.href}>

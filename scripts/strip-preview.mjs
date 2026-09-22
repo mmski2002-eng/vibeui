@@ -20,6 +20,13 @@ const ROOT = "public/r"
 const DEMO = "/demo/"
 
 /**
+ * База для `registryDependencies` составных блоков: голое имя shadcn CLI
+ * ищет в ui.shadcn.com, а не у нас. Домен — `homepage` корневого
+ * registry.json; на `.club` статика укажет на `.ru`, файл тот же.
+ */
+const HOMEPAGE = JSON.parse(readFileSync("registry.json", "utf8")).homepage.replace(/\/$/, "")
+
+/**
  * Три первых правила «сохрани как установлено» — в `docs`: shadcn CLI
  * печатает это поле после установки, и правила доходят до агента терминалом,
  * даже когда его фетчер пересказал бриф. Тот же текст для закрытых item'ов
@@ -51,6 +58,15 @@ function stripItem(item) {
       delete file.content
       touched = true
     }
+  }
+
+  const dependencies = item.registryDependencies ?? []
+
+  if (dependencies.some((name) => !name.startsWith("http"))) {
+    item.registryDependencies = dependencies.map((name) =>
+      name.startsWith("http") ? name : `${HOMEPAGE}/r/${name}.json`,
+    )
+    touched = true
   }
 
   if (item.meta?.preview) {

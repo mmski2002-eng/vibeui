@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useId, type CSSProperties, type PointerEvent, type ReactNode } from "react"
+import { Card069 } from "@/registry/components/card/card-069/card-069"
 
 export type Layout009Item = {
   /** Заголовок слота. */
@@ -71,6 +72,7 @@ container-type:inline-size;
 :where([data-vibeui-block="layout-009"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="layout-009"]{display:block;min-width:min(100%,16rem);background:var(--vibeui-layout-009-bg);color:var(--vibeui-layout-009-ink);font-family:var(--vibeui-layout-009-font)}
 [data-vibeui-block="layout-009"] *{box-sizing:border-box}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"]{flex:1}
 [data-vibeui-block="layout-009"] [data-part="frame"]{max-width:80rem;margin:0 auto;padding:3rem clamp(1.25rem,5cqi,3rem);display:flex;flex-direction:column;gap:2rem}
 [data-vibeui-block="layout-009"] [data-part="head"]{display:flex;flex-direction:column;gap:0.75rem;max-width:40rem}
 [data-vibeui-block="layout-009"] [data-part="head"] h2{margin:0;font-size:clamp(1.75rem,4cqi,2.75rem);line-height:1.1;letter-spacing:-0.02em;font-weight:650}
@@ -78,33 +80,8 @@ container-type:inline-size;
 [data-vibeui-block="layout-009"] [data-part="head"] > span{display:block;height:1.5rem;border-radius:999px;background:var(--vibeui-layout-009-ghost-strong);width:min(30rem,85%)}
 [data-vibeui-block="layout-009"] [data-part="head"] > span:nth-child(2){width:min(22rem,60%)}
 [data-vibeui-block="layout-009"] [data-part="head"] > span:nth-child(3){height:0.75rem;width:min(26rem,70%);background:var(--vibeui-layout-009-ghost);margin-top:0.25rem}
-/* Плитка: слот с контентом или призраком, номером и светом за курсором. */
-[data-vibeui-block="layout-009"] [data-part="tile"]{
-position:relative;overflow:hidden;min-height:10rem;padding:1.5rem;border-radius:var(--vibeui-layout-009-radius);
-background:var(--vibeui-layout-009-tile);border:1px solid var(--vibeui-layout-009-edge);
-display:flex;flex-direction:column;justify-content:flex-end;gap:0.75rem;
---vibeui-layout-009-mx:50%;--vibeui-layout-009-my:50%;--vibeui-layout-009-on:0;
-transition:transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1),border-color var(--vibeui-layout-009-dur-5);
-}
-[data-vibeui-block="layout-009"] [data-part="tile"]::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(22rem circle at var(--vibeui-layout-009-mx) var(--vibeui-layout-009-my),color-mix(in oklab,var(--vibeui-layout-009-accent) 14%,transparent),transparent 60%);opacity:var(--vibeui-layout-009-on);transition:opacity var(--vibeui-layout-009-dur-5)}
-[data-vibeui-block="layout-009"] [data-part="tile"]::after{content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:inherit;padding:1px;background:radial-gradient(18rem circle at var(--vibeui-layout-009-mx) var(--vibeui-layout-009-my),color-mix(in oklab,var(--vibeui-layout-009-accent) 70%,transparent),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:var(--vibeui-layout-009-on);transition:opacity var(--vibeui-layout-009-dur-5)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover{border-color:var(--vibeui-layout-009-edge-hover)}
-[data-vibeui-block="layout-009"] [data-part="tile"] h3{margin:0;font-size:1.125rem;font-weight:600;line-height:1.3}
-[data-vibeui-block="layout-009"] [data-part="tile"] p{margin:0;color:var(--vibeui-layout-009-muted);font-size:0.9375rem;line-height:1.45}
-[data-vibeui-block="layout-009"] [data-part="value"]{font-size:clamp(2.5rem,6cqi,3.5rem);font-weight:650;letter-spacing:-0.03em;line-height:1}
-[data-vibeui-block="layout-009"] [data-part="media"]{position:absolute;inset:0;pointer-events:none}
-[data-vibeui-block="layout-009"] [data-part="media"] > *{width:100%;height:100%;object-fit:cover;display:block}
-[data-vibeui-block="layout-009"] [data-part="tile"] > :not([data-part="media"]):not([data-part="num"]){position:relative}
-[data-vibeui-block="layout-009"] [data-part="num"]{position:absolute;top:1.125rem;left:1.125rem;z-index:1;font:500 0.6875rem/1 var(--vibeui-layout-009-mono);letter-spacing:0.08em;padding:0.375rem 0.5rem;border-radius:999px;color:var(--vibeui-layout-009-muted);border:1px solid var(--vibeui-layout-009-edge);background:color-mix(in oklab,var(--vibeui-layout-009-tile) 70%,transparent);transition:color var(--vibeui-layout-009-dur-4),border-color var(--vibeui-layout-009-dur-4),background-color var(--vibeui-layout-009-dur-4)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="num"]{color:var(--vibeui-layout-009-on-accent);background:var(--vibeui-layout-009-accent);border-color:var(--vibeui-layout-009-accent)}
-[data-vibeui-block="layout-009"][data-numbers] [data-part="icon"],[data-vibeui-block="layout-009"][data-numbers] [data-part="faces"],[data-vibeui-block="layout-009"][data-numbers] [data-part="spark"],[data-vibeui-block="layout-009"][data-numbers] [data-part="rows"],[data-vibeui-block="layout-009"][data-numbers] [data-part="image"],[data-vibeui-block="layout-009"][data-numbers] [data-part="window"]{margin-top:2rem}
-/* Призраки. */
-[data-vibeui-block="layout-009"] [data-part="bar"]{display:block;height:0.875rem;border-radius:999px;background:var(--vibeui-layout-009-ghost-strong);width:70%}
-[data-vibeui-block="layout-009"] [data-part="bar"][data-soft]{background:var(--vibeui-layout-009-ghost);height:0.625rem;width:50%}
-[data-vibeui-block="layout-009"] [data-part="bar"][data-wide]{width:88%}
-[data-vibeui-block="layout-009"] [data-part="bar"][data-big]{height:1.5rem}
+[data-vibeui-block="layout-009"][data-numbers] [data-part="icon"],[data-vibeui-block="layout-009"][data-numbers] [data-part="faces"],[data-vibeui-block="layout-009"][data-numbers] [data-part="spark"],[data-vibeui-block="layout-009"][data-numbers] [data-part="rows"],[data-vibeui-block="layout-009"][data-numbers] [data-part="window"]{margin-top:2rem}
 [data-vibeui-block="layout-009"] [data-part="button"]{display:inline-block;width:6.5rem;height:2.5rem;border-radius:0.75rem;background:var(--vibeui-layout-009-accent);margin-top:0.5rem;transition:transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="button"]{transform:translateX(4px)}
 [data-vibeui-block="layout-009"] [data-part="big"]{display:block;height:3rem;width:55%;border-radius:0.75rem;background:var(--vibeui-layout-009-ghost-strong)}
 [data-vibeui-block="layout-009"] [data-part="rows"]{display:flex;flex-direction:column;gap:1rem;flex:1;justify-content:space-evenly;padding-block:0.5rem}
 [data-vibeui-block="layout-009"] [data-part="rows"] span{display:flex;align-items:center;gap:0.75rem}
@@ -113,21 +90,13 @@ transition:transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1),bor
 [data-vibeui-block="layout-009"] [data-part="rows"] span:nth-child(odd) b{max-width:80%}
 [data-vibeui-block="layout-009"] [data-part="rows"][data-table] span{gap:1.25rem;padding:0.5rem 0;border-bottom:1px solid var(--vibeui-layout-009-edge)}
 [data-vibeui-block="layout-009"] [data-part="rows"][data-table] b:first-child{max-width:30%}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="rows"] i{transform:scale(1.35)}
 [data-vibeui-block="layout-009"] [data-part="icon"]{width:2.75rem;height:2.75rem;border-radius:0.875rem;background:var(--vibeui-layout-009-accent);margin-bottom:auto;transition:transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="icon"]{transform:rotate(-6deg) scale(1.08)}
 [data-vibeui-block="layout-009"] [data-part="faces"]{display:flex;margin-bottom:auto}
 [data-vibeui-block="layout-009"] [data-part="faces"] i{width:2.5rem;height:2.5rem;border-radius:999px;border:2px solid var(--vibeui-layout-009-tile);background:var(--vibeui-layout-009-ghost-strong);margin-inline-start:-0.625rem;transition:transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="layout-009"] [data-part="faces"] i:first-child{margin-inline-start:0;background:var(--vibeui-layout-009-accent)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="faces"] i:nth-child(2){transform:translateX(3px)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="faces"] i:nth-child(3){transform:translateX(6px)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="faces"] i:nth-child(4){transform:translateX(9px)}
 [data-vibeui-block="layout-009"] [data-part="spark"]{width:100%;height:4rem;margin-bottom:auto;overflow:visible}
 [data-vibeui-block="layout-009"] [data-part="spark"] path{fill:none;stroke:var(--vibeui-layout-009-accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:240;stroke-dashoffset:0}
 [data-vibeui-block="layout-009"] [data-part="spark"] path[data-fill]{fill:var(--vibeui-layout-009-glow);fill-opacity:0.25;stroke:none}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="spark"] path:not([data-fill]){animation:vibeui-layout-009-draw 1.1s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="layout-009"] [data-part="image"]{display:block;flex:1;min-height:6rem;border-radius:0.75rem;background:radial-gradient(70% 80% at 80% 15%,var(--vibeui-layout-009-glow) 0%,transparent 65%),radial-gradient(60% 70% at 15% 85%,var(--vibeui-layout-009-glow-soft) 0%,transparent 65%),var(--vibeui-layout-009-tile-2);margin-bottom:auto;transition:transform 0.6s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover [data-part="image"]{transform:scale(1.02)}
 [data-vibeui-block="layout-009"] [data-part="window"]{display:block;flex:1;min-height:8rem;border-radius:0.75rem 0.75rem 0 0;border:1px solid var(--vibeui-layout-009-edge);border-bottom:0;background:linear-gradient(var(--vibeui-layout-009-tile-2),var(--vibeui-layout-009-tile-2)) 0 0 / 100% 2rem no-repeat,repeating-linear-gradient(to bottom,transparent 0 2.75rem,var(--vibeui-layout-009-ghost) 2.75rem 3.25rem) 1.25rem 0 / calc(100% - 2.5rem) 100% no-repeat,var(--vibeui-layout-009-tile);position:relative;margin-bottom:0}
 [data-vibeui-block="layout-009"] [data-part="window"] i{position:absolute;top:0.7rem;width:0.6rem;height:0.6rem;border-radius:999px;background:var(--vibeui-layout-009-ghost-strong)}
 [data-vibeui-block="layout-009"] [data-part="window"] i:nth-child(1){left:0.75rem;background:var(--vibeui-layout-009-accent)}
@@ -135,85 +104,33 @@ transition:transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1),bor
 [data-vibeui-block="layout-009"] [data-part="window"] i:nth-child(3){left:2.45rem}
 @keyframes vibeui-layout-009-rise{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
 @keyframes vibeui-layout-009-draw{from{stroke-dashoffset:240}to{stroke-dashoffset:0}}
-
-/* Появление по прокрутке: где есть view(), плитка проявляется, входя в
-   кадр; без поддержки — каскад при загрузке. */
-[data-vibeui-block="layout-009"] [data-part="tile"]{animation:vibeui-layout-009-rise 0.8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-layout-009-i) * 80ms)}
 @supports (animation-timeline: view()){
-[data-vibeui-block="layout-009"] [data-part="tile"]{animation:vibeui-layout-009-rise linear both;animation-timeline:view();animation-range:entry 0% entry 35%;animation-delay:0s}
 }
 
 [data-vibeui-block="layout-009"] [data-part="body"]{display:flex;flex-direction:column;gap:0.75rem;min-height:30rem}
 [data-vibeui-block="layout-009"] [data-part="panel"]{position:relative;display:flex;flex:1 1 0;min-height:0;min-width:0;transition:flex-grow 0.6s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="layout-009"] [data-part="panel"] input{position:absolute;opacity:0;pointer-events:none}
 [data-vibeui-block="layout-009"] [data-part="panel"] label{position:absolute;inset:0;cursor:pointer;z-index:1;border-radius:var(--vibeui-layout-009-radius)}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"]{flex:1;min-height:5.5rem;padding:1.25rem}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"] > [data-part="image"]{position:absolute;inset:0;border-radius:0;margin:0;min-height:0;opacity:0.9}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"] > :not([data-part="image"]):not([data-part="media"]):not([data-part="num"]){position:relative;z-index:1}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="bar"]{opacity:0;transform:translateY(8px);transition:opacity var(--vibeui-layout-009-dur-5),transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"]{flex:1;min-height:5.5rem;padding:1.25rem}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] > [data-part="image"]{position:absolute;inset:0;border-radius:0;margin:0;min-height:0;opacity:0.9}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] > :not([data-part="image"]):not([data-part="media"]):not([data-part="num"]){position:relative;z-index:1}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] [data-part="bar"]{opacity:0;transform:translateY(8px);transition:opacity var(--vibeui-card-069-dur-5),transform var(--vibeui-card-069-dur-5) cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="layout-009"] [data-part="panel"] h3,[data-vibeui-block="layout-009"] [data-part="panel"] p{opacity:0;transform:translateY(8px);transition:opacity var(--vibeui-layout-009-dur-5),transform var(--vibeui-layout-009-dur-5) cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"]:hover{transform:none}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"]:hover{transform:none}
 [data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked),[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within{flex-grow:3.2}
-[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) [data-part="bar"],[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) h3,[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within p{opacity:1;transform:none}
+[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) [data-vibeui-block="card-069"] [data-part="bar"],[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) h3,[data-vibeui-block="layout-009"][data-expand="click"] [data-part="panel"]:has(input:checked) p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover [data-vibeui-block="card-069"] [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:hover p,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within [data-vibeui-block="card-069"] [data-part="bar"],[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within h3,[data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"]:focus-within p{opacity:1;transform:none}
 [data-vibeui-block="layout-009"]:not([data-expand="click"]) [data-part="panel"] label{display:none}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="num"]{z-index:2}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"] [data-part="num"]{z-index:2}
 @container (min-width: 48rem){
 [data-vibeui-block="layout-009"] [data-part="body"]{flex-direction:row;min-height:30rem}
-[data-vibeui-block="layout-009"] [data-part="panel"] [data-part="tile"]{min-height:30rem}
+[data-vibeui-block="layout-009"] [data-part="panel"] [data-vibeui-block="card-069"]{min-height:30rem}
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="layout-009"] *{animation:none!important;transition:none!important}
-[data-vibeui-block="layout-009"] [data-part="tile"]:hover{transform:none}
-[data-vibeui-block="layout-009"] [data-part="tile"]::before,[data-vibeui-block="layout-009"] [data-part="tile"]::after{display:none}
 }
 `
 
-function Ghost({ kind }: { kind: string }) {
-  switch (kind) {
-    case "image":
-      return <><span data-part="image" /><span data-part="bar" /><span data-part="bar" data-soft="" /></>
-    default:
-      return null
-  }
-}
 
-type TileProps = {
-  area: (typeof SLOTS)[number]
-  item?: Layout009Item
-  numbers: boolean
-  index: number
-  className?: string
-}
-
-function Tile({ area, item, numbers, index, className }: TileProps) {
-  const filled = Boolean(item && (item.title || item.text || item.value || item.media))
-
-  return (
-    <article
-      data-part="tile"
-      data-area={area}
-      className={className}
-      aria-hidden={filled ? undefined : true}
-      style={{ "--vibeui-layout-009-i": index } as CSSProperties}
-    >
-      {item?.media ? <div data-part="media">{item.media}</div> : null}
-      {numbers ? (
-        <span data-part="num" aria-hidden="true">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      ) : null}
-      {filled ? (
-        <>
-          {item?.value ? <span data-part="value">{item.value}</span> : null}
-          {item?.title ? <h3>{item.title}</h3> : null}
-          {item?.text ? <p>{item.text}</p> : null}
-        </>
-      ) : (
-        <Ghost kind={GHOST[area]} />
-      )}
-    </article>
-  )
-}
 
 /** Раскрывающиеся панели: наведённая панель расширяется, остальные сжимаются. */
 export function Layout009({
@@ -233,14 +150,7 @@ export function Layout009({
   } as CSSProperties
   const hasHead = Boolean(heading || lead)
   const tile = (area: (typeof SLOTS)[number], className?: string, key?: string) => (
-    <Tile
-      key={key ?? area}
-      area={area}
-      item={items?.[SLOTS.indexOf(area)]}
-      numbers={numbers}
-      index={SLOTS.indexOf(area)}
-      className={className}
-    />
+    <Card069 key={key ?? area} data-part="tile" {...items?.[SLOTS.indexOf(area)]} numbers={numbers} index={SLOTS.indexOf(area)} ghost={GHOST[area]} data-area={area} className={className} accent={accent} />
   )
   const frame = useRef(0)
 
@@ -259,16 +169,16 @@ export function Layout009({
 
     cancelAnimationFrame(frame.current)
     frame.current = requestAnimationFrame(() => {
-      target.style.setProperty("--vibeui-layout-009-mx", `${x}%`)
-      target.style.setProperty("--vibeui-layout-009-my", `${y}%`)
-      target.style.setProperty("--vibeui-layout-009-on", "1")
+      target.style.setProperty("--vibeui-card-069-mx", `${x}%`)
+      target.style.setProperty("--vibeui-card-069-my", `${y}%`)
+      target.style.setProperty("--vibeui-card-069-on", "1")
     })
   }
 
   function handleLeave(event: PointerEvent<HTMLDivElement>) {
     const target = (event.target as HTMLElement).closest<HTMLElement>('[data-part="tile"]')
 
-    target?.style.setProperty("--vibeui-layout-009-on", "0")
+    target?.style.setProperty("--vibeui-card-069-on", "0")
   }
   const groupId = `panels-${useId().replace(/:/g, "")}`
 

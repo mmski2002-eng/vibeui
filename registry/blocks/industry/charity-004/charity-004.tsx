@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card082 } from "@/registry/components/card/card-082/card-082"
 
 export type Charity004Point = {
   city: string
@@ -68,13 +69,6 @@ container-type:inline-size;
 [data-vibeui-block="charity-004"] [data-part="total"] strong{font-family:var(--vibeui-charity-004-display);font-weight:700;font-size:clamp(2.6rem,6cqi,4rem);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="charity-004"] [data-part="total"] span{font-size:.95rem;color:var(--vibeui-charity-004-muted)}
 [data-vibeui-block="charity-004"] [data-part="list"]{margin:1.6rem 0 0;padding:0;list-style:none;display:grid;gap:.15rem}
-[data-vibeui-block="charity-004"] [data-part="city"]{display:grid;grid-template-columns:1.6rem minmax(0,1fr) auto;align-items:center;gap:.6rem;padding:.55rem .7rem;border-radius:.7rem;opacity:.35;transform:translateX(-6px);transition:opacity .4s,transform .4s,background .2s;cursor:default}
-[data-vibeui-block="charity-004"] [data-part="city"][data-lit="true"]{opacity:1;transform:none}
-[data-vibeui-block="charity-004"] [data-part="city"]:hover{background:var(--vibeui-charity-004-soft)}
-[data-vibeui-block="charity-004"] [data-part="city"] i{width:.6rem;height:.6rem;margin:0 auto;border-radius:50%;background:var(--vibeui-charity-004-accent)}
-[data-vibeui-block="charity-004"] [data-part="city"] span{font-weight:500}
-[data-vibeui-block="charity-004"] [data-part="city"] span small{margin-left:.5rem;font-family:var(--vibeui-charity-004-hand);font-size:1.1rem;color:var(--vibeui-charity-004-accent)}
-[data-vibeui-block="charity-004"] [data-part="city"] b{font-family:var(--vibeui-charity-004-display);font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums}
 [data-vibeui-block="charity-004"] [data-part="map"]{position:relative;width:100%;max-width:38rem;margin:0 auto}
 [data-vibeui-block="charity-004"] [data-part="svg"]{display:block;width:100%;height:auto;overflow:visible}
 [data-vibeui-block="charity-004"] [data-part="land"]{fill:var(--vibeui-charity-004-land);stroke:var(--vibeui-charity-004-line);stroke-width:1.2;stroke-linejoin:round}
@@ -92,7 +86,7 @@ container-type:inline-size;
 [data-vibeui-block="charity-004"] [data-part="compass"]{position:absolute;right:0;top:0;font-family:var(--vibeui-charity-004-hand);font-size:1.3rem;line-height:1;color:var(--vibeui-charity-004-muted);transform:rotate(6deg)}
 @keyframes vibeui-charity-004-pulse{from{transform:scale(.6);opacity:.45}to{transform:scale(2.4);opacity:0}}
 @container (min-width: 56rem){[data-vibeui-block="charity-004"] [data-part="shell"]{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:4rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="charity-004"] *{animation:none!important;transition:none!important}[data-vibeui-block="charity-004"] [data-part="pin"]{opacity:1;transform:none}[data-vibeui-block="charity-004"] [data-part="city"]{opacity:1;transform:none}[data-vibeui-block="charity-004"] [data-part="route"]{stroke-dashoffset:0}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="charity-004"] *{animation:none!important;transition:none!important}[data-vibeui-block="charity-004"] [data-part="pin"]{opacity:1;transform:none}[data-vibeui-block="charity-004"] [data-part="route"]{stroke-dashoffset:0}}`
 
 const DEFAULT_POINTS: Charity004Point[] = [
   { city: "Тверь", count: 96, x: 52, y: 58, note: "с 2019" },
@@ -186,14 +180,7 @@ export function Charity004({
             </p>
             <ul data-part="list">
               {points.map((point, index) => (
-                <li key={point.city} data-part="city" data-lit={index < lit} onMouseEnter={() => setHot(index)} onMouseLeave={() => setHot(null)}>
-                  <i aria-hidden="true" />
-                  <span>
-                    {point.city}
-                    {point.note ? <small>{point.note}</small> : null}
-                  </span>
-                  <b>{point.count}</b>
-                </li>
+                <Card082 key={point.city} data-part="city" city={point.city} note={point.note} count={point.count} data-lit={index < lit} onMouseEnter={() => setHot(index)} onMouseLeave={() => setHot(null)} accent={accent} />
               ))}
             </ul>
           </div>

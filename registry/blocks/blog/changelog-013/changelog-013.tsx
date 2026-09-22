@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Changelog013Tag = "new" | "fix" | "breaking" | "perf"
 
 export type Changelog013Entry = {
@@ -72,6 +74,7 @@ container-type:inline-size;
 :where([data-vibeui-block="changelog-013"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="changelog-013"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-changelog-013-bg);color:var(--vibeui-changelog-013-fg);font-family:var(--vibeui-changelog-013-display);font-size:1rem;line-height:1.5}
 [data-vibeui-block="changelog-013"] *{box-sizing:border-box}
+[data-vibeui-block="changelog-013"] [data-part="all"]{margin:1.6rem 0 0 1.4rem}
 [data-vibeui-block="changelog-013"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="changelog-013"] [data-part="head"]{max-width:42rem;margin:0 0 2.2rem}
 [data-vibeui-block="changelog-013"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-changelog-013-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-changelog-013-accent)}
@@ -93,8 +96,6 @@ container-type:inline-size;
 [data-vibeui-block="changelog-013"] [data-part="items"]{margin:0;padding:0;list-style:none;display:grid;gap:.3rem;font-size:.9rem;color:var(--vibeui-changelog-013-muted)}
 [data-vibeui-block="changelog-013"] [data-part="items"] li{display:flex;gap:.5rem}
 [data-vibeui-block="changelog-013"] [data-part="items"] li::before{content:"+";font-family:var(--vibeui-changelog-013-mono);color:var(--vibeui-changelog-013-accent);flex-shrink:0}
-[data-vibeui-block="changelog-013"] [data-part="all"]{display:inline-flex;align-items:center;gap:.3rem;margin:1.6rem 0 0 1.4rem;font-family:var(--vibeui-changelog-013-mono);font-size:.8rem;color:var(--vibeui-changelog-013-fg);text-decoration:none;border-bottom:1px solid var(--vibeui-changelog-013-line);transition:border-color .2s}
-[data-vibeui-block="changelog-013"] [data-part="all"]:hover{border-color:var(--vibeui-changelog-013-accent)}
 [data-vibeui-block="changelog-013"] [data-part="side"]{display:grid;gap:1rem}
 [data-vibeui-block="changelog-013"] [data-part="install"]{border:1px solid var(--vibeui-changelog-013-line);border-radius:1rem;background:var(--vibeui-changelog-013-panel);padding:1rem}
 [data-vibeui-block="changelog-013"] [data-part="install"] h4{margin:0 0 .7rem;font-size:.95rem;font-weight:700}
@@ -108,7 +109,7 @@ container-type:inline-size;
 [data-vibeui-block="changelog-013"] [data-part="copy"]:hover{color:var(--vibeui-changelog-013-fg);border-color:var(--vibeui-changelog-013-fg)}
 [data-vibeui-block="changelog-013"] [data-part="copy"][data-done="true"]{color:var(--vibeui-changelog-013-accent);border-color:var(--vibeui-changelog-013-accent)}
 [data-vibeui-block="changelog-013"] [data-part="copy"] svg{width:.8rem;height:.8rem}
-[data-vibeui-block="changelog-013"] button:focus-visible,[data-vibeui-block="changelog-013"] a:focus-visible{outline:2px solid var(--vibeui-changelog-013-accent);outline-offset:2px}
+[data-vibeui-block="changelog-013"] button:focus-visible{outline:2px solid var(--vibeui-changelog-013-accent);outline-offset:2px}
 [data-vibeui-block="changelog-013"] [data-part="counters"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
 [data-vibeui-block="changelog-013"] [data-part="counter"]{display:grid;gap:.15rem;padding:.9rem 1rem;border:1px solid var(--vibeui-changelog-013-line);border-radius:.8rem;background:var(--vibeui-changelog-013-panel)}
 [data-vibeui-block="changelog-013"] [data-part="counter"] span{display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--vibeui-changelog-013-muted)}
@@ -225,9 +226,12 @@ export function Changelog013({
                 ))}
               </ol>
               {allLabel ? (
-                <a data-part="all" href={allHref}>
-                  {allLabel} <span aria-hidden="true">→</span>
-                </a>
+                <Button077
+                  data-part="all"
+                  label={allLabel}
+                  href={allHref}
+                  accent={accent}
+                />
               ) : null}
             </div>
             <aside data-part="side">

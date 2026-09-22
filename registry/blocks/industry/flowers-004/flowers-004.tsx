@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
+import { Card087 } from "@/registry/components/card/card-087/card-087"
 
 export type Flowers004Month = {
   name: string
@@ -57,6 +58,7 @@ container-type:inline-size;
 :where([data-vibeui-block="flowers-004"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="flowers-004"]{box-sizing:border-box;padding:5rem 0;overflow:hidden;background:var(--vibeui-flowers-004-bg);color:var(--vibeui-flowers-004-fg);font-family:var(--vibeui-flowers-004-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-004"] *{box-sizing:border-box}
+[data-vibeui-block="flowers-004"] [data-part="month"]{flex:0 0 15rem}
 [data-vibeui-block="flowers-004"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="flowers-004"] [data-part="head"]{display:grid;gap:1.2rem;align-items:end;margin:0 0 2.2rem}
 [data-vibeui-block="flowers-004"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-flowers-004-muted)}
@@ -70,21 +72,12 @@ container-type:inline-size;
 [data-vibeui-block="flowers-004"] [data-part="ribbon"]{display:flex;gap:1rem;margin:0 -1.25rem;padding:1.4rem 1.25rem 1.6rem;list-style:none;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;cursor:grab;user-select:none;-webkit-user-select:none}
 [data-vibeui-block="flowers-004"] [data-part="ribbon"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="flowers-004"] [data-part="ribbon"][data-drag="true"]{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
-[data-vibeui-block="flowers-004"] [data-part="month"]{position:relative;flex:0 0 15rem;display:grid;align-content:start;gap:.9rem;padding:1.3rem 1.2rem 1.4rem;border-radius:1rem;border:1px solid var(--vibeui-flowers-004-line);background:var(--vibeui-flowers-004-paper);scroll-snap-align:center;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .3s}
-[data-vibeui-block="flowers-004"] [data-part="month"]:hover{transform:translateY(-4px)}
-[data-vibeui-block="flowers-004"] [data-part="month"][data-now="true"]{border-color:var(--vibeui-flowers-004-accent);box-shadow:0 0 0 1px var(--vibeui-flowers-004-accent),0 24px 40px -30px var(--vibeui-flowers-004-accent)}
-[data-vibeui-block="flowers-004"] [data-part="num"]{font-size:.74rem;letter-spacing:.14em;color:var(--vibeui-flowers-004-muted);font-variant-numeric:tabular-nums}
-[data-vibeui-block="flowers-004"] [data-part="month"] h3{margin:0;font-family:var(--vibeui-flowers-004-display);font-weight:500;font-size:2.2rem;line-height:.95;letter-spacing:-.02em}
-[data-vibeui-block="flowers-004"] [data-part="month"][data-now="true"] h3{color:var(--vibeui-flowers-004-accent)}
-[data-vibeui-block="flowers-004"] [data-part="month"] ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem}
-[data-vibeui-block="flowers-004"] [data-part="month"] li{padding:.25rem .6rem;border-radius:999px;border:1px solid var(--vibeui-flowers-004-line);font-size:.8rem;background:var(--vibeui-flowers-004-bg)}
-[data-vibeui-block="flowers-004"] [data-part="month"] p{margin:0;padding-right:2rem;font-size:.82rem;color:var(--vibeui-flowers-004-muted)}
-[data-vibeui-block="flowers-004"] [data-part="now"]{position:absolute;right:.8rem;top:-.9rem;padding:.1rem .6rem;border-radius:999px;background:var(--vibeui-flowers-004-accent);color:var(--vibeui-flowers-004-on-accent);font-family:var(--vibeui-flowers-004-hand);font-size:1.15rem;line-height:1.3;transform:rotate(3deg)}
-[data-vibeui-block="flowers-004"] [data-part="petal"]{position:absolute;right:1rem;bottom:1rem;width:1.6rem;height:1.6rem;color:var(--vibeui-flowers-004-accent);opacity:.5}
 [data-vibeui-block="flowers-004"] [data-part="hint"]{margin:.4rem 0 0;font-family:var(--vibeui-flowers-004-hand);font-size:1.3rem;color:var(--vibeui-flowers-004-muted)}
 @container (min-width: 40rem){[data-vibeui-block="flowers-004"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}}
+
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-004"] *{animation:none!important;transition:none!important}}
 @container (min-width: 60rem){[data-vibeui-block="flowers-004"] [data-part="month"]{flex-basis:17rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-004"] *{animation:none!important;transition:none!important}}`
+`
 
 const DEFAULT_MONTHS: Flowers004Month[] = [
   { name: "Январь", flowers: ["амариллис", "гиацинт", "тюльпан"], note: "тепличные, но живые и ароматные" },
@@ -203,20 +196,7 @@ export function Flowers004({
           </div>
           <ul data-part="ribbon" ref={ribbonRef} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} aria-label={ribbonLabel}>
             {months.map((item, index) => (
-              <li key={item.name} data-part="month" data-now={month === index}>
-                {month === index ? <span data-part="now">{nowLabel}</span> : null}
-                <span data-part="num">{String(index + 1).padStart(2, "0")} / 12</span>
-                <h3>{item.name}</h3>
-                <ul>
-                  {item.flowers.map((flower) => (
-                    <li key={flower}>{flower}</li>
-                  ))}
-                </ul>
-                {item.note ? <p>{item.note}</p> : null}
-                <svg data-part="petal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M12 21c0-6 1-11 3-16M12 21c-5-1-8-5-8-10 5 0 8 4 8 10ZM12 21c5-1 8-5 8-10-5 0-8 4-8 10Z" />
-                </svg>
-              </li>
+              <Card087 key={item.name} data-part="month" name={item.name} flowers={item.flowers} note={item.note} nowLabel={nowLabel} month={month} index={index} data-now={month === index} accent={accent} />
             ))}
           </ul>
           <p data-part="hint">{hint}</p>

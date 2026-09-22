@@ -2,7 +2,7 @@ import { denialText, resolveAccess } from "@/lib/access"
 import { signRegistryLink } from "@/lib/registry-link"
 import { getSiteBaseUrl } from "@/lib/site"
 import { getCatalogItem } from "@/registry/index"
-import { getBlockSource } from "@/registry/source.server"
+import { getDeliverableSource } from "@/registry/source.server"
 
 /**
  * Выдача исходника для панели «Исходник компонента». Здесь один раз
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     )
   }
 
-  const source = await getBlockSource(slug)
+  const source = await getDeliverableSource(slug)
 
   if (!source) {
     return new Response("Not found\n", { status: 404 })

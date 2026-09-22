@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card172 } from "@/registry/components/card/card-172/card-172"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid025Row = {
@@ -64,20 +65,6 @@ border:1px solid var(--vibeui-datagrid-025-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-025-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-025"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-025"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem 0.625rem;border-bottom:1px solid var(--vibeui-datagrid-025-border);
-}
-[data-vibeui-block="datagrid-025"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-025"] [data-part="count"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-025-muted)}
-[data-vibeui-block="datagrid-025"] [data-part="track"]{
-flex:0 0 100%;height:0.25rem;border-radius:999px;margin-top:0.125rem;
-background:var(--vibeui-datagrid-025-border);overflow:hidden;
-}
-[data-vibeui-block="datagrid-025"] [data-part="fill"]{
-display:block;height:100%;border-radius:999px;
-width:var(--vibeui-datagrid-025-progress,0%);background:var(--vibeui-datagrid-025-accent);
-transition:width var(--vibeui-datagrid-025-dur-2) ease;color:oklch(from var(--vibeui-datagrid-025-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="datagrid-025"] [data-part="scroll"]{
 overflow:auto;max-height:var(--vibeui-datagrid-025-height);
 }
@@ -216,24 +203,7 @@ export function Datagrid025({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="count" role="status" aria-live="polite">
-            {countText
-              .replace("{shown}", String(visible.length))
-              .replace("{total}", String(rows.length))}
-          </p>
-          <span
-            data-part="track"
-            role="progressbar"
-            aria-label={progressLabel}
-            aria-valuenow={percent}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
-            <span data-part="fill" />
-          </span>
-        </div>
+        <Card172 data-part="bar" heading={heading} countText={countText} rows={rows} progressLabel={progressLabel} percent={percent} visible={visible} accent={accent} />
         <div
           data-part="scroll"
           role="region"

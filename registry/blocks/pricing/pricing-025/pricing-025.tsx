@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button013 } from "@/registry/components/button/button-013/button-013"
+import { Slider013 } from "@/registry/components/slider/slider-013/slider-013"
+
 export type Pricing025Plan = {
   name: string
   /** Цена за место в месяц при помесячной оплате. 0 — бесплатно. */
@@ -75,6 +79,8 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-025"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-025"]{box-sizing:border-box;position:relative;overflow:hidden;padding:5rem 0;background:var(--vibeui-pricing-025-bg);color:var(--vibeui-pricing-025-fg);font-family:var(--vibeui-pricing-025-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="pricing-025"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-025"] [data-part="range"]{width:100%}
+[data-vibeui-block="pricing-025"] [data-part="period"]{display:flex}
 [data-vibeui-block="pricing-025"] [data-part="glow"]{position:absolute;left:50%;top:55%;width:70%;aspect-ratio:2.2;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-pricing-025-accent) 10%,transparent),transparent);filter:blur(60px);pointer-events:none;opacity:0;transition:opacity 1.2s var(--vibeui-pricing-025-ease)}
 [data-vibeui-block="pricing-025"][data-in="true"] [data-part="glow"]{opacity:1}
 [data-vibeui-block="pricing-025"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
@@ -91,19 +97,7 @@ container-type:inline-size;
 [data-vibeui-block="pricing-025"] [data-part="seats"]{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;font-size:.9rem}
 [data-vibeui-block="pricing-025"] [data-part="seats"] output{font-family:var(--vibeui-pricing-025-display);font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 [data-vibeui-block="pricing-025"] [data-part="seats"] output small{font-family:var(--vibeui-pricing-025-font);font-weight:500;font-size:.85rem;color:var(--vibeui-pricing-025-muted);margin-left:.3rem}
-[data-vibeui-block="pricing-025"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.5rem;border-radius:999px;background:linear-gradient(90deg,var(--vibeui-pricing-025-accent) var(--vibeui-pricing-025-fill),var(--vibeui-pricing-025-line) var(--vibeui-pricing-025-fill));outline:none;cursor:pointer}
-[data-vibeui-block="pricing-025"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-pricing-025-bg);border:3px solid var(--vibeui-pricing-025-accent);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-pricing-025-accent) 20%,transparent);cursor:grab;transition:box-shadow .3s,transform .3s var(--vibeui-pricing-025-ease)}
-[data-vibeui-block="pricing-025"] [data-part="range"]:hover::-webkit-slider-thumb{transform:scale(1.12);box-shadow:0 0 0 8px color-mix(in oklab,var(--vibeui-pricing-025-accent) 25%,transparent),0 0 24px var(--vibeui-pricing-025-accent)}
-[data-vibeui-block="pricing-025"] [data-part="range"]:active::-webkit-slider-thumb{cursor:grabbing;transform:scale(1.2)}
-[data-vibeui-block="pricing-025"] [data-part="range"]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-pricing-025-bg);border:3px solid var(--vibeui-pricing-025-accent);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-pricing-025-accent) 20%,transparent);cursor:grab}
-[data-vibeui-block="pricing-025"] [data-part="range"]:focus-visible{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-pricing-025-accent) 40%,transparent)}
 [data-vibeui-block="pricing-025"] [data-part="period"]{display:flex;align-items:center;justify-content:center;gap:.8rem;font-size:.88rem;color:var(--vibeui-pricing-025-muted)}
-[data-vibeui-block="pricing-025"] [data-part="period"] [data-on="true"]{color:var(--vibeui-pricing-025-fg);font-weight:600}
-[data-vibeui-block="pricing-025"] [data-part="switch"]{position:relative;width:2.8rem;height:1.5rem;border-radius:999px;border:0;padding:0;background:var(--vibeui-pricing-025-line);cursor:pointer;transition:background .2s}
-[data-vibeui-block="pricing-025"] [data-part="switch"]::after{content:"";position:absolute;top:.2rem;left:.2rem;width:1.1rem;height:1.1rem;border-radius:50%;background:var(--vibeui-pricing-025-fg);transition:transform .2s}
-[data-vibeui-block="pricing-025"] [data-part="switch"][aria-checked="true"]{background:var(--vibeui-pricing-025-accent)}
-[data-vibeui-block="pricing-025"] [data-part="switch"][aria-checked="true"]::after{transform:translateX(1.3rem);background:var(--vibeui-pricing-025-on-accent)}
-[data-vibeui-block="pricing-025"] [data-part="switch"]:focus-visible{outline:2px solid var(--vibeui-pricing-025-accent);outline-offset:2px}
 [data-vibeui-block="pricing-025"] [data-part="save"]{font-family:var(--vibeui-pricing-025-mono);font-size:.68rem;padding:.15rem .5rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-pricing-025-accent) 18%,transparent);color:var(--vibeui-pricing-025-accent)}
 [data-vibeui-block="pricing-025"] [data-part="grid"]{display:grid;gap:1rem;margin:2.5rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="pricing-025"] [data-part="plan"]{--vibeui-pricing-025-x:50%;--vibeui-pricing-025-y:0%;position:relative;display:grid;gap:1.2rem;padding:1.6rem;border-radius:1.4rem;background:var(--vibeui-pricing-025-glass);border:1px solid var(--vibeui-pricing-025-line);opacity:0;translate:0 28px;transition:opacity .8s var(--vibeui-pricing-025-ease) calc(.4s + var(--vibeui-pricing-025-i) * .12s),translate .8s var(--vibeui-pricing-025-ease) calc(.4s + var(--vibeui-pricing-025-i) * .12s),border-color .4s}
@@ -118,7 +112,7 @@ container-type:inline-size;
 [data-vibeui-block="pricing-025"] [data-part="plan"] h3{margin:0;font-family:var(--vibeui-pricing-025-display);font-size:1.15rem;font-weight:700}
 [data-vibeui-block="pricing-025"] [data-part="price"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .5rem;font-family:var(--vibeui-pricing-025-display);font-weight:800;font-size:2.4rem;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-025"] [data-part="odo"]{display:inline-flex;height:1em;overflow:hidden;line-height:1;vertical-align:bottom;-webkit-mask:linear-gradient(transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(transparent,#000 6%,#000 94%,transparent)}
-[data-vibeui-block="pricing-025"] [data-part="sr"]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[data-vibeui-block="pricing-025"] [data-part="visually-hidden"]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 [data-vibeui-block="pricing-025"] [data-part="odo"] [data-d]{display:inline-block;width:1ch;height:1em;text-align:center;transform:translateY(calc(var(--vibeui-pricing-025-d) * -1em));transition:transform .55s var(--vibeui-pricing-025-ease)}
 [data-vibeui-block="pricing-025"] [data-part="odo"] [data-d] i{display:block;height:1em;font-style:normal}
 [data-vibeui-block="pricing-025"] [data-part="odo"] [data-c]{display:inline-block;height:1em}
@@ -127,11 +121,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-025"] [data-part="features"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem;font-size:.9rem}
 [data-vibeui-block="pricing-025"] [data-part="features"] li{display:flex;gap:.5rem;align-items:baseline}
 [data-vibeui-block="pricing-025"] [data-part="features"] li::before{content:"✓";font-family:var(--vibeui-pricing-025-mono);color:var(--vibeui-pricing-025-accent);font-size:.8rem}
-[data-vibeui-block="pricing-025"] [data-part="action"]{display:inline-flex;justify-content:center;align-items:center;padding:.8rem 1.2rem;border-radius:999px;font-weight:600;text-decoration:none;color:var(--vibeui-pricing-025-fg);border:1px solid var(--vibeui-pricing-025-line);transition:transform .4s var(--vibeui-pricing-025-ease),background .3s,color .3s,box-shadow .4s}
-[data-vibeui-block="pricing-025"] [data-part="action"]:hover{transform:translateY(-2px);background:var(--vibeui-pricing-025-glass)}
-[data-vibeui-block="pricing-025"] [data-part="plan"][data-featured="true"] [data-part="action"]{background:var(--vibeui-pricing-025-accent);color:var(--vibeui-pricing-025-on-accent);border-color:transparent}
-[data-vibeui-block="pricing-025"] [data-part="plan"][data-featured="true"] [data-part="action"]:hover{box-shadow:0 10px 30px -10px var(--vibeui-pricing-025-accent)}
-[data-vibeui-block="pricing-025"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-pricing-025-accent);outline-offset:2px}
 @keyframes vibeui-pricing-025-breathe{from{background-position:0 0,0% 50%}to{background-position:0 0,100% 50%}}
 @keyframes vibeui-pricing-025-halo{from{opacity:.25;transform:scale(.98)}to{opacity:.55;transform:scale(1.02)}}
 @container (min-width: 44rem){[data-vibeui-block="pricing-025"] [data-part="controls"]{grid-template-columns:1fr auto;align-items:center}[data-vibeui-block="pricing-025"] [data-part="seats"]{grid-column:1/-1}}
@@ -157,7 +146,7 @@ function Odometer({ value }: { value: string }) {
   const chars = Array.from(value)
   return (
     <span data-part="odo">
-      <span data-part="sr">{value}</span>
+      <span data-part="visually-hidden">{value}</span>
       {chars.map((char, index) => {
         const key = chars.length - index
         return /\d/.test(char) ? (
@@ -230,7 +219,6 @@ export function Pricing025({
     plan.style.setProperty("--vibeui-pricing-025-y", `${event.clientY - rect.top}px`)
   }
   const words = title.split(" ").filter(Boolean)
-  const fill = `${((seats - minSeats) / Math.max(1, maxSeats - minSeats)) * 100}%`
   const factor = yearly ? 1 - yearlyDiscount / 100 : 1
 
   const palette = {
@@ -270,20 +258,16 @@ export function Pricing025({
                 <small>{seats === 1 ? seatUnits[0] : seats < 5 ? seatUnits[1] : seatUnits[2]}</small>
               </output>
             </label>
-            <input
-              data-part="range"
-              type="range"
-              min={minSeats}
-              max={maxSeats}
-              value={seats}
-              onChange={(event) => setSeats(Number(event.target.value))}
-              aria-label={seatsLabel}
-              style={{ ["--vibeui-pricing-025-fill" as string]: fill }}
-            />
+            <Slider013 data-part="range" value={seats} min={minSeats} max={maxSeats} onChange={setSeats} aria-label={seatsLabel} surface="var(--vibeui-pricing-025-bg)" accent="var(--vibeui-pricing-025-accent)" />
             <div data-part="period">
-              <span data-on={!yearly}>{monthlyLabel}</span>
-              <button data-part="switch" type="button" role="switch" aria-checked={yearly} aria-label={yearlyAria} onClick={() => setYearly((value) => !value)} />
-              <span data-on={yearly}>{yearlyLabel}</span>
+              <Button013
+                data-part="period-switch"
+                options={[monthlyLabel, yearlyLabel]}
+                defaultValue={yearly ? yearlyLabel : monthlyLabel}
+                label={yearlyAria}
+                onChange={(value) => setYearly(value === yearlyLabel)}
+                accent={accent}
+              />
               {yearlyDiscount > 0 ? <span data-part="save">−{yearlyDiscount}%</span> : null}
             </div>
           </div>
@@ -316,9 +300,15 @@ export function Pricing025({
                     ))}
                   </ul>
                   {plan.actionLabel ? (
-                    <a data-part="action" href={plan.actionHref ?? "#"}>
-                      {plan.actionLabel}
-                    </a>
+                    <Button016
+                      data-part="action"
+                      size="lg"
+                      label={plan.actionLabel}
+                      href={plan.actionHref ?? "#"}
+                      external={false}
+                      tone="accent"
+                      accent={accent}
+                    />
                   ) : null}
                 </li>
               )

@@ -206,13 +206,18 @@ function Workbench({
                 kind={kind}
                 category={category}
                 full={
+                  kind === "block" ||
                   item.meta?.preview?.width === "full" ||
                   item.meta?.preview?.width === "natural"
                 }
-                // «section» — фон или курсор на весь экран: центрированный
-                // кадр без ширины схлопывает его в ноль, а кап full в 30rem
-                // ему мал — рисуется во всё поле, как natural.
+                // Блок — секция с container-type:inline-size: size-container
+                // не даёт содержимому задать свою ширину, и в центрированном
+                // кадре без ширины он схлопывается в 0px — контент вылезает
+                // узкой колонкой, container query не срабатывает. Поэтому
+                // любой блок здесь рисуется во всё поле, как natural.
+                // «section» — фон или курсор на весь экран, та же причина.
                 natural={
+                  kind === "block" ||
                   item.meta?.preview?.width === "natural" ||
                   item.meta?.preview?.width === "section"
                 }

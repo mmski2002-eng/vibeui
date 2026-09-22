@@ -1,6 +1,11 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button018 } from "@/registry/components/button/button-018/button-018"
 import type { CSSProperties } from "react"
 
 export type Pricing013Props = {
@@ -51,6 +56,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-013"]{color-scheme:dark}
+[data-vibeui-block="pricing-013"] [data-part="cta-button"]{margin-top:1.25rem;}
 [data-vibeui-block="pricing-013"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -59,23 +65,11 @@ box-sizing:border-box;background:var(--vibeui-pricing-013-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-013-sans);
 }
 [data-vibeui-block="pricing-013"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-013"] [data-part="heading"]{margin-bottom:1.75rem}
 [data-vibeui-block="pricing-013"] [data-part="shell"]{max-width:56rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
-[data-vibeui-block="pricing-013"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-013-accent);
-}
-[data-vibeui-block="pricing-013"] h2{
-margin:0;max-width:22ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-013"] [data-part="lede"]{margin:0.875rem 0 1.75rem;max-width:34rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-013-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-013"] [data-part="card"]{
 display:grid;grid-template-columns:1fr;gap:1.75rem;padding:1.75rem;border-radius:1.25rem;
 border:1px solid var(--vibeui-pricing-013-line);background:var(--vibeui-pricing-013-card);
-}
-[data-vibeui-block="pricing-013"] [data-part="seatlabel"]{margin:0 0 0.75rem;font-size:0.8125rem;font-weight:650;color:var(--vibeui-pricing-013-muted)}
-[data-vibeui-block="pricing-013"] [data-part="stepper"]{
-display:inline-flex;align-items:center;gap:0.25rem;padding:0.25rem;border-radius:0.875rem;
-border:1px solid var(--vibeui-pricing-013-line);
 }
 [data-vibeui-block="pricing-013"] button{
 appearance:none;cursor:pointer;width:2.5rem;height:2.5rem;border-radius:0.625rem;border:0;
@@ -107,13 +101,6 @@ border-top:1px solid color-mix(in oklab,var(--vibeui-pricing-013-accent) 25%,tra
 [data-vibeui-block="pricing-013"] [data-part="sum"]{
 font-size:2rem;font-weight:700;letter-spacing:-0.04em;color:var(--vibeui-pricing-013-accent);font-variant-numeric:tabular-nums;
 }
-[data-vibeui-block="pricing-013"] a{
-display:inline-flex;align-items:center;justify-content:center;margin-top:1.25rem;height:2.75rem;border-radius:0.625rem;
-background:var(--vibeui-pricing-013-accent);color:oklch(from var(--vibeui-pricing-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-013-dur-2) ease;
-}
-[data-vibeui-block="pricing-013"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-013-accent) 86%,black)}
-[data-vibeui-block="pricing-013"] a:focus-visible{outline:2px solid var(--vibeui-pricing-013-accent);outline-offset:3px}
 [data-vibeui-block="pricing-013"] [data-part="note"]{margin:1rem 0 0;font-size:0.75rem;color:var(--vibeui-pricing-013-muted)}
 @container (min-width: 34rem){
 [data-vibeui-block="pricing-013"] [data-part="shell"]{padding:5rem 2rem}
@@ -194,7 +181,6 @@ export function Pricing013({
   className,
   style,
 }: Pricing013Props) {
-  const id = useId()
   const [seats, setSeats] = useState(defaultSeats)
 
   const text = (key: string) => labels[key] ?? DEFAULT_LABELS[key]
@@ -224,40 +210,29 @@ export function Pricing013({
         style={palette}
       >
         <div data-part="shell">
-          {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h2>{title}</h2>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={lede}
+            accent={accent}
+          />
 
           <div data-part="card">
             <div>
-              <p data-part="seatlabel" id={`${id}-label`}>
-                {text("seats")}
-              </p>
-              <div data-part="stepper">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setSeats((value) => Math.max(minSeats, value - 1))
-                  }
-                  disabled={seats <= minSeats}
-                  aria-label={text("decrease")}
-                >
-                  −
-                </button>
-                <output htmlFor={`${id}-label`} aria-live="polite">
-                  {seats}
-                </output>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setSeats((value) => Math.min(maxSeats, value + 1))
-                  }
-                  disabled={seats >= maxSeats}
-                  aria-label={text("increase")}
-                >
-                  +
-                </button>
-              </div>
+              {/* Счётчик мест — button-018; блок считает цену от значения. */}
+              <Button018
+                data-part="seats"
+                defaultValue={seats}
+                min={minSeats}
+                max={maxSeats}
+                label={text("seats")}
+                unit=""
+                decreaseLabel={text("decrease")}
+                increaseLabel={text("increase")}
+                onChange={setSeats}
+                accent={accent}
+              />
               <p data-part="seathint">
                 {fill(seatsHint, { included: includedSeats, max: maxSeats })}
               </p>
@@ -300,7 +275,7 @@ export function Pricing013({
                   {MONEY.format(total)} {currency}
                 </span>
               </p>
-              <a href={action.href}>{action.label}</a>
+              <Button016 data-part="cta-button" label={action.label} href={action.href} external={false} size="lg" tone="accent" accent={accent} />
             </div>
           </div>
 

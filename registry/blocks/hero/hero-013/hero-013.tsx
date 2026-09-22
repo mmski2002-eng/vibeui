@@ -1,9 +1,12 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Hero013Props = {
   title?: string
   lede?: string
-  placeholder?: string
   submitLabel?: string
   /** Подпись поля для скринридера: она скрыта, но остаётся в дереве доступности. */
   searchLabel?: string
@@ -56,35 +59,10 @@ color:var(--vibeui-hero-013-fg);font-family:var(--vibeui-hero-013-sans);
 }
 [data-vibeui-block="hero-013"] *{box-sizing:border-box}
 [data-vibeui-block="hero-013"] [data-part="shell"]{max-width:46rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;text-align:center}
-[data-vibeui-block="hero-013"] h1{
-margin:0;font-size:clamp(1.75rem,5.6cqi,3rem);line-height:1.08;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-013"] [data-part="lede"]{
-margin:0.875rem auto 0;max-width:32rem;font-size:clamp(0.9375rem,1.4cqi,1.0625rem);line-height:1.55;
-color:var(--vibeui-hero-013-muted);text-wrap:pretty;
-}
 [data-vibeui-block="hero-013"] form{margin:1.75rem auto 0;max-width:34rem;width:100%}
-[data-vibeui-block="hero-013"] [data-part="search"]{
-display:flex;align-items:center;gap:0.5rem;padding:0.4375rem 0.4375rem 0.4375rem 0.875rem;
-border-radius:9999px;border:1px solid var(--vibeui-hero-013-line);background:var(--vibeui-hero-013-card);
-box-shadow:0 1px 2px oklch(0 0 0 / 5%);transition:border-color var(--vibeui-hero-013-dur-2) ease,box-shadow var(--vibeui-hero-013-dur-2) ease;
-}
-[data-vibeui-block="hero-013"] [data-part="search"]:focus-within{
-border-color:var(--vibeui-hero-013-accent);
-box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-hero-013-accent) 20%,transparent);
-}
-[data-vibeui-block="hero-013"] [data-part="glass"]{flex:0 0 auto;color:var(--vibeui-hero-013-muted)}
-[data-vibeui-block="hero-013"] input{
-flex:1 1 auto;min-width:0;height:2.5rem;border:0;background:none;font:inherit;font-size:0.9375rem;color:inherit;
-}
-[data-vibeui-block="hero-013"] input:focus{outline:none}
-[data-vibeui-block="hero-013"] button{
-appearance:none;cursor:pointer;flex:0 0 auto;height:2.5rem;padding:0 1.125rem;border:0;border-radius:9999px;
-background:var(--vibeui-hero-013-accent);color:oklch(from var(--vibeui-hero-013-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;transition:background-color var(--vibeui-hero-013-dur-2) ease;
-}
-[data-vibeui-block="hero-013"] button:hover{background:color-mix(in oklab,var(--vibeui-hero-013-accent) 86%,black)}
-[data-vibeui-block="hero-013"] button:focus-visible{outline:2px solid var(--vibeui-hero-013-accent);outline-offset:3px}
+[data-vibeui-block="hero-013"] [data-part="search"]{display:flex;align-items:stretch;gap:0.5rem}
+[data-vibeui-block="hero-013"] [data-part="search"]>[data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="hero-013"] [data-part="search"]>[data-vibeui-block="button-001"]{flex:0 0 auto;align-self:center}
 [data-vibeui-block="hero-013"] [data-part="counter"]{margin:0.75rem 0 0;font-size:0.75rem;color:var(--vibeui-hero-013-muted)}
 [data-vibeui-block="hero-013"] [data-part="popular"]{margin:1.75rem 0 0}
 [data-vibeui-block="hero-013"] [data-part="populartitle"]{
@@ -141,7 +119,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
 export function Hero013({
   title = "Найдите секцию по названию, а не листайте каталог",
   lede = "Тысяча с лишним готовых блоков. Введите задачу словами — «тёмный hero с формой» — и берите подходящий.",
-  placeholder = "Например: тарифы с переключателем",
   submitLabel = "Найти",
   searchLabel = "Поиск по каталогу",
   popularTitle = "Ищут чаще всего",
@@ -176,43 +153,22 @@ export function Hero013({
         style={palette}
       >
         <div data-part="shell">
-          <h1>{title}</h1>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={lede}
+            level="h1"
+            size="lg"
+            align="center"
+            accent={accent}
+          />
 
           <form role="search" method="get" action="#">
             <div data-part="search">
-              <svg
-                data-part="glass"
-                viewBox="0 0 16 16"
-                width="16"
-                height="16"
-                aria-hidden="true"
-              >
-                <circle
-                  cx="7"
-                  cy="7"
-                  r="4.25"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M10.5 10.5 14 14"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <label htmlFor="vibeui-hero-013-q" hidden>
-                {searchLabel}
-              </label>
-              <input
-                id="vibeui-hero-013-q"
-                type="search"
-                name="q"
-                placeholder={placeholder}
-              />
-              <button type="submit">{submitLabel}</button>
+              <Input001 type="search" name="q" label={searchLabel} accent={accent} />
+              <Button001 type="submit" size="lg" accent={accent}>
+                {submitLabel}
+              </Button001>
             </div>
           </form>
 

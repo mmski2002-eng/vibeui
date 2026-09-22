@@ -4322,6 +4322,1403 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "accordion-015",
+      "type": "registry:component",
+      "title": "Аккордеон-колонки",
+      "description": "Карточки вопросов раскладываются в газетные колонки: порядок вертикальный — читают левую колонку сверху вниз, потом правую, и нумерация не путается. Карточка не рвётся между колонками. На нативных details, разделы независимы, номера «01, 02…» перед вопросом, стрелка справа поворачивается при раскрытии.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-015/accordion-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-015.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-015-*. Колонки — CSS columns с break-inside:avoid у карточки, число колонок задаёт проп columns (1–3) и включается от ширины компонента через @container: до 40rem один столбец, до 60rem не больше двух. Раскрытие держат нативные details/summary, разделы независимы. Тема — light-dark() по color-scheme окружения.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "columns",
+          "masonry",
+          "cards",
+          "numbered",
+          "details",
+          "questions"
+        ],
+        "ai": {
+          "export": "Accordion015",
+          "usage": "<Accordion015\n  columns={2}\n  items={[\n    { question: \"Как быстро подключают тариф?\", answer: \"Сразу после оплаты.\" },\n    { question: \"Есть ли ограничение по числу сотрудников?\", answer: \"На стартовом тарифе — пять.\" },\n  ]}\n/>",
+          "summary": "Карточки вопросов в газетные колонки: вертикальный порядок, нумерация, нативные details. Для длинных списков вопросов, где одна колонка была бы слишком высокой.",
+          "preserve": [
+            "column-count вместо сетки: сетка пустила бы порядок слева направо и сломала бы нумерацию",
+            "break-inside:avoid у карточки — иначе вопрос окажется внизу одной колонки, а ответ вверху другой",
+            "нативные details и summary: поиск по странице сам раскрывает найденный вопрос, а до гидратации всё уже работает",
+            "скрытие стандартного маркера вместе с собственной стрелкой — без своей стрелки непонятно, что карточка раскрывается",
+            "видимое кольцо фокуса на summary: раскрытие обязано работать с клавиатуры",
+            "палитра --vibeui-accordion-015-* и light-dark(): компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "numbered — номера перед вопросами",
+            "columns — число колонок на широкой раскладке: 1, 2 или 3",
+            "accent — цвет номеров, стрелки и фокуса",
+            "background — подложка; пусто — карточки лежат на фоне страницы"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "numbered",
+            "label": "Номера",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "columns",
+            "label": "Колонки",
+            "type": "select",
+            "options": [
+              "1",
+              "2",
+              "3"
+            ],
+            "default": "2"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Column accordion",
+            "description": "Question cards laid out in newspaper columns: the order stays vertical — read the left column top to bottom, then the right, and the numbering stays intact. A card never breaks across columns. Native details, independent sections, “01, 02…” numbers before the question, a chevron on the right that rotates on open.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-015-*. Columns are CSS columns with break-inside:avoid on the card; the columns prop (1–3) sets their number and they switch on by the component's width via @container: one column below 40rem, at most two below 60rem. Native details/summary drive the expansion, sections are independent. Theme via light-dark() from the surrounding color-scheme.",
+            "ai": {
+              "summary": "Question cards in newspaper columns: vertical order, numbering, native details. For long question lists where a single column would be too tall.",
+              "preserve": [
+                "column-count instead of a grid: a grid would run the order left to right and break the numbering",
+                "break-inside:avoid on the card — otherwise the question lands at the bottom of one column and the answer at the top of the next",
+                "native details and summary: find-in-page opens the matching question by itself, and everything works before hydration",
+                "hiding the default marker together with the custom chevron — without a chevron it is unclear the card expands",
+                "a visible focus ring on summary: expansion must work from the keyboard",
+                "the --vibeui-accordion-015-* palette and light-dark(): the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "numbered — numbers before the questions",
+                "columns — column count on the wide layout: 1, 2 or 3",
+                "accent — colour of numbers, chevron and focus",
+                "background — surface; empty — the cards sit on the page background"
+              ],
+              "usage": "<Accordion015\n  columns={2}\n  items={[\n    { question: \"How fast is the plan activated?\", answer: \"Right after payment.\" },\n    { question: \"Is there a seat limit?\", answer: \"Five on the starter plan.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "numbered": {
+                "label": "Numbers"
+              },
+              "columns": {
+                "label": "Columns"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "How fast is the plan activated?",
+                    "answer": "Right after payment: access opens automatically, no need to wait for a manager."
+                  },
+                  {
+                    "question": "Can I migrate data from another system?",
+                    "answer": "Yes. Import understands CSV and XLSX exports, and for large bases we migrate by hand for free."
+                  },
+                  {
+                    "question": "What happens when the paid period ends?",
+                    "answer": "The account switches to read-only. Data is kept for another year and can only be deleted manually."
+                  },
+                  {
+                    "question": "Is there a seat limit?",
+                    "answer": "Five people on the starter plan, then seats are added one by one without switching plans."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "numbered",
+          "columns",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
+    },
+    {
+      "name": "accordion-016",
+      "type": "registry:block",
+      "title": "Серифный аккордеон с номерами",
+      "description": "Вопрос набран антиквой, номер «01, 02…» и ответ — рубленым шрифтом; плюс из двух полос поворачивается в крест. Разделы взаимно исключают друг друга через атрибут name у details, без JS. Для сайтов с редакционной, «книжной» типографикой.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-016/accordion-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-016.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-016-*. Раскрытие держат нативные details/summary; exclusive включает взаимное исключение через атрибут name, group задаёт его имя. Гарнитуры (Cormorant Garamond и Manrope) компонент не подключает — их грузит страница, без них честный откат на системные. Пропсы ink и background задают цвет текста и фон страницы для приглушённых тонов; сам компонент фона не рисует.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "serif",
+          "numbered",
+          "editorial",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion016",
+          "usage": "<Accordion016\n  items={[\n    { question: \"Первый вопрос?\", answer: \"Ответ.\" },\n    { question: \"Второй вопрос?\", answer: \"Ответ.\" },\n  ]}\n/>",
+          "summary": "Серифный аккордеон с номерами: антиква в вопросе, рубленый в номере и ответе, плюс поворачивается в крест. Один открытый раздел по умолчанию.",
+          "preserve": [
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "взаимное исключение через атрибут name (exclusive и group), а не через состояние",
+            "палитру --vibeui-accordion-016-* и light-dark(): компонент следует color-scheme окружения",
+            "маркер и его поворот из псевдоэлементов — не подменять иконочной библиотекой"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "exclusive — один открытый раздел; group — имя группы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под приглушённые тона"
+          ],
+          "notes": [
+            "Извлечён из блока faq-016: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один открытый",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "exclusive",
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Serif numbered accordion",
+            "description": "The question is set in a serif, the “01, 02…” number and the answer in a sans; a two-bar plus rotates into a cross. Sections are mutually exclusive via the details name attribute, no JS. For sites with editorial, book-like typography.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-016-*. Native details/summary drive the expansion; exclusive turns on mutual exclusion via the name attribute, group names it. The typefaces are not loaded by the component — the page loads them, otherwise an honest fallback to system fonts. The ink and background props set the text colour and the page background for muted tones; the component paints no background itself.",
+            "ai": {
+              "summary": "A serif accordion with numbers: serif in the question, sans in the number and answer, the plus rotates into a cross. One open section by default.",
+              "preserve": [
+                "native details/summary: replacing them with useState buttons loses find-in-page, keyboard and pre-hydration behaviour",
+                "mutual exclusion via the name attribute (exclusive and group), not via state",
+                "the --vibeui-accordion-016-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "the marker and its rotation from pseudo-elements — do not swap in an icon library"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "exclusive — one open section; group — the group name",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background for muted tones"
+              ],
+              "notes": [
+                "Extracted from the faq-016 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion016\n  items={[\n    { question: \"First question?\", answer: \"Answer.\" },\n    { question: \"Second question?\", answer: \"Answer.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "Single open"
+              },
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "How much do your services cost?",
+                    "answer": "2 % on purchase, 3 % on sale, paid after the deal is registered."
+                  },
+                  {
+                    "question": "Can I sell a mortgaged flat?",
+                    "answer": "Yes: the buyer's money clears the mortgage through an escrow account."
+                  },
+                  {
+                    "question": "How is the flat checked?",
+                    "answer": "A lawyer pulls the title history, debts and registered residents; the opinion is in writing."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-017",
+      "type": "registry:block",
+      "title": "Аккордеон-плитки с кромкой",
+      "description": "Разделы — мягкие плитки с тонкой левой кромкой: у открытого она загорается акцентом, а круглый плюс справа заливается акцентом и поворачивается в крест. Ответ въезжает с лёгким сдвигом. Один открытый раздел через name у details, без JS.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-017/accordion-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-017.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-017-*. Раскрытие держат нативные details/summary; exclusive включает взаимное исключение через атрибут name, group задаёт его имя. Гарнитуры (Unbounded и Inter) компонент не подключает — их грузит страница, без них честный откат на системные. Пропсы ink и background задают цвет текста и фон страницы для приглушённых тонов; сам компонент фона не рисует.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "tiles",
+          "cards",
+          "edge",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion017",
+          "usage": "<Accordion017\n  items={[\n    { question: \"Первый вопрос?\", answer: \"Ответ.\" },\n    { question: \"Второй вопрос?\", answer: \"Ответ.\" },\n  ]}\n/>",
+          "summary": "Плитки с акцентной кромкой у открытого раздела и круглым плюсом, который заливается акцентом. Один открытый раздел по умолчанию.",
+          "preserve": [
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "взаимное исключение через атрибут name (exclusive и group), а не через состояние",
+            "палитру --vibeui-accordion-017-* и light-dark(): компонент следует color-scheme окружения",
+            "маркер и его поворот из псевдоэлементов — не подменять иконочной библиотекой"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "exclusive — один открытый раздел; group — имя группы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под приглушённые тона"
+          ],
+          "notes": [
+            "Извлечён из блока faq-017: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один открытый",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "exclusive",
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tile accordion with an edge",
+            "description": "Sections are soft tiles with a thin left edge: on the open one it lights up in the accent, and the round plus on the right fills with the accent and rotates into a cross. The answer slides in slightly. One open section via details name, no JS.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-017-*. Native details/summary drive the expansion; exclusive turns on mutual exclusion via the name attribute, group names it. The typefaces are not loaded by the component — the page loads them, otherwise an honest fallback to system fonts. The ink and background props set the text colour and the page background for muted tones; the component paints no background itself.",
+            "ai": {
+              "summary": "Tiles with an accent edge on the open section and a round plus that fills with the accent. One open section by default.",
+              "preserve": [
+                "native details/summary: replacing them with useState buttons loses find-in-page, keyboard and pre-hydration behaviour",
+                "mutual exclusion via the name attribute (exclusive and group), not via state",
+                "the --vibeui-accordion-017-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "the marker and its rotation from pseudo-elements — do not swap in an icon library"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "exclusive — one open section; group — the group name",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background for muted tones"
+              ],
+              "notes": [
+                "Extracted from the faq-017 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion017\n  items={[\n    { question: \"First question?\", answer: \"Answer.\" },\n    { question: \"Second question?\", answer: \"Answer.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "Single open"
+              },
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "How long is the course?",
+                    "answer": "Eight weeks, two live sessions a week plus recordings."
+                  },
+                  {
+                    "question": "Do I need prior experience?",
+                    "answer": "No. The first two weeks cover the basics from scratch."
+                  },
+                  {
+                    "question": "Is there a certificate?",
+                    "answer": "Yes, after the final project is reviewed."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-018",
+      "type": "registry:block",
+      "title": "Аккордеон с цветными точками",
+      "description": "У каждого раздела своя цветная точка перед вопросом: темы узнают по цвету, а не по подписи; у открытого раздела точка увеличивается, плитка ложится на плашку. Две колонки от 56rem ширины компонента. Цвет точки — поле color у item, пусто — акцент.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-018/accordion-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-018.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-018-*. Раскрытие держат нативные details/summary; exclusive включает взаимное исключение через атрибут name, group задаёт его имя. Гарнитуры (Inter Tight и Inter) компонент не подключает — их грузит страница, без них честный откат на системные. Пропсы ink и background задают цвет текста и фон страницы для приглушённых тонов; сам компонент фона не рисует.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "dots",
+          "colors",
+          "two-columns",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion018",
+          "usage": "<Accordion018\n  items={[\n    { question: \"Первый вопрос?\", answer: \"Ответ.\" },\n    { question: \"Второй вопрос?\", answer: \"Ответ.\" },\n  ]}\n/>",
+          "summary": "Разделы с цветными точками-маркерами в две колонки: цвет из поля color у item, у открытого раздела точка растёт.",
+          "preserve": [
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "взаимное исключение через атрибут name (exclusive и group), а не через состояние",
+            "палитру --vibeui-accordion-018-* и light-dark(): компонент следует color-scheme окружения",
+            "маркер и его поворот из псевдоэлементов — не подменять иконочной библиотекой"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "exclusive — один открытый раздел; group — имя группы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под приглушённые тона"
+          ],
+          "notes": [
+            "Извлечён из блока faq-018: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один открытый",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "exclusive",
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Colour-dot accordion",
+            "description": "Each section has its own coloured dot before the question: topics are recognised by colour, not by a label; on the open section the dot grows and the tile gets a surface. Two columns from 56rem of the component width. The dot colour is the item's color field, empty — accent.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-018-*. Native details/summary drive the expansion; exclusive turns on mutual exclusion via the name attribute, group names it. The typefaces are not loaded by the component — the page loads them, otherwise an honest fallback to system fonts. The ink and background props set the text colour and the page background for muted tones; the component paints no background itself.",
+            "ai": {
+              "summary": "Sections with coloured dot markers in two columns: colour from the item's color field, the dot grows on the open section.",
+              "preserve": [
+                "native details/summary: replacing them with useState buttons loses find-in-page, keyboard and pre-hydration behaviour",
+                "mutual exclusion via the name attribute (exclusive and group), not via state",
+                "the --vibeui-accordion-018-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "the marker and its rotation from pseudo-elements — do not swap in an icon library"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "exclusive — one open section; group — the group name",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background for muted tones"
+              ],
+              "notes": [
+                "Extracted from the faq-018 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion018\n  items={[\n    { question: \"First question?\", answer: \"Answer.\" },\n    { question: \"Second question?\", answer: \"Answer.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "Single open"
+              },
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "Which cities do you ship to?",
+                    "answer": "Every city in the country; the courier zone is shown at checkout.",
+                    "color": "#e4572e"
+                  },
+                  {
+                    "question": "How do I return an item?",
+                    "answer": "Within 14 days from your account: the courier picks it up.",
+                    "color": "#29335c"
+                  },
+                  {
+                    "question": "Is there a warranty?",
+                    "answer": "A year on everything, two on appliances.",
+                    "color": "#f3a712"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-019",
+      "type": "registry:block",
+      "title": "Неоновый аккордеон",
+      "description": "Тёмный аккордеон: у открытого раздела вдоль левого края загорается неоновая линия с мягким свечением, моноширинный номер подсвечивается тем же цветом, рамка плитки светится. Палитра фиксированно тёмная — неон на светлом не светится. Один открытый раздел через name у details.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-019/accordion-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-019.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-019-*. Раскрытие держат нативные details/summary; exclusive включает взаимное исключение через атрибут name, group задаёт его имя. Гарнитуры (Unbounded, Manrope и JetBrains Mono) компонент не подключает — их грузит страница, без них честный откат на системные. Пропсы ink и background задают цвет текста и фон страницы для приглушённых тонов; сам компонент фона не рисует.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "neon",
+          "dark",
+          "glow",
+          "numbered",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion019",
+          "usage": "<Accordion019\n  items={[\n    { question: \"Первый вопрос?\", answer: \"Ответ.\" },\n    { question: \"Второй вопрос?\", answer: \"Ответ.\" },\n  ]}\n/>",
+          "summary": "Тёмный аккордеон с неоновой линией и свечением у открытого раздела, моноширинные номера. Палитра тёмная фиксированно.",
+          "preserve": [
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "взаимное исключение через атрибут name (exclusive и group), а не через состояние",
+            "палитру --vibeui-accordion-019-* и light-dark(): компонент следует color-scheme окружения",
+            "маркер и его поворот из псевдоэлементов — не подменять иконочной библиотекой"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "exclusive — один открытый раздел; group — имя группы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под приглушённые тона"
+          ],
+          "notes": [
+            "Извлечён из блока faq-019: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один открытый",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "exclusive",
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Neon accordion",
+            "description": "A dark accordion: on the open section a neon line with a soft glow lights up along the left edge, the monospace number glows in the same colour, the tile border glows. The palette is fixed dark — neon does not glow on light. One open section via details name.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-019-*. Native details/summary drive the expansion; exclusive turns on mutual exclusion via the name attribute, group names it. The typefaces are not loaded by the component — the page loads them, otherwise an honest fallback to system fonts. The ink and background props set the text colour and the page background for muted tones; the component paints no background itself.",
+            "ai": {
+              "summary": "A dark accordion with a neon line and glow on the open section, monospace numbers. The palette is fixed dark.",
+              "preserve": [
+                "native details/summary: replacing them with useState buttons loses find-in-page, keyboard and pre-hydration behaviour",
+                "mutual exclusion via the name attribute (exclusive and group), not via state",
+                "the --vibeui-accordion-019-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "the marker and its rotation from pseudo-elements — do not swap in an icon library"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "exclusive — one open section; group — the group name",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background for muted tones"
+              ],
+              "notes": [
+                "Extracted from the faq-019 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion019\n  items={[\n    { question: \"First question?\", answer: \"Answer.\" },\n    { question: \"Second question?\", answer: \"Answer.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "Single open"
+              },
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "Where is the line-up announced?",
+                    "answer": "On the site and in the channel a month before the festival."
+                  },
+                  {
+                    "question": "Can I come with a tent?",
+                    "answer": "Yes, the camp opens on Friday morning."
+                  },
+                  {
+                    "question": "Are there age limits?",
+                    "answer": "18+ after 22:00; before that with a parent."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-020",
+      "type": "registry:block",
+      "title": "Аккордеон с римскими номерами",
+      "description": "Римские номера курсивной антиквой перед вопросом, тонкая линия сверху раздела, открытый раздел ложится на тёплую плашку; крест из двух линий складывается в одну при раскрытии. Один открытый раздел через name у details, без JS.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-020/accordion-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-020-*. Раскрытие держат нативные details/summary; exclusive включает взаимное исключение через атрибут name, group задаёт его имя. Гарнитуры (Cormorant Garamond и Manrope) компонент не подключает — их грузит страница, без них честный откат на системные. Пропсы ink и background задают цвет текста и фон страницы для приглушённых тонов; сам компонент фона не рисует.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "roman",
+          "serif",
+          "wedding",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion020",
+          "usage": "<Accordion020\n  items={[\n    { question: \"Первый вопрос?\", answer: \"Ответ.\" },\n    { question: \"Второй вопрос?\", answer: \"Ответ.\" },\n  ]}\n/>",
+          "summary": "Антиква с римскими номерами: линия сверху, тёплая плашка у открытого раздела, крест складывается в линию.",
+          "preserve": [
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "взаимное исключение через атрибут name (exclusive и group), а не через состояние",
+            "палитру --vibeui-accordion-020-* и light-dark(): компонент следует color-scheme окружения",
+            "маркер и его поворот из псевдоэлементов — не подменять иконочной библиотекой"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "exclusive — один открытый раздел; group — имя группы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под приглушённые тона"
+          ],
+          "notes": [
+            "Извлечён из блока faq-020: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один открытый",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "exclusive",
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Roman-numeral accordion",
+            "description": "Roman numerals in italic serif before the question, a thin line above the section, the open section rests on a warm surface; a two-line cross folds into one on open. One open section via details name, no JS.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-020-*. Native details/summary drive the expansion; exclusive turns on mutual exclusion via the name attribute, group names it. The typefaces are not loaded by the component — the page loads them, otherwise an honest fallback to system fonts. The ink and background props set the text colour and the page background for muted tones; the component paints no background itself.",
+            "ai": {
+              "summary": "Serif with Roman numerals: a line above, a warm surface on the open section, the cross folds into a line.",
+              "preserve": [
+                "native details/summary: replacing them with useState buttons loses find-in-page, keyboard and pre-hydration behaviour",
+                "mutual exclusion via the name attribute (exclusive and group), not via state",
+                "the --vibeui-accordion-020-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "the marker and its rotation from pseudo-elements — do not swap in an icon library"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "exclusive — one open section; group — the group name",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background for muted tones"
+              ],
+              "notes": [
+                "Extracted from the faq-020 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion020\n  items={[\n    { question: \"First question?\", answer: \"Answer.\" },\n    { question: \"Second question?\", answer: \"Answer.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "Single open"
+              },
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "Can we bring children?",
+                    "answer": "Yes, and we will be glad. There is a play corner on the lawn."
+                  },
+                  {
+                    "question": "What should we give?",
+                    "answer": "The best gift is you. If you want more — a contribution to the trip."
+                  },
+                  {
+                    "question": "Where do we park?",
+                    "answer": "At the estate gate, free, enough for everyone."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-021",
+      "type": "registry:block",
+      "title": "Аккордеон-бирки",
+      "description": "Каждый раздел — багажная бирка: ярлык с кодом раздела слева (поле tag у item), вопрос крупным гротеском заглавными, крест-марка справа. Открытая бирка приподнимается с тенью. Две колонки от 56rem ширины компонента, ярлыки чередуют три цвета по порядку.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-021/accordion-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-021.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-021-*. Раскрытие держат нативные details/summary; exclusive включает взаимное исключение через атрибут name, group задаёт его имя. Гарнитуры (Oswald и Lobster) компонент не подключает — их грузит страница, без них честный откат на системные. Пропсы ink и background задают цвет текста и фон страницы для приглушённых тонов; сам компонент фона не рисует.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "tags",
+          "travel",
+          "two-columns",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion021",
+          "usage": "<Accordion021\n  items={[\n    { question: \"Первый вопрос?\", answer: \"Ответ.\" },\n    { question: \"Второй вопрос?\", answer: \"Ответ.\" },\n  ]}\n/>",
+          "summary": "Разделы-бирки: ярлык с кодом слева, вопрос заглавными, марка справа, две колонки. Открытая бирка приподнимается.",
+          "preserve": [
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "взаимное исключение через атрибут name (exclusive и group), а не через состояние",
+            "палитру --vibeui-accordion-021-* и light-dark(): компонент следует color-scheme окружения",
+            "маркер и его поворот из псевдоэлементов — не подменять иконочной библиотекой"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "exclusive — один открытый раздел; group — имя группы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под приглушённые тона"
+          ],
+          "notes": [
+            "Извлечён из блока faq-021: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один открытый",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "exclusive",
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Luggage-tag accordion",
+            "description": "Every section is a luggage tag: a label with the section code on the left (the item's tag field), the question in large uppercase sans, a cross mark on the right. The open tag lifts with a shadow. Two columns from 56rem of the component width, labels rotate through three colours in order.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-021-*. Native details/summary drive the expansion; exclusive turns on mutual exclusion via the name attribute, group names it. The typefaces are not loaded by the component — the page loads them, otherwise an honest fallback to system fonts. The ink and background props set the text colour and the page background for muted tones; the component paints no background itself.",
+            "ai": {
+              "summary": "Tag sections: a code label on the left, uppercase question, a mark on the right, two columns. The open tag lifts.",
+              "preserve": [
+                "native details/summary: replacing them with useState buttons loses find-in-page, keyboard and pre-hydration behaviour",
+                "mutual exclusion via the name attribute (exclusive and group), not via state",
+                "the --vibeui-accordion-021-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "the marker and its rotation from pseudo-elements — do not swap in an icon library"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "exclusive — one open section; group — the group name",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background for muted tones"
+              ],
+              "notes": [
+                "Extracted from the faq-021 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion021\n  items={[\n    { question: \"First question?\", answer: \"Answer.\" },\n    { question: \"Second question?\", answer: \"Answer.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "Single open"
+              },
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "tag": "visa",
+                    "question": "Do I need a visa?",
+                    "answer": "No. A passport is enough for up to 30 days."
+                  },
+                  {
+                    "tag": "money",
+                    "question": "How do I pay?",
+                    "answer": "Cash in the local currency; cards work only in large hotels."
+                  },
+                  {
+                    "tag": "sea",
+                    "question": "Is the water warm?",
+                    "answer": "27 degrees all year; the beach is a ten-minute walk."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-022",
+      "type": "registry:block",
+      "title": "Аккордеон на инее",
+      "description": "Карточки на матовом стекле с инеем по краю: тонкая рамка, лёгкий блик в углу, у открытой карточки золотистое свечение. Вместо плюса — снежинка, которая поворачивается и загорается при раскрытии; ответ раскрывается через ::details-content с анимацией высоты. Две колонки от 56rem.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-022/accordion-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-022.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-022-*. Раскрытие держат нативные details/summary; exclusive включает взаимное исключение через атрибут name, group задаёт его имя. Гарнитуры (Cormorant Garamond и Marck Script) компонент не подключает — их грузит страница, без них честный откат на системные. Пропсы ink и background задают цвет текста и фон страницы для приглушённых тонов; сам компонент фона не рисует.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "frost",
+          "glass",
+          "winter",
+          "snowflake",
+          "details"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion022",
+          "usage": "<Accordion022\n  items={[\n    { question: \"Первый вопрос?\", answer: \"Ответ.\" },\n    { question: \"Второй вопрос?\", answer: \"Ответ.\" },\n  ]}\n/>",
+          "summary": "Карточки на матовом стекле с инеем и снежинкой-маркером, золотистое свечение у открытой, две колонки.",
+          "preserve": [
+            "нативные details/summary: замена на кнопки с useState забирает поиск по странице, клавиатуру и работу до гидратации",
+            "взаимное исключение через атрибут name (exclusive и group), а не через состояние",
+            "палитру --vibeui-accordion-022-* и light-dark(): компонент следует color-scheme окружения",
+            "маркер и его поворот из псевдоэлементов — не подменять иконочной библиотекой"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "exclusive — один открытый раздел; group — имя группы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под приглушённые тона"
+          ],
+          "notes": [
+            "Извлечён из блока faq-022: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "exclusive",
+            "label": "Один открытый",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": -1,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "exclusive",
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Frost accordion",
+            "description": "Cards on frosted glass with rime along the edge: a thin border, a light glint in the corner, a golden glow on the open card. Instead of a plus — a snowflake that rotates and lights up on open; the answer expands via ::details-content with a height animation. Two columns from 56rem.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-022-*. Native details/summary drive the expansion; exclusive turns on mutual exclusion via the name attribute, group names it. The typefaces are not loaded by the component — the page loads them, otherwise an honest fallback to system fonts. The ink and background props set the text colour and the page background for muted tones; the component paints no background itself.",
+            "ai": {
+              "summary": "Frosted-glass cards with rime and a snowflake marker, a golden glow on the open one, two columns.",
+              "preserve": [
+                "native details/summary: replacing them with useState buttons loses find-in-page, keyboard and pre-hydration behaviour",
+                "mutual exclusion via the name attribute (exclusive and group), not via state",
+                "the --vibeui-accordion-022-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "the marker and its rotation from pseudo-elements — do not swap in an icon library"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "exclusive — one open section; group — the group name",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background for muted tones"
+              ],
+              "notes": [
+                "Extracted from the faq-022 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion022\n  items={[\n    { question: \"First question?\", answer: \"Answer.\" },\n    { question: \"Second question?\", answer: \"Answer.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "exclusive": {
+                "label": "Single open"
+              },
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "Will it be cold?",
+                    "answer": "The house is warm; for the terrace there are blankets and mulled wine."
+                  },
+                  {
+                    "question": "Can we bring children?",
+                    "answer": "Yes. There will be a nanny and a room with games."
+                  },
+                  {
+                    "question": "What about the dress code?",
+                    "answer": "Warm and festive: wool, velvet, anything you can dance in."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "accordion-023",
+      "type": "registry:block",
+      "title": "Аккордеон с плюсом-крестиком",
+      "description": "Плитки на мягких плашках: открыт один раздел, плюс справа поворачивается в крестик и заливается акцентом, ответ раскрывается через grid-template-rows 0fr → 1fr с плавной высотой. Открытая плитка обведена акцентом; кнопка с aria-expanded и aria-controls.",
+      "categories": [
+        "accordion"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "accordion-023/accordion-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/accordion-023.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-accordion-023-*. Клиентский: состояние — индекс открытого раздела, потому что анимация высоты нативным details не даётся; кнопка с aria-expanded и aria-controls. Гарнитуру Manrope грузит страница, без неё откат на системный гротеск. Пропсы ink и background задают цвет текста и фон страницы для плашки и приглушённых тонов.",
+      "meta": {
+        "tags": [
+          "accordion",
+          "faq",
+          "plus",
+          "cross",
+          "tiles",
+          "animated",
+          "client"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "ai": {
+          "export": "Accordion023",
+          "usage": "<Accordion023\n  items={[\n    { question: \"Работает без интернета?\", answer: \"Да, полностью.\" },\n    { question: \"Можно отменить подписку?\", answer: \"В любой момент в настройках магазина.\" },\n  ]}\n/>",
+          "summary": "Плитки с плюсом-крестиком: один открыт, высота анимируется через grid-template-rows, доступность из коробки.",
+          "preserve": [
+            "раскрытие — grid-template-rows с transition, состояние — индекс открытого раздела",
+            "плюс — два псевдоэлемента, rotate(45deg) даёт крестик; заливка по aria-expanded",
+            "палитру --vibeui-accordion-023-* и light-dark(): компонент следует color-scheme окружения",
+            "кнопка с aria-expanded и aria-controls — не заменять на div с onClick"
+          ],
+          "adapt": [
+            "items — вопросы и ответы",
+            "defaultOpen — номер раздела, открытого сразу",
+            "accent — акцент",
+            "ink — цвет текста",
+            "background — фон страницы под плашку"
+          ],
+          "notes": [
+            "Извлечён из блока faq-023: блок теперь импортирует этот компонент (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "defaultOpen",
+            "label": "Открыт сразу",
+            "type": "number",
+            "default": 0,
+            "min": -1,
+            "max": 9
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "defaultOpen",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Plus-to-cross accordion",
+            "description": "Tiles on soft surfaces: one section open, the plus on the right rotates into a cross and fills with the accent, the answer expands via grid-template-rows 0fr → 1fr with a smooth height. The open tile has an accent ring; the button has aria-expanded and aria-controls.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-accordion-023-*. Client-side: the state is the open section index, because a height animation is not available with native details; a button with aria-expanded and aria-controls. The page loads Manrope, otherwise a system sans fallback. The ink and background props set the text colour and the page background for the surface and muted tones.",
+            "ai": {
+              "summary": "Tiles with a plus-to-cross toggle: one open, the height animates via grid-template-rows, accessibility out of the box.",
+              "preserve": [
+                "expansion is grid-template-rows with a transition, the state is the open index",
+                "the plus is two pseudo-elements, rotate(45deg) makes a cross; fill on aria-expanded",
+                "the --vibeui-accordion-023-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "a button with aria-expanded and aria-controls — do not replace with a div and onClick"
+              ],
+              "adapt": [
+                "items — questions and answers",
+                "defaultOpen — the section open right away",
+                "accent — accent",
+                "ink — text colour",
+                "background — page background under the surface"
+              ],
+              "notes": [
+                "Extracted from the faq-023 block: the block now imports this component (docs/PLAN-BLOCKS-FROM-COMPONENTS.md)."
+              ],
+              "usage": "<Accordion023\n  items={[\n    { question: \"Does it work offline?\", answer: \"Yes, fully.\" },\n    { question: \"Can I cancel?\", answer: \"Anytime in the store settings.\" },\n  ]}\n/>"
+            },
+            "controls": {
+              "defaultOpen": {
+                "label": "Open at start"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "items": [
+                  {
+                    "question": "Does the app listen to me all night?",
+                    "answer": "Only via the microphone and only on the phone: audio isn't recorded or sent anywhere."
+                  },
+                  {
+                    "question": "What happens after 7 days of premium?",
+                    "answer": "Premium features close, free ones stay forever."
+                  },
+                  {
+                    "question": "Does it work offline?",
+                    "answer": "Yes, fully. Sync happens when the network is back."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

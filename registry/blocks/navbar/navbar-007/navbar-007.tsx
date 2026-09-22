@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Card142 } from "@/registry/components/card/card-142/card-142"
 import type { CSSProperties } from "react"
 
 type Navbar007Link = {
@@ -240,18 +241,6 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.02em;
 }
 [data-vibeui-block="navbar-007"] [data-part="user"] [data-part="menu"]{
 left:auto;right:0;transform-origin:top right;min-width:15rem;
-}
-[data-vibeui-block="navbar-007"] [data-part="user-card"]{
-display:flex;flex-direction:column;gap:0.0625rem;
-padding:0.5rem 0.625rem 0.625rem;
-}
-[data-vibeui-block="navbar-007"] [data-part="user-card"] strong{
-font-size:0.875rem;font-weight:620;letter-spacing:-0.01em;
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-[data-vibeui-block="navbar-007"] [data-part="user-card"] span{
-font-size:0.75rem;color:var(--vibeui-navbar-007-muted);
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
 [data-vibeui-block="navbar-007"] a:focus-visible,
@@ -504,10 +493,7 @@ export function Navbar007({
                 </span>
               </button>
               <div data-part="menu" data-open={userOpen} aria-hidden={!userOpen}>
-                <div data-part="user-card">
-                  <strong>{userName}</strong>
-                  <span>{userEmail}</span>
-                </div>
+                <Card142 data-part="user-card" userName={userName} userEmail={userEmail} accent={accent} />
                 <hr />
                 {userMenu.map((entry) => (
                   <a

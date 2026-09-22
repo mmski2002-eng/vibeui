@@ -364,6 +364,12 @@ export const CATEGORIES = [
     en: "Tree",
     group: "data",
   },
+  {
+    slug: "typography",
+    label: "Типографика",
+    en: "Typography",
+    group: "marketing",
+  },
   // Категории анимаций: живут в дереве registry/animations, свой kind, в
   // каталог компонентов/блоков не попадают.
   {

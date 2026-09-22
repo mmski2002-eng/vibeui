@@ -1,4 +1,5 @@
 import type { ComponentProps, CSSProperties } from "react"
+import { Card154 } from "@/registry/components/card/card-154/card-154"
 
 export type Datagrid004Row = {
   code: string
@@ -64,13 +65,6 @@ font-family:var(--vibeui-datagrid-004-font);overflow:hidden;
 container-type:inline-size;
 }
 [data-vibeui-block="datagrid-004"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-004"] [data-part="head"]{
-display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem;padding:0.875rem;
-}
-[data-vibeui-block="datagrid-004"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="datagrid-004"] [data-part="hint"]{
-margin:0 0 0 auto;font-size:0.75rem;color:var(--vibeui-datagrid-004-muted);
-}
 [data-vibeui-block="datagrid-004"] [data-part="scroll"]{
 max-height:var(--vibeui-datagrid-004-height);overflow:auto;
 border-top:1px solid var(--vibeui-datagrid-004-border);
@@ -292,12 +286,7 @@ export function Datagrid004({
         className={className}
         style={palette}
       >
-        <div data-part="head">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="hint">
-            {countText.replace("{count}", String(rows.length))}
-          </p>
-        </div>
+        <Card154 data-part="head" heading={heading} countText={countText} rows={rows} accent={accent} />
         <div
           data-part="scroll"
           role="region"

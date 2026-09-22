@@ -1,0 +1,157 @@
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
+
+export type Card065Props = Omit<ComponentProps<"article">, "title" | "children"> & {
+  media?: ReactNode
+  value?: string
+  title?: string
+  text?: string
+  numbers?: boolean
+  index?: number
+  ghost?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
+}
+
+function Ghost({ kind }: { kind: string }) {
+  switch (kind) {
+    case "lead":
+      return <><span data-part="bar" data-wide="" /><span data-part="bar" /><span data-part="bar" data-soft="" /><span data-part="button" /></>
+    case "image":
+      return <><span data-part="image" /><span data-part="bar" /><span data-part="bar" data-soft="" /></>
+    case "chart":
+      return <><svg data-part="spark" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path data-fill="" d="M0 32 L14 26 L28 29 L42 18 L56 21 L70 10 L84 13 L100 4 L100 40 L0 40 Z" /><path d="M0 32 L14 26 L28 29 L42 18 L56 21 L70 10 L84 13 L100 4" /></svg><span data-part="bar" /><span data-part="bar" data-soft="" /></>
+    case "proof":
+      return <><div data-part="faces"><i /><i /><i /><i /></div><span data-part="bar" data-wide="" /><span data-part="bar" data-soft="" /></>
+    default:
+      return null
+  }
+}
+
+// Часть блока layout-005, вынесенная как есть: разметка и стили карточки
+// живут здесь, блок владеет раскладкой и данными.
+const STYLES = `
+:where([data-vibeui-block="card-065"]){
+--vibeui-card-065-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-card-065-dur-4:340ms;
+--vibeui-card-065-dur-5:460ms;
+--vibeui-card-065-edge:light-dark(color-mix(in oklab,#000000 8%,transparent),color-mix(in oklab,#ffffff 10%,transparent));
+--vibeui-card-065-edge-hover:light-dark(color-mix(in oklab,#000000 22%,transparent),color-mix(in oklab,#ffffff 26%,transparent));
+--vibeui-card-065-ghost:light-dark(color-mix(in oklab,#000000 12%,transparent),color-mix(in oklab,#ffffff 14%,transparent));
+--vibeui-card-065-ghost-strong:light-dark(color-mix(in oklab,#000000 70%,transparent),color-mix(in oklab,#ffffff 78%,transparent));
+--vibeui-card-065-glow:color-mix(in oklab,var(--vibeui-card-065-accent) 42%,transparent);
+--vibeui-card-065-glow-soft:light-dark(color-mix(in oklab,#000000 14%,transparent),color-mix(in oklab,#ffffff 22%,transparent));
+--vibeui-card-065-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--vibeui-card-065-muted:light-dark(color-mix(in oklab,#000000 56%,#ffffff),color-mix(in oklab,#ffffff 60%,#1a1a1a));
+--vibeui-card-065-on-accent:oklch(from var(--vibeui-card-065-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+--vibeui-card-065-radius:1.25rem;
+--vibeui-card-065-tile:light-dark(#ffffff,#1a1a1a);
+--vibeui-card-065-tile-2:light-dark(#f7f7f7,#222222);
+}
+:where(.dark,[data-theme="dark"]) [data-vibeui-block="card-065"]{color-scheme:dark}
+[data-vibeui-block="card-065"]{box-sizing:border-box;min-width:min(100%,12rem)}
+[data-vibeui-block="card-065"] *{box-sizing:border-box}
+@keyframes vibeui-card-065-draw{from{stroke-dashoffset:240}to{stroke-dashoffset:0}}
+[data-vibeui-block="card-065"]{position:relative;overflow:hidden;min-height:10rem;padding:1.5rem;border-radius:var(--vibeui-card-065-radius);
+background:var(--vibeui-card-065-tile);border:1px solid var(--vibeui-card-065-edge);
+display:flex;flex-direction:column;justify-content:flex-end;gap:0.75rem;
+--vibeui-card-065-mx:50%;--vibeui-card-065-my:50%;--vibeui-card-065-on:0;
+transition:transform var(--vibeui-card-065-dur-5) cubic-bezier(.2,.8,.2,1),border-color var(--vibeui-card-065-dur-5);}
+[data-vibeui-block="card-065"]::before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(22rem circle at var(--vibeui-card-065-mx) var(--vibeui-card-065-my),color-mix(in oklab,var(--vibeui-card-065-accent) 14%,transparent),transparent 60%);opacity:var(--vibeui-card-065-on);transition:opacity var(--vibeui-card-065-dur-5)}
+[data-vibeui-block="card-065"]::after{content:"";position:absolute;inset:-1px;pointer-events:none;border-radius:inherit;padding:1px;background:radial-gradient(18rem circle at var(--vibeui-card-065-mx) var(--vibeui-card-065-my),color-mix(in oklab,var(--vibeui-card-065-accent) 70%,transparent),transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:var(--vibeui-card-065-on);transition:opacity var(--vibeui-card-065-dur-5)}
+[data-vibeui-block="card-065"]:hover{border-color:var(--vibeui-card-065-edge-hover)}
+[data-vibeui-block="card-065"] h3{margin:0;font-size:1.125rem;font-weight:600;line-height:1.3}
+[data-vibeui-block="card-065"] p{margin:0;color:var(--vibeui-card-065-muted);font-size:0.9375rem;line-height:1.45}
+[data-vibeui-block="card-065"] [data-part="value"]{font-size:clamp(2.5rem,6cqi,3.5rem);font-weight:650;letter-spacing:-0.03em;line-height:1}
+[data-vibeui-block="card-065"] [data-part="media"]{position:absolute;inset:0;pointer-events:none}
+[data-vibeui-block="card-065"] [data-part="media"] > *{width:100%;height:100%;object-fit:cover;display:block}
+[data-vibeui-block="card-065"] > :not([data-part="media"]):not([data-part="num"]){position:relative}
+[data-vibeui-block="card-065"] [data-part="num"]{position:absolute;top:1.125rem;left:1.125rem;z-index:1;font:500 0.6875rem/1 var(--vibeui-card-065-mono);letter-spacing:0.08em;padding:0.375rem 0.5rem;border-radius:999px;color:var(--vibeui-card-065-muted);border:1px solid var(--vibeui-card-065-edge);background:color-mix(in oklab,var(--vibeui-card-065-tile) 70%,transparent);transition:color var(--vibeui-card-065-dur-4),border-color var(--vibeui-card-065-dur-4),background-color var(--vibeui-card-065-dur-4)}
+[data-vibeui-block="card-065"]:hover [data-part="num"]{color:var(--vibeui-card-065-on-accent);background:var(--vibeui-card-065-accent);border-color:var(--vibeui-card-065-accent)}
+[data-vibeui-block="card-065"][data-numbers] [data-part="faces"],[data-vibeui-block="card-065"][data-numbers] [data-part="spark"],[data-vibeui-block="card-065"][data-numbers] [data-part="image"]{margin-top:2rem}
+[data-vibeui-block="card-065"] [data-part="bar"]{display:block;height:0.875rem;border-radius:999px;background:var(--vibeui-card-065-ghost-strong);width:70%}
+[data-vibeui-block="card-065"] [data-part="bar"][data-soft]{background:var(--vibeui-card-065-ghost);height:0.625rem;width:50%}
+[data-vibeui-block="card-065"] [data-part="bar"][data-wide]{width:88%}
+[data-vibeui-block="card-065"] [data-part="bar"][data-big]{height:1.5rem}
+[data-vibeui-block="card-065"] [data-part="button"]{display:inline-block;width:6.5rem;height:2.5rem;border-radius:0.75rem;background:var(--vibeui-card-065-accent);margin-top:0.5rem;transition:transform var(--vibeui-card-065-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="card-065"]:hover [data-part="button"]{transform:translateX(4px)}
+[data-vibeui-block="card-065"] [data-part="faces"]{display:flex;margin-bottom:auto}
+[data-vibeui-block="card-065"] [data-part="faces"] i{width:2.5rem;height:2.5rem;border-radius:999px;border:2px solid var(--vibeui-card-065-tile);background:var(--vibeui-card-065-ghost-strong);margin-inline-start:-0.625rem;transition:transform var(--vibeui-card-065-dur-5) cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="card-065"] [data-part="faces"] i:first-child{margin-inline-start:0;background:var(--vibeui-card-065-accent)}
+[data-vibeui-block="card-065"]:hover [data-part="faces"] i:nth-child(2){transform:translateX(3px)}
+[data-vibeui-block="card-065"]:hover [data-part="faces"] i:nth-child(3){transform:translateX(6px)}
+[data-vibeui-block="card-065"]:hover [data-part="faces"] i:nth-child(4){transform:translateX(9px)}
+[data-vibeui-block="card-065"] [data-part="spark"]{width:100%;height:4rem;margin-bottom:auto;overflow:visible}
+[data-vibeui-block="card-065"] [data-part="spark"] path{fill:none;stroke:var(--vibeui-card-065-accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:240;stroke-dashoffset:0}
+[data-vibeui-block="card-065"] [data-part="spark"] path[data-fill]{fill:var(--vibeui-card-065-glow);fill-opacity:0.25;stroke:none}
+[data-vibeui-block="card-065"]:hover [data-part="spark"] path:not([data-fill]){animation:vibeui-card-065-draw 1.1s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="card-065"] [data-part="image"]{display:block;flex:1;min-height:6rem;border-radius:0.75rem;background:radial-gradient(70% 80% at 80% 15%,var(--vibeui-card-065-glow) 0%,transparent 65%),radial-gradient(60% 70% at 15% 85%,var(--vibeui-card-065-glow-soft) 0%,transparent 65%),var(--vibeui-card-065-tile-2);margin-bottom:auto;transition:transform 0.6s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="card-065"]:hover [data-part="image"]{transform:scale(1.02)}
+[data-vibeui-block="card-065"]{width:min(34rem,80cqi);min-height:22rem;flex:none;scroll-snap-align:start}
+[data-vibeui-block="card-065"]:hover{transform:translateY(-4px)}
+[data-vibeui-block="card-065"] h3{font-size:1.5rem;letter-spacing:-0.02em}
+@supports (animation-timeline: view()){
+[data-vibeui-block="card-065"]{scroll-snap-align:none}
+}
+[data-vibeui-block="card-065"]{min-height:26rem;padding:2.5rem}
+@media (prefers-reduced-motion:reduce){
+[data-vibeui-block="card-065"]:hover{transform:none}
+[data-vibeui-block="card-065"]::before,[data-vibeui-block="card-065"]::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="card-065"] *{animation:none!important;transition:none!important}}
+`
+
+/** Панель горизонтальной ленты: номер, значение, заголовок, текст или медиа; без содержимого — скелет-заглушка. Движение вбок задаёт блок. */
+export function Card065({
+  media,
+  value,
+  title,
+  text,
+  numbers = true,
+  index = 0,
+  ghost,
+  accent,
+  className,
+  style,
+  ...props
+}: Card065Props) {
+  const palette = {
+    "--vibeui-card-065-i": index,
+    ...(accent ? { "--vibeui-card-065-accent": accent } : null),
+    ...style,
+  } as CSSProperties
+  const filled = Boolean((title || text || value || media))
+
+  return (
+    <>
+      <style href="vibeui-card-065" precedence="medium">
+        {STYLES}
+      </style>
+      <article
+          {...props}
+          data-slot="card"
+          data-vibeui-block="card-065"
+          data-numbers={numbers ? "" : undefined}
+          aria-hidden={filled ? undefined : true}
+          className={className}
+          style={palette}
+        >
+        {media ? <div data-part="media">{media}</div> : null}
+        {numbers ? (
+          <span data-part="num" aria-hidden="true">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        ) : null}
+        {filled ? (
+          <>
+            {value ? <span data-part="value">{value}</span> : null}
+            {title ? <h3>{title}</h3> : null}
+            {text ? <p>{text}</p> : null}
+          </>
+        ) : (
+          <Ghost kind={ghost} />
+        )}
+      </article>
+    </>
+  )
+}

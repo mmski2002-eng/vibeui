@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Event003Item = {
   title: string
@@ -22,7 +23,8 @@ export type Event003Props = {
 // название, формат и остаток мест. Три колонки на широком экране. Формат
 // компактной афиши на несколько мероприятий, где важны дата и наличие мест,
 // а не обложка.
-const STYLES = `
+const STYLES = `[data-vibeui-block="event-003"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="event-003"]){
 --vibeui-event-003-bg:transparent;
 --vibeui-event-003-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -43,8 +45,6 @@ display:block;background:var(--vibeui-event-003-bg);color:var(--vibeui-event-003
 font-family:var(--vibeui-event-003-font);
 }
 [data-vibeui-block="event-003"] [data-part="shell"]{max-width:64rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="event-003"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-event-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="event-003"] [data-part="title"]{margin:0 0 2rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="event-003"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="event-003"] [data-part="card"]{
 min-inline-size:0;display:flex;flex-direction:column;overflow:hidden;text-decoration:none;color:inherit;
@@ -141,8 +141,12 @@ export function Event003({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="grid">
             {events.map((event) => (
               <a key={event.title} href="#" data-part="card">

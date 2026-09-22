@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card100 } from "@/registry/components/card/card-100/card-100"
 
 export type Gadget001Step = {
   /** Доля прокрутки 0–1, с которой шаг становится текущим. */
@@ -66,6 +67,7 @@ container-type:inline-size;
 :where([data-vibeui-block="gadget-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="gadget-001"]{box-sizing:border-box;position:relative;background:var(--vibeui-gadget-001-bg);color:var(--vibeui-gadget-001-fg);font-family:var(--vibeui-gadget-001-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="gadget-001"] *{box-sizing:border-box}
+[data-vibeui-block="gadget-001"] [data-part="step"]{margin:1rem 0 0}
 [data-vibeui-block="gadget-001"] [data-part="track"]{position:relative;min-height:calc(var(--vibeui-gadget-001-screens) * 100svh)}
 [data-vibeui-block="gadget-001"] [data-part="stage"]{--vibeui-gadget-001-desk:42%;--vibeui-gadget-001-lx:68%;position:sticky;top:0;min-height:100svh;max-height:100svh;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;padding:5.5rem 1.25rem 1.5rem;color:var(--vibeui-gadget-001-text)}
 [data-vibeui-block="gadget-001"] [data-part="room"]{position:absolute;inset:0;z-index:0;pointer-events:none}
@@ -96,9 +98,6 @@ container-type:inline-size;
 [data-vibeui-block="gadget-001"] [data-part="copy"]{position:relative;z-index:1;align-self:end;max-width:34rem}
 [data-vibeui-block="gadget-001"] [data-part="eyebrow"]{margin:0 0 .6rem;font-family:var(--vibeui-gadget-001-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
 [data-vibeui-block="gadget-001"] [data-part="title"]{margin:0;font-family:var(--vibeui-gadget-001-display);font-weight:900;font-size:clamp(1.7rem,4.6cqi,3.4rem);line-height:1.02;letter-spacing:-.03em;text-wrap:balance}
-[data-vibeui-block="gadget-001"] [data-part="step"]{margin:1rem 0 0;display:grid;gap:.25rem;min-height:4.4rem}
-[data-vibeui-block="gadget-001"] [data-part="step"] b{font-family:var(--vibeui-gadget-001-mono);font-weight:500;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in oklab,var(--vibeui-gadget-001-ember) 60%,var(--vibeui-gadget-001-text))}
-[data-vibeui-block="gadget-001"] [data-part="step"] p{margin:0;font-size:1rem;opacity:.85;animation:vibeui-gadget-001-fade .5s ease-out}
 @keyframes vibeui-gadget-001-fade{from{opacity:0;transform:translateY(.4rem)}}
 [data-vibeui-block="gadget-001"] [data-part="render"]{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;display:block}
 [data-vibeui-block="gadget-001"] [data-part="tint"]{position:absolute;left:20%;right:20%;top:7%;height:24%;border-radius:50% 50% 48% 48% / 28% 28% 42% 42%;background:var(--vibeui-gadget-001-light);mix-blend-mode:color;opacity:calc(.4 + var(--vibeui-gadget-001-pk) * .6);pointer-events:none}
@@ -241,10 +240,7 @@ export function Gadget001({
               {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
               <h2 data-part="title">{title}</h2>
               {current ? (
-                <div data-part="step" aria-live="polite">
-                  <b>{current.label}</b>
-                  <p key={current.label}>{current.text}</p>
-                </div>
+                <Card100 data-part="step" label={current.label} text={current.text} accent={accent} />
               ) : null}
             </div>
           </div>

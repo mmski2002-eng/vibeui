@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Hero008Props = {
   title?: string
@@ -49,23 +52,7 @@ font-family:var(--vibeui-hero-008-sans);
 }
 [data-vibeui-block="hero-008"] *{box-sizing:border-box}
 [data-vibeui-block="hero-008"] [data-part="shell"]{max-width:64rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem 0;text-align:center}
-[data-vibeui-block="hero-008"] h1{
-margin:0;font-size:clamp(1.875rem,6cqi,3.5rem);line-height:1.06;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-008"] [data-part="lede"]{
-margin:1.125rem auto 0;max-width:36rem;font-size:clamp(0.9375rem,1.5cqi,1.0625rem);line-height:1.6;
-color:var(--vibeui-hero-008-muted);text-wrap:pretty;
-}
 [data-vibeui-block="hero-008"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.625rem;margin:1.875rem auto 0;max-width:20rem}
-[data-vibeui-block="hero-008"] a{
-display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:9999px;
-font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color var(--vibeui-hero-008-dur-2) ease,border-color var(--vibeui-hero-008-dur-2) ease;
-}
-[data-vibeui-block="hero-008"] [data-part="primary"]{background:var(--vibeui-hero-008-accent);color:oklch(from var(--vibeui-hero-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-008-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-008-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-008-dur-3) ease,background-color var(--vibeui-hero-008-dur-2) ease}
-[data-vibeui-block="hero-008"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-008-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
-[data-vibeui-block="hero-008"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-008-line);color:var(--vibeui-hero-008-fg)}
-[data-vibeui-block="hero-008"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-008-fg)}
-[data-vibeui-block="hero-008"] a:focus-visible{outline:2px solid var(--vibeui-hero-008-accent);outline-offset:3px}
 [data-vibeui-block="hero-008"] [data-part="proof"]{margin-top:3rem;border-top:1px solid var(--vibeui-hero-008-line);background:var(--vibeui-hero-008-soft)}
 [data-vibeui-block="hero-008"] [data-part="proofinner"]{max-width:64rem;width:100%;margin:0 auto;padding:1.75rem 1.25rem}
 [data-vibeui-block="hero-008"] [data-part="prooftitle"]{
@@ -159,15 +146,34 @@ export function Hero008({
         style={palette}
       >
         <div data-part="shell">
-          <h1>{title}</h1>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={lede}
+            level="h1"
+            size="lg"
+            align="center"
+            accent={accent}
+          />
           <div data-part="actions">
-            <a data-part="primary" href={primary.href}>
-              {primary.label}
-            </a>
-            <a data-part="secondary" href={secondary.href}>
-              {secondary.label}
-            </a>
+            <Button016
+              data-part="primary"
+              size="lg"
+              label={primary.label}
+              href={primary.href}
+              external={false}
+              tone="accent"
+              accent={accent}
+            />
+            <Button016
+              data-part="secondary"
+              size="lg"
+              label={secondary.label}
+              href={secondary.href}
+              external={false}
+              tone="neutral"
+              accent={accent}
+            />
           </div>
         </div>
 

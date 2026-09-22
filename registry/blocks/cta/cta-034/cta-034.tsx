@@ -2,6 +2,9 @@
 
 import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Cta034Props = {
   eyebrow?: string
   title?: string
@@ -67,12 +70,8 @@ container-type:inline-size;
 [data-vibeui-block="cta-034"] [data-part="title"]{margin:0;font-family:var(--vibeui-cta-034-display);font-weight:800;font-size:clamp(1.9rem,4.8cqi,3.2rem);line-height:1;letter-spacing:-.04em}
 [data-vibeui-block="cta-034"] [data-part="lede"]{margin:1rem auto 0;max-width:28rem;color:var(--vibeui-cta-034-muted)}
 [data-vibeui-block="cta-034"] [data-part="form"]{display:grid;gap:.5rem;margin:1.6rem 0 0}
-[data-vibeui-block="cta-034"] [data-part="form"] input{width:100%;height:3.1rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--vibeui-cta-034-line);background:var(--vibeui-cta-034-bg);color:var(--vibeui-cta-034-fg);font:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
-[data-vibeui-block="cta-034"] [data-part="form"] input::placeholder{color:var(--vibeui-cta-034-muted)}
-[data-vibeui-block="cta-034"] [data-part="form"] input:focus-visible{border-color:var(--vibeui-cta-034-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-cta-034-accent) 22%,transparent)}
-[data-vibeui-block="cta-034"] [data-part="form"] button{height:3.1rem;padding:0 1.4rem;border-radius:999px;border:0;background:var(--vibeui-cta-034-accent);color:var(--vibeui-cta-034-on-accent);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="cta-034"] [data-part="form"] button:hover{transform:translateY(-1px);box-shadow:0 12px 30px -12px var(--vibeui-cta-034-accent)}
-[data-vibeui-block="cta-034"] [data-part="form"] button:focus-visible{outline:2px solid var(--vibeui-cta-034-fg);outline-offset:2px}
+[data-vibeui-block="cta-034"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="cta-034"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="cta-034"] [data-part="fine"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem 1rem;margin:1rem 0 0;padding:0;list-style:none;font-family:var(--vibeui-cta-034-mono);font-size:.68rem;color:var(--vibeui-cta-034-muted)}
 [data-vibeui-block="cta-034"] [data-part="done"]{display:grid;justify-items:center;gap:.8rem;padding:1rem 0}
 [data-vibeui-block="cta-034"] [data-part="done"] svg{width:4rem;height:4rem;color:var(--vibeui-cta-034-accent)}
@@ -189,8 +188,10 @@ export function Cta034({
                 <h2 data-part="title">{title}</h2>
                 {lede ? <p data-part="lede">{lede}</p> : null}
                 <form data-part="form" onSubmit={submit}>
-                  <input type="email" name="email" required placeholder={placeholder} aria-label={placeholder} autoComplete="email" />
-                  <button type="submit">{actionLabel}</button>
+                  <Input001 type="email" name="email" required label={placeholder} autoComplete="email" accent={accent} />
+                  <Button001 type="submit" size="lg" accent={accent}>
+                    {actionLabel}
+                  </Button001>
                 </form>
                 {fine.length > 0 ? (
                   <ul data-part="fine">

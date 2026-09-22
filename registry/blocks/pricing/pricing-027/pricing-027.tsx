@@ -2,6 +2,9 @@
 
 import { useEffect, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button013 } from "@/registry/components/button/button-013/button-013"
+
 export type Pricing027Item = {
   name: string
   note?: string
@@ -63,15 +66,12 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-027"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-027"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-pricing-027-bg);color:var(--vibeui-pricing-027-fg);font-family:var(--vibeui-pricing-027-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="pricing-027"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-027"] [data-part="tabs"]{width:fit-content;max-width:100%}
 [data-vibeui-block="pricing-027"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="pricing-027"] [data-part="head"]{display:grid;grid-template-columns:minmax(0,1fr);gap:1.2rem;align-items:end}
 [data-vibeui-block="pricing-027"] [data-part="eyebrow"]{margin:0 0 .7rem;font-weight:600;font-size:.85rem;letter-spacing:.02em;color:var(--vibeui-pricing-027-accent)}
 [data-vibeui-block="pricing-027"] [data-part="title"]{margin:0;font-family:var(--vibeui-pricing-027-display);font-weight:900;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1;letter-spacing:-.03em}
 [data-vibeui-block="pricing-027"] [data-part="lede"]{margin:.9rem 0 0;max-width:34rem;color:var(--vibeui-pricing-027-muted)}
-[data-vibeui-block="pricing-027"] [data-part="tabs"]{display:flex;flex-wrap:wrap;gap:.4rem;padding:.3rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-pricing-027-fg) 6%,transparent);width:fit-content;max-width:100%}
-[data-vibeui-block="pricing-027"] [data-part="tabs"] button{padding:.55rem 1.05rem;border:0;border-radius:999px;background:transparent;color:var(--vibeui-pricing-027-muted);font-family:var(--vibeui-pricing-027-display);font-weight:800;font-size:.92rem;cursor:pointer;transition:background .25s,color .25s,transform .25s cubic-bezier(.34,1.56,.64,1)}
-[data-vibeui-block="pricing-027"] [data-part="tabs"] button[aria-selected="true"]{background:var(--vibeui-pricing-027-accent);color:var(--vibeui-pricing-027-on-accent);transform:scale(1.04)}
-[data-vibeui-block="pricing-027"] [data-part="tabs"] button:focus-visible{outline:2px solid var(--vibeui-pricing-027-accent);outline-offset:2px}
 [data-vibeui-block="pricing-027"] [data-part="grid"]{display:grid;gap:1rem;margin:2.2rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="pricing-027"] [data-part="ticket"]{position:relative;display:grid;grid-template-rows:1fr auto;border-radius:1.4rem;background:var(--vibeui-pricing-027-card);border:1px solid var(--vibeui-pricing-027-line);overflow:hidden;isolation:isolate;animation:vibeui-pricing-027-rise .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-pricing-027-i) * 50ms);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
 [data-vibeui-block="pricing-027"] [data-part="ticket"]:hover{transform:translateY(-4px);box-shadow:0 24px 40px -28px rgb(0 0 0 / .5)}
@@ -86,9 +86,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-027"] [data-part="tear"]::after{right:-.8rem}
 [data-vibeui-block="pricing-027"] [data-part="bottom"]{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.9rem 1.3rem 1.1rem}
 [data-vibeui-block="pricing-027"] [data-part="price"]{font-family:var(--vibeui-pricing-027-display);font-weight:900;font-size:1.5rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
-[data-vibeui-block="pricing-027"] [data-part="bottom"] a{display:inline-flex;align-items:center;gap:.3rem;padding:.5rem .9rem;border-radius:999px;border:1px solid var(--vibeui-pricing-027-line);color:var(--vibeui-pricing-027-fg);text-decoration:none;font-weight:600;font-size:.85rem;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
-[data-vibeui-block="pricing-027"] [data-part="bottom"] a:hover{background:var(--vibeui-pricing-027-accent);color:var(--vibeui-pricing-027-on-accent);border-color:transparent}
-[data-vibeui-block="pricing-027"] [data-part="bottom"] a:focus-visible{outline:2px solid var(--vibeui-pricing-027-accent);outline-offset:2px}
 [data-vibeui-block="pricing-027"] [data-part="sticker"]{position:absolute;top:.9rem;right:-.2rem;padding:.3rem .7rem;border-radius:.5rem;background:var(--vibeui-pricing-027-accent);color:var(--vibeui-pricing-027-on-accent);font-family:var(--vibeui-pricing-027-display);font-weight:800;font-size:.7rem;letter-spacing:.02em;transform:rotate(6deg);box-shadow:0 6px 14px -6px var(--vibeui-pricing-027-accent)}
 [data-vibeui-block="pricing-027"] [data-part="fine"]{margin:1.6rem 0 0;font-size:.82rem;color:var(--vibeui-pricing-027-muted)}
 @keyframes vibeui-pricing-027-rise{from{opacity:0;transform:translateY(12px)}}
@@ -197,13 +194,14 @@ export function Pricing027({
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
             {groups.length > 1 ? (
-              <div data-part="tabs" role="tablist" aria-label={tabsLabel}>
-                {groups.map((item) => (
-                  <button key={item.key} type="button" role="tab" aria-selected={item.key === group.key} onClick={() => setActive(item.key)}>
-                    {item.label}
-                  </button>
-                ))}
-              </div>
+              <Button013
+                data-part="tabs"
+                options={groups.map((item) => item.label)}
+                defaultValue={group.label}
+                label={tabsLabel}
+                onChange={(value) => setActive(groups.find((item) => item.label === value)?.key ?? active)}
+                accent={accent}
+              />
             ) : null}
           </div>
           <ul data-part="grid" key={group.key}>
@@ -217,7 +215,7 @@ export function Pricing027({
                 <div data-part="tear" aria-hidden="true" />
                 <div data-part="bottom">
                   <span data-part="price">{item.price}</span>
-                  {actionLabel ? <a href={actionHref}>{actionLabel}</a> : null}
+                  {actionLabel ? <Button016 label={actionLabel} href={actionHref} external={false} size="sm" tone="neutral" accent={accent} /> : null}
                 </div>
               </li>
             ))}

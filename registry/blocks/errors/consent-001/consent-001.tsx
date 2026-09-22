@@ -2,6 +2,9 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+
+
 export type Consent001Props = {
   title?: string
   message?: string
@@ -55,14 +58,6 @@ box-shadow:0 12px 32px -20px oklch(0 0 0 / 40%);
 [data-vibeui-block="consent-001"] [data-part="text"]{margin:0;font-size:0.875rem;line-height:1.5;color:var(--vibeui-consent-001-muted)}
 [data-vibeui-block="consent-001"] [data-part="link"]{color:var(--vibeui-consent-001-accent);text-decoration:underline;text-underline-offset:2px}
 [data-vibeui-block="consent-001"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem}
-[data-vibeui-block="consent-001"] [data-part="btn"]{
-height:2.625rem;padding:0 1.125rem;border-radius:0.75rem;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:640;
-border:1px solid var(--vibeui-consent-001-border);background:transparent;color:inherit;
-transition:border-color var(--vibeui-consent-001-dur-2) ease,background-color var(--vibeui-consent-001-dur-2) ease;
-}
-[data-vibeui-block="consent-001"] [data-part="btn"]:hover{border-color:var(--vibeui-consent-001-accent)}
-[data-vibeui-block="consent-001"] [data-part="btn"]:focus-visible{outline:2px solid var(--vibeui-consent-001-accent);outline-offset:2px}
-[data-vibeui-block="consent-001"] [data-part="btn"][data-variant="accept"]{border-color:transparent;background:var(--vibeui-consent-001-accent);color:oklch(from var(--vibeui-consent-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @container (min-width: 48rem){
 [data-vibeui-block="consent-001"] [data-part="bar"]{grid-template-columns:1fr auto}
 }
@@ -144,28 +139,15 @@ export function Consent001({
             </p>
           </div>
           <div data-part="actions">
-            <button
-              data-part="btn"
-              type="button"
-              onClick={() => setDismissed(true)}
-            >
+            <Button001 data-part="btn" type="button" onClick={() => setDismissed(true)} tone="outline" accent={accent}>
               {settingsLabel}
-            </button>
-            <button
-              data-part="btn"
-              type="button"
-              onClick={() => setDismissed(true)}
-            >
+            </Button001>
+            <Button001 data-part="btn" type="button" onClick={() => setDismissed(true)} tone="outline" accent={accent}>
               {rejectLabel}
-            </button>
-            <button
-              data-part="btn"
-              data-variant="accept"
-              type="button"
-              onClick={() => setDismissed(true)}
-            >
+            </Button001>
+            <Button001 data-part="btn" type="button" onClick={() => setDismissed(true)} tone="solid" accent={accent}>
               {acceptLabel}
-            </button>
+            </Button001>
           </div>
         </div>
       </section>

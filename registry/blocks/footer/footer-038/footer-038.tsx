@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks011 } from "@/registry/components/navigation/footerlinks-011/footerlinks-011"
 
 export type Footer038Link = {
   label: string
@@ -65,11 +66,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-038"] [data-part="contacts"] a::before{content:"";width:.4rem;height:.4rem;border-radius:50%;background:var(--vibeui-footer-038-accent)}
 [data-vibeui-block="footer-038"] [data-part="contacts"] a:hover{color:var(--vibeui-footer-038-accent)}
 [data-vibeui-block="footer-038"] [data-part="columns"]{display:grid;gap:2rem;grid-template-columns:repeat(2,minmax(0,1fr))}
-[data-vibeui-block="footer-038"] [data-part="columns"] h3{margin:0 0 .8rem;font-family:var(--vibeui-footer-038-hand);font-weight:400;font-size:1.25rem;color:var(--vibeui-footer-038-accent)}
-[data-vibeui-block="footer-038"] [data-part="columns"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
-[data-vibeui-block="footer-038"] [data-part="columns"] a{position:relative;color:var(--vibeui-footer-038-fg);text-decoration:none;transition:color .2s}
-[data-vibeui-block="footer-038"] [data-part="columns"] a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--vibeui-footer-038-accent);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="footer-038"] [data-part="columns"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="footer-038"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.5rem;padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-038-line);font-size:.8rem;color:var(--vibeui-footer-038-muted)}
 [data-vibeui-block="footer-038"] [data-part="legal"]{display:flex;flex-wrap:wrap;gap:1.2rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="footer-038"] [data-part="legal"] a{color:inherit;text-decoration:none}
@@ -151,16 +147,7 @@ export function Footer038({
           {columns.length > 0 ? (
             <nav data-part="columns" aria-label={navLabel}>
               {columns.map((column) => (
-                <div key={column.title}>
-                  <h3>{column.title}</h3>
-                  <ul>
-                    {column.links.map((link) => (
-                      <li key={link.label}>
-                        <a href={link.href}>{link.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Footerlinks011 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </nav>
           ) : null}

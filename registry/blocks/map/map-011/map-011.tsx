@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Map011Fact = {
   label: string
   value: string
@@ -72,11 +74,6 @@ container-type:inline-size;
 [data-vibeui-block="map-011"] [data-part="facts"] a{color:inherit;text-decoration:none;border-bottom:1px solid var(--vibeui-map-011-line);transition:border-color .2s,color .2s}
 [data-vibeui-block="map-011"] [data-part="facts"] a:hover{color:var(--vibeui-map-011-accent);border-color:var(--vibeui-map-011-accent)}
 [data-vibeui-block="map-011"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.6rem 0 0}
-[data-vibeui-block="map-011"] [data-part="primary"],[data-vibeui-block="map-011"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.3rem;border-radius:.7rem;font-weight:700;font-size:.92rem;text-decoration:none;transition:transform .2s,box-shadow .25s,background .2s}
-[data-vibeui-block="map-011"] [data-part="primary"]{background:var(--vibeui-map-011-accent);color:var(--vibeui-map-011-on-accent)}
-[data-vibeui-block="map-011"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 12px 30px -10px var(--vibeui-map-011-accent)}
-[data-vibeui-block="map-011"] [data-part="secondary"]{border:1px solid var(--vibeui-map-011-line);color:var(--vibeui-map-011-fg)}
-[data-vibeui-block="map-011"] [data-part="secondary"]:hover{background:var(--vibeui-map-011-glass)}
 [data-vibeui-block="map-011"] a:focus-visible{outline:2px solid var(--vibeui-map-011-accent);outline-offset:2px}
 [data-vibeui-block="map-011"] [data-part="map"]{position:relative;overflow:hidden;border-radius:1.4rem;border:1px solid var(--vibeui-map-011-line);background:var(--vibeui-map-011-glass);aspect-ratio:3/2}
 [data-vibeui-block="map-011"] [data-part="map"] svg{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -157,14 +154,26 @@ export function Map011({
             ) : null}
             <div data-part="actions">
               {mapsLabel ? (
-                <a data-part="primary" href={mapsHref}>
-                  {mapsLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  label={mapsLabel}
+                  href={mapsHref}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {navigatorLabel ? (
-                <a data-part="secondary" href={navigatorHref}>
-                  {navigatorLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  label={navigatorLabel}
+                  href={navigatorHref}
+                  external={false}
+                  size="lg"
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

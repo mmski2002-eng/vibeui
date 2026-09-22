@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 type Navbar018Chapter = {
@@ -73,6 +75,7 @@ font-family:var(--vibeui-navbar-018-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-018"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-018"] [data-part="action"]{flex:none}
 [data-vibeui-block="navbar-018"] [data-part="shell"]{
 display:flex;align-items:center;gap:0.75rem;
 max-width:82rem;margin:0 auto;padding:0.625rem 1rem;min-height:3.5rem;
@@ -149,26 +152,6 @@ color:var(--vibeui-navbar-018-ink);font-weight:580;
 border-left-color:var(--vibeui-navbar-018-accent);
 }
 
-[data-vibeui-block="navbar-018"] [data-part="action"]{
-flex:none;display:inline-flex;align-items:center;gap:0.4375rem;
-min-height:2.375rem;padding:0.25rem 1rem;border-radius:0.625rem;
-background:var(--vibeui-navbar-018-accent);color:oklch(from var(--vibeui-navbar-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:0.875rem;font-weight:650;white-space:nowrap;
-box-shadow:0 0.25rem 0.875rem color-mix(in oklab,var(--vibeui-navbar-018-accent) 38%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-navbar-018-dur-2) var(--vibeui-navbar-018-ease),box-shadow var(--vibeui-navbar-018-dur-3) ease;
-}
-[data-vibeui-block="navbar-018"] [data-part="action"] svg{
-width:0.8125rem;height:0.8125rem;
-transition:transform var(--vibeui-navbar-018-dur-3) var(--vibeui-navbar-018-ease);
-}
-[data-vibeui-block="navbar-018"] [data-part="action"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.5rem 1.25rem color-mix(in oklab,var(--vibeui-navbar-018-accent) 48%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
-}
-[data-vibeui-block="navbar-018"] [data-part="action"]:hover svg{transform:translateX(0.1875rem)}
-
 [data-vibeui-block="navbar-018"] [data-part="progress"]{
 position:absolute;left:0;bottom:-1px;height:2.5px;width:100%;
 background:transparent;pointer-events:none;
@@ -183,14 +166,13 @@ box-shadow:0 0 0.75rem color-mix(in oklab,var(--vibeui-navbar-018-accent) 55%,tr
 transition:width var(--vibeui-navbar-018-dur-2) linear;
 }
 
-[data-vibeui-block="navbar-018"] a:focus-visible,
+
 [data-vibeui-block="navbar-018"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-018-accent);outline-offset:3px;
 }
-@container (max-width: 39.9375rem){
-[data-vibeui-block="navbar-018"] [data-part="action"]{display:none}
-}
+
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-018"] *{animation:none!important;transition:none!important}}
+@container (max-width: 39.9375rem){[data-vibeui-block="navbar-018"] [data-part="action"]{display:none}}
 `
 
 const DEFAULT_CHAPTERS: Navbar018Chapter[] = [
@@ -325,18 +307,15 @@ export function Navbar018({
             </nav>
           </div>
 
-          <a data-part="action" href={actionHref}>
-            {actionLabel}
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M2.5 8h11M9 3.5 13.5 8 9 12.5"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
+          <Button016
+            data-part="action"
+            label={actionLabel}
+            href={actionHref}
+            external={false}
+            size="sm"
+            tone="accent"
+            accent={accent}
+          />
         </div>
 
         {shown !== null ? (

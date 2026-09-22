@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero039Word = {
   word: string
   /** Метка языка в чипе: «EN», «ES», «IT». */
@@ -96,12 +98,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-039"] [data-part="flip"] path{stroke-dasharray:110;stroke-dashoffset:110;animation:vibeui-hero-039-ink 1s cubic-bezier(.2,.8,.2,1) .4s forwards}
 [data-vibeui-block="hero-039"] [data-part="lede"]{margin:1.4rem 0 0;max-width:32rem;font-size:1.1rem;color:var(--vibeui-hero-039-muted)}
 [data-vibeui-block="hero-039"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.8rem 0 0}
-[data-vibeui-block="hero-039"] [data-part="primary"],[data-vibeui-block="hero-039"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.4rem;border-radius:1rem;font-weight:600;text-decoration:none;transition:transform .18s,box-shadow .2s,background .2s}
-[data-vibeui-block="hero-039"] [data-part="primary"]{background:var(--vibeui-hero-039-accent);color:var(--vibeui-hero-039-on-accent)}
-[data-vibeui-block="hero-039"] [data-part="primary"]:hover{transform:translateY(-2px) rotate(-1deg);box-shadow:0 14px 30px -12px var(--vibeui-hero-039-accent)}
-[data-vibeui-block="hero-039"] [data-part="secondary"]{color:var(--vibeui-hero-039-fg);border:1.5px solid var(--vibeui-hero-039-fg)}
-[data-vibeui-block="hero-039"] [data-part="secondary"]:hover{transform:translateY(-2px) rotate(1deg);background:var(--vibeui-hero-039-paper)}
-[data-vibeui-block="hero-039"] a:focus-visible{outline:2px solid var(--vibeui-hero-039-accent);outline-offset:2px}
 [data-vibeui-block="hero-039"] [data-part="trust"]{margin:1.6rem 0 0;font-family:var(--vibeui-hero-039-hand);font-size:1.35rem;color:var(--vibeui-hero-039-muted);transform:rotate(-1.5deg);transform-origin:left}
 [data-vibeui-block="hero-039"] [data-part="chat"]{position:relative;width:min(100%,30rem);margin:0 auto;border-radius:.5rem 1.2rem 1.2rem .5rem;background:var(--vibeui-hero-039-paper);background-image:linear-gradient(90deg,transparent 2.6rem,color-mix(in oklab,var(--vibeui-hero-039-accent) 45%,transparent) 2.6rem,color-mix(in oklab,var(--vibeui-hero-039-accent) 45%,transparent) calc(2.6rem + 1px),transparent calc(2.6rem + 1px)),repeating-linear-gradient(180deg,transparent 0 calc(1.75rem - 1px),var(--vibeui-hero-039-rule) calc(1.75rem - 1px) 1.75rem);box-shadow:0 1px 0 var(--vibeui-hero-039-line),0 30px 60px -30px color-mix(in oklab,var(--vibeui-hero-039-fg) 45%,transparent);transform:rotate(1deg)}
 [data-vibeui-block="hero-039"] [data-part="chat"]::before{content:"";position:absolute;left:.6rem;top:1.4rem;bottom:1.4rem;width:.5rem;background:repeating-linear-gradient(180deg,var(--vibeui-hero-039-line) 0 .5rem,transparent .5rem 1.6rem);border-radius:999px;opacity:.9}
@@ -255,14 +251,26 @@ export function Hero039({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
             {trust ? <p data-part="trust">{trust}</p> : null}

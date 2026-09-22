@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Accordion001 } from "@/registry/components/accordion/accordion-001/accordion-001"
+import { Accordion007 } from "@/registry/components/accordion/accordion-007/accordion-007"
 
 type Faq010Item = {
   question: string
@@ -14,6 +18,7 @@ export type Faq010Props = {
   restLabel?: string
   items?: Faq010Item[]
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
   background?: string
   accent?: string
   className?: string
@@ -23,16 +28,16 @@ export type Faq010Props = {
 // Частые вопросы подняты наверх, раскрыты и помечены бейджем: большинству
 // хватит первых трёх ответов без единого клика. Остальное свёрнуто ниже и не
 // мешает. Раскладка считается от собственной ширины блока, а не окна.
+// Составной блок: частые — карточки accordion-007 с бейджем, остальные —
+// список accordion-001.
 const STYLES = `
+
 :where([data-vibeui-block="faq-010"]){
 --vibeui-faq-010-bg:transparent;
---vibeui-faq-010-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
 --vibeui-faq-010-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
 --vibeui-faq-010-muted:light-dark(oklch(0.45 0 0),oklch(0.7 0 0));
---vibeui-faq-010-border:light-dark(oklch(0.9 0 0),oklch(0.33 0 0));
 --vibeui-faq-010-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-faq-010-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
---vibeui-faq-010-dur-2:180ms;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="faq-010"]{color-scheme:dark}
@@ -42,64 +47,19 @@ display:block;background:var(--vibeui-faq-010-bg);color:var(--vibeui-faq-010-ink
 font-family:var(--vibeui-faq-010-font);
 }
 [data-vibeui-block="faq-010"] [data-part="shell"]{max-width:52rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="faq-010"] [data-part="title"]{
+[data-vibeui-block="faq-010"] [data-part="heading"]{
 margin:0 0 1.75rem;max-width:24ch;
 font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="faq-010"] [data-part="popular"]{display:grid;gap:0.75rem;margin:0 0 2rem}
-[data-vibeui-block="faq-010"] [data-part="item"]{
-border:1px solid var(--vibeui-faq-010-border);border-radius:0.875rem;
-background:var(--vibeui-faq-010-card);
-transition:border-color var(--vibeui-faq-010-dur-2) ease;
-}
-[data-vibeui-block="faq-010"] [data-part="item"]:hover,
-[data-vibeui-block="faq-010"] [data-part="item"][open]{
-border-color:color-mix(in oklab,var(--vibeui-faq-010-accent) 40%,var(--vibeui-faq-010-border));
-}
-[data-vibeui-block="faq-010"] [data-part="popular"] [data-part="item"]{
-border-color:color-mix(in oklab,var(--vibeui-faq-010-accent) 30%,var(--vibeui-faq-010-border));
-background:color-mix(in oklab,var(--vibeui-faq-010-accent) 6%,var(--vibeui-faq-010-card));
-}
-[data-vibeui-block="faq-010"] [data-part="question"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;
-padding:1rem 1.125rem;cursor:pointer;list-style:none;
-font-size:0.9375rem;font-weight:640;line-height:1.4;
-}
-[data-vibeui-block="faq-010"] [data-part="question"]::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-010"] [data-part="question"]:focus-visible{
-outline:2px solid var(--vibeui-faq-010-accent);outline-offset:2px;border-radius:0.875rem;
-}
-[data-vibeui-block="faq-010"] [data-part="badge"]{
-flex:none;padding:0.1875rem 0.5625rem;border-radius:999px;
-background:color-mix(in oklab,var(--vibeui-faq-010-accent) 14%,transparent);
-color:var(--vibeui-faq-010-accent);
-font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
-}
-[data-vibeui-block="faq-010"] [data-part="sign"]{
-margin-left:auto;flex:none;width:0.875rem;height:0.875rem;position:relative;
-color:var(--vibeui-faq-010-accent);
-transition:transform var(--vibeui-faq-010-dur-2) ease;
-}
-[data-vibeui-block="faq-010"] [data-part="sign"]::before,
-[data-vibeui-block="faq-010"] [data-part="sign"]::after{
-content:"";position:absolute;inset:0;margin:auto;background:currentColor;border-radius:1px;
-}
-[data-vibeui-block="faq-010"] [data-part="sign"]::before{width:100%;height:2px}
-[data-vibeui-block="faq-010"] [data-part="sign"]::after{width:2px;height:100%}
-[data-vibeui-block="faq-010"] [data-part="item"][open] [data-part="sign"]{transform:rotate(45deg)}
-[data-vibeui-block="faq-010"] [data-part="answer"]{
-margin:0;padding:0 1.125rem 1.125rem;max-width:62ch;
-color:var(--vibeui-faq-010-muted);font-size:0.9375rem;line-height:1.6;
-}
 [data-vibeui-block="faq-010"] [data-part="rest-label"]{
 margin:0 0 0.875rem;
 color:var(--vibeui-faq-010-muted);
 font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
 }
-[data-vibeui-block="faq-010"] [data-part="rest"]{display:grid;gap:0.625rem}
+[data-vibeui-block="faq-010"] [data-part="rest"]{width:100%;max-width:none}
 @container (min-width: 40rem){
 [data-vibeui-block="faq-010"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="faq-010"] [data-part="question"]{font-size:1rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-010"] *{animation:none!important;transition:none!important}}
 `
@@ -167,12 +127,13 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Частые вопросы подняты наверх, раскрыты и помечены бейджем. */
+/** Частые вопросы наверху в accordion-007 с бейджем, остальные — accordion-001. */
 export function Faq010({
   title = "Ответы, которые ищут чаще всего",
   badgeLabel = "Частый вопрос",
   restLabel = "Остальные вопросы",
   items = DEFAULT_ITEMS,
+  marker = "plus",
   background = "",
   accent,
   className,
@@ -203,35 +164,38 @@ export function Faq010({
         style={palette}
       >
         <div data-part="shell">
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            title={title}
+            accent={accent}
+          />
           {popular.length > 0 ? (
             <div data-part="popular">
+              {/* Каждый частый вопрос — свой accordion-007, раскрытый сразу:
+                  компонент открывает один раздел, а раскрытыми должны быть все. */}
               {popular.map((item) => (
-                <details key={item.question} data-part="item" open>
-                  <summary data-part="question">
-                    <span data-part="badge">{badgeLabel}</span>
-                    <span>{item.question}</span>
-                    <span data-part="sign" aria-hidden="true" />
-                  </summary>
-                  <p data-part="answer">{item.answer}</p>
-                </details>
+                <Accordion007
+                  key={item.question}
+                  items={[{ title: item.question, body: item.answer, badge: badgeLabel }]}
+                  badge
+                  defaultOpen={0}
+                  marker="plus"
+                  accent={accent}
+                />
               ))}
             </div>
           ) : null}
           {rest.length > 0 ? (
             <>
               <h3 data-part="rest-label">{restLabel}</h3>
-              <div data-part="rest">
-                {rest.map((item) => (
-                  <details key={item.question} data-part="item">
-                    <summary data-part="question">
-                      <span>{item.question}</span>
-                      <span data-part="sign" aria-hidden="true" />
-                    </summary>
-                    <p data-part="answer">{item.answer}</p>
-                  </details>
-                ))}
-              </div>
+              <Accordion001
+                marker={marker}
+                data-part="rest"
+                items={rest.map((item) => ({ question: item.question, answer: item.answer }))}
+                exclusive={false}
+                divider="line"
+                accent={accent}
+              />
             </>
           ) : null}
         </div>

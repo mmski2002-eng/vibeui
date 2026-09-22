@@ -81,9 +81,6 @@ export const PREVIEWS = {
   "avatar-031": dynamic(() =>
     import("@/registry/components/avatar/avatar-031/avatar-031").then((module) => module.Avatar031),
   ),
-  "avatar-033": dynamic(() =>
-    import("@/registry/components/avatar/avatar-033/avatar-033").then((module) => module.Avatar033),
-  ),
   "avatar-034": dynamic(() =>
     import("@/registry/components/avatar/avatar-034/avatar-034").then((module) => module.Avatar034),
   ),
@@ -170,5 +167,8 @@ export const PREVIEWS = {
   ),
   "iconstack-006": dynamic(() =>
     import("@/registry/components/avatar/iconstack-006/iconstack-006").then((module) => module.Iconstack006),
+  ),
+  "avatar-033": dynamic(() =>
+    import("@/registry/components/avatar/avatar-033/avatar-033").then((module) => module.Avatar033),
   ),
 } satisfies PreviewMap

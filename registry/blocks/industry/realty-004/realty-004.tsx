@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Card093 } from "@/registry/components/card/card-093/card-093"
 
 export type Realty004District = {
   name: string
@@ -87,14 +88,6 @@ container-type:inline-size;
 [data-vibeui-block="realty-004"] [data-part="tag"]{position:absolute;left:50%;top:100%;transform:translate(-50%,.15rem);padding:.25rem .55rem;border-radius:.4rem;background:var(--vibeui-realty-004-card);color:var(--vibeui-realty-004-fg);font-size:.72rem;font-weight:600;white-space:nowrap;box-shadow:0 4px 12px rgb(0 0 0 / .15);opacity:0;transition:opacity .2s;pointer-events:none}
 [data-vibeui-block="realty-004"] [data-part="pin"][data-active] [data-part="tag"],[data-vibeui-block="realty-004"] [data-part="pin"]:hover [data-part="tag"]{opacity:1}
 [data-vibeui-block="realty-004"] [data-part="list"]{display:grid;gap:.75rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="realty-004"] [data-part="district"]{display:grid;grid-template-columns:4.5rem minmax(0,1fr) auto;gap:1rem;align-items:center;padding:.75rem;border-radius:.9rem;border:1px solid var(--vibeui-realty-004-line);background:var(--vibeui-realty-004-card);cursor:pointer;transition:border-color .2s,transform .25s}
-[data-vibeui-block="realty-004"] [data-part="district"][data-active],[data-vibeui-block="realty-004"] [data-part="district"]:hover{border-color:var(--vibeui-realty-004-accent);transform:translateX(4px)}
-[data-vibeui-block="realty-004"] [data-part="thumb"]{width:4.5rem;height:3.25rem;border-radius:.5rem;object-fit:cover;background:var(--vibeui-realty-004-water)}
-[data-vibeui-block="realty-004"] [data-part="district"] b{display:block;font-weight:600}
-[data-vibeui-block="realty-004"] [data-part="district"] small{display:block;color:var(--vibeui-realty-004-muted);font-size:.8rem}
-[data-vibeui-block="realty-004"] [data-part="rate"]{text-align:right}
-[data-vibeui-block="realty-004"] [data-part="rate"] b{font-family:var(--vibeui-realty-004-display);font-size:1.35rem;font-weight:600;line-height:1}
-[data-vibeui-block="realty-004"] [data-part="rate"] small{display:block;color:var(--vibeui-realty-004-muted);font-size:.72rem}
 @container (min-width: 56rem){
 [data-vibeui-block="realty-004"] [data-part="shell"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"head head" "map list";gap:2.5rem 3rem;padding:5.5rem 2rem}
 [data-vibeui-block="realty-004"] [data-part="head"]{grid-area:head}
@@ -173,23 +166,7 @@ export function Realty004({
           </div>
           <ul data-part="list">
             {districts.map((district, index) => (
-              <li
-                key={district.name}
-                data-part="district"
-                data-active={active === index ? "" : undefined}
-                onMouseEnter={() => setActive(index)}
-                onMouseLeave={() => setActive(null)}
-              >
-                {district.image ? <img data-part="thumb" src={district.image} alt="" loading="lazy" /> : <span data-part="thumb" aria-hidden="true" />}
-                <span>
-                  <b>{district.name}</b>
-                  <small>{district.note ?? district.count}</small>
-                </span>
-                <span data-part="rate">
-                  <b>{district.price}</b>
-                  <small>за м² · {district.count}</small>
-                </span>
-              </li>
+              <Card093 key={district.name} data-part="district" name={district.name} image={district.image} note={district.note} count={district.count} price={district.price} data-active={active === index ? "" : undefined} onMouseEnter={() => setActive(index)} onMouseLeave={() => setActive(null)} accent={accent} />
             ))}
           </ul>
         </div>

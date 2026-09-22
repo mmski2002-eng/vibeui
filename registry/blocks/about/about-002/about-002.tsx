@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react"
 
+import { Card025 } from "@/registry/components/card/card-025/card-025"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 type About002Item = {
   year: string
   heading: string
@@ -24,6 +27,7 @@ export type About002Props = {
 // а хронология читается и без стилей. На широком контейнере год уходит в
 // левую колонку, ось встаёт между годом и текстом.
 const STYLES = `
+[data-vibeui-block="about-002"] [data-part="figure"]{margin-top:1.5rem}
 :where([data-vibeui-block="about-002"]){
 --vibeui-about-002-bg:transparent;
 --vibeui-about-002-ink:light-dark(oklch(0.17 0 0),oklch(0.97 0 0));
@@ -44,23 +48,8 @@ min-width:min(100%,16rem);
 display:block;background:var(--vibeui-about-002-bg);color:var(--vibeui-about-002-ink);
 font-family:var(--vibeui-about-002-font);
 }
-[data-vibeui-block="about-002"] [data-part="figure"]{
-position:relative;overflow:hidden;aspect-ratio:16 / 9;
-margin-top:1.5rem;border-radius:0.875rem;
-}
-[data-vibeui-block="about-002"] [data-part="figure"] img{
-display:block;width:100%;height:100%;object-fit:cover;
-}
 [data-vibeui-block="about-002"] [data-part="shell"]{
 max-width:56rem;margin:0 auto;padding:3.5rem 1.25rem;
-}
-[data-vibeui-block="about-002"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-about-002-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="about-002"] [data-part="title"]{
-margin:0 0 2.5rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="about-002"] [data-part="timeline"]{
 list-style:none;margin:0;padding:0;
@@ -190,8 +179,13 @@ export function About002({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            ledeWidth={52}
+            accent={accent}
+          />
           <ol data-part="timeline">
             {items.map((item) => (
               <li key={item.year + item.heading} data-part="milestone">
@@ -205,9 +199,7 @@ export function About002({
           </ol>
 
           {image ? (
-            <figure data-part="figure">
-              <img src={image} alt="" loading="lazy" decoding="async" />
-            </figure>
+            <Card025 data-part="figure" src={image} alt="" ratio="16/9" accent={accent} />
           ) : null}
         </div>
       </section>

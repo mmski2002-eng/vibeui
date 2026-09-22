@@ -2,6 +2,10 @@
 
 import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+
 export type Contact019Option = { value: string; label: string }
 
 export type Contact019Labels = {
@@ -135,21 +139,11 @@ container-type:inline-size;
 [data-vibeui-block="contact-019"] [data-part="step"] h3{margin:0 0 .25rem;font-family:var(--vibeui-contact-019-display);font-size:1.7rem;font-weight:600;line-height:1.1;text-transform:uppercase}
 [data-vibeui-block="contact-019"] [data-part="step"] > p{margin:0 0 1.2rem;font-size:.92rem;color:var(--vibeui-contact-019-muted)}
 [data-vibeui-block="contact-019"] [data-part="row"]{display:grid;gap:0 .8rem}
-[data-vibeui-block="contact-019"] label{display:block;margin-bottom:1rem}
-[data-vibeui-block="contact-019"] label > span{display:block;margin-bottom:.35rem;font-family:var(--vibeui-contact-019-display);font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-contact-019-muted)}
-[data-vibeui-block="contact-019"] input,[data-vibeui-block="contact-019"] textarea{width:100%;padding:.75rem .9rem;border:1px solid var(--vibeui-contact-019-line);border-radius:.6rem;background:var(--vibeui-contact-019-field);color:inherit;font:inherit;transition:border-color .25s,box-shadow .25s}
-[data-vibeui-block="contact-019"] input:focus,[data-vibeui-block="contact-019"] textarea:focus{outline:none;border-color:var(--vibeui-contact-019-sea);box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-contact-019-sea) 20%,transparent)}
-[data-vibeui-block="contact-019"] textarea{min-height:5.5rem;resize:vertical}
 [data-vibeui-block="contact-019"] [data-part="choices"]{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
 [data-vibeui-block="contact-019"] [data-part="choice"]{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1rem;border:1px solid var(--vibeui-contact-019-line);border-radius:.5rem;background:var(--vibeui-contact-019-field);color:inherit;font-family:var(--vibeui-contact-019-display);font-size:.9rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:border-color .25s,background .25s,color .25s,transform .2s}
 [data-vibeui-block="contact-019"] [data-part="choice"]:hover{border-color:var(--vibeui-contact-019-sea);transform:translateY(-1px)}
 [data-vibeui-block="contact-019"] [data-part="choice"][aria-pressed="true"]{border-color:var(--vibeui-contact-019-fg);background:var(--vibeui-contact-019-fg);color:var(--vibeui-contact-019-paper)}
-[data-vibeui-block="contact-019"] [data-part="choice"]:focus-visible,[data-vibeui-block="contact-019"] [data-part="nav"] button:focus-visible{outline:2px solid var(--vibeui-contact-019-accent);outline-offset:3px}
 [data-vibeui-block="contact-019"] [data-part="nav"]{display:flex;justify-content:space-between;gap:.75rem;margin-top:1.5rem;padding-top:1.2rem;border-top:2px dashed var(--vibeui-contact-019-line)}
-[data-vibeui-block="contact-019"] [data-part="nav"] button{display:inline-flex;align-items:center;gap:.4rem;height:2.9rem;padding:0 1.3rem;border-radius:.6rem;border:1px solid var(--vibeui-contact-019-line);background:transparent;color:inherit;font-family:var(--vibeui-contact-019-display);font-size:.9rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .2s,background .25s,border-color .25s}
-[data-vibeui-block="contact-019"] [data-part="nav"] button:disabled{opacity:.45;cursor:not-allowed}
-[data-vibeui-block="contact-019"] [data-part="nav"] button[data-primary]{margin-left:auto;background:var(--vibeui-contact-019-accent);border-color:var(--vibeui-contact-019-accent);color:var(--vibeui-contact-019-on-accent);box-shadow:0 12px 24px -14px var(--vibeui-contact-019-accent)}
-[data-vibeui-block="contact-019"] [data-part="nav"] button:not(:disabled):hover{transform:translateY(-1px)}
 [data-vibeui-block="contact-019"] [data-part="pass"]{position:relative;align-self:start;overflow:hidden;border-radius:.9rem;background:var(--vibeui-contact-019-paper);box-shadow:0 30px 60px -40px rgb(18 58 75 / .5)}
 [data-vibeui-block="contact-019"] [data-part="pass"] header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1.2rem;background:var(--vibeui-contact-019-fg);color:var(--vibeui-contact-019-paper)}
 [data-vibeui-block="contact-019"] [data-part="pass"] header b{font-family:var(--vibeui-contact-019-display);font-size:.8rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-contact-019-sun)}
@@ -176,7 +170,10 @@ container-type:inline-size;
 [data-vibeui-block="contact-019"] [data-part="form"]{padding:2rem 2.25rem}
 [data-vibeui-block="contact-019"] [data-part="pass"]{position:sticky;top:5rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-019"] *{animation:none!important;transition:none!important}[data-vibeui-block="contact-019"] [data-part="pass"][data-sent="true"] [data-part="stamp"]{opacity:.9}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-019"] *{animation:none!important;transition:none!important}[data-vibeui-block="contact-019"] [data-part="pass"][data-sent="true"] [data-part="stamp"]{opacity:.9}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="contact-019"] [data-part="choice"]:focus-visible{outline:2px solid var(--vibeui-contact-019-accent);outline-offset:3px}
+`
 
 function subscribe() {
   return () => {}
@@ -336,10 +333,15 @@ export function Contact019({
                     <div data-part="step" key="who">
                       <h3>{stepLabels[0]}</h3>
                       <p>{t.whoText}</p>
-                      <label>
-                        <span>{t.nameLabel}</span>
-                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder={t.namePlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={(event) => set("name", event.target.value)}
+                        autoComplete="name"
+                        label={t.nameLabel}
+                        accent={accent}
+                      />
                       <div data-part="choices">
                         {choice(answers.coming === "yes", t.comingYes, () => set("coming", "yes"))}
                         {choice(answers.coming === "no", t.comingNo, () => set("coming", "no"))}
@@ -351,19 +353,28 @@ export function Contact019({
                       <h3>{stepLabels[1]}</h3>
                       <p>{t.datesText}</p>
                       <div data-part="row">
-                        <label>
-                          <span>{t.arriveLabel}</span>
-                          <input type="text" value={answers.arrive} onChange={(event) => set("arrive", event.target.value)} placeholder={t.arrivePlaceholder} />
-                        </label>
-                        <label>
-                          <span>{t.departLabel}</span>
-                          <input type="text" value={answers.depart} onChange={(event) => set("depart", event.target.value)} placeholder={t.departPlaceholder} />
-                        </label>
+                        <Input001
+                          type="text"
+                          value={answers.arrive}
+                          onChange={(event) => set("arrive", event.target.value)}
+                          label={t.arriveLabel}
+                          accent={accent}
+                        />
+                        <Input001
+                          type="text"
+                          value={answers.depart}
+                          onChange={(event) => set("depart", event.target.value)}
+                          label={t.departLabel}
+                          accent={accent}
+                        />
                       </div>
-                      <label>
-                        <span>{t.flightLabel}</span>
-                        <input type="text" value={answers.flight} onChange={(event) => set("flight", event.target.value)} placeholder={t.flightPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.flight}
+                        onChange={(event) => set("flight", event.target.value)}
+                        label={t.flightLabel}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   {step === 2 ? (
@@ -374,10 +385,13 @@ export function Contact019({
                         {choice(answers.hotel === "help", t.hotelHelp, () => set("hotel", "help"))}
                         {choice(answers.hotel === "own", t.hotelOwn, () => set("hotel", "own"))}
                       </div>
-                      <label>
-                        <span>{t.companionsLabel}</span>
-                        <input type="text" value={answers.companions} onChange={(event) => set("companions", event.target.value)} placeholder={t.companionsPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.companions}
+                        onChange={(event) => set("companions", event.target.value)}
+                        label={t.companionsLabel}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   {step === 3 ? (
@@ -387,38 +401,46 @@ export function Contact019({
                       <div data-part="choices" role="group" aria-label={stepLabels[3]}>
                         {menu.map((item) => choice(answers.menu === item.value, item.label, () => set("menu", item.value)))}
                       </div>
-                      <label>
-                        <span>{t.allergies}</span>
-                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder={t.allergiesPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.allergies}
+                        onChange={(event) => set("allergies", event.target.value)}
+                        label={t.allergies}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   {step === 4 ? (
                     <div data-part="step" key="song">
                       <h3>{stepLabels[4]}</h3>
                       <p>{t.songText}</p>
-                      <label>
-                        <span>{t.songLabel}</span>
-                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder={t.songPlaceholder} />
-                      </label>
-                      <label>
-                        <span>{t.wishLabel}</span>
-                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder={t.wishPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.song}
+                        onChange={(event) => set("song", event.target.value)}
+                        label={t.songLabel}
+                        accent={accent}
+                      />
+                      <Input034
+                        value={answers.wish}
+                        onChange={(event) => set("wish", event.target.value)}
+                        label={t.wishLabel}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   <div data-part="nav">
-                    <button type="button" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
+                    <Button001 type="button" tone="soft" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))} accent={accent}>
                       {t.back}
-                    </button>
+                    </Button001>
                     {step < last ? (
-                      <button type="button" data-primary="" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))}>
+                      <Button001 type="button" tone="solid" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))} accent={accent}>
                         {t.next}
-                      </button>
+                      </Button001>
                     ) : (
-                      <button type="submit" data-primary="">
+                      <Button001 type="submit" size="lg" accent={accent}>
                         {submitLabel}
-                      </button>
+                      </Button001>
                     )}
                   </div>
                 </>

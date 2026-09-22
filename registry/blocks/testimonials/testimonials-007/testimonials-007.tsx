@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card042 } from "@/registry/components/card/card-042/card-042"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 
 type Testimonials007Item = {
   quote: string
@@ -23,7 +26,8 @@ export type Testimonials007Props = {
 // лента говорит «отзывов больше, чем влезает на экран», не заставляя листать.
 // Пауза по hover обязательна — бегущий текст нельзя читать, и reduced-motion
 // останавливает ленты совсем.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-007"] [data-part="card"]{width:19rem;flex:none;margin:0}
+
 :where([data-vibeui-block="testimonials-007"]){
 --vibeui-testimonials-007-bg:transparent;
 --vibeui-testimonials-007-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -42,14 +46,6 @@ font-family:var(--vibeui-testimonials-007-font);
 }
 [data-vibeui-block="testimonials-007"] [data-part="head"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem 0;
-}
-[data-vibeui-block="testimonials-007"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-testimonials-007-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="testimonials-007"] [data-part="title"]{
-margin:0;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="testimonials-007"] [data-part="band"]{
 display:grid;gap:0.25rem;padding:2rem 0 3rem;
@@ -71,34 +67,6 @@ animation-name:vibeui-testimonials-007-right;animation-duration:56s;
 [data-vibeui-block="testimonials-007"] [data-part="group"]{
 display:flex;gap:1rem;flex:none;list-style:none;margin:0;padding:0.5rem 0.5rem 0.5rem 0;
 }
-[data-vibeui-block="testimonials-007"] [data-part="card"]{
-width:19rem;flex:none;display:flex;flex-direction:column;gap:1rem;margin:0;
-padding:1.25rem;border:1px solid var(--vibeui-testimonials-007-border);border-radius:1rem;
-background:var(--vibeui-testimonials-007-card);
-}
-[data-vibeui-block="testimonials-007"] [data-part="quote"]{
-margin:0;flex:1 1 auto;font-size:0.9375rem;line-height:1.55;
-}
-[data-vibeui-block="testimonials-007"] [data-part="quote"]::before{content:"«"}
-[data-vibeui-block="testimonials-007"] [data-part="quote"]::after{content:"»"}
-[data-vibeui-block="testimonials-007"] [data-part="author"]{
-display:flex;align-items:center;gap:0.625rem;
-}
-[data-vibeui-block="testimonials-007"] [data-part="avatar"]{
-position:relative;width:2rem;height:2rem;flex:none;border-radius:999px;
-display:grid;place-items:center;
-color:var(--vibeui-testimonials-007-accent);
-font-size:0.6875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="testimonials-007"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-testimonials-007-accent) 14%,var(--vibeui-testimonials-007-card));}
-[data-vibeui-block="testimonials-007"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="testimonials-007"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
-[data-vibeui-block="testimonials-007"] [data-part="name"]{font-size:0.875rem;font-weight:640}
-[data-vibeui-block="testimonials-007"] [data-part="role"]{color:var(--vibeui-testimonials-007-muted);font-size:0.75rem;line-height:1.35}
 @container (min-width: 40rem){
 [data-vibeui-block="testimonials-007"] [data-part="head"]{padding-top:4.5rem}
 }
@@ -190,38 +158,17 @@ function initials(name: string) {
 function MarqueeGroup({
   items,
   hidden,
+  accent,
 }: {
   items: Testimonials007Item[]
   hidden?: boolean
+  accent?: string
 }) {
   return (
     <ul data-part="group" aria-hidden={hidden || undefined}>
       {items.map((item) => (
         <li key={item.name}>
-          <figure data-part="card">
-            <blockquote data-part="quote">{item.quote}</blockquote>
-            <figcaption data-part="author">
-              <span
-                data-part="avatar"
-                data-empty={item.image ? undefined : "true"}
-                aria-hidden="true"
-              >
-                {item.image ? (
-                  <img
-                    src={item.image}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : null}
-                {initials(item.name)}
-              </span>
-              <span data-part="who">
-                <span data-part="name">{item.name}</span>
-                <span data-part="role">{item.role}</span>
-              </span>
-            </figcaption>
-          </figure>
+          <Card042 data-part="card" quote={item.quote} name={item.name} image={item.image} role={item.role} accent={accent} />
         </li>
       ))}
     </ul>
@@ -263,20 +210,24 @@ export function Testimonials007({
         style={palette}
       >
         <div data-part="head">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
         </div>
         <div data-part="band">
           <div data-part="row" data-direction="left">
             <div data-part="track">
-              <MarqueeGroup items={topRow} />
-              <MarqueeGroup items={topRow} hidden />
+              <MarqueeGroup items={topRow} accent={accent} />
+              <MarqueeGroup items={topRow} hidden accent={accent} />
             </div>
           </div>
           <div data-part="row" data-direction="right">
             <div data-part="track">
-              <MarqueeGroup items={bottomRow} />
-              <MarqueeGroup items={bottomRow} hidden />
+              <MarqueeGroup items={bottomRow} accent={accent} />
+              <MarqueeGroup items={bottomRow} hidden accent={accent} />
             </div>
           </div>
         </div>

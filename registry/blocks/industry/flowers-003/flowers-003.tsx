@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useId, useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
+import { Button081 } from "@/registry/components/button/button-081/button-081"
 
 export type Flowers003Order = {
   items: readonly { name: string; count: number; price: number }[]
@@ -96,6 +97,7 @@ container-type:inline-size;
 :where([data-vibeui-block="flowers-003"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="flowers-003"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-flowers-003-bg);color:var(--vibeui-flowers-003-fg);font-family:var(--vibeui-flowers-003-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-003"] *{box-sizing:border-box}
+[data-vibeui-block="flowers-003"] [data-part="slot"]{flex:0 0 6.5rem}
 [data-vibeui-block="flowers-003"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="flowers-003"] [data-part="head"]{max-width:40rem;margin:0 0 2.5rem}
 [data-vibeui-block="flowers-003"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-flowers-003-muted)}
@@ -110,13 +112,6 @@ container-type:inline-size;
 [data-vibeui-block="flowers-003"] [data-part="tape"]{position:relative;overflow:hidden;min-height:4.6rem;padding:.5rem 0 .2rem 50%;border-top:1px solid var(--vibeui-flowers-003-line);border-bottom:1px solid var(--vibeui-flowers-003-line);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
 [data-vibeui-block="flowers-003"] [data-part="tape"]::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--vibeui-flowers-003-accent);z-index:2}
 [data-vibeui-block="flowers-003"] [data-part="track"]{display:flex;transform:translate3d(calc((var(--vibeui-flowers-003-i) + .5) * -6.5rem),0,0);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="flowers-003"] [data-part="slot"]{flex:0 0 6.5rem;display:grid;justify-items:center;gap:.3rem;padding:0;border:0;background:transparent;color:var(--vibeui-flowers-003-muted);font:inherit;cursor:pointer;transition:color .3s}
-[data-vibeui-block="flowers-003"] [data-part="slot"] i{display:block;width:1px;height:1.2rem;background:currentColor;opacity:.5}
-[data-vibeui-block="flowers-003"] [data-part="slot"] b{font-family:var(--vibeui-flowers-003-display);font-weight:600;font-size:1.3rem;line-height:1;font-variant-numeric:tabular-nums}
-[data-vibeui-block="flowers-003"] [data-part="slot"] small{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase}
-[data-vibeui-block="flowers-003"] [data-part="slot"][data-on="true"]{color:var(--vibeui-flowers-003-fg)}
-[data-vibeui-block="flowers-003"] [data-part="slot"][data-on="true"] i{height:2rem;opacity:1;background:var(--vibeui-flowers-003-accent)}
-[data-vibeui-block="flowers-003"] [data-part="slot"]:focus-visible{outline:2px solid var(--vibeui-flowers-003-accent);outline-offset:-2px;border-radius:.5rem}
 [data-vibeui-block="flowers-003"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.35rem;margin:.4rem 0 0;border-radius:999px;background:var(--vibeui-flowers-003-line);outline:none;cursor:pointer}
 [data-vibeui-block="flowers-003"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-flowers-003-bg);border:2px solid var(--vibeui-flowers-003-fg);cursor:grab}
 [data-vibeui-block="flowers-003"] [data-part="range"]::-moz-range-thumb{width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-flowers-003-bg);border:2px solid var(--vibeui-flowers-003-fg);cursor:grab}
@@ -303,11 +298,7 @@ export function Flowers003({
               <div data-part="tape" role="radiogroup" aria-label={tapeLabel}>
                 <div data-part="track" style={{ ["--vibeui-flowers-003-i" as string]: index }}>
                   {slots.map((slot, slotIndex) => (
-                    <button key={`${slot.day}-${slot.start}`} type="button" data-part="slot" role="radio" aria-checked={slotIndex === index} data-on={slotIndex === index} onClick={() => setSelected(slotIndex)}>
-                      <i aria-hidden="true" />
-                      <b>{clock(slot.start)}</b>
-                      <small>{slot.day === "today" ? todayLabel : tomorrowLabel}</small>
-                    </button>
+                    <Button081 key={`${slot.day}-${slot.start}`} data-part="slot" day={slot.day} start={slot.start} todayLabel={todayLabel} tomorrowLabel={tomorrowLabel} aria-checked={slotIndex === index} data-on={slotIndex === index} onClick={() => setSelected(slotIndex)} accent={accent} />
                   ))}
                 </div>
               </div>

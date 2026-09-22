@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties } from "react"
+import { Slider013 } from "@/registry/components/slider/slider-013/slider-013"
+
 
 export type Language003Milestone = {
   week: number
@@ -102,10 +104,6 @@ container-type:inline-size;
 [data-vibeui-block="language-003"] [data-part="control"]{display:grid;gap:.5rem}
 [data-vibeui-block="language-003"] [data-part="control"] label{display:flex;justify-content:space-between;align-items:baseline;font-size:.85rem;color:var(--vibeui-language-003-muted)}
 [data-vibeui-block="language-003"] [data-part="control"] output{font-family:var(--vibeui-language-003-display);font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--vibeui-language-003-fg);font-variant-numeric:tabular-nums}
-[data-vibeui-block="language-003"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.5rem;border-radius:999px;background:linear-gradient(90deg,var(--vibeui-language-003-accent) var(--vibeui-language-003-fill),var(--vibeui-language-003-line) var(--vibeui-language-003-fill));outline:none;cursor:pointer}
-[data-vibeui-block="language-003"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-language-003-paper);border:3px solid var(--vibeui-language-003-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-language-003-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="language-003"] [data-part="range"]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-language-003-paper);border:3px solid var(--vibeui-language-003-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-language-003-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="language-003"] [data-part="range"]:focus-visible{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-language-003-accent) 40%,transparent)}
 [data-vibeui-block="language-003"] [data-part="months"]{display:flex;justify-content:space-between;margin:0;padding:0;list-style:none;font-size:.72rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-language-003-muted)}
 @keyframes vibeui-language-003-draw{to{stroke-dashoffset:0}}
 @keyframes vibeui-language-003-pulse{from{transform:scale(.6);opacity:1}to{transform:scale(2.2);opacity:0}}
@@ -296,7 +294,7 @@ export function Language003({
                 <span>{weekLabel}</span>
                 <output htmlFor={rangeId}>{week === 0 ? startLabel : weekLine.replace("{n}", String(week))}</output>
               </label>
-              <input id={rangeId} data-part="range" type="range" min={0} max={weeks} step={1} value={week} onChange={(event) => setWeek(Number(event.target.value))} style={{ ["--vibeui-language-003-fill" as string]: fill }} aria-valuetext={weekValue.replace("{n}", String(week)).replace("{words}", String(value))} />
+              <Slider013 id={rangeId} data-part="range" min={0} max={weeks} step={1} value={week} onChange={setWeek} aria-valuetext={weekValue.replace("{n}", String(week)).replace("{words}", String(value))} />
               <ul data-part="months" aria-hidden="true">
                 <li>{startLabel}</li>
                 <li>{monthTicks[0]}</li>

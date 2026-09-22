@@ -1,6 +1,9 @@
 "use client"
 
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Hero011Props = {
   kicker?: string
@@ -85,36 +88,7 @@ display:inline-block;margin:0 0 1.25rem;padding:0.3125rem 0.75rem;border-radius:
 border:1px solid var(--vibeui-hero-011-edge);background:var(--vibeui-hero-011-veil);
 font-size:0.75rem;font-weight:600;color:var(--vibeui-hero-011-muted);
 }
-[data-vibeui-block="hero-011"] h1{
-margin:0;font-size:clamp(2rem,7cqi,4rem);line-height:1.02;letter-spacing:-0.04em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-011"] h1 span{
-background:linear-gradient(100deg,var(--vibeui-hero-011-accent),var(--vibeui-hero-011-cool));
--webkit-background-clip:text;background-clip:text;color:transparent;
-}
-[data-vibeui-block="hero-011"] [data-part="lede"]{
-margin:1.25rem auto 0;max-width:34rem;font-size:clamp(0.9375rem,1.5cqi,1.125rem);line-height:1.6;
-color:var(--vibeui-hero-011-muted);text-wrap:pretty;
-}
 [data-vibeui-block="hero-011"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.625rem;margin:2rem auto 0;max-width:20rem}
-[data-vibeui-block="hero-011"] a{
-display:inline-flex;align-items:center;justify-content:center;height:2.875rem;padding:0 1.5rem;border-radius:0.75rem;
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-hero-011-dur-2) ease,border-color var(--vibeui-hero-011-dur-2) ease;
-}
-[data-vibeui-block="hero-011"] [data-part="primary"]{
-background:var(--vibeui-hero-011-accent);color:oklch(from var(--vibeui-hero-011-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;
-box-shadow:0 0 2.5rem color-mix(in oklab,var(--vibeui-hero-011-accent) 34%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-hero-011-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-011-dur-3) ease;
-}
-[data-vibeui-block="hero-011"] [data-part="primary"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0 3.25rem color-mix(in oklab,var(--vibeui-hero-011-accent) 46%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
-}
-[data-vibeui-block="hero-011"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-011-edge);color:var(--vibeui-hero-011-fg);background:var(--vibeui-hero-011-veil)}
-[data-vibeui-block="hero-011"] a:hover{opacity:.88}
-[data-vibeui-block="hero-011"] a:focus-visible{outline:2px solid var(--vibeui-hero-011-accent);outline-offset:3px}
 [data-vibeui-block="hero-011"] [data-part="meta"]{
 list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.5rem;margin:2rem 0 0;padding:0;
 font-size:0.75rem;color:var(--vibeui-hero-011-muted);
@@ -208,17 +182,35 @@ export function Hero011({
         <div data-part="spot" aria-hidden="true" />
         <div data-part="shell">
           {kicker ? <p data-part="kicker">{kicker}</p> : null}
-          <h1>
-            {title} {titleAccent ? <span>{titleAccent}</span> : null}
-          </h1>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            title={title}
+            titleAccent={titleAccent}
+            lede={lede}
+            level="h1"
+            size="xl"
+            align="center"
+            accent={accent}
+          />
           <div data-part="actions">
-            <a data-part="primary" href={primary.href}>
-              {primary.label}
-            </a>
-            <a data-part="secondary" href={secondary.href}>
-              {secondary.label}
-            </a>
+            <Button016
+              data-part="primary"
+              size="lg"
+              label={primary.label}
+              href={primary.href}
+              external={false}
+              tone="accent"
+              accent={accent}
+            />
+            <Button016
+              data-part="secondary"
+              size="lg"
+              label={secondary.label}
+              href={secondary.href}
+              external={false}
+              tone="neutral"
+              accent={accent}
+            />
           </div>
           {meta.length > 0 ? (
             <ul data-part="meta">

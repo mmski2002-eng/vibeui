@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 import type { CSSProperties } from "react"
 
 export type Map003Note = {
@@ -107,14 +108,6 @@ max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
 }
 [data-vibeui-block="map-003"] [data-part="head"]{
 display:flex;flex-wrap:wrap;align-items:baseline;gap:0.75rem;margin:0 0 1.25rem;
-}
-[data-vibeui-block="map-003"] [data-part="eyebrow"]{
-font-size:0.75rem;font-weight:650;letter-spacing:0.09em;text-transform:uppercase;
-color:var(--vibeui-map-003-accent);
-}
-[data-vibeui-block="map-003"] h2{
-margin:0;font-weight:680;letter-spacing:-0.02em;
-font-size:clamp(1.375rem,3.2cqi,2rem);line-height:1.16;
 }
 [data-vibeui-block="map-003"] [data-part="shell"]{
 overflow:hidden;border-radius:1.25rem;
@@ -399,8 +392,13 @@ export function Map003({
       >
         <div data-part="frame">
           <div data-part="head">
-            <span data-part="eyebrow">{eyebrow}</span>
-            <h2>{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              size="sm"
+              accent={accent}
+            />
           </div>
 
           <div data-part="shell">

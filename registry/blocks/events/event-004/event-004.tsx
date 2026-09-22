@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Event004Event = {
   /** «ср», «пт», «сб–вс». */
   day: string
@@ -70,8 +72,6 @@ container-type:inline-size;
 [data-vibeui-block="event-004"] [data-part="text"]{margin:0;color:var(--vibeui-event-004-muted);max-width:36rem}
 [data-vibeui-block="event-004"] [data-part="foot"]{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.5rem;margin-top:.5rem}
 [data-vibeui-block="event-004"] [data-part="price"]{font-family:var(--vibeui-event-004-display);font-size:1.1rem}
-[data-vibeui-block="event-004"] [data-part="action"]{color:inherit;text-decoration:none;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;border-bottom:1px solid var(--vibeui-event-004-accent);padding-bottom:.15rem}
-[data-vibeui-block="event-004"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-event-004-accent);outline-offset:3px}
 [data-vibeui-block="event-004"] [data-part="photo"]{display:none;width:11rem;aspect-ratio:3/2;object-fit:cover;border-radius:.6rem;align-self:center;opacity:0;transform:translateX(10px) scale(.96);transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="event-004"] [data-part="event"]:hover [data-part="photo"]{opacity:1;transform:none}
 @container (min-width: 56rem){
@@ -135,9 +135,7 @@ export function Event004({
                   <div data-part="foot">
                     {event.price ? <span data-part="price">{event.price}</span> : null}
                     {event.actionLabel ? (
-                      <a data-part="action" href={event.actionHref ?? "#"}>
-                        {event.actionLabel} →
-                      </a>
+                      <Button077 data-part="action" label={event.actionLabel} href={event.actionHref ?? "#"} accent={accent} />
                     ) : null}
                   </div>
                 </div>

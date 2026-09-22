@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Bakery005Line = {
   label: string
   value: string
@@ -67,6 +69,7 @@ container-type:inline-size;
 :where([data-vibeui-block="bakery-005"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="bakery-005"]{box-sizing:border-box;position:relative;overflow:clip;padding:5.5rem 0;background:var(--vibeui-bakery-005-panel);color:var(--vibeui-bakery-005-fg);font-family:var(--vibeui-bakery-005-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="bakery-005"] *{box-sizing:border-box}
+[data-vibeui-block="bakery-005"] [data-part="action"]{margin-top:auto;align-self:flex-start}
 [data-vibeui-block="bakery-005"] [data-part="glow"]{position:absolute;right:-8rem;top:6rem;width:52rem;height:34rem;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bakery-005-accent) 14%,transparent),transparent 70%);filter:blur(40px);pointer-events:none}
 [data-vibeui-block="bakery-005"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="bakery-005"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-bakery-005-accent);font-weight:600;margin:0 0 1.1rem}
@@ -101,10 +104,6 @@ container-type:inline-size;
 [data-vibeui-block="bakery-005"] [data-part="price"]{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
 [data-vibeui-block="bakery-005"] [data-part="price"] b{font-family:var(--vibeui-bakery-005-display);font-size:2.4rem;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="bakery-005"] [data-part="price"] span{color:var(--vibeui-bakery-005-muted)}
-[data-vibeui-block="bakery-005"] [data-part="action"]{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;border-radius:999px;padding:.95rem 1.5rem;font-weight:600;font-size:.95rem;text-decoration:none;color:var(--vibeui-bakery-005-on-accent);background:var(--vibeui-bakery-005-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 10px 24px -12px color-mix(in oklab,var(--vibeui-bakery-005-accent) 70%,transparent);transition:transform .18s,filter .18s}
-[data-vibeui-block="bakery-005"] [data-part="action"][data-ghost="true"]{color:var(--vibeui-bakery-005-fg);background:var(--vibeui-bakery-005-panel);box-shadow:0 1px 0 rgb(255 255 255 / .6) inset,0 2px 4px rgb(0 0 0 / .08)}
-[data-vibeui-block="bakery-005"] [data-part="action"]:hover{transform:translateY(-2px);filter:brightness(1.04)}
-[data-vibeui-block="bakery-005"] [data-part="action"]:active{transform:translateY(1px) scale(.97)}
 [data-vibeui-block="bakery-005"] a:focus-visible{outline:2px solid var(--vibeui-bakery-005-accent);outline-offset:3px}
 @keyframes vibeui-bakery-005-stamp{0%{transform:scale(1.6) rotate(-20deg);opacity:0}60%{opacity:.95}100%{transform:scale(1) rotate(-12deg);opacity:.9}}
 @keyframes vibeui-bakery-005-rise{0%{transform:translateY(112%) scaleY(.8)}70%{transform:translateY(-2%)}100%{transform:none}}
@@ -249,9 +248,16 @@ export function Bakery005({
                 </ul>
               ) : null}
               {cardAction ? (
-                <a data-part="action" data-ghost="true" href={cardHref}>
-                  {cardAction}
-                </a>
+                <Button016
+                  data-part="action"
+                  data-ghost="true"
+                  label={cardAction}
+                  href={cardHref}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
             </div>
             <div data-part="card" style={{ ["--vibeui-bakery-005-i" as string]: 1 }} onPointerMove={tilt} onPointerLeave={untilt}>
@@ -269,9 +275,15 @@ export function Bakery005({
                 {subNote ? <span>{subNote}</span> : null}
               </div>
               {subAction ? (
-                <a data-part="action" href={subHref}>
-                  {subAction}
-                </a>
+                <Button016
+                  data-part="action"
+                  label={subAction}
+                  href={subHref}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

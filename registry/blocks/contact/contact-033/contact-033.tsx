@@ -1,6 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button015 } from "@/registry/components/button/button-015/button-015"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 export type Contact033Right = {
   name: string
@@ -66,6 +69,7 @@ container-type:inline-size;
 @supports (animation-timeline:view()){[data-vibeui-block="contact-033"] [data-part="shell"]{animation:vibeui-contact-033-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
 @keyframes vibeui-contact-033-reveal{from{opacity:0;transform:translateY(1.5rem)}}
 [data-vibeui-block="contact-033"] *{box-sizing:border-box}
+[data-vibeui-block="contact-033"] [data-part="press"]{margin-top:1.4rem}
 [data-vibeui-block="contact-033"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:center}
 @container (min-width:48rem){[data-vibeui-block="contact-033"] [data-part="shell"]{padding-block:2rem}}
 @container (min-width:72rem){[data-vibeui-block="contact-033"] [data-part="shell"]{padding-block:3rem}}
@@ -91,14 +95,6 @@ container-type:inline-size;
 [data-vibeui-block="contact-033"] [data-part="lines"] a{color:var(--vibeui-contact-033-fg);text-decoration:none}
 [data-vibeui-block="contact-033"] [data-part="lines"] a:hover{color:var(--vibeui-contact-033-accent)}
 [data-vibeui-block="contact-033"] [data-part="lines"] a:focus-visible{outline:2px solid var(--vibeui-contact-033-accent);outline-offset:3px}
-[data-vibeui-block="contact-033"] [data-part="copy"]{display:inline-flex;align-items:center;gap:.5rem;margin-left:.6rem;padding:.2rem .7rem;border:1px solid var(--vibeui-contact-033-line);border-radius:999px;background:transparent;color:var(--vibeui-contact-033-muted);font:inherit;font-size:.75rem;font-style:italic;cursor:pointer;transition:color .25s,border-color .25s,background-color .25s}
-[data-vibeui-block="contact-033"] [data-part="copy"]:hover{border-color:var(--vibeui-contact-033-accent);color:var(--vibeui-contact-033-fg)}
-[data-vibeui-block="contact-033"] [data-part="copy"][data-done="true"]{background:var(--vibeui-contact-033-accent);border-color:transparent;color:var(--vibeui-contact-033-on-accent)}
-[data-vibeui-block="contact-033"] [data-part="copy"]:focus-visible{outline:2px solid var(--vibeui-contact-033-accent);outline-offset:2px}
-[data-vibeui-block="contact-033"] [data-part="press"]{margin-top:1.4rem;position:relative;color:var(--vibeui-contact-033-fg);text-decoration:none;font-style:italic;font-size:.95rem;padding:.2rem 0}
-[data-vibeui-block="contact-033"] [data-part="press"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--vibeui-contact-033-accent);transform:scaleX(.35);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="contact-033"] [data-part="press"]:hover::after{transform:scaleX(1)}
-[data-vibeui-block="contact-033"] [data-part="press"]:focus-visible{outline:2px solid var(--vibeui-contact-033-accent);outline-offset:3px}
 @container (min-width: 60rem){[data-vibeui-block="contact-033"] [data-part="shell"]{grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:5rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-033"] *{animation:none!important;transition:none!important}}`
 
@@ -133,7 +129,6 @@ export function Contact033({
   style,
 }: Contact033Props) {
   const [mode, setMode] = useState<"day" | "night" | null>(null)
-  const [copied, setCopied] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -164,11 +159,6 @@ export function Contact033({
     card.style.removeProperty("--vibeui-contact-033-rx")
   }
 
-  const copy = () => {
-    navigator.clipboard?.writeText(email).catch(() => undefined)
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 2000)
-  }
 
   const palette = {
     ...(accent ? { "--vibeui-contact-033-accent": accent } : null),
@@ -215,17 +205,18 @@ export function Contact033({
               <div data-part="lines">
                 <div>
                   <a href={`mailto:${email}`}>{email}</a>
-                  <button data-part="copy" type="button" data-done={copied} onClick={copy} aria-live="polite">
-                    {copied ? copiedLabel : copyLabel}
-                  </button>
+                  <Button015 data-part="copy-button" value={email} label={copyLabel} doneLabel={copiedLabel} />
                 </div>
                 {phone ? <a href={`tel:${phone.replace(/[^\d+]/g, "")}`}>{phone}</a> : null}
               </div>
             </div>
             {pressKitLabel ? (
-              <a data-part="press" href={pressKitHref}>
-                {pressKitLabel}
-              </a>
+              <Button077
+                data-part="press"
+                label={pressKitLabel}
+                href={pressKitHref}
+                accent={accent}
+              />
             ) : null}
           </div>
         </div>

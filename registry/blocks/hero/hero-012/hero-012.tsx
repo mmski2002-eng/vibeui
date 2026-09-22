@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Hero012Props = {
   badge?: string
@@ -66,25 +69,9 @@ padding:0.1875rem 0.5rem;border-radius:9999px;background:var(--vibeui-hero-012-a
 color:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
 }
 [data-vibeui-block="hero-012"] [data-part="announcetext"]{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-[data-vibeui-block="hero-012"] [data-part="arrow"]{flex:0 0 auto;transition:transform var(--vibeui-hero-012-dur-2) ease}
-[data-vibeui-block="hero-012"] [data-part="announce"]:hover [data-part="arrow"]{transform:translateX(2px)}
-[data-vibeui-block="hero-012"] h1{
-margin:0;font-size:clamp(1.875rem,6.2cqi,3.5rem);line-height:1.06;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-012"] [data-part="lede"]{
-margin:1.125rem auto 0;max-width:34rem;font-size:clamp(0.9375rem,1.5cqi,1.0625rem);line-height:1.6;
-color:var(--vibeui-hero-012-muted);text-wrap:pretty;
-}
+[data-vibeui-block="hero-012"] [data-part="announce-arrow"]{flex:0 0 auto;transition:transform var(--vibeui-hero-012-dur-2) ease}
+[data-vibeui-block="hero-012"] [data-part="announce"]:hover [data-part="announce-arrow"]{transform:translateX(2px)}
 [data-vibeui-block="hero-012"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.625rem;margin:1.875rem auto 0;max-width:20rem}
-[data-vibeui-block="hero-012"] [data-part="actions"] a{
-display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:0.625rem;
-font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color var(--vibeui-hero-012-dur-2) ease,border-color var(--vibeui-hero-012-dur-2) ease;
-}
-[data-vibeui-block="hero-012"] [data-part="primary"]{background:var(--vibeui-hero-012-accent);color:oklch(from var(--vibeui-hero-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-012-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-012-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-012-dur-3) ease,background-color var(--vibeui-hero-012-dur-2) ease}
-[data-vibeui-block="hero-012"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-012-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
-[data-vibeui-block="hero-012"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-012-line);color:var(--vibeui-hero-012-fg);background:var(--vibeui-hero-012-card)}
-[data-vibeui-block="hero-012"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-012-fg)}
-[data-vibeui-block="hero-012"] [data-part="actions"] a:focus-visible{outline:2px solid var(--vibeui-hero-012-accent);outline-offset:3px}
 [data-vibeui-block="hero-012"] [data-part="release"]{
 margin:2.75rem auto 0;max-width:34rem;width:100%;text-align:left;
 border:1px solid var(--vibeui-hero-012-line);border-radius:0.875rem;background:var(--vibeui-hero-012-card);
@@ -185,7 +172,7 @@ export function Hero012({
             <span data-part="badge">{badge}</span>
             <span data-part="announcetext">{announcement}</span>
             <svg
-              data-part="arrow"
+              data-part="announce-arrow"
               viewBox="0 0 16 16"
               width="14"
               height="14"
@@ -202,16 +189,35 @@ export function Hero012({
             </svg>
           </a>
 
-          <h1>{title}</h1>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={lede}
+            level="h1"
+            size="lg"
+            align="center"
+            accent={accent}
+          />
 
           <div data-part="actions">
-            <a data-part="primary" href={primary.href}>
-              {primary.label}
-            </a>
-            <a data-part="secondary" href={secondary.href}>
-              {secondary.label}
-            </a>
+            <Button016
+              data-part="primary"
+              size="lg"
+              label={primary.label}
+              href={primary.href}
+              external={false}
+              tone="accent"
+              accent={accent}
+            />
+            <Button016
+              data-part="secondary"
+              size="lg"
+              label={secondary.label}
+              href={secondary.href}
+              external={false}
+              tone="neutral"
+              accent={accent}
+            />
           </div>
 
           <div data-part="release">

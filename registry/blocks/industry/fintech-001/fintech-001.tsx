@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react"
+import { Button089 } from "@/registry/components/button/button-089/button-089"
 
 export type Fintech001Operation = {
   title: string
@@ -80,9 +81,6 @@ container-type:inline-size;
 [data-vibeui-block="fintech-001"] [data-part="balance"]{margin:.3rem 0 0;font-family:var(--vibeui-fintech-001-mono);font-weight:600;font-size:clamp(1.8rem,5cqi,2.6rem);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 [data-vibeui-block="fintech-001"] [data-part="delta"]{display:inline-block;margin:.5rem 0 0;padding:.2rem .6rem;border-radius:999px;font-family:var(--vibeui-fintech-001-mono);font-size:.72rem;background:color-mix(in oklab,var(--vibeui-fintech-001-accent) 16%,transparent);color:var(--vibeui-fintech-001-accent)}
 [data-vibeui-block="fintech-001"] [data-part="tabs"]{display:inline-flex;padding:.25rem;border-radius:999px;background:var(--vibeui-fintech-001-glass);border:1px solid var(--vibeui-fintech-001-line)}
-[data-vibeui-block="fintech-001"] [data-part="tabs"] button{padding:.4rem .85rem;border:0;border-radius:999px;background:transparent;color:var(--vibeui-fintech-001-muted);font:inherit;font-size:.8rem;font-weight:500;cursor:pointer;transition:background .25s,color .2s}
-[data-vibeui-block="fintech-001"] [data-part="tabs"] button[aria-pressed="true"]{background:var(--vibeui-fintech-001-accent);color:var(--vibeui-fintech-001-on-accent)}
-[data-vibeui-block="fintech-001"] [data-part="tabs"] button:focus-visible{outline:2px solid var(--vibeui-fintech-001-accent);outline-offset:2px}
 [data-vibeui-block="fintech-001"] [data-part="chart"]{display:block;width:100%;height:auto;margin:1.2rem 0 0;overflow:visible}
 [data-vibeui-block="fintech-001"] [data-part="area"]{opacity:0;transition:opacity 1s ease-out .6s}
 [data-vibeui-block="fintech-001"] [data-part="stroke"]{fill:none;stroke:var(--vibeui-fintech-001-accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
@@ -295,9 +293,7 @@ export function Fintech001({
               {periods.length > 1 ? (
                 <div data-part="tabs" role="group" aria-label={tabsLabel}>
                   {periods.map((item, index) => (
-                    <button key={item.label} type="button" aria-pressed={index === periodIndex} onClick={() => { setPeriodIndex(index); setTouched(true) }}>
-                      {item.label}
-                    </button>
+                    <Button089 key={item.label} data-part="period" label={item.label} aria-pressed={index === periodIndex} onClick={() => { setPeriodIndex(index); setTouched(true) }} accent={accent} />
                   ))}
                 </div>
               ) : null}

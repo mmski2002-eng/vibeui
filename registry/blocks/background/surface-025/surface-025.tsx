@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Caption001 } from "@/registry/components/typography/caption-001/caption-001"
 
 export type Surface025Props = {
   /** Разлиновка: клетка, линейка или точки в узлах. */
@@ -89,11 +90,7 @@ background-position:0.5px 0.5px;
 [data-vibeui-block="surface-025"][data-major="0"]{--vibeui-surface-025-b:transparent}
 /* Поля: красная вертикаль на четвёртой клетке от края. */
 [data-vibeui-block="surface-025"] > [data-part="margin"]{position:absolute;top:0;bottom:0;left:calc(var(--vibeui-surface-025-cell) * 4 + 0.5px);width:1px;background:var(--vibeui-surface-025-margin);pointer-events:none}
-[data-vibeui-block="surface-025"] > [data-part="demo"]{box-sizing:border-box;position:relative;max-width:72rem;margin:0 auto;padding:4rem 1.5rem;min-height:18rem;display:grid;align-content:center;gap:.75rem}
-[data-vibeui-block="surface-025"] > [data-part="demo"] > [data-part="eyebrow"]{margin:0;font-size:.75rem;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-surface-025-muted)}
-[data-vibeui-block="surface-025"] > [data-part="demo"] > [data-part="title"]{margin:0;max-width:20ch;font-size:clamp(1.75rem,5cqi,3rem);line-height:1.05;letter-spacing:-.02em;font-weight:700;text-wrap:balance}
-[data-vibeui-block="surface-025"] > [data-part="demo"] > [data-part="note"]{margin:0;max-width:44ch;font-size:1rem;line-height:1.55;color:var(--vibeui-surface-025-muted)}
-@container (min-width: 52rem){[data-vibeui-block="surface-025"] > [data-part="demo"]{padding:6rem 2.5rem;min-height:24rem}}`
+`
 
 /** Тетрадный лист: бумага в клетку, линейку или точки — обёртка для любого содержимого. */
 export function Surface025({
@@ -138,11 +135,7 @@ export function Surface025({
       >
         {margin ? <span data-part="margin" aria-hidden="true" /> : null}
         {children ?? (
-          <div data-part="demo">
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            {title ? <h2 data-part="title">{title}</h2> : null}
-            {note ? <p data-part="note">{note}</p> : null}
-          </div>
+          <Caption001 data-part="demo" eyebrow={eyebrow} title={title} note={note} />
         )}
       </div>
     </>

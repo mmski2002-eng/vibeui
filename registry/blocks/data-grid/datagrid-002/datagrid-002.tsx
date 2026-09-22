@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card152 } from "@/registry/components/card/card-152/card-152"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid002Row = {
@@ -74,36 +75,6 @@ border:1px solid var(--vibeui-datagrid-002-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-002-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-002"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-002"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-min-height:3.25rem;padding:0.625rem 0.875rem;
-border-bottom:1px solid var(--vibeui-datagrid-002-border);
-transition:background-color var(--vibeui-datagrid-002-dur-2) ease;
-}
-[data-vibeui-block="datagrid-002"] [data-part="bar"][data-active="true"]{
-background:var(--vibeui-datagrid-002-accent-soft);
-}
-[data-vibeui-block="datagrid-002"] [data-part="bar-title"]{margin:0;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="datagrid-002"] [data-part="bar-note"]{
-margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-002-muted);
-}
-[data-vibeui-block="datagrid-002"] [data-part="bar-text"]{margin-inline-end:auto}
-[data-vibeui-block="datagrid-002"] [data-part="count"]{
-font-size:0.875rem;font-weight:650;color:var(--vibeui-datagrid-002-accent);
-}
-[data-vibeui-block="datagrid-002"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.375rem}
-[data-vibeui-block="datagrid-002"] [data-part="actions"] button{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
-padding:0.375rem 0.75rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-002-border);
-background:var(--vibeui-datagrid-002-btn);color:var(--vibeui-datagrid-002-fg);
-}
-[data-vibeui-block="datagrid-002"] [data-part="actions"] button[data-tone="primary"]{
-border-color:transparent;background:var(--vibeui-datagrid-002-accent);color:oklch(from var(--vibeui-datagrid-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-}
-[data-vibeui-block="datagrid-002"] [data-part="actions"] button:focus-visible{
-outline:2px solid var(--vibeui-datagrid-002-accent);outline-offset:2px;
-}
 [data-vibeui-block="datagrid-002"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-002"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-002-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-002"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -244,36 +215,7 @@ export function Datagrid002({
         className={className}
         style={palette}
       >
-        <div data-part="bar" data-active={selected.length > 0}>
-          <div data-part="bar-text">
-            {selected.length > 0 ? (
-              <p data-part="count" aria-live="polite">
-                {selectedText
-                  .replace("{count}", String(selected.length))
-                  .replace("{total}", String(rows.length))
-                  .replace("{sum}", money(total))}
-              </p>
-            ) : (
-              <>
-                <h3 data-part="bar-title">{heading}</h3>
-                <p data-part="bar-note">
-                  {countText.replace("{count}", String(rows.length))}
-                </p>
-              </>
-            )}
-          </div>
-          {selected.length > 0 ? (
-            <div data-part="actions">
-              <button type="button" data-tone="primary">
-                {actionLabel}
-              </button>
-              <button type="button">{exportLabel}</button>
-              <button type="button" onClick={() => setSelected([])}>
-                {clearLabel}
-              </button>
-            </div>
-          ) : null}
-        </div>
+        <Card152 data-part="bar" selectedText={selectedText} rows={rows} heading={heading} countText={countText} actionLabel={actionLabel} exportLabel={exportLabel} clearLabel={clearLabel} money={money} selected={selected} setSelected={setSelected} total={total} accent={accent} />
         <div
           data-part="scroll"
           role="region"

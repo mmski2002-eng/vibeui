@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card048 } from "@/registry/components/card/card-048/card-048"
 
 export type Testimonials035Quote = {
   quote: string
@@ -48,6 +49,7 @@ container-type:inline-size;
 :where([data-vibeui-block="testimonials-035"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="testimonials-035"]{box-sizing:border-box;padding:5rem 0 6rem;overflow:hidden;background:var(--vibeui-testimonials-035-bg);color:var(--vibeui-testimonials-035-fg);font-family:var(--vibeui-testimonials-035-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="testimonials-035"] *{box-sizing:border-box}
+[data-vibeui-block="testimonials-035"] [data-part="card"]{width:20rem}
 [data-vibeui-block="testimonials-035"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="testimonials-035"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-testimonials-035-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-testimonials-035-accent)}
 [data-vibeui-block="testimonials-035"] [data-part="title"]{margin:0 0 2.5rem;max-width:40rem;font-family:var(--vibeui-testimonials-035-display);font-weight:900;font-size:clamp(2rem,5.4cqi,4rem);line-height:1;letter-spacing:-.03em;text-wrap:balance}
@@ -60,12 +62,6 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-035"] [data-part="row"]{display:flex;gap:1rem;width:max-content;animation:vibeui-testimonials-035-run var(--vibeui-testimonials-035-t) linear infinite}
 [data-vibeui-block="testimonials-035"] [data-part="row"][data-dir="right"]{animation-direction:reverse}
 [data-vibeui-block="testimonials-035"] [data-part="band"]:hover [data-part="row"]{animation-play-state:paused}
-[data-vibeui-block="testimonials-035"] [data-part="card"]{display:grid;gap:.6rem;width:20rem;padding:1.1rem 1.2rem;border-radius:1.2rem;background:var(--vibeui-testimonials-035-card);border:1px solid var(--vibeui-testimonials-035-line)}
-[data-vibeui-block="testimonials-035"] [data-part="card"] blockquote{margin:0;font-size:.95rem;line-height:1.45}
-[data-vibeui-block="testimonials-035"] [data-part="card"] blockquote::before{content:"“";color:var(--vibeui-testimonials-035-accent);font-family:var(--vibeui-testimonials-035-display);font-weight:900;margin-right:.1em}
-[data-vibeui-block="testimonials-035"] [data-part="card"] figcaption{display:flex;gap:.5rem;align-items:baseline;font-family:var(--vibeui-testimonials-035-mono);font-size:.68rem;letter-spacing:.06em;color:var(--vibeui-testimonials-035-muted)}
-[data-vibeui-block="testimonials-035"] [data-part="card"] figcaption b{font-weight:500;color:var(--vibeui-testimonials-035-fg)}
-[data-vibeui-block="testimonials-035"] [data-part="card"] figcaption i{font-style:normal;color:var(--vibeui-testimonials-035-accent)}
 @keyframes vibeui-testimonials-035-run{to{transform:translateX(-50%)}}
 @container (min-width: 56rem){[data-vibeui-block="testimonials-035"] [data-part="featured"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-035"] *{animation:none!important;transition:none!important}[data-vibeui-block="testimonials-035"] [data-part="band"]{transform:none;margin:0}[data-vibeui-block="testimonials-035"] [data-part="row"]{flex-wrap:wrap;width:auto}}`
@@ -145,13 +141,7 @@ export function Testimonials035({
               <div key={rowIndex} data-part="row" data-dir={rowIndex % 2 ? "right" : "left"}>
                 {[0, 1].map((copy) =>
                   row.map((item, index) => (
-                    <figure key={`${copy}-${index}`} data-part="card" aria-hidden={copy === 1 ? "true" : undefined}>
-                      <blockquote>{item.quote}</blockquote>
-                      <figcaption>
-                        <b>{item.who}</b>
-                        {item.role ? <i>{item.role}</i> : null}
-                      </figcaption>
-                    </figure>
+                    <Card048 key={`${copy}-${index}`} data-part="card" quote={item.quote} who={item.who} role={item.role} index={index} aria-hidden={copy === 1 ? "true" : undefined} accent={accent} />
                   )),
                 )}
               </div>

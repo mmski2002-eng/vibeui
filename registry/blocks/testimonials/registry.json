@@ -10,7 +10,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-040"
+      ],
       "files": [
         {
           "path": "testimonials-001/testimonials-001.tsx",
@@ -18,19 +20,21 @@
           "target": "@components/vibeui/testimonials-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-001-*. Число колонок и размер главной цитаты считаются от собственной ширины блока через container-запросы. Разметка семантическая: каждый отзыв — <figure> с <blockquote> и <figcaption>. Аватар — инициалы на подложке акцента: фотографии в отзывах чаще всего стоковые и портят доверие сильнее, чем их отсутствие.",
+      "docs": "Составной блок: импортирует card-040 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-001-*. Число колонок и размер главной цитаты считаются от собственной ширины блока через container-запросы. Разметка семантическая: каждый отзыв — <figure> с <blockquote> и <figcaption>. Аватар — инициалы на подложке акцента: фотографии в отзывах чаще всего стоковые и портят доверие сильнее, чем их отсутствие.",
       "meta": {
         "tags": [
           "testimonials",
           "social proof",
           "reviews",
-          "quotes"
+          "quotes",
+          "composite"
         ],
         "ai": {
           "export": "Testimonials001",
           "usage": "<Testimonials001\n  title=\"Что говорят те, кто уже собрал сайт\"\n  items={[{ quote: \"...\", name: \"Анна Ковалёва\", role: \"Арт-директор\", featured: true }]}\n/>",
           "summary": "Секция отзывов: главный отзыв набран засечным шрифтом и занимает две колонки, остальные идут мелкой сеткой. Каждый отзыв — figure с цитатой, инициалами вместо фото, именем и должностью. Сетка перестраивается от собственной ширины блока: одна колонка, две, три. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-040 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-001-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "иерархию: один отзыв крупный, остальные мелкие — равные карточки превращают секцию в шум, который не читают",
             "смену гарнитуры у главной цитаты: засечный шрифт отличает её сильнее, чем размер",
@@ -62,6 +66,7 @@
             "ai": {
               "summary": "A testimonials section: the featured quote is set in a serif and spans two columns while the rest form a small grid. Each testimonial is a figure with the quote, initials instead of a photo, a name and a role. The grid reflows on the block's own width: one column, two, three. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-040 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the hierarchy: one large quote among small ones — equal cards turn the section into noise nobody reads",
                 "the typeface switch on the featured quote: a serif sets it apart more than size does",
@@ -139,7 +144,7 @@
                 ]
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-001-*. The number of columns and the size of the featured quote are computed from the block's own width through container queries. The markup is semantic: every testimonial is a <figure> with a <blockquote> and a <figcaption>. The avatar is initials on an accent backdrop: photos in testimonials are most often stock ones and damage trust more than their absence does.",
+            "docs": "A composite block: imports card-040 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-001-*. The number of columns and the size of the featured quote are computed from the block's own width through container queries. The markup is semantic: every testimonial is a <figure> with a <blockquote> and a <figcaption>. The avatar is initials on an accent backdrop: photos in testimonials are most often stock ones and damage trust more than their absence does.",
             "slots": {
               "shape": "Testimonials: a featured serif quote and a small grid of cards",
               "items": [
@@ -231,7 +236,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-027",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-002/testimonials-002.tsx",
@@ -239,13 +247,14 @@
           "target": "@components/vibeui/testimonials-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-002-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три. Карточка — flex-колонка, где цитата растягивается, а подпись прижата вниз, поэтому карточки в ряду выглядят одинаковыми независимо от длины текста. Разметка семантическая: каждый отзыв — <figure> с <blockquote> и <figcaption>. Инициалы вместо фотографий: стоковое лицо в отзыве заметно и вредит доверию.",
+      "docs": "Составной блок: импортирует card-027, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-002-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три. Карточка — flex-колонка, где цитата растягивается, а подпись прижата вниз, поэтому карточки в ряду выглядят одинаковыми независимо от длины текста. Разметка семантическая: каждый отзыв — <figure> с <blockquote> и <figcaption>. Инициалы вместо фотографий: стоковое лицо в отзыве заметно и вредит доверию.",
       "meta": {
         "tags": [
           "testimonials",
           "grid",
           "social proof",
-          "reviews"
+          "reviews",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -301,6 +310,7 @@
           "usage": "<Testimonials002\n  title=\"Что говорят команды\"\n  items={[{ quote: \"Собираем страницу за вечер.\", name: \"Анна Ковалёва\", role: \"Маркетинг\", source: \"Отзыв в чате\" }]}\n/>",
           "summary": "Секция отзывов ровной сеткой: надзаголовок, заголовок и карточки одинакового веса. В каждой — цитата, инициалы автора, должность и подпись источника. Число колонок меняется от собственной ширины блока. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты card-027, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-002-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "источник отзыва у каждой карточки: без него отзыв читается как написанный маркетологом",
             "равный вес карточек — этот блок показывает объём, а не одну громкую цитату",
@@ -361,6 +371,7 @@
             "ai": {
               "summary": "A testimonial section in an even grid: an eyebrow, a heading and cards of equal weight. Each holds a quote, the author's initials, their role and a source badge. The number of columns follows the block's own width. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the card-027, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the source badge on every card: without it a testimonial reads as marketing copy",
                 "the equal weight of the cards — this block shows volume, not one loud quote",
@@ -455,7 +466,7 @@
                 ]
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-002-*. A server component. The number of columns is computed from the block's own width: one, two, three. The card is a flex column where the quote stretches and the caption is pushed to the bottom, so cards in a row look identical no matter how long the text is. The markup is semantic: every testimonial is a <figure> with a <blockquote> and a <figcaption>. Initials instead of photos: a stock face in a testimonial is noticeable and hurts trust.",
+            "docs": "A composite block: imports card-027, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-002-*. A server component. The number of columns is computed from the block's own width: one, two, three. The card is a flex column where the quote stretches and the caption is pushed to the bottom, so cards in a row look identical no matter how long the text is. The markup is semantic: every testimonial is a <figure> with a <blockquote> and a <figcaption>. Initials instead of photos: a stock face in a testimonial is noticeable and hurts trust.",
             "slots": {
               "shape": "Testimonials in an even grid of equal cards",
               "items": [
@@ -530,7 +541,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-041"
+      ],
       "files": [
         {
           "path": "testimonials-003/testimonials-003.tsx",
@@ -538,13 +551,14 @@
           "target": "@components/vibeui/testimonials-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-003-*. Серверный компонент. Кегль цитаты считается в cqi от собственной ширины блока, строки выравниваются через text-wrap:balance. Кавычка — крупный знак в отдельном слое с pointer-events:none и user-select:none, обрезанный краем секции: это подложка, а не украшение, поэтому она не мешает выделять текст. Цифры размечены списком определений <dl>: значение и подпись — пара, а не два независимых абзаца.",
+      "docs": "Составной блок: импортирует card-041 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-003-*. Серверный компонент. Кегль цитаты считается в cqi от собственной ширины блока, строки выравниваются через text-wrap:balance. Кавычка — крупный знак в отдельном слое с pointer-events:none и user-select:none, обрезанный краем секции: это подложка, а не украшение, поэтому она не мешает выделять текст. Цифры размечены списком определений <dl>: значение и подпись — пара, а не два независимых абзаца.",
       "meta": {
         "tags": [
           "testimonials",
           "quote",
           "case study",
-          "metrics"
+          "metrics",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -557,6 +571,7 @@
           "usage": "<Testimonials003\n  quote=\"Мы перестали спорить о том, как должна выглядеть страница.\"\n  name=\"Елена Ремизова\"\n  role=\"Директор по продукту\"\n  metrics={[{ value: \"4 дня\", caption: \"вместо трёх недель\" }]}\n/>",
           "summary": "Секция с одним крупным отзывом: цитата засечным шрифтом во всю ширину, инициалы автора, должность, название компании и три цифры под чертой. Приём для случая, когда есть один действительно сильный отзыв. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты card-041 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-003-* и не подменять её токенами вашей темы",
             "одну цитату: смысл блока в том, что она одна — добавите вторую, и приём исчезнет",
             "засечную гарнитуру цитаты: она отличает прямую речь от остального текста страницы сильнее, чем размер",
@@ -619,6 +634,7 @@
             "ai": {
               "summary": "A section with a single large testimonial: the quote set in serif across the full width, the author's initials, role, company name and three numbers under a rule. The device for when you have one genuinely strong testimonial. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the card-041 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-003-* palette — do not swap it for your theme tokens",
                 "the single quote: the point of the block is that there is only one — add a second and the device disappears",
                 "the serif face on the quote: it separates direct speech from the rest of the page more strongly than size does",
@@ -688,7 +704,7 @@
                 "avatarImage": "/demo/avatars/pavel-256.webp"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-003-*. A server component. The type size of the quote is computed in cqi from the block's own width, and the lines are balanced with text-wrap:balance. The quotation mark is a large glyph in a separate layer with pointer-events:none and user-select:none, clipped by the edge of the section: it is a backdrop rather than an ornament, so it does not get in the way of selecting the text. The numbers are marked up as a definition list <dl>: the value and its caption are a pair, not two independent paragraphs.",
+            "docs": "A composite block: imports card-041 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-003-*. A server component. The type size of the quote is computed in cqi from the block's own width, and the lines are balanced with text-wrap:balance. The quotation mark is a large glyph in a separate layer with pointer-events:none and user-select:none, clipped by the edge of the section: it is a backdrop rather than an ornament, so it does not get in the way of selecting the text. The numbers are marked up as a definition list <dl>: the value and its caption are a pair, not two independent paragraphs.",
             "slots": {
               "shape": "One large full-width serif quote and three numbers",
               "items": [
@@ -756,7 +772,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-026",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-004/testimonials-004.tsx",
@@ -764,13 +783,14 @@
           "target": "@components/vibeui/testimonials-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-004-*. Серверный компонент. Логотипы — текстовые начертания со знаком, вырезанным из конического градиента через mask-image: внешних файлов нет, знак перекрашивается вместе с акцентом. Ячейки разделены только горизонтальными линиями, без рамок и теней: полоса логотипов должна читаться как список, а не как набор карточек. Колонки считаются от собственной ширины блока: одна, две, четыре.",
+      "docs": "Составной блок: импортирует card-026, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-004-*. Серверный компонент. Логотипы — текстовые начертания со знаком, вырезанным из конического градиента через mask-image: внешних файлов нет, знак перекрашивается вместе с акцентом. Ячейки разделены только горизонтальными линиями, без рамок и теней: полоса логотипов должна читаться как список, а не как набор карточек. Колонки считаются от собственной ширины блока: одна, две, четыре.",
       "meta": {
         "tags": [
           "testimonials",
           "logos",
           "clients",
-          "social proof"
+          "social proof",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -780,6 +800,7 @@
           "usage": "<Testimonials004\n  title=\"Нас выбирают не за красивые слова\"\n  items={[{ company: \"Артель\", industry: \"Производство\", quote: \"Каталог собрали из готовых секций.\", person: \"Елена Ремизова, продукт\" }]}\n/>",
           "summary": "Лента клиентов: у каждой компании — начертание с фирменным знаком, отрасль, короткая цитата и имя сказавшего. Заменяет безмолвную полосу логотипов, которая ничего не доказывает. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты card-026, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-004-* и не подменять её токенами вашей темы",
             "цитату под каждым логотипом: полоса логотипов без слов не доказывает, что это клиенты",
             "имя и должность сказавшего — анонимная цитата от компании звучит как пресс-релиз",
@@ -840,6 +861,7 @@
             "ai": {
               "summary": "A client row: every company gets a wordmark with a glyph, an industry, a short quote and the name of whoever said it. It replaces the silent logo strip that proves nothing. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the card-026, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-004-* palette — do not swap it for your theme tokens",
                 "the quote under every logo: a wordless logo strip does not prove these are clients",
                 "the name and role of the speaker — an anonymous company quote sounds like a press release",
@@ -916,7 +938,7 @@
                 ]
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-004-*. A server component. The logos are text wordmarks with a glyph cut out of a conic gradient through mask-image: there are no external files, and the glyph is recoloured along with the accent. The cells are separated by horizontal rules alone, with no borders and no shadows: a logo strip has to read as a list rather than as a set of cards. The columns are computed from the block's own width: one, two, four.",
+            "docs": "A composite block: imports card-026, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-004-*. A server component. The logos are text wordmarks with a glyph cut out of a conic gradient through mask-image: there are no external files, and the glyph is recoloured along with the accent. The cells are separated by horizontal rules alone, with no borders and no shadows: a logo strip has to read as a list rather than as a set of cards. The columns are computed from the block's own width: one, two, four.",
             "slots": {
               "shape": "A client row: a wordmark, industry, a short quote, the author",
               "items": [
@@ -977,7 +999,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-028"
+      ],
       "files": [
         {
           "path": "testimonials-005/testimonials-005.tsx",
@@ -985,13 +1009,14 @@
           "target": "@components/vibeui/testimonials-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-005-*. Серверный компонент. Звезда — фигура clip-path, а не шрифтовой знак: она одинакова во всех системах и красится переменной. Половинная оценка делается линейным градиентом с резкой границей на 50 %, состояние передаётся атрибутом data-filled. Каждый ряд звёзд помечен role=\"img\" с текстовой оценкой в aria-label — иначе скринридер прочитает пять одинаковых пустых элементов. Число колонок считается от собственной ширины блока.",
+      "docs": "Составной блок: импортирует card-028 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-005-*. Серверный компонент. Звезда — фигура clip-path, а не шрифтовой знак: она одинакова во всех системах и красится переменной. Половинная оценка делается линейным градиентом с резкой границей на 50 %, состояние передаётся атрибутом data-filled. Каждый ряд звёзд помечен role=\"img\" с текстовой оценкой в aria-label — иначе скринридер прочитает пять одинаковых пустых элементов. Число колонок считается от собственной ширины блока.",
       "meta": {
         "tags": [
           "testimonials",
           "rating",
           "stars",
-          "reviews"
+          "reviews",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1001,6 +1026,7 @@
           "usage": "<Testimonials005\n  average=\"4,8\"\n  total=\"на основе 1 214 оценок\"\n  items={[{ rating: 5, title: \"Приехало раньше срока\", quote: \"Упаковано плотно.\", name: \"Наталья В.\", date: \"12 марта\" }]}\n/>",
           "summary": "Секция отзывов с оценками: в шапке средняя оценка, ряд звёзд и число отзывов, ниже карточки с собственной оценкой, коротким заголовком, текстом, именем и датой. Звёзды нарисованы CSS и заливаются на долю оценки. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-028 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-005-* и не подменять её токенами вашей темы",
             "role=\"img\" с текстовой оценкой в aria-label у каждого ряда звёзд: без него скринридер читает пять безымянных элементов",
             "звезду фигурой clip-path, а не символом шрифта — символ выглядит по-разному в каждой системе",
@@ -1063,6 +1089,7 @@
             "ai": {
               "summary": "A review section with ratings: the header holds the average, a row of stars and the review count; below are cards with their own rating, a short title, the text, a name and a date. The stars are drawn in CSS and filled to the fraction of the score. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-028 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-005-* palette — do not swap it for your theme tokens",
                 "role=\"img\" with the score written into aria-label on every star row: without it a screen reader reads five nameless elements",
                 "the star as a clip-path shape rather than a font character — the character looks different in every system",
@@ -1162,7 +1189,7 @@
                 ]
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-005-*. A server component. The star is a clip-path shape rather than a font glyph: it is identical across systems and takes its colour from a variable. A half rating is made with a linear gradient with a hard stop at 50 %, and the state is passed through the data-filled attribute. Every row of stars is marked role=\"img\" with the score as text in aria-label — otherwise a screen reader reads out five identical empty elements. The number of columns is computed from the block's own width.",
+            "docs": "A composite block: imports card-028 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-005-*. A server component. The star is a clip-path shape rather than a font glyph: it is identical across systems and takes its colour from a variable. A half rating is made with a linear gradient with a hard stop at 50 %, and the state is passed through the data-filled attribute. Every row of stars is marked role=\"img\" with the score as text in aria-label — otherwise a screen reader reads out five identical empty elements. The number of columns is computed from the block's own width.",
             "slots": {
               "shape": "Reviews with ratings: the average, stars, a counter and cards",
               "items": [
@@ -1245,7 +1272,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-029",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-006/testimonials-006.tsx",
@@ -1253,13 +1283,14 @@
           "target": "@components/vibeui/testimonials-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-006-*. Серверный компонент. Кладка сделана на column-count с break-inside:avoid: карточки укладываются встык без единой строки JS и без измерения высот. Ровная сетка заставила бы подрезать цитаты под общий размер, а именно длина отзыва и есть признак того, что его писал человек. Блок намеренно тёмный — стена карточек на светлом фоне выглядит как таблица. Флаг highlight подсвечивает отдельные карточки градиентом от акцента.",
+      "docs": "Составной блок: импортирует card-029, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-006-*. Серверный компонент. Кладка сделана на column-count с break-inside:avoid: карточки укладываются встык без единой строки JS и без измерения высот. Ровная сетка заставила бы подрезать цитаты под общий размер, а именно длина отзыва и есть признак того, что его писал человек. Блок намеренно тёмный — стена карточек на светлом фоне выглядит как таблица. Флаг highlight подсвечивает отдельные карточки градиентом от акцента.",
       "meta": {
         "tags": [
           "testimonials",
           "masonry",
           "wall",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1323,6 +1354,7 @@
           "usage": "<Testimonials006\n  title=\"Живая стена отзывов\"\n  items={[{ quote: \"Секции ставятся копированием файла.\", name: \"Пётр Ляхов\", role: \"Разработчик\", highlight: true }]}\n/>",
           "summary": "Тёмная стена отзывов: карточки разной высоты укладываются в две-три колонки, часть подсвечена акцентом. Кладка держится на CSS columns, поэтому не нужны ни измерения, ни клиентский код. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-029, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-006-* и не подменять её токенами вашей темы",
             "column-count вместо сетки: именно он даёт разную высоту без подсчётов и без JS",
             "break-inside:avoid у карточки — иначе цитата разорвётся между колонками",
@@ -1374,6 +1406,7 @@
             "ai": {
               "summary": "A dark testimonial wall: cards of different heights stack into two or three columns, some highlighted with the accent. The masonry rests on CSS columns, so no measurement and no client code are needed. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-029, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-006-* palette — do not swap it for your theme tokens",
                 "column-count instead of a grid: it is what gives uneven heights with no measuring and no JS",
                 "break-inside:avoid on the card — otherwise a quote tears across columns",
@@ -1470,7 +1503,7 @@
                 ]
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-006-*. A server component. The masonry is built on column-count with break-inside:avoid: the cards stack flush without a single line of JS and without measuring heights. An even grid would force the quotes to be trimmed to a common size, and it is precisely the length of a testimonial that shows a human wrote it. The block is deliberately dark — a wall of cards on a light background looks like a table. The highlight flag lights up individual cards with a gradient from the accent.",
+            "docs": "A composite block: imports card-029, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-006-*. A server component. The masonry is built on column-count with break-inside:avoid: the cards stack flush without a single line of JS and without measuring heights. An even grid would force the quotes to be trimmed to a common size, and it is precisely the length of a testimonial that shows a human wrote it. The block is deliberately dark — a wall of cards on a light background looks like a table. The highlight flag lights up individual cards with a gradient from the accent.",
             "slots": {
               "shape": "A dark masonry testimonial wall in two or three columns",
               "items": [
@@ -1523,7 +1556,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-042",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-007/testimonials-007.tsx",
@@ -1531,14 +1567,15 @@
           "target": "@components/vibeui/testimonials-007.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-007-*. Серверный компонент, движение — чистый CSS. Трек каждой ленты содержит две копии ряда (вторая скрыта aria-hidden) и анимируется translateX(-50%): когда первая копия уезжает, её место занимает вторая, и цикл бесшовен. Ленты идут навстречу друг другу с разной длительностью, наведение ставит анимацию на паузу, mask-градиенты растворяют края, prefers-reduced-motion останавливает ленты совсем.",
+      "docs": "Составной блок: импортирует card-042, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-007-*. Серверный компонент, движение — чистый CSS. Трек каждой ленты содержит две копии ряда (вторая скрыта aria-hidden) и анимируется translateX(-50%): когда первая копия уезжает, её место занимает вторая, и цикл бесшовен. Ленты идут навстречу друг другу с разной длительностью, наведение ставит анимацию на паузу, mask-градиенты растворяют края, prefers-reduced-motion останавливает ленты совсем.",
       "meta": {
         "tags": [
           "testimonials",
           "marquee",
           "animation",
           "social proof",
-          "scroll"
+          "scroll",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1600,6 +1637,7 @@
           "usage": "<Testimonials007\n  title=\"Лента тех, кто уже собрал сайт\"\n  items={[{ quote: \"Собрали лендинг за вечер.\", name: \"Анна Ковалёва\", role: \"Маркетинг\" }]}\n/>",
           "summary": "Секция отзывов с двумя бегущими лентами карточек: верхняя едет влево, нижняя вправо, наведение ставит ленту на паузу. Движение собрано на CSS-анимации трека из двух копий ряда, поэтому цикл бесшовный, а компонент остаётся серверным. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-042, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-007-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "встречное движение лент с разной длительностью: синхронные однонаправленные ряды читаются как один зациклившийся элемент, а не как поток отзывов",
             "две копии ряда в треке и aria-hidden на второй — без дубля цикл рвётся, а со «зрячим» дублем скринридер читает каждый отзыв дважды",
@@ -1657,10 +1695,11 @@
           "en": {
             "title": "Scrolling Testimonial Marquee",
             "description": "Two testimonial marquees running toward each other: hover pauses the motion, reduced-motion stops it. Self-contained: one file, no dependencies, the motion is pure CSS.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-007-*. A server component; the motion is pure CSS. Each marquee track holds two copies of the row (the second is aria-hidden) and animates translateX(-50%): as the first copy leaves, the second takes its place, so the loop is seamless. The rows run toward each other at different speeds, hovering pauses the animation, mask gradients dissolve the edges, and prefers-reduced-motion stops the marquees entirely.",
+            "docs": "A composite block: imports card-042, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-007-*. A server component; the motion is pure CSS. Each marquee track holds two copies of the row (the second is aria-hidden) and animates translateX(-50%): as the first copy leaves, the second takes its place, so the loop is seamless. The rows run toward each other at different speeds, hovering pauses the animation, mask gradients dissolve the edges, and prefers-reduced-motion stops the marquees entirely.",
             "ai": {
               "summary": "A testimonials section with two marquee rows of cards: the top one runs left, the bottom one right, and hovering pauses a row. The motion is a CSS animation of a track built from two copies of the row, so the loop is seamless and the component stays a server one. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-042, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-007-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the opposing directions and different durations: synchronized one-way rows read as a single looping element, not a stream of testimonials",
                 "the two copies of the row inside the track with aria-hidden on the second — without the duplicate the loop breaks, and with a visible duplicate a screen reader announces every quote twice",
@@ -1812,7 +1851,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-030",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-008/testimonials-008.tsx",
@@ -1820,14 +1862,15 @@
           "target": "@components/vibeui/testimonials-008.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-008-*. Серверный компонент. Карточка — flex-колонка: метрика акцентным цветом, подпись к ней, дальше цитата, растянутая на свободное место, и автор, прижатый вниз, — поэтому карточки в ряду ровные при разной длине текста. Цифры набраны с font-variant-numeric:tabular-nums, число колонок считается от собственной ширины блока: одна, две, три.",
+      "docs": "Составной блок: импортирует card-030, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-008-*. Серверный компонент. Карточка — flex-колонка: метрика акцентным цветом, подпись к ней, дальше цитата, растянутая на свободное место, и автор, прижатый вниз, — поэтому карточки в ряду ровные при разной длине текста. Цифры набраны с font-variant-numeric:tabular-nums, число колонок считается от собственной ширины блока: одна, две, три.",
       "meta": {
         "tags": [
           "testimonials",
           "metrics",
           "results",
           "social proof",
-          "numbers"
+          "numbers",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1837,6 +1880,7 @@
           "usage": "<Testimonials008\n  title=\"Цифры, которые называют сами команды\"\n  items={[{ metric: \"−40%\", metricLabel: \"времени на вёрстку\", quote: \"Секции берём готовыми.\", name: \"Анна Ковалёва\", role: \"Маркетинг\" }]}\n/>",
           "summary": "Секция отзывов, где каждая карточка начинается с крупной метрики результата, а цитата под ней объясняет, откуда результат взялся. Метрика набрана акцентным цветом и табличными цифрами, сетка перестраивается от собственной ширины блока. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-030, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-008-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "иерархию карточки: метрика, подпись, цитата, автор — цифра отвечает на «что мне это даст» быстрее любой цитаты, цитата объясняет цифру",
             "акцентный цвет только на метрике: покрашенная цитата или рамка отнимут у цифры статус главного элемента",
@@ -1894,10 +1938,11 @@
           "en": {
             "title": "Testimonials with Results",
             "description": "Three cards where a large result metric sits above the quote: −40% time, 2 days, 0 dependencies. A number answers \"what do I get\" faster than a quote. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-008-*. A server component. The card is a flex column: the metric in the accent colour, its caption, then the quote stretched over the free space and the author pinned to the bottom — so cards in a row stay even with texts of different lengths. The digits use font-variant-numeric:tabular-nums, and the column count follows the block's own width: one, two, three.",
+            "docs": "A composite block: imports card-030, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-008-*. A server component. The card is a flex column: the metric in the accent colour, its caption, then the quote stretched over the free space and the author pinned to the bottom — so cards in a row stay even with texts of different lengths. The digits use font-variant-numeric:tabular-nums, and the column count follows the block's own width: one, two, three.",
             "ai": {
               "summary": "A testimonials section where every card opens with a large result metric and the quote below explains where the result came from. The metric is set in the accent colour with tabular figures, and the grid reflows on the block's own width. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-030, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-008-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the card hierarchy: metric, caption, quote, author — the number answers \"what do I get\" faster than any quote, and the quote explains the number",
                 "the accent colour on the metric only: a coloured quote or border would strip the number of its lead role",
@@ -2030,7 +2075,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-031",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-009/testimonials-009.tsx",
@@ -2038,14 +2086,15 @@
           "target": "@components/vibeui/testimonials-009.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-009-*. Серверный компонент. Masonry собрана на column-count с break-inside:avoid: посты разной длины ложатся плотно без строки JS и без измерения высот. Каждый пост — article с шапкой (инициалы, имя, ник), текстом и подвалом с сердцем-SVG и счётчиком лайков; счётчик форматируется через Intl.NumberFormat. Число колонок считается от собственной ширины блока: одна, две, три.",
+      "docs": "Составной блок: импортирует card-031, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-009-*. Серверный компонент. Masonry собрана на column-count с break-inside:avoid: посты разной длины ложатся плотно без строки JS и без измерения высот. Каждый пост — article с шапкой (инициалы, имя, ник), текстом и подвалом с сердцем-SVG и счётчиком лайков; счётчик форматируется через Intl.NumberFormat. Число колонок считается от собственной ширины блока: одна, две, три.",
       "meta": {
         "tags": [
           "testimonials",
           "social",
           "masonry",
           "posts",
-          "wall"
+          "wall",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2115,6 +2164,7 @@
           "usage": "<Testimonials009\n  title=\"Что пишут о нас в сети\"\n  items={[{ name: \"Анна Ковалёва\", handle: \"@akovaleva\", text: \"Собрала лендинг за вечер.\", likes: 214 }]}\n/>",
           "summary": "Стена отзывов в стиле постов соцсети: аватар из инициалов, имя, ник с собакой, текст поста и лайк-счётчик с сердцем. Посты разной длины укладываются masonry-кладкой на CSS columns, компонент серверный. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-031, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-009-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "masonry на column-count с break-inside:avoid — посты разной длины ложатся плотно без JS; ровная сетка заставила бы резать тексты под одну высоту",
             "разную длину постов: одинаково подстриженные абзацы выдают редактуру, а стена живёт именно разнобоем",
@@ -2172,10 +2222,11 @@
           "en": {
             "title": "Social Post Wall",
             "description": "A wall of testimonials styled as social posts: initials avatar, handle, text and a like counter, masonry on CSS columns. A post reads as more honest than a polished quote. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-009-*. A server component. The masonry is built on column-count with break-inside:avoid: posts of different lengths pack tightly without a line of JS and without measuring heights. Every post is an article with a header (initials, name, handle), the text and a footer with an SVG heart and a like counter formatted through Intl.NumberFormat. The column count follows the block's own width: one, two, three.",
+            "docs": "A composite block: imports card-031, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-009-*. A server component. The masonry is built on column-count with break-inside:avoid: posts of different lengths pack tightly without a line of JS and without measuring heights. Every post is an article with a header (initials, name, handle), the text and a footer with an SVG heart and a like counter formatted through Intl.NumberFormat. The column count follows the block's own width: one, two, three.",
             "ai": {
               "summary": "A wall of testimonials styled as social posts: an initials avatar, a name, an @handle, the post text and a like counter with a heart. Posts of different lengths pack into a masonry on CSS columns, and the component stays a server one. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-031, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-009-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the masonry on column-count with break-inside:avoid — posts of different lengths pack tightly without JS; an even grid would force the texts to be cut to one height",
                 "the varying post lengths: identically trimmed paragraphs betray editing, and the wall lives on the unevenness",
@@ -2349,7 +2400,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-107"
+      ],
       "files": [
         {
           "path": "testimonials-010/testimonials-010.tsx",
@@ -2357,14 +2410,15 @@
           "target": "@components/vibeui/testimonials-010.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-010-*. Серверный компонент. Цитата набрана системной засечной гарнитурой кеглем clamp(1.75rem…4.25rem) от собственной ширины блока, text-wrap:balance выравнивает строки. Кавычки — псевдоэлементы ::before и ::after акцентного цвета: открывающая увеличена и вынесена в поле слева, закрывающая стоит в строке. Автор отделён короткой акцентной чертой, сделанной ::before у figcaption.",
+      "docs": "Составной блок: импортирует card-107 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-010-*. Серверный компонент. Цитата набрана системной засечной гарнитурой кеглем clamp(1.75rem…4.25rem) от собственной ширины блока, text-wrap:balance выравнивает строки. Кавычки — псевдоэлементы ::before и ::after акцентного цвета: открывающая увеличена и вынесена в поле слева, закрывающая стоит в строке. Автор отделён короткой акцентной чертой, сделанной ::before у figcaption.",
       "meta": {
         "tags": [
           "testimonials",
           "quote",
           "typography",
           "hero",
-          "statement"
+          "statement",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2374,6 +2428,7 @@
           "usage": "<Testimonials010\n  quote=\"Мы перестали спорить о вёрстке.\"\n  name=\"Анна Ковалёва\"\n  role=\"Арт-директор, студия «Полёт»\"\n/>",
           "summary": "Одна цитата на всю секцию: гигантская засечная типографика, акцентные кавычки-псевдоэлементы, автор внизу за короткой акцентной чертой. Кегль считается от собственной ширины блока, ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-107 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-010-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "гигантский кегль цитаты: это блок-заявление, уменьшенный до «обычного» размера он теряет причину существовать",
             "кавычки псевдоэлементами акцентного цвета — они маркируют жанр раньше, чем прочитано первое слово, и не попадают в текст при копировании",
@@ -2431,10 +2486,11 @@
           "en": {
             "title": "Full-Screen Quote",
             "description": "A single quote in giant serif typography with accent quotation marks and the author below. A statement: we have a testimonial worth a whole section. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-010-*. A server component. The quote is set in the system serif at clamp(1.75rem…4.25rem) computed from the block's own width, with text-wrap:balance evening out the lines. The quotation marks are ::before and ::after pseudo-elements in the accent colour: the opening one is enlarged and hung into the left margin, the closing one stays in the line. The author is set off by a short accent dash drawn with a ::before on the figcaption.",
+            "docs": "A composite block: imports card-107 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-010-*. A server component. The quote is set in the system serif at clamp(1.75rem…4.25rem) computed from the block's own width, with text-wrap:balance evening out the lines. The quotation marks are ::before and ::after pseudo-elements in the accent colour: the opening one is enlarged and hung into the left margin, the closing one stays in the line. The author is set off by a short accent dash drawn with a ::before on the figcaption.",
             "ai": {
               "summary": "One quote filling the section: giant serif typography, accent pseudo-element quotation marks, the author below behind a short accent dash. The size is computed from the block's own width; zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-107 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-010-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the giant quote size: this is a statement block, and shrunk to a \"normal\" size it loses its reason to exist",
                 "the pseudo-element quotation marks in the accent colour — they mark the genre before the first word is read and never end up in copied text",
@@ -2530,7 +2586,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-032",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-011/testimonials-011.tsx",
@@ -2538,14 +2597,15 @@
           "target": "@components/vibeui/testimonials-011.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-011-*. Серверный компонент. Звёзды — два наложенных ряда SVG: серый снизу, акцентный сверху, обрезанный по ширине на score/5 — дробная оценка закрашивается честно, без округления до целых. У ряда звёзд aria-label с оценкой, сами SVG скрыты от скринридера. Балл выводится с запятой через toFixed и tabular-nums, сетка карточек считается от собственной ширины блока: одна, две, четыре колонки.",
+      "docs": "Составной блок: импортирует card-032, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-011-*. Серверный компонент. Звёзды — два наложенных ряда SVG: серый снизу, акцентный сверху, обрезанный по ширине на score/5 — дробная оценка закрашивается честно, без округления до целых. У ряда звёзд aria-label с оценкой, сами SVG скрыты от скринридера. Балл выводится с запятой через toFixed и tabular-nums, сетка карточек считается от собственной ширины блока: одна, две, четыре колонки.",
       "meta": {
         "tags": [
           "testimonials",
           "ratings",
           "stars",
           "social proof",
-          "platforms"
+          "platforms",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2555,6 +2615,7 @@
           "usage": "<Testimonials011\n  title=\"Оценки на площадках\"\n  items={[{ platform: \"G2\", score: 4.8, reviews: \"312 отзывов\" }]}\n/>",
           "summary": "Ряд карточек с рейтингами продукта на внешних площадках: название площадки, ряд звёзд, закрашенный ровно на величину оценки, балл из пяти и число отзывов. Дробная закраска сделана обрезкой акцентного слоя звёзд по ширине. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-032, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-011-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "двухслойные звёзды с обрезкой по ширине: закраска на 4,8 из 5 видна честно — округление до пяти целых звёзд превращает рейтинг в декорацию",
             "число отзывов под баллом: оценка 4,9 по трём отзывам и по пятистам — разные утверждения",
@@ -2612,10 +2673,11 @@
           "en": {
             "title": "Platform Ratings",
             "description": "A row of cards with the product's scores on independent platforms: stars, a 4.8/5 rating and the review count. A score on someone else's platform beats a quote on your own site. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-011-*. A server component. The stars are two stacked SVG rows: a grey one below and an accent one above, clipped in width to score/5 — a fractional score is filled honestly, with no rounding to whole stars. The star row carries an aria-label with the score while the SVGs themselves are hidden from screen readers. The score is printed via toFixed with tabular-nums, and the card grid follows the block's own width: one, two, four columns.",
+            "docs": "A composite block: imports card-032, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-011-*. A server component. The stars are two stacked SVG rows: a grey one below and an accent one above, clipped in width to score/5 — a fractional score is filled honestly, with no rounding to whole stars. The star row carries an aria-label with the score while the SVGs themselves are hidden from screen readers. The score is printed via toFixed with tabular-nums, and the card grid follows the block's own width: one, two, four columns.",
             "ai": {
               "summary": "A row of cards with the product's ratings on external platforms: the platform name, a star row filled exactly to the score, the mark out of five and the review count. The fractional fill is done by clipping the accent star layer in width. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-032, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-011-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the two-layer stars clipped in width: a 4.8-of-5 fill stays honest — rounding to five whole stars turns the rating into decoration",
                 "the review count under the score: a 4.9 from three reviews and from five hundred are different claims",
@@ -2746,7 +2808,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-043",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-012/testimonials-012.tsx",
@@ -2754,14 +2819,15 @@
           "target": "@components/vibeui/testimonials-012.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-012-*. Серверный компонент: табы собраны на radio-инпутах внутри label и селекторах :has() — переключение сегментов работает без JS, клавиатура получает стрелки радиогруппы бесплатно. Активный таб заливается акцентом с почти чёрным текстом, панель показывается правилом «:has(input[value=N]:checked) → панель N»; поддержано до четырёх сегментов. В каждом сегменте — сетка из двух цитат-figure.",
+      "docs": "Составной блок: импортирует card-043, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-012-*. Серверный компонент: табы собраны на radio-инпутах внутри label и селекторах :has() — переключение сегментов работает без JS, клавиатура получает стрелки радиогруппы бесплатно. Активный таб заливается акцентом с почти чёрным текстом, панель показывается правилом «:has(input[value=N]:checked) → панель N»; поддержано до четырёх сегментов. В каждом сегменте — сетка из двух цитат-figure.",
       "meta": {
         "tags": [
           "testimonials",
           "tabs",
           "segments",
           "social proof",
-          "css-only"
+          "css-only",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2823,6 +2889,7 @@
           "usage": "<Testimonials012\n  title=\"Каждый хвалит за своё\"\n  segments={[{ label: \"Стартапы\", items: [{ quote: \"Лендинг был готов к утру.\", name: \"Павел Гусев\", role: \"Сооснователь\" }] }]}\n/>",
           "summary": "Секция отзывов с CSS-табами по сегментам аудитории: стартапы, агентства, продуктовые команды. Переключение работает на radio-инпутах и :has() без клиентского JS, в каждом сегменте по две цитаты. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-043, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-012-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "radio-инпуты с :has() вместо useState: переключение обязано работать без JS, иначе блок перестаёт быть серверным",
             "разбиение отзывов по сегментам — посетитель ищет отзыв «про таких, как я», общая куча отнимает у него этот шанс",
@@ -2880,10 +2947,11 @@
           "en": {
             "title": "Segmented Testimonials",
             "description": "Testimonials sorted by audience segment: startups, agencies, product teams. The tabs run on radio inputs without a line of JS. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-012-*. A server component: the tabs are built on radio inputs inside labels and :has() selectors — switching segments works without JS, and the keyboard gets the radio group's arrow keys for free. The active tab is filled with the accent and near-black text; a panel is shown by the rule \":has(input[value=N]:checked) → panel N\", with up to four segments supported. Each segment holds a grid of two figure quotes.",
+            "docs": "A composite block: imports card-043, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-012-*. A server component: the tabs are built on radio inputs inside labels and :has() selectors — switching segments works without JS, and the keyboard gets the radio group's arrow keys for free. The active tab is filled with the accent and near-black text; a panel is shown by the rule \":has(input[value=N]:checked) → panel N\", with up to four segments supported. Each segment holds a grid of two figure quotes.",
             "ai": {
               "summary": "A testimonials section with CSS tabs by audience segment: startups, agencies, product teams. Switching runs on radio inputs and :has() with no client JS, and every segment holds two quotes. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-043, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-012-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the radio inputs with :has() instead of useState: switching has to work without JS, otherwise the block stops being a server component",
                 "the split of testimonials into segments — a visitor looks for a quote \"from someone like me\", and one common pile takes that chance away",
@@ -3044,7 +3112,10 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-044",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-013/testimonials-013.tsx",
@@ -3052,14 +3123,15 @@
           "target": "@components/vibeui/testimonials-013.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-013-*. Серверный компонент. Две панели-article в сетке: «Было» набрано приглушённым цветом с маркерами-тире, «Стало» подсвечено тёплым тинтом акцента через color-mix и маркерами-галочками — контраст виден до чтения, одним оформлением, без красного и зелёного. Под панелями figure с цитатой и автором, отделённая линией. На узкой ширине панели складываются в колонку: «Было» всегда читается первым.",
+      "docs": "Составной блок: импортирует card-044, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-013-*. Серверный компонент. Две панели-article в сетке: «Было» набрано приглушённым цветом с маркерами-тире, «Стало» подсвечено тёплым тинтом акцента через color-mix и маркерами-галочками — контраст виден до чтения, одним оформлением, без красного и зелёного. Под панелями figure с цитатой и автором, отделённая линией. На узкой ширине панели складываются в колонку: «Было» всегда читается первым.",
       "meta": {
         "tags": [
           "testimonials",
           "before-after",
           "comparison",
           "case study",
-          "story"
+          "story",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3069,6 +3141,7 @@
           "usage": "<Testimonials013\n  title=\"Что изменилось после перехода\"\n  beforePoints={[\"Неделя вёрстки на страницу\"]}\n  afterPoints={[\"Страница собирается за вечер\"]}\n  quote=\"Маркетинг собирает страницы сам.\"\n  name=\"Ирина Белова\"\n  role=\"Продакт-менеджер\"\n/>",
           "summary": "Секция-сравнение: панель боли «Было» приглушённым цветом, панель результата «Стало» с тёплой акцентной подсветкой, под ними цитата клиента, подтверждающая перемену. Раскладка считается от собственной ширины блока. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-044, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-013-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "асимметрию панелей: «Было» приглушено, «Стало» подсвечено акцентом — равные панели превращают историю перемены в таблицу сравнения",
             "тёплый тинт «Стало» через color-mix от акцента, а не зелёный: зелёный и красный в этой библиотеке зарезервированы за семантикой статусов",
@@ -3126,10 +3199,11 @@
           "en": {
             "title": "Before and After",
             "description": "A testimonial unfolded into a story of change: a \"before\" pain panel, an accented \"after\" result panel and a confirming quote below them. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-013-*. A server component. Two article panels in a grid: \"Before\" is set in a muted colour with dash markers, \"After\" is lit with a warm accent tint via color-mix and check markers — the contrast is visible before reading, through styling alone, with no red or green. Below the panels sits a figure with the quote and the author, set off by a rule. At narrow widths the panels stack into a column: \"Before\" always reads first.",
+            "docs": "A composite block: imports card-044, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-013-*. A server component. Two article panels in a grid: \"Before\" is set in a muted colour with dash markers, \"After\" is lit with a warm accent tint via color-mix and check markers — the contrast is visible before reading, through styling alone, with no red or green. Below the panels sits a figure with the quote and the author, set off by a rule. At narrow widths the panels stack into a column: \"Before\" always reads first.",
             "ai": {
               "summary": "A comparison section: the \"Before\" pain panel in a muted colour, the \"After\" result panel with a warm accent highlight, and a client quote below confirming the change. The layout follows the block's own width. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-044, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-013-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the asymmetry of the panels: \"Before\" muted, \"After\" lit with the accent — equal panels turn a story of change into a comparison table",
                 "the warm \"After\" tint via color-mix from the accent rather than green: green and red in this library are reserved for status semantics",
@@ -3256,7 +3330,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "testimonials-014/testimonials-014.tsx",
@@ -3264,14 +3340,15 @@
           "target": "@components/vibeui/testimonials-014.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-014-*. Серверный компонент. Постер — панель 16:9 с градиентом из тёплых тёмных тонов акцента, акцентной кнопкой play и подписью с длительностью; вся панель декоративна и скрыта aria-hidden, потому что неработающий настоящий button обманул бы клавиатуру и скринридер. Рядом — расшифровка: figure с цитатой и автором под подписью «Расшифровка». На широкой ширине постер и текст стоят в две колонки 7:5, на узкой складываются.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-014-*. Серверный компонент. Постер — панель 16:9 с градиентом из тёплых тёмных тонов акцента, акцентной кнопкой play и подписью с длительностью; вся панель декоративна и скрыта aria-hidden, потому что неработающий настоящий button обманул бы клавиатуру и скринридер. Рядом — расшифровка: figure с цитатой и автором под подписью «Расшифровка». На широкой ширине постер и текст стоят в две колонки 7:5, на узкой складываются.",
       "meta": {
         "tags": [
           "testimonials",
           "video",
           "transcript",
           "social proof",
-          "poster"
+          "poster",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -3284,6 +3361,7 @@
           "usage": "<Testimonials014\n  title=\"Две минуты о том, как это работает\"\n  posterLabel=\"Анна Ковалёва — о переходе\"\n  duration=\"2:14\"\n  quote=\"Неделю вёрстки мы превратили в один вечер.\"\n  name=\"Анна Ковалёва\"\n  role=\"Руководитель маркетинга\"\n/>",
           "summary": "Секция видео-отзыва: слева постер 16:9 с акцентной кнопкой play и длительностью, справа текстовая расшифровка цитаты с автором. Постер — декорация без плеера и видеофайла, реальное видео подключается на месте. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-014-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "расшифровку рядом с постером — большинство посетителей не нажмёт play, и суть отзыва обязана дойти и до них",
             "aria-hidden на постере, пока не подключено настоящее видео: нарисованная кнопка, притворяющаяся рабочим button, обманывает клавиатуру и скринридер",
@@ -3342,10 +3420,11 @@
           "en": {
             "title": "Video Testimonial",
             "description": "A video testimonial poster with a play button (decorative, no player) and the text transcript of the quote beside it. Most people will not press play — the point has to reach them too. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-014-*. A server component. The poster is a 16:9 panel with a gradient of warm dark accent tones, an accent play button and a caption with the duration; the whole panel is decorative and aria-hidden, because a non-working real button would betray the keyboard and the screen reader. Beside it is the transcript: a figure with the quote and the author under a \"Transcript\" label. At wide widths the poster and the text sit in 7:5 columns; at narrow ones they stack.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-014-*. A server component. The poster is a 16:9 panel with a gradient of warm dark accent tones, an accent play button and a caption with the duration; the whole panel is decorative and aria-hidden, because a non-working real button would betray the keyboard and the screen reader. Beside it is the transcript: a figure with the quote and the author under a \"Transcript\" label. At wide widths the poster and the text sit in 7:5 columns; at narrow ones they stack.",
             "ai": {
               "summary": "A video testimonial section: a 16:9 poster with an accent play button and a duration on the left, the text transcript of the quote with its author on the right. The poster is decoration without a player or video file; the real video is wired up on site. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-014-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the transcript beside the poster — most visitors will not press play, and the point of the testimonial has to reach them too",
                 "aria-hidden on the poster until a real video is wired up: a painted button pretending to be a working one betrays the keyboard and the screen reader",
@@ -3466,7 +3545,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "badge-028"
+      ],
       "files": [
         {
           "path": "testimonials-015/testimonials-015.tsx",
@@ -3474,14 +3555,15 @@
           "target": "@components/vibeui/testimonials-015.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-015-*. Серверный компонент. Центрированная figure: цитата кеглем от собственной ширины блока с акцентными кавычками-псевдоэлементами, под ней плашка-пилюля с инициалами компании, именем и должностью автора. Ниже, за линией, строка логотипов клиентов — словесные метки текстом в приглушённом цвете: чужие SVG в registry-блоке — это обещание прав на чужие знаки, а текст заменяется своим за минуту.",
+      "docs": "Составной блок: импортирует badge-028 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-testimonials-015-*. Серверный компонент. Центрированная figure: цитата кеглем от собственной ширины блока с акцентными кавычками-псевдоэлементами, под ней плашка-пилюля с инициалами компании, именем и должностью автора. Ниже, за линией, строка логотипов клиентов — словесные метки текстом в приглушённом цвете: чужие SVG в registry-блоке — это обещание прав на чужие знаки, а текст заменяется своим за минуту.",
       "meta": {
         "tags": [
           "testimonials",
           "quote",
           "logos",
           "clients",
-          "social proof"
+          "social proof",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3491,6 +3573,7 @@
           "usage": "<Testimonials015\n  quote=\"Мы собрали новый сайт за спринт.\"\n  name=\"Дмитрий Хан\"\n  role=\"Основатель\"\n  company=\"Студия «Плот»\"\n  logos={[\"Северный путь\", \"Sturm\", \"Плот\"]}\n/>",
           "summary": "Крупная центрированная цитата с акцентными кавычками, под ней плашка компании с инициалами, именем и должностью автора, а внизу за линией — строка текстовых логотипов клиентов. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты badge-028 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-testimonials-015-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "связку «цитата + строка логотипов»: голос убеждает, логотипы показывают массовость — порознь каждая половина слабее",
             "плашку-пилюлю компании под цитатой: подпись с компанией объясняет, почему этому голосу стоит верить",
@@ -3548,10 +3631,11 @@
           "en": {
             "title": "Quote with Logos",
             "description": "A large quote with the author's company plaque and a row of text client logos below: one voice convinces, the logo row shows it is not the only one. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-testimonials-015-*. A server component. A centred figure: the quote sized from the block's own width with accent pseudo-element quotation marks, and below it a pill plaque with the company initials, the author's name and role. Further down, behind a rule, sits the row of client logos — wordmarks set as text in a muted colour: shipping others' SVGs in a registry block is a claim to rights over their marks, while text is replaced with your own in a minute.",
+            "docs": "A composite block: imports badge-028 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-testimonials-015-*. A server component. A centred figure: the quote sized from the block's own width with accent pseudo-element quotation marks, and below it a pill plaque with the company initials, the author's name and role. Further down, behind a rule, sits the row of client logos — wordmarks set as text in a muted colour: shipping others' SVGs in a registry block is a claim to rights over their marks, while text is replaced with your own in a minute.",
             "ai": {
               "summary": "A large centred quote with accent quotation marks, a company plaque with initials, name and role below it, and a row of text client logos behind a rule at the bottom. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the badge-028 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-testimonials-015-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the pairing of the quote and the logo row: the voice convinces, the logos show scale — apart, each half is weaker",
                 "the company pill under the quote: a caption with the company explains why this voice deserves trust",
@@ -3679,7 +3763,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-033"
+      ],
       "files": [
         {
           "path": "testimonials-016/testimonials-016.tsx",
@@ -3687,7 +3773,7 @@
           "target": "@components/vibeui/testimonials-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Шапка секции — flex с заголовком слева и общей оценкой справа. Карточки 1/2/3 колонки (container query 48rem и 64rem); появление @keyframes с задержкой --n×90ms. Кавычка — абсолютный серифный символ с opacity .35; звёзды — строка «★» по rating с aria-label; источник — пилюля справа в строке автора. Палитра --vibeui-testimonials-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-033 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Шапка секции — flex с заголовком слева и общей оценкой справа. Карточки 1/2/3 колонки (container query 48rem и 64rem); появление @keyframes с задержкой --n×90ms. Кавычка — абсолютный серифный символ с opacity .35; звёзды — строка «★» по rating с aria-label; источник — пилюля справа в строке автора. Палитра --vibeui-testimonials-016-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3699,7 +3785,8 @@
           "listing",
           "reviews",
           "testimonials",
-          "rating"
+          "rating",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3710,6 +3797,7 @@
           "usage": "<Testimonials016\n  title=\"Что говорят после сделки\"\n  score=\"4,9\"\n  scoreLabel=\"средняя оценка по 312 отзывам\"\n  reviews={[\n    { quote: \"Продали двушку за 26 дней и дороже, чем оценивали соседи.\", name: \"Ольга и Сергей\", deal: \"продали квартиру на Петроградской\", source: \"Яндекс Карты\", rating: 5 },\n  ]}\n/>",
           "summary": "Самодостаточная секция отзывов для агентства, застройщика или юристов: цитаты серифом, звёзды, сделка и источник, общая оценка. Отзывы — массив пропсом.",
           "preserve": [
+            "импорты card-033 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "серифную курсивную цитату с большой полупрозрачной кавычкой — это голос, а не карточка каталога",
             "строку «кто и какую сделку провёл» с плашкой источника: отзыв проверяем",
             "общую оценку крупно акцентом в шапке секции напротив заголовка"
@@ -3767,10 +3855,11 @@
           "en": {
             "title": "Post-deal reviews",
             "description": "Agency client reviews: italic serif quotes with a large accent quotation mark, stars, who did which deal, the review source as a tag. A large overall score on the right of the head. Cards cascade in.",
-            "docs": "One file, zero dependencies, a server component. The section head is a flex row with the heading left and the overall score right. Cards in 1/2/3 columns (container queries 48rem and 64rem); appearance via @keyframes with a --n×90ms delay. The quotation mark is an absolutely positioned serif glyph at opacity .35; stars are a “★” string by rating with an aria-label; the source is a pill on the right of the author row. Palette --vibeui-testimonials-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-033 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The section head is a flex row with the heading left and the overall score right. Cards in 1/2/3 columns (container queries 48rem and 64rem); appearance via @keyframes with a --n×90ms delay. The quotation mark is an absolutely positioned serif glyph at opacity .35; stars are a “★” string by rating with an aria-label; the source is a pill on the right of the author row. Palette --vibeui-testimonials-016-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained reviews section for an agency, developer or law firm: serif quotes, stars, the deal and the source, an overall score. Reviews come in as a prop array.",
               "preserve": [
+                "the card-033 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the italic serif quote with a large translucent quotation mark — a voice, not a catalogue card",
                 "the “who did which deal” row with the source tag: the review is verifiable",
                 "the large accent overall score in the section head opposite the heading"
@@ -3904,7 +3993,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-034"
+      ],
       "files": [
         {
           "path": "testimonials-017/testimonials-017.tsx",
@@ -3912,7 +4003,7 @@
           "target": "@components/vibeui/testimonials-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Фото — <img> absolute с blur(10px) и opacity .5, поверх градиентное затемнение. Сетка shell от 64rem (container query) 1fr/2.6fr, карточки в три колонки от 48rem с backdrop-filter и появлением @keyframes с задержкой --n×100ms. Звёзды — строка «★» по rating с aria-label. Секция всегда тёмная: цвета фиксированы под фото. Палитра --vibeui-testimonials-017-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-034 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Фото — <img> absolute с blur(10px) и opacity .5, поверх градиентное затемнение. Сетка shell от 64rem (container query) 1fr/2.6fr, карточки в три колонки от 48rem с backdrop-filter и появлением @keyframes с задержкой --n×100ms. Звёзды — строка «★» по rating с aria-label. Секция всегда тёмная: цвета фиксированы под фото. Палитра --vibeui-testimonials-017-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3925,7 +4016,8 @@
           "reviews",
           "testimonials",
           "rating",
-          "glass"
+          "glass",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -3938,6 +4030,7 @@
           "usage": "<Testimonials017\n  title=\"Что пишут после ужина\"\n  score=\"4,9\"\n  scoreLabel=\"по 640 отзывам\"\n  image=\"/photos/hall-01.webp\"\n  reviews={[\n    { quote: \"Сиг с копчёным картофелем — лучшее, что я ела в городе за год.\", name: \"Мария К.\", occasion: \"ужин на двоих\", source: \"Яндекс Карты\", rating: 5 },\n  ]}\n/>",
           "summary": "Самодостаточная секция отзывов для ресторана, бара или отеля: стеклянные карточки поверх мутного фото, звёзды, источник и общая оценка. Отзывы — массив пропсом.",
           "preserve": [
+            "импорты card-034 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "мутное фото зала под затемнением — атмосфера места вместо белой секции",
             "стеклянные карточки с backdrop-filter и курсивную серифную цитату",
             "повод и источник отзыва: проверяемо и по-человечески"
@@ -3989,10 +4082,11 @@
           "en": {
             "title": "Reviews over a blurred photo",
             "description": "Restaurant reviews over a blurred photo of the hall under a warm shade: glass cards with an italic serif quote, accent stars, name, occasion and source. A large overall score on the left.",
-            "docs": "One file, zero dependencies, a server component. The photo is an absolute <img> with blur(10px) and opacity .5, a gradient shade on top. The shell grid from 64rem (container query) is 1fr/2.6fr, cards in three columns from 48rem with backdrop-filter and a @keyframes appearance with a --n×100ms delay. Stars are a “★” string by rating with an aria-label. The section is always dark: colours are fixed for the photo. Palette --vibeui-testimonials-017-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-034 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The photo is an absolute <img> with blur(10px) and opacity .5, a gradient shade on top. The shell grid from 64rem (container query) is 1fr/2.6fr, cards in three columns from 48rem with backdrop-filter and a @keyframes appearance with a --n×100ms delay. Stars are a “★” string by rating with an aria-label. The section is always dark: colours are fixed for the photo. Palette --vibeui-testimonials-017-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained reviews section for a restaurant, bar or hotel: glass cards over a blurred photo, stars, source and an overall score. Reviews come in as a prop array.",
               "preserve": [
+                "the card-034 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the blurred hall photo under a shade — the atmosphere of the place instead of a white section",
                 "the glass cards with backdrop-filter and the italic serif quote",
                 "the occasion and source of a review: verifiable and human"
@@ -4129,7 +4223,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-108"
+      ],
       "files": [
         {
           "path": "testimonials-018/testimonials-018.tsx",
@@ -4137,7 +4233,7 @@
           "target": "@components/vibeui/testimonials-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Ряды — items пополам (при ≤3 отзывах оба ряда из всех); каждый ряд — track с двумя копиями <ul> (вторая aria-hidden, ссылки tabIndex=-1), @keyframes translateX(-50 %) длительностью max(30 с, n×14 с), второй ряд animation-direction:reverse, пауза по :hover и :focus-within, края — mask-image. Лайтбокс — <dialog> с showModal(): ссылка на mp4/webm/mov → <video controls autoplay>, иначе <iframe allow=autoplay>; клик по фону и Escape закрывают, onClose сбрасывает состояние. reduced-motion: ряды становятся переносимой сеткой без копий. Палитра --vibeui-testimonials-018-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-108 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради лайтбокса. Ряды — items пополам (при ≤3 отзывах оба ряда из всех); каждый ряд — track с двумя копиями <ul> (вторая aria-hidden, ссылки tabIndex=-1), @keyframes translateX(-50 %) длительностью max(30 с, n×14 с), второй ряд animation-direction:reverse, пауза по :hover и :focus-within, края — mask-image. Лайтбокс — <dialog> с showModal(): ссылка на mp4/webm/mov → <video controls autoplay>, иначе <iframe allow=autoplay>; клик по фону и Escape закрывают, onClose сбрасывает состояние. reduced-motion: ряды становятся переносимой сеткой без копий. Палитра --vibeui-testimonials-018-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -4150,7 +4246,8 @@
           "ticker",
           "video",
           "lightbox",
-          "dialog"
+          "dialog",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -4196,6 +4293,7 @@
           "usage": "<Testimonials018\n  score=\"4,9\"\n  scoreLabel=\"по 412 отзывам выпускников\"\n  items={[\n    { quote: \"Самое ценное — ревью…\", name: \"Марина Соколова\", role: \"UI-дизайнер, Авито\", image: \"/photos/marina.webp\", cohort: \"поток 11\", video: \"/photos/review.webp\", videoHref: \"/video/marina.mp4\", href: \"https://t.me/marina\" },\n  ]}\n/>",
           "summary": "Самодостаточные отзывы для курса, школы или сервиса: две встречные бегущие строки с паузой по наведению, видео в лайтбоксе, оценка со звёздами, ссылки на профили. Отзывы — массив пропсом.",
           "preserve": [
+            "импорты card-108 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "два встречных ряда с паузой по наведению и растворяющимися краями",
             "лайтбокс на <dialog> для видео-отзыва — без перехода со страницы",
             "общую оценку со звёздами в шапке"
@@ -4253,10 +4351,11 @@
           "en": {
             "title": "Reviews as two opposing tickers with video",
             "description": "Reviews as an endless ticker: two rows of cards travel toward each other, paused on hover, edges dissolve. A card with a video review opens a lightbox with a player. A total score with stars top left. The name links to a profile, the cohort as a tag.",
-            "docs": "One file, zero dependencies, “use client” for the lightbox. Rows are items split in half (with ≤3 reviews both rows show all); each row is a track with two <ul> copies (the second aria-hidden, links tabIndex=-1), @keyframes translateX(-50 %) lasting max(30 s, n×14 s), the second row animation-direction:reverse, paused on :hover and :focus-within, edges via mask-image. The lightbox is a <dialog> with showModal(): a link to mp4/webm/mov → <video controls autoplay>, otherwise <iframe allow=autoplay>; a click on the backdrop and Escape close it, onClose resets state. reduced-motion: rows become a wrapping grid without copies. Palette --vibeui-testimonials-018-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-108 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the lightbox. Rows are items split in half (with ≤3 reviews both rows show all); each row is a track with two <ul> copies (the second aria-hidden, links tabIndex=-1), @keyframes translateX(-50 %) lasting max(30 s, n×14 s), the second row animation-direction:reverse, paused on :hover and :focus-within, edges via mask-image. The lightbox is a <dialog> with showModal(): a link to mp4/webm/mov → <video controls autoplay>, otherwise <iframe allow=autoplay>; a click on the backdrop and Escape close it, onClose resets state. reduced-motion: rows become a wrapping grid without copies. Palette --vibeui-testimonials-018-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "Self-contained reviews for a course, school or service: two opposing tickers paused on hover, video in a lightbox, a star score, profile links. Reviews come in as a prop array.",
               "preserve": [
+                "the card-108 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "two opposing rows paused on hover with dissolving edges",
                 "the <dialog> lightbox for a video review — no leaving the page",
                 "the total score with stars in the header"
@@ -4394,7 +4493,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-109"
+      ],
       "files": [
         {
           "path": "testimonials-019/testimonials-019.tsx",
@@ -4402,7 +4503,7 @@
           "target": "@components/vibeui/testimonials-019.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради активного индекса. Каждая карточка — <button> с --d (сдвиг от активной) и --abs: transform translateX(d×60 %) translateZ(−abs×14rem) rotateY(−d×28deg), opacity и brightness по abs, z-index 10−abs, переход .7 с; карточки дальше двух скрыты. Сцена с perspective:1600px и фиксированной высотой. Активная — tabIndex 0, остальные aria-hidden; ArrowLeft/ArrowRight на сцене. От 60rem (container query) сдвиг 78 % и поворот 32°. Палитра --vibeui-testimonials-019-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-109 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради активного индекса. Каждая карточка — <button> с --d (сдвиг от активной) и --abs: transform translateX(d×60 %) translateZ(−abs×14rem) rotateY(−d×28deg), opacity и brightness по abs, z-index 10−abs, переход .7 с; карточки дальше двух скрыты. Сцена с perspective:1600px и фиксированной высотой. Активная — tabIndex 0, остальные aria-hidden; ArrowLeft/ArrowRight на сцене. От 60rem (container query) сдвиг 78 % и поворот 32°. Палитра --vibeui-testimonials-019-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -4414,7 +4515,8 @@
           "reviews",
           "carousel",
           "coverflow",
-          "3d"
+          "3d",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -4433,6 +4535,7 @@
           "usage": "<Testimonials019\n  items={[\n    { quote: \"Через два года лев смотрится так, будто сделан вчера.\", name: \"Илья\", meta: \"реализм · предплечье · 2023\", image: \"/photos/healed-01.webp\", after: \"спустя 2 года\", rating: 5 },\n  ]}\n/>",
           "summary": "Самодостаточная секция отзывов для тату-студии, салона или студии: карусель coverflow с фото результата «спустя время», рейтингом и клавиатурой. Отзывы — массив пропсом.",
           "preserve": [
+            "импорты card-109 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "coverflow: соседи в глубине с поворотом, активная в полный размер",
             "фото зажившей работы с плашкой «спустя N лет» — доказательство, а не аватар",
             "неоновые звёзды рейтинга"
@@ -4483,10 +4586,11 @@
           "en": {
             "title": "Coverflow reviews with healed-work photos",
             "description": "Reviews as a coverflow carousel — the active card centred at full size, neighbours receding with a turn and darkening. A card shows a healed-work photo with an “N years later” tag, the quote, name, style and placement, neon stars. Arrows, dots, keyboard, a click on a neighbour.",
-            "docs": "One file, zero dependencies, “use client” for the active index. Each card is a <button> with --d (offset from active) and --abs: transform translateX(d×60 %) translateZ(−abs×14rem) rotateY(−d×28deg), opacity and brightness by abs, z-index 10−abs, a .7 s transition; cards further than two are hidden. The stage has perspective:1600px and a fixed height. The active card is tabIndex 0, the rest aria-hidden; ArrowLeft/ArrowRight on the stage. From 60rem (container query) a 78 % offset and 32° turn. Palette --vibeui-testimonials-019-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-109 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the active index. Each card is a <button> with --d (offset from active) and --abs: transform translateX(d×60 %) translateZ(−abs×14rem) rotateY(−d×28deg), opacity and brightness by abs, z-index 10−abs, a .7 s transition; cards further than two are hidden. The stage has perspective:1600px and a fixed height. The active card is tabIndex 0, the rest aria-hidden; ArrowLeft/ArrowRight on the stage. From 60rem (container query) a 78 % offset and 32° turn. Palette --vibeui-testimonials-019-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained reviews section for a tattoo studio, salon or studio: a coverflow carousel with “years later” result photos, ratings and keyboard. Reviews come in as a prop array.",
               "preserve": [
+                "the card-109 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the coverflow: neighbours in depth with a turn, the active one at full size",
                 "the healed-work photo with an “N years later” tag — proof, not an avatar",
                 "the neon rating stars"
@@ -4619,7 +4723,12 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "card-039",
+        "input-001",
+        "input-034"
+      ],
       "files": [
         {
           "path": "testimonials-020/testimonials-020.tsx",
@@ -4627,7 +4736,7 @@
           "target": "@components/vibeui/testimonials-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Доска — <ul> auto-fill minmax(12rem,1fr) с inset-тенью и «рамкой» через box-shadow; записка — article с наклоном --vibeui-testimonials-020-tilt по nth-child(4n…), hover выпрямляет и увеличивает; кнопка — radial-gradient латуни. Новые записки — state-массив, добавляются в начало с data-fresh и keyframes «приколоть». Форма — name + textarea (required), onSubmit без action — preventDefault, с action — POST. От 56rem сетка .8fr/1.6fr, левая колонка sticky. Палитра --vibeui-testimonials-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-001, card-039, input-001, input-034 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради формы. Доска — <ul> auto-fill minmax(12rem,1fr) с inset-тенью и «рамкой» через box-shadow; записка — article с наклоном --vibeui-testimonials-020-tilt по nth-child(4n…), hover выпрямляет и увеличивает; кнопка — radial-gradient латуни. Новые записки — state-массив, добавляются в начало с data-fresh и keyframes «приколоть». Форма — name + textarea (required), onSubmit без action — preventDefault, с action — POST. От 56rem сетка .8fr/1.6fr, левая колонка sticky. Палитра --vibeui-testimonials-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -4641,7 +4750,8 @@
           "form",
           "testimonials",
           "serif",
-          "cream"
+          "cream",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -4657,6 +4767,7 @@
           "usage": "<Testimonials020\n  title=\"Доска у входа — уже здесь\"\n  wishes={[\n    { name: \"Ксения\", note: \"свидетельница\", text: \"Я знала это с первого кофе. Готовьте танцпол.\" },\n    { name: \"Бабушка Нина\", text: \"Артём, береги её. Василиса, корми его.\" },\n  ]}\n  submitLabel=\"Приколоть на доску\"\n  action=\"/api/wishes\"\n/>",
           "summary": "Самодостаточная стена пожеланий для свадебного сайта: записки на пробковой доске под углом с акцентными кнопками и форма, которая прикалывает новую записку первой. Пожелания — массив пропсом, отправка на action.",
           "preserve": [
+            "импорты button-001, card-039, input-001, input-034 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "пробковую доску с записками под разными углами и акцентными кнопками",
             "анимацию «приколоть» у новой записки, которая встаёт первой",
             "форму слева, липкую от 56rem"
@@ -4707,10 +4818,11 @@
           "en": {
             "title": "Guest wishes wall on a cork board",
             "description": "A wall of wishes: cream notes on a cork board at different angles, an accent pin on each, text in a handwritten-feel serif, the signature in accent. On the left a “leave a wish” form — the new note pins on first with an animation. Without a backend the note lives until reload; with action it POSTs.",
-            "docs": "One file, zero dependencies, “use client” for the form. The board is a <ul> auto-fill minmax(12rem,1fr) with an inset shadow and a “frame” via box-shadow; a note is an article tilted via --vibeui-testimonials-020-tilt by nth-child(4n…), hover straightens and scales; the pin is an accent radial-gradient. New notes are a state array prepended with data-fresh and a “pin” keyframe. The form is name + textarea (required), onSubmit without action — preventDefault, with action — POST. From 56rem a .8fr/1.6fr grid, the left column sticky. Palette --vibeui-testimonials-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-001, card-039, input-001, input-034 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the form. The board is a <ul> auto-fill minmax(12rem,1fr) with an inset shadow and a “frame” via box-shadow; a note is an article tilted via --vibeui-testimonials-020-tilt by nth-child(4n…), hover straightens and scales; the pin is an accent radial-gradient. New notes are a state array prepended with data-fresh and a “pin” keyframe. The form is name + textarea (required), onSubmit without action — preventDefault, with action — POST. From 56rem a .8fr/1.6fr grid, the left column sticky. Palette --vibeui-testimonials-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained wishes wall for a wedding site: tilted notes on a cork board with accent pins and a form that pins a new note first. Wishes come as a prop array, submission goes to action.",
               "preserve": [
+                "the button-001, card-039, input-001, input-034 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the cork board with notes at different angles and accent pins",
                 "the “pin” animation of a new note taking the first place",
                 "the form on the left, sticky from 56rem"
@@ -4826,7 +4938,11 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "input-001",
+        "input-034"
+      ],
       "files": [
         {
           "path": "testimonials-021/testimonials-021.tsx",
@@ -4834,7 +4950,7 @@
           "target": "@components/vibeui/testimonials-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Стена — <ul> auto-fill minmax(17rem,1fr), открытка — article с сеткой 1.5fr/1fr, вертикальной линией ::before, наклоном по nth-child(4n…) и подъёмом по hover; марка — рамка с пунктиром, штемпель — SVG-круг с текстом города (или «отправлено» у новых). Новые открытки — state-массив в начале с data-fresh и keyframes «приземления». Форма — имя, откуда, текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-001, input-001, input-034 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради формы. Стена — <ul> auto-fill minmax(17rem,1fr), открытка — article с сеткой 1.5fr/1fr, вертикальной линией ::before, наклоном по nth-child(4n…) и подъёмом по hover; марка — рамка с пунктиром, штемпель — SVG-круг с текстом города (или «отправлено» у новых). Новые открытки — state-массив в начале с data-fresh и keyframes «приземления». Форма — имя, откуда, текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -4848,7 +4964,8 @@
           "stamp",
           "postmark",
           "cuba",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -4864,6 +4981,7 @@
           "usage": "<Testimonials021\n  title=\"Напишите нам открытку\"\n  cards={[\n    { name: \"Оля и Саша\", from: \"Москва\", text: \"Билеты куплены, шляпы тоже.\" },\n    { name: \"Мариэла\", from: \"Гавана\", text: \"Всё готово, море тёплое. ¡Hasta la boda!\" },\n  ]}\n  submitLabel=\"Отправить\"\n  action=\"/api/postcards\"\n/>",
           "summary": "Самодостаточная стена открыток для свадьбы-путешествия: открытки оборотом с марками и штемпелями городов и форма, которая кладёт новую первой со штемпелем «отправлено». Открытки — массив пропсом, отправка на action.",
           "preserve": [
+            "импорты button-001, input-001, input-034 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "открытки оборотной стороной: линия посередине, марка, круглый штемпель с городом",
             "анимацию приземления новой открытки и штемпель «отправлено»",
             "форму слева с полем «откуда», липкую от 56rem"
@@ -4914,10 +5032,11 @@
           "en": {
             "title": "Guest postcards with postmarks",
             "description": "A wall of guest postcards back-side up: ruled lines, a stamp, a round postmark with the city, handwritten text, a signature. On the left a “send a postcard” form — the new one lands first with a “sent” postmark and a landing animation. Without a backend it lives until reload; with action it POSTs.",
-            "docs": "One file, zero dependencies, “use client” for the form. The wall is a <ul> auto-fill minmax(17rem,1fr), a postcard is an article with a 1.5fr/1fr grid, a ::before vertical line, tilt by nth-child(4n…) and a hover lift; the stamp is a dashed frame, the postmark an SVG circle with the city (or “sent” on new ones). New postcards are a state array prepended with data-fresh and a “landing” keyframe. The form is name, from, text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-001, input-001, input-034 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the form. The wall is a <ul> auto-fill minmax(17rem,1fr), a postcard is an article with a 1.5fr/1fr grid, a ::before vertical line, tilt by nth-child(4n…) and a hover lift; the stamp is a dashed frame, the postmark an SVG circle with the city (or “sent” on new ones). New postcards are a state array prepended with data-fresh and a “landing” keyframe. The form is name, from, text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained postcard wall for a destination wedding: back-side postcards with stamps and city postmarks and a form that lands a new one first with a “sent” postmark. Postcards via props, submission to action.",
               "preserve": [
+                "the button-001, input-001, input-034 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the back-side postcards: a centre line, a stamp, a round city postmark",
                 "the landing animation of a new postcard and the “sent” postmark",
                 "the form on the left with a “from” field, sticky from 56rem"
@@ -5039,7 +5158,11 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "input-001",
+        "input-034"
+      ],
       "files": [
         {
           "path": "testimonials-022/testimonials-022.tsx",
@@ -5047,7 +5170,7 @@
           "target": "@components/vibeui/testimonials-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради формы. Окно — блок с ледяным градиентом, ::before — капли radial-gradient; стена — <ul> auto-fill minmax(15rem,1fr), записка — <article> с неровными скруглениями, лёгким backdrop-blur, наклоном по nth-child у li и подъёмом по hover; текст рукописный с мягким свечением, подпись справа. Новые записки — state-массив в начале с data-fresh и keyframes clip-path:circle (протирание). Форма — имя и текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-001, input-001, input-034 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради формы. Окно — блок с ледяным градиентом, ::before — капли radial-gradient; стена — <ul> auto-fill minmax(15rem,1fr), записка — <article> с неровными скруглениями, лёгким backdrop-blur, наклоном по nth-child у li и подъёмом по hover; текст рукописный с мягким свечением, подпись справа. Новые записки — state-массив в начале с data-fresh и keyframes clip-path:circle (протирание). Форма — имя и текст (required); без action — preventDefault. От 56rem сетка .8fr/1.7fr, левая колонка sticky. Палитра --vibeui-testimonials-022-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -5059,7 +5182,8 @@
           "glass",
           "frost",
           "notes",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5075,6 +5199,7 @@
           "usage": "<Testimonials022\n  title=\"Напишите на стекле\"\n  notes={[\n    { name: \"Оля и Саша\", text: \"Тёплые ботинки куплены.\" },\n    { name: \"Марина\", text: \"Свечи привезли, снег заказали.\" },\n  ]}\n  submitLabel=\"Написать\"\n  action=\"/api/wishes\"\n/>",
           "summary": "Самодостаточная стена пожеланий на запотевшем окне: полупрозрачные записки рукописным на стекле с каплями и форма, которая проявляет новую как протёртую ладонью. Записки — массив пропсом, отправка на action.",
           "preserve": [
+            "импорты button-001, input-001, input-034 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "стекло с инеем и каплями и полупрозрачные записки с неровными краями",
             "проявление новой записки протиранием (clip-path по кругу)",
             "рукописный текст с мягким свечением и подпись справа"
@@ -5125,10 +5250,11 @@
           "en": {
             "title": "Wishes as notes on a fogged window",
             "description": "A wall of wishes on a fogged window: frosted glass with droplets, each note a translucent wiped patch with handwritten text and a signature. A “write on the glass” form on the left — a new note appears as if wiped by a palm. Without a backend it lives until reload; with action it POSTs.",
-            "docs": "One file, zero dependencies, “use client” for the form. The window is a block with an icy gradient, a ::before of radial-gradient droplets; the wall is a <ul> auto-fill minmax(15rem,1fr), a note is an <article> with uneven rounding, a light backdrop-blur, a tilt by nth-child on the li and a hover lift; handwritten text with a soft glow, the signature on the right. New notes are a state array prepended with data-fresh and a clip-path:circle keyframe (the wipe). The form is name and text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-001, input-001, input-034 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the form. The window is a block with an icy gradient, a ::before of radial-gradient droplets; the wall is a <ul> auto-fill minmax(15rem,1fr), a note is an <article> with uneven rounding, a light backdrop-blur, a tilt by nth-child on the li and a hover lift; handwritten text with a soft glow, the signature on the right. New notes are a state array prepended with data-fresh and a clip-path:circle keyframe (the wipe). The form is name and text (required); without action — preventDefault. From 56rem a .8fr/1.7fr grid, the left column sticky. Palette --vibeui-testimonials-022-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained wishes wall on a fogged window: translucent handwritten notes on droplet-covered glass and a form that reveals a new one as if wiped by a palm. Notes via props, submission to action.",
               "preserve": [
+                "the button-001, input-001, input-034 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the frosted, droplet-covered glass and the translucent notes with uneven edges",
                 "the wipe reveal of a new note (circular clip-path)",
                 "the handwritten text with a soft glow and the signature on the right"
@@ -5236,7 +5362,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-110"
+      ],
       "files": [
         {
           "path": "testimonials-023/testimonials-023.tsx",
@@ -5255,7 +5383,8 @@
           "restaurant",
           "print",
           "monospace",
-          "quotes"
+          "quotes",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -5266,6 +5395,7 @@
           "usage": "<Testimonials023\n  brand=\"Корка\"\n  place=\"Хамовники\"\n  reviews={[\n    { no: \"0412\", time: \"08:14\", name: \"Марина\", lines: [\"Тартин ещё тёплый,\", \"корка хрустит на весь\", \"трамвай.\"], sum: \"420 ₽\" },\n  ]}\n/>",
           "summary": "Отзывы гостей в форме чеков — короткие, честные, с суммой заказа. Для кафе, пекарни, бара, лавки.",
           "preserve": [
+            "импорты card-110 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "печать — animation steps(3) на каждом ребёнке с задержкой от индекса строки и индекса чека",
             "зубчатый низ — clip-path polygon из 40 точек, сгенерированных при загрузке модуля",
             "поворот каждого чека — из массива углов по индексу, переменной --vibeui-testimonials-023-r"
@@ -5331,6 +5461,7 @@
             "ai": {
               "summary": "Guest reviews as receipts — short, honest, with the order total. For a café, bakery, bar or deli.",
               "preserve": [
+                "the card-110 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "printing is a steps(3) animation on each child with a delay from the line index and the receipt index",
                 "the serrated bottom is a clip-path polygon of 40 points generated at module load",
                 "each receipt's tilt comes from an angle array by index via --vibeui-testimonials-023-r"
@@ -5435,7 +5566,8 @@
                   "role": "receipt total"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-110 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -5459,7 +5591,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-110 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-024",
@@ -5470,7 +5603,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-111"
+      ],
       "files": [
         {
           "path": "testimonials-024/testimonials-024.tsx",
@@ -5488,7 +5623,8 @@
           "portfolio",
           "reviews",
           "slider",
-          "clients"
+          "clients",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -5499,6 +5635,7 @@
           "usage": "<Testimonials024\n  interval={7}\n  quotes={[\n    { text: \"Сделал за три недели то, на что у нас ушло бы полгода.\", name: \"Марина Соколова\", role: \"СЕО\", project: \"магазин\" },\n    { text: \"Дизайнер, который понимает, что такое стейт.\", name: \"Игорь Черных\", role: \"CTO\" },\n  ]}\n/>",
           "summary": "Отзывы для портфолио, агентства, сервиса: по одному, крупно, с честной полосой времени и клавиатурой.",
           "preserve": [
+            "импорты card-111 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "автопрокрутка — setTimeout на interval, перезапускается от индекса; пауза — data-paused по pointerenter/focus",
             "полоса активной точки — keyframes fill на время интервала; пройденные точки залиты через data-done",
             "смена цитаты — key на blockquote, чтобы анимация появления сработала заново"
@@ -5564,6 +5701,7 @@
             "ai": {
               "summary": "Reviews for a portfolio, agency or service: one at a time, big, with an honest time bar and keyboard support.",
               "preserve": [
+                "the card-111 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "autoplay is a setTimeout on interval, restarted from the index; pause is data-paused on pointerenter/focus",
                 "the active dot bar is fill keyframes over the interval; passed dots are filled via data-done",
                 "a key on blockquote so the appear animation re-runs on change"
@@ -5636,7 +5774,8 @@
                   "role": "role and project"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-111 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -5660,7 +5799,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-111 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-025",
@@ -5671,7 +5811,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-035"
+      ],
       "files": [
         {
           "path": "testimonials-025/testimonials-025.tsx",
@@ -5689,7 +5831,8 @@
           "carousel",
           "scroll snap",
           "mobile",
-          "rating"
+          "rating",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -5702,6 +5845,7 @@
           "usage": "<Testimonials025\n  rating=\"4,9\"\n  ratingNote=\"12 412 оценок\"\n  image=\"/photos/evening.webp\"\n  reviews={[{ title: \"Первый раз уснула без телефона\", text: \"Дыхание 4-7-8 работает.\", name: \"Лена К.\", store: \"App Store\", stars: 5 }]}\n/>",
           "summary": "Отзывы для приложения или сервиса в форме магазинных карточек: звёзды, магазин, дата — как в сторе.",
           "preserve": [
+            "импорты card-035 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "лента — overflow-x auto со scroll-snap-type mandatory и scroll-padding по отступу",
             "карточка 22rem или 85% ширины на узком, чтобы край следующей был виден",
             "звёзды — пять символов, лишние гасятся data-off"
@@ -5767,6 +5911,7 @@
             "ai": {
               "summary": "Reviews for an app or service as store-style cards: stars, store, date — like in the store.",
               "preserve": [
+                "the card-035 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the strip is overflow-x auto with scroll-snap-type mandatory and scroll-padding matching the gutter",
                 "a card is 22rem or 85% width on narrow so the next card's edge shows",
                 "stars are five glyphs, extras dimmed via data-off"
@@ -5857,7 +6002,8 @@
                   "role": "name and store"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-035 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -5881,7 +6027,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-035 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-026",
@@ -5892,7 +6039,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-112"
+      ],
       "files": [
         {
           "path": "testimonials-026/testimonials-026.tsx",
@@ -5913,7 +6062,8 @@
           "marquee",
           "brands",
           "ticker",
-          "animation"
+          "animation",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -5924,6 +6074,7 @@
           "usage": "<Testimonials026\n  stats={[{ value: 1840, label: \"машин за год\" }, { value: 4.9, label: \"рейтинг\" }]}\n  brands={[\"Porsche\", \"BMW\", \"Audi\"]}\n  reviews={[{ name: \"Илья Р.\", car: \"Porsche Macan\", text: \"Через год вода скатывается сама.\", stars: 5 }]}\n/>",
           "summary": "Отзывы для автосервиса: счётчики докручиваются в viewport, марки бегут лентой, отзывы едут в два ряда.",
           "preserve": [
+            "импорты card-112 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "счётчик — rAF от 0 до value за 1,6 с с ease-out кубом, запускается один раз по IntersectionObserver threshold 0.4; дробные значения с одним знаком",
             "лента и ряды — контент продублирован, keyframes translateX(−50%), второй ряд animation-direction:reverse, hover ставит play-state paused",
             "ряд обрезан mask-image по краям; при reduce-motion анимация выключена и ряд прокручивается пальцем"
@@ -5997,6 +6148,7 @@
             "ai": {
               "summary": "Reviews for a car service: counters count up in the viewport, brands run as a ribbon, reviews move in two rows.",
               "preserve": [
+                "the card-112 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the counter is a rAF from 0 to value over 1.6 s with cubic ease-out, fired once by an IntersectionObserver at threshold 0.4; fractional values with one decimal",
                 "the ribbon and rows have duplicated content, keyframes translateX(−50%), the second row is animation-direction:reverse, hover sets play-state paused",
                 "a row is faded by mask-image at the edges; under reduce-motion the animation is off and the row scrolls by finger"
@@ -6124,7 +6276,8 @@
                   "role": "name and car"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-112 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -6154,7 +6307,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-112 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-027",
@@ -6165,7 +6319,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-036"
+      ],
       "files": [
         {
           "path": "testimonials-027/testimonials-027.tsx",
@@ -6185,7 +6341,8 @@
           "handwritten",
           "vet",
           "pet",
-          "sticker"
+          "sticker",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6196,6 +6353,7 @@
           "usage": "<Testimonials027\n  title=\"Записи от хозяев\"\n  entries={[\n    { pet: \"Батон\", owner: \"Оля, хозяйка\", date: \"14 марта\", text: \"Кастрация. Вечером уже требовал ужин.\", photo: \"/demo/vet/diary-01.webp\", sticker: \"не боялся\" },\n    { pet: \"Фунтик\", owner: \"Дед Миша\", date: \"19 апреля\", text: \"Ночью перестал есть. УЗИ сделали сразу.\", sticker: \"24/7\" },\n  ]}\n/>",
           "summary": "Отзывы в виде полароидов из дневника питомца, лента тянется мышью.",
           "preserve": [
+            "импорты card-036 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "drag — только для pointerType mouse: setPointerCapture на треке, scrollLeft = стартовый − сдвиг; data-dragging убирает scroll-snap и меняет курсор",
             "поворот карточек — --r через nth-child(4n+1…4), hover снимает поворот и поднимает translateY(−8px) scale(1.02)",
             "первая карточка выровнена с контентом через padding-inline max(1.25rem, calc((100% − 80rem) / 2 + 1.25rem))"
@@ -6268,6 +6426,7 @@
             "ai": {
               "summary": "Testimonials as polaroids from a pet diary, the strip drags with the mouse.",
               "preserve": [
+                "the card-036 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "drag only for pointerType mouse: setPointerCapture on the track, scrollLeft = start − delta; data-dragging removes scroll-snap and changes the cursor",
                 "card rotation is --r via nth-child(4n+1…4), hover removes the rotation and lifts translateY(−8px) scale(1.02)",
                 "the first card aligns with the content via padding-inline max(1.25rem, calc((100% − 80rem) / 2 + 1.25rem))"
@@ -6383,7 +6542,8 @@
                   "role": "sticker"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-036 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -6420,7 +6580,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-036 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-028",
@@ -6431,7 +6592,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-037"
+      ],
       "files": [
         {
           "path": "testimonials-028/testimonials-028.tsx",
@@ -6450,7 +6613,8 @@
           "flowers",
           "scroll snap",
           "carousel",
-          "editorial"
+          "editorial",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6461,6 +6625,7 @@
           "usage": "<Testimonials028\n  title=\"Что пишут нам в ответ\"\n  addressee=\"Мастерская «Стебель»\"\n  reviews={[{ text: \"Курьер приехал ровно к 11, мама три дня всем показывала открытку.\", name: \"Ксения\", place: \"Петроградская\", date: \"12 июня\", occasion: \"маме, 60 лет\" }]}\n/>",
           "summary": "Отзывы, стилизованные под открытки — для цветов, кафе, отелей, всего, где уместно рукописное «спасибо».",
           "preserve": [
+            "импорты card-037 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "лента — overflow-x auto со scroll-snap-type x mandatory и scroll-padding по краям, карточки min(88%, 34rem), от 60rem — 36rem",
             "наклон — --vibeui-testimonials-028-r по nth-child odd/even, на hover rotate(0) translateY(-6px)",
             "адресная сторона — марка с dotted outline, штемпель absolute с rotate(-12deg), три линии с border-bottom и ellipsis"
@@ -6533,6 +6698,7 @@
             "ai": {
               "summary": "Testimonials styled as postcards — for flowers, cafés, hotels, anything where a handwritten “thank you” fits.",
               "preserve": [
+                "the card-037 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the strip is overflow-x auto with scroll-snap-type x mandatory and scroll-padding at the edges, cards min(88%, 34rem), from 60rem — 36rem",
                 "the tilt is --vibeui-testimonials-028-r by nth-child odd/even, on hover rotate(0) translateY(-6px)",
                 "the address side is a stamp with a dotted outline, an absolute postmark with rotate(-12deg), three lines with border-bottom and ellipsis"
@@ -6629,7 +6795,8 @@
                   "type": "text"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-037 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -6653,7 +6820,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-037 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-029",
@@ -6664,7 +6832,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-113"
+      ],
       "files": [
         {
           "path": "testimonials-029/testimonials-029.tsx",
@@ -6685,7 +6855,8 @@
           "contractor",
           "signature",
           "stars",
-          "scroll-driven"
+          "scroll-driven",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6696,6 +6867,7 @@
           "usage": "<Testimonials029\n  reviews={[\n    { number: \"0298\", object: \"Двушка на Ленинском, 62 м²\", date: \"14.08.2026\", text: \"Сдали на два дня раньше срока.\", name: \"Анна Р.\", stars: 5 },\n  ]}\n/>",
           "summary": "Отзывы для сайта подрядчика: каждый — акт приёмки с номером, подписью и штампом, замечания не прячутся.",
           "preserve": [
+            "импорты card-113 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "штамп — абсолютно позиционирован в правом нижнем углу, повёрнут на −8°, keyframes scale 1.7→1 с overshoot; в @supports (animation-timeline: view()) — та же анимация по animation-range entry 20% entry 70%",
             "подпись — i в шрифте Caveat над линией, максимум calc(100% - 10rem) ширины, чтобы не заезжать под штамп",
             "review.remark переключает штамп на data-kind=remark (пунктир, без заливки) и показывает p[data-part=remark]"
@@ -6768,6 +6940,7 @@
             "ai": {
               "summary": "Reviews for a contractor site: each one an acceptance certificate with a number, a signature and a stamp, remarks not hidden.",
               "preserve": [
+                "the card-113 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the stamp is absolutely positioned bottom-right, rotated −8°, a scale 1.7→1 keyframe with overshoot; under @supports (animation-timeline: view()) the same animation over animation-range entry 20% entry 70%",
                 "the signature is an i in Caveat above a line, at most calc(100% - 10rem) wide so it never runs under the stamp",
                 "review.remark switches the stamp to data-kind=remark (dashed, no fill) and shows p[data-part=remark]"
@@ -6883,7 +7056,8 @@
                   "role": "remark and how it was closed"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-113 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -6911,7 +7085,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-113 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-031",
@@ -6922,7 +7097,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-114"
+      ],
       "files": [
         {
           "path": "testimonials-031/testimonials-031.tsx",
@@ -6942,7 +7119,8 @@
           "level",
           "scale",
           "scroll-driven",
-          "handwritten"
+          "handwritten",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6953,6 +7131,7 @@
           "usage": "<Testimonials031\n  title=\"Было → стало, в уровнях, а не в звёздочках\"\n  reviews={[{ name: \"Марина\", lang: \"английский\", months: 6, before: \"A2\", after: \"B2\", quote: \"Через полгода вела созвон с заказчиком из Дублина.\", note: \"сдала IELTS на 7.0\" }]}\n/>",
           "summary": "Отзывы для школы или курса с измеримым результатом: уровень до и после на шкале, полоска растёт при прокрутке.",
           "preserve": [
+            "импорты card-114 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "позиция на шкале = indexOf(code) / (levels.length − 1) × 100%; заливка — left --from и width (--to − --from)",
             "рост заливки — @supports (animation-timeline: view()) с animation-range entry 30% → 90%, кружок «стало» появляется scale 0→1",
             "карточки чуть повёрнуты через --tilt по индексу, по hover выравниваются и приподнимаются"
@@ -7018,6 +7197,7 @@
             "ai": {
               "summary": "Reviews for a school or course with a measurable result: the level before and after on a scale, the bar grows on scroll.",
               "preserve": [
+                "the card-114 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the scale position = indexOf(code) / (levels.length − 1) × 100%; the fill uses left --from and width (--to − --from)",
                 "the fill growth is @supports (animation-timeline: view()) with animation-range entry 30% → 90%, the “after” circle scales 0→1",
                 "cards are slightly rotated via --tilt by index, on hover they straighten and lift"
@@ -7129,7 +7309,8 @@
                   "role": "handwritten note"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-114 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -7158,7 +7339,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-114 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-032",
@@ -7169,7 +7351,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-047"
+      ],
       "files": [
         {
           "path": "testimonials-032/testimonials-032.tsx",
@@ -7188,7 +7372,8 @@
           "metrics",
           "scroll-driven",
           "glass",
-          "grid"
+          "grid",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -7199,6 +7384,7 @@
           "usage": "<Testimonials032\n  title=\"Предприниматели считают лучше маркетологов\"\n  reviews={[{ quote: \"Выписка подтягивается сама.\", name: \"Ольга Мещерякова\", role: \"Кофейня «Корка», Москва\", metric: \"−2 ч\", metricLabel: \"каждую пятницу\", featured: true }]}\n/>",
           "summary": "Отзывы для финтеха: карточки с метрикой цифрами, цитатой и автором, появляются по прокрутке.",
           "preserve": [
+            "импорты card-047 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "появление — @supports (animation-timeline: view()) даёт карточкам keyframes rise с animation-range entry 0% → entry 45%; вне поддержки правила нет, карточки видны",
             "метрика — strong моноширинным с background-clip:text по градиенту accent → mint, подпись span капителью",
             "сетка: 1 колонка, две от 44rem, три от 60rem; li с data-featured занимает две колонки, figure растянута на 100% высоты"
@@ -7270,6 +7456,7 @@
             "ai": {
               "summary": "Fintech testimonials: cards with a numeric metric, a quote and the author, revealed on scroll.",
               "preserve": [
+                "the card-047 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the reveal — @supports (animation-timeline: view()) gives cards the rise keyframes with animation-range entry 0% → entry 45%; without support there is no rule and cards are visible",
                 "the metric is a monospace strong with background-clip:text over an accent → mint gradient, the caption is a small-caps span",
                 "grid: 1 column, two from 44rem, three from 60rem; an li with data-featured spans two columns, the figure stretches to 100% height"
@@ -7377,7 +7564,8 @@
                   "role": "initials"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-047 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -7408,7 +7596,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-047 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-034",
@@ -7419,7 +7608,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-038"
+      ],
       "files": [
         {
           "path": "testimonials-034/testimonials-034.tsx",
@@ -7439,7 +7630,8 @@
           "monospace",
           "stack",
           "dark",
-          "grid"
+          "grid",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -7450,6 +7642,7 @@
           "usage": "<Testimonials034\n  title=\"Что говорят те, кто уже подключил\"\n  reviews={[{ handle: \"@lena_builds\", name: \"Лена Гусева\", role: \"Tech lead\", text: \"Переехали за один спринт.\", stack: [\"Next.js\"], metric: \"−70 % звонков курьеров\" }]}\n/>",
           "summary": "Отзывы разработчиков с ником, стеком и метрикой — как комментарии в трекере.",
           "preserve": [
+            "импорты card-038 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "монограмма считается из первых букв имени функцией initials, без картинок",
             "сетка 1 → 2 от 44rem → 3 от 64rem, каждая вторая карточка смещена на 1.5rem вниз",
             "метрика — p с ::before «$ », цитата — blockquote с акцентными кавычками в ::before/::after"
@@ -7514,6 +7707,7 @@
             "ai": {
               "summary": "Developer reviews with a handle, stack and a metric — like tracker comments.",
               "preserve": [
+                "the card-038 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the monogram comes from the first letters of the name via initials, no images",
                 "grid 1 → 2 from 44rem → 3 from 64rem, every second card is offset 1.5rem down",
                 "the metric is a p with a “$ ” ::before, the quote is a blockquote with accent quotation marks in ::before/::after"
@@ -7633,7 +7827,8 @@
                   "role": "stack and metric"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-038 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -7657,7 +7852,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-038 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "testimonials-035",
@@ -7668,7 +7864,9 @@
         "testimonials"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-048"
+      ],
       "files": [
         {
           "path": "testimonials-035/testimonials-035.tsx",
@@ -7688,7 +7886,8 @@
           "gadget",
           "hardware",
           "product",
-          "social-proof"
+          "social-proof",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -7699,6 +7898,7 @@
           "usage": "<Testimonials035\n  title=\"Что говорят те, кто уже проснулся\"\n  featured={[{ quote: \"Первый будильник, который хочется поставить на тумбочку.\", who: \"Кинжал\", role: \"обзор\" }]}\n  items={[{ quote: \"Сын встаёт сам.\", who: \"Марина\", role: \"Казань\" }]}\n/>",
           "summary": "Пресса и отзывы железки: три цитаты-выноски и наклонная лента карточек в две стороны.",
           "preserve": [
+            "импорты card-048 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "лента — data-part=band с rotate(-2deg) и отрицательными полями, ряды width:max-content с keyframes translateX(-50%), второй ряд animation-direction:reverse",
             "каждый ряд отрисован дважды, вторая копия aria-hidden — так цикл бесшовный",
             "при reduce-motion лента не наклонена и не бежит, ряды переносятся flex-wrap"
@@ -7772,6 +7972,7 @@
             "ai": {
               "summary": "Hardware press and reviews: three pull quotes and a tilted two-way band of cards.",
               "preserve": [
+                "the card-048 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the band is data-part=band with rotate(-2deg) and negative margins; rows are width:max-content with translateX(-50%) keyframes, the second row is animation-direction:reverse",
                 "each row is rendered twice, the second copy aria-hidden — that makes the loop seamless",
                 "under reduce-motion the band is neither tilted nor running, rows wrap with flex-wrap"
@@ -7887,7 +8088,8 @@
                   "role": "name and city / outlet"
                 }
               ]
-            }
+            },
+            "docs": "A composite block: imports card-048 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         },
         "slots": {
@@ -7913,7 +8115,8 @@
             }
           ]
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-048 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

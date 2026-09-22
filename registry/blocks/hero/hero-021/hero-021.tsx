@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero021Props = {
   image?: string
   imageAlt?: string
@@ -56,13 +58,6 @@ container-type:inline-size;
 @keyframes vibeui-hero-021-fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 [data-vibeui-block="hero-021"] [data-part="lede"]{margin:1.5rem 0 0;max-width:34rem;font-size:1.05rem;color:rgb(242 235 224 / .8);animation:vibeui-hero-021-fade .8s .9s both}
 [data-vibeui-block="hero-021"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem;animation:vibeui-hero-021-fade .8s 1.1s both}
-[data-vibeui-block="hero-021"] [data-part="primary"],[data-vibeui-block="hero-021"] [data-part="secondary"]{display:inline-flex;align-items:center;height:3.25rem;padding:0 1.6rem;border-radius:999px;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:transform .2s,background .2s,box-shadow .3s}
-[data-vibeui-block="hero-021"] [data-part="primary"]{background:var(--vibeui-hero-021-accent);color:var(--vibeui-hero-021-on-accent)}
-[data-vibeui-block="hero-021"] [data-part="primary"]{box-shadow:var(--vibeui-hero-021-glow)}
-[data-vibeui-block="hero-021"] [data-part="primary"]:hover{transform:translateY(-2px);filter:brightness(1.08)}
-[data-vibeui-block="hero-021"] [data-part="secondary"]{border:1px solid rgb(242 235 224 / .4);color:inherit}
-[data-vibeui-block="hero-021"] [data-part="secondary"]:hover{background:rgb(242 235 224 / .1)}
-[data-vibeui-block="hero-021"] a:focus-visible{outline:2px solid var(--vibeui-hero-021-accent);outline-offset:3px}
 [data-vibeui-block="hero-021"] [data-part="ticker"]{position:relative;z-index:1;overflow:hidden;border-top:1px solid rgb(242 235 224 / .15);background:rgb(20 17 16 / .6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:.85rem 0;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:rgb(242 235 224 / .75);mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent)}
 [data-vibeui-block="hero-021"] [data-part="track"]{display:flex;gap:3rem;width:max-content;animation:vibeui-hero-021-ticker 40s linear infinite}
 [data-vibeui-block="hero-021"] [data-part="track"] span{display:inline-flex;align-items:center;gap:3rem;white-space:nowrap}
@@ -126,14 +121,26 @@ export function Hero021({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="actions">
             {primaryLabel ? (
-              <a data-part="primary" href={primaryHref}>
-                {primaryLabel}
-              </a>
+              <Button016
+                data-part="primary"
+                size="lg"
+                label={primaryLabel}
+                href={primaryHref}
+                external={false}
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
             {secondaryLabel ? (
-              <a data-part="secondary" href={secondaryHref}>
-                {secondaryLabel}
-              </a>
+              <Button016
+                data-part="secondary"
+                size="lg"
+                label={secondaryLabel}
+                href={secondaryHref}
+                external={false}
+                tone="neutral"
+                accent={accent}
+              />
             ) : null}
           </div>
         </div>

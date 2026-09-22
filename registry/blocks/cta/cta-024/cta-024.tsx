@@ -1,6 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button015 } from "@/registry/components/button/button-015/button-015"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Cta024Sponsor = {
   name: string
@@ -78,24 +81,17 @@ container-type:inline-size;
 [data-vibeui-block="cta-024"][data-shown="true"] [data-reveal]{opacity:1;animation:vibeui-cta-024-up .8s var(--vibeui-cta-024-ease) backwards;animation-delay:calc(.2s + var(--vibeui-cta-024-i,0) * .1s)}
 [data-vibeui-block="cta-024"] [data-part="text"]{margin:.9rem 0 0;color:var(--vibeui-cta-024-muted);max-width:32rem;font-size:1.05rem}
 [data-vibeui-block="cta-024"] [data-part="actions"]{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;margin-top:1.5rem}
-[data-vibeui-block="cta-024"] [data-part="primary"],[data-vibeui-block="cta-024"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.4rem;border-radius:10px;font-weight:600;text-decoration:none;font-size:.98rem;transform:translate(calc(var(--vibeui-cta-024-mx,0) * 1px),calc(var(--vibeui-cta-024-my,0) * 1px));transition:transform .35s var(--vibeui-cta-024-ease),background .25s,box-shadow .35s,border-color .25s}
 [data-vibeui-block="cta-024"] [data-part="primary"]{background:var(--vibeui-cta-024-accent);color:var(--vibeui-cta-024-on-accent);box-shadow:0 12px 30px -14px color-mix(in oklab,var(--vibeui-cta-024-accent) 70%,transparent)}
 [data-vibeui-block="cta-024"] [data-part="primary"]:hover{box-shadow:0 20px 40px -14px color-mix(in oklab,var(--vibeui-cta-024-accent) 85%,transparent)}
-[data-vibeui-block="cta-024"] [data-part="secondary"]{color:inherit;border:1px solid var(--vibeui-cta-024-line)}
-[data-vibeui-block="cta-024"] [data-part="secondary"]:hover{background:var(--vibeui-cta-024-panel);transform:translateY(-2px);border-color:color-mix(in oklab,var(--vibeui-cta-024-fg) 30%,transparent)}
 [data-vibeui-block="cta-024"] [data-part="cmd"]{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--vibeui-cta-024-mono);font-size:.84rem;color:var(--vibeui-cta-024-muted);padding:.3rem .3rem .3rem .8rem;border-radius:8px;border:1px dashed var(--vibeui-cta-024-line);transition:border-color .3s}
 [data-vibeui-block="cta-024"] [data-part="cmd"]:hover{border-color:var(--vibeui-cta-024-accent)}
 [data-vibeui-block="cta-024"] [data-part="cmd"] code{white-space:nowrap}
 [data-vibeui-block="cta-024"] [data-part="cmd"] code::before{content:"$ ";color:var(--vibeui-cta-024-accent)}
-[data-vibeui-block="cta-024"] [data-part="copy"]{border:1px solid var(--vibeui-cta-024-line);border-radius:6px;background:var(--vibeui-cta-024-panel);color:inherit;font:inherit;font-size:.72rem;padding:.3rem .55rem;cursor:pointer;transition:background .3s,color .2s,border-color .2s,transform .25s var(--vibeui-cta-024-ease)}
-[data-vibeui-block="cta-024"] [data-part="copy"]:hover{transform:translateY(-1px);border-color:var(--vibeui-cta-024-accent)}
-[data-vibeui-block="cta-024"] [data-part="copy"][data-done="true"]{background:var(--vibeui-cta-024-accent);color:var(--vibeui-cta-024-on-accent);border-color:transparent}
 [data-vibeui-block="cta-024"] [data-part="sponsors"]{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--vibeui-cta-024-line);display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:baseline;font-size:.85rem}
 [data-vibeui-block="cta-024"] [data-part="sponsors"] small{font-family:var(--vibeui-cta-024-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-cta-024-muted);width:100%}
 [data-vibeui-block="cta-024"] [data-part="sponsors"] a{display:inline-block;color:inherit;text-decoration:none;font-weight:500;border-bottom:1px solid var(--vibeui-cta-024-line);transition:transform .3s var(--vibeui-cta-024-ease),border-color .3s,color .3s}
 [data-vibeui-block="cta-024"] [data-part="sponsors"] a:hover{transform:translateY(-2px);border-color:var(--vibeui-cta-024-accent);color:var(--vibeui-cta-024-accent)}
 [data-vibeui-block="cta-024"] [data-part="sponsors"] a[data-become="true"]{color:var(--vibeui-cta-024-accent);border-color:var(--vibeui-cta-024-accent)}
-[data-vibeui-block="cta-024"] a:focus-visible,[data-vibeui-block="cta-024"] button:focus-visible{outline:2px solid var(--vibeui-cta-024-accent);outline-offset:2px}
 @keyframes vibeui-cta-024-wiggle{0%,100%{transform:rotate(0)}30%{transform:rotate(-6deg) scale(1.04)}60%{transform:rotate(5deg) scale(1.04)}}
 @keyframes vibeui-cta-024-breathe{to{transform:translateY(-50%) scale(1.25);opacity:.28}}
 @keyframes vibeui-cta-024-rise{to{transform:none}}
@@ -130,7 +126,6 @@ export function Cta024({
 }: Cta024Props) {
   const root = useRef<HTMLElement>(null)
   const [shown, setShown] = useState(false)
-  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     const element = root.current
@@ -148,15 +143,6 @@ export function Cta024({
     return () => observer.disconnect()
   }, [])
 
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(command)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 2000)
-    } catch {
-      /* буфер недоступен — подпись не меняем */
-    }
-  }
 
   const magnet = (event: PointerEvent<HTMLAnchorElement>) => {
     if (event.pointerType !== "mouse") return
@@ -215,16 +201,25 @@ export function Cta024({
                   ★ {primaryLabel}
                 </a>
                 {secondaryLabel ? (
-                  <a data-part="secondary" href={secondaryHref}>
-                    {secondaryLabel}
-                  </a>
+                  <Button016
+                    data-part="secondary"
+                    label={secondaryLabel}
+                    href={secondaryHref}
+                    external={false}
+                    size="lg"
+                    tone="neutral"
+                    accent={accent}
+                  />
                 ) : null}
                 {command ? (
                   <span data-part="cmd">
                     <code>{command}</code>
-                    <button type="button" data-part="copy" data-done={copied} onClick={copy} aria-label={`${copyLabel}: ${command}`}>
-                      {copied ? copiedLabel : copyLabel}
-                    </button>
+                    <Button015
+                      data-part="copy-button"
+                      value={command}
+                      label={copyLabel}
+                      doneLabel={copiedLabel}
+                    />
                   </span>
                 ) : null}
               </div>

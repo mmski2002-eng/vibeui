@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar024Link = {
   label: string
   /** Якорь секции: «#works». По нему считается активный раздел. */
@@ -60,8 +62,8 @@ const STYLES = `
 :where([data-vibeui-block="navbar-024"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="navbar-024"]{box-sizing:border-box;position:fixed;left:0;right:0;bottom:0;z-index:40;display:block;color:var(--vibeui-navbar-024-fg);font-family:var(--vibeui-navbar-024-font);font-size:1rem;line-height:1.3}
 [data-vibeui-block="navbar-024"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-024"] [data-part="action"]{flex:none}
 [data-vibeui-block="navbar-024"] a{color:inherit;text-decoration:none}
-[data-vibeui-block="navbar-024"] a:focus-visible{outline:2px solid var(--vibeui-navbar-024-cyan);outline-offset:2px;border-radius:.5rem}
 [data-vibeui-block="navbar-024"] [data-part="rail"]{position:relative;display:flex;align-items:center;gap:.25rem;padding:.5rem .75rem calc(.5rem + env(safe-area-inset-bottom));background:var(--vibeui-navbar-024-bg);-webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3);border-top:1px solid var(--vibeui-navbar-024-line)}
 [data-vibeui-block="navbar-024"] [data-part="glow"]{position:absolute;left:0;right:0;top:-1px;height:1px;background:linear-gradient(90deg,var(--vibeui-navbar-024-accent-2),var(--vibeui-navbar-024-accent) var(--vibeui-navbar-024-p,0%),transparent var(--vibeui-navbar-024-p,0%));box-shadow:0 0 10px var(--vibeui-navbar-024-accent);pointer-events:none}
 [data-vibeui-block="navbar-024"] [data-part="brand"]{display:none;font-family:var(--vibeui-navbar-024-display);font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-navbar-024-accent);text-shadow:0 0 6px var(--vibeui-navbar-024-accent),0 0 18px color-mix(in oklab,var(--vibeui-navbar-024-accent) 70%,transparent),0 0 40px color-mix(in oklab,var(--vibeui-navbar-024-accent) 40%,transparent);animation:vibeui-navbar-024-flicker 7s infinite}
@@ -73,15 +75,12 @@ const STYLES = `
 [data-vibeui-block="navbar-024"] [data-part="link"][aria-current="true"] svg{color:var(--vibeui-navbar-024-accent);filter:drop-shadow(0 0 6px var(--vibeui-navbar-024-accent)) drop-shadow(0 0 14px color-mix(in oklab,var(--vibeui-navbar-024-accent) 60%,transparent));transform:translateY(-2px)}
 [data-vibeui-block="navbar-024"] [data-part="link"]::after{content:"";position:absolute;left:50%;bottom:.1rem;width:.3rem;height:.3rem;margin-left:-.15rem;border-radius:50%;background:var(--vibeui-navbar-024-accent);box-shadow:0 0 8px var(--vibeui-navbar-024-accent);opacity:0;transform:scale(.4);transition:opacity .3s,transform .3s cubic-bezier(.2,.9,.3,1.4)}
 [data-vibeui-block="navbar-024"] [data-part="link"][aria-current="true"]::after{opacity:1;transform:none}
-[data-vibeui-block="navbar-024"] [data-part="action"]{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;flex:none;height:3rem;padding:0 1rem;border-radius:.7rem;background:var(--vibeui-navbar-024-accent);color:var(--vibeui-navbar-024-on-accent);font-weight:800;font-size:.85rem;white-space:nowrap;box-shadow:0 0 0 1px color-mix(in oklab,var(--vibeui-navbar-024-accent) 60%,transparent),0 0 18px color-mix(in oklab,var(--vibeui-navbar-024-accent) 60%,transparent);transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="navbar-024"] [data-part="action"] svg{width:1.1rem;height:1.1rem;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
-[data-vibeui-block="navbar-024"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 0 0 1px var(--vibeui-navbar-024-accent),0 0 28px var(--vibeui-navbar-024-accent),0 0 60px color-mix(in oklab,var(--vibeui-navbar-024-accent) 40%,transparent)}
-[data-vibeui-block="navbar-024"] [data-part="action"] span{display:none}
 [data-vibeui-block="navbar-024"] [data-part="status"]{display:none;align-items:center;gap:.5rem;font-family:var(--vibeui-navbar-024-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-navbar-024-muted);white-space:nowrap}
 [data-vibeui-block="navbar-024"] [data-part="status"]::before{content:"";flex:none;width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-navbar-024-ok);box-shadow:0 0 8px var(--vibeui-navbar-024-ok);animation:vibeui-navbar-024-pulse 2s ease-in-out infinite}
 @keyframes vibeui-navbar-024-pulse{0%,100%{box-shadow:0 0 6px var(--vibeui-navbar-024-ok)}50%{box-shadow:0 0 14px var(--vibeui-navbar-024-ok),0 0 26px color-mix(in oklab,var(--vibeui-navbar-024-ok) 50%,transparent)}}
 [data-vibeui-block="navbar-024"][data-placement="static"]{position:static}
 @media (min-width: 60rem){
+[data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="action"]{width:100%;margin-top:1rem}
 [data-vibeui-block="navbar-024"][data-placement="fixed"]{left:0;top:0;right:auto;bottom:0;width:var(--vibeui-navbar-024-rail);transition:width .4s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="navbar-024"][data-placement="fixed"]:hover,[data-vibeui-block="navbar-024"][data-placement="fixed"]:focus-within{width:14rem}
 [data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="rail"]{flex-direction:column;align-items:stretch;height:100%;padding:1.25rem .75rem 1.25rem;border-top:0;border-right:1px solid var(--vibeui-navbar-024-line);overflow:hidden}
@@ -94,11 +93,6 @@ const STYLES = `
 [data-vibeui-block="navbar-024"][data-placement="fixed"]:hover [data-part="link"] span,[data-vibeui-block="navbar-024"][data-placement="fixed"]:focus-within [data-part="link"] span{opacity:1;transform:none}
 [data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="link"]:hover{background:rgb(255 255 255 / .05)}
 [data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="link"]::after{left:auto;right:.6rem;bottom:auto;top:50%;margin:-.15rem 0 0}
-[data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="action"]{width:100%;justify-content:center;gap:0;padding:0 .5rem;margin-top:1rem}
-[data-vibeui-block="navbar-024"][data-placement="fixed"]:hover [data-part="action"],[data-vibeui-block="navbar-024"][data-placement="fixed"]:focus-within [data-part="action"]{justify-content:flex-start;gap:.5rem;padding:0 .85rem}
-[data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="action"] svg{flex:none;width:1.25rem;height:1.25rem}
-[data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="action"] span{display:inline;max-width:0;overflow:hidden;opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s,max-width .3s}
-[data-vibeui-block="navbar-024"][data-placement="fixed"]:hover [data-part="action"] span,[data-vibeui-block="navbar-024"][data-placement="fixed"]:focus-within [data-part="action"] span{max-width:10rem;opacity:1;transform:none}
 [data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="status"]{display:flex;margin:.9rem 0 0 .35rem}
 [data-vibeui-block="navbar-024"][data-placement="fixed"] [data-part="status"] span{opacity:0;transition:opacity .3s}
 [data-vibeui-block="navbar-024"][data-placement="fixed"]:hover [data-part="status"] span,[data-vibeui-block="navbar-024"][data-placement="fixed"]:focus-within [data-part="status"] span{opacity:1}
@@ -211,12 +205,16 @@ export function Navbar024({
             ))}
           </ul>
           {actionLabel ? (
-            <a data-part="action" href={actionHref} aria-label={actionLabel}>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-              <span>{actionLabel}</span>
-            </a>
+            <Button016
+              data-part="action"
+              aria-label={actionLabel}
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="sm"
+              tone="accent"
+              accent={accent}
+            />
           ) : null}
           {status ? (
             <p data-part="status">

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Button086 } from "@/registry/components/button/button-086/button-086"
 
 export type Renovation003Work = {
   name: string
@@ -69,6 +70,7 @@ container-type:inline-size;
 :where([data-vibeui-block="renovation-003"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="renovation-003"]{box-sizing:border-box;padding:5rem 0;background-color:var(--vibeui-renovation-003-bg);background-image:linear-gradient(var(--vibeui-renovation-003-grid) 1px,transparent 1px),linear-gradient(90deg,var(--vibeui-renovation-003-grid) 1px,transparent 1px);background-size:5rem 5rem;color:var(--vibeui-renovation-003-fg);font-family:var(--vibeui-renovation-003-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="renovation-003"] *{box-sizing:border-box}
+[data-vibeui-block="renovation-003"] [data-part="tab"]{min-width:13rem}
 [data-vibeui-block="renovation-003"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="renovation-003"] [data-part="head"]{max-width:44rem;margin-bottom:2.5rem}
 [data-vibeui-block="renovation-003"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 1rem;font-family:var(--vibeui-renovation-003-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-renovation-003-muted)}
@@ -77,13 +79,7 @@ container-type:inline-size;
 [data-vibeui-block="renovation-003"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-renovation-003-muted)}
 [data-vibeui-block="renovation-003"] [data-part="grid"]{display:grid;gap:1.25rem;align-items:start}
 [data-vibeui-block="renovation-003"] [data-part="tabs"]{display:flex;gap:.5rem;margin:0;padding:0 0 .25rem;list-style:none;overflow-x:auto;scrollbar-width:none}
-[data-vibeui-block="renovation-003"] [data-part="tab"]{display:grid;gap:.2rem;min-width:13rem;padding:.9rem 1rem;border:1px solid var(--vibeui-renovation-003-line);border-radius:.4rem;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .2s,background .2s,transform .18s}
-[data-vibeui-block="renovation-003"] [data-part="tab"] b{font-family:var(--vibeui-renovation-003-display);font-weight:700;font-size:1rem;letter-spacing:-.01em;line-height:1.2}
-[data-vibeui-block="renovation-003"] [data-part="tab"] span{font-family:var(--vibeui-renovation-003-mono);font-size:.7rem;color:var(--vibeui-renovation-003-muted)}
-[data-vibeui-block="renovation-003"] [data-part="tab"]:hover{border-color:color-mix(in oklab,var(--vibeui-renovation-003-fg) 40%,transparent)}
-[data-vibeui-block="renovation-003"] [data-part="tab"][aria-selected="true"]{border-color:var(--vibeui-renovation-003-fg);background:var(--vibeui-renovation-003-fg);color:var(--vibeui-renovation-003-bg)}
-[data-vibeui-block="renovation-003"] [data-part="tab"][aria-selected="true"] span{color:color-mix(in oklab,var(--vibeui-renovation-003-bg) 70%,var(--vibeui-renovation-003-fg))}
-[data-vibeui-block="renovation-003"] [data-part="tab"]:focus-visible,[data-vibeui-block="renovation-003"] [data-part="range"]:focus-visible + [data-part="handle"]{outline:2px solid var(--vibeui-renovation-003-accent);outline-offset:2px}
+[data-vibeui-block="renovation-003"] [data-part="range"]:focus-visible + [data-part="handle"]{outline:2px solid var(--vibeui-renovation-003-accent);outline-offset:2px}
 [data-vibeui-block="renovation-003"] [data-part="compare"]{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--vibeui-renovation-003-fg);background:color-mix(in oklab,var(--vibeui-renovation-003-fg) 8%,transparent);user-select:none;touch-action:pan-y}
 [data-vibeui-block="renovation-003"] [data-part="compare"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 [data-vibeui-block="renovation-003"] [data-part="before"]{clip-path:inset(0 calc(100% - var(--vibeui-renovation-003-x)) 0 0)}
@@ -104,7 +100,8 @@ container-type:inline-size;
 [data-vibeui-block="renovation-003"] [data-part="facts"] dd{margin:0;font-family:var(--vibeui-renovation-003-mono);font-weight:500;font-size:.9rem;font-variant-numeric:tabular-nums}
 [data-vibeui-block="renovation-003"] [data-part="text"]{margin:.9rem 0 0;font-size:.92rem;color:var(--vibeui-renovation-003-muted)}
 @container (min-width: 40rem){[data-vibeui-block="renovation-003"] [data-part="facts"]{grid-template-columns:repeat(4,minmax(0,1fr))}[data-vibeui-block="renovation-003"] [data-part="facts"] div{border-bottom:0}[data-vibeui-block="renovation-003"] [data-part="facts"] div:last-child{border-right:0}}
-@container (min-width: 60rem){[data-vibeui-block="renovation-003"] [data-part="grid"]{grid-template-columns:18rem minmax(0,1fr);gap:2rem}[data-vibeui-block="renovation-003"] [data-part="tabs"]{flex-direction:column;overflow:visible}[data-vibeui-block="renovation-003"] [data-part="tab"]{min-width:0}[data-vibeui-block="renovation-003"] [data-part="compare"]{aspect-ratio:16/10}}
+@container (min-width: 60rem){
+[data-vibeui-block="renovation-003"] [data-part="tab"]{min-width:0}[data-vibeui-block="renovation-003"] [data-part="grid"]{grid-template-columns:18rem minmax(0,1fr);gap:2rem}[data-vibeui-block="renovation-003"] [data-part="tabs"]{flex-direction:column;overflow:visible}[data-vibeui-block="renovation-003"] [data-part="compare"]{aspect-ratio:16/10}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="renovation-003"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_WORKS: Renovation003Work[] = [
@@ -173,12 +170,7 @@ export function Renovation003({
             <ul data-part="tabs" role="tablist" aria-label={tabsLabel}>
               {works.map((item, itemIndex) => (
                 <li key={item.name} role="presentation">
-                  <button data-part="tab" type="button" role="tab" aria-selected={itemIndex === index} onClick={() => pick(itemIndex)}>
-                    <b>{item.name}</b>
-                    <span>
-                      {[item.area, item.type, item.weeks ? `${item.weeks} ${weekShort}` : null].filter(Boolean).join(" · ")}
-                    </span>
-                  </button>
+                  <Button086 data-part="tab" name={item.name} area={item.area} type={item.type} weeks={item.weeks} weekShort={weekShort} aria-selected={itemIndex === index} onClick={() => pick(itemIndex)} accent={accent} />
                 </li>
               ))}
             </ul>

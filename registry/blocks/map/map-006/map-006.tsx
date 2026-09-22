@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Map006Point = {
   name: string
   latitude: number
@@ -63,6 +65,7 @@ container-type:inline-size;
 :where([data-vibeui-block="map-006"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="map-006"]{box-sizing:border-box;display:block;background:var(--vibeui-map-006-bg);color:var(--vibeui-map-006-fg);font-family:var(--vibeui-map-006-font);font-size:1rem;line-height:1.4}
 [data-vibeui-block="map-006"] *{box-sizing:border-box}
+[data-vibeui-block="map-006"] [data-part="open"]{margin-top:1.25rem}
 [data-vibeui-block="map-006"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="map-006"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:2rem 1.25rem 3rem}
 [data-vibeui-block="map-006"] [data-part="eyebrow"]{margin:0;padding-top:1.25rem;border-top:1px solid var(--vibeui-map-006-line);font-size:1.05rem}
@@ -81,9 +84,6 @@ container-type:inline-size;
 [data-vibeui-block="map-006"] [data-part="emoji"]{display:grid;place-items:center;width:3rem;height:3rem;border-radius:.8rem;background:color-mix(in oklab,var(--vibeui-map-006-route) 82%,#000);font-size:1.5rem;line-height:1;filter:drop-shadow(0 4px 4px rgb(0 0 0 / .2))}
 [data-vibeui-block="map-006"] [data-part="mode"]{display:block;font-family:var(--vibeui-map-006-display);font-weight:600;letter-spacing:-.01em}
 [data-vibeui-block="map-006"] [data-part="route"] span span{display:block;font-size:.88rem;opacity:.8}
-[data-vibeui-block="map-006"] [data-part="open"]{display:inline-flex;align-items:center;height:2.6rem;padding:0 1.15rem;margin-top:1.25rem;border-radius:999px;background:var(--vibeui-map-006-accent);color:var(--vibeui-map-006-on-accent);font-weight:600;transition:transform .2s}
-[data-vibeui-block="map-006"] [data-part="open"]:hover{transform:translateY(-2px)}
-[data-vibeui-block="map-006"] [data-part="open"]:focus-visible{outline:2px solid var(--vibeui-map-006-fg);outline-offset:3px}
 @container (min-width: 60rem){
 [data-vibeui-block="map-006"] [data-part="shell"]{padding:2.5rem 2rem 4rem}
 [data-vibeui-block="map-006"] [data-part="grid"]{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:2.5rem;align-items:start}
@@ -182,9 +182,17 @@ export function Map006({
                 </>
               ) : null}
               {openLabel ? (
-                <a data-part="open" href={openHref} target="_blank" rel="noreferrer noopener">
-                  {openLabel}
-                </a>
+                <Button016
+                  data-part="open"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  label={openLabel}
+                  href={openHref}
+                  external={false}
+                  size="md"
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

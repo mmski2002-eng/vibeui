@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Logocloud006Item = {
   name: string
@@ -52,14 +53,6 @@ max-width:64rem;margin:0 auto;padding:3rem 1.25rem;
 display:grid;gap:2rem;justify-items:center;text-align:center;
 }
 [data-vibeui-block="logocloud-006"] [data-part="head"]{display:grid;gap:0.625rem;justify-items:center}
-[data-vibeui-block="logocloud-006"] [data-part="eyebrow"]{
-margin:0;color:var(--vibeui-logocloud-006-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="logocloud-006"] [data-part="title"]{
-margin:0;max-width:24ch;
-font-size:clamp(1.375rem,4cqi,2rem);line-height:1.15;letter-spacing:-0.02em;font-weight:700;
-}
 [data-vibeui-block="logocloud-006"] [data-part="grid"]{
 list-style:none;margin:0;padding:0;width:100%;
 display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.75rem;
@@ -189,8 +182,14 @@ export function Logocloud006({
       >
         <div data-part="shell">
           <div data-part="head">
-            <p data-part="eyebrow">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              size="sm"
+              align="center"
+              accent={accent}
+            />
           </div>
           <ul data-part="grid">
             {items.map((item) => (

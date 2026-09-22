@@ -10,7 +10,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-011"
+      ],
       "files": [
         {
           "path": "surface-001/surface-001.tsx",
@@ -18,7 +20,7 @@
           "target": "@components/vibeui/surface-001.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, без JS. Изображение — обычный <img> с object-fit:cover; точка кадрирования пропом focus (object-position), alt обязателен по смыслу кадра. Без src рисуется стилизованный CSS-пейзаж-заглушка с role=\"img\". Вуаль — заранее выбранный линейный градиент двух сил (data-scrim), не вычисление по пикселям; текст прижат к тёмной зоне (align start/end). Палитра --vibeui-surface-001-*.",
+      "docs": "Составной блок: импортирует mockup-011 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, без JS. Изображение — обычный <img> с object-fit:cover; точка кадрирования пропом focus (object-position), alt обязателен по смыслу кадра. Без src рисуется стилизованный CSS-пейзаж-заглушка с role=\"img\". Вуаль — заранее выбранный линейный градиент двух сил (data-scrim), не вычисление по пикселям; текст прижат к тёмной зоне (align start/end). Палитра --vibeui-surface-001-*.",
       "meta": {
         "tags": [
           "background",
@@ -26,7 +28,8 @@
           "image",
           "hero",
           "hotel",
-          "atmosphere"
+          "atmosphere",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -42,6 +45,7 @@
           "usage": "<Surface001 src=\"/photos/mountains.jpg\" alt=\"Хребет на закате\" focus=\"center 30%\" scrim=\"soft\">\n  {/* ваш контент */}\n</Surface001>",
           "summary": "Фотографический фон: <img> во весь блок с object-fit:cover, настраиваемой точкой кадрирования и градиентной вуалью двух сил под текстом. Текстовая зона прижимается к тёмному краю кадра. Без src — CSS-заглушка пейзажа. Действия поверх остаются брендовыми акцентными. Без JS.",
           "preserve": [
+            "импорты mockup-011 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-001-* и не подменять её токенами вашей темы",
             "вуаль как заранее выбранную тёмную зону с проверенным контрастом — не вычислять читаемость смешиванием с пикселями фото",
             "естественные цвета фотографии: не тонировать кадр в акцентный, бренд живёт в действиях",
@@ -101,10 +105,11 @@
           "en": {
             "title": "Photographic Atmosphere",
             "description": "A full-bleed photo background with a gradient scrim under the text: the atmosphere of a hotel, restaurant, architecture or personal brand. The photo keeps its natural colors, the interface on top stays on brand. The image is passed as a prop.",
-            "docs": "One file, zero dependencies, no JS. The image is a plain <img> with object-fit:cover; the crop point is the focus prop (object-position), alt is required by the frame's meaning. Without src a stylized CSS landscape placeholder renders with role=\"img\". The scrim is a pre-chosen linear gradient of two strengths (data-scrim), not per-pixel math; the text hugs the dark zone (align start/end). Palette --vibeui-surface-001-*.",
+            "docs": "A composite block: imports mockup-011 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, no JS. The image is a plain <img> with object-fit:cover; the crop point is the focus prop (object-position), alt is required by the frame's meaning. Without src a stylized CSS landscape placeholder renders with role=\"img\". The scrim is a pre-chosen linear gradient of two strengths (data-scrim), not per-pixel math; the text hugs the dark zone (align start/end). Palette --vibeui-surface-001-*.",
             "ai": {
               "summary": "A photographic background: a full-bleed <img> with object-fit:cover, a configurable crop point and a two-strength gradient scrim under the text. The text zone hugs the dark edge of the frame. Without src — a CSS landscape placeholder. Actions on top stay brand accent. No JS.",
               "preserve": [
+                "the mockup-011 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-001-* palette — do not swap it for your theme tokens",
                 "the scrim as a pre-chosen dark zone with verified contrast — do not compute readability by mixing with photo pixels",
                 "the photo's natural colors: do not tint the frame accent, the brand lives in the actions",
@@ -159,7 +164,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-012"
+      ],
       "files": [
         {
           "path": "surface-002/surface-002.tsx",
@@ -167,14 +174,15 @@
           "target": "@components/vibeui/surface-002.tsx"
         }
       ],
-      "docs": "Единственный клиентский фон набора (\"use client\"), ноль зависимостей кроме react. Координаты пишутся в CSS-переменные --vibeui-surface-002-x/y через requestAnimationFrame без state и перерисовок; обрабатывается только pointerType === \"mouse\" — на touch пятно стоит в стартовой точке. Свет — radial-gradient, сетка материала проявляется маской вокруг пятна. Замены системного курсора нет. Палитра --vibeui-surface-002-*.",
+      "docs": "Составной блок: импортирует mockup-012 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nЕдинственный клиентский фон набора (\"use client\"), ноль зависимостей кроме react. Координаты пишутся в CSS-переменные --vibeui-surface-002-x/y через requestAnimationFrame без state и перерисовок; обрабатывается только pointerType === \"mouse\" — на touch пятно стоит в стартовой точке. Свет — radial-gradient, сетка материала проявляется маской вокруг пятна. Замены системного курсора нет. Палитра --vibeui-surface-002-*.",
       "meta": {
         "tags": [
           "background",
           "spotlight",
           "cursor",
           "interactive",
-          "studio"
+          "studio",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -185,6 +193,7 @@
           "usage": "<Surface002 radius=\"large\" strength=\"soft\">\n  {/* ваш контент */}\n</Surface002>",
           "summary": "Тёплое световое пятно следует за мышью и проявляет тонкую сетку графитового материала; координаты пишутся в CSS-переменные через rAF без перерисовок React. На touch — статичная точка. Радиус и сила настройками. Маленький клиентский компонент.",
           "preserve": [
+            "импорты mockup-012 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-002-* и не подменять её токенами вашей темы",
             "обновление через CSS-переменные и rAF — не переписывать на setState: перерисовки убьют плавность",
             "статичную точку на touch и при reduced motion — эффект не условие композиции",
@@ -240,10 +249,11 @@
           "en": {
             "title": "Cursor Spotlight",
             "description": "A graphite background with a warm spot following the pointer and revealing the material's grid. For studios, portfolios and tool presentations. On touch and with reduced motion the light is static — the composition never depends on the effect.",
-            "docs": "The set's only client background (\"use client\"), zero dependencies besides react. Coordinates are written into the --vibeui-surface-002-x/y CSS variables through requestAnimationFrame with no state or re-renders; only pointerType === \"mouse\" is handled — on touch the spot stays at its start point. The light is a radial-gradient, the material grid is revealed by a mask around the spot. No system cursor replacement. Palette --vibeui-surface-002-*.",
+            "docs": "A composite block: imports mockup-012 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe set's only client background (\"use client\"), zero npm dependencies besides react. Coordinates are written into the --vibeui-surface-002-x/y CSS variables through requestAnimationFrame with no state or re-renders; only pointerType === \"mouse\" is handled — on touch the spot stays at its start point. The light is a radial-gradient, the material grid is revealed by a mask around the spot. No system cursor replacement. Palette --vibeui-surface-002-*.",
             "ai": {
               "summary": "A warm light spot follows the mouse and reveals a thin grid in the graphite material; coordinates go into CSS variables via rAF without React re-renders. On touch — a static point. Radius and strength are settings. A tiny client component.",
               "preserve": [
+                "the mockup-012 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-002-* palette — do not swap it for your theme tokens",
                 "updates through CSS variables and rAF — do not rewrite onto setState: re-renders kill the smoothness",
                 "the static point on touch and reduced motion — the effect is not a condition of the composition",
@@ -287,7 +297,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-004/surface-004.tsx",
@@ -295,7 +307,7 @@
           "target": "@components/vibeui/surface-004.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2-шейдер на треугольнике: simplex-шум (Ashima, MIT), fbm из трёх октав искажает координаты, четыре пятна смешиваются гауссовыми весами, дизер ±1/255 против полос. Рендер в половину разрешения (гладкому градиенту хватает), DPR ≤ 1. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-004-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2-шейдер на треугольнике: simplex-шум (Ashima, MIT), fbm из трёх октав искажает координаты, четыре пятна смешиваются гауссовыми весами, дизер ±1/255 против полос. Рендер в половину разрешения (гладкому градиенту хватает), DPR ≤ 1. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-004-*.",
       "meta": {
         "tags": [
           "background",
@@ -305,13 +317,15 @@
           "webgl",
           "animated",
           "saas",
-          "stripe"
+          "stripe",
+          "composite"
         ],
         "ai": {
           "export": "Surface004",
           "usage": "<Surface004 speed=\"calm\" warp=\"soft\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface004>",
           "summary": "Живой mesh-градиент на WebGL2: четыре пятна плывут по искажённому шумом полю, смешиваясь как шёлк. Палитра из CSS с light-dark: три базовых цвета темы плюс accent, либо свои четыре через colors. Рендер в полразрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL. Демонстрационный призрак — страница со стеклянными карточками поверх течения.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-004-* и не подменять её токенами вашей темы",
             "рендер в половину разрешения и DPR ≤ 1 — гладкому градиенту лишние пиксели не нужны, а слабым устройствам дороги",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -338,10 +352,11 @@
           "en": {
             "title": "Mesh Gradient",
             "description": "A live mesh gradient: four color spots drift slowly across a noise-warped field — silk, not circles. Rendered by the GPU, zero dependencies. For SaaS, AI products, apps and any first screen. At rest and without WebGL — a static version of the same colors.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 shader on a single triangle: simplex noise (Ashima, MIT), a three-octave fbm warps the coordinates, four spots blend with gaussian weights, ±1/255 dither against banding. Rendered at half resolution (a smooth gradient needs no more), DPR ≤ 1. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-004-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 shader on a single triangle: simplex noise (Ashima, MIT), a three-octave fbm warps the coordinates, four spots blend with gaussian weights, ±1/255 dither against banding. Rendered at half resolution (a smooth gradient needs no more), DPR ≤ 1. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-004-*.",
             "ai": {
               "summary": "A live WebGL2 mesh gradient: four spots drift across a noise-warped field, blending like silk. The palette comes from CSS with light-dark: three theme base colors plus accent, or your own four via colors. Half-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL. The demo ghost is a page with glass cards over the flow.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-004-* palette — do not swap it for your theme tokens",
                 "half-resolution rendering and DPR ≤ 1 — a smooth gradient needs no extra pixels and weak devices pay for them",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -441,7 +456,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-005/surface-005.tsx",
@@ -449,7 +466,7 @@
           "target": "@components/vibeui/surface-005.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-005-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-005-*.",
       "meta": {
         "tags": [
           "background",
@@ -459,7 +476,8 @@
           "silk",
           "shader",
           "webgl",
-          "premium"
+          "premium",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -470,6 +488,7 @@
           "usage": "<Surface005 speed=\"calm\" finish=\"gloss\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface005>",
           "summary": "Жидкий металл на WebGL2: поле складок с нормалью по конечным разностям, два источника света, френель, анизотропные полосы отражения и блик цвета accent. Палитра из CSS с light-dark, рендер в полразрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-005-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -541,10 +560,11 @@
           "en": {
             "title": "Liquid Metal",
             "description": "Live liquid metal: chrome folds with fresnel edges, a sharp highlight and reflection bands drift across the screen. GPU-rendered, zero dependencies. For premium products, studios, fashion and tech launches. At rest and without WebGL — a static version of the same tones.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-005-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-005-*.",
             "ai": {
               "summary": "Liquid metal on WebGL2: a fold field with finite-difference normals, two light sources, fresnel, anisotropic reflection bands and an accent-colored highlight. Palette from CSS with light-dark, half-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-005-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -595,7 +615,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-006/surface-006.tsx",
@@ -603,7 +625,7 @@
           "target": "@components/vibeui/surface-006.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-006-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-006-*.",
       "meta": {
         "tags": [
           "background",
@@ -614,7 +636,8 @@
           "bayer",
           "shader",
           "webgl",
-          "devtools"
+          "devtools",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -625,6 +648,7 @@
           "usage": "<Surface006 speed=\"calm\" cell=\"fine\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface006>",
           "summary": "Дизеринг на WebGL2: шумовое световое поле квантуется упорядоченной матрицей Байера 4×4 в три цвета палитры. Холст в разрешении ячейки с image-rendering:pixelated — честный пиксель без лишней работы видеокарты. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-006-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -696,10 +720,11 @@
           "en": {
             "title": "Dithering",
             "description": "Live dithering: a soft light spot is quantized by a Bayer matrix into large three-tone pixels — a retro monitor that breathes. GPU-rendered, zero dependencies. For dev tools, infrastructure, hacker and indie products.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-006-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-006-*.",
             "ai": {
               "summary": "Dithering on WebGL2: a noise light field quantized by an ordered 4×4 Bayer matrix into three palette colors. The canvas runs at cell resolution with image-rendering:pixelated — an honest pixel with no extra GPU work. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-006-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -750,7 +775,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-007/surface-007.tsx",
@@ -758,7 +785,7 @@
           "target": "@components/vibeui/surface-007.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-007-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-007-*.",
       "meta": {
         "tags": [
           "background",
@@ -768,7 +795,8 @@
           "northern lights",
           "shader",
           "webgl",
-          "ai"
+          "ai",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -779,6 +807,7 @@
           "usage": "<Surface007 speed=\"calm\" bands=\"few\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface007>",
           "summary": "Аврора на WebGL2: от трёх до шести лент, каждая — синусоида с шумовым дрейфом, гауссово ядро и экспоненциальный ореол; цвет ленты идёт от c3 к accent. Лерп с фоном вместо сложения — работает и на светлой теме. Палитра из CSS с light-dark, рендер в 3/4 разрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-007-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -850,10 +879,11 @@
           "en": {
             "title": "Aurora",
             "description": "A live aurora: glowing ribbons with a core and a halo drift across a dark field like northern lights in a single palette. GPU-rendered, zero dependencies. For AI products, launches, research and fintech landings.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-007-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-007-*.",
             "ai": {
               "summary": "An aurora on WebGL2: three to six ribbons, each a sine curve with noise drift, a gaussian core and an exponential halo; the ribbon color runs from c3 to accent. Lerp with the background instead of addition — works on the light theme too. Palette from CSS with light-dark, 3/4-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-007-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -904,7 +934,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-008/surface-008.tsx",
@@ -912,7 +944,7 @@
           "target": "@components/vibeui/surface-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-008-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-008-*.",
       "meta": {
         "tags": [
           "background",
@@ -923,7 +955,8 @@
           "wave",
           "shader",
           "webgl",
-          "data"
+          "data",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -934,6 +967,7 @@
           "usage": "<Surface008 speed=\"calm\" pitch=\"tight\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface008>",
           "summary": "Точечная матрица на WebGL2: холст делится на ячейки заданного шага, в каждой — точка, радиус которой задают радиальная волна и simplex-шум; цвет точки идёт от c3 к accent по силе. Шаг в CSS-пикселях, пересчёт по DPR. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-008-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1005,10 +1039,11 @@
           "en": {
             "title": "Dot Matrix",
             "description": "A live dot matrix: a grid of dots whose size breathes with a wave from the center and with noise, like an LED panel. GPU-rendered, zero dependencies. For AI tools, data, education and digital products.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-008-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-008-*.",
             "ai": {
               "summary": "A dot matrix on WebGL2: the canvas is split into cells of a given pitch, each holding a dot whose radius is set by a radial wave and simplex noise; the dot color runs from c3 to accent by strength. Pitch in CSS pixels, recalculated by DPR. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-008-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -1059,7 +1094,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-013"
+      ],
       "files": [
         {
           "path": "surface-009/surface-009.tsx",
@@ -1067,7 +1104,7 @@
           "target": "@components/vibeui/surface-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-009-*.",
+      "docs": "Составной блок: импортирует mockup-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-009-*.",
       "meta": {
         "tags": [
           "background",
@@ -1077,7 +1114,8 @@
           "apple",
           "blur",
           "shader",
-          "webgl"
+          "webgl",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1088,6 +1126,7 @@
           "usage": "<Surface009 speed=\"calm\" frost=\"clear\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface009>",
           "summary": "Жидкое стекло на WebGL2: мягкий фон из пятен палитры и плита-линза, чей прямоугольник берётся из DOM-элемента [data-part=\"slab\"] (в нём и живёт контент). Внутри плиты — преломление по SDF скруглённого прямоугольника с расхождением каналов, четырёхточечное размытие по frost, тонировка и краевой блик. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-009-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1159,10 +1198,11 @@
           "en": {
             "title": "Liquid Glass",
             "description": "Live liquid glass: a glass slab under the content refracts the drifting background — at the edges the image bends with chromatic fringing and a highlight runs along the rim. GPU-rendered, zero dependencies. For a first screen with a card, a form or a product panel.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-009-*.",
+            "docs": "A composite block: imports mockup-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-009-*.",
             "ai": {
               "summary": "Liquid glass on WebGL2: a soft background of palette spots and a lens slab whose rectangle comes from the DOM element [data-part=\"slab\"] (where the content lives). Inside the slab — refraction by a rounded-rectangle SDF with channel separation, a four-tap blur by frost, tinting and a rim highlight. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-009-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -1213,7 +1253,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-010/surface-010.tsx",
@@ -1221,7 +1263,7 @@
           "target": "@components/vibeui/surface-010.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-010-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-010-*.",
       "meta": {
         "tags": [
           "background",
@@ -1233,7 +1275,8 @@
           "shader",
           "webgl",
           "ai",
-          "biotech"
+          "biotech",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1244,6 +1287,7 @@
           "usage": "<Surface010 speed=\"calm\" density=\"sparse\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface010>",
           "summary": "Нейро-шум на WebGL2: координаты трижды искажаются simplex-шумом, два слоя шума дают прожилки степенью от |noise| — тонкие линии там, где поле меняет знак. Основной слой — accent, второй — нейтральный, виньетка гасит края. Палитра из CSS с light-dark, рендер в 3/4 разрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-010-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1315,10 +1359,11 @@
           "en": {
             "title": "Neuro Noise",
             "description": "Live neuro noise: glowing veins drift and branch across a dark field — a neural net, marble or lightning under skin. GPU-rendered, zero dependencies. For AI, biotech, science and any product that wants a 'living intelligence' feel.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-010-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-010-*.",
             "ai": {
               "summary": "Neuro noise on WebGL2: coordinates are warped three times by simplex noise, two noise layers give veins by a power of |noise| — thin lines where the field changes sign. The main layer is accent, the second neutral, a vignette fades the edges. Palette from CSS with light-dark, 3/4-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-010-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -1369,7 +1414,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-011/surface-011.tsx",
@@ -1377,7 +1424,7 @@
           "target": "@components/vibeui/surface-011.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-011-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-011-*.",
       "meta": {
         "tags": [
           "background",
@@ -1388,7 +1435,8 @@
           "blur",
           "shader",
           "webgl",
-          "raycast"
+          "raycast",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1399,6 +1447,7 @@
           "usage": "<Surface011 speed=\"calm\" grain=\"fine\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface011>",
           "summary": "Зернистый градиент на WebGL2: три гауссовых пятна (c2, c3, accent) дрейфуют по базе c1, поверх — хэш-зерно, обновляемое 12 раз в секунду. Полное разрешение ради честного зерна, шейдер копеечный. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-011-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1470,10 +1519,11 @@
           "en": {
             "title": "Grain Gradient",
             "description": "A live grain gradient: large soft spots drift across the field under film grain — a tactile, 'printed' background. GPU-rendered, zero dependencies. For apps, personal pages, music and editorial projects.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-011-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-011-*.",
             "ai": {
               "summary": "A grain gradient on WebGL2: three gaussian spots (c2, c3, accent) drift over the c1 base, with hash grain on top updated 12 times a second. Full resolution for honest grain, the shader is dirt cheap. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-011-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -1524,7 +1574,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-013/surface-013.tsx",
@@ -1532,7 +1584,7 @@
           "target": "@components/vibeui/surface-013.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client», canvas2D без WebGL. До 1600 частиц в плоских Float32Array идут по полю направлений из simplex-шума (JS-реализация без таблиц); кадр не очищается, а притеняется полупрозрачной заливкой базового цвета — следы гаснут сами. Палитра — CSS-переменные с light-dark, читаются через computed border-color холста. DPR ≤ 1.5 ради тонких линий. Пауза вне вьюпорта и в скрытой вкладке, prefers-reduced-motion и speed=still — один прогретый кадр (40 шагов), заглушка из radial-gradient до первого кадра. Палитра --vibeui-surface-013-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client», canvas2D без WebGL. До 1600 частиц в плоских Float32Array идут по полю направлений из simplex-шума (JS-реализация без таблиц); кадр не очищается, а притеняется полупрозрачной заливкой базового цвета — следы гаснут сами. Палитра — CSS-переменные с light-dark, читаются через computed border-color холста. DPR ≤ 1.5 ради тонких линий. Пауза вне вьюпорта и в скрытой вкладке, prefers-reduced-motion и speed=still — один прогретый кадр (40 шагов), заглушка из radial-gradient до первого кадра. Палитра --vibeui-surface-013-*.",
       "meta": {
         "tags": [
           "background",
@@ -1542,7 +1594,8 @@
           "wind",
           "shader",
           "webgl",
-          "motion"
+          "motion",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1553,6 +1606,7 @@
           "usage": "<Surface013 speed=\"calm\" density=\"dense\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface013>",
           "summary": "Поток частиц на canvas2D: до 1600 частиц идут по полю направлений из simplex-шума, кадр притеняется вместо очистки, и за частицами остаются гаснущие следы. Четверть частиц — акцентные, остальные нейтральные. Без WebGL и зависимостей. Палитра из CSS с light-dark, пауза вне экрана, один прогретый кадр при reduced motion, CSS-заглушка до первого кадра.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-013-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1624,10 +1678,11 @@
           "en": {
             "title": "Particle Flow",
             "description": "A live particle flow: smoky trails of thousands of particles run along a direction field, gathering into clouds and dispersing. GPU-rendered, zero dependencies. For AI products, data, science and anything that needs motion without noise.",
-            "docs": "One file, zero dependencies, \"use client\", canvas2D without WebGL. Up to 1600 particles in flat Float32Arrays follow a direction field from simplex noise (a table-free JS implementation); the frame is not cleared but dimmed with a translucent fill of the base color — trails fade on their own. The palette is CSS variables with light-dark read through the canvas computed border-color. DPR ≤ 1.5 for thin lines. Paused outside the viewport and in a hidden tab, prefers-reduced-motion and speed=still draw a single pre-warmed frame (40 steps), a radial-gradient fallback until the first frame. Palette --vibeui-surface-013-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\", canvas2D without WebGL. Up to 1600 particles in flat Float32Arrays follow a direction field from simplex noise (a table-free JS implementation); the frame is not cleared but dimmed with a translucent fill of the base color — trails fade on their own. The palette is CSS variables with light-dark read through the canvas computed border-color. DPR ≤ 1.5 for thin lines. Paused outside the viewport and in a hidden tab, prefers-reduced-motion and speed=still draw a single pre-warmed frame (40 steps), a radial-gradient fallback until the first frame. Palette --vibeui-surface-013-*.",
             "ai": {
               "summary": "A particle flow on canvas2D: up to 1600 particles follow a direction field from simplex noise, the frame is dimmed instead of cleared, and fading trails remain behind the particles. A quarter of the particles are accent, the rest neutral. No WebGL and no dependencies. Palette from CSS with light-dark, paused off-screen, a single pre-warmed frame under reduced motion, a CSS fallback until the first frame.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-013-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -1678,7 +1733,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-014/surface-014.tsx",
@@ -1686,7 +1743,7 @@
           "target": "@components/vibeui/surface-014.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-014-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-014-*.",
       "meta": {
         "tags": [
           "background",
@@ -1697,7 +1754,8 @@
           "matrix",
           "shader",
           "webgl",
-          "devtools"
+          "devtools",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1708,6 +1766,7 @@
           "usage": "<Surface014 speed=\"calm\" cell=\"small\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface014>",
           "summary": "ASCII-поле на WebGL2: атлас из 14 глифов рисуется в canvas2D один раз и загружается текстурой; шейдер делит холст на ячейки, берёт яркость шумового поля в центре ячейки и выбирает глиф по яркости. Размер ячейки в CSS-пикселях с пересчётом по DPR. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-014-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1779,10 +1838,11 @@
           "en": {
             "title": "ASCII Field",
             "description": "A live ASCII field: a light spot typeset in glyphs from a dot to @ breathes and drifts like on a terminal. GPU-rendered, zero dependencies. For dev tools, hacker products, CLIs and indie games.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-014-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-014-*.",
             "ai": {
               "summary": "An ASCII field on WebGL2: an atlas of 14 glyphs is drawn once in canvas2D and uploaded as a texture; the shader splits the canvas into cells, takes the brightness of a noise field at the cell center and picks a glyph by brightness. Cell size in CSS pixels recalculated by DPR. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-014-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -1833,7 +1893,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-015/surface-015.tsx",
@@ -1841,7 +1903,7 @@
           "target": "@components/vibeui/surface-015.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-015-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-015-*.",
       "meta": {
         "tags": [
           "background",
@@ -1852,7 +1914,8 @@
           "shimmer",
           "shader",
           "webgl",
-          "fashion"
+          "fashion",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1863,6 +1926,7 @@
           "usage": "<Surface015 speed=\"calm\" shimmer=\"wide\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface015>",
           "summary": "Перламутровая фольга на WebGL2: складчатое поле с нормалью по конечным разностям; угол нормаль–взгляд задаёт фазу циклического перехода c2→c3→accent (косинусные веса, без шва), плюс диффуз и блик. Палитра из CSS с light-dark, рендер в 3/4 разрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-015-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -1934,10 +1998,11 @@
           "en": {
             "title": "Pearl Foil",
             "description": "Live pearl foil: folds shimmer through three palette tones by viewing angle — a hologram without the rainbow. GPU-rendered, zero dependencies. For fashion, beauty, music, events and premium D2C.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-015-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-015-*.",
             "ai": {
               "summary": "Pearl foil on WebGL2: a fold field with finite-difference normals; the normal–view angle sets the phase of a cyclic c2→c3→accent transition (cosine weights, no seam), plus diffuse and a highlight. Palette from CSS with light-dark, 3/4-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-015-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -1988,7 +2053,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-016/surface-016.tsx",
@@ -1996,7 +2063,7 @@
           "target": "@components/vibeui/surface-016.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-016-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-016-*.",
       "meta": {
         "tags": [
           "background",
@@ -2007,7 +2074,8 @@
           "depth",
           "clouds",
           "shader",
-          "webgl"
+          "webgl",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2018,6 +2086,7 @@
           "usage": "<Surface016 speed=\"calm\" depth=\"deep\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface016>",
           "summary": "Слои тумана на WebGL2: три слоя fbm-шума разной крупности и скорости, каждый сдвигается за мышью пропорционально глубине (uniform mouse из pointermove, только мышь). Дальний — c2, средний — c3, ближний — accent. Палитра из CSS с light-dark, рендер в полразрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-016-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -2089,10 +2158,11 @@
           "en": {
             "title": "Fog Layers",
             "description": "Live fog layers: three layers of mist at different depths drift and shift with the cursor — depth without 3D. GPU-rendered, zero dependencies. For product pages, hospitality, wellness and stories.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-016-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-016-*.",
             "ai": {
               "summary": "Fog layers on WebGL2: three fbm noise layers of different scale and speed, each shifting with the mouse in proportion to depth (a mouse uniform from pointermove, mouse only). Far — c2, mid — c3, near — accent. Palette from CSS with light-dark, half-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-016-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -2143,7 +2213,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-017/surface-017.tsx",
@@ -2151,7 +2223,7 @@
           "target": "@components/vibeui/surface-017.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-017-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-017-*.",
       "meta": {
         "tags": [
           "background",
@@ -2162,7 +2234,8 @@
           "terrain",
           "shader",
           "webgl",
-          "minimal"
+          "minimal",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2173,6 +2246,7 @@
           "usage": "<Surface017 speed=\"calm\" rows=\"dense\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface017>",
           "summary": "Волновой рельеф на WebGL2: ряды с шагом rows, каждый ряд — линия, смещённая simplex-шумом по x и времени; пиксель берёт расстояние до ближайшего из трёх соседних рядов, толщина линии в пикселях холста. Нижние ряды ярче, амплитуда красит линию от c3 к accent. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-017-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -2244,10 +2318,11 @@
           "en": {
             "title": "Wave Relief",
             "description": "A live wave relief: rows of thin lines breathe like fabric or a terrain cross-section, near ones brighter, far ones fading. GPU-rendered, zero dependencies. A calm background for text in tech, fintech, architecture and data.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-017-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-017-*.",
             "ai": {
               "summary": "A wave relief on WebGL2: rows at the rows pitch, each row a line displaced by simplex noise along x and time; a pixel takes the distance to the nearest of three neighboring rows, line thickness in canvas pixels. Lower rows are brighter, amplitude colors the line from c3 to accent. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-017-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -2298,7 +2373,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-018/surface-018.tsx",
@@ -2306,7 +2383,7 @@
           "target": "@components/vibeui/surface-018.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-018-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-018-*.",
       "meta": {
         "tags": [
           "background",
@@ -2317,7 +2394,8 @@
           "tiles",
           "shader",
           "webgl",
-          "data"
+          "data",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2328,6 +2406,7 @@
           "usage": "<Surface018 speed=\"calm\" scale=\"large\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface018>",
           "summary": "Вороной на WebGL2: точки в сетке 3×3 соседей плавают по синусу от хэша, F1 и F2 — два ближайших расстояния, ребро — smoothstep(F2−F1) ровной толщины. Заливка ячейки по хэшу между c1 и c2, к центру светлеет к c3, рёбра — accent. Палитра из CSS с light-dark, рендер в 3/4 разрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-018-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -2399,10 +2478,11 @@
           "en": {
             "title": "Voronoi Cells",
             "description": "A live Voronoi mosaic: cells around drifting points slowly flow, edges even, each cell its own shade. GPU-rendered, zero dependencies. For data, infrastructure, biotech and science.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-018-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-018-*.",
             "ai": {
               "summary": "Voronoi on WebGL2: points in a 3×3 neighbor grid drift on a sine from a hash, F1 and F2 are the two nearest distances, the edge is smoothstep(F2−F1) of even thickness. Cell fill by hash between c1 and c2, lightening to c3 toward the center, edges — accent. Palette from CSS with light-dark, 3/4-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-018-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -2453,7 +2533,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-019/surface-019.tsx",
@@ -2461,7 +2543,7 @@
           "target": "@components/vibeui/surface-019.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-019-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-019-*.",
       "meta": {
         "tags": [
           "background",
@@ -2472,7 +2554,8 @@
           "volumetric",
           "cinematic",
           "shader",
-          "webgl"
+          "webgl",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2483,6 +2566,7 @@
           "usage": "<Surface019 speed=\"calm\" haze=\"thin\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface019>",
           "summary": "Свет сквозь туман на WebGL2: от пикселя к источнику идут 18 шагов, каждый вычитает плотность simplex-дымки с затуханием — так получаются лучи. Источник — над кромкой или за мышью (uniform mouse). Пыль — редкие искры хэша. Палитра из CSS с light-dark, рендер в полразрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-019-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -2554,10 +2638,11 @@
           "en": {
             "title": "God Rays",
             "description": "Live light through fog: volumetric beams from a source above the edge break through the haze with dust drifting in them; the source follows the cursor. GPU-rendered, zero dependencies. For film, events, hospitality and premium products.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-019-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-019-*.",
             "ai": {
               "summary": "Light through fog on WebGL2: 18 steps march from the pixel to the source, each subtracting simplex haze density with falloff — that makes the beams. The source is above the edge or behind the mouse (a mouse uniform). Dust is sparse hash sparks. Palette from CSS with light-dark, half-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-019-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -2608,7 +2693,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-020/surface-020.tsx",
@@ -2616,7 +2703,7 @@
           "target": "@components/vibeui/surface-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-020-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-020-*.",
       "meta": {
         "tags": [
           "background",
@@ -2627,7 +2714,8 @@
           "marble",
           "shader",
           "webgl",
-          "premium"
+          "premium",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2638,6 +2726,7 @@
           "usage": "<Surface020 speed=\"calm\" flow=\"broad\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface020>",
           "summary": "Чернила в воде на WebGL2: двойной domain warp (fbm от fbm) по классике Quilez даёт клубы, курсор отталкивает поле экспоненциальным толчком (uniform mouse). Три слоя палитры по трём полям, accent — верхний. Палитра из CSS с light-dark, рендер в полразрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-020-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -2709,10 +2798,11 @@
           "en": {
             "title": "Ink in Water",
             "description": "Live ink in water: plumes of paint slowly spread and move away from the cursor — a dense, expensive background. GPU-rendered, zero dependencies. For studios, perfume, premium goods and personal pages.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-020-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-020-*.",
             "ai": {
               "summary": "Ink in water on WebGL2: a double domain warp (fbm of fbm) after Quilez yields plumes, the cursor repels the field with an exponential push (a mouse uniform). Three palette layers over three fields, accent on top. Palette from CSS with light-dark, half-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-020-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -2763,7 +2853,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-021/surface-021.tsx",
@@ -2771,7 +2863,7 @@
           "target": "@components/vibeui/surface-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-021-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике, simplex-шум (Ashima, MIT). Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-021-*.",
       "meta": {
         "tags": [
           "background",
@@ -2782,7 +2874,8 @@
           "offset",
           "editorial",
           "shader",
-          "webgl"
+          "webgl",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2793,6 +2886,7 @@
           "usage": "<Surface021 speed=\"calm\" pitch=\"fine\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface021>",
           "summary": "Полутон на WebGL2: сетка точек, повёрнутая на 15°, шаг в CSS-пикселях с пересчётом по DPR; радиус точки — от шумового светового поля в центре ячейки, до слияния в сплошную заливку. Цвет точки от c3 к accent по силе. Палитра из CSS с light-dark, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-021-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -2864,10 +2958,11 @@
           "en": {
             "title": "Halftone",
             "description": "Live halftone: a print screen at 15° where the dot size breathes with a light field — offset printing that moves. GPU-rendered, zero dependencies. For editorial projects, publishers, design studios and posters.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-021-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle, simplex noise (Ashima, MIT). The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-021-*.",
             "ai": {
               "summary": "Halftone on WebGL2: a dot grid rotated 15°, pitch in CSS pixels recalculated by DPR; the dot radius comes from a noise light field at the cell center, up to merging into a solid fill. Dot color from c3 to accent by strength. Palette from CSS with light-dark, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-021-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -2918,7 +3013,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "mockup-010"
+      ],
       "files": [
         {
           "path": "surface-024/surface-024.tsx",
@@ -2926,7 +3023,7 @@
           "target": "@components/vibeui/surface-024.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-024-*.",
+      "docs": "Составной блок: импортирует mockup-010 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client». WebGL2 fragment-шейдер на одном треугольнике. Палитра — CSS-переменные с light-dark; шейдер читает их через computed border-color холста, поэтому тема, accent и colors работают одинаково для канваса и CSS-заглушки. Пауза вне вьюпорта и в скрытой вкладке (IntersectionObserver, visibilitychange), prefers-reduced-motion и speed=still — один кадр, без WebGL2 остаётся заглушка из radial-gradient. Смена темы ловится MutationObserver на <html>. Палитра --vibeui-surface-024-*.",
       "meta": {
         "tags": [
           "background",
@@ -2937,7 +3034,8 @@
           "rain",
           "waves",
           "shader",
-          "webgl"
+          "webgl",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2948,6 +3046,7 @@
           "usage": "<Surface024 speed=\"calm\" waves=\"calm\" accent=\"#ff5900\">\n  {/* ваш контент */}\n</Surface024>",
           "summary": "Рябь от курсора на WebGL2: pointermove каждые ~140 мс добавляет каплю (x, y, время рождения) в кольцевой буфер из восьми uniform vec3; шейдер суммирует затухающие кольца в высоту воды, градиент высоты смещает выборку мягкого фона (преломление), гребни подсвечиваются accent. Без мыши и на touch капли падают случайно. Палитра из CSS с light-dark, рендер в 3/4 разрешения, пауза вне экрана, один кадр при reduced motion, CSS-заглушка без WebGL.",
           "preserve": [
+            "импорты mockup-010 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-surface-024-* и не подменять её токенами вашей темы",
             "разрешение холста, выбранное под этот эффект — выше не нужно глазу, ниже ломает картинку",
             "паузу вне вьюпорта и в скрытой вкладке — фон, которого не видно, не должен тратить батарею",
@@ -3019,10 +3118,11 @@
           "en": {
             "title": "Cursor Ripples",
             "description": "Live cursor ripples: rings spread under the pointer, bending the soft background like water; without a mouse rain falls across the field. GPU-rendered, zero dependencies. For interactive first screens, apps and portfolios.",
-            "docs": "One file, zero dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-024-*.",
+            "docs": "A composite block: imports mockup-010 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, \"use client\". A WebGL2 fragment shader on a single triangle. The palette is CSS variables with light-dark; the shader reads them through the canvas computed border-color, so theme, accent and colors work identically for the canvas and the CSS fallback. Paused outside the viewport and in a hidden tab (IntersectionObserver, visibilitychange), prefers-reduced-motion and speed=still draw a single frame, without WebGL2 the radial-gradient fallback stays. Theme switches are caught by a MutationObserver on <html>. Palette --vibeui-surface-024-*.",
             "ai": {
               "summary": "Cursor ripples on WebGL2: pointermove every ~140 ms adds a drop (x, y, birth time) to a ring buffer of eight uniform vec3s; the shader sums decaying rings into a water height, the height gradient offsets the soft background sample (refraction), crests are lit with accent. Without a mouse and on touch drops fall randomly. Palette from CSS with light-dark, 3/4-resolution rendering, paused off-screen, a single frame under reduced motion, a CSS fallback without WebGL.",
               "preserve": [
+                "the mockup-010 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-surface-024-* palette — do not swap it for your theme tokens",
                 "the canvas resolution chosen for this effect — higher is invisible to the eye, lower breaks the picture",
                 "the pause outside the viewport and in a hidden tab — a background nobody sees must not drain the battery",
@@ -3073,7 +3173,9 @@
         "background"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "caption-001"
+      ],
       "files": [
         {
           "path": "surface-025/surface-025.tsx",
@@ -3081,7 +3183,7 @@
           "target": "@components/vibeui/surface-025.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент без состояния. Разлиновка — background-image из linear-gradient (клетка и линейка) или radial-gradient (точки) двумя слоями: тонкий шагом cell и крупный шагом major×cell; цвета линий — color-mix от --vibeui-surface-025-ink с долей из strength (faint 0.055/0.095, soft 0.085/0.14, clear 0.13/0.2). major=0 убирает крупную клетку. margin — красная вертикаль на четвёртой клетке. children заменяют демонстрационные eyebrow/title/note. Палитра --vibeui-surface-025-* с light-dark: бумага #faf7f2 / #1c1a18, линии синевато-серые; tone фиксирует схему, paper и ink переопределяют цвета.",
+      "docs": "Составной блок: импортирует caption-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент без состояния. Разлиновка — background-image из linear-gradient (клетка и линейка) или radial-gradient (точки) двумя слоями: тонкий шагом cell и крупный шагом major×cell; цвета линий — color-mix от --vibeui-surface-025-ink с долей из strength (faint 0.055/0.095, soft 0.085/0.14, clear 0.13/0.2). major=0 убирает крупную клетку. margin — красная вертикаль на четвёртой клетке. children заменяют демонстрационные eyebrow/title/note. Палитра --vibeui-surface-025-* с light-dark: бумага #faf7f2 / #1c1a18, линии синевато-серые; tone фиксирует схему, paper и ink переопределяют цвета.",
       "meta": {
         "tags": [
           "background",
@@ -3093,7 +3195,8 @@
           "dots",
           "sketch",
           "hand-drawn",
-          "wrapper"
+          "wrapper",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -3107,6 +3210,7 @@
           "usage": "<Surface025 pattern=\"grid\" cell={24} strength=\"soft\" tone=\"light\">\n  {/* любые секции страницы */}\n</Surface025>",
           "summary": "Самодостаточный фон-обёртка «тетрадный лист» для страниц в рукописном стиле: клетка, линейка или точки, шаг и приглушение пропсами, светлая и тёмная бумага. Секции внутри — любые.",
           "preserve": [
+            "импорты caption-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "два слоя разлиновки — тонкий и крупный каждой пятой линией: одна сетка выглядит как таблица, а не тетрадь",
             "цвет линий через color-mix от ink с долей из strength — так приглушение одинаково в обеих темах",
             "бумагу и линии из палитры --vibeui-surface-025-* с light-dark, а не из токенов темы проекта"
@@ -3183,10 +3287,11 @@
           "en": {
             "title": "Notebook sheet",
             "description": "Paper in squares, lines or dots like a notebook sheet: ruling from CSS gradients, a bold square every fifth line, optional red margin. Line strength is adjustable, light and dark paper. A wrapper: content of any height sits on top.",
-            "docs": "One file, zero dependencies, a stateless server component. The ruling is a background-image of linear-gradients (squares and lines) or radial-gradients (dots) in two layers: fine at cell and bold at major×cell; line colours are color-mix from --vibeui-surface-025-ink with a share from strength (faint 0.055/0.095, soft 0.085/0.14, clear 0.13/0.2). major=0 removes the bold grid. margin — a red vertical on the fourth cell. children replace the demo eyebrow/title/note. Palette --vibeui-surface-025-* with light-dark: paper #faf7f2 / #1c1a18, bluish-grey lines; tone pins the scheme, paper and ink override colours.",
+            "docs": "A composite block: imports caption-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a stateless server component. The ruling is a background-image of linear-gradients (squares and lines) or radial-gradients (dots) in two layers: fine at cell and bold at major×cell; line colours are color-mix from --vibeui-surface-025-ink with a share from strength (faint 0.055/0.095, soft 0.085/0.14, clear 0.13/0.2). major=0 removes the bold grid. margin — a red vertical on the fourth cell. children replace the demo eyebrow/title/note. Palette --vibeui-surface-025-* with light-dark: paper #faf7f2 / #1c1a18, bluish-grey lines; tone pins the scheme, paper and ink override colours.",
             "ai": {
               "summary": "A self-contained notebook-sheet background wrapper for hand-drawn pages: squares, lines or dots, cell and strength via props, light and dark paper. Any sections inside.",
               "preserve": [
+                "the caption-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "two ruling layers — fine and bold every fifth line: a single grid reads as a table, not a notebook",
                 "line colour via color-mix from ink with a share from strength — the same softness in both themes",
                 "paper and lines from the --vibeui-surface-025-* palette with light-dark, not from the project's theme tokens"

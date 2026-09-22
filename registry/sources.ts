@@ -56,6 +56,7 @@ import tabsRegistry from "@/registry/components/tabs/registry.json"
 import navigationRegistry from "@/registry/components/navigation/registry.json"
 import toastRegistry from "@/registry/components/toast/registry.json"
 import treeRegistry from "@/registry/components/tree/registry.json"
+import typographyRegistry from "@/registry/components/typography/registry.json"
 import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
 import sketchRegistry from "@/registry/animations/sketch/registry.json"
@@ -337,6 +338,11 @@ export const SOURCES = [
     directory: "registry/components/tree",
     kind: "component",
     items: treeRegistry.items,
+  },
+  {
+    directory: "registry/components/typography",
+    kind: "component",
+    items: typographyRegistry.items,
   },
   {
     directory: "registry/animations/stacks",

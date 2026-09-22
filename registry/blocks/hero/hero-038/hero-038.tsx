@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero038Props = {
   eyebrow?: string
   /** Заголовок; таймер встаёт после него отдельной строкой. */
@@ -71,12 +73,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-038"] [data-part="timer"] b{font-weight:400;animation:vibeui-hero-038-blink 1s steps(1) infinite}
 [data-vibeui-block="hero-038"] [data-part="lede"]{margin:1.4rem 0 0;max-width:30rem;font-size:1.08rem;color:var(--vibeui-hero-038-muted)}
 [data-vibeui-block="hero-038"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.8rem 0 0}
-[data-vibeui-block="hero-038"] [data-part="primary"],[data-vibeui-block="hero-038"] [data-part="secondary"]{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:3.4rem;padding:0 1.6rem;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .2s}
-[data-vibeui-block="hero-038"] [data-part="primary"]{background:var(--vibeui-hero-038-accent);color:var(--vibeui-hero-038-on-accent)}
-[data-vibeui-block="hero-038"] [data-part="primary"]:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 16px 36px -12px var(--vibeui-hero-038-accent)}
-[data-vibeui-block="hero-038"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-038-line);color:var(--vibeui-hero-038-fg)}
-[data-vibeui-block="hero-038"] [data-part="secondary"]:hover{transform:translateY(-2px);border-color:var(--vibeui-hero-038-fg)}
-[data-vibeui-block="hero-038"] a:focus-visible{outline:2px solid var(--vibeui-hero-038-accent);outline-offset:3px}
 [data-vibeui-block="hero-038"] [data-part="trust"]{margin:1.4rem 0 0;font-size:.88rem;color:var(--vibeui-hero-038-muted)}
 [data-vibeui-block="hero-038"] [data-part="trust"] b{color:var(--vibeui-hero-038-accent);font-weight:700}
 [data-vibeui-block="hero-038"] [data-part="scene"]{position:relative;width:min(100%,26rem);aspect-ratio:1;margin:0 auto;container-type:inline-size}
@@ -185,14 +181,26 @@ export function Hero038({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
             {trust ? (

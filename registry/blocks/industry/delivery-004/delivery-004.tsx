@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
+import { Card084 } from "@/registry/components/card/card-084/card-084"
 
 export type Delivery004Step = {
   title: string
@@ -78,15 +79,6 @@ container-type:inline-size;
 [data-vibeui-block="delivery-004"] [data-part="steps"]{position:relative;display:grid;gap:1.2rem;margin:2rem 0 0;padding:0 0 0 2.2rem;list-style:none}
 [data-vibeui-block="delivery-004"] [data-part="steps"]::before,[data-vibeui-block="delivery-004"] [data-part="steps"]::after{content:"";position:absolute;left:.65rem;top:.6rem;bottom:.6rem;width:2px;border-radius:2px;background:var(--vibeui-delivery-004-line)}
 [data-vibeui-block="delivery-004"] [data-part="steps"]::after{background:var(--vibeui-delivery-004-accent);transform:scaleY(var(--vibeui-delivery-004-fill));transform-origin:top;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="delivery-004"] [data-part="step"]{position:relative;transition:opacity .4s}
-[data-vibeui-block="delivery-004"] [data-part="step"][data-state="todo"]{opacity:.45}
-[data-vibeui-block="delivery-004"] [data-part="step"]::before{content:"";position:absolute;left:-2.2rem;top:.3rem;width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--vibeui-delivery-004-line);background:var(--vibeui-delivery-004-bg);transition:background .3s,border-color .3s,transform .3s cubic-bezier(.34,1.56,.64,1)}
-[data-vibeui-block="delivery-004"] [data-part="step"][data-state="done"]::before,[data-vibeui-block="delivery-004"] [data-part="step"][data-state="now"]::before{background:var(--vibeui-delivery-004-accent);border-color:var(--vibeui-delivery-004-accent)}
-[data-vibeui-block="delivery-004"] [data-part="step"][data-state="now"]::before{transform:scale(1.25);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-delivery-004-accent) 25%,transparent)}
-[data-vibeui-block="delivery-004"] [data-part="step"] h3{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:0;font-family:var(--vibeui-delivery-004-display);font-weight:700;font-size:1rem}
-[data-vibeui-block="delivery-004"] [data-part="step"] h3 time{font-family:var(--vibeui-delivery-004-font);font-weight:600;font-size:.82rem;color:var(--vibeui-delivery-004-muted);font-variant-numeric:tabular-nums;opacity:0;transition:opacity .3s}
-[data-vibeui-block="delivery-004"] [data-part="step"][data-state="done"] time,[data-vibeui-block="delivery-004"] [data-part="step"][data-state="now"] time{opacity:1}
-[data-vibeui-block="delivery-004"] [data-part="step"] p{margin:.25rem 0 0;font-size:.88rem;color:var(--vibeui-delivery-004-muted)}
 [data-vibeui-block="delivery-004"] [data-part="phone"]{position:relative;width:min(100%,24rem);margin:0 auto;padding:.7rem;border-radius:2.2rem;background:var(--vibeui-delivery-004-fg);color:var(--vibeui-delivery-004-on-fg);box-shadow:0 40px 80px -30px rgb(0 0 0 / .7)}
 [data-vibeui-block="delivery-004"] [data-part="screen"]{position:relative;overflow:hidden;border-radius:1.6rem;background:var(--vibeui-delivery-004-bg);color:var(--vibeui-delivery-004-fg)}
 [data-vibeui-block="delivery-004"] [data-part="screen"] svg{display:block;width:100%;height:auto}
@@ -196,13 +188,7 @@ export function Delivery004({
             </button>
             <ol data-part="steps" style={{ ["--vibeui-delivery-004-fill" as string]: fill } as CSSProperties} aria-live="polite">
               {steps.map((item, index) => (
-                <li key={item.title} data-part="step" data-state={index < step ? "done" : index === step ? "now" : "todo"}>
-                  <h3>
-                    {item.title}
-                    <time>{item.time}</time>
-                  </h3>
-                  <p>{item.text}</p>
-                </li>
+                <Card084 key={item.title} data-part="step" title={item.title} time={item.time} text={item.text} data-state={index < step ? "done" : index === step ? "now" : "todo"} accent={accent} />
               ))}
             </ol>
           </div>

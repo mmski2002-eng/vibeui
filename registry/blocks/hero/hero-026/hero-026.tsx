@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useSyncExternalStore, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero026Props = {
   /** Имена через « & »: «Соня & Тимур». */
   names?: string
@@ -98,13 +100,9 @@ container-type:inline-size;
 [data-vibeui-block="hero-026"] [data-part="countdown"] b{font-family:var(--vibeui-hero-026-display);font-size:clamp(1.6rem,3.4cqi,2.4rem);font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
 [data-vibeui-block="hero-026"] [data-part="countdown"] span{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgb(255 250 240 / .7)}
 [data-vibeui-block="hero-026"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.8rem}
-[data-vibeui-block="hero-026"] [data-part="primary"],[data-vibeui-block="hero-026"] [data-part="calendar"]{display:inline-flex;align-items:center;gap:.5rem;height:3rem;padding:0 1.4rem;border-radius:.6rem;font-family:var(--vibeui-hero-026-display);font-size:.95rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .2s,background .25s,border-color .25s}
-[data-vibeui-block="hero-026"] [data-part="primary"]{background:var(--vibeui-hero-026-accent);color:var(--vibeui-hero-026-on-accent);border:1px solid var(--vibeui-hero-026-accent);box-shadow:0 14px 30px -14px var(--vibeui-hero-026-accent)}
-[data-vibeui-block="hero-026"] [data-part="primary"]:hover{transform:translateY(-2px);background:color-mix(in oklab,var(--vibeui-hero-026-accent) 88%,#000)}
 [data-vibeui-block="hero-026"] [data-part="calendar"]{background:rgb(255 250 240 / .14);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fffaf0;border:1px solid rgb(255 250 240 / .4)}
 [data-vibeui-block="hero-026"] [data-part="calendar"]:hover{border-color:#fffaf0;transform:translateY(-2px)}
 [data-vibeui-block="hero-026"] [data-part="calendar"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-[data-vibeui-block="hero-026"] [data-part="primary"]:focus-visible,[data-vibeui-block="hero-026"] [data-part="calendar"]:focus-visible,[data-vibeui-block="hero-026"] [data-part="tear"]:focus-visible{outline:2px solid var(--vibeui-hero-026-sun);outline-offset:3px}
 [data-vibeui-block="hero-026"] [data-part="side"]{position:relative;justify-self:center;width:min(100%,20rem)}
 [data-vibeui-block="hero-026"] [data-part="polaroid"]{position:relative;margin:0;padding:.8rem .8rem 2.6rem;background:var(--vibeui-hero-026-paper);box-shadow:0 30px 60px -30px rgb(0 0 0 / .6);transform:rotate(3deg);transition:transform .4s cubic-bezier(.2,.9,.3,1.2)}
 [data-vibeui-block="hero-026"] [data-part="polaroid"]:hover{transform:rotate(0) scale(1.02)}
@@ -183,7 +181,10 @@ container-type:inline-size;
 [data-vibeui-block="hero-026"] [data-part="frame"]{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);align-items:center;padding:9rem 2.5rem 4.5rem;min-height:42rem}
 [data-vibeui-block="hero-026"] [data-part="side"]{justify-self:end;width:min(100%,22rem)}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-026"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-026"] [data-part="gate"]{display:none}[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="letter"],[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="side"]{opacity:1}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-026"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-026"] [data-part="gate"]{display:none}[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="letter"],[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="side"]{opacity:1}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="hero-026"] [data-part="calendar"]:focus-visible,[data-vibeui-block="hero-026"] [data-part="tear"]:focus-visible{outline:2px solid var(--vibeui-hero-026-sun);outline-offset:3px}
+`
 
 const ZERO = ["00", "00", "00", "00"] as const
 
@@ -330,9 +331,15 @@ export function Hero026({
             )}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {calendarLabel && !Number.isNaN(target) ? (
                 <button type="button" data-part="calendar" onClick={downloadCalendar}>

@@ -2,7 +2,7 @@ import { denialText, resolveAccess } from "@/lib/access"
 import { withPreserveHeader } from "@/lib/registry-docs"
 import { verifyRegistryLink } from "@/lib/registry-link"
 import { getCatalogItem } from "@/registry/index"
-import { getBlockSource } from "@/registry/source.server"
+import { getDeliverableSource } from "@/registry/source.server"
 
 /**
  * Исходник item'а по прямой ссылке `/f/<name>.tsx`.
@@ -26,7 +26,7 @@ export async function GET(
   const { file } = await params
   const slug = file.replace(/\.tsx$/, "")
   const item = getCatalogItem(slug)
-  const source = await getBlockSource(slug)
+  const source = await getDeliverableSource(slug)
 
   if (!item || !source) {
     return new Response("Not found\n", { status: 404 })

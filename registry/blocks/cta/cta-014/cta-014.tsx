@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState, type CSSProperties } from "react"
+import { Button115 } from "@/registry/components/button/button-115/button-115"
 
 export type Cta014Props = {
   eyebrow?: string
@@ -78,18 +79,6 @@ background:var(--vibeui-cta-014-term-muted);opacity:0.55;
 [data-vibeui-block="cta-014"] [data-part="window-title"]{
 margin:0 auto 0 0.25rem;color:var(--vibeui-cta-014-term-muted);
 font-size:0.75rem;font-weight:600;letter-spacing:0.04em;
-}
-[data-vibeui-block="cta-014"] [data-part="copy-button"]{
-padding:0.3125rem 0.75rem;border:1px solid var(--vibeui-cta-014-term-border);
-border-radius:0.5rem;cursor:pointer;
-background:transparent;color:var(--vibeui-cta-014-term-ink);
-font:inherit;font-size:0.75rem;font-weight:600;
-transition:border-color var(--vibeui-cta-014-dur-2) ease,color var(--vibeui-cta-014-dur-2) ease;
-}
-[data-vibeui-block="cta-014"] [data-part="copy-button"]:hover{border-color:var(--vibeui-cta-014-accent)}
-[data-vibeui-block="cta-014"] [data-part="copy-button"][data-copied="true"]{color:var(--vibeui-cta-014-ok)}
-[data-vibeui-block="cta-014"] [data-part="copy-button"]:focus-visible{
-outline:2px solid var(--vibeui-cta-014-accent);outline-offset:2px;
 }
 [data-vibeui-block="cta-014"] [data-part="command"]{
 margin:0;padding:1.125rem 1rem;
@@ -192,14 +181,7 @@ export function Cta014({
               <span data-part="dot" aria-hidden="true" />
               <span data-part="dot" aria-hidden="true" />
               <span data-part="window-title">{windowTitle}</span>
-              <button
-                data-part="copy-button"
-                type="button"
-                data-copied={copied ? "true" : "false"}
-                onClick={copyCommand}
-              >
-                {copied ? copiedLabel : copyLabel}
-              </button>
+              <Button115 data-part="copy-button" copiedLabel={copiedLabel} copyLabel={copyLabel} copied={copied} onClick={copyCommand} accent={accent} />
             </div>
             <pre data-part="command">
               <code>

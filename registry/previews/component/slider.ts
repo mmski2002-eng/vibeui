@@ -42,4 +42,6 @@ export const PREVIEWS = {
     import("@/registry/components/slider/range-006/range-006").then((module) => module.Range006),
   "range-007": () =>
     import("@/registry/components/slider/range-007/range-007").then((module) => module.Range007),
+  "slider-013": () =>
+    import("@/registry/components/slider/slider-013/slider-013").then((module) => module.Slider013),
 } satisfies PreviewLoaderMap

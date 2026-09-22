@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card148 } from "@/registry/components/card/card-148/card-148"
 
 type Faq012Item = {
   question: string
@@ -47,22 +48,6 @@ margin:0 0 2rem;max-width:24ch;
 font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="faq-012"] [data-part="grid"]{display:grid;gap:1rem}
-[data-vibeui-block="faq-012"] [data-part="card"]{
-min-inline-size:0;
-padding:1.375rem 1.5rem;border:1px solid var(--vibeui-faq-012-border);border-radius:1rem;
-background:var(--vibeui-faq-012-card);
-}
-[data-vibeui-block="faq-012"] [data-part="question"]{
-margin:0 0 0.625rem;
-padding-left:0.875rem;position:relative;
-font-size:1rem;font-weight:700;line-height:1.4;letter-spacing:-0.01em;
-}
-[data-vibeui-block="faq-012"] [data-part="question"]::before{
-content:"";position:absolute;left:0;top:0.2em;bottom:0.2em;width:3px;border-radius:2px;
-background:var(--vibeui-faq-012-accent);color:oklch(from var(--vibeui-faq-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="faq-012"] [data-part="answer"]{
-margin:0;color:var(--vibeui-faq-012-muted);font-size:0.9375rem;line-height:1.6;
-}
 @container (min-width: 40rem){
 [data-vibeui-block="faq-012"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="faq-012"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
@@ -166,26 +151,7 @@ export function Faq012({
           <h2 data-part="title">{title}</h2>
           <div data-part="grid">
             {items.map((item) => (
-              <article
-                key={item.question}
-                data-part="card"
-                itemScope
-                itemProp="mainEntity"
-                itemType="https://schema.org/Question"
-              >
-                <h3 data-part="question" itemProp="name">
-                  {item.question}
-                </h3>
-                <div
-                  itemScope
-                  itemProp="acceptedAnswer"
-                  itemType="https://schema.org/Answer"
-                >
-                  <p data-part="answer" itemProp="text">
-                    {item.answer}
-                  </p>
-                </div>
-              </article>
+              <Card148 key={item.question} data-part="card" question={item.question} answer={item.answer} accent={accent} />
             ))}
           </div>
         </div>

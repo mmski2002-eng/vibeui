@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState, type CSSProperties } from "react"
+import { Card083 } from "@/registry/components/card/card-083/card-083"
 
 export type Delivery001Dish = {
   id: string
@@ -78,6 +79,7 @@ container-type:inline-size;
 :where([data-vibeui-block="delivery-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="delivery-001"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-delivery-001-bg);color:var(--vibeui-delivery-001-fg);font-family:var(--vibeui-delivery-001-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="delivery-001"] *{box-sizing:border-box}
+[data-vibeui-block="delivery-001"] [data-part="photo"]{width:72%;margin:0 auto}
 [data-vibeui-block="delivery-001"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="delivery-001"] [data-part="head"]{display:grid;gap:1.2rem;align-items:end}
 [data-vibeui-block="delivery-001"] [data-part="eyebrow"]{margin:0 0 .6rem;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-delivery-001-accent)}
@@ -91,14 +93,7 @@ container-type:inline-size;
 [data-vibeui-block="delivery-001"] [data-part="dish"]{position:relative;display:grid;grid-template-rows:auto 1fr auto;gap:.8rem;padding:1.1rem 1.1rem 1.2rem;border-radius:1.6rem;background:var(--vibeui-delivery-001-card);border:1px solid var(--vibeui-delivery-001-line);transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s;animation:vibeui-delivery-001-in .5s cubic-bezier(.2,.8,.2,1) both}
 [data-vibeui-block="delivery-001"] [data-part="dish"]:hover{transform:translateY(-4px);border-color:color-mix(in oklab,var(--vibeui-delivery-001-accent) 60%,transparent)}
 [data-vibeui-block="delivery-001"] [data-part="dish"][data-in="true"]{border-color:var(--vibeui-delivery-001-accent)}
-[data-vibeui-block="delivery-001"] [data-part="photo"]{position:relative;width:72%;margin:0 auto;aspect-ratio:1}
-[data-vibeui-block="delivery-001"] [data-part="photo"] img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="delivery-001"] [data-part="photo"][data-shape="circle"] img{border-radius:50%}
-[data-vibeui-block="delivery-001"] [data-part="photo"][data-shape="drop"] img{border-radius:50% 50% 50% 8%}
-[data-vibeui-block="delivery-001"] [data-part="photo"][data-shape="blob"] img{border-radius:60% 40% 55% 45% / 45% 60% 40% 55%}
-[data-vibeui-block="delivery-001"] [data-part="dish"]:hover [data-part="photo"] img{transform:scale(1.06) rotate(-4deg)}
-[data-vibeui-block="delivery-001"] [data-part="photo"]:empty{border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in oklab,var(--vibeui-delivery-001-accent) 55%,var(--vibeui-delivery-001-card)),var(--vibeui-delivery-001-card))}
-[data-vibeui-block="delivery-001"] [data-part="badge"]{position:absolute;top:2%;left:-4%;padding:.3rem .65rem;border-radius:.5rem;background:var(--vibeui-delivery-001-accent);color:var(--vibeui-delivery-001-on-accent);font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-8deg)}
+[data-vibeui-block="delivery-001"] [data-part="dish"]:hover [data-vibeui-block="card-083"] img{transform:scale(1.06) rotate(-4deg)}
 [data-vibeui-block="delivery-001"] [data-part="dish"] h3{margin:0;font-family:var(--vibeui-delivery-001-display);font-weight:700;font-size:1rem;line-height:1.2}
 [data-vibeui-block="delivery-001"] [data-part="text"]{margin:.3rem 0 0;font-size:.86rem;color:var(--vibeui-delivery-001-muted)}
 [data-vibeui-block="delivery-001"] [data-part="meta"]{margin:.5rem 0 0;font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-delivery-001-muted)}
@@ -313,10 +308,7 @@ export function Delivery001({
               const amount = qty[dish.id] ?? 0
               return (
                 <li key={dish.id} data-part="dish" data-in={amount > 0 ? "true" : undefined}>
-                  <figure data-part="photo" data-shape={SHAPES[index % SHAPES.length]}>
-                    {dish.image ? <img src={dish.image} alt={dish.name} loading="lazy" /> : null}
-                    {dish.badge ? <figcaption data-part="badge">{dish.badge}</figcaption> : null}
-                  </figure>
+                  <Card083 data-part="photo" image={dish.image} name={dish.name} badge={dish.badge} data-shape={SHAPES[index % SHAPES.length]} accent={accent} />
                   <div>
                     <h3>{dish.name}</h3>
                     {dish.text ? <p data-part="text">{dish.text}</p> : null}

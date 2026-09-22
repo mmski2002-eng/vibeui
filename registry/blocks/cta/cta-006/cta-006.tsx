@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Cta006Term = {
   term: string
@@ -30,6 +33,7 @@ export type Cta006Props = {
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, карточка с печатью темнеет вместе со страницей.
 const STYLES = `
+
 :where([data-vibeui-block="cta-006"]){
 --vibeui-cta-006-bg:transparent;
 --vibeui-cta-006-card:light-dark(oklch(1 0 0),oklch(0.24 0.014 150));
@@ -72,10 +76,6 @@ display:grid;place-items:center;background:var(--vibeui-cta-006-card);
 color:var(--vibeui-cta-006-accent);font-size:0.6875rem;font-weight:750;line-height:1.15;letter-spacing:0.01em;
 }
 [data-vibeui-block="cta-006"] [data-part="head"]{display:flex;align-items:center;gap:1rem}
-[data-vibeui-block="cta-006"] [data-part="title"]{
-margin:0;max-width:22ch;
-font-size:clamp(1.5rem,4.6cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="cta-006"] [data-part="text"]{
 margin:0.75rem 0 0;max-width:56ch;color:var(--vibeui-cta-006-muted);font-size:1rem;line-height:1.6;
 }
@@ -85,21 +85,9 @@ display:grid;gap:0.875rem;margin:0;padding:1.25rem 0 0;border-top:1px solid var(
 [data-vibeui-block="cta-006"] [data-part="terms"] dt{font-size:0.9375rem;font-weight:660}
 [data-vibeui-block="cta-006"] [data-part="terms"] dd{margin:0.1875rem 0 0;color:var(--vibeui-cta-006-muted);font-size:0.875rem;line-height:1.5}
 [data-vibeui-block="cta-006"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.875rem}
-[data-vibeui-block="cta-006"] [data-part="action"]{
-display:inline-flex;align-items:center;justify-content:center;
-min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.875rem;
-background:var(--vibeui-cta-006-accent);color:oklch(from var(--vibeui-cta-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:1rem;font-weight:650;
-transition:background-color var(--vibeui-cta-006-dur-2) ease;
-}
-[data-vibeui-block="cta-006"] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-cta-006-accent) 86%,black)}
-[data-vibeui-block="cta-006"] [data-part="secondary"]{
-color:var(--vibeui-cta-006-ink);font-size:0.9375rem;font-weight:560;text-underline-offset:4px;
-}
 [data-vibeui-block="cta-006"] [data-part="small"]{
 margin:0;color:var(--vibeui-cta-006-muted);font-size:0.8125rem;line-height:1.55;max-width:76ch;
 }
-[data-vibeui-block="cta-006"] a:focus-visible{outline:2px solid var(--vibeui-cta-006-accent);outline-offset:3px}
 @container (min-width: 44rem){
 [data-vibeui-block="cta-006"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="cta-006"] [data-part="card"]{grid-template-columns:1.25fr 1fr;gap:2.5rem 3rem;padding:2.75rem}
@@ -192,7 +180,12 @@ export function Cta006({
                 <span data-part="seal" aria-hidden="true">
                   <span data-part="seal-inner">{badge}</span>
                 </span>
-                <h2 data-part="title">{title}</h2>
+                <Heading001
+                  data-part="heading"
+                  title={title}
+                  ledeWidth={56}
+                  accent={accent}
+                />
               </div>
               <p data-part="text">{description}</p>
             </div>
@@ -205,12 +198,24 @@ export function Cta006({
               ))}
             </dl>
             <div data-part="actions">
-              <a data-part="action" href={actionHref}>
-                {actionLabel}
-              </a>
-              <a data-part="secondary" href={secondaryHref}>
-                {secondaryLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
+              <Button016
+                data-part="secondary"
+                label={secondaryLabel}
+                href={secondaryHref}
+                external={false}
+                size="lg"
+                tone="neutral"
+                accent={accent}
+              />
             </div>
             <p data-part="small">{smallPrint}</p>
           </div>

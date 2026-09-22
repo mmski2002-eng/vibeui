@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks014 } from "@/registry/components/navigation/footerlinks-014/footerlinks-014"
 
 export type Footer042Link = {
   label: string
@@ -57,10 +58,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-042"] [data-part="status"]{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;padding:.4rem .8rem;border-radius:999px;border:1px solid var(--vibeui-footer-042-line);font-family:var(--vibeui-footer-042-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-footer-042-muted)}
 [data-vibeui-block="footer-042"] [data-part="status"]::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-footer-042-accent);box-shadow:0 0 10px var(--vibeui-footer-042-accent);animation:vibeui-footer-042-pulse 2.4s ease-in-out infinite}
 [data-vibeui-block="footer-042"] [data-part="columns"]{display:grid;gap:2rem;grid-template-columns:repeat(2,minmax(0,1fr))}
-[data-vibeui-block="footer-042"] [data-part="column"] h3{margin:0 0 .8rem;font-family:var(--vibeui-footer-042-mono);font-weight:500;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-footer-042-muted)}
-[data-vibeui-block="footer-042"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.45rem}
-[data-vibeui-block="footer-042"] [data-part="column"] a{color:var(--vibeui-footer-042-fg);text-decoration:none;transition:color .2s}
-[data-vibeui-block="footer-042"] [data-part="column"] a:hover{color:var(--vibeui-footer-042-accent)}
 [data-vibeui-block="footer-042"] a:focus-visible{outline:2px solid var(--vibeui-footer-042-accent);outline-offset:2px}
 [data-vibeui-block="footer-042"] [data-part="bottom"]{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;justify-content:space-between;padding:1.4rem 0;font-size:.8rem;color:var(--vibeui-footer-042-muted)}
 [data-vibeui-block="footer-042"] [data-part="legal"]{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;margin:0;padding:0;list-style:none}
@@ -119,16 +116,7 @@ export function Footer042({
             </div>
             <div data-part="columns">
               {columns.map((column) => (
-                <nav key={column.title} data-part="column" aria-label={column.title}>
-                  <h3>{column.title}</h3>
-                  <ul>
-                    {column.links.map((link) => (
-                      <li key={link.href}>
-                        <a href={link.href}>{link.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                <Footerlinks014 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
           </div>

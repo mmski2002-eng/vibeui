@@ -1,6 +1,9 @@
 "use client"
 
 import { useId, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 import type { CSSProperties } from "react"
 
 export type Pricing014Addon = {
@@ -51,6 +54,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-014"]{color-scheme:dark}
+[data-vibeui-block="pricing-014"] [data-part="cta-button"]{margin-top:1.25rem;}
 [data-vibeui-block="pricing-014"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -59,14 +63,9 @@ box-sizing:border-box;background:var(--vibeui-pricing-014-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-014-sans);
 }
 [data-vibeui-block="pricing-014"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-014"] [data-part="heading"]{margin-bottom:1.75rem}
+[data-vibeui-block="pricing-014"] [data-part="note"]{margin:0.875rem 0 0}
 [data-vibeui-block="pricing-014"] [data-part="shell"]{max-width:58rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
-[data-vibeui-block="pricing-014"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-014-accent);
-}
-[data-vibeui-block="pricing-014"] h2{
-margin:0 0 1.75rem;max-width:22ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
 [data-vibeui-block="pricing-014"] [data-part="grid"]{display:grid;grid-template-columns:1fr;gap:1.25rem;align-items:start}
 [data-vibeui-block="pricing-014"] fieldset{margin:0;padding:0;border:0}
 [data-vibeui-block="pricing-014"] legend{
@@ -124,13 +123,6 @@ display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-
 border-top:1px solid var(--vibeui-pricing-014-line);font-size:0.8125rem;color:var(--vibeui-pricing-014-muted);
 }
 [data-vibeui-block="pricing-014"] [data-part="sum"]{font-size:1.75rem;font-weight:700;letter-spacing:-0.035em;color:var(--vibeui-pricing-014-fg);font-variant-numeric:tabular-nums}
-[data-vibeui-block="pricing-014"] a{
-display:inline-flex;align-items:center;justify-content:center;margin-top:1.25rem;width:100%;height:2.75rem;border-radius:0.625rem;
-background:var(--vibeui-pricing-014-accent);color:oklch(from var(--vibeui-pricing-014-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-014-dur-2) ease;
-}
-[data-vibeui-block="pricing-014"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-014-accent) 86%,black)}
-[data-vibeui-block="pricing-014"] a:focus-visible{outline:2px solid var(--vibeui-pricing-014-accent);outline-offset:3px}
 [data-vibeui-block="pricing-014"] [data-part="note"]{margin:0.875rem 0 0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-pricing-014-muted)}
 @container (min-width: 34rem){
 [data-vibeui-block="pricing-014"] [data-part="shell"]{padding:5rem 2rem}
@@ -255,8 +247,12 @@ export function Pricing014({
         style={palette}
       >
         <div data-part="shell">
-          {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h2>{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
 
           <div data-part="grid">
             <fieldset>
@@ -313,7 +309,7 @@ export function Pricing014({
                   {MONEY.format(total)} {currency}
                 </span>
               </p>
-              <a href={action.href}>{action.label}</a>
+              <Button016 data-part="cta-button" label={action.label} href={action.href} external={false} size="lg" tone="accent" accent={accent} />
               {note ? <p data-part="note">{note}</p> : null}
             </div>
           </div>

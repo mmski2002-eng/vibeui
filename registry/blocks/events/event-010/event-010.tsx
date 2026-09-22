@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Card122 } from "@/registry/components/card/card-122/card-122"
 
 export type Event010Slot = {
   time: string
@@ -85,12 +86,6 @@ container-type:inline-size;
 [data-vibeui-block="event-010"] [data-part="panel"]{display:grid;gap:1.5rem;margin-top:1rem;padding:1.5rem;border-radius:1rem;background:var(--vibeui-event-010-paper);animation:vibeui-event-010-in .45s cubic-bezier(.2,.9,.3,1) both}
 @keyframes vibeui-event-010-in{from{opacity:0;transform:translateY(.4rem)}}
 [data-vibeui-block="event-010"] [data-part="slots"]{margin:0;padding:0;list-style:none}
-[data-vibeui-block="event-010"] [data-part="slot"]{display:grid;grid-template-columns:4.2rem minmax(0,1fr);gap:.2rem 1rem;padding:.9rem 0;border-bottom:1px dashed var(--vibeui-event-010-line)}
-[data-vibeui-block="event-010"] [data-part="slot"]:last-child{border-bottom:0}
-[data-vibeui-block="event-010"] [data-part="slot"] time{font-family:var(--vibeui-event-010-display);font-size:1.2rem;font-weight:600;letter-spacing:.04em;color:var(--vibeui-event-010-sea);font-variant-numeric:tabular-nums}
-[data-vibeui-block="event-010"] [data-part="slot"] h3{margin:0;font-family:var(--vibeui-event-010-display);font-size:1.3rem;font-weight:600;line-height:1.15;text-transform:uppercase}
-[data-vibeui-block="event-010"] [data-part="slot"] h3 span{margin-left:.6rem;font-family:var(--vibeui-event-010-font);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-event-010-accent)}
-[data-vibeui-block="event-010"] [data-part="slot"] p{grid-column:2;margin:0;font-size:.92rem;color:var(--vibeui-event-010-muted)}
 [data-vibeui-block="event-010"] [data-part="side"]{display:grid;gap:1rem;align-self:start}
 [data-vibeui-block="event-010"] [data-part="photo"]{margin:0;padding:.5rem .5rem 0;border-radius:.6rem;background:#fff;box-shadow:0 10px 24px -14px rgb(18 58 75 / .4);transform:rotate(-1.2deg)}
 [data-vibeui-block="event-010"] [data-part="photo"] img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:.3rem}
@@ -189,14 +184,7 @@ export function Event010({
             <div key={active} id={`vibeui-event-010-day-${active}`} role="tabpanel" data-part="panel">
               <ol data-part="slots">
                 {day.slots.map((slot) => (
-                  <li key={slot.time + slot.title} data-part="slot">
-                    <time>{slot.time}</time>
-                    <h3>
-                      {slot.title}
-                      {slot.place ? <span>{slot.place}</span> : null}
-                    </h3>
-                    {slot.text ? <p>{slot.text}</p> : null}
-                  </li>
+                  <Card122 key={slot.time + slot.title} data-part="slot" time={slot.time} title={slot.title} place={slot.place} text={slot.text} accent={accent} />
                 ))}
               </ol>
               {day.wear || day.image ? (

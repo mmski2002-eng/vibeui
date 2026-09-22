@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Button100 } from "@/registry/components/button/button-100/button-100"
 
 export type Event009Swatch = {
   name: string
@@ -58,22 +59,14 @@ container-type:inline-size;
 :where([data-vibeui-block="event-009"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="event-009"]{box-sizing:border-box;display:block;background:var(--vibeui-event-009-bg);color:var(--vibeui-event-009-fg);font-family:var(--vibeui-event-009-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="event-009"] *{box-sizing:border-box}
+[data-vibeui-block="event-009"] [data-part="swatch"]{margin-right:-.75rem}
 [data-vibeui-block="event-009"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="event-009"] [data-part="eyebrow"]{margin:0 0 .6rem;font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-event-009-accent)}
 [data-vibeui-block="event-009"] [data-part="title"]{margin:0;font-family:var(--vibeui-event-009-display);font-size:clamp(2rem,5cqi,3.6rem);font-weight:500;font-style:italic;line-height:1.05;color:var(--vibeui-event-009-plum);text-wrap:balance}
 [data-vibeui-block="event-009"] [data-part="lede"]{max-width:36rem;margin:.8rem 0 0;color:var(--vibeui-event-009-muted)}
 [data-vibeui-block="event-009"] [data-part="top"]{display:grid;gap:2rem;margin-top:2.5rem}
 [data-vibeui-block="event-009"] [data-part="palette"]{display:flex;flex-wrap:wrap;gap:.75rem 0;margin:0;padding:0 .75rem 0 0;list-style:none}
-[data-vibeui-block="event-009"] [data-part="swatch"]{position:relative;display:grid;gap:.5rem;justify-items:center;margin-right:-.75rem;padding:0;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer}
-[data-vibeui-block="event-009"] [data-part="chip"]{display:block;width:clamp(4.5rem,14cqi,8.5rem);aspect-ratio:1;border-radius:50%;background:var(--vibeui-event-009-chip);box-shadow:0 0 0 .3rem var(--vibeui-event-009-bg),0 18px 30px -18px rgb(43 26 36 / .6);transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
-[data-vibeui-block="event-009"] [data-part="swatch"]:hover [data-part="chip"],[data-vibeui-block="event-009"] [data-part="swatch"]:focus-visible [data-part="chip"]{transform:translateY(-.5rem) scale(1.05)}
-[data-vibeui-block="event-009"] [data-part="swatch"][data-copied="true"] [data-part="chip"]{animation:vibeui-event-009-pop .5s cubic-bezier(.2,.9,.3,1.4)}
 @keyframes vibeui-event-009-pop{40%{transform:translateY(-.9rem) scale(1.1)}}
-[data-vibeui-block="event-009"] [data-part="swatch"]:focus-visible{outline:none}
-[data-vibeui-block="event-009"] [data-part="swatch"] small{display:grid;justify-items:center;gap:.1rem;font-size:.72rem;letter-spacing:.06em;color:var(--vibeui-event-009-muted)}
-[data-vibeui-block="event-009"] [data-part="swatch"] small b{font-weight:600;color:var(--vibeui-event-009-fg)}
-[data-vibeui-block="event-009"] [data-part="swatch"] small code{font-family:inherit;font-variant-numeric:tabular-nums;text-transform:uppercase}
-[data-vibeui-block="event-009"] [data-part="swatch"][data-copied="true"] small code{color:var(--vibeui-event-009-accent)}
 [data-vibeui-block="event-009"] [data-part="hint"]{margin:1rem 0 0;font-size:.8rem;color:var(--vibeui-event-009-muted)}
 [data-vibeui-block="event-009"] [data-part="grid"]{display:grid;gap:1rem;margin-top:1.5rem}
 [data-vibeui-block="event-009"] [data-part="look"]{padding:1.5rem;border:1px solid var(--vibeui-event-009-line);border-radius:1.2rem;background:var(--vibeui-event-009-card)}
@@ -153,13 +146,7 @@ export function Event009({
           <ul data-part="palette">
             {swatches.map((swatch) => (
               <li key={swatch.hex}>
-                <button type="button" data-part="swatch" data-copied={copied === swatch.hex ? "true" : undefined} onClick={() => copy(swatch.hex)} aria-label={`${swatch.name} ${swatch.hex}`} style={{ "--vibeui-event-009-chip": swatch.hex } as CSSProperties}>
-                  <span data-part="chip" aria-hidden="true" />
-                  <small aria-hidden="true">
-                    <b>{swatch.name}</b>
-                    <code>{copied === swatch.hex ? copiedLabel : swatch.hex}</code>
-                  </small>
-                </button>
+                <Button100 data-part="swatch" hex={swatch.hex} name={swatch.name} copiedLabel={copiedLabel} copied={copied} onClick={() => copy(swatch.hex)} accent={accent} />
               </li>
             ))}
           </ul>

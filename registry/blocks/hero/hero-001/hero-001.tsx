@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Hero001Action = {
   label: string
@@ -70,9 +73,6 @@ container-type:inline-size;
 
 const ENTER =
   "animate-[vibeui-hero-001-fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_both]"
-
-const ACTION_BASE =
-  "group inline-flex h-12 items-center justify-center gap-2 rounded-full px-7 text-[0.95rem] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vibeui-hero-ring)]"
 
 function cx(...classes: (string | false | undefined)[]) {
   return classes.filter(Boolean).join(" ")
@@ -185,33 +185,17 @@ export function Hero001({
             </span>
           ) : null}
 
-          <h1
-            className={cx(
-              ENTER,
-              "mt-7 text-[clamp(2.25rem,6cqi,4.75rem)] leading-[1.04] font-semibold tracking-tight text-balance break-words [animation-delay:60ms]",
-            )}
-          >
-            {title}
-            {titleAccent ? (
-              <>
-                {" "}
-                <span className="text-[var(--vibeui-hero-muted)]">
-                  {titleAccent}
-                </span>
-              </>
-            ) : null}
-          </h1>
-
-          {description ? (
-            <p
-              className={cx(
-                ENTER,
-                "mt-6 max-w-xl text-[clamp(1rem,1.6cqi,1.15rem)] leading-relaxed text-pretty break-words text-[var(--vibeui-hero-muted)] [animation-delay:120ms]",
-              )}
-            >
-              {description}
-            </p>
-          ) : null}
+          <Heading001
+            data-part="heading"
+            className="mt-7"
+            title={title}
+            titleAccent={titleAccent}
+            lede={description}
+            level="h1"
+            size="xl"
+            align="center"
+            accent={accent}
+          />
 
           <div
             data-part="actions"
@@ -221,45 +205,11 @@ export function Hero001({
             )}
           >
             {primaryAction ? (
-              <a
-                href={primaryAction.href}
-                className={cx(
-                  ACTION_BASE,
-                  "bg-[var(--vibeui-hero-accent)] text-[var(--vibeui-hero-accent-fg)] shadow-[0_0.375rem_1.25rem_color-mix(in_oklab,var(--vibeui-hero-accent)_40%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_42%,transparent)] hover:shadow-[0_0.625rem_1.75rem_color-mix(in_oklab,var(--vibeui-hero-accent)_50%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_52%,transparent)] transition-[box-shadow,transform] duration-200 hover:-translate-y-px",
-                )}
-                style={{
-                  boxShadow:
-                    "0 14px 40px -14px color-mix(in oklab, var(--vibeui-hero-accent) 70%, transparent)",
-                }}
-              >
-                {primaryAction.label}
-              </a>
+              <Button016 label={primaryAction.label} href={primaryAction.href} external={false} size="lg" tone="accent" accent={accent} />
             ) : null}
 
             {secondaryAction ? (
-              <a
-                href={secondaryAction.href}
-                className={cx(
-                  ACTION_BASE,
-                  "border border-[var(--vibeui-hero-border)] text-[var(--vibeui-hero-fg)] transition-colors duration-150 hover:bg-[color-mix(in_oklab,var(--vibeui-hero-fg)_10%,transparent)]",
-                )}
-              >
-                {secondaryAction.label}
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  className="size-4 transition-transform duration-150 group-hover:translate-x-0.5"
-                >
-                  <path
-                    d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
+              <Button016 label={secondaryAction.label} href={secondaryAction.href} external={false} size="lg" tone="neutral" arrow accent={accent} />
             ) : null}
           </div>
 

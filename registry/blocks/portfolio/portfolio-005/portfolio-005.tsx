@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Portfolio005Row = {
   title: string
@@ -27,7 +28,8 @@ export type Portfolio005Props = {
 // Вся строка — ссылка, поэтому цель нажатия во всю ширину, а не в размер
 // названия. Разделители — границы соседних строк, чтобы у первой и
 // последней не висело лишней линии.
-const STYLES = `
+const STYLES = `[data-vibeui-block="portfolio-005"] [data-part="heading"]{margin-bottom:0.75rem}
+
 :where([data-vibeui-block="portfolio-005"]){
 --vibeui-portfolio-005-bg:transparent;
 --vibeui-portfolio-005-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -48,8 +50,6 @@ background:var(--vibeui-portfolio-005-bg);color:var(--vibeui-portfolio-005-ink);
 font-family:var(--vibeui-portfolio-005-font);
 }
 [data-vibeui-block="portfolio-005"] [data-part="shell"]{max-width:60rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="portfolio-005"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-portfolio-005-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="portfolio-005"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;max-width:22ch}
 [data-vibeui-block="portfolio-005"] [data-part="lead"]{margin:0 0 2rem;max-width:54ch;color:var(--vibeui-portfolio-005-muted);font-size:1rem;line-height:1.6}
 [data-vibeui-block="portfolio-005"] [data-part="rows"]{list-style:none;margin:0;padding:0;border-top:1px solid var(--vibeui-portfolio-005-border)}
 [data-vibeui-block="portfolio-005"] [data-part="row"]{border-bottom:1px solid var(--vibeui-portfolio-005-border)}
@@ -172,8 +172,12 @@ export function Portfolio005({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           {lead ? <p data-part="lead">{lead}</p> : null}
 
           <ul data-part="rows">

@@ -2,6 +2,8 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero043Props = {
   eyebrow?: string
   title?: string
@@ -75,12 +77,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-043"] [data-part="title"]{margin:0;font-family:var(--vibeui-hero-043-display);font-weight:800;font-size:clamp(2rem,5.6cqi,4rem);line-height:1;letter-spacing:-.03em;text-wrap:balance;opacity:calc(.18 + var(--vibeui-hero-043-b) * .82);transition:opacity .3s;text-shadow:0 0 40px color-mix(in oklab,var(--vibeui-hero-043-light) calc(var(--vibeui-hero-043-b) * 45%),transparent)}
 [data-vibeui-block="hero-043"] [data-part="lede"]{margin:1.4rem 0 0;max-width:32rem;font-size:1.1rem;color:var(--vibeui-hero-043-muted)}
 [data-vibeui-block="hero-043"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.8rem 0 0}
-[data-vibeui-block="hero-043"] [data-part="primary"],[data-vibeui-block="hero-043"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.4rem;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .18s,box-shadow .25s,background .2s}
-[data-vibeui-block="hero-043"] [data-part="primary"]{background:var(--vibeui-hero-043-accent);color:var(--vibeui-hero-043-on-accent)}
-[data-vibeui-block="hero-043"] [data-part="primary"]:hover{transform:translateY(-2px);box-shadow:0 16px 40px -14px var(--vibeui-hero-043-accent)}
-[data-vibeui-block="hero-043"] [data-part="secondary"]{color:var(--vibeui-hero-043-fg);border:1px solid var(--vibeui-hero-043-line)}
-[data-vibeui-block="hero-043"] [data-part="secondary"]:hover{background:var(--vibeui-hero-043-glass)}
-[data-vibeui-block="hero-043"] a:focus-visible,[data-vibeui-block="hero-043"] input:focus-visible{outline:2px solid var(--vibeui-hero-043-accent);outline-offset:3px}
+[data-vibeui-block="hero-043"] input:focus-visible{outline:2px solid var(--vibeui-hero-043-accent);outline-offset:3px}
 [data-vibeui-block="hero-043"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin:1.8rem 0 0;padding:0;list-style:none;font-family:var(--vibeui-hero-043-mono);font-size:.74rem;letter-spacing:.04em;color:var(--vibeui-hero-043-muted)}
 [data-vibeui-block="hero-043"] [data-part="facts"] li::before{content:"// ";color:var(--vibeui-hero-043-light)}
 [data-vibeui-block="hero-043"] [data-part="scene"]{display:grid;gap:1.5rem;justify-items:center}
@@ -177,17 +174,18 @@ export function Hero043({
             <div data-part="mask" style={{ ["--vibeui-hero-043-i" as string]: 3 }}>
               <div data-part="actions">
                 {primaryLabel ? (
-                  <a data-part="primary" href={primaryHref}>
-                    {primaryLabel}
-                  </a>
+                  <Button016
+                    data-part="primary"
+                    size="lg"
+                    label={primaryLabel}
+                    href={primaryHref}
+                    external={false}
+                    tone="accent"
+                    accent={accent}
+                  />
                 ) : null}
                 {secondaryLabel ? (
-                  <a data-part="secondary" href={secondaryHref}>
-                    {secondaryLabel}
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M12 5v14M6 13l6 6 6-6" />
-                    </svg>
-                  </a>
+                  <Button016 data-part="secondary" label={secondaryLabel} href={secondaryHref} external={false} size="lg" tone="neutral" accent={accent} />
                 ) : null}
               </div>
             </div>

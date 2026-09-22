@@ -2,6 +2,8 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button015 } from "@/registry/components/button/button-015/button-015"
+
 export type Cta023Props = {
   eyebrow?: string
   /** После « — » уходит в курсив. */
@@ -66,10 +68,6 @@ container-type:inline-size;
 [data-vibeui-block="cta-023"] [data-part="req"]{display:grid;gap:.15rem;padding:.9rem 1rem;border:1px solid var(--vibeui-cta-023-line);border-radius:.6rem;background:rgb(11 18 32 / .35)}
 [data-vibeui-block="cta-023"] [data-part="req"] span{font-family:var(--vibeui-cta-023-display);font-size:.75rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-cta-023-silver)}
 [data-vibeui-block="cta-023"] [data-part="req"] code{font-family:var(--vibeui-cta-023-display);font-size:1.55rem;font-weight:500;letter-spacing:.06em;font-variant-numeric:lining-nums tabular-nums}
-[data-vibeui-block="cta-023"] [data-part="copy"]{display:inline-flex;align-items:center;gap:.5rem;height:2.9rem;margin-top:.9rem;padding:0 1.3rem;border:0;border-radius:999px;background:var(--vibeui-cta-023-accent);color:var(--vibeui-cta-023-on-accent);font-family:var(--vibeui-cta-023-display);font-size:1.02rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 26px -6px var(--vibeui-cta-023-accent);transition:transform .2s,box-shadow .25s}
-[data-vibeui-block="cta-023"] [data-part="copy"]:hover{transform:translateY(-1px);box-shadow:0 0 34px -4px var(--vibeui-cta-023-accent)}
-[data-vibeui-block="cta-023"] [data-part="copy"]:focus-visible{outline:2px solid var(--vibeui-cta-023-fg);outline-offset:3px}
-[data-vibeui-block="cta-023"] [data-part="copy"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="cta-023"] [data-part="fire"]{position:relative;height:12rem;overflow:hidden;background:radial-gradient(75% 90% at 50% 118%,#3a2416 0,#1a1410 48%,#0d0b0b 100%)}
 [data-vibeui-block="cta-023"] [data-part="fire"] video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 [data-vibeui-block="cta-023"] [data-part="fire"]::before{content:"";position:absolute;left:50%;bottom:-4.5rem;width:18rem;height:11rem;margin-left:-9rem;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,rgb(255 154 60 / .5),rgb(242 182 79 / .18) 44%,transparent 72%);filter:blur(7px);animation:vibeui-cta-023-embers 4.5s ease-in-out infinite}
@@ -115,15 +113,6 @@ export function Cta023({
   } as CSSProperties
   const [head, tail] = title.split(" — ")
 
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(requisite)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 2400)
-    } catch {
-      setCopied(false)
-    }
-  }
 
   return (
     <>
@@ -151,12 +140,15 @@ export function Cta023({
                   <span>{requisiteLabel}</span>
                   <code>{requisite}</code>
                 </div>
-                <button type="button" data-part="copy" onClick={copy} aria-live="polite">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    {copied ? <path d="M5 12l5 5L20 7" /> : <path d="M9 9h10v11H9zM5 15V4h11" />}
-                  </svg>
-                  {copied ? copiedLabel : copyLabel}
-                </button>
+                <Button015
+                  data-part="copy-button"
+                  value={requisite}
+                  label={copyLabel}
+                  doneLabel={copiedLabel}
+                  hold={2400}
+                  onCopy={() => setCopied(true)}
+                  onReset={() => setCopied(false)}
+                />
               </div>
               <div data-part="fire" aria-hidden="true">
               </div>

@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button015 } from "@/registry/components/button/button-015/button-015"
 
 export type Waitlist003Props = {
   eyebrow?: string
@@ -20,7 +23,8 @@ export type Waitlist003Props = {
 // полоса прогресса до начала списка и блок реферального кода «двигайся вверх
 // за приглашения». Прогресс считается от position/total и выражается шириной
 // заливки. Формат подтверждения записи, мотивирующий делиться ссылкой.
-const STYLES = `
+const STYLES = `[data-vibeui-block="waitlist-003"] [data-part="heading"]{margin-bottom:1.5rem}
+
 :where([data-vibeui-block="waitlist-003"]){
 --vibeui-waitlist-003-bg:transparent;
 --vibeui-waitlist-003-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -42,8 +46,6 @@ display:block;background:var(--vibeui-waitlist-003-bg);color:var(--vibeui-waitli
 font-family:var(--vibeui-waitlist-003-font);
 }
 [data-vibeui-block="waitlist-003"] [data-part="shell"]{max-width:34rem;margin:0 auto;padding:3.5rem 1.25rem;text-align:center}
-[data-vibeui-block="waitlist-003"] [data-part="eyebrow"]{margin:0 0 0.625rem;color:var(--vibeui-waitlist-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="waitlist-003"] [data-part="title"]{margin:0 0 1.5rem;font-size:clamp(1.5rem,5cqi,2.25rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="waitlist-003"] [data-part="pos"]{font-family:var(--vibeui-waitlist-003-mono);font-size:clamp(3rem,12cqi,4.5rem);font-weight:750;line-height:1;color:var(--vibeui-waitlist-003-accent);font-variant-numeric:tabular-nums}
 [data-vibeui-block="waitlist-003"] [data-part="ahead"]{margin:0.5rem 0 1.75rem;color:var(--vibeui-waitlist-003-muted);font-size:0.9375rem}
 [data-vibeui-block="waitlist-003"] [data-part="track"]{height:0.625rem;border-radius:999px;background:var(--vibeui-waitlist-003-track);overflow:hidden;margin-bottom:2rem}
@@ -55,10 +57,6 @@ padding:0.75rem 1rem;border:1px dashed var(--vibeui-waitlist-003-border);border-
 background:var(--vibeui-waitlist-003-code);
 }
 [data-vibeui-block="waitlist-003"] [data-part="code-value"]{font-family:var(--vibeui-waitlist-003-mono);font-size:0.9375rem;font-weight:650;letter-spacing:0.02em}
-[data-vibeui-block="waitlist-003"] [data-part="code-btn"]{
-border:0;background:var(--vibeui-waitlist-003-accent);color:oklch(from var(--vibeui-waitlist-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-padding:0.375rem 0.875rem;border-radius:0.5rem;cursor:pointer;font:inherit;font-size:0.8125rem;font-weight:650;
-}
 @container (min-width: 36rem){[data-vibeui-block="waitlist-003"] [data-part="shell"]{padding:4.5rem 2rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="waitlist-003"] *{animation:none!important;transition:none!important}}
 `
@@ -123,8 +121,13 @@ export function Waitlist003({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            align="center"
+            accent={accent}
+          />
           <div data-part="pos">#{position.toLocaleString("ru-RU")}</div>
           <p data-part="ahead">
             {(position - 1).toLocaleString("ru-RU")} {aheadNote}
@@ -142,9 +145,7 @@ export function Waitlist003({
           <p data-part="ref-note">{referralNote}</p>
           <div data-part="code">
             <span data-part="code-value">{referralCode}</span>
-            <button data-part="code-btn" type="button">
-              {shareLabel}
-            </button>
+            <Button015 value={referralCode} label={shareLabel} />
           </div>
         </div>
       </section>

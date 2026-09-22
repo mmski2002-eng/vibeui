@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
+import { Card141 } from "@/registry/components/card/card-141/card-141"
 
 export type Map010Hours = {
   label: string
@@ -90,9 +91,6 @@ container-type:inline-size;
 [data-vibeui-block="map-010"] [data-part="pin"] span{color:var(--vibeui-map-010-muted);font-size:.86rem}
 [data-vibeui-block="map-010"] [data-part="info"]{position:relative;padding:1.6rem;display:grid;gap:1.2rem;align-content:start;border-radius:1.4rem;background:radial-gradient(18rem circle at var(--vibeui-map-010-x,50%) var(--vibeui-map-010-y,0%),color-mix(in oklab,var(--vibeui-map-010-accent) 10%,transparent),transparent 65%),var(--vibeui-map-010-card);box-shadow:0 1px 0 rgb(255 255 255 / .5) inset,0 24px 48px -32px rgb(0 0 0 / .35),0 1px 2px rgb(0 0 0 / .06)}
 [data-vibeui-block="map-010"] [data-part="info"] h3{margin:0;font-family:var(--vibeui-map-010-display);font-size:1.25rem;font-weight:600;letter-spacing:-.02em}
-[data-vibeui-block="map-010"] [data-part="hours"]{display:grid;gap:.4rem;font-size:.92rem}
-[data-vibeui-block="map-010"] [data-part="hours"] div{display:flex;justify-content:space-between;gap:1rem;padding-bottom:.4rem;border-bottom:1px dashed var(--vibeui-map-010-line)}
-[data-vibeui-block="map-010"] [data-part="hours"] span{color:var(--vibeui-map-010-muted)}
 [data-vibeui-block="map-010"] [data-part="queue"]{display:grid;gap:.6rem}
 [data-vibeui-block="map-010"] [data-part="now"]{display:flex;align-items:baseline;gap:.5rem;font-size:.9rem;color:var(--vibeui-map-010-muted)}
 [data-vibeui-block="map-010"] [data-part="now"] b{font-family:var(--vibeui-map-010-display);font-size:1.8rem;color:var(--vibeui-map-010-fg);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
@@ -256,13 +254,7 @@ export function Map010({
             </div>
             <div data-part="info" onPointerMove={spotlight}>
               <h3>{hoursTitle}</h3>
-              <div data-part="hours">
-                {hours.map((line) => (
-                  <div key={line.label}>
-                    {line.label} <span>{line.value}</span>
-                  </div>
-                ))}
-              </div>
+              <Card141 data-part="hours" hours={hours} accent={accent} />
               {queue.length > 0 ? (
                 <div data-part="queue" aria-label={chartLabel}>
                   <div data-part="now">

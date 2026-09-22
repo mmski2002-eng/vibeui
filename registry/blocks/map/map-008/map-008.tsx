@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card139 } from "@/registry/components/card/card-139/card-139"
 
 export type Map008Point = {
   /** Код точки на карте: «HAV», «CYO». */
@@ -74,10 +75,6 @@ container-type:inline-size;
 [data-vibeui-block="map-008"] [data-part="photo"] img{display:block;width:100%;height:100%;object-fit:cover}
 [data-vibeui-block="map-008"] [data-part="photo"] figcaption{position:absolute;left:0;right:0;bottom:.5rem;text-align:center;font-family:var(--vibeui-map-008-script);font-size:1.15rem;color:var(--vibeui-map-008-fg)}
 [data-vibeui-block="map-008"] [data-part="points"]{display:grid;gap:.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="map-008"] [data-part="point"]{display:grid;grid-template-columns:3.2rem minmax(0,1fr);gap:.1rem .9rem;padding:.8rem .9rem;border-radius:.7rem;background:var(--vibeui-map-008-paper)}
-[data-vibeui-block="map-008"] [data-part="point"] b{grid-row:1 / span 2;align-self:center;font-family:var(--vibeui-map-008-display);font-size:1.15rem;font-weight:700;letter-spacing:.08em;color:var(--vibeui-map-008-sea)}
-[data-vibeui-block="map-008"] [data-part="point"] h3{margin:0;font-family:var(--vibeui-map-008-display);font-size:1.05rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-[data-vibeui-block="map-008"] [data-part="point"] p{margin:0;font-size:.88rem;color:var(--vibeui-map-008-muted)}
 [data-vibeui-block="map-008"] [data-part="open"]{display:inline-flex;align-items:center;gap:.4rem;width:max-content;font-family:var(--vibeui-map-008-display);font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-bottom:2px solid var(--vibeui-map-008-accent);transition:color .25s}
 [data-vibeui-block="map-008"] [data-part="open"]:hover{color:var(--vibeui-map-008-accent)}
 [data-vibeui-block="map-008"] [data-part="transfer"]{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1rem;align-items:center;margin-top:1.5rem;padding:1.2rem 1.4rem;border-radius:.9rem;background:var(--vibeui-map-008-fg);color:var(--vibeui-map-008-bg)}
@@ -156,11 +153,7 @@ export function Map008({
               ) : null}
               <ul data-part="points">
                 {points.map((point) => (
-                  <li key={point.code} data-part="point">
-                    <b>{point.code}</b>
-                    <h3>{point.title}</h3>
-                    <p>{point.text}</p>
-                  </li>
+                  <Card139 key={point.code} data-part="point" code={point.code} title={point.title} text={point.text} accent={accent} />
                 ))}
               </ul>
               <a data-part="open" href={openHref} target="_blank" rel="noopener noreferrer">

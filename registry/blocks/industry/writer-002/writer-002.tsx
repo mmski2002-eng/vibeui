@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button088 } from "@/registry/components/button/button-088/button-088"
 
 export type Writer002Text = {
   title: string
@@ -70,6 +71,7 @@ container-type:inline-size;
 @supports (animation-timeline:view()){[data-vibeui-block="writer-002"] [data-part="shell"]{animation:vibeui-writer-002-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
 @keyframes vibeui-writer-002-reveal{from{opacity:0;transform:translateY(1.5rem)}}
 [data-vibeui-block="writer-002"] *{box-sizing:border-box}
+[data-vibeui-block="writer-002"] [data-part="row"]{width:100%}
 [data-vibeui-block="writer-002"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem}
 @container (min-width:48rem){[data-vibeui-block="writer-002"] [data-part="shell"]{padding-block:2rem}}
 @container (min-width:72rem){[data-vibeui-block="writer-002"] [data-part="shell"]{padding-block:3rem}}
@@ -89,14 +91,7 @@ container-type:inline-size;
 [data-vibeui-block="writer-002"] [data-part="list"]{margin:0;padding:0;list-style:none;border-top:1px solid var(--vibeui-writer-002-line)}
 [data-vibeui-block="writer-002"] [data-part="heading"]{margin:0;font:inherit}
 [data-vibeui-block="writer-002"] [data-part="item"]{border-bottom:1px solid var(--vibeui-writer-002-line);animation:vibeui-writer-002-in .5s cubic-bezier(.2,.8,.2,1) both}
-[data-vibeui-block="writer-002"] [data-part="row"]{display:grid;grid-template-columns:minmax(0,1fr);gap:.4rem 1.5rem;align-items:baseline;width:100%;padding:1.3rem 0;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
-[data-vibeui-block="writer-002"] [data-part="row"]:focus-visible{outline:2px solid var(--vibeui-writer-002-accent);outline-offset:4px}
-[data-vibeui-block="writer-002"] [data-part="name"]{display:block;margin:0;font-family:var(--vibeui-writer-002-display);font-weight:400;font-size:clamp(1.7rem,3.6cqi,2.8rem);line-height:1.1;letter-spacing:-.01em;transition:color .3s,transform .5s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="writer-002"] [data-part="item"]:hover [data-part="name"],[data-vibeui-block="writer-002"] [data-part="item"][data-open="true"] [data-part="name"]{color:var(--vibeui-writer-002-accent);transform:translateX(.6rem)}
-[data-vibeui-block="writer-002"] [data-part="meta"]{display:flex;gap:1.2rem;font-size:.85rem;font-style:italic;color:var(--vibeui-writer-002-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
-[data-vibeui-block="writer-002"] [data-part="meta"] span+span::before{content:"·";margin-right:1.2rem;color:var(--vibeui-writer-002-accent)}
-[data-vibeui-block="writer-002"] [data-part="topic"]{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-writer-002-muted)}
-[data-vibeui-block="writer-002"] [data-part="more"]{font-style:italic;font-size:.95rem;color:var(--vibeui-writer-002-accent);white-space:nowrap}
+[data-vibeui-block="writer-002"] [data-part="item"]:hover [data-vibeui-block="button-088"] [data-part="name"],[data-vibeui-block="writer-002"] [data-part="item"][data-open="true"] [data-vibeui-block="button-088"] [data-part="name"]{color:var(--vibeui-button-088-accent);transform:translateX(.6rem)}
 [data-vibeui-block="writer-002"] [data-part="fold"]{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="writer-002"] [data-part="item"][data-open="true"] [data-part="fold"]{grid-template-rows:1fr}
 [data-vibeui-block="writer-002"] [data-part="fold"]>div{overflow:hidden}
@@ -112,8 +107,8 @@ container-type:inline-size;
 [data-vibeui-block="writer-002"] [data-part="archive"][data-hover="true"] [data-part="preview"]{opacity:1}
 [data-vibeui-block="writer-002"] [data-part="empty"]{padding:2rem 0;font-style:italic;color:var(--vibeui-writer-002-muted)}
 @keyframes vibeui-writer-002-in{from{opacity:0;transform:translateY(.6rem)}}
-@container (min-width: 40rem){[data-vibeui-block="writer-002"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto;align-items:end}[data-vibeui-block="writer-002"] [data-part="row"]{grid-template-columns:minmax(0,1fr) auto}[data-vibeui-block="writer-002"] [data-part="meta"]>span:not([data-part="more"]){opacity:0;transform:translateX(1rem);transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1)}[data-vibeui-block="writer-002"] [data-part="item"]:hover [data-part="meta"]>span,[data-vibeui-block="writer-002"] [data-part="item"][data-open="true"] [data-part="meta"]>span,[data-vibeui-block="writer-002"] [data-part="row"]:focus-visible [data-part="meta"]>span{opacity:1;transform:none}[data-vibeui-block="writer-002"] [data-part="topic"]{grid-column:1/-1}}
-@container (min-width: 56rem){[data-vibeui-block="writer-002"] [data-part="preview"]{display:block}[data-vibeui-block="writer-002"] [data-part="row"]{grid-template-columns:auto minmax(0,1fr) auto;align-items:baseline}[data-vibeui-block="writer-002"] [data-part="topic"]{grid-column:auto;width:6.5rem}}
+@container (min-width: 40rem){[data-vibeui-block="writer-002"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto;align-items:end}[data-vibeui-block="writer-002"] [data-part="item"]:hover [data-vibeui-block="button-088"] [data-part="meta"]>span,[data-vibeui-block="writer-002"] [data-part="item"][data-open="true"] [data-vibeui-block="button-088"] [data-part="meta"]>span{opacity:1;transform:none}}
+@container (min-width: 56rem){[data-vibeui-block="writer-002"] [data-part="preview"]{display:block}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="writer-002"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_TEXTS: Writer002Text[] = [
@@ -237,15 +232,7 @@ export function Writer002({
               return (
                 <li key={text.title} data-part="item" data-open={isOpen} style={{ animationDelay: `${order * 60}ms` }} onPointerEnter={() => setHover(index)}>
                   <h3 data-part="heading">
-                    <button data-part="row" type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? -1 : index)}>
-                      <span data-part="topic">{text.topic}</span>
-                      <span data-part="name">{text.title}</span>
-                      <span data-part="meta">
-                        <span>{text.year}</span>
-                        <span>{plural(text.minutes, ...minuteUnits)}</span>
-                        <span data-part="more">{isOpen ? lessLabel : moreLabel}</span>
-                      </span>
-                    </button>
+                    <Button088 data-part="row" topic={text.topic} title={text.title} year={text.year} minutes={text.minutes} minuteUnits={minuteUnits} lessLabel={lessLabel} moreLabel={moreLabel} isOpen={isOpen} onClick={() => setOpen(isOpen ? -1 : index)} accent={accent} />
                   </h3>
                   <div data-part="fold">
                     <div>

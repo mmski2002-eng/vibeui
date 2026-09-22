@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks020 } from "@/registry/components/navigation/footerlinks-020/footerlinks-020"
 
 export type Footer025Link = { label: string; href: string }
 
@@ -50,6 +51,7 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-025"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-025"]{box-sizing:border-box;position:relative;display:block;background:var(--vibeui-footer-025-bg);color:var(--vibeui-footer-025-fg);font-family:var(--vibeui-footer-025-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="footer-025"] *{box-sizing:border-box}
+[data-vibeui-block="footer-025"] [data-part="links"]{margin:0}
 [data-vibeui-block="footer-025"]::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:radial-gradient(circle,var(--vibeui-footer-025-bg) 0 2.5px,transparent 3px) 0 0/12px 2px repeat-x}
 [data-vibeui-block="footer-025"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="footer-025"] a:focus-visible{outline:2px solid var(--vibeui-footer-025-sun);outline-offset:3px;border-radius:.3rem}
@@ -64,9 +66,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-025"] [data-part="coords"]{display:grid;gap:.15rem;justify-items:center;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;letter-spacing:.08em;color:var(--vibeui-footer-025-muted)}
 [data-vibeui-block="footer-025"] [data-part="coords"] b{font-family:var(--vibeui-footer-025-display);font-size:.72rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-footer-025-sea)}
 [data-vibeui-block="footer-025"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.4rem;padding-top:1rem;border-top:1px solid var(--vibeui-footer-025-line)}
-[data-vibeui-block="footer-025"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.2rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="footer-025"] [data-part="links"] a{position:relative;font-family:var(--vibeui-footer-025-display);font-size:.82rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;opacity:.85;transition:opacity .25s,color .25s}
-[data-vibeui-block="footer-025"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-025-sun)}
 [data-vibeui-block="footer-025"] [data-part="tag"]{display:inline-flex;align-items:center;height:1.9rem;padding:0 .8rem;border:1px solid var(--vibeui-footer-025-line);border-radius:999px;font-size:.76rem;font-weight:600;letter-spacing:.02em;color:var(--vibeui-footer-025-sun);transition:border-color .25s}
 [data-vibeui-block="footer-025"] [data-part="tag"]:hover{border-color:var(--vibeui-footer-025-sun)}
 [data-vibeui-block="footer-025"] [data-part="rsvp"]{margin:0;font-size:.84rem;color:var(--vibeui-footer-025-muted);white-space:nowrap}
@@ -144,13 +143,7 @@ export function Footer025({
           </div>
           <div data-part="bottom">
             {links.length > 0 ? (
-              <ul data-part="links">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
-                  </li>
-                ))}
-              </ul>
+              <Footerlinks020 data-part="links" links={links} accent={accent} />
             ) : null}
             {hashtag ? (
               <a data-part="tag" href={`https://www.instagram.com/explore/tags/${hashtag.replace(/^#/, "")}/`} target="_blank" rel="noopener noreferrer">

@@ -1,4 +1,9 @@
 import type { CSSProperties } from "react"
+import { Card053 } from "@/registry/components/card/card-053/card-053"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 
 type People005Member = {
   name: string
@@ -26,7 +31,8 @@ export type People005Props = {
 // как «место ещё не занято», тёплая подложка и оранжевая кнопка ведут в
 // вакансии. Приглашение стоит в общей сетке, а не отдельным баннером:
 // кандидат буквально видит свою будущую карточку рядом с будущими коллегами.
-const STYLES = `
+const STYLES = `[data-vibeui-block="people-005"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="people-005"]){
 --vibeui-people-005-bg:transparent;
 --vibeui-people-005-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -50,39 +56,7 @@ display:block;background:var(--vibeui-people-005-bg);color:var(--vibeui-people-0
 font-family:var(--vibeui-people-005-font);
 }
 [data-vibeui-block="people-005"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="people-005"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-people-005-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="people-005"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="people-005"] [data-part="grid"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="people-005"] [data-part="card"]{
-min-inline-size:0;display:flex;flex-direction:column;align-items:center;gap:0.25rem;
-padding:1.75rem 1.25rem;text-align:center;
-border:1px solid var(--vibeui-people-005-border);border-radius:1.125rem;
-background:var(--vibeui-people-005-card);
-transition:border-color var(--vibeui-people-005-dur-2) ease;
-}
-[data-vibeui-block="people-005"] [data-part="card"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-people-005-accent) 40%,var(--vibeui-people-005-border));
-}
-[data-vibeui-block="people-005"] [data-part="avatar"]{
-position:relative;width:3.5rem;height:3.5rem;flex:none;border-radius:999px;margin-bottom:0.625rem;
-display:grid;place-items:center;
-color:var(--vibeui-people-005-accent);
-font-size:1rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="people-005"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-005-accent) 12%,var(--vibeui-people-005-card));}
-[data-vibeui-block="people-005"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="people-005"] [data-part="name"]{margin:0;font-size:1rem;font-weight:650}
-[data-vibeui-block="people-005"] [data-part="role"]{margin:0;color:var(--vibeui-people-005-muted);font-size:0.8125rem;line-height:1.4}
 [data-vibeui-block="people-005"] [data-part="join"]{
 min-inline-size:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.375rem;
 padding:1.75rem 1.25rem;text-align:center;
@@ -101,21 +75,6 @@ font-size:1.375rem;font-weight:600;line-height:1;
 [data-vibeui-block="people-005"] [data-part="join-title"]{margin:0;font-size:1rem;font-weight:700}
 [data-vibeui-block="people-005"] [data-part="join-text"]{
 margin:0;color:var(--vibeui-people-005-muted);font-size:0.8125rem;line-height:1.5;
-}
-[data-vibeui-block="people-005"] [data-part="cta"]{
-display:inline-flex;align-items:center;gap:0.375rem;margin-top:0.875rem;
-padding:0.5625rem 1.125rem;border-radius:999px;
-background:var(--vibeui-people-005-accent-fill);color:var(--vibeui-people-005-on-accent);
-font-size:0.875rem;font-weight:700;line-height:1;text-decoration:none;
-transition:background var(--vibeui-people-005-dur-2) ease,transform var(--vibeui-people-005-dur-2) ease;
-}
-[data-vibeui-block="people-005"] [data-part="cta"]::after{content:"→"}
-[data-vibeui-block="people-005"] [data-part="cta"]:hover{
-background:color-mix(in oklab,var(--vibeui-people-005-accent-fill) 90%,oklch(0 0 0));
-transform:translateY(-1px);
-}
-[data-vibeui-block="people-005"] [data-part="cta"]:focus-visible{
-outline:2px solid var(--vibeui-people-005-accent);outline-offset:2px;
 }
 @container (min-width: 30rem){
 [data-vibeui-block="people-005"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -211,37 +170,29 @@ export function People005({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ul data-part="grid">
             {members.map((member) => (
-              <li key={member.name} data-part="card">
-                <span
-                  data-part="avatar"
-                  data-empty={member.image ? undefined : "true"}
-                  aria-hidden="true"
-                >
-                  {member.image ? (
-                    <img
-                      src={member.image}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
-                  {initials(member.name)}
-                </span>
-                <p data-part="name">{member.name}</p>
-                <p data-part="role">{member.role}</p>
-              </li>
+              <Card053 key={member.name} data-part="card" name={member.name} image={member.image} role={member.role} accent={accent} />
             ))}
             <li data-part="join">
               <span data-part="join-avatar" aria-hidden="true" />
               <p data-part="join-title">{joinTitle}</p>
               <p data-part="join-text">{joinText}</p>
-              <a data-part="cta" href={ctaHref}>
-                {ctaLabel}
-              </a>
+              <Button016
+                data-part="cta"
+                label={ctaLabel}
+                href={ctaHref}
+                external={false}
+                size="md"
+                tone="neutral"
+                accent={accent}
+              />
             </li>
           </ul>
         </div>

@@ -1,6 +1,9 @@
 "use client"
 
 import { useState, type CSSProperties, type PointerEvent } from "react"
+import { Button013 } from "@/registry/components/button/button-013/button-013"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing020Plan = {
   name: string
@@ -75,18 +78,13 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-020"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-020"]{box-sizing:border-box;display:block;background:var(--vibeui-pricing-020-bg);color:var(--vibeui-pricing-020-fg);font-family:var(--vibeui-pricing-020-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="pricing-020"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-020"] [data-part="action"]{margin-top:auto}
 [data-vibeui-block="pricing-020"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="pricing-020"] [data-part="head"]{text-align:center;max-width:38rem;margin:0 auto 2rem}
 [data-vibeui-block="pricing-020"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-pricing-020-accent);font-weight:700}
 [data-vibeui-block="pricing-020"] [data-part="title"]{margin:0;font-family:var(--vibeui-pricing-020-display);font-weight:700;font-size:clamp(1.8rem,3.6cqi,2.75rem);line-height:1.1;letter-spacing:-.02em}
 [data-vibeui-block="pricing-020"] [data-part="lede"]{margin:.75rem 0 0;color:var(--vibeui-pricing-020-muted)}
 [data-vibeui-block="pricing-020"] [data-part="bar"]{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1rem;margin-bottom:2rem}
-[data-vibeui-block="pricing-020"] [data-part="switch"]{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:.25rem;border-radius:999px;background:var(--vibeui-pricing-020-card);border:1px solid var(--vibeui-pricing-020-line)}
-[data-vibeui-block="pricing-020"] [data-part="switch"]::before{content:"";position:absolute;top:.25rem;bottom:.25rem;left:.25rem;width:calc(50% - .25rem);border-radius:999px;background:var(--vibeui-pricing-020-fg);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="pricing-020"] [data-part="switch"][data-split="true"]::before{transform:translateX(100%)}
-[data-vibeui-block="pricing-020"] [data-part="switch"] button{position:relative;z-index:1;border:0;background:transparent;padding:.55rem 1.1rem;border-radius:999px;font:inherit;font-size:.85rem;font-weight:600;color:var(--vibeui-pricing-020-muted);cursor:pointer;white-space:nowrap;transition:color .3s}
-[data-vibeui-block="pricing-020"] [data-part="switch"] button[aria-pressed="true"]{color:var(--vibeui-pricing-020-bg)}
-[data-vibeui-block="pricing-020"] [data-part="switch"] button:focus-visible{outline:2px solid var(--vibeui-pricing-020-accent);outline-offset:2px}
 [data-vibeui-block="pricing-020"] [data-part="sticker"]{padding:.45rem .8rem;border-radius:.6rem;background:var(--vibeui-pricing-020-marker);color:#1a2e05;font-family:var(--vibeui-pricing-020-display);font-size:.75rem;font-weight:600;transform:rotate(-2deg)}
 [data-vibeui-block="pricing-020"] [data-part="grid"]{display:grid;gap:1.25rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="pricing-020"] [data-part="plan"]{position:relative;isolation:isolate;display:flex;flex-direction:column;gap:1.25rem;padding:1.75rem;border-radius:1.25rem;background:var(--vibeui-pricing-020-card);border:1px solid var(--vibeui-pricing-020-line);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
@@ -115,11 +113,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-020"] [data-part="features"]{margin:0;padding:0;list-style:none;display:grid;gap:.55rem;font-size:.9rem}
 [data-vibeui-block="pricing-020"] [data-part="features"] li{display:flex;gap:.65rem;align-items:flex-start}
 [data-vibeui-block="pricing-020"] [data-part="features"] li::before{content:"";flex:none;width:1.1rem;height:1.1rem;margin-top:.15rem;border-radius:50%;background:var(--vibeui-pricing-020-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
-[data-vibeui-block="pricing-020"] [data-part="action"]{position:relative;display:inline-flex;align-items:center;justify-content:center;height:3rem;margin-top:auto;border-radius:999px;border:1px solid var(--vibeui-pricing-020-line);color:inherit;font-weight:600;text-decoration:none;transition:transform .2s,background .2s,box-shadow .3s}
-[data-vibeui-block="pricing-020"] [data-part="action"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="pricing-020"] [data-part="plan"][data-featured="true"] [data-part="action"]{background:var(--vibeui-pricing-020-accent);color:var(--vibeui-pricing-020-on-accent);border-color:transparent;box-shadow:0 0 0 0 var(--vibeui-pricing-020-accent)}
-[data-vibeui-block="pricing-020"] [data-part="plan"][data-featured="true"] [data-part="action"]:hover{box-shadow:0 14px 30px -12px var(--vibeui-pricing-020-accent)}
-[data-vibeui-block="pricing-020"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-pricing-020-accent);outline-offset:3px}
 [data-vibeui-block="pricing-020"] [data-part="note"]{margin:1.5rem 0 0;text-align:center;font-size:.8rem;color:var(--vibeui-pricing-020-muted)}
 @container (min-width: 56rem){
 [data-vibeui-block="pricing-020"] [data-part="shell"]{padding:5.5rem 2rem}
@@ -189,12 +182,15 @@ export function Pricing020({
           </div>
           <div data-part="bar">
             <div data-part="switch" data-split={split} role="group" aria-label={methodLabel}>
-              <button type="button" aria-pressed={!split} onClick={() => setSplit(false)}>
-                {onceLabel}
-              </button>
-              <button type="button" aria-pressed={split} onClick={() => setSplit(true)}>
-                {splitLabel} · {months} {monthsUnit}
-              </button>
+              {/* Переключатель — button-013; блок держит только флаг. */}
+              <Button013
+                data-part="toggle"
+                options={[onceLabel, `${splitLabel} · ${months} ${monthsUnit}`]}
+                defaultValue={split ? `${splitLabel} · ${months} ${monthsUnit}` : onceLabel}
+                label=""
+                onChange={(value) => setSplit(value === `${splitLabel} · ${months} ${monthsUnit}`)}
+                accent={accent}
+              />
             </div>
             {sticker ? <span data-part="sticker">{sticker}</span> : null}
           </div>
@@ -241,9 +237,15 @@ export function Pricing020({
                     ))}
                   </ul>
                   {plan.actionLabel ? (
-                    <a data-part="action" href={plan.actionHref ?? "#"}>
-                      {plan.actionLabel}
-                    </a>
+                    <Button016
+                      data-part="action"
+                      size="lg"
+                      label={plan.actionLabel}
+                      href={plan.actionHref ?? "#"}
+                      external={false}
+                      tone="accent"
+                      accent={accent}
+                    />
                   ) : null}
                 </li>
               )

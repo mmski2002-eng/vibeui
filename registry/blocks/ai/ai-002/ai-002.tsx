@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button126 } from "@/registry/components/button/button-126/button-126"
 
 export type Ai002Props = {
   eyebrow?: string
@@ -83,13 +84,6 @@ container-type:inline-size;
 [data-vibeui-block="ai-002"] [data-part="label"] i{width:.4rem;height:.4rem;border-radius:50%;background:var(--vibeui-ai-002-accent)}
 [data-vibeui-block="ai-002"] textarea{width:100%;min-height:13rem;resize:vertical;font:inherit;font-size:.9rem;line-height:1.5;color:inherit;background:transparent;border:0;outline:0;padding:0}
 [data-vibeui-block="ai-002"] [data-part="row"]{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
-[data-vibeui-block="ai-002"] [data-part="run"]{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.3rem;border:0;border-radius:.9rem;background:var(--vibeui-ai-002-accent);color:var(--vibeui-ai-002-on-accent);font:inherit;font-weight:600;cursor:pointer;transition:filter .3s,transform .4s var(--vibeui-ai-002-ease),box-shadow .4s;will-change:transform}
-[data-vibeui-block="ai-002"] [data-part="run"]:hover{filter:brightness(1.08);box-shadow:0 12px 30px -12px var(--vibeui-ai-002-accent)}
-[data-vibeui-block="ai-002"] [data-part="run"]:disabled{cursor:progress}
-[data-vibeui-block="ai-002"] [data-part="run"] svg{width:1em;height:1em}
-[data-vibeui-block="ai-002"] [data-part="run"][data-busy="true"]{background:linear-gradient(110deg,var(--vibeui-ai-002-accent),var(--vibeui-ai-002-a2),var(--vibeui-ai-002-a3),var(--vibeui-ai-002-accent));background-size:300% 100%;animation:vibeui-ai-002-thinking 1.4s linear infinite;box-shadow:0 0 30px -6px var(--vibeui-ai-002-a2)}
-[data-vibeui-block="ai-002"] [data-part="run"][data-busy="true"] svg{animation:vibeui-ai-002-spin 1.1s linear infinite}
-[data-vibeui-block="ai-002"] [data-part="run"][data-busy="true"]::after{content:"";position:absolute;left:-40%;top:0;bottom:0;width:40%;background:linear-gradient(90deg,transparent,rgb(255 255 255 / .45),transparent);animation:vibeui-ai-002-sheen 1s linear infinite}
 [data-vibeui-block="ai-002"] [data-part="ghost"]{display:inline-flex;align-items:center;padding:.7rem 1rem;border-radius:.8rem;border:1px solid var(--vibeui-ai-002-line);background:none;color:inherit;font:inherit;font-weight:500;font-size:.9rem;cursor:pointer;transition:background .3s,transform .3s var(--vibeui-ai-002-ease),border-color .3s,color .3s}
 [data-vibeui-block="ai-002"] [data-part="ghost"]:hover:not(:disabled){background:var(--vibeui-ai-002-line);transform:translateY(-1px)}
 [data-vibeui-block="ai-002"] [data-part="ghost"]:disabled{opacity:.5;cursor:default}
@@ -283,12 +277,7 @@ export function Ai002({
               </p>
               <textarea value={text} onChange={(event) => setText(event.target.value)} placeholder={placeholder} aria-label={inputLabel} />
               <div data-part="row">
-                <button ref={runRef} type="button" data-part="run" data-busy={phase === "busy"} disabled={phase === "busy" || phase === "typing"} onClick={run} onPointerMove={onRunMove} onPointerLeave={onRunLeave}>
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10Z" />
-                  </svg>
-                  {phase === "busy" || phase === "typing" ? runningLabel : runLabel}
-                </button>
+                <Button126 data-part="run" runningLabel={runningLabel} runLabel={runLabel} phase={phase} ref={runRef} onClick={run} onPointerMove={onRunMove} onPointerLeave={onRunLeave} accent={accent} />
                 <span data-part="stats">
                   {text.split(/\s+/).filter(Boolean).length} {wordsUnit}
                 </span>

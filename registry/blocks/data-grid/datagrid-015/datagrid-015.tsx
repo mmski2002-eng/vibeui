@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card165 } from "@/registry/components/card/card-165/card-165"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid015Row = {
@@ -62,12 +63,6 @@ border:1px solid var(--vibeui-datagrid-015-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-015-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-015"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-015"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-015-border);
-}
-[data-vibeui-block="datagrid-015"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-015"] [data-part="live"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-015-muted)}
 [data-vibeui-block="datagrid-015"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-015"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-015-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-015"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -231,12 +226,7 @@ export function Datagrid015({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="live" role="status" aria-live="polite">
-            {message || stepsTemplate.replace("{count}", String(order.length))}
-          </p>
-        </div>
+        <Card165 data-part="bar" heading={heading} stepsTemplate={stepsTemplate} message={message} order={order} accent={accent} />
         <div
           data-part="scroll"
           role="region"

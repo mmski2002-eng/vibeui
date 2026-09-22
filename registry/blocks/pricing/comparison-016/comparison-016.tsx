@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card146 } from "@/registry/components/card/card-146/card-146"
 
 export type Comparison016Row = {
   label: string
@@ -68,20 +69,9 @@ container-type:inline-size;
 [data-vibeui-block="comparison-016"] [data-part="legend"] div{display:grid;gap:.15rem}
 [data-vibeui-block="comparison-016"] [data-part="legend"] b{font-family:var(--vibeui-comparison-016-display);font-weight:700;font-size:1.05rem}
 [data-vibeui-block="comparison-016"] [data-part="legend"] span{font-family:var(--vibeui-comparison-016-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-comparison-016-muted)}
-[data-vibeui-block="comparison-016"] [data-part="legend"] [data-current]{color:var(--vibeui-comparison-016-accent)}
-[data-vibeui-block="comparison-016"] [data-part="row"]{display:grid;gap:.8rem;padding:1.1rem 1.2rem;border-radius:1.2rem;background:var(--vibeui-comparison-016-glass);border:1px solid var(--vibeui-comparison-016-line);animation:vibeui-comparison-016-in .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--vibeui-comparison-016-i) * 60ms)}
-[data-vibeui-block="comparison-016"] [data-part="label"]{display:flex;align-items:center;gap:.6rem;font-weight:600}
-[data-vibeui-block="comparison-016"] [data-part="new"]{padding:.15rem .5rem;border-radius:999px;background:var(--vibeui-comparison-016-accent);color:var(--vibeui-comparison-016-on-accent);font-family:var(--vibeui-comparison-016-mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase}
-[data-vibeui-block="comparison-016"] [data-part="cell"]{display:grid;gap:.35rem}
-[data-vibeui-block="comparison-016"] [data-part="cell"] span{display:flex;justify-content:space-between;gap:.6rem;font-family:var(--vibeui-comparison-016-mono);font-size:.82rem}
-[data-vibeui-block="comparison-016"] [data-part="cell"] small{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-comparison-016-muted)}
-[data-vibeui-block="comparison-016"] [data-part="bar"]{height:.4rem;border-radius:999px;background:var(--vibeui-comparison-016-line);overflow:hidden}
-[data-vibeui-block="comparison-016"] [data-part="bar"] i{display:block;height:100%;border-radius:999px;background:var(--vibeui-comparison-016-muted);transform-origin:left;transform:scaleX(var(--vibeui-comparison-016-w));animation:vibeui-comparison-016-grow 1.2s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--vibeui-comparison-016-i) * 80ms + .2s)}
-[data-vibeui-block="comparison-016"] [data-part="cell"][data-current] [data-part="bar"] i{background:var(--vibeui-comparison-016-accent)}
-[data-vibeui-block="comparison-016"] [data-part="cell"][data-current] span{font-weight:500}
 @keyframes vibeui-comparison-016-in{from{opacity:0;transform:translateY(.8rem)}}
 @keyframes vibeui-comparison-016-grow{from{transform:scaleX(0)}}
-@container (min-width: 52rem){[data-vibeui-block="comparison-016"] [data-part="legend"]{display:grid}[data-vibeui-block="comparison-016"] [data-part="row"]{grid-template-columns:1.2fr 1fr 1fr;align-items:center;gap:1rem}[data-vibeui-block="comparison-016"] [data-part="cell"] small{display:none}[data-vibeui-block="comparison-016"] [data-part="cell"] span{justify-content:flex-start}}
+@container (min-width: 52rem){[data-vibeui-block="comparison-016"] [data-part="legend"]{display:grid}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="comparison-016"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_ROWS: Comparison016Row[] = [
@@ -147,30 +137,7 @@ export function Comparison016({
               </div>
             </div>
             {rows.map((row, index) => (
-              <div key={row.label} data-part="row" role="row" style={{ ["--vibeui-comparison-016-i" as string]: index }}>
-                <div data-part="label" role="rowheader">
-                  {row.label}
-                  {row.isNew ? <span data-part="new">{newLabel}</span> : null}
-                </div>
-                <div data-part="cell" data-current="" role="cell">
-                  <span>
-                    <small>{currentName}</small>
-                    {row.current}
-                  </span>
-                  <div data-part="bar" aria-hidden="true">
-                    <i style={{ ["--vibeui-comparison-016-w" as string]: (row.currentBar ?? 100) / 100 }} />
-                  </div>
-                </div>
-                <div data-part="cell" role="cell">
-                  <span>
-                    <small>{previousName}</small>
-                    {row.previous}
-                  </span>
-                  <div data-part="bar" aria-hidden="true">
-                    <i style={{ ["--vibeui-comparison-016-w" as string]: (row.previousBar ?? 0) / 100 }} />
-                  </div>
-                </div>
-              </div>
+              <Card146 key={row.label} data-part="row" label={row.label} isNew={row.isNew} current={row.current} currentBar={row.currentBar} previous={row.previous} previousBar={row.previousBar} newLabel={newLabel} currentName={currentName} previousName={previousName} style={{ ["--vibeui-comparison-016-i" as string]: index }} accent={accent} />
             ))}
           </div>
         </div>

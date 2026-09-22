@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
+import { Sociallinks005 } from "@/registry/components/navigation/sociallinks-005/sociallinks-005"
+import { Footerlinks026 } from "@/registry/components/navigation/footerlinks-026/footerlinks-026"
 
 export type Footer044Link = {
   label: string
@@ -52,17 +54,16 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-044"][data-mode="night"]){color-scheme:dark}
 [data-vibeui-block="footer-044"]{box-sizing:border-box;padding:4rem 0 2rem;background:var(--vibeui-footer-044-bg);color:var(--vibeui-footer-044-fg);font-family:var(--vibeui-footer-044-font);font-size:.95rem;line-height:1.6;transition:background-color .6s,color .6s}
 [data-vibeui-block="footer-044"] *{box-sizing:border-box}
+[data-vibeui-block="footer-044"] [data-part="socials"]{margin:0}
+[data-vibeui-block="footer-044"] [data-part="nav"]{margin:0}
 [data-vibeui-block="footer-044"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem;text-align:center;border-top:1px solid var(--vibeui-footer-044-line);padding-top:3rem}
 [data-vibeui-block="footer-044"] [data-part="ornament"]{font-family:var(--vibeui-footer-044-display);font-size:1.6rem;color:var(--vibeui-footer-044-accent);line-height:1}
 [data-vibeui-block="footer-044"] [data-part="brand"]{margin:.6rem 0 0;font-family:var(--vibeui-footer-044-display);font-weight:400;font-size:clamp(2rem,4.5cqi,3rem);line-height:1;letter-spacing:-.01em}
 [data-vibeui-block="footer-044"] [data-part="tagline"]{margin:.5rem 0 0;font-style:italic;color:var(--vibeui-footer-044-muted)}
-[data-vibeui-block="footer-044"] [data-part="nav"],[data-vibeui-block="footer-044"] [data-part="socials"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.8rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="footer-044"] a{position:relative;color:var(--vibeui-footer-044-fg);text-decoration:none;font-style:italic;padding:.2rem 0;transition:color .25s}
 [data-vibeui-block="footer-044"] a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--vibeui-footer-044-accent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 [data-vibeui-block="footer-044"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="footer-044"] a:focus-visible{outline:2px solid var(--vibeui-footer-044-accent);outline-offset:3px}
-[data-vibeui-block="footer-044"] [data-part="socials"] a{color:var(--vibeui-footer-044-muted);font-size:.88rem}
-[data-vibeui-block="footer-044"] [data-part="socials"] a:hover{color:var(--vibeui-footer-044-fg)}
 [data-vibeui-block="footer-044"] [data-part="bottom"]{display:grid;gap:.6rem;padding-top:1.6rem;border-top:1px solid var(--vibeui-footer-044-line);font-size:.8rem;font-style:italic;color:var(--vibeui-footer-044-muted)}
 [data-vibeui-block="footer-044"] [data-part="bottom"] p{margin:0}
 [data-vibeui-block="footer-044"] [data-part="top"]{display:inline-flex;align-items:center;gap:.4rem;justify-self:center;font-size:.85rem}
@@ -136,23 +137,11 @@ export function Footer044({
           </div>
           {links.length > 0 ? (
             <nav aria-label={navLabel}>
-              <ul data-part="nav">
-                {links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <a href={link.href}>{link.label}</a>
-                  </li>
-                ))}
-              </ul>
+              <Footerlinks026 data-part="nav" links={links} accent={accent} />
             </nav>
           ) : null}
           {socials.length > 0 ? (
-            <ul data-part="socials" aria-label={socialsLabel}>
-              {socials.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))}
-            </ul>
+            <Sociallinks005 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
           ) : null}
           <div data-part="bottom">
             <p>{copyright}</p>

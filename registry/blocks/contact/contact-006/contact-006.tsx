@@ -1,5 +1,10 @@
 import type { CSSProperties } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Select001 } from "@/registry/components/select/select-001/select-001"
+
 export type Contact006Slot = {
   time: string
   taken?: boolean
@@ -102,9 +107,6 @@ color:var(--vibeui-contact-006-accent);border-color:var(--vibeui-contact-006-acc
 background:color-mix(in oklab,var(--vibeui-contact-006-accent) 8%,var(--vibeui-contact-006-card));
 }
 [data-vibeui-block="contact-006"] [data-part="day-note"]{font-size:0.6875rem;font-weight:400}
-[data-vibeui-block="contact-006"] input[type="radio"]{
-position:absolute;width:1px;height:1px;opacity:0;
-}
 [data-vibeui-block="contact-006"] [data-part="day"]:has(input:focus-visible),
 [data-vibeui-block="contact-006"] [data-part="slot"]:has(input:focus-visible){
 outline:2px solid var(--vibeui-contact-006-accent);outline-offset:2px;
@@ -130,53 +132,10 @@ background:var(--vibeui-contact-006-soft);border-style:dashed;
 font-size:0.5625rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
 color:var(--vibeui-contact-006-muted);
 }
-/* align-content:start: в паре полей ряд растягивает оба по высоте, и без этого
-   строки короткого поля (пояс) разъезжаются, селект уезжает ниже телефона. */
-[data-vibeui-block="contact-006"] [data-part="field"]{display:grid;gap:0.3125rem;align-content:start}
 [data-vibeui-block="contact-006"] label[for]{font-size:0.8125rem;font-weight:640}
-[data-vibeui-block="contact-006"] input[type="tel"],
-[data-vibeui-block="contact-006"] select{
-width:100%;height:2.625rem;padding:0 0.75rem;border-radius:0.6875rem;
-border:1px solid var(--vibeui-contact-006-border);
-background:var(--vibeui-contact-006-card);color:inherit;font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="contact-006"] select{appearance:none;cursor:pointer;padding-right:2rem}
-[data-vibeui-block="contact-006"] [data-part="select"]{position:relative;display:grid}
-[data-vibeui-block="contact-006"] [data-part="select"]::after{
-content:"";position:absolute;right:0.875rem;top:50%;margin-top:-0.25rem;
-width:0.375rem;height:0.375rem;pointer-events:none;
-border-right:1.5px solid var(--vibeui-contact-006-muted);
-border-bottom:1.5px solid var(--vibeui-contact-006-muted);
-transform:rotate(45deg);
-}
-[data-vibeui-block="contact-006"] input[type="tel"]:user-invalid{border-color:var(--vibeui-contact-006-alarm)}
-[data-vibeui-block="contact-006"] [data-part="error"]{
-font-size:0.75rem;line-height:1.4;color:var(--vibeui-contact-006-alarm);
-position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
-}
-[data-vibeui-block="contact-006"] input[type="tel"]:user-invalid ~ [data-part="error"]{
-position:static;width:auto;height:auto;clip-path:none;
-}
-[data-vibeui-block="contact-006"] [data-part="hint"]{font-size:0.75rem;line-height:1.45;color:var(--vibeui-contact-006-muted)}
-[data-vibeui-block="contact-006"] [data-part="consent"]{
-display:flex;gap:0.5rem;align-items:flex-start;cursor:pointer;
-font-size:0.75rem;line-height:1.5;color:var(--vibeui-contact-006-muted);
-}
-[data-vibeui-block="contact-006"] input[type="checkbox"]{
-flex:none;width:0.9375rem;height:0.9375rem;margin:0.125rem 0 0;accent-color:var(--vibeui-contact-006-accent);
-}
-[data-vibeui-block="contact-006"] button{
-appearance:none;cursor:pointer;border:0;
-height:2.75rem;padding:0 1.25rem;border-radius:0.75rem;
-background:var(--vibeui-contact-006-accent);color:oklch(from var(--vibeui-contact-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:660;
-}
 [data-vibeui-block="contact-006"] [data-part="foot"]{
 margin:0;font-size:0.75rem;line-height:1.55;color:var(--vibeui-contact-006-muted);
 }
-[data-vibeui-block="contact-006"] button:focus-visible,
-[data-vibeui-block="contact-006"] input:focus-visible,
-[data-vibeui-block="contact-006"] select:focus-visible{outline:2px solid var(--vibeui-contact-006-accent);outline-offset:2px}
 @container (min-width: 46rem){
 [data-vibeui-block="contact-006"] [data-part="frame"]{padding:4rem 2rem;grid-template-columns:1fr 1.2fr;column-gap:3rem}
 [data-vibeui-block="contact-006"] form{padding:1.625rem}
@@ -337,45 +296,32 @@ export function Contact006({
             </fieldset>
 
             <div data-part="pair">
-              <div data-part="field">
-                <label htmlFor="contact-006-phone">{phoneLabel}</label>
-                <input
-                  id="contact-006-phone"
-                  type="tel"
-                  name="phone"
-                  required
-                  inputMode="tel"
-                  autoComplete="tel"
-                  pattern="[+0-9()\\s-]{10,20}"
-                  placeholder={text.phonePlaceholder}
-                  aria-describedby="contact-006-phone-error contact-006-phone-hint"
-                />
-                <span id="contact-006-phone-error" data-part="error">
-                  {text.phoneError}
-                </span>
-                <span id="contact-006-phone-hint" data-part="hint">
-                  {phoneHint}
-                </span>
-              </div>
+              <Input001
+                type="tel"
+                name="phone"
+                inputMode="tel"
+                autoComplete="tel"
+                pattern="[+0-9()\\s-]{10,20}"
+                required
+                label={phoneLabel}
+                hint={phoneHint}
+                accent={accent}
+              />
 
-              <div data-part="field">
-                <label htmlFor="contact-006-zone">{text.zone}</label>
-                <span data-part="select">
-                  <select id="contact-006-zone" name="zone">
-                    {zones.map((zone) => (
-                      <option key={zone}>{zone}</option>
-                    ))}
-                  </select>
-                </span>
-              </div>
+              <Select001
+                label={text.zone}
+                placeholder=""
+                options={zones.map((zone) => ({ value: zone, label: zone }))}
+                name="zone"
+                accent={accent}
+              />
             </div>
 
-            <label data-part="consent">
-              <input type="checkbox" name="consent" required />
-              {consentLabel}
-            </label>
+            <Checkbox001 name="consent" required label={consentLabel} description="" accent={accent} />
 
-            <button type="submit">{submitLabel}</button>
+            <Button001 type="submit" size="lg" accent={accent}>
+              {submitLabel}
+            </Button001>
             <p data-part="foot">{footNote}</p>
           </form>
         </div>

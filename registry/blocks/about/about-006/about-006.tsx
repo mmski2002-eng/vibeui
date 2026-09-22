@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 export type About006Props = {
   /** Фотографии мозаики по порядку плиток. Без них остаются цветные поля. */
@@ -63,13 +64,6 @@ grid-column:span 2;min-inline-size:0;
 display:flex;flex-direction:column;justify-content:center;gap:0.625rem;
 padding:1.75rem;border:1px solid var(--vibeui-about-006-border);border-radius:1rem;
 background:color-mix(in oklab,var(--vibeui-about-006-accent) 8%,var(--vibeui-about-006-card));
-}
-[data-vibeui-block="about-006"] [data-part="eyebrow"]{
-margin:0;color:var(--vibeui-about-006-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="about-006"] [data-part="title"]{
-margin:0;font-size:clamp(1.375rem,3.5cqi,1.875rem);line-height:1.15;letter-spacing:-0.02em;font-weight:700;
 }
 [data-vibeui-block="about-006"] [data-part="caption"]{
 margin:0;color:var(--vibeui-about-006-muted);font-size:0.9375rem;line-height:1.6;
@@ -164,8 +158,13 @@ export function About006({
         <div data-part="shell">
           <div data-part="mosaic">
             <div data-part="note">
-              <p data-part="eyebrow">{eyebrow}</p>
-              <h2 data-part="title">{title}</h2>
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                size="sm"
+                accent={accent}
+              />
               <p data-part="caption">{caption}</p>
             </div>
             {TILES.map((tile, index) => (

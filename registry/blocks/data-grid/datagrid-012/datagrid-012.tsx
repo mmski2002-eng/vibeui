@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card162 } from "@/registry/components/card/card-162/card-162"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid012Row = {
@@ -69,22 +70,6 @@ border:1px solid var(--vibeui-datagrid-012-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-012-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-012"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-012"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-012-border);
-}
-[data-vibeui-block="datagrid-012"] [data-part="bar-text"]{margin-inline-end:auto}
-[data-vibeui-block="datagrid-012"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="datagrid-012"] [data-part="status"]{
-margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-012-muted);
-}
-[data-vibeui-block="datagrid-012"] [data-part="bar"] button{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:550;
-padding:0.375rem 0.75rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-012-border);
-background:var(--vibeui-datagrid-012-field);color:var(--vibeui-datagrid-012-fg);
-}
-[data-vibeui-block="datagrid-012"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-012-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-012"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-012"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-012-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-012"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -252,19 +237,7 @@ export function Datagrid012({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <div data-part="bar-text">
-            <h3 data-part="title">{heading}</h3>
-            <p data-part="status" role="status">
-              {loading
-                ? loadingText
-                : readyText.replace("{count}", String(rows.length))}
-            </p>
-          </div>
-          <button type="button" onClick={() => setLoading(!loading)}>
-            {loading ? showDataLabel : showLoadingLabel}
-          </button>
-        </div>
+        <Card162 data-part="bar" heading={heading} loadingText={loadingText} readyText={readyText} rows={rows} showDataLabel={showDataLabel} showLoadingLabel={showLoadingLabel} loading={loading} setLoading={setLoading} accent={accent} />
         <div
           data-part="scroll"
           role="region"

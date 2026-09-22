@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useSyncExternalStore, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero027Props = {
   /** «Валерия & Дмитрий» — амперсанд делит на две строки. */
   names?: string
@@ -66,8 +68,7 @@ container-type:inline-size;
 }
 [data-vibeui-block="hero-027"]{box-sizing:border-box;position:relative;display:block;overflow:hidden;background:var(--vibeui-hero-027-night);color:var(--vibeui-hero-027-ink);color-scheme:dark;font-family:var(--vibeui-hero-027-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-027"] *{box-sizing:border-box}
-[data-vibeui-block="hero-027"] a{color:inherit;text-decoration:none}
-[data-vibeui-block="hero-027"] a:focus-visible,[data-vibeui-block="hero-027"] button:focus-visible{outline:2px solid var(--vibeui-hero-027-accent);outline-offset:3px;border-radius:.5rem}
+[data-vibeui-block="hero-027"] button:focus-visible{outline:2px solid var(--vibeui-hero-027-accent);outline-offset:3px;border-radius:.5rem}
 [data-vibeui-block="hero-027"] [data-part="bg"]{position:absolute;inset:0;overflow:hidden;background:radial-gradient(60% 50% at 50% 60%,#1a2742 0,var(--vibeui-hero-027-night) 100%)}
 [data-vibeui-block="hero-027"] [data-part="bg"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.9)}
 [data-vibeui-block="hero-027"] [data-part="bg"]::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(11 18 32 / .72) 0%,rgb(11 18 32 / .3) 35%,rgb(11 18 32 / .35) 70%,rgb(11 18 32 / .92) 100%)}
@@ -88,9 +89,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-027"] [data-part="countdown"] b{font-family:var(--vibeui-hero-027-display);font-size:1.9rem;font-weight:500;line-height:1;font-variant-numeric:lining-nums tabular-nums}
 [data-vibeui-block="hero-027"] [data-part="countdown"] span{font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--vibeui-hero-027-silver)}
 [data-vibeui-block="hero-027"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
-[data-vibeui-block="hero-027"] [data-part="primary"],[data-vibeui-block="hero-027"] [data-part="calendar"]{display:inline-flex;align-items:center;gap:.5rem;height:3.1rem;padding:0 1.5rem;border-radius:999px;font-family:var(--vibeui-hero-027-display);font-size:1.08rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .25s,border-color .25s}
-[data-vibeui-block="hero-027"] [data-part="primary"]{border:0;background:var(--vibeui-hero-027-accent);color:var(--vibeui-hero-027-on-accent);box-shadow:0 0 30px -4px var(--vibeui-hero-027-accent)}
-[data-vibeui-block="hero-027"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0 40px -2px var(--vibeui-hero-027-accent)}
 [data-vibeui-block="hero-027"] [data-part="calendar"]{border:1px solid var(--vibeui-hero-027-line);background:rgb(19 28 46 / .35);color:var(--vibeui-hero-027-ink);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 [data-vibeui-block="hero-027"] [data-part="calendar"]:hover{border-color:var(--vibeui-hero-027-silver);transform:translateY(-1px)}
 [data-vibeui-block="hero-027"] [data-part="calendar"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -272,9 +270,15 @@ export function Hero027({
             )}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {calendarLabel && !Number.isNaN(target) ? (
                 <button type="button" data-part="calendar" onClick={downloadCalendar}>

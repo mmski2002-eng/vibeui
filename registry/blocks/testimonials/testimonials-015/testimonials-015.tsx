@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Badge028 } from "@/registry/components/badge/badge-028/badge-028"
 
 export type Testimonials015Props = {
   quote?: string
@@ -74,11 +75,6 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase
 margin:0;padding:0;list-style:none;
 display:flex;flex-wrap:wrap;justify-content:center;
 column-gap:2.5rem;row-gap:1rem;
-}
-[data-vibeui-block="testimonials-015"] [data-part="logo"]{
-color:var(--vibeui-testimonials-015-muted);
-font-size:1.0625rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
-opacity:0.85;white-space:nowrap;
 }
 @container (min-width: 44rem){
 [data-vibeui-block="testimonials-015"] [data-part="shell"]{padding:5.5rem 2rem}
@@ -179,9 +175,7 @@ export function Testimonials015({
             <p data-part="clients-label">{logosLabel}</p>
             <ul data-part="logos">
               {logos.map((logo) => (
-                <li key={logo} data-part="logo">
-                  {logo}
-                </li>
+                <Badge028 key={logo} data-part="logo" logo={logo} accent={accent} />
               ))}
             </ul>
           </div>

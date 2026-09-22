@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 export type Hero016Path = {
   title: string
@@ -59,17 +60,6 @@ font-family:var(--vibeui-hero-016-sans);
 }
 [data-vibeui-block="hero-016"] *{box-sizing:border-box}
 [data-vibeui-block="hero-016"] [data-part="shell"]{max-width:62rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;text-align:center}
-[data-vibeui-block="hero-016"] [data-part="eyebrow"]{
-margin:0 0 0.875rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-hero-016-accent);
-}
-[data-vibeui-block="hero-016"] h1{
-margin:0;font-size:clamp(1.75rem,5.4cqi,3rem);line-height:1.08;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-016"] [data-part="lede"]{
-margin:1rem auto 0;max-width:34rem;font-size:clamp(0.9375rem,1.4cqi,1.0625rem);line-height:1.6;
-color:var(--vibeui-hero-016-muted);text-wrap:pretty;
-}
 [data-vibeui-block="hero-016"] [data-part="paths"]{display:grid;grid-template-columns:1fr;gap:1rem;margin:2.25rem 0 0;text-align:left}
 [data-vibeui-block="hero-016"] [data-part="path"]{
 position:relative;display:flex;flex-direction:column;
@@ -193,9 +183,16 @@ export function Hero016({
         style={palette}
       >
         <div data-part="shell">
-          {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h1>{title}</h1>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={lede}
+            level="h1"
+            size="lg"
+            align="center"
+            accent={accent}
+          />
 
           <div data-part="paths">
             {paths.map((path, index) => (

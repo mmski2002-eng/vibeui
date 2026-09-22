@@ -6,8 +6,12 @@ export type Button016Props = Omit<ComponentProps<"a">, "children"> & {
   /** Открывать в новой вкладке: тогда об этом говорится вслух и значком. */
   external?: boolean
   tone?: "neutral" | "accent"
+  /** md — строка в тексте и в карточке, lg — призыв в секции. */
+  size?: "sm" | "md" | "lg"
   /** Пояснение для скринридера о переходе в новую вкладку. */
   externalHint?: string
+  /** Стрелка после подписи: «дальше», «к каталогу» — призыв, а не действие. */
+  arrow?: boolean
   /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -31,7 +35,7 @@ const STYLES = `
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="button-016"]{color-scheme:dark}
 [data-vibeui-block="button-016"]{
-display:inline-flex;align-items:center;gap:0.4375rem;
+display:inline-flex;align-items:center;justify-content:center;gap:0.4375rem;
 height:2.25rem;padding:0 0.875rem;box-sizing:border-box;
 border:1px solid var(--vibeui-button-016-border);border-radius:0.625rem;
 background:var(--vibeui-button-016-bg);color:var(--vibeui-button-016-fg);
@@ -39,6 +43,8 @@ font-family:var(--vibeui-button-016-font);font-size:0.8125rem;font-weight:600;li
 text-decoration:none;
 transition:background-color .16s ease;
 }
+[data-vibeui-block="button-016"][data-size="sm"]{height:2rem;padding:0 0.75rem;font-size:0.75rem;border-radius:0.5rem}
+[data-vibeui-block="button-016"][data-size="lg"]{height:3rem;padding:0 1.375rem;font-size:0.9375rem;border-radius:0.75rem}
 [data-vibeui-block="button-016"][data-tone="accent"]{
 border-color:transparent;background:var(--vibeui-button-016-accent);color:oklch(from var(--vibeui-button-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 }
@@ -58,6 +64,21 @@ border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;
 }
 /* Пояснение про новую вкладку — только для скринридера: значок его не
    заменяет, а текст рядом с кнопкой был бы шумом. */
+/* Стрелка из бордюров и линии: одинакова во всех шрифтах и движках. */
+[data-vibeui-block="button-016"] [data-part="arrow"]{
+position:relative;flex:none;width:0.875rem;height:0.75rem;
+transition:transform .18s ease;
+}
+[data-vibeui-block="button-016"] [data-part="arrow"]::before{
+content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-0.75px;
+background:currentColor;
+}
+[data-vibeui-block="button-016"] [data-part="arrow"]::after{
+content:"";position:absolute;right:1px;top:50%;width:0.375rem;height:0.375rem;
+border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;
+transform:translateY(-50%) rotate(45deg);
+}
+[data-vibeui-block="button-016"]:hover [data-part="arrow"]{transform:translateX(0.1875rem)}
 [data-vibeui-block="button-016"] [data-part="sr"]{
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
@@ -96,7 +117,9 @@ export function Button016({
   href = "#",
   external = true,
   tone = "neutral",
+  size = "md",
   externalHint = "(откроется в новой вкладке)",
+  arrow = false,
   background = "",
   accent,
   className,
@@ -124,6 +147,7 @@ export function Button016({
         data-slot="button"
         data-vibeui-block="button-016"
         data-tone={tone}
+        data-size={size}
         href={href}
         className={className}
         style={palette}
@@ -132,6 +156,7 @@ export function Button016({
           : null)}
       >
         {label}
+        {arrow ? <span data-part="arrow" aria-hidden="true" /> : null}
         {external ? (
           <>
             <span data-part="out" aria-hidden="true" />

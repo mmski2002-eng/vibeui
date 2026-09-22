@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { Button108 } from "@/registry/components/button/button-108/button-108"
 import type { CSSProperties } from "react"
 
 type Navbar017Link = {
@@ -85,6 +86,7 @@ content:"";position:absolute;inset:0;pointer-events:none;
 background:radial-gradient(26rem 12rem at 82% -40%,color-mix(in oklab,var(--vibeui-navbar-017-accent) 46%,transparent),transparent 70%);
 }
 [data-vibeui-block="navbar-017"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-017"] [data-part="ticket"]{margin-left:auto;flex:none}
 [data-vibeui-block="navbar-017"] [data-part="shell"]{
 position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem 1rem;
 max-width:82rem;margin:0 auto;padding:0.875rem 1rem;
@@ -138,32 +140,6 @@ opacity:0;pointer-events:none;color:oklch(from var(--vibeui-navbar-017-accent) c
 opacity:1;
 transition:transform var(--vibeui-navbar-017-dur-4) var(--vibeui-navbar-017-ease),width var(--vibeui-navbar-017-dur-4) var(--vibeui-navbar-017-ease),opacity var(--vibeui-navbar-017-dur-2) ease;
 }
-
-[data-vibeui-block="navbar-017"] [data-part="ticket"]{
-margin-left:auto;flex:none;position:relative;
-display:inline-flex;align-items:center;gap:0.5rem;
-min-height:2.75rem;padding:0.25rem 1.5rem;border-radius:0.625rem;
-background:var(--vibeui-navbar-017-accent);color:oklch(from var(--vibeui-navbar-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:0.9375rem;font-weight:740;letter-spacing:0.02em;
-text-transform:uppercase;white-space:nowrap;
-/* вырезы по краям: кнопка читается билетом, а не плашкой */
--webkit-mask:radial-gradient(0.4375rem 0.4375rem at 0 50%,transparent 98%,#000 100%),
-radial-gradient(0.4375rem 0.4375rem at 100% 50%,transparent 98%,#000 100%);
--webkit-mask-composite:source-in;
-mask:radial-gradient(0.4375rem 0.4375rem at 0 50%,transparent 98%,#000 100%),
-radial-gradient(0.4375rem 0.4375rem at 100% 50%,transparent 98%,#000 100%);
-mask-composite:intersect;
-transition:transform var(--vibeui-navbar-017-dur-2) var(--vibeui-navbar-017-ease),filter var(--vibeui-navbar-017-dur-3) ease;
-}
-[data-vibeui-block="navbar-017"] [data-part="ticket"]::before{
-content:"";position:absolute;left:0.9375rem;top:0.5rem;bottom:0.5rem;width:1.5px;
-background:repeating-linear-gradient(currentColor 0 3px,transparent 3px 6px);
-opacity:.4;
-}
-[data-vibeui-block="navbar-017"] [data-part="ticket"]:hover{
-transform:translateY(-1px);filter:brightness(1.06);
-}
-[data-vibeui-block="navbar-017"] [data-part="ticket"] span{padding-left:0.75rem}
 
 [data-vibeui-block="navbar-017"] [data-part="state"]{
 margin-left:auto;flex:none;
@@ -362,9 +338,7 @@ export function Navbar017({
           </nav>
 
           {sales === "open" ? (
-            <a data-part="ticket" href={ticketHref}>
-              <span>{ticketLabel}</span>
-            </a>
+            <Button108 data-part="ticket" ticketHref={ticketHref} ticketLabel={ticketLabel} accent={accent} />
           ) : (
             <span data-part="state" role="status">
               {sales === "soon" ? soonLabel : closedLabel}

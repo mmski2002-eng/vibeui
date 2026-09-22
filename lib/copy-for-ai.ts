@@ -54,6 +54,11 @@ export function buildAgentBrief(
   context: CopyForAiContext & {
     pageUrl: string | null
     fileUrl: string | null
+    /**
+     * Файлы частей составного блока для запасного пути через curl: без них
+     * скачанный блок импортирует то, чего в проекте нет.
+     */
+    partFiles?: { target: string; url: string }[]
     values: ControlValues
     /** Подложка, на которой человек смотрел блок на витрине. */
     theme?: "light" | "dark"
@@ -65,6 +70,7 @@ export function buildAgentBrief(
     kind,
     pageUrl,
     fileUrl,
+    partFiles = [],
     values: chosen,
     locale,
     theme,
@@ -119,7 +125,12 @@ export function buildAgentBrief(
   // Второй путь по убыванию точности: скачивание переносит файл побайтово
   // так же, как установка. Чтение кода и перепечатывание — не переносит.
   if (fileUrl && target) {
-    lines.push("", copy.curl, `curl -o ${target} ${fileUrl}`)
+    lines.push(
+      "",
+      copy.curl,
+      `curl -o ${target} ${fileUrl}`,
+      ...partFiles.map((part) => `curl -o ${part.target} ${part.url}`),
+    )
   }
 
   lines.push("")
@@ -137,6 +148,10 @@ export function buildAgentBrief(
       ? `${copy.npmDeps} ${item.dependencies.join(", ")}`
       : copy.npmNone,
   )
+
+  if (item.registryDependencies?.length) {
+    lines.push(`${copy.registryDeps} ${item.registryDependencies.join(", ")}`)
+  }
 
   // Сниппет собирается из значений, которые пользователь выставил на витрине.
   // Меняются только пропы: установленный файл остаётся тем же.

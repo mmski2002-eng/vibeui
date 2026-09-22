@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState, useSyncExternalStore, type CSSProperties } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Event026Item = {
   /** Дата ISO «2026-10-03». Если пусто — берётся inDays от сегодня (для демо). */
   date?: string
@@ -71,6 +73,7 @@ container-type:inline-size;
 @supports (animation-timeline:view()){[data-vibeui-block="event-026"] [data-part="shell"]{animation:vibeui-event-026-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
 @keyframes vibeui-event-026-reveal{from{opacity:0;transform:translateY(1.5rem)}}
 [data-vibeui-block="event-026"] *{box-sizing:border-box}
+[data-vibeui-block="event-026"] [data-part="action"]{align-self:start;justify-self:start;grid-column:2;margin-top:.5rem}
 [data-vibeui-block="event-026"] [data-part="shell"]{max-width:74rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem}
 @container (min-width:48rem){[data-vibeui-block="event-026"] [data-part="shell"]{padding-block:2rem}}
 @container (min-width:72rem){[data-vibeui-block="event-026"] [data-part="shell"]{padding-block:3rem}}
@@ -97,13 +100,10 @@ container-type:inline-size;
 [data-vibeui-block="event-026"] [data-part="name"]{margin:0;font-family:var(--vibeui-event-026-display);font-weight:400;font-size:clamp(1.4rem,2.6cqi,1.9rem);line-height:1.15}
 [data-vibeui-block="event-026"] [data-part="where"]{display:flex;flex-wrap:wrap;gap:.2rem 1rem;margin:.2rem 0 0;font-size:.9rem;color:var(--vibeui-event-026-muted)}
 [data-vibeui-block="event-026"] [data-part="where"] span+span::before{content:"·";margin-right:1rem;color:var(--vibeui-event-026-accent)}
-[data-vibeui-block="event-026"] [data-part="action"]{align-self:start;justify-self:start;grid-column:2;margin-top:.5rem;position:relative;color:var(--vibeui-event-026-fg);text-decoration:none;font-style:italic;font-size:.95rem;padding:.2rem 0;white-space:nowrap}
-[data-vibeui-block="event-026"] [data-part="action"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--vibeui-event-026-accent);transform:scaleX(.35);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="event-026"] [data-part="action"]:hover::after{transform:scaleX(1)}
-[data-vibeui-block="event-026"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-event-026-accent);outline-offset:3px}
 [data-vibeui-block="event-026"] [data-part="past-label"]{margin:0;padding:1rem 0 .4rem;font-size:.72rem;font-style:italic;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-event-026-muted)}
 @keyframes vibeui-event-026-pulse{50%{transform:scale(1.6);opacity:.5}}
-@container (min-width: 44rem){[data-vibeui-block="event-026"] [data-part="row"]{grid-template-columns:5rem minmax(0,1fr) auto}[data-vibeui-block="event-026"] [data-part="action"]{grid-column:3;grid-row:1/span 2;align-self:center;margin:0}}
+@container (min-width: 44rem){
+[data-vibeui-block="event-026"] [data-part="action"]{grid-column:3;grid-row:1/span 2;align-self:center;margin:0}[data-vibeui-block="event-026"] [data-part="row"]{grid-template-columns:5rem minmax(0,1fr) auto}}
 @container (min-width: 60rem){[data-vibeui-block="event-026"] [data-part="shell"]{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:4rem;align-items:start}[data-vibeui-block="event-026"] [data-part="aside"]{position:sticky;top:6rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-026"] *{animation:none!important;transition:none!important}}`
 
@@ -224,9 +224,12 @@ export function Event026({
         </p>
       </div>
       {row.event.actionLabel && !isPast ? (
-        <a data-part="action" href={row.event.href ?? "#"}>
-          {row.event.actionLabel}
-        </a>
+        <Button077
+          data-part="action"
+          label={row.event.actionLabel}
+          href={row.event.href ?? "#"}
+          accent={accent}
+        />
       ) : null}
     </li>
   )

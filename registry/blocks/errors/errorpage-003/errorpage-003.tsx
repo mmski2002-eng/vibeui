@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
 
 export type Errorpage003Props = {
   eyebrow?: string
@@ -25,7 +28,8 @@ export type Errorpage003Props = {
 // закончится, как идёт и «можно закрыть вкладку — мы напишем». Полоса с
 // бегущими полосками показывает, что процесс идёт, а не завис; проценты
 // приходят пропом, потому что честнее сервера их никто не знает.
-const STYLES = `
+const STYLES = `[data-vibeui-block="errorpage-003"] [data-part="submit"]{flex:none}
+
 :where([data-vibeui-block="errorpage-003"]){
 --vibeui-errorpage-003-bg:transparent;
 --vibeui-errorpage-003-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -51,28 +55,7 @@ font-family:var(--vibeui-errorpage-003-font);
 max-width:40rem;margin:0 auto;padding:4rem 1.25rem;
 display:flex;flex-direction:column;align-items:center;text-align:center;
 }
-[data-vibeui-block="errorpage-003"] [data-part="eyebrow"]{
-margin:0;
-display:inline-flex;align-items:center;gap:0.5rem;
-padding:0.3125rem 0.875rem;border-radius:999px;
-border:1px solid color-mix(in oklab,var(--vibeui-errorpage-003-accent) 40%,var(--vibeui-errorpage-003-border));
-background:color-mix(in oklab,var(--vibeui-errorpage-003-accent) 10%,var(--vibeui-errorpage-003-card));
-color:var(--vibeui-errorpage-003-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-}
-[data-vibeui-block="errorpage-003"] [data-part="eyebrow"]::before{
-content:"";width:0.5rem;height:0.5rem;border-radius:999px;
-background:var(--vibeui-errorpage-003-accent);
-animation:vibeui-errorpage-003-pulse 1.6s ease-in-out infinite;color:oklch(from var(--vibeui-errorpage-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @keyframes vibeui-errorpage-003-pulse{50%{opacity:0.35}}
-[data-vibeui-block="errorpage-003"] [data-part="title"]{
-margin:1.25rem 0 0;
-font-size:clamp(1.625rem,6cqi,2.5rem);line-height:1.1;letter-spacing:-0.02em;font-weight:700;
-}
-[data-vibeui-block="errorpage-003"] [data-part="description"]{
-margin:0.875rem 0 0;max-width:44ch;
-color:var(--vibeui-errorpage-003-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="errorpage-003"] [data-part="finish"]{
 margin:1.75rem 0 0;display:grid;gap:0.25rem;
 }
@@ -120,21 +103,6 @@ background:var(--vibeui-errorpage-003-card);
 [data-vibeui-block="errorpage-003"] [data-part="notify"]:focus-within{
 border-color:color-mix(in oklab,var(--vibeui-errorpage-003-accent) 55%,var(--vibeui-errorpage-003-border));
 }
-[data-vibeui-block="errorpage-003"] [data-part="input"]{
-flex:1 1 auto;min-width:0;
-border:0;background:none;padding:0.5rem 0.625rem;
-color:inherit;font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="errorpage-003"] [data-part="input"]::placeholder{color:var(--vibeui-errorpage-003-muted)}
-[data-vibeui-block="errorpage-003"] [data-part="input"]:focus{outline:none}
-[data-vibeui-block="errorpage-003"] [data-part="submit"]{
-flex:none;cursor:pointer;
-border:0;border-radius:0.625rem;padding:0.5rem 1.125rem;
-background:var(--vibeui-errorpage-003-accent-fill);color:var(--vibeui-errorpage-003-accent-ink);
-font:inherit;font-size:0.875rem;font-weight:650;
-transition:filter var(--vibeui-errorpage-003-dur-2) ease;
-}
-[data-vibeui-block="errorpage-003"] [data-part="submit"]:hover{filter:brightness(1.06)}
 [data-vibeui-block="errorpage-003"] :is(button,input):focus-visible{
 outline:2px solid var(--vibeui-errorpage-003-accent);outline-offset:2px;border-radius:0.625rem;
 }
@@ -207,9 +175,13 @@ export function Errorpage003({
         style={palette}
       >
         <div data-part="frame">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={description}
+            accent={accent}
+          />
           <dl data-part="finish">
             <dt data-part="finish-label">{finishLabel}</dt>
             <dd data-part="finish-time">{finishTime}</dd>
@@ -239,9 +211,9 @@ export function Errorpage003({
               placeholder={notifyPlaceholder}
               aria-label={notifyButton}
             />
-            <button data-part="submit" type="submit">
+            <Button001 type="submit" data-part="submit" size="lg" accent={accent}>
               {notifyButton}
-            </button>
+            </Button001>
           </form>
         </div>
       </section>

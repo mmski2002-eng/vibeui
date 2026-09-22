@@ -1,5 +1,9 @@
 import type { CSSProperties } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Select001 } from "@/registry/components/select/select-001/select-001"
+
 export type Contact003Props = {
   badge?: string
   title?: string
@@ -95,31 +99,6 @@ color:var(--vibeui-contact-003-accent);font-size:0.6875rem;font-weight:700;
 [data-vibeui-block="contact-003"] form{
 display:grid;gap:0.875rem;padding-top:1.25rem;border-top:1px solid var(--vibeui-contact-003-border);
 }
-[data-vibeui-block="contact-003"] [data-part="field"]{display:grid;gap:0.3125rem}
-[data-vibeui-block="contact-003"] label{font-size:0.8125rem;font-weight:640}
-[data-vibeui-block="contact-003"] input,
-[data-vibeui-block="contact-003"] select{
-width:100%;height:2.625rem;padding:0 0.75rem;border-radius:0.6875rem;
-border:1px solid var(--vibeui-contact-003-border);
-background:var(--vibeui-contact-003-field);color:inherit;font:inherit;font-size:0.875rem;
-}
-[data-vibeui-block="contact-003"] select{appearance:none;cursor:pointer;padding-right:2rem}
-[data-vibeui-block="contact-003"] [data-part="select"]{position:relative;display:block}
-[data-vibeui-block="contact-003"] [data-part="select"]::after{
-content:"";position:absolute;right:0.875rem;top:50%;margin-top:-0.25rem;
-width:0.375rem;height:0.375rem;pointer-events:none;
-border-right:1.5px solid var(--vibeui-contact-003-muted);
-border-bottom:1.5px solid var(--vibeui-contact-003-muted);
-transform:rotate(45deg);
-}
-[data-vibeui-block="contact-003"] input:user-invalid{border-color:var(--vibeui-contact-003-alarm)}
-[data-vibeui-block="contact-003"] [data-part="error"]{
-font-size:0.75rem;line-height:1.4;color:var(--vibeui-contact-003-alarm);
-position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
-}
-[data-vibeui-block="contact-003"] input:user-invalid ~ [data-part="error"]{
-position:static;width:auto;height:auto;clip-path:none;
-}
 [data-vibeui-block="contact-003"] fieldset{margin:0;padding:0;border:0;display:grid;gap:0.4375rem}
 [data-vibeui-block="contact-003"] legend{padding:0;font-size:0.8125rem;font-weight:640}
 [data-vibeui-block="contact-003"] [data-part="goals"]{display:flex;flex-wrap:wrap;gap:0.4375rem;clear:both}
@@ -135,15 +114,6 @@ color:var(--vibeui-contact-003-accent);border-color:var(--vibeui-contact-003-acc
 background:color-mix(in oklab,var(--vibeui-contact-003-accent) 8%,var(--vibeui-contact-003-card));
 }
 [data-vibeui-block="contact-003"] [data-part="goal"]:has(input:focus-visible){outline:2px solid var(--vibeui-contact-003-accent);outline-offset:2px}
-[data-vibeui-block="contact-003"] input[type="radio"]{
-width:0.8125rem;height:0.8125rem;margin:0;accent-color:var(--vibeui-contact-003-accent);
-}
-[data-vibeui-block="contact-003"] button{
-appearance:none;cursor:pointer;border:0;justify-self:start;
-height:2.75rem;padding:0 1.375rem;border-radius:0.75rem;
-background:var(--vibeui-contact-003-accent);color:oklch(from var(--vibeui-contact-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:660;
-}
 [data-vibeui-block="contact-003"] [data-part="privacy"]{
 margin:0;font-size:0.75rem;line-height:1.55;color:var(--vibeui-contact-003-muted);max-width:56ch;
 }
@@ -272,64 +242,40 @@ export function Contact003({
 
             <form>
               <div data-part="pair">
-                <div data-part="field">
-                  <label htmlFor="contact-003-name">{labels.name}</label>
-                  <input
-                    id="contact-003-name"
-                    name="name"
-                    required
-                    autoComplete="name"
-                    placeholder={labels.namePlaceholder}
-                    aria-describedby="contact-003-name-error"
-                  />
-                  <span id="contact-003-name-error" data-part="error">
-                    {labels.nameError}
-                  </span>
-                </div>
+                <Input001
+                  name="name"
+                  autoComplete="name"
+                  required
+                  label={labels.name}
+                  accent={accent}
+                />
 
-                <div data-part="field">
-                  <label htmlFor="contact-003-email">{labels.email}</label>
-                  <input
-                    id="contact-003-email"
-                    type="email"
-                    name="email"
-                    required
-                    autoComplete="email"
-                    placeholder={labels.emailPlaceholder}
-                    aria-describedby="contact-003-email-error"
-                  />
-                  <span id="contact-003-email-error" data-part="error">
-                    {labels.emailError}
-                  </span>
-                </div>
+                <Input001
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                  label={labels.email}
+                  accent={accent}
+                />
               </div>
 
               <div data-part="pair">
-                <div data-part="field">
-                  <label htmlFor="contact-003-company">{labels.company}</label>
-                  <input
-                    id="contact-003-company"
-                    name="company"
-                    required
-                    autoComplete="organization"
-                    placeholder={labels.companyPlaceholder}
-                    aria-describedby="contact-003-company-error"
-                  />
-                  <span id="contact-003-company-error" data-part="error">
-                    {labels.companyError}
-                  </span>
-                </div>
+                <Input001
+                  name="company"
+                  autoComplete="organization"
+                  required
+                  label={labels.company}
+                  accent={accent}
+                />
 
-                <div data-part="field">
-                  <label htmlFor="contact-003-size">{labels.teamSize}</label>
-                  <span data-part="select">
-                    <select id="contact-003-size" name="teamSize">
-                      {teamSizes.map((size) => (
-                        <option key={size}>{size}</option>
-                      ))}
-                    </select>
-                  </span>
-                </div>
+                <Select001
+                  label={labels.teamSize}
+                  placeholder=""
+                  options={teamSizes.map((size) => ({ value: size, label: size }))}
+                  name="teamSize"
+                  accent={accent}
+                />
               </div>
 
               <fieldset>
@@ -349,7 +295,9 @@ export function Contact003({
                 </div>
               </fieldset>
 
-              <button type="submit">{submitLabel}</button>
+              <Button001 type="submit" size="lg" accent={accent}>
+                {submitLabel}
+              </Button001>
               <p data-part="privacy">{privacyNote}</p>
             </form>
           </div>

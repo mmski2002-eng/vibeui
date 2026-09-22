@@ -1,0 +1,751 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "heading-001",
+      "type": "registry:component",
+      "title": "Заголовок секции",
+      "description": "Надзаголовок мелким uppercase акцентом, заголовок и подводка приглушённым цветом — заголовочная часть секции как один компонент. Гарнитуры, шкала размера, выравнивание и уровень заголовка (h1–h3) — пропсы; размер заголовка считается от ширины контейнера. Из него собираются секции: FAQ, тарифы, контакты, призывы.",
+      "categories": [
+        "typography"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "heading-001/heading-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/heading-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-heading-001-*. level задаёт тег заголовка: h1 только для первого экрана, остальные секции — h2. size — шкала clamp в cqi (sm, md, lg, xl), align — start или center. display и font — имена гарнитур для заголовка и остального текста: компонент их не грузит, шрифт подключает страница; пусто — системный гротеск. ledeWidth — ширина подводки в символах. Цвет по умолчанию — currentColor окружения, приглушённый тон подводки считается от него; ink переопределяет.",
+      "meta": {
+        "tags": [
+          "heading",
+          "title",
+          "eyebrow",
+          "lede",
+          "section",
+          "typography",
+          "text",
+          "intro"
+        ],
+        "ai": {
+          "export": "Heading001",
+          "usage": "<Heading001 eyebrow=\"Вопросы\" title=\"Коротко о том, как это работает\" lede=\"Если ответа здесь нет — напишите.\" />",
+          "summary": "Заголовочная часть секции: надзаголовок, заголовок, подводка. Гарнитуры, размер, выравнивание и уровень — пропсами; размер от ширины контейнера.",
+          "preserve": [
+            "уровень заголовка через level: h1 только у первого экрана, остальные секции — h2, иначе документ теряет структуру",
+            "размер в cqi от ширины контейнера, а не от окна: в узкой колонке заголовок ужимается сам",
+            "палитру --vibeui-heading-001-* и light-dark(): компонент следует color-scheme окружения",
+            "text-wrap:balance у заголовка и pretty у подводки — без них строки рвутся на одно слово"
+          ],
+          "adapt": [
+            "eyebrow, title, lede — тексты",
+            "level — h1, h2 или h3",
+            "size — шкала: sm, md, lg, xl",
+            "align — start или center",
+            "display и font — гарнитуры заголовка и текста",
+            "ledeWidth — ширина подводки в символах",
+            "accent — цвет надзаголовка",
+            "ink — цвет заголовка; пусто — цвет текста окружения",
+            "titleAccent — хвост заголовка цветом акцента"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Коротко о том, как это работает",
+            "maxLength": 60
+          },
+          {
+            "prop": "eyebrow",
+            "label": "Надзаголовок",
+            "type": "text",
+            "default": "",
+            "maxLength": 24
+          },
+          {
+            "prop": "size",
+            "label": "Размер",
+            "type": "select",
+            "options": [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl"
+            ],
+            "default": "md"
+          },
+          {
+            "prop": "align",
+            "label": "Выравнивание",
+            "type": "select",
+            "options": [
+              "start",
+              "center"
+            ],
+            "default": "start"
+          },
+          {
+            "prop": "level",
+            "label": "Уровень",
+            "type": "select",
+            "options": [
+              "h1",
+              "h2",
+              "h3"
+            ],
+            "default": "h2"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Section heading",
+            "description": "A small uppercase eyebrow in the accent colour, a headline and a muted lede — the heading part of a section as one component. Typefaces, size scale, alignment and heading level (h1–h3) are props; the headline size is derived from the container width. Sections are built from it: FAQ, pricing, contacts, calls to action.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-heading-001-*. level sets the heading tag: h1 only for the first screen, h2 for every other section. size is a clamp scale in cqi (sm, md, lg, xl), align is start or center. display and font name the typefaces for the headline and the rest: the component does not load them, the page does; empty — system sans. ledeWidth is the lede width in characters. The default colour is the surrounding currentColor, the muted lede tone is derived from it; ink overrides.",
+            "ai": {
+              "summary": "The heading part of a section: eyebrow, headline, lede. Typefaces, size, alignment and level as props; size from the container width.",
+              "preserve": [
+                "the heading level via level: h1 only on the first screen, h2 for other sections, or the document loses its outline",
+                "size in cqi from the container width, not the viewport: the headline shrinks by itself in a narrow column",
+                "the --vibeui-heading-001-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "text-wrap:balance on the headline and pretty on the lede — without them lines break on a single word"
+              ],
+              "adapt": [
+                "eyebrow, title, lede — texts",
+                "level — h1, h2 or h3",
+                "size — scale: sm, md, lg, xl",
+                "align — start or center",
+                "display and font — headline and text typefaces",
+                "ledeWidth — lede width in characters",
+                "accent — eyebrow colour",
+                "ink — headline colour; empty — the surrounding text colour",
+                "titleAccent — the tail of the title in the accent colour"
+              ],
+              "usage": "<Heading001 eyebrow=\"Questions\" title=\"Briefly, how it works\" lede=\"If the answer is not here, write to us.\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Briefly, how it works"
+              },
+              "eyebrow": {
+                "label": "Eyebrow",
+                "default": ""
+              },
+              "size": {
+                "label": "Size"
+              },
+              "align": {
+                "label": "Align"
+              },
+              "level": {
+                "label": "Level"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Questions",
+                "title": "Briefly, how it works",
+                "lede": "If the answer is not here, write to us — we reply within a business day."
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "size",
+          "align",
+          "accent"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "eyebrow": "Вопросы",
+            "lede": "Если ответа здесь нет — напишите, мы отвечаем в течение рабочего дня."
+          }
+        }
+      }
+    },
+    {
+      "name": "word-001",
+      "type": "registry:component",
+      "title": "Слово заголовка",
+      "description": "Слово крупного заголовка с задержкой появления по номеру: оборачивает текст, анимацию задаёт блок через переменную.",
+      "categories": [
+        "typography"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "word-001/word-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/word-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока bakery-002 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-word-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "word",
+          "heading",
+          "reveal",
+          "typography",
+          "bakery"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Word001",
+          "usage": "<Word001  />",
+          "summary": "Слово крупного заголовка с задержкой появления по номеру: оборачивает текст, анимацию задаёт блок через переменную.",
+          "preserve": [
+            "локальную палитру --vibeui-word-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            " — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Heading word",
+            "description": "A display-heading word with a reveal delay by index: wraps the text, the block drives the animation through a variable.",
+            "docs": "Extracted from the bakery-002 block as is: one file, no dependencies, its own palette in the --vibeui-word-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A display-heading word with a reveal delay by index: wraps the text, the block drives the animation through a variable.",
+              "usage": "<Word001  />",
+              "preserve": [
+                "the local --vibeui-word-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                " — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "counter-001",
+      "type": "registry:component",
+      "title": "Счётчик кадров",
+      "description": "Подпись «текущий / всего» для scroll-истории.",
+      "categories": [
+        "typography"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "counter-001/counter-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/counter-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока bakery-004 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-counter-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "counter",
+          "frames",
+          "caption",
+          "typography",
+          "bakery"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Counter001",
+          "usage": "<Counter001  />",
+          "summary": "Подпись «текущий / всего» для scroll-истории.",
+          "preserve": [
+            "локальную палитру --vibeui-counter-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "frames, index — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Frame counter",
+            "description": "“current / total” caption for a scroll story.",
+            "docs": "Extracted from the bakery-004 block as is: one file, no dependencies, its own palette in the --vibeui-counter-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "“current / total” caption for a scroll story.",
+              "usage": "<Counter001  />",
+              "preserve": [
+                "the local --vibeui-counter-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "frames, index — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mark-001",
+      "type": "registry:component",
+      "title": "Маркер во фразе",
+      "description": "Выделенный фрагмент фразы-заявления: подложка-маркер и акцентный цвет текста.",
+      "categories": [
+        "typography"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mark-001/mark-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mark-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока about-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-mark-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "mark",
+          "highlight",
+          "phrase",
+          "typography",
+          "about"
+        ],
+        "ai": {
+          "export": "Mark001",
+          "usage": "<Mark001 text=\"Мы строим библиотеку, в которой \" />",
+          "summary": "Выделенный фрагмент фразы-заявления: подложка-маркер и акцентный цвет текста.",
+          "preserve": [
+            "локальную палитру --vibeui-mark-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "text — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "text",
+            "label": "text",
+            "type": "text",
+            "default": "Мы строим библиотеку, в которой ",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "text",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Phrase highlight",
+            "description": "Highlighted fragment of a statement: marker background and accent text colour.",
+            "docs": "Extracted from the about-001 block as is: one file, no dependencies, its own palette in the --vibeui-mark-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Highlighted fragment of a statement: marker background and accent text colour.",
+              "usage": "<Mark001 text=\"Мы строим библиотеку, в которой \" />",
+              "preserve": [
+                "the local --vibeui-mark-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "text — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "text": {
+                "label": "text",
+                "default": "Мы строим библиотеку, в которой "
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "contact-001",
+      "type": "registry:component",
+      "title": "Контакт-ссылка с подчёркиванием",
+      "description": "Подпись «связаться» с подчёркиванием в шапке-манифесте.",
+      "categories": [
+        "typography"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "contact-001/contact-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/contact-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока navbar-013 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-contact-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "contact",
+          "underline",
+          "header",
+          "typography",
+          "navbar"
+        ],
+        "ai": {
+          "export": "Contact001",
+          "usage": "<Contact001  />",
+          "summary": "Подпись «связаться» с подчёркиванием в шапке-манифесте.",
+          "preserve": [
+            "локальную палитру --vibeui-contact-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "contactLabel — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Underlined contact",
+            "description": "“Contact” caption with an underline in a manifesto header.",
+            "docs": "Extracted from the navbar-013 block as is: one file, no dependencies, its own palette in the --vibeui-contact-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "“Contact” caption with an underline in a manifesto header.",
+              "usage": "<Contact001  />",
+              "preserve": [
+                "the local --vibeui-contact-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "contactLabel — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cell-001",
+      "type": "registry:component",
+      "title": "Ячейка значения с подписью",
+      "description": "Значение в строке сравнения со скрытой подписью колонки для читалок; «мы» по data-us.",
+      "categories": [
+        "typography"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cell-001/cell-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cell-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока comparison-015 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-cell-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "cell",
+          "value",
+          "comparison",
+          "typography"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Cell001",
+          "usage": "<Cell001 value=\"99,9 %\" />",
+          "summary": "Значение в строке сравнения со скрытой подписью колонки для читалок; «мы» по data-us.",
+          "preserve": [
+            "локальную палитру --vibeui-cell-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "value, columns — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "value",
+            "label": "value",
+            "type": "text",
+            "default": "99,9 %",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "value",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Value cell with sr-label",
+            "description": "Value in a comparison row with a screen-reader column label; “us” through data-us.",
+            "docs": "Extracted from the comparison-015 block as is: one file, no dependencies, its own palette in the --vibeui-cell-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Value in a comparison row with a screen-reader column label; “us” through data-us.",
+              "usage": "<Cell001 value=\"99,9 %\" />",
+              "preserve": [
+                "the local --vibeui-cell-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "value, columns — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "value": {
+                "label": "value",
+                "default": "99,9 %"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "caption-001",
+      "type": "registry:component",
+      "title": "Подпись демо на подложке",
+      "description": "Демонстрационная подпись подложки: надзаголовок, заголовок и заметка на полях.",
+      "categories": [
+        "typography"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "caption-001/caption-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/caption-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока surface-025 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-caption-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "caption",
+          "demo",
+          "surface",
+          "typography"
+        ],
+        "ai": {
+          "export": "Caption001",
+          "usage": "<Caption001  />",
+          "summary": "Демонстрационная подпись подложки: надзаголовок, заголовок и заметка на полях.",
+          "preserve": [
+            "локальную палитру --vibeui-caption-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "eyebrow, title, note — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Surface demo caption",
+            "description": "Surface demo caption: eyebrow, title and a margin note.",
+            "docs": "Extracted from the surface-025 block as is: one file, no dependencies, its own palette in the --vibeui-caption-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Surface demo caption: eyebrow, title and a margin note.",
+              "usage": "<Caption001  />",
+              "preserve": [
+                "the local --vibeui-caption-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "eyebrow, title, note — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

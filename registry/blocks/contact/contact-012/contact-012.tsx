@@ -1,4 +1,9 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
 
 type Contact012FieldText = {
   email: string
@@ -54,44 +59,7 @@ display:block;background:var(--vibeui-contact-012-bg);color:var(--vibeui-contact
 font-family:var(--vibeui-contact-012-font);
 }
 [data-vibeui-block="contact-012"] [data-part="shell"]{max-width:44rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="contact-012"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-contact-012-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="contact-012"] [data-part="title"]{
-margin:0;max-width:24ch;
-font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="contact-012"] [data-part="description"]{
-margin:0.875rem 0 0;max-width:52ch;color:var(--vibeui-contact-012-muted);
-font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="contact-012"] [data-part="form"]{margin-top:2rem;display:grid;gap:1.125rem}
-[data-vibeui-block="contact-012"] [data-part="field"]{display:grid;gap:0.4375rem;min-inline-size:0}
-[data-vibeui-block="contact-012"] [data-part="label"]{font-size:0.875rem;font-weight:650}
-[data-vibeui-block="contact-012"] [data-part="input"]{
-width:100%;padding:0.6875rem 0.875rem;margin:0;
-border:1px solid var(--vibeui-contact-012-border);border-radius:0.625rem;
-background:var(--vibeui-contact-012-field);color:inherit;
-font:inherit;font-size:0.9375rem;line-height:1.45;
-}
-[data-vibeui-block="contact-012"] textarea[data-part="input"]{resize:vertical;min-height:6.5rem}
-[data-vibeui-block="contact-012"] [data-part="input"]::placeholder{color:var(--vibeui-contact-012-muted)}
-[data-vibeui-block="contact-012"] [data-part="input"]:focus-visible{
-outline:2px solid var(--vibeui-contact-012-accent);outline-offset:2px;
-}
-/* Текст ошибки всегда в разметке: узел, появившийся из ниоткуда,
-   скринридер не найдёт. Визуально скрыт до :user-invalid. */
-[data-vibeui-block="contact-012"] [data-part="error"]{
-position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
-color:var(--vibeui-contact-012-error);font-style:normal;font-size:0.8125rem;line-height:1.4;
-}
-[data-vibeui-block="contact-012"] [data-part="field"]:has(:user-invalid) [data-part="error"]{
-position:static;width:auto;height:auto;clip-path:none;
-}
-[data-vibeui-block="contact-012"] [data-part="field"] :user-invalid{
-border-color:var(--vibeui-contact-012-error);
-}
 [data-vibeui-block="contact-012"] [data-part="drop"]{
 display:grid;justify-items:center;gap:0.5rem;text-align:center;
 padding:1.75rem 1.25rem;border:1.5px dashed var(--vibeui-contact-012-border);border-radius:1rem;
@@ -129,18 +97,7 @@ transition:border-color var(--vibeui-contact-012-dur-2) ease;
 [data-vibeui-block="contact-012"] [data-part="file"]::file-selector-button:hover{
 border-color:color-mix(in oklab,var(--vibeui-contact-012-accent) 55%,var(--vibeui-contact-012-border));
 }
-[data-vibeui-block="contact-012"] [data-part="submit"]{
-padding:0.8125rem 1.5rem;border:0;border-radius:0.75rem;cursor:pointer;
-background:var(--vibeui-contact-012-accent-fill);color:var(--vibeui-contact-012-on-accent);
-font:inherit;font-size:0.9375rem;font-weight:700;letter-spacing:0.01em;
-transition:filter var(--vibeui-contact-012-dur-2) ease,transform var(--vibeui-contact-012-dur-2) ease;
-}
-[data-vibeui-block="contact-012"] [data-part="submit"]:hover{filter:brightness(1.06)}
-[data-vibeui-block="contact-012"] [data-part="submit"]:active{transform:translateY(1px)}
-[data-vibeui-block="contact-012"] [data-part="submit"]:focus-visible{
-outline:2px solid var(--vibeui-contact-012-accent);outline-offset:3px;
-}
-[data-vibeui-block="contact-012"] [data-part="note"]{
+[data-vibeui-block="contact-012"] [data-part="aside-note"]{
 margin:0;color:var(--vibeui-contact-012-muted);font-size:0.8125rem;line-height:1.5;
 }
 @container (min-width: 34rem){
@@ -224,44 +181,29 @@ export function Contact012({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={description}
+            ledeWidth={52}
+            accent={accent}
+          />
           <form data-part="form">
-            <div data-part="field">
-              <label data-part="label" htmlFor="vibeui-contact-012-email">
-                {fieldText.email}
-              </label>
-              <input
-                data-part="input"
-                id="vibeui-contact-012-email"
-                name="email"
-                type="email"
-                required
-                placeholder={fieldText.emailPlaceholder}
-                aria-describedby="vibeui-contact-012-email-error"
-              />
-              <em data-part="error" id="vibeui-contact-012-email-error">
-                {fieldText.emailError}
-              </em>
-            </div>
-            <div data-part="field">
-              <label data-part="label" htmlFor="vibeui-contact-012-message">
-                {fieldText.message}
-              </label>
-              <textarea
-                data-part="input"
-                id="vibeui-contact-012-message"
-                name="message"
-                required
-                minLength={20}
-                placeholder={fieldText.messagePlaceholder}
-                aria-describedby="vibeui-contact-012-message-error"
-              />
-              <em data-part="error" id="vibeui-contact-012-message-error">
-                {fieldText.messageError}
-              </em>
-            </div>
+            <Input001
+              name="email"
+              type="email"
+              required
+              label={fieldText.email}
+              accent={accent}
+            />
+            <Input034
+              name="message"
+              minLength={20}
+              required
+              label={fieldText.message}
+              accent={accent}
+            />
             <label data-part="drop">
               <span data-part="dropicon" aria-hidden="true">
                 <svg
@@ -287,10 +229,10 @@ export function Contact012({
                 accept=".png,.jpg,.jpeg,.pdf,.zip"
               />
             </label>
-            <button data-part="submit" type="submit">
+            <Button001 type="submit" size="lg" accent={accent}>
               {submitLabel}
-            </button>
-            <p data-part="note">{responseNote}</p>
+            </Button001>
+            <p data-part="aside-note">{responseNote}</p>
           </form>
         </div>
       </section>

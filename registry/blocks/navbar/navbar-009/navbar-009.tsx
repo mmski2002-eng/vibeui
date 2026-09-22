@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 type Navbar009Branch = {
@@ -75,6 +77,9 @@ font-family:var(--vibeui-navbar-009-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-009"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-009"] [data-part="actions"]{display:flex;flex:1 1 100%}
+[data-vibeui-block="navbar-009"] [data-part="call"]{display:none}
+[data-vibeui-block="navbar-009"] [data-part="book"]{flex:1 1 auto}
 [data-vibeui-block="navbar-009"] [data-part="shell"]{
 display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem 1.25rem;
 max-width:82rem;margin:0 auto;padding:0.875rem 1rem;
@@ -175,41 +180,19 @@ box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-navbar-009-accent) 22%,tran
 [data-vibeui-block="navbar-009"] [data-part="actions"]{
 display:flex;gap:0.5rem;flex:1 1 100%;
 }
-[data-vibeui-block="navbar-009"] [data-part="call"]{display:none}
-[data-vibeui-block="navbar-009"] [data-part="book"]{
-flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-min-height:2.875rem;padding:0.25rem 1.375rem;border-radius:0.875rem;
-background:var(--vibeui-navbar-009-accent);color:oklch(from var(--vibeui-navbar-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:1rem;font-weight:660;white-space:nowrap;letter-spacing:-0.01em;
-box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-navbar-009-accent) 40%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-navbar-009-dur-2) var(--vibeui-navbar-009-ease),box-shadow var(--vibeui-navbar-009-dur-3) ease;
-}
-[data-vibeui-block="navbar-009"] [data-part="book"] svg{width:1.0625rem;height:1.0625rem}
-[data-vibeui-block="navbar-009"] [data-part="book"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-navbar-009-accent) 50%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
-}
 
-[data-vibeui-block="navbar-009"] a:focus-visible,
+
 [data-vibeui-block="navbar-009"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-009-accent);outline-offset:3px;
 }
 @container (max-width: 47.9375rem){
+[data-vibeui-block="navbar-009"] [data-part="call"]{flex:1 1 auto}
 [data-vibeui-block="navbar-009"] [data-part="contact"]{display:none}
-[data-vibeui-block="navbar-009"] [data-part="call"]{
-flex:1 1 auto;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-min-height:2.875rem;padding:0.25rem 1.25rem;border-radius:0.875rem;
-border:1.5px solid var(--vibeui-navbar-009-ink);color:var(--vibeui-navbar-009-ink);
-text-decoration:none;font-size:1rem;font-weight:620;white-space:nowrap;
-}
-[data-vibeui-block="navbar-009"] [data-part="call"] svg{width:1.0625rem;height:1.0625rem}
 }
 @container (min-width: 48rem){
+[data-vibeui-block="navbar-009"] [data-part="book"]{flex:none}
 [data-vibeui-block="navbar-009"] [data-part="shell"]{padding:1rem 2rem;flex-wrap:nowrap}
 [data-vibeui-block="navbar-009"] [data-part="actions"]{flex:none}
-[data-vibeui-block="navbar-009"] [data-part="book"]{flex:none}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-009"] *{animation:none!important;transition:none!important}}
 `
@@ -388,14 +371,24 @@ export function Navbar009({
           </div>
 
           <div data-part="actions">
-            <a data-part="call" href={phoneHref}>
-              <PhoneIcon />
-              {callLabel}
-            </a>
-            <a data-part="book" href={actionHref}>
-              <CalendarIcon />
-              {actionLabel}
-            </a>
+            <Button016
+              data-part="call"
+              label={callLabel}
+              href={phoneHref}
+              external={false}
+              size="sm"
+              tone="neutral"
+              accent={accent}
+            />
+            <Button016
+              data-part="book"
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="sm"
+              tone="accent"
+              accent={accent}
+            />
           </div>
         </div>
       </header>

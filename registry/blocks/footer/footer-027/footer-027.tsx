@@ -1,6 +1,7 @@
 "use client"
 
 import { useSyncExternalStore, type CSSProperties } from "react"
+import { Footerlinks005 } from "@/registry/components/navigation/footerlinks-005/footerlinks-005"
 
 export type Footer027Link = {
   label: string
@@ -69,9 +70,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-027"] [data-part="mark"] i{display:block;font-style:normal;background:linear-gradient(110deg,var(--vibeui-footer-027-fg) 40%,var(--vibeui-footer-027-warm));-webkit-background-clip:text;background-clip:text;color:transparent}
 [data-vibeui-block="footer-027"] [data-part="brand"] small{display:block;font-family:var(--vibeui-footer-027-font);font-weight:400;font-size:.9rem;letter-spacing:0;opacity:.6;margin-top:.5rem}
 [data-vibeui-block="footer-027"] [data-part="cols"]{display:grid;gap:1.5rem;grid-template-columns:repeat(2,1fr)}
-[data-vibeui-block="footer-027"] [data-part="cols"] h4{margin:0 0 .6rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;opacity:.55;font-weight:600}
-[data-vibeui-block="footer-027"] [data-part="cols"] a{display:block;width:fit-content;color:inherit;text-decoration:none;font-size:.92rem;opacity:.85;padding:.15rem 0;transition:transform .3s var(--vibeui-footer-027-ease),color .2s,opacity .2s}
-[data-vibeui-block="footer-027"] [data-part="cols"] a:hover{opacity:1;color:var(--vibeui-footer-027-warm);transform:translateX(.3rem)}
 [data-vibeui-block="footer-027"] [data-part="day"]{margin-top:2.5rem}
 [data-vibeui-block="footer-027"] [data-part="label"]{display:flex;justify-content:space-between;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-bottom:.6rem}
 [data-vibeui-block="footer-027"] [data-part="bar"]{position:relative;height:1.4rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-footer-027-fg) 8%,transparent);margin-bottom:1.6rem}
@@ -90,7 +88,6 @@ container-type:inline-size;
 @keyframes vibeui-footer-027-in{from{opacity:0;translate:0 1.5rem}to{opacity:1;translate:0 0}}
 @supports (animation-timeline: view()){
 [data-vibeui-block="footer-027"] [data-part="mark"] i{animation:vibeui-footer-027-rise linear both;animation-timeline:view();animation-range:entry 0% entry 80%}
-[data-vibeui-block="footer-027"] [data-part="cols"] > div{animation:vibeui-footer-027-in linear both;animation-timeline:view();animation-range:entry 0% entry 90%}
 [data-vibeui-block="footer-027"] [data-part="day"]{animation:vibeui-footer-027-in linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
 }
 @container (min-width: 56rem){[data-vibeui-block="footer-027"] [data-part="top"]{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr)}[data-vibeui-block="footer-027"] [data-part="cols"]{grid-template-columns:repeat(3,1fr)}}
@@ -174,14 +171,7 @@ export function Footer027({
             </div>
             <div data-part="cols">
               {columns.map((column) => (
-                <div key={column.title}>
-                  <h4>{column.title}</h4>
-                  {column.links.map((link) => (
-                    <a key={link.label} href={link.href}>
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
+                <Footerlinks005 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
           </div>

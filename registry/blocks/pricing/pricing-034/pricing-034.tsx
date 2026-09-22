@@ -2,6 +2,9 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Slider013 } from "@/registry/components/slider/slider-013/slider-013"
+
 export type Pricing034Tier = {
   /** Верхняя граница ступени, запросов в месяц. Последняя — Infinity. */
   upTo: number
@@ -74,6 +77,9 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-034"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-034"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-pricing-034-bg);color:var(--vibeui-pricing-034-fg);font-family:var(--vibeui-pricing-034-display);font-size:1rem;line-height:1.5}
 [data-vibeui-block="pricing-034"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-034"] [data-part="range"]{width:100%;margin:.6rem 0 0}
+[data-vibeui-block="pricing-034"] [data-part="ticks"]{display:flex;margin:.4rem 0 0}
+[data-vibeui-block="pricing-034"] [data-part="range"]{margin:.6rem 0 0}
 [data-vibeui-block="pricing-034"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="pricing-034"] [data-part="head"]{max-width:42rem;margin:0 0 2.2rem}
 [data-vibeui-block="pricing-034"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-pricing-034-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-pricing-034-accent)}
@@ -85,10 +91,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-034"] [data-part="count"]{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.4rem 1rem;font-size:.85rem;color:var(--vibeui-pricing-034-muted)}
 [data-vibeui-block="pricing-034"] [data-part="count"] output{font-family:var(--vibeui-pricing-034-mono);font-weight:600;font-size:1.5rem;letter-spacing:-.02em;color:var(--vibeui-pricing-034-fg);font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-034"] [data-part="count"] output small{font-family:var(--vibeui-pricing-034-display);font-weight:400;font-size:.8rem;color:var(--vibeui-pricing-034-muted);margin-left:.4rem}
-[data-vibeui-block="pricing-034"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.4rem;margin:.6rem 0 0;border-radius:999px;background:linear-gradient(90deg,var(--vibeui-pricing-034-accent) var(--vibeui-pricing-034-fill),var(--vibeui-pricing-034-line) var(--vibeui-pricing-034-fill));outline:none;cursor:pointer}
-[data-vibeui-block="pricing-034"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.3rem;height:1.3rem;border-radius:50%;background:var(--vibeui-pricing-034-bg);border:3px solid var(--vibeui-pricing-034-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-pricing-034-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="pricing-034"] [data-part="range"]::-moz-range-thumb{width:1.3rem;height:1.3rem;border-radius:50%;background:var(--vibeui-pricing-034-bg);border:3px solid var(--vibeui-pricing-034-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-pricing-034-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="pricing-034"] [data-part="range"]:focus-visible{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-pricing-034-accent) 40%,transparent)}
 [data-vibeui-block="pricing-034"] [data-part="ticks"]{display:flex;justify-content:space-between;margin:.4rem 0 0;padding:0;list-style:none;font-family:var(--vibeui-pricing-034-mono);font-size:.64rem;color:var(--vibeui-pricing-034-muted)}
 [data-vibeui-block="pricing-034"] [data-part="total"]{display:grid;gap:.2rem;padding:1.1rem 0;border-top:1px dashed var(--vibeui-pricing-034-line);border-bottom:1px dashed var(--vibeui-pricing-034-line)}
 [data-vibeui-block="pricing-034"] [data-part="total"] span{font-size:.8rem;color:var(--vibeui-pricing-034-muted)}
@@ -115,11 +117,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-034"] [data-part="dot"]{fill:var(--vibeui-pricing-034-accent);stroke:var(--vibeui-pricing-034-bg);stroke-width:3;transition:transform .25s ease-out}
 [data-vibeui-block="pricing-034"] [data-part="legend"]{display:flex;justify-content:space-between;font-family:var(--vibeui-pricing-034-mono);font-size:.68rem;color:var(--vibeui-pricing-034-muted)}
 [data-vibeui-block="pricing-034"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.6rem}
-[data-vibeui-block="pricing-034"] [data-part="primary"],[data-vibeui-block="pricing-034"] [data-part="secondary"]{display:inline-flex;align-items:center;justify-content:center;height:2.8rem;padding:0 1.2rem;border-radius:.6rem;font-family:var(--vibeui-pricing-034-mono);font-weight:600;font-size:.85rem;text-decoration:none;transition:box-shadow .25s,background .2s}
-[data-vibeui-block="pricing-034"] [data-part="primary"]{background:var(--vibeui-pricing-034-accent);color:var(--vibeui-pricing-034-on-accent)}
-[data-vibeui-block="pricing-034"] [data-part="primary"]:hover{box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-pricing-034-accent) 22%,transparent)}
-[data-vibeui-block="pricing-034"] [data-part="secondary"]{border:1px solid var(--vibeui-pricing-034-line);color:var(--vibeui-pricing-034-fg)}
-[data-vibeui-block="pricing-034"] [data-part="secondary"]:hover{background:var(--vibeui-pricing-034-bg)}
 [data-vibeui-block="pricing-034"] a:focus-visible{outline:2px solid var(--vibeui-pricing-034-accent);outline-offset:2px}
 [data-vibeui-block="pricing-034"] [data-part="fine"]{display:flex;flex-wrap:wrap;gap:.3rem 1rem;margin:0;padding:0;list-style:none;font-size:.78rem;color:var(--vibeui-pricing-034-muted)}
 [data-vibeui-block="pricing-034"] [data-part="fine"] li::before{content:"✓ ";color:var(--vibeui-pricing-034-accent)}
@@ -207,7 +204,6 @@ export function Pricing034({
   const rows = breakdown(requests, tiers)
   const total = rows.reduce((sum, row) => sum + row.sum, 0)
   const effective = requests > 0 ? (total / requests) * 1000 : 0
-  const fill = `${slider / 10}%`
 
   // Лестница: x — логарифм запросов, y — ставка за тысячу.
   const maxRate = Math.max(...tiers.map((tier) => tier.perThousand), 0.01)
@@ -255,7 +251,7 @@ export function Pricing034({
                     <small>{requestsUnit}</small>
                   </output>
                 </label>
-                <input data-part="range" type="range" min={0} max={1000} value={slider} onChange={(event) => setSlider(Number(event.target.value))} aria-label={requestsLabel} aria-valuetext={requestsValue.replace("{n}", formatCount(requests, millionUnit, thousandUnit, decimalSeparator))} style={{ ["--vibeui-pricing-034-fill" as string]: fill }} />
+                <Slider013 data-part="range" value={slider} min={0} max={1000} onChange={setSlider} aria-label={requestsLabel} aria-valuetext={requestsValue.replace("{n}", formatCount(requests, millionUnit, thousandUnit, decimalSeparator))} surface="var(--vibeui-pricing-034-bg)" accent="var(--vibeui-pricing-034-accent)" />
                 <ul data-part="ticks" aria-hidden="true">
                   {tickValues.map((value) => (
                     <li key={value}>{formatCount(value, millionUnit, thousandUnit, decimalSeparator)}</li>
@@ -314,14 +310,26 @@ export function Pricing034({
               </div>
               <div data-part="actions">
                 {primaryLabel ? (
-                  <a data-part="primary" href={primaryHref}>
-                    {primaryLabel}
-                  </a>
+                  <Button016
+                    data-part="primary"
+                    size="lg"
+                    label={primaryLabel}
+                    href={primaryHref}
+                    external={false}
+                    tone="accent"
+                    accent={accent}
+                  />
                 ) : null}
                 {secondaryLabel ? (
-                  <a data-part="secondary" href={secondaryHref}>
-                    {secondaryLabel}
-                  </a>
+                  <Button016
+                    data-part="secondary"
+                    size="lg"
+                    label={secondaryLabel}
+                    href={secondaryHref}
+                    external={false}
+                    tone="neutral"
+                    accent={accent}
+                  />
                 ) : null}
               </div>
               {fine.length > 0 ? (

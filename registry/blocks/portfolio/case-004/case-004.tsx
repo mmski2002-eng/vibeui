@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Case004Item = {
   client: string
@@ -46,14 +47,6 @@ max-width:76rem;margin:0 auto;padding:3rem 0 3rem 1.25rem;
 [data-vibeui-block="case-004"] [data-part="head"]{
 display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;
 margin-bottom:1.75rem;padding-right:1.25rem;
-}
-[data-vibeui-block="case-004"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-case-004-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="case-004"] [data-part="title"]{
-margin:0;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="case-004"] [data-part="hint"]{
 flex:none;display:inline-flex;align-items:center;gap:0.375rem;
@@ -205,8 +198,12 @@ export function Case004({
         <div data-part="shell">
           <div data-part="head">
             <div>
-              <p data-part="eyebrow">{eyebrow}</p>
-              <h2 data-part="title">{title}</h2>
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                accent={accent}
+              />
             </div>
             <p data-part="hint" aria-hidden="true">
               {hint}

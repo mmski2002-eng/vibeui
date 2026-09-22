@@ -1,7 +1,11 @@
 "use client"
 
-import { useId, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 import type { CSSProperties } from "react"
+
+import { Accordion007 } from "@/registry/components/accordion/accordion-007/accordion-007"
+import { Input004 } from "@/registry/components/input/input-004/input-004"
 
 type Faq005Item = {
   question: string
@@ -19,24 +23,26 @@ export type Faq005Props = {
   countText?: string
   items?: Faq005Item[]
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  showTopic?: boolean
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
   background?: string
   accent?: string
   className?: string
   style?: CSSProperties
 }
 
-// Вопросы с поиском по списку. Клиентский компонент — ровно ради поля:
-// фильтрация идёт по вопросу, ответу и теме, чтобы «когда привезут» нашло
-// раздел про доставку. Число найденного объявляется через aria-live, иначе
-// человек со скринридером не узнает, что список под полем поменялся.
+// Вопросы с поиском по списку. Составной блок: поле — input-004, список —
+// accordion-007 с темой в плашке справа. Клиентский компонент — ровно ради
+// фильтрации: она идёт по вопросу, ответу и теме, чтобы «когда привезут»
+// нашло раздел про доставку. Число найденного объявляется через aria-live,
+// иначе человек со скринридером не узнает, что список под полем поменялся.
 //
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, она темнеет вместе со страницей.
-const STYLES = `
+const STYLES = `[data-vibeui-block="faq-005"] [data-part="search"]{margin-top:1.5rem}
+
 :where([data-vibeui-block="faq-005"]){
 --vibeui-faq-005-bg:transparent;
---vibeui-faq-005-field:light-dark(oklch(0.98 0 240),oklch(0.26 0 240));
---vibeui-faq-005-field-focus:light-dark(oklch(1 0 0),oklch(0.3 0 240));
 --vibeui-faq-005-ink:light-dark(oklch(0.22 0 240),oklch(0.95 0 240));
 --vibeui-faq-005-muted:light-dark(oklch(0.5 0 240),oklch(0.72 0 240));
 --vibeui-faq-005-border:light-dark(oklch(0.9 0 240),oklch(0.36 0 240));
@@ -58,58 +64,22 @@ font-family:var(--vibeui-faq-005-font);
 [data-vibeui-block="faq-005"] [data-part="shell"]{
 max-width:56rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="faq-005"] [data-part="title"]{
+[data-vibeui-block="faq-005"] [data-part="heading"]{
 margin:0;max-width:18ch;
 font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
-[data-vibeui-block="faq-005"] [data-part="search"]{position:relative;margin-top:1.5rem}
-[data-vibeui-block="faq-005"] [data-part="input"]{
-width:100%;height:3rem;padding:0 1rem;
-border:1px solid var(--vibeui-faq-005-border);border-radius:0.875rem;
-background:var(--vibeui-faq-005-field);color:inherit;font:inherit;font-size:1rem;
-transition:border-color var(--vibeui-faq-005-dur-2) ease,box-shadow var(--vibeui-faq-005-dur-2) ease,background-color var(--vibeui-faq-005-dur-2) ease;
-}
-[data-vibeui-block="faq-005"] [data-part="input"]::placeholder{color:color-mix(in oklab,var(--vibeui-faq-005-muted) 75%,transparent)}
-[data-vibeui-block="faq-005"] [data-part="input"]:focus{
-outline:none;background:var(--vibeui-faq-005-field-focus);border-color:var(--vibeui-faq-005-accent);
-box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-faq-005-accent) 20%,transparent);
-}
+/* Поле и список — компоненты, им отдаётся вся ширина колонки. */
+[data-vibeui-block="faq-005"] [data-part="search"]{margin-top:1.5rem;max-width:none}
 [data-vibeui-block="faq-005"] [data-part="count"]{
 margin:0.625rem 0 0;color:var(--vibeui-faq-005-muted);font-size:0.8125rem;
 }
-[data-vibeui-block="faq-005"] [data-part="list"]{margin-top:1.5rem}
-[data-vibeui-block="faq-005"] [data-part="item"]{
-border-bottom:1px solid var(--vibeui-faq-005-border);
-}
-[data-vibeui-block="faq-005"] [data-part="item"] summary{
-cursor:pointer;list-style:none;position:relative;
-display:flex;flex-direction:column;gap:0.25rem;
-padding:1rem 2rem 1rem 0;
-font-size:1rem;font-weight:600;line-height:1.4;
-}
-[data-vibeui-block="faq-005"] [data-part="item"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-005"] [data-part="item"] summary::after{
-content:"";position:absolute;right:0.375rem;top:1.3125rem;width:0.5rem;height:0.5rem;
-border-right:2px solid var(--vibeui-faq-005-accent);border-bottom:2px solid var(--vibeui-faq-005-accent);
-transform:rotate(45deg);
-transition:transform var(--vibeui-faq-005-dur-2) ease;
-}
-[data-vibeui-block="faq-005"] [data-part="item"][open] summary::after{transform:rotate(-135deg)}
-[data-vibeui-block="faq-005"] [data-part="item"] summary:focus-visible{outline:2px solid var(--vibeui-faq-005-accent);outline-offset:-2px}
-[data-vibeui-block="faq-005"] [data-part="topic"]{
-color:var(--vibeui-faq-005-accent);font-size:0.6875rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
-}
-[data-vibeui-block="faq-005"] [data-part="answer"]{
-margin:0;padding:0 2rem 1.25rem 0;max-width:64ch;
-color:var(--vibeui-faq-005-muted);font-size:0.9375rem;line-height:1.6;
-}
+[data-vibeui-block="faq-005"] [data-part="list"]{margin-top:1.5rem;width:100%;max-width:none}
 [data-vibeui-block="faq-005"] [data-part="empty"]{
 margin:1.5rem 0 0;padding:1.5rem;border:1px dashed var(--vibeui-faq-005-border);border-radius:1rem;
 color:var(--vibeui-faq-005-muted);font-size:0.9375rem;line-height:1.55;
 }
 @container (min-width: 40rem){
 [data-vibeui-block="faq-005"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="faq-005"] [data-part="item"] summary{font-size:1.0625rem;padding-block:1.125rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-005"] *{animation:none!important;transition:none!important}}
 `
@@ -192,7 +162,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Вопросы с поиском: фильтрация по вопросу, ответу и теме, счётчик — вслух. */
+/** Вопросы с поиском: поле input-004, список accordion-007, счётчик — вслух. */
 export function Faq005({
   title = "Найдите ответ за десять секунд",
   placeholder = "Например: когда привезут заказ",
@@ -200,13 +170,14 @@ export function Faq005({
   searchLabel = "Поиск по вопросам",
   countText = "Показано вопросов: {found} из {total}",
   items = DEFAULT_ITEMS,
+  showTopic = true,
+  marker = "chevron",
   background = "",
   accent,
   className,
   style,
 }: Faq005Props) {
   const [query, setQuery] = useState("")
-  const inputId = useId()
 
   const found = useMemo(
     () => (query.trim() ? items.filter((item) => matches(item, query)) : items),
@@ -235,34 +206,39 @@ export function Faq005({
         style={palette}
       >
         <div data-part="shell">
-          <h2 data-part="title">{title}</h2>
-          <div data-part="search">
-            <input
-              data-part="input"
-              id={inputId}
-              type="search"
-              value={query}
-              placeholder={placeholder}
-              aria-label={searchLabel}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </div>
+          <Heading001
+            data-part="heading"
+            title={title}
+            accent={accent}
+          />
+          <Input004
+            data-part="search"
+            label={searchLabel}
+            placeholder={placeholder}
+            shortcut=""
+            defaultValue=""
+            text={{ idle: "", searching: "" }}
+            onChange={setQuery}
+            accent={accent}
+          />
           <p data-part="count" aria-live="polite">
             {countText
               .replace("{found}", String(found.length))
               .replace("{total}", String(items.length))}
           </p>
-          <div data-part="list">
-            {found.map((item) => (
-              <details key={item.question} data-part="item">
-                <summary>
-                  <span data-part="topic">{item.topic}</span>
-                  {item.question}
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
+          {found.length > 0 ? (
+            <Accordion007
+              marker={marker}
+              badge={showTopic}
+              data-part="list"
+              items={found.map((item) => ({
+                title: item.question,
+                body: item.answer,
+                badge: item.topic,
+              }))}
+              accent={accent}
+            />
+          ) : null}
           {found.length === 0 ? <p data-part="empty">{emptyLabel}</p> : null}
         </div>
       </section>

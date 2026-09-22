@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Button124 } from "@/registry/components/button/button-124/button-124"
 
 export type Footer016Props = {
   /** Предыдущая глава. Пустой label убирает ссылку. */
@@ -46,6 +47,7 @@ background:var(--vibeui-footer-016-bg);color:var(--vibeui-footer-016-ink);
 font-family:var(--vibeui-footer-016-font);
 }
 [data-vibeui-block="footer-016"] *{box-sizing:border-box}
+[data-vibeui-block="footer-016"] [data-part="page-link"]{min-width:0}
 [data-vibeui-block="footer-016"] [data-part="shell"]{
 max-width:46rem;margin:0 auto;padding:2rem 1rem 1.5rem;
 display:flex;flex-direction:column;gap:1.25rem;
@@ -53,24 +55,6 @@ display:flex;flex-direction:column;gap:1.25rem;
 [data-vibeui-block="footer-016"] [data-part="pager"]{
 display:grid;gap:0.75rem;
 }
-[data-vibeui-block="footer-016"] [data-part="page-link"]{
-display:flex;flex-direction:column;gap:0.25rem;
-padding:1rem 1.125rem;border:1px solid var(--vibeui-footer-016-line);
-color:inherit;text-decoration:none;min-width:0;
-transition:border-color var(--vibeui-footer-016-dur-2) ease;
-}
-[data-vibeui-block="footer-016"] [data-part="page-link"]:hover{
-border-color:var(--vibeui-footer-016-accent);
-}
-[data-vibeui-block="footer-016"] [data-part="page-link"] span{
-font-size:0.8125rem;color:var(--vibeui-footer-016-muted);
-}
-[data-vibeui-block="footer-016"] [data-part="page-link"] strong{
-font-size:1rem;font-weight:620;letter-spacing:-0.01em;line-height:1.35;
-}
-[data-vibeui-block="footer-016"] [data-part="page-link"][data-dir="next"]{text-align:right;align-items:flex-end}
-[data-vibeui-block="footer-016"] [data-part="page-link"][data-dir="next"] strong::after{content:" →"}
-[data-vibeui-block="footer-016"] [data-part="page-link"][data-dir="prev"] strong::before{content:"← "}
 [data-vibeui-block="footer-016"] [data-part="meta"]{
 display:flex;align-items:center;flex-wrap:wrap;gap:0.75rem 1.5rem;
 padding-top:1rem;border-top:1px solid var(--vibeui-footer-016-line);
@@ -148,18 +132,12 @@ export function Footer016({
         <div data-part="shell">
           <nav data-part="pager" aria-label="Соседние главы">
             {prevLabel ? (
-              <a data-part="page-link" data-dir="prev" href={prevHref}>
-                <span>{prevCaption}</span>
-                <strong>{prevLabel}</strong>
-              </a>
+              <Button124 data-part="page-link" prevHref={prevHref} prevCaption={prevCaption} prevLabel={prevLabel} accent={accent} />
             ) : (
               <span aria-hidden="true" />
             )}
             {nextLabel ? (
-              <a data-part="page-link" data-dir="next" href={nextHref}>
-                <span>{nextCaption}</span>
-                <strong>{nextLabel}</strong>
-              </a>
+              <Button124 data-part="page-link" prevHref={nextHref} prevCaption={nextCaption} prevLabel={nextLabel} accent={accent} />
             ) : null}
           </nav>
           <div data-part="meta">

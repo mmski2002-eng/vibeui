@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
+import { Word001 } from "@/registry/components/typography/word-001/word-001"
 
 export type Bakery001Product = {
   id: string
@@ -80,15 +81,14 @@ container-type:inline-size;
 :where([data-vibeui-block="bakery-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="bakery-001"]{box-sizing:border-box;position:relative;overflow:clip;padding:5.5rem 0;background:var(--vibeui-bakery-001-panel);color:var(--vibeui-bakery-001-fg);font-family:var(--vibeui-bakery-001-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="bakery-001"] *{box-sizing:border-box}
+[data-vibeui-block="bakery-001"] [data-part="word"]{margin:-.04em 0 -.14em}
 [data-vibeui-block="bakery-001"] [data-part="glow"]{position:absolute;left:50%;top:40%;width:60rem;height:30rem;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bakery-001-accent) 14%,transparent),transparent 70%);filter:blur(40px);pointer-events:none}
 [data-vibeui-block="bakery-001"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="bakery-001"] [data-part="head"]{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
 [data-vibeui-block="bakery-001"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-bakery-001-accent);font-weight:600;margin:0 0 1.1rem}
 [data-vibeui-block="bakery-001"] [data-part="eyebrow"]::before{content:"";width:1.4rem;height:2px;background:var(--vibeui-bakery-001-accent);border-radius:2px}
 [data-vibeui-block="bakery-001"] [data-part="title"]{margin:0;font-family:var(--vibeui-bakery-001-display);font-weight:600;letter-spacing:-.025em;line-height:1.02;font-size:clamp(2.2rem,5cqi,4rem)}
-[data-vibeui-block="bakery-001"] [data-part="word"]{display:inline-block;overflow:clip;vertical-align:top;padding:.04em .06em .14em 0;margin:-.04em 0 -.14em}
-[data-vibeui-block="bakery-001"] [data-part="word"] i{display:inline-block;font-style:normal;transform:translateY(112%)}
-[data-vibeui-block="bakery-001"][data-shown="true"] [data-part="word"] i{animation:vibeui-bakery-001-rise .9s var(--vibeui-bakery-001-ease) both;animation-delay:calc(var(--vibeui-bakery-001-n) * .09s)}
+[data-vibeui-block="bakery-001"][data-shown="true"] [data-vibeui-block="word-001"] i{animation:vibeui-bakery-001-rise .9s var(--vibeui-bakery-001-ease) both;animation-delay:calc(var(--vibeui-bakery-001-n) * .09s)}
 [data-vibeui-block="bakery-001"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-bakery-001-muted);max-width:34rem;margin:1rem 0 0}
 [data-vibeui-block="bakery-001"] [data-part="lede"],[data-vibeui-block="bakery-001"] [data-part="aside"]{opacity:0;translate:0 1rem}
 [data-vibeui-block="bakery-001"][data-shown="true"] [data-part="lede"],[data-vibeui-block="bakery-001"][data-shown="true"] [data-part="aside"]{animation:vibeui-bakery-001-in .8s var(--vibeui-bakery-001-ease) .3s both}
@@ -130,7 +130,7 @@ container-type:inline-size;
 @keyframes vibeui-bakery-001-rise{0%{transform:translateY(112%) scaleY(.8)}70%{transform:translateY(-2%)}100%{transform:none}}
 @keyframes vibeui-bakery-001-in{from{opacity:0;translate:0 2rem}to{opacity:1;translate:0 0}}
 @keyframes vibeui-bakery-001-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(.35rem)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-001"] [data-part="word"] i{transform:none}[data-vibeui-block="bakery-001"] [data-part="item"],[data-vibeui-block="bakery-001"] [data-part="lede"],[data-vibeui-block="bakery-001"] [data-part="aside"]{opacity:1;translate:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="bakery-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="bakery-001"] [data-part="item"],[data-vibeui-block="bakery-001"] [data-part="lede"],[data-vibeui-block="bakery-001"] [data-part="aside"]{opacity:1;translate:none}}`
 
 const listeners = new Set<() => void>()
 let timer: number | undefined
@@ -324,9 +324,7 @@ export function Bakery001({
               <h2 data-part="title">
                 {title.split(" ").map((word, index, all) => (
                   <span key={`${word}-${index}`}>
-                    <span data-part="word" style={{ ["--vibeui-bakery-001-n" as string]: index }}>
-                      <i>{word}</i>
-                    </span>
+                    <Word001 data-part="word" word={word} style={{ ["--vibeui-bakery-001-n" as string]: index }} accent={accent} />
                     {index < all.length - 1 ? " " : ""}
                   </span>
                 ))}

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card149 } from "@/registry/components/card/card-149/card-149"
 
 type Faq015Item = {
   question: string
@@ -50,57 +51,8 @@ margin:0 0 1.75rem;max-width:24ch;
 font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="faq-015"] [data-part="list"]{display:grid;gap:0.75rem}
-[data-vibeui-block="faq-015"] [data-part="item"]{
-border:1px solid var(--vibeui-faq-015-border);border-radius:1rem;
-background:var(--vibeui-faq-015-card);
-transition:border-color var(--vibeui-faq-015-dur-2) ease;
-}
-[data-vibeui-block="faq-015"] [data-part="item"]:hover,
-[data-vibeui-block="faq-015"] [data-part="item"][open]{
-border-color:color-mix(in oklab,var(--vibeui-faq-015-accent) 40%,var(--vibeui-faq-015-border));
-}
-[data-vibeui-block="faq-015"] [data-part="question"]{
-display:flex;align-items:baseline;gap:0.75rem;
-padding:1.125rem 1.25rem;cursor:pointer;list-style:none;
-font-size:0.9375rem;font-weight:640;line-height:1.4;
-}
-[data-vibeui-block="faq-015"] [data-part="question"]::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-015"] [data-part="question"]:focus-visible{
-outline:2px solid var(--vibeui-faq-015-accent);outline-offset:2px;border-radius:1rem;
-}
-[data-vibeui-block="faq-015"] [data-part="sign"]{
-margin-left:auto;flex:none;align-self:center;width:0.875rem;height:0.875rem;position:relative;
-color:var(--vibeui-faq-015-accent);
-transition:transform var(--vibeui-faq-015-dur-2) ease;
-}
-[data-vibeui-block="faq-015"] [data-part="sign"]::before,
-[data-vibeui-block="faq-015"] [data-part="sign"]::after{
-content:"";position:absolute;inset:0;margin:auto;background:currentColor;border-radius:1px;
-}
-[data-vibeui-block="faq-015"] [data-part="sign"]::before{width:100%;height:2px}
-[data-vibeui-block="faq-015"] [data-part="sign"]::after{width:2px;height:100%}
-[data-vibeui-block="faq-015"] [data-part="item"][open] [data-part="sign"]{transform:rotate(45deg)}
-[data-vibeui-block="faq-015"] [data-part="answer"]{
-margin:0;padding:0 1.25rem 1.25rem;max-width:62ch;
-color:var(--vibeui-faq-015-muted);font-size:0.9375rem;line-height:1.6;
-}
-[data-vibeui-block="faq-015"] [data-part="slot"]{
-margin:0 1.25rem 1.25rem;aspect-ratio:16/9;
-display:grid;place-items:center;padding:1rem;
-border:1px dashed color-mix(in oklab,var(--vibeui-faq-015-accent) 45%,var(--vibeui-faq-015-border));
-border-radius:0.75rem;
-background:linear-gradient(135deg,
-color-mix(in oklab,var(--vibeui-faq-015-accent) 12%,var(--vibeui-faq-015-card)),
-color-mix(in oklab,var(--vibeui-faq-015-accent) 3%,var(--vibeui-faq-015-card)) 55%,
-color-mix(in oklab,var(--vibeui-faq-015-accent) 9%,var(--vibeui-faq-015-card)));
-}
-[data-vibeui-block="faq-015"] [data-part="slot-label"]{
-color:color-mix(in oklab,var(--vibeui-faq-015-accent) 70%,var(--vibeui-faq-015-muted));
-font-size:0.8125rem;font-weight:600;text-align:center;line-height:1.4;
-}
 @container (min-width: 40rem){
 [data-vibeui-block="faq-015"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="faq-015"] [data-part="question"]{font-size:1rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-015"] *{animation:none!important;transition:none!important}}
 `
@@ -189,20 +141,7 @@ export function Faq015({
           <h2 data-part="title">{title}</h2>
           <div data-part="list">
             {items.map((item) => (
-              <details key={item.question} data-part="item">
-                <summary data-part="question">
-                  <span>{item.question}</span>
-                  <span data-part="sign" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-                {item.imageLabel ? (
-                  <figure data-part="slot">
-                    <figcaption data-part="slot-label">
-                      {item.imageLabel}
-                    </figcaption>
-                  </figure>
-                ) : null}
-              </details>
+              <Card149 key={item.question} data-part="item" question={item.question} answer={item.answer} imageLabel={item.imageLabel} accent={accent} />
             ))}
           </div>
         </div>

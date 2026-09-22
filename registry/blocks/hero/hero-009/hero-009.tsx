@@ -1,6 +1,9 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 export type Hero009Stat = {
@@ -49,6 +52,7 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-009"]{color-scheme:dark}
 :where([data-vibeui-block="hero-009"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="hero-009"][data-tone="dark"]){color-scheme:dark}
+[data-vibeui-block="hero-009"] [data-part="cta-button"]{margin-top:1.75rem;}
 [data-vibeui-block="hero-009"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -61,24 +65,6 @@ font-family:var(--vibeui-hero-009-sans);
 max-width:72rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;
 display:grid;grid-template-columns:1fr;gap:2.5rem;align-items:center;
 }
-[data-vibeui-block="hero-009"] [data-part="eyebrow"]{
-margin:0 0 0.875rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-hero-009-accent);
-}
-[data-vibeui-block="hero-009"] h1{
-margin:0;font-size:clamp(1.75rem,5cqi,2.875rem);line-height:1.1;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-009"] [data-part="lede"]{
-margin:1rem 0 0;max-width:32rem;font-size:clamp(0.9375rem,1.4cqi,1.0625rem);line-height:1.6;
-color:var(--vibeui-hero-009-muted);text-wrap:pretty;
-}
-[data-vibeui-block="hero-009"] a{
-display:inline-flex;align-items:center;justify-content:center;margin-top:1.75rem;height:2.75rem;padding:0 1.5rem;
-border-radius:0.5rem;background:var(--vibeui-hero-009-accent);color:oklch(from var(--vibeui-hero-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color var(--vibeui-hero-009-dur-2) ease;
-}
-[data-vibeui-block="hero-009"] a:hover{background:color-mix(in oklab,var(--vibeui-hero-009-accent) 86%,black)}
-[data-vibeui-block="hero-009"] a:focus-visible{outline:2px solid var(--vibeui-hero-009-accent);outline-offset:3px}
 [data-vibeui-block="hero-009"] [data-part="stats"]{
 margin:0;padding:0;display:grid;grid-template-columns:1fr;border-top:1px solid var(--vibeui-hero-009-line);
 }
@@ -239,10 +225,16 @@ export function Hero009({
       >
         <div data-part="shell">
           <div>
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h1>{title}</h1>
-            {lede ? <p data-part="lede">{lede}</p> : null}
-            <a href={primary.href}>{primary.label}</a>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={lede}
+              level="h1"
+              size="lg"
+              accent={accent}
+            />
+            <Button016 data-part="cta-button" label={primary.label} href={primary.href} external={false} size="lg" tone="accent" accent={accent} />
           </div>
 
           <div>

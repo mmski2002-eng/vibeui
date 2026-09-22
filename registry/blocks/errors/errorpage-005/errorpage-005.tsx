@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Errorpage005Props = {
   title?: string
@@ -60,14 +63,6 @@ mask:repeating-linear-gradient(90deg,#000 0 0.375rem,transparent 0.375rem 0.625r
 animation:vibeui-errorpage-005-drift 2.4s linear infinite;
 }
 @keyframes vibeui-errorpage-005-drift{to{background-position:var(--vibeui-errorpage-005-step) 0}}
-[data-vibeui-block="errorpage-005"] [data-part="title"]{
-margin:1.75rem 0 0;
-font-size:clamp(1.625rem,6cqi,2.5rem);line-height:1.1;letter-spacing:-0.02em;font-weight:700;
-}
-[data-vibeui-block="errorpage-005"] [data-part="description"]{
-margin:0.875rem 0 0;max-width:42ch;
-color:var(--vibeui-errorpage-005-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="errorpage-005"] [data-part="check"]{
 margin:1.75rem 0 0;width:100%;max-width:24rem;text-align:left;
 padding:1.25rem 1.5rem;
@@ -92,18 +87,6 @@ content:"";flex:none;align-self:center;
 width:0.875rem;height:0.875rem;border-radius:0.25rem;
 border:1.5px solid color-mix(in oklab,var(--vibeui-errorpage-005-accent) 65%,var(--vibeui-errorpage-005-border));
 background:color-mix(in oklab,var(--vibeui-errorpage-005-accent) 12%,var(--vibeui-errorpage-005-card));
-}
-[data-vibeui-block="errorpage-005"] [data-part="retry"]{
-margin-top:1.75rem;
-display:inline-block;text-decoration:none;
-padding:0.625rem 1.5rem;border-radius:0.75rem;
-background:var(--vibeui-errorpage-005-accent-fill);color:var(--vibeui-errorpage-005-accent-ink);
-font-size:0.9375rem;font-weight:650;
-transition:filter var(--vibeui-errorpage-005-dur-2) ease;
-}
-[data-vibeui-block="errorpage-005"] [data-part="retry"]:hover{filter:brightness(1.06)}
-[data-vibeui-block="errorpage-005"] a:focus-visible{
-outline:2px solid var(--vibeui-errorpage-005-accent);outline-offset:2px;
 }
 @container (min-width: 48rem){
 [data-vibeui-block="errorpage-005"] [data-part="frame"]{padding:6rem 2rem}
@@ -175,8 +158,13 @@ export function Errorpage005({
       >
         <div data-part="frame">
           <div data-part="wave" aria-hidden="true" />
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={description}
+            ledeWidth={42}
+            accent={accent}
+          />
           <div data-part="check">
             <p data-part="check-label">{checklistLabel}</p>
             <ul data-part="check-list">
@@ -188,9 +176,15 @@ export function Errorpage005({
             </ul>
           </div>
           {/* Пустой href ведёт на текущий адрес — повтор без JS. */}
-          <a data-part="retry" href="">
-            {retryLabel}
-          </a>
+          <Button016
+            data-part="retry"
+            label={retryLabel}
+            href=""
+            external={false}
+            size="lg"
+            tone="accent"
+            accent={accent}
+          />
         </div>
       </section>
     </>

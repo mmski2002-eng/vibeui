@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Card124 } from "@/registry/components/card/card-124/card-124"
 
 export type Event012Swatch = { name: string; hex: string }
 
@@ -69,15 +70,6 @@ container-type:inline-size;
 [data-vibeui-block="event-012"] [data-part="swatch"][data-copied="true"] code{opacity:1}
 [data-vibeui-block="event-012"] [data-part="grid"]{display:grid;gap:2rem;margin-top:2.5rem}
 [data-vibeui-block="event-012"] [data-part="looks"]{display:grid;gap:1.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="event-012"] [data-part="look"]{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1rem;align-items:center}
-[data-vibeui-block="event-012"] [data-part="look"] figure{position:relative;margin:0;padding:.4rem .4rem 1.2rem;background:#fffaf0;box-shadow:0 16px 30px -22px rgb(18 58 75 / .6);transform:rotate(-3deg)}
-[data-vibeui-block="event-012"] [data-part="look"]:nth-child(even) figure{transform:rotate(2.5deg)}
-[data-vibeui-block="event-012"] [data-part="look"] figure::before{content:"";position:absolute;top:-.5rem;left:50%;width:3.2rem;height:1rem;margin-left:-1.6rem;background:rgb(255 255 255 / .6);box-shadow:0 1px 2px rgb(0 0 0 / .1);transform:rotate(-4deg)}
-[data-vibeui-block="event-012"] [data-part="look"] span{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--vibeui-event-012-sand)}
-[data-vibeui-block="event-012"] [data-part="look"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="event-012"] [data-part="look"] small{display:block;font-family:var(--vibeui-event-012-script);font-size:1.15rem;color:var(--vibeui-event-012-accent)}
-[data-vibeui-block="event-012"] [data-part="look"] h3{margin:.1rem 0 .3rem;font-family:var(--vibeui-event-012-display);font-size:1.4rem;font-weight:600;line-height:1.1;text-transform:uppercase}
-[data-vibeui-block="event-012"] [data-part="look"] p{margin:0;font-size:.92rem;color:var(--vibeui-event-012-muted)}
 [data-vibeui-block="event-012"] [data-part="rules"]{display:grid;gap:.6rem;margin:0;padding:1.4rem;list-style:none;border-radius:1rem;background:var(--vibeui-event-012-sand);align-self:start}
 [data-vibeui-block="event-012"] [data-part="rules"] li{display:flex;align-items:center;gap:.8rem;font-size:.95rem}
 [data-vibeui-block="event-012"] [data-part="rules"] svg{flex:none;width:2.2rem;height:2.2rem;padding:.45rem;border-radius:50%;background:var(--vibeui-event-012-bg);color:var(--vibeui-event-012-sea);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
@@ -86,7 +78,6 @@ container-type:inline-size;
 [data-vibeui-block="event-012"] [data-part="swatch"]{min-height:8.5rem;padding:1rem 1.1rem}
 [data-vibeui-block="event-012"] [data-part="grid"]{grid-template-columns:minmax(0,1.5fr) minmax(16rem,.7fr);gap:3rem}
 [data-vibeui-block="event-012"] [data-part="looks"]{grid-template-columns:1fr 1fr}
-[data-vibeui-block="event-012"] [data-part="look"]{grid-template-columns:8rem minmax(0,1fr)}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-012"] *{animation:none!important;transition:none!important}}`
 
@@ -182,16 +173,7 @@ export function Event012({
           <div data-part="grid">
             <ul data-part="looks">
               {looks.map((look) => (
-                <li key={look.who} data-part="look">
-                  <figure>
-                    <span>{look.image ? <img src={look.image} alt={look.imageAlt ?? ""} loading="lazy" /> : null}</span>
-                  </figure>
-                  <div>
-                    <small>{look.who}</small>
-                    <h3>{look.title}</h3>
-                    <p>{look.text}</p>
-                  </div>
-                </li>
+                <Card124 key={look.who} data-part="look" who={look.who} image={look.image} imageAlt={look.imageAlt} title={look.title} text={look.text} accent={accent} />
               ))}
             </ul>
             {rules.length > 0 ? (

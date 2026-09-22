@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Card144 } from "@/registry/components/card/card-144/card-144"
 
 export type Comparison006Row = {
   name: string
@@ -77,18 +78,8 @@ container-type:inline-size;
 [data-vibeui-block="comparison-006"] [data-part="chart"]{border:1px solid var(--vibeui-comparison-006-line);border-radius:16px;padding:1.5rem;background:var(--vibeui-comparison-006-panel);box-shadow:0 30px 70px -40px color-mix(in oklab,var(--vibeui-comparison-006-accent) 45%,rgb(0 0 0 / .4));transform:rotateX(calc(var(--vibeui-comparison-006-rx,0) * 1deg)) rotateY(calc(var(--vibeui-comparison-006-ry,0) * 1deg));transition:transform .6s var(--vibeui-comparison-006-ease)}
 [data-vibeui-block="comparison-006"] [data-part="metric"]{margin:0 0 1.2rem;font-family:var(--vibeui-comparison-006-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-comparison-006-muted)}
 [data-vibeui-block="comparison-006"] [data-part="rows"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="comparison-006"] [data-part="row"]{display:grid;grid-template-columns:minmax(6rem,10rem) 1fr auto;gap:1rem;align-items:center}
-[data-vibeui-block="comparison-006"] [data-part="name"]{font-weight:600;font-size:.92rem}
-[data-vibeui-block="comparison-006"] [data-part="name"] small{display:block;font-weight:400;font-size:.72rem;color:var(--vibeui-comparison-006-muted)}
-[data-vibeui-block="comparison-006"] [data-part="track"]{height:1.6rem;border-radius:6px;background:var(--vibeui-comparison-006-line);overflow:hidden}
-[data-vibeui-block="comparison-006"] [data-part="bar"]{height:100%;width:calc(var(--vibeui-comparison-006-w) * 100%);background:color-mix(in oklab,var(--vibeui-comparison-006-fg) 40%,var(--vibeui-comparison-006-bg));border-radius:6px;transform:scaleX(0);transform-origin:left;transition:transform 1.1s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--vibeui-comparison-006-i) * .12s)}
-[data-vibeui-block="comparison-006"] [data-shown="true"] [data-part="bar"]{transform:none}
-[data-vibeui-block="comparison-006"] [data-part="row"][data-self="true"] [data-part="bar"]{background:var(--vibeui-comparison-006-accent)}
-[data-vibeui-block="comparison-006"] [data-part="row"][data-self="true"] [data-part="name"]::after{content:attr(data-tag);margin-left:.5rem;padding:.1rem .4rem;border-radius:4px;background:var(--vibeui-comparison-006-accent);color:var(--vibeui-comparison-006-on-accent);font-family:var(--vibeui-comparison-006-mono);font-size:.62rem;vertical-align:middle}
-[data-vibeui-block="comparison-006"] [data-part="val"]{font-family:var(--vibeui-comparison-006-mono);font-size:.85rem;font-variant-numeric:tabular-nums;min-width:5rem;text-align:right}
-[data-vibeui-block="comparison-006"] [data-part="row"][data-self="true"] [data-part="bar"]{position:relative;overflow:hidden}
-[data-vibeui-block="comparison-006"] [data-part="row"][data-self="true"] [data-part="bar"]::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgb(255 255 255 / .35),transparent);transform:translateX(-100%)}
-[data-vibeui-block="comparison-006"] [data-shown="true"] [data-part="row"][data-self="true"] [data-part="bar"]::after{animation:vibeui-comparison-006-shine 2.2s ease-in-out 1.4s infinite}
+[data-vibeui-block="comparison-006"] [data-shown="true"] [data-vibeui-block="card-144"] [data-part="bar"]{transform:none}
+[data-vibeui-block="comparison-006"] [data-shown="true"] [data-vibeui-block="card-144"][data-self="true"] [data-part="bar"]::after{animation:vibeui-comparison-006-shine 2.2s ease-in-out 1.4s infinite}
 [data-vibeui-block="comparison-006"] [data-part="checks"]{margin:1.4rem 0 0;padding:1.2rem 0 0;border-top:1px solid var(--vibeui-comparison-006-line);display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;align-items:center}
 [data-vibeui-block="comparison-006"] [data-part="checks"] small{width:100%;font-family:var(--vibeui-comparison-006-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-comparison-006-muted);margin-bottom:.2rem}
 [data-vibeui-block="comparison-006"] [data-part="check"]{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem .35rem .5rem;border-radius:999px;border:1px solid var(--vibeui-comparison-006-line);background:var(--vibeui-comparison-006-bg);font-size:.82rem;font-weight:500;opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s var(--vibeui-comparison-006-ease),border-color .3s;transition-delay:calc(1.1s + var(--vibeui-comparison-006-i) * .1s)}
@@ -104,29 +95,8 @@ container-type:inline-size;
 @container (min-width: 60rem){[data-vibeui-block="comparison-006"] [data-part="shell"]{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:4rem}[data-vibeui-block="comparison-006"] [data-part="chart"]{padding:2rem}}
 @media (hover: none){[data-vibeui-block="comparison-006"] [data-part="chart"]{transform:none}}
 [data-vibeui-block="comparison-006"] [data-part="w"]:not(:last-child)::after{content:"\\00a0"}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="comparison-006"] *{animation:none!important;transition:none!important}[data-vibeui-block="comparison-006"] [data-part="bar"]{transform:none}[data-vibeui-block="comparison-006"] [data-part="w"] > span{transform:none}[data-vibeui-block="comparison-006"] [data-reveal],[data-vibeui-block="comparison-006"] [data-part="check"]{opacity:1;transform:none}[data-vibeui-block="comparison-006"] [data-part="check"] path{stroke-dashoffset:0}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="comparison-006"] *{animation:none!important;transition:none!important}[data-vibeui-block="comparison-006"] [data-part="w"] > span{transform:none}[data-vibeui-block="comparison-006"] [data-reveal],[data-vibeui-block="comparison-006"] [data-part="check"]{opacity:1;transform:none}[data-vibeui-block="comparison-006"] [data-part="check"] path{stroke-dashoffset:0}}`
 
-function Value({ target, run, unit }: { target: number; run: boolean; unit: string }) {
-  const [value, setValue] = useState(0)
-  useEffect(() => {
-    if (!run) return
-    const start = performance.now()
-    let raf = 0
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / 1100)
-      setValue(target * (1 - Math.pow(1 - t, 3)))
-      if (t < 1) raf = window.requestAnimationFrame(tick)
-    }
-    raf = window.requestAnimationFrame(tick)
-    return () => window.cancelAnimationFrame(raf)
-  }, [run, target])
-  const digits = Number.isInteger(target) ? 0 : 1
-  return (
-    <span data-part="val">
-      {(run ? value : 0).toFixed(digits)} {unit}
-    </span>
-  )
-}
 
 /** Сравнение размера: полосы растут, числа считают вверх при появлении. */
 export function Comparison006({
@@ -226,16 +196,7 @@ export function Comparison006({
               {metric ? <p data-part="metric">{metric}</p> : null}
               <ul data-part="rows">
                 {rows.map((row, index) => (
-                  <li key={row.name} data-part="row" data-self={row.self ?? false}>
-                    <span data-part="name" data-tag={selfTag}>
-                      {row.name}
-                      {row.note ? <small>{row.note}</small> : null}
-                    </span>
-                    <span data-part="track">
-                      <span data-part="bar" style={{ ["--vibeui-comparison-006-w" as string]: row.value / max, ["--vibeui-comparison-006-i" as string]: index }} />
-                    </span>
-                    <Value target={row.value} run={shown} unit={unit} />
-                  </li>
+                  <Card144 key={row.name} data-part="row" name={row.name} self={row.self} note={row.note} value={row.value} selfTag={selfTag} unit={unit} max={max} shown={shown} index={index} accent={accent} />
                 ))}
               </ul>
               {checks.length > 0 ? (

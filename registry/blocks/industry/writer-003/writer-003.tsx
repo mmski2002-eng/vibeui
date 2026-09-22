@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Writer003Props = {
   eyebrow?: string
   title?: string
@@ -84,10 +86,6 @@ container-type:inline-size;
 [data-vibeui-block="writer-003"] [data-part="notes"] b{font-weight:400;font-style:italic;color:var(--vibeui-writer-003-accent);margin-right:.4em}
 [data-vibeui-block="writer-003"] [data-part="foot"]{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 2rem;max-width:65ch;padding-top:1.6rem;border-top:1px solid var(--vibeui-writer-003-line)}
 [data-vibeui-block="writer-003"] [data-part="ornament"]{font-family:var(--vibeui-writer-003-display);font-size:1.4rem;color:var(--vibeui-writer-003-accent)}
-[data-vibeui-block="writer-003"] [data-part="action"]{position:relative;color:var(--vibeui-writer-003-fg);text-decoration:none;font-style:italic;font-size:1.05rem;padding:.3rem 0}
-[data-vibeui-block="writer-003"] [data-part="action"]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--vibeui-writer-003-accent);transform:scaleX(.35);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="writer-003"] [data-part="action"]:hover::after{transform:scaleX(1)}
-[data-vibeui-block="writer-003"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-writer-003-accent);outline-offset:3px}
 @container (min-width: 64rem){[data-vibeui-block="writer-003"] [data-part="shell"]{grid-template-columns:4.5rem minmax(0,1fr);column-gap:2rem}[data-vibeui-block="writer-003"] [data-part="mark"]{grid-row:1/span 3;align-self:start;position:sticky;top:6rem;flex-direction:column;align-items:center;gap:.8rem;height:22rem}[data-vibeui-block="writer-003"] [data-part="track"]{width:2px;height:auto;flex:1}[data-vibeui-block="writer-003"] [data-part="ribbon"]{transform:scaleY(var(--vibeui-writer-003-p,0));transform-origin:top}[data-vibeui-block="writer-003"] [data-part="percent"]{text-align:center;min-width:0}[data-vibeui-block="writer-003"] [data-part="mark"] span:first-child{writing-mode:vertical-rl;transform:rotate(180deg)}[data-vibeui-block="writer-003"] [data-part="head"],[data-vibeui-block="writer-003"] [data-part="body"],[data-vibeui-block="writer-003"] [data-part="foot"]{grid-column:2}[data-vibeui-block="writer-003"] [data-part="para"]{grid-template-columns:minmax(0,65ch) 15rem;column-gap:3rem;max-width:none;align-items:start}[data-vibeui-block="writer-003"] [data-part="notes"]{padding:.3rem 0 0 1rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="writer-003"] *{animation:none!important;transition:none!important}}`
 
@@ -248,9 +246,12 @@ export function Writer003({
               ❦
             </span>
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
-                {actionLabel}
-              </a>
+              <Button077
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                accent={accent}
+              />
             ) : null}
           </div>
         </div>

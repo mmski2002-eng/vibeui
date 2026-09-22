@@ -1,181 +1,44 @@
 import type { ComponentProps, CSSProperties } from "react"
 
-export type Avatar033Props = Omit<ComponentProps<"div">, "children"> & {
-  name?: string
-  src?: string
-  state?: "speaking" | "listening" | "muted"
-  /** Подписи: компонент несёт русские, проект подставляет свои. */
-  stateText?: Record<string, string>
-  /** Пусто — подложки нет, компонент лежит на фоне страницы. */
-  background?: string
-  /** Цвет основного текста. Пусто — берётся из темы окружения. */
-  textColor?: string
-  /** Цвет приглушённого текста. Пусто — выводится из основного. */
-  mutedColor?: string
+export type Avatar033Props = Omit<ComponentProps<"li">, "title" | "children"> & {
+  initials?: string
+  accent?: string
+  className?: string
+  style?: CSSProperties
 }
 
-// Идея компонента: строка участника звонка. Кто говорит — видно по кольцу,
-// которое расходится от портрета: движение ловится боковым зрением, а список
-// из десяти человек глазами не сканируют. Но движение не может быть
-// единственным признаком: в prefers-reduced-motion пульс заменяется ровным
-// кольцом того же цвета, микрофон рисуется отдельным значком, а состояние
-// названо словом. Значок микрофона нарисован псевдоэлементами — без иконок.
-const STYLES = `:where([data-vibeui-block="avatar-033"]){
---vibeui-avatar-033-size:2.5rem;
---vibeui-avatar-033-bg:transparent;
---vibeui-avatar-033-fg:light-dark(oklch(0.24 0 265),oklch(0.94 0 265));
---vibeui-avatar-033-muted:color-mix(in oklab,var(--vibeui-avatar-033-fg) 68%,transparent);
---vibeui-avatar-033-border:light-dark(oklch(0.91 0 265),oklch(0.31 0 265));
---vibeui-avatar-033-live:oklch(0.62 0.15 152);
---vibeui-avatar-033-off:light-dark(oklch(0.2 0 0),oklch(0.92 0 0));
---vibeui-avatar-033-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-}
-/* Своя светлая подложка: тёмный текст обязан читаться на любом фоне. */
-[data-vibeui-block="avatar-033"]{
-container-type:inline-size;flex-wrap:wrap;
-display:flex;align-items:center;gap:0.75rem;
-box-sizing:border-box;width:100%;
-/* container-type отрывает ширину от содержимого: без нижней границы
-   блок схлопывается внутри flex-контейнера. */
-min-width:min(100%,15rem);max-width:19rem;padding:0.5rem 0.75rem;
-background:var(--vibeui-avatar-033-bg);
-border:1px solid var(--vibeui-avatar-033-border);border-radius:0.75rem;
-font-family:var(--vibeui-avatar-033-font);color:var(--vibeui-avatar-033-fg);
-}
-[data-vibeui-block="avatar-033"] *{box-sizing:border-box}
-[data-vibeui-block="avatar-033"] [data-part="slot"]{position:relative;display:grid;place-items:center;flex:none}
-[data-vibeui-block="avatar-033"] [data-part="face"]{
-display:grid;place-items:center;
-width:var(--vibeui-avatar-033-size);height:var(--vibeui-avatar-033-size);
-border-radius:9999px;
-background:light-dark(oklch(0.9 0.06 var(--vibeui-avatar-033-hue,265)),oklch(0.34 0.065 var(--vibeui-avatar-033-hue,265)));
-color:light-dark(oklch(0.36 0.12 var(--vibeui-avatar-033-hue,265)),oklch(0.88 0.063 var(--vibeui-avatar-033-hue,265)));
-font-size:calc(var(--vibeui-avatar-033-size) * 0.34);font-weight:700;line-height:1;
-}
-/* Пульс расходится от портрета: движение ловится боковым зрением. */
-[data-vibeui-block="avatar-033"] [data-part="pulse"]{
-position:absolute;inset:0;border-radius:9999px;opacity:0;
-box-shadow:0 0 0 0.125rem var(--vibeui-avatar-033-live);
-}
-[data-vibeui-block="avatar-033"][data-state="speaking"] [data-part="pulse"]{
-opacity:1;animation:vibeui-avatar-033-pulse 1.5s infinite ease-out;
-}
-@keyframes vibeui-avatar-033-pulse{
-from{transform:scale(1);opacity:.9}
-to{transform:scale(1.35);opacity:0}
-}
-/* Значок микрофона: капсула на ножке, у выключенного — перечёркнутая. */
-[data-vibeui-block="avatar-033"] [data-part="mic"]{
-position:absolute;right:-0.3125rem;bottom:-0.25rem;
-display:grid;place-items:center;width:1.125rem;height:1.125rem;
-border-radius:9999px;background:var(--vibeui-avatar-033-live);
-box-shadow:0 0 0 0.125rem var(--vibeui-avatar-033-bg);
-}
-/* Знак микрофона белый в обеих темах: он лежит на насыщенном значке, а не на карточке. */
-[data-vibeui-block="avatar-033"] [data-part="mic"]::before{
-content:"";width:0.25rem;height:0.4375rem;border-radius:9999px;background:oklch(1 0 0);
-}
-[data-vibeui-block="avatar-033"] [data-part="mic"]::after{
-content:"";position:absolute;width:0.5rem;height:0.09375rem;border-radius:9999px;
-background:oklch(1 0 0);transform:translateY(0.3125rem);
-}
-[data-vibeui-block="avatar-033"][data-state="muted"] [data-part="mic"]{background:var(--vibeui-avatar-033-off)}
-[data-vibeui-block="avatar-033"][data-state="muted"] [data-part="mic"]::after{
-width:0.75rem;transform:rotate(-45deg);
-}
-[data-vibeui-block="avatar-033"][data-state="listening"] [data-part="mic"]{background:light-dark(oklch(0.62 0 265),oklch(0.66 0 265))}
-[data-vibeui-block="avatar-033"] [data-part="text"]{display:flex;flex-direction:column;gap:0.0625rem;min-width:0;flex:1 1 auto}
-[data-vibeui-block="avatar-033"] [data-part="name"]{
-font-size:0.875rem;font-weight:650;
-overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-[data-vibeui-block="avatar-033"] [data-part="state"]{font-size:0.75rem;color:var(--vibeui-avatar-033-muted)}
-[data-vibeui-block="avatar-033"][data-state="speaking"] [data-part="state"]{color:var(--vibeui-avatar-033-live);font-weight:600}
-[data-vibeui-block="avatar-033"][data-state="muted"] [data-part="state"]{color:var(--vibeui-avatar-033-off)}
-[data-vibeui-block="avatar-033"] [data-part="face"]{overflow:hidden}
-[data-vibeui-block="avatar-033"] [data-part="face"] img{width:100%;height:100%;border-radius:inherit;object-fit:cover;display:block}
-@container (max-width: 20rem){
-[data-vibeui-block="avatar-033"] [data-part="text"]{min-width:100%}
+// Часть блока bento-008, вынесенная как есть: разметка и стили карточки
+// живут здесь, блок владеет раскладкой и данными.
+const STYLES = `
+:where([data-vibeui-block="avatar-033"]){
+--vibeui-avatar-033-accent:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-avatar-033-display:"Onest",ui-sans-serif,system-ui,sans-serif;
+--vibeui-avatar-033-fg:light-dark(#1a1a1a,#f2f2f2);
+--vibeui-avatar-033-paper:color-mix(in oklab,var(--vibeui-avatar-033-bg) 92%,#fff);
+--vibeui-avatar-033-bg:light-dark(#ffffff,#1a1a1a);
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="avatar-033"]{color-scheme:dark}
-@media (prefers-reduced-motion:reduce){
-[data-vibeui-block="avatar-033"] *{animation:none!important;transition:none!important}
-/* Без движения состояние всё равно видно: ровное кольцо того же цвета. */
-[data-vibeui-block="avatar-033"][data-state="speaking"] [data-part="pulse"]{transform:scale(1.2);opacity:1}
-}
+[data-vibeui-block="avatar-033"]{box-sizing:border-box;list-style:none}
+[data-vibeui-block="avatar-033"] *{box-sizing:border-box}
+@keyframes vibeui-avatar-033-wave{0%,70%,100%{transform:rotate(0);opacity:0}80%{opacity:1;transform:rotate(-15deg)}90%{opacity:1;transform:rotate(15deg)}}
+@keyframes vibeui-avatar-033-hand{0%,70%,100%{transform:translateY(0)}80%,90%{transform:translateY(-5px)}}
+[data-vibeui-block="avatar-033"]{position:relative;display:grid;place-items:center;width:2.6rem;height:2.6rem;margin-left:-.6rem;border-radius:50%;border:2px solid var(--vibeui-avatar-033-paper);background:color-mix(in oklab,var(--vibeui-avatar-033-accent) calc(var(--vibeui-bento-008-i) * 12% + 20%),var(--vibeui-avatar-033-fg));color:#fff;font-family:var(--vibeui-avatar-033-display);font-size:.72rem;font-weight:700}
+[data-vibeui-block="avatar-033"]:first-child{margin-left:0}
+[data-vibeui-block="avatar-033"][data-hand="true"]{animation:vibeui-avatar-033-hand 3s ease-in-out infinite}
+[data-vibeui-block="avatar-033"][data-hand="true"]::after{content:"✋";position:absolute;right:-.5rem;top:-.6rem;font-size:.9rem;animation:vibeui-avatar-033-wave 3s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="avatar-033"] *{animation:none!important;transition:none!important}}
 `
 
-const STATE_LABEL: Record<string, string> = {
-  speaking: "говорит",
-  listening: "микрофон включён",
-  muted: "микрофон выключен",
-}
-
-function hue(name: string) {
-  let hash = 2166136261
-  for (const symbol of name) {
-    hash ^= symbol.codePointAt(0)!
-    hash = Math.imul(hash, 16777619)
-  }
-  return ((hash >>> 0) % 12) * 30
-}
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0).toUpperCase())
-    .join("")
-}
-
-/**
- * Ветка темы для заданного фона. Без неё светлая плашка досталась бы тексту
- * тёмной ветки: light-dark() смотрит на color-scheme, а не на цвет фона.
- */
-function schemeForBackground(background: string): "light" | "dark" | undefined {
-  const match = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(background)
-
-  if (!match) {
-    return undefined
-  }
-
-  const hex =
-    match[1].length === 3
-      ? match[1].replace(/./g, (character) => character + character)
-      : match[1]
-  const [red, green, blue] = [0, 2, 4].map(
-    (offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255,
-  )
-
-  return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
-}
-
-/**
- * Строка участника звонка: пульс у говорящего, значок микрофона и состояние словом.
- * Один файл, ноль зависимостей, собственная палитра.
- */
+/** Круглый аватар с инициалами для стопки лиц; с data-hand машет рукой. */
 export function Avatar033({
-  background = "",
-  name = "Ирина Ким",
-  src,
-  state = "speaking",
-  stateText = STATE_LABEL,
-  textColor,
-  mutedColor,
+  initials,
+  accent,
   className,
   style,
   ...props
 }: Avatar033Props) {
   const palette = {
-    "--vibeui-avatar-033-hue": hue(name),
-    ...(background
-      ? {
-          "--vibeui-avatar-033-bg": background,
-          colorScheme: schemeForBackground(background),
-        }
-      : null),
-    ...(textColor ? { "--vibeui-avatar-033-fg": textColor } : null),
-    ...(mutedColor ? { "--vibeui-avatar-033-muted": mutedColor } : null),
+    ...(accent ? { "--vibeui-avatar-033-accent": accent } : null),
     ...style,
   } as CSSProperties
 
@@ -184,29 +47,15 @@ export function Avatar033({
       <style href="vibeui-avatar-033" precedence="medium">
         {STYLES}
       </style>
-      <div
+      <li
         {...props}
         data-slot="avatar"
         data-vibeui-block="avatar-033"
-        data-state={state}
         className={className}
         style={palette}
       >
-        <span data-part="slot">
-          <span data-part="pulse" aria-hidden="true" />
-          <span data-part="face" aria-hidden="true">
-            {src ? <img src={src} alt="" /> : initials(name)}
-          </span>
-          <span data-part="mic" aria-hidden="true" />
-        </span>
-        <span data-part="text">
-          <span data-part="name">{name}</span>
-          {/* Состояние словом: пульс и цвет значка вслух не читаются. */}
-          <span data-part="state">
-            {stateText[state] ?? STATE_LABEL[state]}
-          </span>
-        </span>
-      </div>
+        {initials}
+      </li>
     </>
   )
 }

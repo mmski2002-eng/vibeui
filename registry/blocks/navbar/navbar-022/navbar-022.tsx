@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button110 } from "@/registry/components/button/button-110/button-110"
 
 export type Navbar022Link = {
   label: string
@@ -55,6 +56,8 @@ container-type:inline-size;
 :where([data-vibeui-block="navbar-022"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="navbar-022"]{box-sizing:border-box;display:block;position:relative;z-index:40;background:color-mix(in oklab,var(--vibeui-navbar-022-bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--vibeui-navbar-022-fg);font-family:var(--vibeui-navbar-022-font);font-size:.9375rem;line-height:1.5;border-bottom:1px solid var(--vibeui-navbar-022-line)}
 [data-vibeui-block="navbar-022"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-022"] [data-part="action"]{display:none}
+[data-vibeui-block="navbar-022"] [data-part="sheet"] [data-part="action"]{justify-self:start}
 [data-vibeui-block="navbar-022"][data-sticky="true"]{position:sticky;top:0}
 [data-vibeui-block="navbar-022"] [data-part="bar"]{max-width:76rem;margin:0 auto;display:flex;align-items:center;gap:1.25rem;padding:.9rem 1.25rem}
 [data-vibeui-block="navbar-022"] [data-part="brand"]{display:flex;align-items:baseline;gap:.6rem;flex:none;margin-right:auto;color:inherit;text-decoration:none}
@@ -64,17 +67,14 @@ container-type:inline-size;
 [data-vibeui-block="navbar-022"] [data-part="nav"]{display:none;align-items:center;gap:1.4rem;margin:0;padding:0;list-style:none;white-space:nowrap}
 [data-vibeui-block="navbar-022"] [data-part="link"]{color:var(--vibeui-navbar-022-muted);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
 [data-vibeui-block="navbar-022"] [data-part="link"]:hover{color:var(--vibeui-navbar-022-fg)}
-[data-vibeui-block="navbar-022"] [data-part="action"]{display:none;align-items:center;gap:.6rem;height:2.6rem;padding:0 .4rem 0 1.1rem;border-radius:999px;background:var(--vibeui-navbar-022-accent);color:var(--vibeui-navbar-022-on-accent);font-weight:600;font-size:.85rem;text-decoration:none;white-space:nowrap;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="navbar-022"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 12px 24px -12px var(--vibeui-navbar-022-accent)}
-[data-vibeui-block="navbar-022"] [data-part="price"]{display:inline-flex;align-items:center;height:1.9rem;padding:0 .7rem;border-radius:999px;background:rgb(255 255 255 / .18);font-variant-numeric:tabular-nums}
 [data-vibeui-block="navbar-022"] [data-part="toggle"]{display:inline-flex;align-items:center;padding:.5rem .9rem;border:1px solid var(--vibeui-navbar-022-line);border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:.85rem;cursor:pointer}
 [data-vibeui-block="navbar-022"] [data-part="sheet"]{display:grid;gap:.9rem;padding:1rem 1.25rem 1.4rem;border-top:1px solid var(--vibeui-navbar-022-line)}
-[data-vibeui-block="navbar-022"] [data-part="sheet"] [data-part="link"],[data-vibeui-block="navbar-022"] [data-part="sheet"] [data-part="action"]{display:inline-flex;font-size:1rem;justify-self:start}
+[data-vibeui-block="navbar-022"] [data-part="sheet"] [data-part="link"]{display:inline-flex;font-size:1rem;justify-self:start}
 [data-vibeui-block="navbar-022"] [data-part="progress"]{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--vibeui-navbar-022-accent);transform:scaleX(var(--vibeui-navbar-022-progress));transform-origin:left;transition:transform .1s linear}
 [data-vibeui-block="navbar-022"] :focus-visible{outline:2px solid var(--vibeui-navbar-022-accent);outline-offset:3px}
 @container (min-width: 60rem){
 [data-vibeui-block="navbar-022"] [data-part="bar"]{padding:.9rem 2rem}
-[data-vibeui-block="navbar-022"] [data-part="nav"],[data-vibeui-block="navbar-022"] [data-part="action"]{display:flex}
+[data-vibeui-block="navbar-022"] [data-part="nav"]{display:flex}
 [data-vibeui-block="navbar-022"] [data-part="toggle"],[data-vibeui-block="navbar-022"] [data-part="sheet"]{display:none}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-022"] *{transition:none!important}}`
@@ -140,10 +140,7 @@ export function Navbar022({
   }, [progress])
 
   const action = actionLabel ? (
-    <a data-part="action" href={actionHref}>
-      {actionLabel}
-      {actionPrice ? <span data-part="price">{actionPrice}</span> : null}
-    </a>
+    <Button110 data-part="action" actionHref={actionHref} actionLabel={actionLabel} actionPrice={actionPrice} accent={accent} />
   ) : null
 
   return (

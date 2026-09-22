@@ -115,6 +115,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/component/toast")).PREVIEWS
     case "component/tree":
       return (await import("@/registry/previews-lazy/component/tree")).PREVIEWS
+    case "component/typography":
+      return (await import("@/registry/previews-lazy/component/typography")).PREVIEWS
     case "animation/stacks":
       return (await import("@/registry/previews-lazy/animation/stacks")).PREVIEWS
     case "animation/cursor":

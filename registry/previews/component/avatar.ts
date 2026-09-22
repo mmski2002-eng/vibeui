@@ -54,8 +54,6 @@ export const PREVIEWS = {
     import("@/registry/components/avatar/avatar-030/avatar-030").then((module) => module.Avatar030),
   "avatar-031": () =>
     import("@/registry/components/avatar/avatar-031/avatar-031").then((module) => module.Avatar031),
-  "avatar-033": () =>
-    import("@/registry/components/avatar/avatar-033/avatar-033").then((module) => module.Avatar033),
   "avatar-034": () =>
     import("@/registry/components/avatar/avatar-034/avatar-034").then((module) => module.Avatar034),
   "avatar-035": () =>
@@ -114,4 +112,6 @@ export const PREVIEWS = {
     import("@/registry/components/avatar/iconstack-005/iconstack-005").then((module) => module.Iconstack005),
   "iconstack-006": () =>
     import("@/registry/components/avatar/iconstack-006/iconstack-006").then((module) => module.Iconstack006),
+  "avatar-033": () =>
+    import("@/registry/components/avatar/avatar-033/avatar-033").then((module) => module.Avatar033),
 } satisfies PreviewLoaderMap

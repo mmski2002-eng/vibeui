@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card161 } from "@/registry/components/card/card-161/card-161"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid011Row = {
@@ -71,31 +72,6 @@ border:1px solid var(--vibeui-datagrid-011-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-011-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-011"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-011"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.375rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-011-border);
-}
-[data-vibeui-block="datagrid-011"] [data-part="title"]{
-margin:0 0.5rem 0 0;font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="datagrid-011"] [data-part="chip"]{
-display:inline-flex;align-items:center;gap:0.375rem;
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
-padding:0.25rem 0.5rem;border-radius:999px;
-color:var(--vibeui-datagrid-011-accent);background:var(--vibeui-datagrid-011-accent-soft);
-border:1px solid transparent;
-}
-[data-vibeui-block="datagrid-011"] [data-part="chip"]:hover{border-color:var(--vibeui-datagrid-011-accent)}
-[data-vibeui-block="datagrid-011"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
-[data-vibeui-block="datagrid-011"] [data-part="reset"]{
-margin-inline-start:auto;
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
-padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-011-border);
-background:var(--vibeui-datagrid-011-field);color:var(--vibeui-datagrid-011-fg);
-}
-[data-vibeui-block="datagrid-011"] [data-part="reset"]:disabled{opacity:.45;cursor:not-allowed}
-[data-vibeui-block="datagrid-011"] [data-part="reset"]:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-011"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-011"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-011-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-011"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -296,36 +272,7 @@ export function Datagrid011({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          {applied.map((one) => (
-            <button
-              key={one.id}
-              type="button"
-              data-part="chip"
-              aria-label={removeFilterLabel.replace(
-                "{filter}",
-                filterLabel(one.id),
-              )}
-              onClick={() =>
-                setActive((current) =>
-                  current.filter((value) => value !== one.id),
-                )
-              }
-            >
-              {filterLabel(one.id)}
-              <span aria-hidden="true">×</span>
-            </button>
-          ))}
-          <button
-            type="button"
-            data-part="reset"
-            disabled={applied.length === 0}
-            onClick={() => setActive([])}
-          >
-            {resetAllLabel}
-          </button>
-        </div>
+        <Card161 data-part="bar" heading={heading} removeFilterLabel={removeFilterLabel} resetAllLabel={resetAllLabel} applied={applied} filterLabel={filterLabel} setActive={setActive} accent={accent} />
         <div
           data-part="scroll"
           role="region"

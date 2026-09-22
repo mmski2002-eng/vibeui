@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Sociallinks001 } from "@/registry/components/navigation/sociallinks-001/sociallinks-001"
 
 type Footer006Contact = {
   label: string
@@ -93,18 +94,6 @@ transition:border-color var(--vibeui-footer-006-dur-2) ease,color var(--vibeui-f
 [data-vibeui-block="footer-006"] [data-part="contacts"] a:hover{
 color:var(--vibeui-footer-006-accent);border-bottom-color:currentColor;
 }
-[data-vibeui-block="footer-006"] [data-part="socials"]{display:flex;flex-wrap:wrap;gap:0.5rem}
-[data-vibeui-block="footer-006"] [data-part="social"]{
-display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:0.75rem;
-border:1px solid var(--vibeui-footer-006-border);
-color:var(--vibeui-footer-006-muted);text-decoration:none;
-font-size:0.75rem;font-weight:750;letter-spacing:0.02em;
-transition:background-color var(--vibeui-footer-006-dur-2) ease,color var(--vibeui-footer-006-dur-2) ease,border-color var(--vibeui-footer-006-dur-2) ease;
-}
-[data-vibeui-block="footer-006"] [data-part="social"]:hover{
-background:var(--vibeui-footer-006-accent);border-color:var(--vibeui-footer-006-accent);
-color:oklch(from var(--vibeui-footer-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-}
 [data-vibeui-block="footer-006"] [data-part="bottom"]{
 display:flex;flex-wrap:wrap;gap:0.5rem 1rem;
 padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-006-border);
@@ -113,7 +102,6 @@ color:var(--vibeui-footer-006-muted);font-size:0.8125rem;
 [data-vibeui-block="footer-006"] a:focus-visible{outline:2px solid var(--vibeui-footer-006-accent);outline-offset:3px}
 @container (min-width: 46rem){
 [data-vibeui-block="footer-006"] [data-part="shell"]{grid-template-columns:1.2fr 1fr auto;gap:3rem;padding:4rem 2rem 1.75rem}
-[data-vibeui-block="footer-006"] [data-part="socials"]{align-content:start}
 [data-vibeui-block="footer-006"] [data-part="bottom"]{grid-column:1 / -1}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-006"] *{animation:none!important;transition:none!important}}
@@ -209,18 +197,7 @@ export function Footer006({
               </div>
             ))}
           </dl>
-          <nav data-part="socials" aria-label={socialsLabel}>
-            {socials.map((social) => (
-              <a
-                key={social.href}
-                data-part="social"
-                href={social.href}
-                aria-label={social.label}
-              >
-                <span aria-hidden="true">{social.short}</span>
-              </a>
-            ))}
-          </nav>
+          <Sociallinks001 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
           <div data-part="bottom">
             <span>{legal}</span>
           </div>

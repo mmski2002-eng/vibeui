@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent } from "react"
 
+import { Button003 } from "@/registry/components/button/button-003/button-003"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Cta026Props = {
   eyebrow?: string
   title?: string
@@ -76,12 +79,6 @@ container-type:inline-size;
 [data-vibeui-block="cta-026"][data-in="true"] [data-part="w"] span{transform:none}
 [data-vibeui-block="cta-026"] [data-part="lede"]{margin:1rem auto 0;max-width:28rem;color:var(--vibeui-cta-026-muted)}
 [data-vibeui-block="cta-026"] [data-part="form"]{display:grid;gap:.6rem;margin:1.8rem 0 0}
-[data-vibeui-block="cta-026"] [data-part="form"] input{width:100%;height:3.1rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--vibeui-cta-026-line);background:color-mix(in oklab,var(--vibeui-cta-026-bg) 80%,transparent);color:var(--vibeui-cta-026-fg);font:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
-[data-vibeui-block="cta-026"] [data-part="form"] input::placeholder{color:var(--vibeui-cta-026-muted)}
-[data-vibeui-block="cta-026"] [data-part="form"] input:focus-visible{border-color:var(--vibeui-cta-026-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-cta-026-accent) 25%,transparent)}
-[data-vibeui-block="cta-026"] [data-part="form"] button{height:3.1rem;padding:0 1.4rem;border-radius:999px;border:0;background:var(--vibeui-cta-026-accent);color:var(--vibeui-cta-026-on-accent);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .4s var(--vibeui-cta-026-ease),box-shadow .3s,filter .3s;will-change:transform}
-[data-vibeui-block="cta-026"] [data-part="form"] button:hover{filter:brightness(1.08);box-shadow:0 12px 30px -10px var(--vibeui-cta-026-accent),0 0 30px -8px var(--vibeui-cta-026-accent)}
-[data-vibeui-block="cta-026"] [data-part="form"] button:focus-visible{outline:2px solid var(--vibeui-cta-026-fg);outline-offset:2px}
 [data-vibeui-block="cta-026"] [data-part="fine"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.2rem;margin:1rem 0 0;padding:0;list-style:none;font-size:.8rem;color:var(--vibeui-cta-026-muted)}
 [data-vibeui-block="cta-026"] [data-part="fine"] li::before{content:"✓ ";color:var(--vibeui-cta-026-accent)}
 [data-vibeui-block="cta-026"] [data-part="done"]{display:grid;justify-items:center;gap:.8rem;padding:1rem 0;animation:vibeui-cta-026-up .6s var(--vibeui-cta-026-ease) both}
@@ -127,7 +124,6 @@ export function Cta026({
   const [done, setDone] = useState(false)
   const [seen, setSeen] = useState(false)
   const rootRef = useRef<HTMLElement>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const root = rootRef.current
@@ -161,18 +157,6 @@ export function Cta026({
     const rect = card.getBoundingClientRect()
     card.style.setProperty("--vibeui-cta-026-x", `${event.clientX - rect.left}px`)
     card.style.setProperty("--vibeui-cta-026-y", `${event.clientY - rect.top}px`)
-  }
-  const onButtonMove = (event: PointerEvent<HTMLButtonElement>) => {
-    if (event.pointerType !== "mouse") return
-    const button = buttonRef.current
-    if (!button) return
-    const rect = button.getBoundingClientRect()
-    const dx = (event.clientX - rect.left - rect.width / 2) / (rect.width / 2)
-    const dy = (event.clientY - rect.top - rect.height / 2) / (rect.height / 2)
-    button.style.transform = `translate(${(dx * 7).toFixed(1)}px,${(dy * 6).toFixed(1)}px)`
-  }
-  const onButtonLeave = () => {
-    if (buttonRef.current) buttonRef.current.style.transform = ""
   }
   const words = title.split(" ").filter(Boolean)
 
@@ -231,10 +215,10 @@ export function Cta026({
                   </h2>
                   {lede ? <p data-part="lede">{lede}</p> : null}
                   <form data-part="form" onSubmit={submit}>
-                    <input type="email" name="email" required placeholder={placeholder} aria-label={placeholder} autoComplete="email" />
-                    <button ref={buttonRef} type="submit" onPointerMove={onButtonMove} onPointerLeave={onButtonLeave}>
+                    <Input001 type="email" name="email" required label={placeholder} autoComplete="email" accent={accent} />
+                    <Button003 type="submit" accent={accent}>
                       {actionLabel}
-                    </button>
+                    </Button003>
                   </form>
                   {fine.length > 0 ? (
                     <ul data-part="fine">

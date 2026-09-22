@@ -1,11 +1,11 @@
 import { useId, type CSSProperties } from "react"
 
-export type Faq021Item = {
-  question: string
-  answer: string
-  /** Короткая метка на бирке: «виза», «деньги». */
-  tag?: string
-}
+import {
+  Accordion021,
+  type Accordion021Item,
+} from "@/registry/components/accordion/accordion-021/accordion-021"
+
+export type Faq021Item = Accordion021Item
 
 export type Faq021Props = {
   eyebrow?: string
@@ -18,6 +18,7 @@ export type Faq021Props = {
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
+  openFirst?: boolean
   background?: string
   className?: string
   style?: CSSProperties
@@ -50,6 +51,8 @@ container-type:inline-size;
 [data-vibeui-block="faq-021"]{box-sizing:border-box;display:block;background:var(--vibeui-faq-021-bg);color:var(--vibeui-faq-021-fg);font-family:var(--vibeui-faq-021-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="faq-021"] *{box-sizing:border-box}
 [data-vibeui-block="faq-021"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
+/* Список вопросов — accordion-021, ему отдаётся вся колонка. */
+[data-vibeui-block="faq-021"] [data-part="grid"]{width:100%;max-width:none}
 [data-vibeui-block="faq-021"] [data-part="head"]{display:grid;gap:.6rem;max-width:40rem;margin-bottom:2rem}
 [data-vibeui-block="faq-021"] [data-part="eyebrow"]{margin:0;font-family:var(--vibeui-faq-021-display);font-size:.8rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--vibeui-faq-021-accent)}
 [data-vibeui-block="faq-021"] [data-part="title"]{margin:0;font-family:var(--vibeui-faq-021-display);font-size:clamp(2.2rem,6cqi,4.2rem);font-weight:700;line-height:.98;text-transform:uppercase}
@@ -57,26 +60,9 @@ container-type:inline-size;
 [data-vibeui-block="faq-021"] [data-part="ask"]{margin:.4rem 0 0;font-size:.95rem;color:var(--vibeui-faq-021-muted)}
 [data-vibeui-block="faq-021"] [data-part="ask"] a{color:var(--vibeui-faq-021-fg);font-weight:600;text-decoration:none;border-bottom:2px solid var(--vibeui-faq-021-accent);transition:color .25s}
 [data-vibeui-block="faq-021"] [data-part="ask"] a:hover{color:var(--vibeui-faq-021-accent)}
-[data-vibeui-block="faq-021"] [data-part="ask"] a:focus-visible,[data-vibeui-block="faq-021"] summary:focus-visible{outline:2px solid var(--vibeui-faq-021-sea);outline-offset:3px;border-radius:.5rem}
-[data-vibeui-block="faq-021"] [data-part="grid"]{display:grid;gap:.8rem}
-[data-vibeui-block="faq-021"] details{position:relative;border-radius:.6rem;background:var(--vibeui-faq-021-sand);transition:transform .3s cubic-bezier(.2,.9,.3,1),box-shadow .3s}
-[data-vibeui-block="faq-021"] details[open]{transform:translateY(-.2rem);box-shadow:0 22px 40px -28px rgb(18 58 75 / .55)}
-[data-vibeui-block="faq-021"] summary{display:grid;grid-template-columns:5rem minmax(0,1fr) 1.6rem;align-items:center;gap:.9rem;padding:0 1rem 0 0;cursor:pointer;list-style:none;min-height:3.8rem}
-[data-vibeui-block="faq-021"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-021"] [data-part="tag"]{position:relative;display:flex;align-items:center;justify-content:center;align-self:stretch;padding:.5rem .3rem .5rem 1.1rem;border-radius:.6rem 0 0 .6rem;background:var(--vibeui-faq-021-sea);color:#fffaf0;font-family:var(--vibeui-faq-021-display);font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-align:center;line-height:1.1;overflow-wrap:anywhere}
-[data-vibeui-block="faq-021"] [data-part="tag"]::after{content:"";position:absolute;left:.4rem;top:50%;width:.5rem;height:.5rem;margin-top:-.25rem;border-radius:50%;background:var(--vibeui-faq-021-sand);box-shadow:inset 0 0 0 1.5px rgb(18 58 75 / .35)}
-[data-vibeui-block="faq-021"] details:nth-child(3n+2) [data-part="tag"]{background:var(--vibeui-faq-021-accent)}
-[data-vibeui-block="faq-021"] details:nth-child(3n) [data-part="tag"]{background:var(--vibeui-faq-021-sun);color:var(--vibeui-faq-021-fg)}
-[data-vibeui-block="faq-021"] [data-part="q"]{font-family:var(--vibeui-faq-021-display);font-size:1.15rem;font-weight:600;line-height:1.2;text-transform:uppercase;letter-spacing:.02em}
-[data-vibeui-block="faq-021"] [data-part="mark"]{position:relative;width:1.2rem;height:1.2rem}
-[data-vibeui-block="faq-021"] [data-part="mark"]::before,[data-vibeui-block="faq-021"] [data-part="mark"]::after{content:"";position:absolute;left:0;top:50%;width:100%;height:2px;background:var(--vibeui-faq-021-fg);transition:transform .35s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="faq-021"] [data-part="mark"]::after{transform:rotate(90deg)}
-[data-vibeui-block="faq-021"] details[open] [data-part="mark"]::after{transform:rotate(0)}
-[data-vibeui-block="faq-021"] [data-part="answer"]{margin:0;padding:0 1.2rem 1.2rem 5.3rem;color:var(--vibeui-faq-021-muted);animation:vibeui-faq-021-in .35s cubic-bezier(.2,.9,.3,1) both}
-@keyframes vibeui-faq-021-in{from{opacity:0;transform:translateY(-.25rem)}}
+}
 @container (min-width:56rem){
 [data-vibeui-block="faq-021"] [data-part="shell"]{padding:5rem 2.5rem}
-[data-vibeui-block="faq-021"] [data-part="grid"]{grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-021"] *{animation:none!important;transition:none!important}}`
 
@@ -101,6 +87,7 @@ export function Faq021({
   tone = "auto",
   accent,
   ink,
+  openFirst = false,
   background,
   className,
   style,
@@ -131,20 +118,15 @@ export function Faq021({
               </p>
             ) : null}
           </div>
-          <div data-part="grid">
-            {items.map((item) => (
-              <details key={item.question} name={group}>
-                <summary>
-                  <span data-part="tag" aria-hidden="true">
-                    {item.tag ?? "?"}
-                  </span>
-                  <span data-part="q">{item.question}</span>
-                  <span data-part="mark" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
+          <Accordion021
+            defaultOpen={openFirst ? 0 : -1}
+            data-part="grid"
+            items={items}
+            group={group}
+            accent={accent}
+            ink={ink}
+            background={background}
+          />
         </div>
       </section>
     </>

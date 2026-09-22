@@ -2,6 +2,12 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Button015 } from "@/registry/components/button/button-015/button-015"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Cta035Props = {
   eyebrow?: string
   title?: string
@@ -64,12 +70,8 @@ container-type:inline-size;
 [data-vibeui-block="cta-035"] [data-part="title"]{margin:0;font-weight:800;font-size:clamp(2.2rem,5.6cqi,4rem);line-height:1;letter-spacing:-.045em;text-wrap:balance}
 [data-vibeui-block="cta-035"] [data-part="lede"]{margin:1rem auto 0;max-width:30rem;color:var(--vibeui-cta-035-muted)}
 [data-vibeui-block="cta-035"] [data-part="form"]{display:grid;gap:.6rem;margin:1.8rem auto 0;max-width:32rem}
-[data-vibeui-block="cta-035"] [data-part="form"] input{width:100%;height:3.2rem;padding:0 1.1rem;border-radius:.7rem;border:1px solid var(--vibeui-cta-035-line);background:var(--vibeui-cta-035-bg);color:var(--vibeui-cta-035-fg);font:inherit;font-family:var(--vibeui-cta-035-mono);font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s}
-[data-vibeui-block="cta-035"] [data-part="form"] input::placeholder{color:var(--vibeui-cta-035-muted)}
-[data-vibeui-block="cta-035"] [data-part="form"] input:focus-visible{border-color:var(--vibeui-cta-035-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-cta-035-accent) 22%,transparent)}
-[data-vibeui-block="cta-035"] [data-part="form"] button{height:3.2rem;padding:0 1.4rem;border-radius:.7rem;border:0;background:var(--vibeui-cta-035-accent);color:var(--vibeui-cta-035-on-accent);font:inherit;font-family:var(--vibeui-cta-035-mono);font-weight:600;font-size:.88rem;cursor:pointer;white-space:nowrap;transition:box-shadow .25s}
-[data-vibeui-block="cta-035"] [data-part="form"] button:hover{box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-cta-035-accent) 22%,transparent),0 0 40px -8px var(--vibeui-cta-035-accent)}
-[data-vibeui-block="cta-035"] button:focus-visible,[data-vibeui-block="cta-035"] a:focus-visible{outline:2px solid var(--vibeui-cta-035-fg);outline-offset:2px}
+[data-vibeui-block="cta-035"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="cta-035"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="cta-035"] [data-part="fine"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.2rem;margin:1rem 0 0;padding:0;list-style:none;font-size:.78rem;color:var(--vibeui-cta-035-muted)}
 [data-vibeui-block="cta-035"] [data-part="fine"] li::before{content:"✓ ";color:var(--vibeui-cta-035-accent)}
 [data-vibeui-block="cta-035"] [data-part="done"]{display:grid;justify-items:center;gap:1rem;margin:1.8rem auto 0;max-width:34rem}
@@ -80,21 +82,14 @@ container-type:inline-size;
 [data-vibeui-block="cta-035"] [data-part="key"] code{flex:1;min-width:0;overflow-wrap:anywhere;color:var(--vibeui-cta-035-fg)}
 [data-vibeui-block="cta-035"] [data-part="key"] code b{font-weight:600;color:var(--vibeui-cta-035-accent)}
 [data-vibeui-block="cta-035"] [data-part="cursor"]{display:inline-block;width:.55em;height:1.05em;margin-left:1px;vertical-align:-.15em;background:var(--vibeui-cta-035-accent);animation:vibeui-cta-035-blink 1s steps(2,start) infinite}
-[data-vibeui-block="cta-035"] [data-part="copy"]{display:inline-flex;align-items:center;gap:.3rem;flex-shrink:0;height:2rem;padding:0 .7rem;border:1px solid var(--vibeui-cta-035-line);border-radius:.45rem;background:transparent;color:var(--vibeui-cta-035-muted);font-family:var(--vibeui-cta-035-mono);font-size:.7rem;cursor:pointer;opacity:0;transition:opacity .3s,color .2s,border-color .2s}
-[data-vibeui-block="cta-035"] [data-part="copy"][data-ready="true"]{opacity:1}
-[data-vibeui-block="cta-035"] [data-part="copy"]:hover{color:var(--vibeui-cta-035-fg);border-color:var(--vibeui-cta-035-fg)}
-[data-vibeui-block="cta-035"] [data-part="copy"][data-done="true"]{color:var(--vibeui-cta-035-accent);border-color:var(--vibeui-cta-035-accent)}
-[data-vibeui-block="cta-035"] [data-part="copy"] svg{width:.8rem;height:.8rem}
 [data-vibeui-block="cta-035"] [data-part="done"] h3{margin:0;font-size:1.4rem;font-weight:700;letter-spacing:-.02em}
 [data-vibeui-block="cta-035"] [data-part="done"] p{margin:0;color:var(--vibeui-cta-035-muted)}
 [data-vibeui-block="cta-035"] [data-part="elapsed"]{font-family:var(--vibeui-cta-035-mono);font-size:.76rem;color:var(--vibeui-cta-035-accent)}
-[data-vibeui-block="cta-035"] [data-part="docs"]{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--vibeui-cta-035-mono);font-size:.82rem;color:var(--vibeui-cta-035-fg);text-decoration:none;border-bottom:1px solid var(--vibeui-cta-035-line);transition:border-color .2s}
-[data-vibeui-block="cta-035"] [data-part="docs"]:hover{border-color:var(--vibeui-cta-035-accent)}
 @keyframes vibeui-cta-035-draw{to{stroke-dashoffset:0}}
 @keyframes vibeui-cta-035-blink{to{visibility:hidden}}
 @keyframes vibeui-cta-035-breathe{from{transform:translateX(-50%) scale(1);opacity:.8}to{transform:translateX(-50%) scale(1.2);opacity:1}}
 @container (min-width: 36rem){[data-vibeui-block="cta-035"] [data-part="form"]{grid-template-columns:1fr auto}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-035"] *{animation:none!important;transition:none!important}[data-vibeui-block="cta-035"] [data-part="check"] circle,[data-vibeui-block="cta-035"] [data-part="check"] path{stroke-dashoffset:0}[data-vibeui-block="cta-035"] [data-part="copy"]{opacity:1}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-035"] *{animation:none!important;transition:none!important}[data-vibeui-block="cta-035"] [data-part="check"] circle,[data-vibeui-block="cta-035"] [data-part="check"] path{stroke-dashoffset:0}}`
 
 const ALPHABET = "abcdef0123456789"
 
@@ -126,7 +121,6 @@ export function Cta035({
   const [secret, setSecret] = useState<string | null>(null)
   const [typed, setTyped] = useState(0)
   const [elapsed, setElapsed] = useState<number | null>(null)
-  const [copied, setCopied] = useState(false)
   const startedAt = useRef(0)
   const ready = secret !== null && typed >= secret.length
 
@@ -149,11 +143,6 @@ export function Cta035({
     setTyped(0)
   }
 
-  const copy = () => {
-    if (secret && typeof navigator !== "undefined" && navigator.clipboard) void navigator.clipboard.writeText(keyPrefix + secret).catch(() => undefined)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1500)
-  }
 
   const palette = {
     ...(accent ? { "--vibeui-cta-035-accent": accent } : null),
@@ -182,8 +171,10 @@ export function Cta035({
               {secret === null ? (
                 <>
                   <form data-part="form" onSubmit={submit}>
-                    <input type="email" name="email" required placeholder={placeholder} aria-label={emailLabel} autoComplete="email" />
-                    <button type="submit">{actionLabel}</button>
+                    <Input001 type="email" name="email" required label={placeholder} autoComplete="email" accent={accent} />
+                    <Button001 type="submit" size="lg" accent={accent}>
+                      {actionLabel}
+                    </Button001>
                   </form>
                   {fine.length > 0 ? (
                     <ul data-part="fine">
@@ -201,12 +192,14 @@ export function Cta035({
                       {secret.slice(0, typed)}
                       {!ready ? <span data-part="cursor" aria-hidden="true" /> : null}
                     </code>
-                    <button data-part="copy" type="button" data-ready={ready} data-done={copied} onClick={copy} tabIndex={ready ? 0 : -1}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        {copied ? <path d="M5 13l4 4L19 7" /> : <><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>}
-                      </svg>
-                      {copied ? doneLabel : copyLabel}
-                    </button>
+                    <Button015
+                      data-part="copy-button"
+                      value={keyPrefix + secret}
+                      label={copyLabel}
+                      doneLabel={doneLabel}
+                      hold={1500}
+                      disabled={!ready}
+                    />
                   </div>
                   {ready ? (
                     <>
@@ -220,9 +213,12 @@ export function Cta035({
                         </span>
                       ) : null}
                       {docsLabel ? (
-                        <a data-part="docs" href={docsHref}>
-                          {docsLabel} <span aria-hidden="true">→</span>
-                        </a>
+                        <Button077
+                          data-part="docs"
+                          label={docsLabel}
+                          href={docsHref}
+                          accent={accent}
+                        />
                       ) : null}
                     </>
                   ) : null}

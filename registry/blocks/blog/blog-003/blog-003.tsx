@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Avatar001 } from "@/registry/components/avatar/avatar-001/avatar-001"
+
 export type Blog003Props = {
   /** Обложка статьи. Без неё остаётся цветное поле. */
   coverImage?: string
@@ -63,6 +65,7 @@ background:var(--vibeui-blog-003-bg);color:var(--vibeui-blog-003-fg);
 font-family:var(--vibeui-blog-003-sans);
 }
 [data-vibeui-block="blog-003"] *{box-sizing:border-box}
+[data-vibeui-block="blog-003"] [data-part="avatar"]{flex:none;width:2.125rem}
 [data-vibeui-block="blog-003"] [data-part="frame"]{max-width:72rem;margin:0 auto;padding:2.5rem 1.25rem}
 [data-vibeui-block="blog-003"] [data-part="card"]{
 position:relative;display:grid;overflow:hidden;
@@ -123,19 +126,8 @@ display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;margin-top:0.25rem;
 padding-top:0.875rem;border-top:1px solid var(--vibeui-blog-003-border);
 font-size:0.8125rem;color:var(--vibeui-blog-003-muted);
 }
-[data-vibeui-block="blog-003"] [data-part="avatar"]{
-position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;
-width:2.125rem;height:2.125rem;border-radius:9999px;
-color:var(--vibeui-blog-003-accent);font-size:0.8125rem;font-weight:700;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="blog-003"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-blog-003-accent) 16%,transparent);}
-[data-vibeui-block="blog-003"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
 [data-vibeui-block="blog-003"] [data-part="who"]{display:grid;line-height:1.35}
-[data-vibeui-block="blog-003"] [data-part="name"]{color:var(--vibeui-blog-003-fg);font-weight:650}
+[data-vibeui-block="blog-003"] [data-part="author-name"]{color:var(--vibeui-blog-003-fg);font-weight:650}
 [data-vibeui-block="blog-003"] [data-part="role"]{font-size:0.75rem}
 [data-vibeui-block="blog-003"] [data-part="stats"]{
 margin-left:auto;display:flex;flex-wrap:wrap;gap:0.4375rem;align-items:center;
@@ -256,23 +248,9 @@ export function Blog003({
               <p data-part="excerpt">{excerpt}</p>
 
               <p data-part="byline">
-                <span
-                  data-part="avatar"
-                  data-empty={avatarImage ? undefined : "true"}
-                  aria-hidden="true"
-                >
-                  {avatarImage ? (
-                    <img
-                      src={avatarImage}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
-                  {author.slice(0, 1)}
-                </span>
+                <Avatar001 data-part="avatar" name={author} src={avatarImage} status="none" aria-hidden="true" />
                 <span data-part="who">
-                  <span data-part="name">{author}</span>
+                  <span data-part="author-name">{author}</span>
                   <span data-part="role">{role}</span>
                 </span>
                 <span data-part="stats">

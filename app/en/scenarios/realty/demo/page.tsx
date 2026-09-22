@@ -29,15 +29,16 @@ export const metadata = {
 
 const page: CSSProperties = {
   colorScheme: "light",
-  background: "#f3ede3",
-  color: "#173b2e",
+  background: "#f4f6f4",
+  color: "#13322b",
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
 // Page theme: catalogue blocks are neutral by default, the scenario sets the colours.
-const realty = { tone: "light", background: "#f3ede3", ink: "#173b2e", accent: "#b8925a" } as const
-// Inverted sections: an ink-green slab with light text.
-const realtyDark = { ...realty, background: "#173b2e", ink: "#eef0ea" } as const
+// Cool natural palette: off-white ground, deep green, sage accent.
+const realty = { tone: "light", background: "#f4f6f4", ink: "#13322b", accent: "#8f9a86" } as const
+// Inverted sections: a deep-green slab with light text.
+const realtyDark = { ...realty, background: "#13322b", ink: "#eef1ec" } as const
 
 const PHOTOS = "/demo/realty"
 
@@ -106,8 +107,10 @@ export default function Page() {
       <div id="hero">
         <Hero020
           {...realty}
-          image={`${PHOTOS}/hero.webp`}
-          imageAlt="The living room of a flat in a historic building with a view of the Neva"
+          video={`${PHOTOS}/hero.mp4`}
+          videoWebm={`${PHOTOS}/hero.webm`}
+          image={`${PHOTOS}/hero-poster.webp`}
+          imageAlt="A modern premium residential building amid greenery"
           eyebrow="Petersburg · since 2007"
           title="A flat you'll want to come home to"
           lede="We find homes in Petersburg for your budget and rhythm of life: from a studio by the metro to a house with a garden. Every listing is checked by a lawyer."

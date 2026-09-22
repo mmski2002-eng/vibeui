@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Case005Group = "g1" | "g2" | "g3" | "g4"
 
@@ -29,7 +30,8 @@ export type Case005Props = {
 // Ни строчки JS — фильтр работает даже до гидратации. Слотов отрасли
 // четыре (g1–g4): CSS не умеет сравнивать произвольные значения, поэтому
 // набор групп перечислен в стилях явно.
-const STYLES = `
+const STYLES = `[data-vibeui-block="case-005"] [data-part="heading"]{margin-bottom:1.5rem}
+
 :where([data-vibeui-block="case-005"]){
 --vibeui-case-005-bg:transparent;
 --vibeui-case-005-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -51,14 +53,6 @@ font-family:var(--vibeui-case-005-font);
 }
 [data-vibeui-block="case-005"] [data-part="shell"]{
 max-width:64rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="case-005"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-case-005-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="case-005"] [data-part="title"]{
-margin:0 0 1.5rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="case-005"] [data-part="filters"]{
 display:flex;flex-wrap:wrap;gap:0.5rem;
@@ -257,8 +251,12 @@ export function Case005({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <fieldset data-part="filters">
             <legend data-part="legend">{eyebrow}</legend>
             <input

@@ -2,6 +2,9 @@
 
 import { useId, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Slider013 } from "@/registry/components/slider/slider-013/slider-013"
+
 export type Pricing022Zone = {
   key: string
   label: string
@@ -78,6 +81,8 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-022"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-022"]{box-sizing:border-box;display:block;background:var(--vibeui-pricing-022-bg);color:var(--vibeui-pricing-022-fg);font-family:var(--vibeui-pricing-022-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="pricing-022"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-022"] [data-part="field"]{display:grid}
+[data-vibeui-block="pricing-022"] [data-part="action"]{margin-top:auto}
 [data-vibeui-block="pricing-022"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="pricing-022"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 .75rem;font-family:var(--vibeui-pricing-022-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-pricing-022-cyan);text-shadow:0 0 10px color-mix(in oklab,var(--vibeui-pricing-022-cyan) 70%,transparent)}
 [data-vibeui-block="pricing-022"] [data-part="eyebrow"]::before{content:"";width:2rem;height:1px;background:var(--vibeui-pricing-022-cyan);box-shadow:0 0 8px var(--vibeui-pricing-022-cyan)}
@@ -87,18 +92,9 @@ container-type:inline-size;
 [data-vibeui-block="pricing-022"] [data-part="field"]{display:grid;gap:.6rem}
 [data-vibeui-block="pricing-022"] [data-part="field"]>label,[data-vibeui-block="pricing-022"] [data-part="legend"]{display:flex;justify-content:space-between;gap:1rem;font-family:var(--vibeui-pricing-022-mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-pricing-022-muted)}
 [data-vibeui-block="pricing-022"] [data-part="field"] output{color:var(--vibeui-pricing-022-cyan);text-shadow:0 0 8px color-mix(in oklab,var(--vibeui-pricing-022-cyan) 60%,transparent)}
-[data-vibeui-block="pricing-022"] input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:1.5rem;margin:0;background:transparent;cursor:pointer}
-[data-vibeui-block="pricing-022"] input[type="range"]::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(90deg,var(--vibeui-pricing-022-cyan) var(--vibeui-pricing-022-fill,0%),var(--vibeui-pricing-022-line) var(--vibeui-pricing-022-fill,0%));box-shadow:0 0 8px color-mix(in oklab,var(--vibeui-pricing-022-cyan) 40%,transparent)}
-[data-vibeui-block="pricing-022"] input[type="range"]::-moz-range-track{height:4px;border-radius:4px;background:var(--vibeui-pricing-022-line)}
-[data-vibeui-block="pricing-022"] input[type="range"]::-moz-range-progress{height:4px;border-radius:4px;background:var(--vibeui-pricing-022-cyan)}
-[data-vibeui-block="pricing-022"] input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:1.4rem;height:1.4rem;margin-top:-.55rem;border-radius:50%;border:2px solid var(--vibeui-pricing-022-cyan);background:var(--vibeui-pricing-022-bg);box-shadow:0 0 12px var(--vibeui-pricing-022-cyan),0 0 30px color-mix(in oklab,var(--vibeui-pricing-022-cyan) 50%,transparent);transition:transform .2s}
-[data-vibeui-block="pricing-022"] input[type="range"]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--vibeui-pricing-022-cyan);background:var(--vibeui-pricing-022-bg);box-shadow:0 0 12px var(--vibeui-pricing-022-cyan)}
-[data-vibeui-block="pricing-022"] input[type="range"]:hover::-webkit-slider-thumb{transform:scale(1.15)}
-[data-vibeui-block="pricing-022"] input[type="range"]:focus-visible{outline:2px solid var(--vibeui-pricing-022-cyan);outline-offset:6px;border-radius:4px}
 [data-vibeui-block="pricing-022"] [data-part="zones"]{display:flex;flex-wrap:wrap;gap:.45rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="pricing-022"] [data-part="zone"]{height:2.3rem;padding:0 .9rem;border-radius:.5rem;border:1px solid var(--vibeui-pricing-022-line);background:transparent;color:var(--vibeui-pricing-022-muted);font:inherit;font-size:.88rem;font-weight:600;cursor:pointer;transition:color .25s,border-color .25s,box-shadow .3s,background .25s}
 [data-vibeui-block="pricing-022"] [data-part="zone"][aria-pressed="true"]{color:var(--vibeui-pricing-022-fg);border-color:var(--vibeui-pricing-022-accent);background:color-mix(in oklab,var(--vibeui-pricing-022-accent) 14%,transparent);box-shadow:0 0 14px color-mix(in oklab,var(--vibeui-pricing-022-accent) 45%,transparent)}
-[data-vibeui-block="pricing-022"] [data-part="zone"]:focus-visible,[data-vibeui-block="pricing-022"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-pricing-022-cyan);outline-offset:3px}
 [data-vibeui-block="pricing-022"] [data-part="total"]{display:grid;gap:.25rem;padding-top:1.25rem;border-top:1px solid var(--vibeui-pricing-022-line)}
 [data-vibeui-block="pricing-022"] [data-part="total"] small{font-family:var(--vibeui-pricing-022-mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-pricing-022-muted)}
 [data-vibeui-block="pricing-022"] [data-part="sum"]{position:relative;display:block;height:3.2rem;overflow:hidden;font-family:var(--vibeui-pricing-022-mono);font-size:2.6rem;font-weight:700;line-height:3.2rem;letter-spacing:-.04em;color:var(--vibeui-pricing-022-accent);text-shadow:0 0 14px color-mix(in oklab,var(--vibeui-pricing-022-accent) 70%,transparent);font-variant-numeric:tabular-nums}
@@ -117,9 +113,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-022"] [data-part="features"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem;font-size:.92rem}
 [data-vibeui-block="pricing-022"] [data-part="features"] li{display:flex;gap:.6rem;align-items:flex-start}
 [data-vibeui-block="pricing-022"] [data-part="features"] li::before{content:"";flex:none;width:.5rem;height:.5rem;margin-top:.5rem;border-radius:50%;background:var(--vibeui-pricing-022-neon);box-shadow:0 0 8px var(--vibeui-pricing-022-neon)}
-[data-vibeui-block="pricing-022"] [data-part="action"]{display:inline-flex;align-items:center;justify-content:center;height:3rem;margin-top:auto;border-radius:.6rem;border:1px solid color-mix(in oklab,var(--vibeui-pricing-022-neon) 60%,transparent);color:inherit;font-weight:700;text-decoration:none;transition:background .25s,box-shadow .3s,transform .2s}
-[data-vibeui-block="pricing-022"] [data-part="pack"][data-featured="true"] [data-part="action"]{background:var(--vibeui-pricing-022-accent);border-color:transparent;color:var(--vibeui-pricing-022-on-accent);box-shadow:0 0 18px color-mix(in oklab,var(--vibeui-pricing-022-accent) 55%,transparent)}
-[data-vibeui-block="pricing-022"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 0 22px color-mix(in oklab,var(--vibeui-pricing-022-neon) 50%,transparent)}
 [data-vibeui-block="pricing-022"] [data-part="note"]{margin:1.5rem 0 0;font-size:.85rem;color:var(--vibeui-pricing-022-muted)}
 @container (min-width: 60rem){
 [data-vibeui-block="pricing-022"] [data-part="shell"]{padding:5.5rem 2rem}
@@ -127,7 +120,10 @@ container-type:inline-size;
 [data-vibeui-block="pricing-022"] [data-part="total"]{padding:0 0 0 2rem;border-top:0;border-left:1px solid var(--vibeui-pricing-022-line)}
 [data-vibeui-block="pricing-022"] [data-part="packages"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-022"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-022"] *{animation:none!important;transition:none!important}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="pricing-022"] [data-part="zone"]:focus-visible{outline:2px solid var(--vibeui-pricing-022-cyan);outline-offset:3px}
+`
 
 const DEFAULT_ZONES: Pricing022Zone[] = [
   { key: "arm", label: "Рука", factor: 1 },
@@ -181,7 +177,6 @@ export function Pricing022({
   const factor = zones.find((item) => item.key === zone)?.factor ?? 1
   const total = Math.max(minPrice, Math.round((size * size * ratePerCm * factor) / 500) * 500)
   const hours = Math.max(1, Math.round((size * size) / 60))
-  const fill = ((size - minSize) / (maxSize - minSize)) * 100
 
   return (
     <>
@@ -200,7 +195,7 @@ export function Pricing022({
                 <span>{sizeLabel}</span>
                 <output htmlFor={`${id}-size`}>{size} {cmUnit}</output>
               </label>
-              <input id={`${id}-size`} type="range" min={minSize} max={maxSize} step={1} value={size} onChange={(event) => setSize(Number(event.target.value))} style={{ ["--vibeui-pricing-022-fill" as string]: `${fill}%` }} />
+              <Slider013 id={`${id}-size`} value={size} min={minSize} max={maxSize} step={1} onChange={setSize} glow surface="var(--vibeui-pricing-022-bg)" accent="var(--vibeui-pricing-022-cyan)" />
             </div>
             <div data-part="field" role="group" aria-labelledby={`${id}-zone`}>
               <p id={`${id}-zone`} data-part="legend">
@@ -244,9 +239,15 @@ export function Pricing022({
                   ))}
                 </ul>
                 {pack.actionLabel ? (
-                  <a data-part="action" href={pack.actionHref ?? "#"}>
-                    {pack.actionLabel}
-                  </a>
+                  <Button016
+                    data-part="action"
+                    size="lg"
+                    label={pack.actionLabel}
+                    href={pack.actionHref ?? "#"}
+                    external={false}
+                    tone="accent"
+                    accent={accent}
+                  />
                 ) : null}
               </li>
             ))}

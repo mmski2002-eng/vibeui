@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 type Portfolio004Work = {
   client: string
@@ -31,7 +34,9 @@ export type Portfolio004Props = {
 // Зигзаг делается порядком в гриде, а не флоатами: на узкой ширине пары
 // складываются в столбик, и обложка всегда оказывается над своим текстом —
 // иначе на телефоне картинка одной работы встаёт над описанием соседней.
-const STYLES = `
+const STYLES = `[data-vibeui-block="portfolio-004"] [data-part="heading"]{margin-bottom:2.5rem}
+[data-vibeui-block="portfolio-004"] [data-part="link"]{align-self:flex-start;margin-top:0.5rem}
+
 :where([data-vibeui-block="portfolio-004"]){
 --vibeui-portfolio-004-bg:transparent;
 --vibeui-portfolio-004-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -51,8 +56,6 @@ background:var(--vibeui-portfolio-004-bg);color:var(--vibeui-portfolio-004-ink);
 font-family:var(--vibeui-portfolio-004-font);
 }
 [data-vibeui-block="portfolio-004"] [data-part="shell"]{max-width:68rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="portfolio-004"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-portfolio-004-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="portfolio-004"] [data-part="title"]{margin:0 0 2.5rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;max-width:22ch}
 [data-vibeui-block="portfolio-004"] [data-part="works"]{list-style:none;margin:0;padding:0;display:grid;gap:2.5rem}
 [data-vibeui-block="portfolio-004"] [data-part="work"]{display:grid;gap:1.25rem;align-items:center;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="portfolio-004"] [data-part="cover"]{
@@ -81,12 +84,6 @@ font-size:0.6875rem;font-weight:700;letter-spacing:0.06em;
 [data-vibeui-block="portfolio-004"] [data-part="results"]{list-style:none;margin:0.25rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:1.5rem}
 [data-vibeui-block="portfolio-004"] [data-part="value"]{display:block;font-size:1.375rem;line-height:1.1;font-weight:700;color:var(--vibeui-portfolio-004-accent)}
 [data-vibeui-block="portfolio-004"] [data-part="label"]{display:block;margin-top:0.25rem;color:var(--vibeui-portfolio-004-muted);font-size:0.8125rem}
-[data-vibeui-block="portfolio-004"] [data-part="link"]{
-align-self:flex-start;margin-top:0.5rem;color:var(--vibeui-portfolio-004-ink);
-font-size:0.9375rem;font-weight:600;text-decoration:none;
-border-bottom:2px solid var(--vibeui-portfolio-004-accent);padding-bottom:0.125rem;
-}
-[data-vibeui-block="portfolio-004"] [data-part="link"]:hover{color:var(--vibeui-portfolio-004-accent)}
 @container (min-width: 46rem){
 [data-vibeui-block="portfolio-004"] [data-part="shell"]{padding:4rem 2rem}
 [data-vibeui-block="portfolio-004"] [data-part="works"]{gap:3.5rem}
@@ -190,8 +187,12 @@ export function Portfolio004({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
 
           <ul data-part="works">
             {works.map((work) => (
@@ -222,9 +223,12 @@ export function Portfolio004({
                     </ul>
                   ) : null}
 
-                  <a data-part="link" href={work.href ?? "#"}>
-                    {linkLabel}
-                  </a>
+                  <Button077
+                    data-part="link"
+                    label={linkLabel}
+                    href={work.href ?? "#"}
+                    accent={accent}
+                  />
                 </div>
               </li>
             ))}

@@ -2,6 +2,8 @@
 
 import { Fragment, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Podcast004Episode = {
   id: string
   number: string
@@ -64,6 +66,7 @@ container-type:inline-size;
 :where([data-vibeui-block="podcast-004"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="podcast-004"]{box-sizing:border-box;position:relative;padding:6rem 0;background:var(--vibeui-podcast-004-bg);color:var(--vibeui-podcast-004-fg);font-family:var(--vibeui-podcast-004-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="podcast-004"] *{box-sizing:border-box}
+[data-vibeui-block="podcast-004"] [data-part="all"]{margin-top:1.8rem}
 [data-vibeui-block="podcast-004"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="podcast-004"] [data-part="eyebrow"]{margin:0 0 .9rem;font-family:var(--vibeui-podcast-004-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-podcast-004-accent);animation:vibeui-podcast-004-up .7s var(--vibeui-podcast-004-ease) both paused}
 [data-vibeui-block="podcast-004"] [data-part="title"]{margin:0;font-family:var(--vibeui-podcast-004-display);font-weight:800;font-size:clamp(3.6rem,10.5cqi,8.25rem);line-height:.88;letter-spacing:-.015em;text-transform:uppercase;text-wrap:balance}
@@ -72,7 +75,7 @@ container-type:inline-size;
 [data-vibeui-block="podcast-004"] [data-part="lede"]{margin:1.2rem 0 0;max-width:34rem;color:var(--vibeui-podcast-004-muted);animation:vibeui-podcast-004-up .8s var(--vibeui-podcast-004-ease) .3s both paused}
 [data-vibeui-block="podcast-004"] [data-part="list"]{list-style:none;margin:3rem 0 0;padding:0;border-top:1px solid var(--vibeui-podcast-004-line);perspective:1200px}
 [data-vibeui-block="podcast-004"] [data-part="row"]{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:1.2rem;align-items:center;padding:1.2rem .8rem;margin:0 -.8rem;border-bottom:1px solid var(--vibeui-podcast-004-line);border-radius:1rem;transition:background .3s;animation:vibeui-podcast-004-up .8s var(--vibeui-podcast-004-ease) both paused;animation-delay:calc(.25s + var(--vibeui-podcast-004-i) * 90ms)}
-[data-vibeui-block="podcast-004"][data-in="true"] [data-part="row"],[data-vibeui-block="podcast-004"][data-in="true"] [data-part="w"] i,[data-vibeui-block="podcast-004"][data-in="true"] [data-part="eyebrow"],[data-vibeui-block="podcast-004"][data-in="true"] [data-part="lede"],[data-vibeui-block="podcast-004"][data-in="true"] [data-part="all"]{animation-play-state:running}
+[data-vibeui-block="podcast-004"][data-in="true"] [data-part="row"],[data-vibeui-block="podcast-004"][data-in="true"] [data-part="w"] i,[data-vibeui-block="podcast-004"][data-in="true"] [data-part="eyebrow"],[data-vibeui-block="podcast-004"][data-in="true"] [data-part="lede"]{animation-play-state:running}
 [data-vibeui-block="podcast-004"] [data-part="row"]::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(28rem circle at var(--vibeui-podcast-004-x,50%) var(--vibeui-podcast-004-y,50%),color-mix(in oklab,var(--vibeui-podcast-004-accent) 14%,transparent),transparent 45%);opacity:0;transition:opacity .4s;pointer-events:none}
 [data-vibeui-block="podcast-004"] [data-part="row"]:hover::before,[data-vibeui-block="podcast-004"] [data-part="row"]:focus-within::before{opacity:1}
 [data-vibeui-block="podcast-004"] [data-part="row"]:hover,[data-vibeui-block="podcast-004"] [data-part="row"]:focus-within{background:var(--vibeui-podcast-004-panel)}
@@ -107,10 +110,6 @@ container-type:inline-size;
 [data-vibeui-block="podcast-004"] [data-part="play"]:active{transform:scale(.96)}
 [data-vibeui-block="podcast-004"] [data-part="play"] svg{width:1rem;height:1rem;fill:currentColor}
 [data-vibeui-block="podcast-004"] [data-part="play"]:focus-visible,[data-vibeui-block="podcast-004"] a:focus-visible{outline:2px solid var(--vibeui-podcast-004-accent);outline-offset:3px}
-[data-vibeui-block="podcast-004"] [data-part="all"]{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.8rem;color:inherit;text-decoration:none;font-weight:500;padding-bottom:.1rem;background:linear-gradient(var(--vibeui-podcast-004-accent),var(--vibeui-podcast-004-accent)) no-repeat 0 100% / 100% 1px;transition:background-size .35s var(--vibeui-podcast-004-ease);animation:vibeui-podcast-004-up .7s var(--vibeui-podcast-004-ease) .9s both paused}
-[data-vibeui-block="podcast-004"] [data-part="all"]:hover{background-size:100% 2px}
-[data-vibeui-block="podcast-004"] [data-part="all"] i{font-style:normal;display:inline-block;transition:translate .3s var(--vibeui-podcast-004-ease)}
-[data-vibeui-block="podcast-004"] [data-part="all"]:hover i{translate:4px 0}
 @keyframes vibeui-podcast-004-grow{from{transform:scaleX(0)}to{transform:none}}
 @keyframes vibeui-podcast-004-run{to{transform:translateX(100cqw)}}
 @keyframes vibeui-podcast-004-word{from{translate:0 110%;rotate:3deg}}
@@ -263,9 +262,16 @@ export function Podcast004({
             ))}
           </ol>
           {moreLabel ? (
-            <a data-part="all" href={moreHref}>
-              {moreLabel} <i aria-hidden="true">→</i>
-            </a>
+            <Button016
+              data-part="all"
+              label={moreLabel}
+              href={moreHref}
+              external={false}
+              arrow
+              size="md"
+              tone="neutral"
+              accent={accent}
+            />
           ) : null}
         </div>
       </section>

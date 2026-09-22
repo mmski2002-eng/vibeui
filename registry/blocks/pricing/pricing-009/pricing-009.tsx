@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing009Plan = {
   name: string
@@ -83,14 +86,11 @@ box-sizing:border-box;background:var(--vibeui-pricing-009-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-009-sans);
 }
 [data-vibeui-block="pricing-009"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-009"] [data-part="cta"]{margin-top:1.375rem}
 [data-vibeui-block="pricing-009"] [data-part="shell"]{max-width:62rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
 [data-vibeui-block="pricing-009"] [data-part="head"]{
 display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2rem;
 }
-[data-vibeui-block="pricing-009"] h2{
-margin:0;max-width:24ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-009"] [data-part="lede"]{margin:0.75rem 0 0;max-width:34rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-009-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-009"] input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 [data-vibeui-block="pricing-009"] [data-part="switch"]{
 display:inline-flex;align-self:flex-start;align-items:center;gap:0.25rem;padding:0.25rem;border-radius:0.75rem;
@@ -123,7 +123,6 @@ display:inline-flex;align-items:center;justify-content:center;margin-top:auto;he
 border:1px solid var(--vibeui-pricing-009-line);color:var(--vibeui-pricing-009-fg);
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-009-dur-2) ease,border-color var(--vibeui-pricing-009-dur-2) ease;
 }
-[data-vibeui-block="pricing-009"] [data-part="cta"]{margin-top:1.375rem}
 [data-vibeui-block="pricing-009"] [data-featured="true"] a{background:var(--vibeui-pricing-009-accent);color:oklch(from var(--vibeui-pricing-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}
 [data-vibeui-block="pricing-009"] a:focus-visible{outline:2px solid var(--vibeui-pricing-009-accent);outline-offset:3px}
 [data-vibeui-block="pricing-009"] [data-part="note"]{margin:1.5rem 0 0;font-size:0.75rem;color:var(--vibeui-pricing-009-muted)}
@@ -247,8 +246,12 @@ export function Pricing009({
 
           <div data-part="head">
             <div>
-              <h2>{title}</h2>
-              {lede ? <p data-part="lede">{lede}</p> : null}
+              <Heading001
+                data-part="heading"
+                title={title}
+                lede={lede}
+                accent={accent}
+              />
             </div>
             <div data-part="switch" role="group" aria-label={currencyLabel}>
               {CURRENCIES.map((currency) => (
@@ -293,9 +296,15 @@ export function Pricing009({
                     </li>
                   ))}
                 </ul>
-                <a data-part="cta" href={plan.action.href}>
-                  {plan.action.label}
-                </a>
+                <Button016
+                  data-part="cta"
+                  label={plan.action.label}
+                  href={plan.action.href}
+                  external={false}
+                  size="lg"
+                  tone={plan.featured ? "accent" : "neutral"}
+                  accent={accent}
+                />
               </li>
             ))}
           </ul>

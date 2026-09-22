@@ -1,9 +1,12 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-type Faq011Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion001,
+  type Accordion001Item,
+} from "@/registry/components/accordion/accordion-001/accordion-001"
+
+type Faq011Item = Accordion001Item
 
 type Faq011Group = {
   label: string
@@ -16,6 +19,7 @@ export type Faq011Props = {
   title?: string
   groups?: Faq011Group[]
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
   background?: string
   accent?: string
   className?: string
@@ -25,7 +29,10 @@ export type Faq011Props = {
 // Двухуровневая структура: заголовок раздела слева, его вопросы справа.
 // Разделы видны все сразу — человек прыгает к своей теме глазами, без
 // вкладок и фильтров. Раскладка считается от собственной ширины блока.
-const STYLES = `
+// Составной блок: вопросы каждого раздела — свой accordion-001.
+const STYLES = `[data-vibeui-block="faq-011"] [data-part="heading"]{margin-bottom:2.5rem}
+
+
 :where([data-vibeui-block="faq-011"]){
 --vibeui-faq-011-bg:transparent;
 --vibeui-faq-011-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
@@ -33,7 +40,6 @@ const STYLES = `
 --vibeui-faq-011-border:light-dark(oklch(0.9 0 0),oklch(0.33 0 0));
 --vibeui-faq-011-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-faq-011-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
---vibeui-faq-011-dur-2:180ms;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="faq-011"]{color-scheme:dark}
@@ -43,14 +49,6 @@ display:block;background:var(--vibeui-faq-011-bg);color:var(--vibeui-faq-011-ink
 font-family:var(--vibeui-faq-011-font);
 }
 [data-vibeui-block="faq-011"] [data-part="shell"]{max-width:64rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="faq-011"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-faq-011-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="faq-011"] [data-part="title"]{
-margin:0 0 2.5rem;max-width:24ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="faq-011"] [data-part="group"]{
 display:grid;gap:1rem;
 padding:2rem 0;border-top:1px solid var(--vibeui-faq-011-border);
@@ -66,40 +64,10 @@ font-variant-numeric:tabular-nums;
 [data-vibeui-block="faq-011"] [data-part="group-note"]{
 margin:0.375rem 0 0;color:var(--vibeui-faq-011-muted);font-size:0.875rem;line-height:1.5;max-width:26ch;
 }
-[data-vibeui-block="faq-011"] [data-part="group-list"]{display:grid}
-[data-vibeui-block="faq-011"] [data-part="item"]{
-border-bottom:1px solid color-mix(in oklab,var(--vibeui-faq-011-border) 60%,transparent);
-}
-[data-vibeui-block="faq-011"] [data-part="item"]:last-of-type{border-bottom:none}
-[data-vibeui-block="faq-011"] [data-part="question"]{
-display:flex;align-items:baseline;gap:0.75rem;
-padding:0.875rem 0.25rem;cursor:pointer;list-style:none;
-font-size:0.9375rem;font-weight:640;line-height:1.4;
-}
-[data-vibeui-block="faq-011"] [data-part="question"]::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-011"] [data-part="question"]:focus-visible{
-outline:2px solid var(--vibeui-faq-011-accent);outline-offset:2px;border-radius:0.375rem;
-}
-[data-vibeui-block="faq-011"] [data-part="sign"]{
-margin-left:auto;flex:none;align-self:center;width:0.75rem;height:0.75rem;position:relative;
-color:var(--vibeui-faq-011-accent);
-transition:transform var(--vibeui-faq-011-dur-2) ease;
-}
-[data-vibeui-block="faq-011"] [data-part="sign"]::before,
-[data-vibeui-block="faq-011"] [data-part="sign"]::after{
-content:"";position:absolute;inset:0;margin:auto;background:currentColor;border-radius:1px;
-}
-[data-vibeui-block="faq-011"] [data-part="sign"]::before{width:100%;height:2px}
-[data-vibeui-block="faq-011"] [data-part="sign"]::after{width:2px;height:100%}
-[data-vibeui-block="faq-011"] [data-part="item"][open] [data-part="sign"]{transform:rotate(45deg)}
-[data-vibeui-block="faq-011"] [data-part="answer"]{
-margin:0;padding:0 0.25rem 1rem;max-width:58ch;
-color:var(--vibeui-faq-011-muted);font-size:0.9375rem;line-height:1.6;
-}
+[data-vibeui-block="faq-011"] [data-part="group-list"]{width:100%;max-width:none}
 @container (min-width: 44rem){
 [data-vibeui-block="faq-011"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="faq-011"] [data-part="group"]{grid-template-columns:15rem minmax(0,1fr);gap:3rem;padding:2.5rem 0}
-[data-vibeui-block="faq-011"] [data-part="question"]{font-size:1rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-011"] *{animation:none!important;transition:none!important}}
 `
@@ -182,11 +150,12 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Вопросы, разложенные по разделам: заголовок темы слева, ответы справа. */
+/** Вопросы по разделам: заголовок темы слева, accordion-001 справа. */
 export function Faq011({
   eyebrow = "База знаний",
   title = "Вопросы по разделам",
   groups = DEFAULT_GROUPS,
+  marker = "chevron",
   background = "",
   accent,
   className,
@@ -214,8 +183,12 @@ export function Faq011({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           {groups.map((group) => (
             <div key={group.label} data-part="group">
               <div>
@@ -229,17 +202,14 @@ export function Faq011({
                   <p data-part="group-note">{group.description}</p>
                 ) : null}
               </div>
-              <div data-part="group-list">
-                {group.items.map((item) => (
-                  <details key={item.question} data-part="item">
-                    <summary data-part="question">
-                      <span>{item.question}</span>
-                      <span data-part="sign" aria-hidden="true" />
-                    </summary>
-                    <p data-part="answer">{item.answer}</p>
-                  </details>
-                ))}
-              </div>
+              <Accordion001
+                marker={marker}
+                data-part="group-list"
+                items={group.items}
+                exclusive={false}
+                divider="line"
+                accent={accent}
+              />
             </div>
           ))}
         </div>

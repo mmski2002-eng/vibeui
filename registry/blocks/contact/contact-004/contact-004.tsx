@@ -1,5 +1,9 @@
 import type { CSSProperties } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+
 export type Contact004Question = {
   question: string
   answer: string
@@ -114,31 +118,6 @@ background:var(--vibeui-contact-004-soft);border:1px solid var(--vibeui-contact-
 [data-vibeui-block="contact-004"] h3{margin:0;font-size:1rem;font-weight:660;line-height:1.3}
 [data-vibeui-block="contact-004"] [data-part="form-hint"]{
 margin:0;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-contact-004-muted);
-}
-[data-vibeui-block="contact-004"] [data-part="field"]{display:grid;gap:0.3125rem}
-[data-vibeui-block="contact-004"] label{font-size:0.8125rem;font-weight:640}
-[data-vibeui-block="contact-004"] input,
-[data-vibeui-block="contact-004"] textarea{
-width:100%;padding:0.5625rem 0.75rem;border-radius:0.6875rem;
-border:1px solid var(--vibeui-contact-004-border);
-background:var(--vibeui-contact-004-card);color:inherit;font:inherit;font-size:0.875rem;
-}
-[data-vibeui-block="contact-004"] textarea{min-height:5rem;resize:vertical;line-height:1.55}
-[data-vibeui-block="contact-004"] input:user-invalid,
-[data-vibeui-block="contact-004"] textarea:user-invalid{border-color:var(--vibeui-contact-004-alarm)}
-[data-vibeui-block="contact-004"] [data-part="error"]{
-font-size:0.75rem;line-height:1.4;color:var(--vibeui-contact-004-alarm);
-position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);
-}
-[data-vibeui-block="contact-004"] input:user-invalid ~ [data-part="error"],
-[data-vibeui-block="contact-004"] textarea:user-invalid ~ [data-part="error"]{
-position:static;width:auto;height:auto;clip-path:none;
-}
-[data-vibeui-block="contact-004"] button{
-appearance:none;cursor:pointer;border:0;
-height:2.625rem;padding:0 1.125rem;border-radius:0.6875rem;
-background:var(--vibeui-contact-004-accent);color:oklch(from var(--vibeui-contact-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;
 }
 [data-vibeui-block="contact-004"] [data-part="response"]{
 margin:0;font-size:0.75rem;line-height:1.5;color:var(--vibeui-contact-004-muted);
@@ -276,38 +255,26 @@ export function Contact004({
             <h3>{formTitle}</h3>
             <p data-part="form-hint">{formHint}</p>
 
-            <div data-part="field">
-              <label htmlFor="contact-004-email">{labels.email}</label>
-              <input
-                id="contact-004-email"
-                type="email"
-                name="email"
-                required
-                autoComplete="email"
-                placeholder={labels.emailPlaceholder}
-                aria-describedby="contact-004-email-error"
-              />
-              <span id="contact-004-email-error" data-part="error">
-                {labels.emailError}
-              </span>
-            </div>
+            <Input001
+              type="email"
+              name="email"
+              autoComplete="email"
+              required
+              label={labels.email}
+              accent={accent}
+            />
 
-            <div data-part="field">
-              <label htmlFor="contact-004-question">{labels.question}</label>
-              <textarea
-                id="contact-004-question"
-                name="question"
-                required
-                minLength={10}
-                placeholder={labels.questionPlaceholder}
-                aria-describedby="contact-004-question-error"
-              />
-              <span id="contact-004-question-error" data-part="error">
-                {labels.questionError}
-              </span>
-            </div>
+            <Input034
+              name="question"
+              minLength={10}
+              required
+              label={labels.question}
+              accent={accent}
+            />
 
-            <button type="submit">{submitLabel}</button>
+            <Button001 type="submit" size="lg" accent={accent}>
+              {submitLabel}
+            </Button001>
             <p data-part="response">{responseNote}</p>
           </form>
         </div>

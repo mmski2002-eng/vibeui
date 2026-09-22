@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Podcast001Episode = {
   number: string
@@ -23,7 +24,8 @@ export type Podcast001Props = {
 // и длительностью. Кнопка play — круг с треугольником из бордюров. Формат
 // ленты выпусков на странице подкаста; строка кликается целиком, воспроизведение
 // подключает приложение.
-const STYLES = `
+const STYLES = `[data-vibeui-block="podcast-001"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="podcast-001"]){
 --vibeui-podcast-001-bg:transparent;
 --vibeui-podcast-001-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -45,8 +47,6 @@ display:block;background:var(--vibeui-podcast-001-bg);color:var(--vibeui-podcast
 font-family:var(--vibeui-podcast-001-font);
 }
 [data-vibeui-block="podcast-001"] [data-part="shell"]{max-width:48rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="podcast-001"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-podcast-001-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="podcast-001"] [data-part="title"]{margin:0 0 2rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="podcast-001"] [data-part="list"]{list-style:none;margin:0;padding:0;display:grid;gap:0.75rem}
 [data-vibeui-block="podcast-001"] [data-part="row"]{
 display:grid;grid-template-columns:auto auto 1fr auto;gap:1rem;align-items:center;
@@ -151,8 +151,12 @@ export function Podcast001({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ul data-part="list">
             {episodes.map((episode) => (
               <li key={episode.number}>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties, type FormEvent, type ReactNode } from "react"
+import { Button095 } from "@/registry/components/button/button-095/button-095"
 
 export type Api001Place = {
   /** Подстроки, по которым узнаётся запрос (в нижнем регистре). */
@@ -93,8 +94,6 @@ container-type:inline-size;
 [data-vibeui-block="api-001"] [data-part="send"]:hover{box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-api-001-accent) 22%,transparent)}
 [data-vibeui-block="api-001"] [data-part="send"][disabled]{opacity:.6;cursor:progress}
 [data-vibeui-block="api-001"] [data-part="chips"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="api-001"] [data-part="chips"] button{padding:.3rem .65rem;border:1px solid var(--vibeui-api-001-line);border-radius:999px;background:transparent;color:var(--vibeui-api-001-muted);font-family:var(--vibeui-api-001-mono);font-size:.7rem;cursor:pointer;transition:color .2s,border-color .2s}
-[data-vibeui-block="api-001"] [data-part="chips"] button:hover{color:var(--vibeui-api-001-fg);border-color:var(--vibeui-api-001-fg)}
 [data-vibeui-block="api-001"] button:focus-visible,[data-vibeui-block="api-001"] input:focus-visible{outline:2px solid var(--vibeui-api-001-accent);outline-offset:2px}
 [data-vibeui-block="api-001"] [data-part="response"]{position:relative;min-height:13rem;margin:0;padding:.9rem 1rem;border:1px solid var(--vibeui-api-001-line);border-radius:.7rem;background:var(--vibeui-api-001-bg);font-family:var(--vibeui-api-001-mono);font-size:.76rem;line-height:1.6;color:var(--vibeui-api-001-muted);white-space:pre;overflow-x:auto}
 [data-vibeui-block="api-001"] [data-part="response"] [data-part="line"]{display:block;opacity:0;transform:translateX(-6px);animation:vibeui-api-001-line .3s ease-out forwards}
@@ -278,9 +277,7 @@ export function Api001({
                 <ul data-part="chips" aria-label={chipsLabel}>
                   {suggestions.map((item) => (
                     <li key={item}>
-                      <button type="button" onClick={() => pick(item)}>
-                        {item}
-                      </button>
+                      <Button095 data-part="suggestion" item={item} onClick={() => pick(item)} accent={accent} />
                     </li>
                   ))}
                 </ul>

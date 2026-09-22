@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Badge031 } from "@/registry/components/badge/badge-031/badge-031"
 
 type Logocloud004Item = {
   name: string
@@ -75,29 +76,8 @@ list-style:none;margin:0;padding:1.75rem 0 0;width:100%;
 border-top:1px solid var(--vibeui-logocloud-004-border);
 display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.25rem 2.5rem;
 }
-[data-vibeui-block="logocloud-004"] [data-part="logo"]{
-color:var(--vibeui-logocloud-004-logo);
-font-size:1.1875rem;line-height:1;white-space:nowrap;
-transition:color var(--vibeui-logocloud-004-dur-2) ease;
-font-weight:750;letter-spacing:-0.035em;
-}
-[data-vibeui-block="logocloud-004"] [data-part="logo"][data-style="serif"]{
-font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:650;letter-spacing:0;
-}
-[data-vibeui-block="logocloud-004"] [data-part="logo"][data-style="mono"]{
-font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-weight:600;letter-spacing:-0.02em;
-}
-[data-vibeui-block="logocloud-004"] [data-part="logo"][data-style="wide"]{
-font-size:0.9375rem;font-weight:650;letter-spacing:0.28em;text-transform:uppercase;
-}
-[data-vibeui-block="logocloud-004"] [data-part="logo"][data-style="slab"]{
-font-weight:850;letter-spacing:-0.01em;text-transform:uppercase;
-}
-[data-vibeui-block="logocloud-004"] [data-part="row"] li:hover [data-part="logo"]{
-color:var(--vibeui-logocloud-004-accent);
-}
-[data-vibeui-block="logocloud-004"] [data-part="logo"][data-highlight]{
-color:var(--vibeui-logocloud-004-accent);
+[data-vibeui-block="logocloud-004"] [data-part="row"] li:hover [data-vibeui-block="badge-031"]{
+color:var(--vibeui-badge-031-accent);
 }
 @container (min-width: 48rem){
 [data-vibeui-block="logocloud-004"] [data-part="shell"]{padding:4.5rem 2rem;gap:2.5rem}
@@ -181,13 +161,7 @@ export function Logocloud004({
           <ul data-part="row">
             {items.map((item) => (
               <li key={item.name}>
-                <span
-                  data-part="logo"
-                  data-style={item.style ?? "sans"}
-                  data-highlight={item.highlight || undefined}
-                >
-                  {item.name}
-                </span>
+                <Badge031 data-part="logo" styleKey={item.style} highlight={item.highlight} name={item.name} accent={accent} />
               </li>
             ))}
           </ul>

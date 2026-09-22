@@ -33,4 +33,16 @@ export const PREVIEWS = {
   "mockup-009": dynamic(() =>
     import("@/registry/components/mockup/mockup-009/mockup-009").then((module) => module.Mockup009),
   ),
+  "mockup-010": dynamic(() =>
+    import("@/registry/components/mockup/mockup-010/mockup-010").then((module) => module.Mockup010),
+  ),
+  "mockup-011": dynamic(() =>
+    import("@/registry/components/mockup/mockup-011/mockup-011").then((module) => module.Mockup011),
+  ),
+  "mockup-012": dynamic(() =>
+    import("@/registry/components/mockup/mockup-012/mockup-012").then((module) => module.Mockup012),
+  ),
+  "mockup-013": dynamic(() =>
+    import("@/registry/components/mockup/mockup-013/mockup-013").then((module) => module.Mockup013),
+  ),
 } satisfies PreviewMap

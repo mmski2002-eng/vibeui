@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button104 } from "@/registry/components/button/button-104/button-104"
 
 export type Portfolio010Photo = {
   src: string
@@ -52,23 +53,12 @@ container-type:inline-size;
 :where([data-vibeui-block="portfolio-010"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="portfolio-010"]{box-sizing:border-box;display:block;background:var(--vibeui-portfolio-010-bg);color:var(--vibeui-portfolio-010-fg);font-family:var(--vibeui-portfolio-010-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="portfolio-010"] *{box-sizing:border-box}
+[data-vibeui-block="portfolio-010"] [data-part="item"]{width:100%;margin:0}
 [data-vibeui-block="portfolio-010"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4.5rem 1.25rem}
 [data-vibeui-block="portfolio-010"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-portfolio-010-display);font-size:.85rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--vibeui-portfolio-010-silver)}
 [data-vibeui-block="portfolio-010"] [data-part="title"]{margin:0;font-family:var(--vibeui-portfolio-010-display);font-size:clamp(2.2rem,5.5cqi,3.8rem);font-weight:500;line-height:1.05}
 [data-vibeui-block="portfolio-010"] [data-part="lede"]{max-width:36rem;margin:1rem 0 0;color:var(--vibeui-portfolio-010-muted)}
 [data-vibeui-block="portfolio-010"] [data-part="grid"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:.9rem;margin-top:2.5rem}
-[data-vibeui-block="portfolio-010"] [data-part="item"]{position:relative;display:block;width:100%;margin:0;padding:.4rem;border:1px solid var(--vibeui-portfolio-010-line);border-radius:.5rem;background:var(--vibeui-portfolio-010-card);color:inherit;font:inherit;text-align:left;cursor:pointer;box-shadow:0 24px 44px -34px rgb(0 0 0 / .9);transition:transform .45s cubic-bezier(.2,.9,.3,1),box-shadow .45s,border-color .45s}
-[data-vibeui-block="portfolio-010"] [data-part="item"]:hover{transform:translateY(-.25rem);border-color:rgb(242 182 79 / .5);box-shadow:0 30px 50px -30px rgb(242 182 79 / .35)}
-[data-vibeui-block="portfolio-010"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-portfolio-010-accent);outline-offset:3px}
-[data-vibeui-block="portfolio-010"] [data-part="item"][data-shape="wide"]{grid-column:span 2}
-[data-vibeui-block="portfolio-010"] [data-part="pic"]{position:relative;display:block;aspect-ratio:3/2;overflow:hidden;border-radius:.25rem;background:var(--vibeui-portfolio-010-bg)}
-[data-vibeui-block="portfolio-010"] [data-part="item"][data-shape="tall"] [data-part="pic"]{aspect-ratio:4/5}
-[data-vibeui-block="portfolio-010"] [data-part="item"][data-shape="square"] [data-part="pic"]{aspect-ratio:1}
-[data-vibeui-block="portfolio-010"] [data-part="item"][data-shape="wide"] [data-part="pic"]{aspect-ratio:2/1}
-[data-vibeui-block="portfolio-010"] [data-part="pic"] img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform .8s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="portfolio-010"] [data-part="item"]:hover img{transform:scale(1.06)}
-[data-vibeui-block="portfolio-010"] [data-part="cap"]{display:block;padding:.6rem .3rem .2rem;font-family:var(--vibeui-portfolio-010-script);font-size:1.15rem;color:var(--vibeui-portfolio-010-silver);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.75;transition:opacity .35s}
-[data-vibeui-block="portfolio-010"] [data-part="item"]:hover [data-part="cap"]{opacity:1}
 [data-vibeui-block="portfolio-010"] dialog{width:min(100%,56rem);max-width:calc(100% - 2rem);max-height:calc(100% - 2rem);margin:auto;padding:0;border:1px solid rgb(159 176 200 / .25);border-radius:1rem;background:#0b1220;color:#f2eee6;box-shadow:0 40px 90px -30px rgb(0 0 0 / .9)}
 [data-vibeui-block="portfolio-010"] dialog::backdrop{background:rgb(5 9 15 / .82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:vibeui-portfolio-010-veil .5s ease both}
 @keyframes vibeui-portfolio-010-veil{from{opacity:0}}
@@ -154,12 +144,7 @@ export function Portfolio010({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="grid">
             {photos.map((photo, index) => (
-              <button key={photo.src + index} type="button" data-part="item" data-shape={photo.shape ?? "rect"} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`}>
-                <span data-part="pic">
-                  {photo.src ? <img src={photo.src} alt={photo.alt ?? ""} loading="lazy" /> : null}
-                </span>
-                {photo.caption ? <span data-part="cap">{photo.caption}</span> : null}
-              </button>
+              <Button104 key={photo.src + index} data-part="item" src={photo.src} shape={photo.shape} caption={photo.caption} alt={photo.alt} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`} accent={accent} />
             ))}
           </div>
         </div>

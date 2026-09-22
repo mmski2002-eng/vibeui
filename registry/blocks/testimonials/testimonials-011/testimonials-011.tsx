@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react"
+import { Card032 } from "@/registry/components/card/card-032/card-032"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Testimonials011Item = {
   platform: string
@@ -21,7 +23,8 @@ export type Testimonials011Props = {
 // цитаты на своём сайте: её нельзя отредактировать. Звёзды закрашены ровно
 // на величину оценки — слой акцентных звёзд обрезается по ширине, дробная
 // часть видна честно, без округления до целых.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-011"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="testimonials-011"]){
 --vibeui-testimonials-011-bg:transparent;
 --vibeui-testimonials-011-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -42,45 +45,8 @@ font-family:var(--vibeui-testimonials-011-font);
 [data-vibeui-block="testimonials-011"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;text-align:center;
 }
-[data-vibeui-block="testimonials-011"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-testimonials-011-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="testimonials-011"] [data-part="title"]{
-margin:0 auto 2rem;max-width:24ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="testimonials-011"] [data-part="grid"]{display:grid;gap:1rem}
-[data-vibeui-block="testimonials-011"] [data-part="card"]{
-min-inline-size:0;
-display:grid;gap:0.75rem;justify-items:center;
-padding:1.75rem 1.25rem;border:1px solid var(--vibeui-testimonials-011-border);border-radius:1.125rem;
-background:var(--vibeui-testimonials-011-card);
-}
-[data-vibeui-block="testimonials-011"] [data-part="platform"]{
-font-size:1rem;font-weight:700;letter-spacing:-0.01em;
-}
-[data-vibeui-block="testimonials-011"] [data-part="stars"]{
-position:relative;display:inline-flex;gap:0.125rem;
-color:var(--vibeui-testimonials-011-star-off);
-}
-[data-vibeui-block="testimonials-011"] [data-part="stars-on"]{
-position:absolute;inset:0;display:inline-flex;gap:0.125rem;
-overflow:hidden;white-space:nowrap;
-color:var(--vibeui-testimonials-011-accent);
-}
-[data-vibeui-block="testimonials-011"] [data-part="star"]{width:1.125rem;height:1.125rem;flex:none}
-[data-vibeui-block="testimonials-011"] [data-part="score"]{
-font-size:1.75rem;font-weight:750;letter-spacing:-0.02em;line-height:1;
-font-variant-numeric:tabular-nums;
-}
-[data-vibeui-block="testimonials-011"] [data-part="score"] small{
-color:var(--vibeui-testimonials-011-muted);
-font-size:0.5em;font-weight:600;
-}
-[data-vibeui-block="testimonials-011"] [data-part="reviews"]{
-color:var(--vibeui-testimonials-011-muted);font-size:0.8125rem;
-}
+[data-vibeui-block="testimonials-011"] [data-part="card-star"]{width:1.125rem;height:1.125rem;flex:none}
 @container (min-width: 34rem){
 [data-vibeui-block="testimonials-011"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -126,7 +92,7 @@ function StarRow() {
       {[0, 1, 2, 3, 4].map((index) => (
         <svg
           key={index}
-          data-part="star"
+          data-part="card-star"
           viewBox="0 0 24 24"
           fill="currentColor"
           aria-hidden="true"
@@ -174,34 +140,16 @@ export function Testimonials011({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            align="center"
+            accent={accent}
+          />
           <div data-part="grid">
             {items.map((item) => (
-              <article key={item.platform} data-part="card">
-                <h3 data-part="platform">{item.platform}</h3>
-                <span
-                  data-part="stars"
-                  role="img"
-                  aria-label={`Оценка ${formatScore(item.score)} из 5`}
-                >
-                  <StarRow />
-                  <span
-                    data-part="stars-on"
-                    style={{
-                      width: `${Math.min(Math.max(item.score / 5, 0), 1) * 100}%`,
-                    }}
-                    aria-hidden="true"
-                  >
-                    <StarRow />
-                  </span>
-                </span>
-                <p data-part="score">
-                  {formatScore(item.score)}
-                  <small> / 5</small>
-                </p>
-                <p data-part="reviews">{item.reviews}</p>
-              </article>
+              <Card032 key={item.platform} data-part="card" platform={item.platform} score={item.score} reviews={item.reviews} accent={accent} />
             ))}
           </div>
         </div>

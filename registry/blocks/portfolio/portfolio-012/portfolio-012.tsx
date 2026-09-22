@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Portfolio012Project = {
   title: string
   role?: string
@@ -59,6 +61,7 @@ container-type:inline-size;
 :where([data-vibeui-block="portfolio-012"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="portfolio-012"]{box-sizing:border-box;padding:5rem 0 6rem;background:var(--vibeui-portfolio-012-bg);color:var(--vibeui-portfolio-012-fg);font-family:var(--vibeui-portfolio-012-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="portfolio-012"] *{box-sizing:border-box}
+[data-vibeui-block="portfolio-012"] [data-part="open"]{margin-top:1.4rem}
 [data-vibeui-block="portfolio-012"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="portfolio-012"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-portfolio-012-mono);font-size:.78rem;color:var(--vibeui-portfolio-012-muted);opacity:0;transition:opacity .6s}
 [data-vibeui-block="portfolio-012"][data-in="true"] [data-part="eyebrow"]{opacity:1}
@@ -81,9 +84,6 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-012"] [data-part="tags"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="portfolio-012"] [data-part="tags"] li{font-family:var(--vibeui-portfolio-012-mono);font-size:.7rem;padding:.25rem .55rem;border-radius:999px;border:1px solid var(--vibeui-portfolio-012-line);transition:background .25s,color .25s,transform .25s var(--vibeui-portfolio-012-ease)}
 [data-vibeui-block="portfolio-012"] [data-part="tags"] li:hover{background:var(--vibeui-portfolio-012-fg);color:var(--vibeui-portfolio-012-bg);transform:translateY(-2px)}
-[data-vibeui-block="portfolio-012"] [data-part="open"]{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.4rem;color:inherit;text-decoration:none;font-weight:600}
-[data-vibeui-block="portfolio-012"] [data-part="open"] i{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--vibeui-portfolio-012-fg);color:var(--vibeui-portfolio-012-bg);font-style:normal;transition:transform .4s var(--vibeui-portfolio-012-ease),background .25s}
-[data-vibeui-block="portfolio-012"] [data-part="card"]:hover [data-part="open"] i{transform:rotate(-45deg) scale(1.1);background:var(--vibeui-portfolio-012-accent)}
 [data-vibeui-block="portfolio-012"] [data-part="pic"]{perspective:900px}
 [data-vibeui-block="portfolio-012"] [data-part="pic"] div{aspect-ratio:16 / 10;border-radius:1rem;overflow:hidden;background:var(--vibeui-portfolio-012-line);transform:rotateX(calc(var(--vibeui-portfolio-012-rx,0) * 1deg)) rotateY(calc(var(--vibeui-portfolio-012-ry,0) * 1deg)) translate3d(calc(var(--vibeui-portfolio-012-tx,0) * 1px),calc(var(--vibeui-portfolio-012-ty,0) * 1px),0);box-shadow:0 24px 50px -30px color-mix(in oklab,var(--vibeui-portfolio-012-accent) 50%,rgb(0 0 0 / .6));will-change:transform}
 [data-vibeui-block="portfolio-012"] [data-part="pic"] img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.06);transition:transform .9s var(--vibeui-portfolio-012-ease)}
@@ -289,10 +289,12 @@ export function Portfolio012({
                     </ul>
                   ) : null}
                   {project.href ? (
-                    <a data-part="open" href={project.href}>
-                      <i aria-hidden="true">→</i>
-                      {openLabel}
-                    </a>
+                    <Button077
+                      data-part="open"
+                      label={openLabel}
+                      href={project.href}
+                      accent={accent}
+                    />
                   ) : null}
                 </div>
                 <div data-part="pic">

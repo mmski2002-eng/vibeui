@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Sociallinks003 } from "@/registry/components/navigation/sociallinks-003/sociallinks-003"
 
 export type Footer035Link = {
   label: string
@@ -60,6 +61,7 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-035"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-035"]{box-sizing:border-box;padding:5rem 0 1.5rem;overflow:hidden;background:var(--vibeui-footer-035-bg);color:var(--vibeui-footer-035-fg);font-family:var(--vibeui-footer-035-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="footer-035"] *{box-sizing:border-box}
+[data-vibeui-block="footer-035"] [data-part="socials"]{margin-left:auto}
 [data-vibeui-block="footer-035"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="footer-035"] [data-part="top"]{display:grid;gap:2.5rem;align-items:start}
 [data-vibeui-block="footer-035"] [data-part="tagline"]{margin:0 0 1.8rem;font-family:var(--vibeui-footer-035-display);font-weight:500;font-size:clamp(1.8rem,4cqi,2.8rem);line-height:1.05;letter-spacing:-.02em;max-width:22rem}
@@ -80,10 +82,10 @@ container-type:inline-size;
 [data-vibeui-block="footer-035"] [data-part="bottom"] nav{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem}
 [data-vibeui-block="footer-035"] [data-part="bottom"] a{color:inherit;text-decoration:none;transition:color .2s}
 [data-vibeui-block="footer-035"] [data-part="bottom"] a:hover{color:var(--vibeui-footer-035-fg)}
-[data-vibeui-block="footer-035"] [data-part="socials"]{margin-left:auto}
 [data-vibeui-block="footer-035"] [data-part="copy"]{flex-basis:100%;margin:0}
 [data-vibeui-block="footer-035"] a:focus-visible{outline:2px solid var(--vibeui-footer-035-accent);outline-offset:3px}
-@container (min-width: 60rem){[data-vibeui-block="footer-035"] [data-part="top"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}[data-vibeui-block="footer-035"] [data-part="contacts"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="footer-035"] [data-part="copy"]{flex-basis:auto;margin-left:auto}[data-vibeui-block="footer-035"] [data-part="socials"]{margin-left:0}}
+@container (min-width: 60rem){
+[data-vibeui-block="footer-035"] [data-part="socials"]{margin-left:0}[data-vibeui-block="footer-035"] [data-part="top"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}[data-vibeui-block="footer-035"] [data-part="contacts"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="footer-035"] [data-part="copy"]{flex-basis:auto;margin-left:auto}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-035"] *{animation:none!important;transition:none!important}}`
 
 /** Подвал с контактами, картой и огромным контурным именем. */
@@ -195,13 +197,7 @@ export function Footer035({
               ))}
             </nav>
             {socials.length > 0 ? (
-              <nav data-part="socials" aria-label={socialsLabel}>
-                {socials.map((link) => (
-                  <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
+              <Sociallinks003 data-part="socials" socialsLabel={socialsLabel} socials={socials} accent={accent} />
             ) : null}
             <p data-part="copy">{copyright}</p>
           </div>

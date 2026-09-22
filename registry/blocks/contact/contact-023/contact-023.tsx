@@ -2,6 +2,11 @@
 
 import { useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+import { Select001 } from "@/registry/components/select/select-001/select-001"
+
 export type Contact023Hours = {
   label: string
   value: string
@@ -72,20 +77,7 @@ container-type:inline-size;
 [data-vibeui-block="contact-023"] [data-part="title"]{margin:0;font-family:var(--vibeui-contact-023-display);font-weight:900;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1;letter-spacing:-.03em}
 [data-vibeui-block="contact-023"] [data-part="lede"]{margin:.9rem 0 0;max-width:30rem;color:var(--vibeui-contact-023-muted)}
 [data-vibeui-block="contact-023"] [data-part="form"]{display:grid;gap:.8rem;margin:1.8rem 0 0;padding:1.5rem;border-radius:1.6rem;background:var(--vibeui-contact-023-card);border:1px solid var(--vibeui-contact-023-line)}
-[data-vibeui-block="contact-023"] [data-part="field"]{position:relative;display:block}
-[data-vibeui-block="contact-023"] [data-part="field"] input,[data-vibeui-block="contact-023"] [data-part="field"] select,[data-vibeui-block="contact-023"] [data-part="field"] textarea{width:100%;padding:1.45rem 1rem .55rem;border:1px solid var(--vibeui-contact-023-line);border-radius:1rem;background:color-mix(in oklab,var(--vibeui-contact-023-fg) 3%,transparent);color:var(--vibeui-contact-023-fg);font:inherit;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none}
-[data-vibeui-block="contact-023"] [data-part="field"] textarea{min-height:5.5rem;resize:vertical}
-[data-vibeui-block="contact-023"] [data-part="field"] input::placeholder,[data-vibeui-block="contact-023"] [data-part="field"] textarea::placeholder{color:transparent}
-[data-vibeui-block="contact-023"] [data-part="field"] span{position:absolute;left:1rem;top:1rem;font-size:.95rem;color:var(--vibeui-contact-023-muted);pointer-events:none;transform-origin:left top;transition:transform .2s cubic-bezier(.2,.8,.2,1),color .2s}
-[data-vibeui-block="contact-023"] [data-part="field"] input:not(:placeholder-shown) + span,[data-vibeui-block="contact-023"] [data-part="field"] textarea:not(:placeholder-shown) + span,[data-vibeui-block="contact-023"] [data-part="field"] select + span,[data-vibeui-block="contact-023"] [data-part="field"] input:focus + span,[data-vibeui-block="contact-023"] [data-part="field"] textarea:focus + span{transform:translateY(-.65rem) scale(.74)}
-[data-vibeui-block="contact-023"] [data-part="field"] input:focus,[data-vibeui-block="contact-023"] [data-part="field"] select:focus,[data-vibeui-block="contact-023"] [data-part="field"] textarea:focus{border-color:var(--vibeui-contact-023-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-contact-023-accent) 20%,transparent)}
-[data-vibeui-block="contact-023"] [data-part="field"] input:focus + span,[data-vibeui-block="contact-023"] [data-part="field"] textarea:focus + span,[data-vibeui-block="contact-023"] [data-part="field"] select:focus + span{color:var(--vibeui-contact-023-accent)}
-[data-vibeui-block="contact-023"] [data-part="field"] select{cursor:pointer}
-[data-vibeui-block="contact-023"] [data-part="field"] i{position:absolute;right:1rem;top:50%;width:.6rem;height:.6rem;border-right:2px solid var(--vibeui-contact-023-muted);border-bottom:2px solid var(--vibeui-contact-023-muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
 [data-vibeui-block="contact-023"] [data-part="two"]{display:grid;gap:.8rem}
-[data-vibeui-block="contact-023"] [data-part="submit"]{margin-top:.4rem;height:3.3rem;border:0;border-radius:999px;background:var(--vibeui-contact-023-accent);color:var(--vibeui-contact-023-on-accent);font-family:var(--vibeui-contact-023-display);font-weight:800;font-size:1rem;cursor:pointer;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
-[data-vibeui-block="contact-023"] [data-part="submit"]:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px var(--vibeui-contact-023-accent)}
-[data-vibeui-block="contact-023"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-contact-023-fg);outline-offset:2px}
 [data-vibeui-block="contact-023"] [data-part="fine"]{margin:0;font-size:.78rem;color:var(--vibeui-contact-023-muted);text-align:center}
 [data-vibeui-block="contact-023"] [data-part="done"]{display:grid;justify-items:center;gap:.8rem;margin:1.8rem 0 0;padding:2.5rem 1.5rem;border-radius:1.6rem;background:var(--vibeui-contact-023-card);border:1px solid var(--vibeui-contact-023-line);text-align:center;animation:vibeui-contact-023-pop .4s cubic-bezier(.34,1.4,.64,1) both}
 [data-vibeui-block="contact-023"] [data-part="done"] svg{width:4.5rem;height:4.5rem;color:var(--vibeui-contact-023-park)}
@@ -196,39 +188,47 @@ export function Contact023({
             ) : (
               <form data-part="form" onSubmit={submit}>
                 <div data-part="two">
-                  <label data-part="field">
-                    <input type="text" name="name" placeholder={nameLabel} autoComplete="name" required />
-                    <span>{nameLabel}</span>
-                  </label>
-                  <label data-part="field">
-                    <input type="tel" name="phone" placeholder={phoneLabel} autoComplete="tel" required />
-                    <span>{phoneLabel}</span>
-                  </label>
+                  <Input001
+                    type="text"
+                    name="name"
+                    autoComplete="name"
+                    required
+                    label={nameLabel}
+                    accent={accent}
+                  />
+                  <Input001
+                    type="tel"
+                    name="phone"
+                    autoComplete="tel"
+                    required
+                    label={phoneLabel}
+                    accent={accent}
+                  />
                 </div>
                 <div data-part="two">
-                  <label data-part="field">
-                    <select name="pet" defaultValue={petOptions[0]}>
-                      {petOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                    <span>{petLabel}</span>
-                    <i aria-hidden="true" />
-                  </label>
-                  <label data-part="field">
-                    <input type="text" name="when" placeholder={whenLabel} />
-                    <span>{whenLabel}</span>
-                  </label>
+                  <Select001
+                    label={petLabel}
+                    placeholder=""
+                    options={petOptions.map((option) => ({ value: option, label: option }))}
+                    name="pet"
+                    defaultValue={petOptions[0]}
+                    accent={accent}
+                  />
+                  <Input001
+                    type="text"
+                    name="when"
+                    label={whenLabel}
+                    accent={accent}
+                  />
                 </div>
-                <label data-part="field">
-                  <textarea name="note" placeholder={notePlaceholder} />
-                  <span>{noteLabel}</span>
-                </label>
-                <button data-part="submit" type="submit">
+                <Input034
+                  name="note"
+                  label={noteLabel}
+                  accent={accent}
+                />
+                <Button001 type="submit" size="lg" accent={accent}>
                   {actionLabel}
-                </button>
+                </Button001>
                 <p data-part="fine">{fine}</p>
               </form>
             )}

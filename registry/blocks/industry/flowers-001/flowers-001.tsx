@@ -2,6 +2,8 @@
 
 import { useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Flowers001Item = {
   name: string
   /** Состав одной строкой: «пионы, эвкалипт, мак». */
@@ -55,6 +57,7 @@ container-type:inline-size;
 :where([data-vibeui-block="flowers-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="flowers-001"]{box-sizing:border-box;position:relative;padding:5rem 0;background:var(--vibeui-flowers-001-bg);color:var(--vibeui-flowers-001-fg);font-family:var(--vibeui-flowers-001-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-001"] *{box-sizing:border-box}
+[data-vibeui-block="flowers-001"] [data-part="all"]{margin:2.5rem 0 0}
 [data-vibeui-block="flowers-001"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="flowers-001"] [data-part="head"]{display:grid;gap:1rem;align-items:end;margin:0 0 2.5rem}
 [data-vibeui-block="flowers-001"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-flowers-001-muted)}
@@ -70,10 +73,8 @@ container-type:inline-size;
 [data-vibeui-block="flowers-001"] [data-part="name"]{margin:0;font-family:var(--vibeui-flowers-001-display);font-weight:500;font-size:1.5rem;line-height:1.05;letter-spacing:-.01em}
 [data-vibeui-block="flowers-001"] [data-part="composition"]{margin:0;font-size:.82rem;color:var(--vibeui-flowers-001-muted)}
 [data-vibeui-block="flowers-001"] [data-part="price"]{font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap}
-[data-vibeui-block="flowers-001"] [data-part="arrow"]{display:none}
+[data-vibeui-block="flowers-001"] [data-part="row-arrow"]{display:none}
 [data-vibeui-block="flowers-001"] [data-part="ghost"]{display:none}
-[data-vibeui-block="flowers-001"] [data-part="all"]{display:inline-flex;align-items:center;gap:.5rem;margin:2.5rem 0 0;padding:.8rem 1.4rem;border-radius:999px;border:1px solid var(--vibeui-flowers-001-fg);color:var(--vibeui-flowers-001-fg);text-decoration:none;font-weight:500;transition:background .25s,color .25s,border-color .25s}
-[data-vibeui-block="flowers-001"] [data-part="all"]:hover{background:var(--vibeui-flowers-001-accent);border-color:var(--vibeui-flowers-001-accent);color:var(--vibeui-flowers-001-on-accent)}
 [data-vibeui-block="flowers-001"] a:focus-visible{outline:2px solid var(--vibeui-flowers-001-accent);outline-offset:3px}
 @container (min-width: 40rem){[data-vibeui-block="flowers-001"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}[data-vibeui-block="flowers-001"] [data-part="list"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 60rem){
@@ -85,8 +86,8 @@ container-type:inline-size;
 [data-vibeui-block="flowers-001"] [data-part="name"]{font-size:clamp(2rem,3.4cqi,3rem)}
 [data-vibeui-block="flowers-001"] [data-part="composition"]{font-size:.9rem}
 [data-vibeui-block="flowers-001"] [data-part="price"]{text-align:right;font-size:1.05rem}
-[data-vibeui-block="flowers-001"] [data-part="arrow"]{display:block;width:1.6rem;height:1.6rem;opacity:0;transform:translateX(-.6rem);transition:opacity .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="flowers-001"] [data-part="row"]:hover [data-part="arrow"]{opacity:1;transform:none}
+[data-vibeui-block="flowers-001"] [data-part="row-arrow"]{display:block;width:1.6rem;height:1.6rem;opacity:0;transform:translateX(-.6rem);transition:opacity .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
+[data-vibeui-block="flowers-001"] [data-part="row"]:hover [data-part="row-arrow"]{opacity:1;transform:none}
 [data-vibeui-block="flowers-001"] [data-part="ghost"]{display:block;position:absolute;left:0;top:0;z-index:2;width:15rem;aspect-ratio:4/5;pointer-events:none;overflow:hidden;border-radius:.4rem;box-shadow:0 30px 60px -24px rgb(0 0 0 / .45);opacity:0;transform:translate3d(-50%,-50%,0) scale(.85);transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .3s}
 [data-vibeui-block="flowers-001"] [data-part="ghost"][data-on="true"]{opacity:1}
 [data-vibeui-block="flowers-001"] [data-part="ghost"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
@@ -170,7 +171,7 @@ export function Flowers001({
                   <h3 data-part="name">{item.name}</h3>
                   <p data-part="composition">{item.note}</p>
                   <span data-part="price">{item.price}</span>
-                  <svg data-part="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg data-part="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 12h16M13 5l7 7-7 7" />
                   </svg>
                 </a>
@@ -183,9 +184,15 @@ export function Flowers001({
             </li>
           </ul>
           {allLabel ? (
-            <a data-part="all" href={allHref}>
-              {allLabel}
-            </a>
+            <Button016
+              data-part="all"
+              label={allLabel}
+              href={allHref}
+              external={false}
+              size="md"
+              tone="neutral"
+              accent={accent}
+            />
           ) : null}
         </div>
       </section>

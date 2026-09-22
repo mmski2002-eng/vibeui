@@ -1,9 +1,14 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-type Faq006Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion001,
+  type Accordion001Item,
+} from "@/registry/components/accordion/accordion-001/accordion-001"
+import { Card024 } from "@/registry/components/card/card-024/card-024"
+import { Item004 } from "@/registry/components/card/item-004/item-004"
+
+type Faq006Item = Accordion001Item
 
 type Faq006Channel = {
   label: string
@@ -20,6 +25,7 @@ export type Faq006Props = {
   /** Подпись карточки помощи для скринридера. */
   helpLabel?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
   background?: string
   accent?: string
   className?: string
@@ -30,10 +36,13 @@ export type Faq006Props = {
 // а рядом с ним и на широкой раскладке залипает: человек, который не нашёл
 // свой вопрос, не должен долистывать до конца, чтобы узнать, куда писать.
 // Каналы связи — ссылки с пояснением, а не одна кнопка «Связаться».
+// Составной блок: список вопросов — accordion-001, карточка помощи —
+// card-024, каналы связи внутри неё — item-004.
 //
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, она темнеет вместе со страницей.
-const STYLES = `
+const STYLES = `[data-vibeui-block="faq-006"] [data-part="help"]{align-self:start}
+
 :where([data-vibeui-block="faq-006"]){
 --vibeui-faq-006-bg:transparent;
 --vibeui-faq-006-card:light-dark(oklch(1 0 0),oklch(0.25 0.014 200));
@@ -61,61 +70,17 @@ font-family:var(--vibeui-faq-006-font);
 display:grid;gap:2rem;
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="faq-006"] [data-part="title"]{
+[data-vibeui-block="faq-006"] [data-part="heading"]{
 margin:0 0 1.25rem;max-width:18ch;
 font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
-[data-vibeui-block="faq-006"] [data-part="item"]{border-top:1px solid var(--vibeui-faq-006-border)}
-[data-vibeui-block="faq-006"] [data-part="item"]:last-of-type{border-bottom:1px solid var(--vibeui-faq-006-border)}
-[data-vibeui-block="faq-006"] [data-part="item"] summary{
-cursor:pointer;list-style:none;position:relative;
-padding:1rem 2rem 1rem 0;
-font-size:1rem;font-weight:600;line-height:1.4;
-}
-[data-vibeui-block="faq-006"] [data-part="item"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-006"] [data-part="item"] summary::after{
-content:"";position:absolute;right:0.375rem;top:1.3125rem;width:0.5rem;height:0.5rem;
-border-right:2px solid var(--vibeui-faq-006-accent);border-bottom:2px solid var(--vibeui-faq-006-accent);
-transform:rotate(45deg);
-transition:transform var(--vibeui-faq-006-dur-2) ease;
-}
-[data-vibeui-block="faq-006"] [data-part="item"][open] summary::after{transform:rotate(-135deg)}
-[data-vibeui-block="faq-006"] [data-part="item"] summary:focus-visible{outline:2px solid var(--vibeui-faq-006-accent);outline-offset:-2px}
-[data-vibeui-block="faq-006"] [data-part="answer"]{
-margin:0;padding:0 2rem 1.25rem 0;max-width:60ch;
-color:var(--vibeui-faq-006-muted);font-size:0.9375rem;line-height:1.6;
-}
-[data-vibeui-block="faq-006"] [data-part="help"]{
-align-self:start;
-padding:1.5rem;border:1px solid var(--vibeui-faq-006-border);border-radius:1.25rem;
-background:var(--vibeui-faq-006-card);
-box-shadow:0 24px 50px -44px var(--vibeui-faq-006-shadow);
-}
-[data-vibeui-block="faq-006"] [data-part="help-title"]{
-margin:0;font-size:1.125rem;font-weight:680;letter-spacing:-0.015em;
-}
-[data-vibeui-block="faq-006"] [data-part="help-text"]{
-margin:0.5rem 0 1.25rem;color:var(--vibeui-faq-006-muted);font-size:0.9375rem;line-height:1.55;
-}
-[data-vibeui-block="faq-006"] [data-part="channels"]{display:grid;gap:0.5rem}
-[data-vibeui-block="faq-006"] [data-part="channel"]{
-display:block;padding:0.75rem 0.875rem;border-radius:0.875rem;
-border:1px solid var(--vibeui-faq-006-border);
-color:inherit;text-decoration:none;
-transition:border-color var(--vibeui-faq-006-dur-2) ease,background-color var(--vibeui-faq-006-dur-2) ease;
-}
-[data-vibeui-block="faq-006"] [data-part="channel"]:hover{
-border-color:var(--vibeui-faq-006-accent);
-background:color-mix(in oklab,var(--vibeui-faq-006-accent) 7%,transparent);
-}
-[data-vibeui-block="faq-006"] [data-part="channel"] strong{display:block;font-size:0.9375rem;font-weight:650}
-[data-vibeui-block="faq-006"] [data-part="channel"] span{display:block;margin-top:0.125rem;color:var(--vibeui-faq-006-muted);font-size:0.8125rem;line-height:1.4}
-[data-vibeui-block="faq-006"] a:focus-visible,
-[data-vibeui-block="faq-006"] summary:focus-visible{outline:2px solid var(--vibeui-faq-006-accent);outline-offset:2px}
+/* Список вопросов — accordion-001, ему отдаётся вся колонка. */
+[data-vibeui-block="faq-006"] [data-part="rows"]{width:100%;max-width:none}
+/* Карточка помощи — card-024, каналы внутри — item-004 во всю её ширину. */
+[data-vibeui-block="faq-006"] [data-part="help"] [data-vibeui-block="item-004"]{width:100%;max-width:none}
 @container (min-width: 52rem){
 [data-vibeui-block="faq-006"] [data-part="shell"]{grid-template-columns:1.7fr 1fr;gap:3.5rem;padding:4.5rem 2rem}
 [data-vibeui-block="faq-006"] [data-part="help"]{position:sticky;top:1.5rem}
-[data-vibeui-block="faq-006"] [data-part="item"] summary{font-size:1.0625rem;padding-block:1.125rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-006"] *{animation:none!important;transition:none!important}}
 `
@@ -189,7 +154,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Вопросы с карточкой «не нашли ответ»: контакты рядом со списком, не после. */
+/** accordion-001 и card-024 с каналами item-004: контакты рядом со списком, не после. */
 export function Faq006({
   title = "Частые вопросы о работе сервиса",
   items = DEFAULT_ITEMS,
@@ -197,6 +162,7 @@ export function Faq006({
   helpText = "Спросите живого человека. Мы не пересылаем вопросы по отделам: кто ответил первым, тот и доводит до решения.",
   channels = DEFAULT_CHANNELS,
   helpLabel = "Связаться с поддержкой",
+  marker = "chevron",
   background = "",
   accent,
   className,
@@ -225,26 +191,40 @@ export function Faq006({
       >
         <div data-part="shell">
           <div data-part="list">
-            <h2 data-part="title">{title}</h2>
-            {items.map((item) => (
-              <details key={item.question} data-part="item">
-                <summary>{item.question}</summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
+            <Heading001
+              data-part="heading"
+              title={title}
+              accent={accent}
+            />
+            <Accordion001
+              marker={marker}
+              data-part="rows"
+              items={items}
+              exclusive={false}
+              divider="line"
+              accent={accent}
+            />
           </div>
-          <aside data-part="help" aria-label={helpLabel}>
-            <h3 data-part="help-title">{helpTitle}</h3>
-            <p data-part="help-text">{helpText}</p>
-            <div data-part="channels">
-              {channels.map((channel) => (
-                <a key={channel.href} data-part="channel" href={channel.href}>
-                  <strong>{channel.label}</strong>
-                  <span>{channel.detail}</span>
-                </a>
-              ))}
-            </div>
-          </aside>
+          <Card024
+            data-part="help"
+            aria-label={helpLabel}
+            title={helpTitle}
+            text={helpText}
+            note=""
+            accent={accent}
+            background={background || undefined}
+          >
+            {channels.map((channel) => (
+              <Item004
+                key={channel.href}
+                href={channel.href}
+                title={channel.label}
+                meta={channel.detail}
+                hint=""
+                accent={accent}
+              />
+            ))}
+          </Card024>
         </div>
       </section>
     </>

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Stats002Stat = {
   value: number
   label: string
@@ -66,6 +68,7 @@ container-type:inline-size;
 :where([data-vibeui-block="stats-002"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="stats-002"]{box-sizing:border-box;padding:5.5rem 0;background:var(--vibeui-stats-002-panel);color:var(--vibeui-stats-002-fg);font-family:var(--vibeui-stats-002-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="stats-002"] *{box-sizing:border-box}
+[data-vibeui-block="stats-002"] [data-part="more"]{margin-top:1rem}
 [data-vibeui-block="stats-002"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem}
 [data-vibeui-block="stats-002"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-stats-002-mono);font-size:.75rem;color:var(--vibeui-stats-002-accent)}
 [data-vibeui-block="stats-002"] [data-part="title"]{margin:0;font-weight:800;font-size:clamp(2.2rem,5.2cqi,3.8rem);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
@@ -107,8 +110,6 @@ container-type:inline-size;
 [data-vibeui-block="stats-002"] [data-part="p"] span{position:absolute;left:50%;bottom:calc(100% + .5rem);transform:translate(-50%,.3rem);padding:.35rem .6rem;border-radius:6px;background:var(--vibeui-stats-002-fg);color:var(--vibeui-stats-002-bg);font-size:.68rem;font-weight:500;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 [data-vibeui-block="stats-002"] [data-part="p"]:hover span,[data-vibeui-block="stats-002"] [data-part="p"]:focus-visible span{opacity:1;transform:translate(-50%,0)}
 [data-vibeui-block="stats-002"] [data-part="p"]:focus-visible{outline:2px solid var(--vibeui-stats-002-accent);outline-offset:2px}
-[data-vibeui-block="stats-002"] [data-part="more"]{display:inline-block;margin-top:1rem;font-family:var(--vibeui-stats-002-mono);font-size:.78rem;color:var(--vibeui-stats-002-accent);text-decoration:none;transition:transform .3s var(--vibeui-stats-002-ease)}
-[data-vibeui-block="stats-002"] [data-part="more"]:hover{transform:translateX(4px)}
 @keyframes vibeui-stats-002-rise{to{transform:none}}
 @keyframes vibeui-stats-002-up{from{opacity:0;transform:translateY(22px)}}
 @keyframes vibeui-stats-002-pop{from{opacity:0;transform:scale(.4)}}
@@ -312,9 +313,12 @@ export function Stats002({
                 ))}
               </ul>
               {moreLabel ? (
-                <a data-part="more" href={moreHref}>
-                  {moreLabel}
-                </a>
+                <Button077
+                  data-part="more"
+                  label={moreLabel}
+                  href={moreHref}
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

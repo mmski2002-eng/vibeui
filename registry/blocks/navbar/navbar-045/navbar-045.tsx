@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
+import { Button114 } from "@/registry/components/button/button-114/button-114"
 
 export type Navbar045Link = {
   label: string
@@ -59,6 +60,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-045"][data-sticky="true"]{position:sticky;top:0}
 [data-vibeui-block="navbar-045"][data-scrolled="true"]{background:color-mix(in oklab,var(--vibeui-navbar-045-bg) 86%,transparent);backdrop-filter:blur(14px)}
 [data-vibeui-block="navbar-045"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-045"] [data-part="mode"]{width:2.5rem}
 [data-vibeui-block="navbar-045"] [data-part="row"]{display:flex;align-items:center;gap:.8rem;height:4.25rem;max-width:74rem;margin:0 auto;padding:0 1.25rem;border-bottom:1px solid var(--vibeui-navbar-045-line);transition:border-color .6s}
 [data-vibeui-block="navbar-045"] [data-part="brand"]{display:flex;flex-direction:column;gap:.05rem;text-decoration:none;color:inherit;min-width:0}
 [data-vibeui-block="navbar-045"] [data-part="name"]{font-family:var(--vibeui-navbar-045-display);font-weight:500;font-size:1.45rem;line-height:1;letter-spacing:.01em;white-space:nowrap}
@@ -69,13 +71,6 @@ container-type:inline-size;
 [data-vibeui-block="navbar-045"] [data-part="nav"] a:hover{color:var(--vibeui-navbar-045-fg)}
 [data-vibeui-block="navbar-045"] [data-part="nav"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-045"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.6rem}
-[data-vibeui-block="navbar-045"] [data-part="mode"]{position:relative;display:inline-grid;place-items:center;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--vibeui-navbar-045-line);border-radius:999px;background:transparent;color:var(--vibeui-navbar-045-accent);cursor:pointer;transition:border-color .25s,transform .25s}
-[data-vibeui-block="navbar-045"] [data-part="mode"]:hover{border-color:var(--vibeui-navbar-045-accent);transform:rotate(15deg)}
-[data-vibeui-block="navbar-045"] [data-part="mode"] svg{position:absolute;width:1.15rem;height:1.15rem;transition:opacity .5s,transform .6s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="navbar-045"] [data-part="mode"] [data-icon="sun"]{opacity:0;transform:rotate(-90deg) scale(.5)}
-[data-vibeui-block="navbar-045"] [data-part="mode"] [data-icon="moon"]{opacity:1;transform:rotate(0) scale(1)}
-[data-vibeui-block="navbar-045"] [data-part="mode"][aria-checked="true"] [data-icon="sun"]{opacity:1;transform:rotate(0) scale(1)}
-[data-vibeui-block="navbar-045"] [data-part="mode"][aria-checked="true"] [data-icon="moon"]{opacity:0;transform:rotate(90deg) scale(.5)}
 [data-vibeui-block="navbar-045"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--vibeui-navbar-045-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-045"] [data-part="burger"] i{display:block;width:1rem;height:1px;margin:0 auto;background:currentColor;transition:transform .25s,opacity .2s}
 [data-vibeui-block="navbar-045"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(6px) rotate(45deg)}
@@ -174,15 +169,7 @@ export function Navbar045({
             ))}
           </nav>
           <div data-part="right">
-            <button data-part="mode" type="button" role="switch" aria-checked={current === "day"} aria-label={current === "day" ? nightLabel : paperLabel} onClick={toggle}>
-              <svg data-icon="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="4" />
-                <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-              </svg>
-              <svg data-icon="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
-              </svg>
-            </button>
+            <Button114 data-part="mode"  aria-checked={current === "day"} aria-label={current === "day" ? nightLabel : paperLabel} onClick={toggle} accent={accent} />
             <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-045-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />
               <i aria-hidden="true" />

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks021 } from "@/registry/components/navigation/footerlinks-021/footerlinks-021"
 
 export type Footer026Link = { label: string; href: string }
 
@@ -48,6 +49,7 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-026"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-026"]{box-sizing:border-box;position:relative;display:block;overflow:hidden;background:var(--vibeui-footer-026-bg);color:var(--vibeui-footer-026-fg);font-family:var(--vibeui-footer-026-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="footer-026"] *{box-sizing:border-box}
+[data-vibeui-block="footer-026"] [data-part="links"]{margin:0}
 [data-vibeui-block="footer-026"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="footer-026"] a:focus-visible{outline:2px solid var(--vibeui-footer-026-accent);outline-offset:3px;border-radius:.3rem}
 [data-vibeui-block="footer-026"] [data-part="pine"]{position:absolute;top:-1rem;width:14rem;height:14rem;fill:none;stroke:var(--vibeui-footer-026-pine);stroke-width:1.2;stroke-linecap:round;opacity:.7;pointer-events:none}
@@ -61,9 +63,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-026"] [data-part="date"]{margin:0;font-family:var(--vibeui-footer-026-display);font-size:1rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--vibeui-footer-026-muted);font-variant-numeric:lining-nums}
 [data-vibeui-block="footer-026"] [data-part="date"] i{display:inline-block;width:.35rem;height:.35rem;margin:0 .6rem .15rem;border-radius:50%;background:var(--vibeui-footer-026-accent);box-shadow:0 0 6px var(--vibeui-footer-026-accent)}
 [data-vibeui-block="footer-026"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.7rem 1.4rem;padding-top:1.2rem;border-top:1px solid var(--vibeui-footer-026-line)}
-[data-vibeui-block="footer-026"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.2rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="footer-026"] [data-part="links"] a{font-family:var(--vibeui-footer-026-display);font-size:.98rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;opacity:.8;transition:opacity .25s,color .25s}
-[data-vibeui-block="footer-026"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-026-accent)}
 [data-vibeui-block="footer-026"] [data-part="tag"]{display:inline-flex;align-items:center;height:1.9rem;padding:0 .8rem;border:1px solid var(--vibeui-footer-026-line);border-radius:999px;font-size:.76rem;font-weight:600;color:var(--vibeui-footer-026-silver);transition:border-color .25s,color .25s}
 [data-vibeui-block="footer-026"] [data-part="tag"]:hover{border-color:var(--vibeui-footer-026-accent);color:var(--vibeui-footer-026-accent)}
 [data-vibeui-block="footer-026"] [data-part="rsvp"]{margin:0;font-size:.84rem;color:var(--vibeui-footer-026-muted);white-space:nowrap}
@@ -143,13 +142,7 @@ export function Footer026({
           </div>
           <div data-part="bottom">
             {links.length > 0 ? (
-              <ul data-part="links">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
-                  </li>
-                ))}
-              </ul>
+              <Footerlinks021 data-part="links" links={links} accent={accent} />
             ) : null}
             {hashtag ? (
               <a data-part="tag" href={`https://www.instagram.com/explore/tags/${hashtag.replace(/^#/, "")}/`} target="_blank" rel="noopener noreferrer">

@@ -1,6 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type FormEvent, type PointerEvent } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
+
+import { Button003 } from "@/registry/components/button/button-003/button-003"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
 
 export type Contact021Link = {
   label: string
@@ -81,16 +85,6 @@ container-type:inline-size;
 [data-vibeui-block="contact-021"][data-in="true"] :is([data-part="rise"],[data-rise]){opacity:1;transform:none}
 [data-vibeui-block="contact-021"] [data-part="text"]{display:block;margin:1rem 0 0;max-width:30rem;color:var(--vibeui-contact-021-muted)}
 [data-vibeui-block="contact-021"] [data-part="form"]{position:relative;display:grid;gap:1rem;margin-top:2rem;max-width:34rem}
-[data-vibeui-block="contact-021"] [data-part="field"]{position:relative;display:block}
-[data-vibeui-block="contact-021"] [data-part="field"] input,[data-vibeui-block="contact-021"] [data-part="field"] textarea{width:100%;padding:1.5rem 1.1rem .7rem;border-radius:.9rem;border:1px solid var(--vibeui-contact-021-line);background:var(--vibeui-contact-021-bg);color:inherit;font:inherit;font-size:1rem;line-height:1.4;outline:none;transition:border-color .25s,box-shadow .25s;resize:vertical}
-[data-vibeui-block="contact-021"] [data-part="field"] textarea{min-height:8rem}
-[data-vibeui-block="contact-021"] [data-part="field"] input:focus,[data-vibeui-block="contact-021"] [data-part="field"] textarea:focus{border-color:var(--vibeui-contact-021-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-contact-021-accent) 18%,transparent)}
-[data-vibeui-block="contact-021"] [data-part="field"] span{position:absolute;left:1.1rem;top:1.1rem;color:var(--vibeui-contact-021-muted);pointer-events:none;transform-origin:left top;transition:transform .3s var(--vibeui-contact-021-ease),color .2s}
-[data-vibeui-block="contact-021"] [data-part="field"] :is(input,textarea):focus + span,[data-vibeui-block="contact-021"] [data-part="field"] :is(input,textarea):not(:placeholder-shown) + span{transform:translateY(-.65rem) scale(.74);color:var(--vibeui-contact-021-accent)}
-[data-vibeui-block="contact-021"] [data-part="submit"]{justify-self:start;display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.7rem;border-radius:999px;border:0;background:var(--vibeui-contact-021-fg);color:var(--vibeui-contact-021-bg);font:inherit;font-weight:600;font-size:1rem;cursor:pointer;transform:translate(calc(var(--vibeui-contact-021-mx,0) * 1px),calc(var(--vibeui-contact-021-my,0) * 1px)) scale(var(--vibeui-contact-021-ms,1));transition:transform .35s var(--vibeui-contact-021-ease),background .25s,color .25s,box-shadow .35s;box-shadow:0 10px 30px -14px color-mix(in oklab,var(--vibeui-contact-021-accent) 60%,transparent)}
-[data-vibeui-block="contact-021"] [data-part="submit"]:hover{--vibeui-contact-021-ms:1.04;background:var(--vibeui-contact-021-accent);color:var(--vibeui-contact-021-on-accent);box-shadow:0 18px 40px -14px color-mix(in oklab,var(--vibeui-contact-021-accent) 80%,transparent)}
-[data-vibeui-block="contact-021"] [data-part="submit"] i{font-style:normal;transition:transform .35s var(--vibeui-contact-021-ease)}
-[data-vibeui-block="contact-021"] [data-part="submit"]:hover i{transform:translateX(.25rem)}
 [data-vibeui-block="contact-021"] [data-part="sent"]{display:grid;justify-items:start;gap:.6rem;margin-top:2rem;max-width:34rem;padding:2rem;border-radius:1.2rem;background:var(--vibeui-contact-021-bg);border:1px solid var(--vibeui-contact-021-line);animation:vibeui-contact-021-pop .6s var(--vibeui-contact-021-ease)}
 [data-vibeui-block="contact-021"] [data-part="sent"] svg{width:3.4rem;height:3.4rem;color:var(--vibeui-contact-021-accent)}
 [data-vibeui-block="contact-021"] [data-part="sent"] circle{fill:none;stroke:currentColor;stroke-width:2;stroke-dasharray:160;stroke-dashoffset:160;animation:vibeui-contact-021-draw .9s var(--vibeui-contact-021-ease) forwards}
@@ -117,7 +111,6 @@ container-type:inline-size;
 [data-vibeui-block="contact-021"][data-in="true"] [data-part="pic"]{opacity:1;transform:rotate(2.5deg)}
 [data-vibeui-block="contact-021"][data-in="true"] [data-part="pic"]:hover{transform:rotate(0) scale(1.03)}
 [data-vibeui-block="contact-021"] [data-part="pic"] img{width:100%;height:100%;object-fit:cover;display:block;background:var(--vibeui-contact-021-line)}
-[data-vibeui-block="contact-021"] button:focus-visible,[data-vibeui-block="contact-021"] a:focus-visible{outline:2px solid var(--vibeui-contact-021-accent);outline-offset:3px}
 @keyframes vibeui-contact-021-draw{to{stroke-dashoffset:0}}
 @keyframes vibeui-contact-021-pop{from{opacity:0;transform:scale(.96) translateY(.6rem)}}
 @keyframes vibeui-contact-021-tick{50%{opacity:0}}
@@ -219,17 +212,6 @@ export function Contact021({
     setSent(true)
   }
 
-  const magnet = (event: PointerEvent<HTMLButtonElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-    const dx = event.clientX - (rect.left + rect.width / 2)
-    const dy = event.clientY - (rect.top + rect.height / 2)
-    event.currentTarget.style.setProperty("--vibeui-contact-021-mx", (dx * 0.22).toFixed(1))
-    event.currentTarget.style.setProperty("--vibeui-contact-021-my", (dy * 0.22).toFixed(1))
-  }
-  const release = (event: PointerEvent<HTMLButtonElement>) => {
-    event.currentTarget.style.setProperty("--vibeui-contact-021-mx", "0")
-    event.currentTarget.style.setProperty("--vibeui-contact-021-my", "0")
-  }
 
   const palette = {
     ...(accent ? { "--vibeui-contact-021-accent": accent } : null),
@@ -279,22 +261,32 @@ export function Contact021({
               </div>
             ) : (
               <form data-part="form" onSubmit={submit}>
-                <label data-part="field" data-rise="" style={{ ["--vibeui-contact-021-i" as string]: 1 }}>
-                  <input type="text" name="name" placeholder=" " required autoComplete="name" />
-                  <span>{nameLabel}</span>
-                </label>
-                <label data-part="field" data-rise="" style={{ ["--vibeui-contact-021-i" as string]: 2 }}>
-                  <input type="email" name="email" placeholder=" " required autoComplete="email" />
-                  <span>{emailLabel}</span>
-                </label>
-                <label data-part="field" data-rise="" style={{ ["--vibeui-contact-021-i" as string]: 3 }}>
-                  <textarea name="message" placeholder=" " required rows={4} />
-                  <span>{messageLabel}</span>
-                </label>
-                <button type="submit" data-part="submit" onPointerMove={magnet} onPointerLeave={release}>
+                <Input001
+                  type="text"
+                  name="name"
+                  autoComplete="name"
+                  required
+                  label={nameLabel}
+                  accent={accent}
+                />
+                <Input001
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  required
+                  label={emailLabel}
+                  accent={accent}
+                />
+                <Input034
+                  name="message"
+                  rows={4}
+                  required
+                  label={messageLabel}
+                  accent={accent}
+                />
+                <Button003 type="submit" accent={accent}>
                   {submitLabel}
-                  <i aria-hidden="true">→</i>
-                </button>
+                </Button003>
               </form>
             )}
           </div>

@@ -2,6 +2,9 @@
 
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Subscribe020Frequency = {
   /** Короткое имя: «Раз в неделю». */
   name: string
@@ -88,14 +91,8 @@ container-type:inline-size;
 [data-vibeui-block="subscribe-020"] [data-part="freq"] button:focus-visible{outline:2px solid var(--vibeui-subscribe-020-accent);outline-offset:2px}
 [data-vibeui-block="subscribe-020"] [data-part="promise"]{margin:.8rem 0 0;min-height:1.7em;font-style:italic;color:var(--vibeui-subscribe-020-muted);animation:vibeui-subscribe-020-swap .5s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="subscribe-020"] [data-part="form"]{display:grid;gap:.6rem;margin:1.4rem 0 0;max-width:30rem}
-[data-vibeui-block="subscribe-020"] [data-part="field"]{position:relative}
-[data-vibeui-block="subscribe-020"] [data-part="field"] input{width:100%;height:3.2rem;padding:.9rem 0 0;border:0;border-bottom:1px solid var(--vibeui-subscribe-020-fg);background:transparent;color:var(--vibeui-subscribe-020-fg);font:inherit;outline:none;transition:border-color .3s}
-[data-vibeui-block="subscribe-020"] [data-part="field"] label{position:absolute;left:0;top:1rem;font-style:italic;color:var(--vibeui-subscribe-020-muted);pointer-events:none;transition:transform .3s cubic-bezier(.2,.8,.2,1),font-size .3s,color .3s;transform-origin:left}
-[data-vibeui-block="subscribe-020"] [data-part="field"] input:focus-visible+label,[data-vibeui-block="subscribe-020"] [data-part="field"] input:not(:placeholder-shown)+label{transform:translateY(-1rem);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-subscribe-020-accent)}
-[data-vibeui-block="subscribe-020"] [data-part="field"] input:focus-visible{border-color:var(--vibeui-subscribe-020-accent)}
-[data-vibeui-block="subscribe-020"] [data-part="form"] button{height:3.1rem;padding:0 1.5rem;border:0;border-radius:999px;background:var(--vibeui-subscribe-020-accent);color:var(--vibeui-subscribe-020-on-accent);font:inherit;font-style:italic;cursor:pointer;white-space:nowrap;transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
-[data-vibeui-block="subscribe-020"] [data-part="form"] button:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px var(--vibeui-subscribe-020-accent)}
-[data-vibeui-block="subscribe-020"] [data-part="form"] button:focus-visible{outline:2px solid var(--vibeui-subscribe-020-fg);outline-offset:3px}
+/* Поле — input-001, кнопка — button-001; в сетке формы им отдаются колонки. */
+[data-vibeui-block="subscribe-020"] [data-part="form"] > [data-vibeui-block="input-001"]{min-width:0}
 [data-vibeui-block="subscribe-020"] [data-part="fine"]{margin:.8rem 0 0;font-size:.8rem;font-style:italic;color:var(--vibeui-subscribe-020-muted)}
 [data-vibeui-block="subscribe-020"] [data-part="done"]{display:flex;align-items:center;gap:1.2rem;margin:1.6rem 0 0;max-width:30rem}
 [data-vibeui-block="subscribe-020"] [data-part="done"] svg{flex-shrink:0;width:3.6rem;height:3.6rem;color:var(--vibeui-subscribe-020-accent)}
@@ -236,11 +233,10 @@ export function Subscribe020({
                   </p>
                 ) : null}
                 <form data-part="form" onSubmit={submit}>
-                  <div data-part="field">
-                    <input id="vibeui-subscribe-020-email" type="email" name="email" required placeholder=" " autoComplete="email" />
-                    <label htmlFor="vibeui-subscribe-020-email">{placeholder}</label>
-                  </div>
-                  <button type="submit">{actionLabel}</button>
+                  <Input001 type="email" name="email" required label={placeholder} autoComplete="email" accent={accent} />
+                  <Button001 type="submit" size="lg" accent={accent}>
+                    {actionLabel}
+                  </Button001>
                 </form>
                 {fine ? <p data-part="fine">{fine}</p> : null}
               </>

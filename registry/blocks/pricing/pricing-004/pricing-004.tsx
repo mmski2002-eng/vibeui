@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing004Row = {
   feature: string
@@ -83,14 +86,9 @@ box-sizing:border-box;background:var(--vibeui-pricing-004-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-004-sans);
 }
 [data-vibeui-block="pricing-004"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-004"] [data-part="heading"]{margin-bottom:2rem}
+[data-vibeui-block="pricing-004"] [data-part="pick"]{margin-top:0.625rem}
 [data-vibeui-block="pricing-004"] [data-part="shell"]{max-width:72rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
-[data-vibeui-block="pricing-004"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-004-accent);
-}
-[data-vibeui-block="pricing-004"] h2{
-margin:0 0 2rem;max-width:24ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
 [data-vibeui-block="pricing-004"] [data-part="scroll"]{overflow-x:auto;border:1px solid var(--vibeui-pricing-004-line);border-radius:1rem;background:var(--vibeui-pricing-004-card)}
 [data-vibeui-block="pricing-004"] table{width:100%;min-width:40rem;border-collapse:collapse;font-size:0.875rem}
 [data-vibeui-block="pricing-004"] caption{
@@ -102,13 +100,6 @@ background:var(--vibeui-pricing-004-card);border-bottom:1px solid var(--vibeui-p
 }
 [data-vibeui-block="pricing-004"] [data-part="planname"]{display:block;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="pricing-004"] [data-part="planprice"]{display:block;margin-top:0.25rem;font-size:0.8125rem;font-weight:500;color:var(--vibeui-pricing-004-muted);font-variant-numeric:tabular-nums}
-[data-vibeui-block="pricing-004"] [data-part="pick"]{
-display:inline-flex;align-items:center;justify-content:center;margin-top:0.625rem;height:2rem;padding:0 0.75rem;
-border-radius:0.5rem;border:1px solid var(--vibeui-pricing-004-line);color:var(--vibeui-pricing-004-fg);
-font-size:0.75rem;font-weight:650;text-decoration:none;transition:border-color var(--vibeui-pricing-004-dur-2) ease,background-color var(--vibeui-pricing-004-dur-2) ease;
-}
-[data-vibeui-block="pricing-004"] [data-featured="true"] [data-part="pick"]{background:var(--vibeui-pricing-004-accent);color:oklch(from var(--vibeui-pricing-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}
-[data-vibeui-block="pricing-004"] [data-part="pick"]:focus-visible{outline:2px solid var(--vibeui-pricing-004-accent);outline-offset:2px}
 [data-vibeui-block="pricing-004"] [data-part="grouprow"] th{
 padding:0.625rem 1rem;background:var(--vibeui-pricing-004-soft);text-align:left;
 font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--vibeui-pricing-004-muted);
@@ -206,8 +197,12 @@ export function Pricing004({
         style={palette}
       >
         <div data-part="shell">
-          {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h2>{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
 
           <div data-part="scroll">
             <table>
@@ -223,9 +218,15 @@ export function Pricing004({
                     >
                       <span data-part="planname">{plan.name}</span>
                       <span data-part="planprice">{plan.price}</span>
-                      <a data-part="pick" href={plan.href}>
-                        {pickLabel}
-                      </a>
+                      <Button016
+                        data-part="pick"
+                        label={pickLabel}
+                        href={plan.href}
+                        external={false}
+                        size="lg"
+                        tone={plan.featured ? "accent" : "neutral"}
+                        accent={accent}
+                      />
                     </th>
                   ))}
                 </tr>

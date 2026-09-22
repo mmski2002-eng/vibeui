@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card027 } from "@/registry/components/card/card-027/card-027"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 
 type Testimonials002Item = {
   quote: string
@@ -24,7 +27,9 @@ export type Testimonials002Props = {
 // когда важно показать не одну громкую цитату, а объём: карточки одной
 // высоты, автор внизу, источник отзыва подписан. Источник важен: отзыв без
 // указания, откуда он взят, читается как написанный маркетологом.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-002"] [data-part="heading"]{margin-bottom:2rem}
+[data-vibeui-block="testimonials-002"] [data-part="card"]{margin:0}
+
 :where([data-vibeui-block="testimonials-002"]){
 --vibeui-testimonials-002-bg:transparent;
 --vibeui-testimonials-002-card:light-dark(oklch(1 0 0),oklch(0.255 0 260));
@@ -50,60 +55,7 @@ font-family:var(--vibeui-testimonials-002-font);
 [data-vibeui-block="testimonials-002"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="testimonials-002"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-testimonials-002-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="testimonials-002"] [data-part="title"]{
-margin:0 0 2rem;max-width:20ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="testimonials-002"] [data-part="grid"]{display:grid;gap:1rem}
-[data-vibeui-block="testimonials-002"] [data-part="card"]{
-/* Элемент грида не сжимается меньше содержимого без явного нуля: на узком
-   экране карточка вылезала за край блока. */
-min-inline-size:0;
-display:flex;flex-direction:column;gap:1.25rem;margin:0;
-padding:1.5rem;border:1px solid var(--vibeui-testimonials-002-border);border-radius:1.125rem;
-background:var(--vibeui-testimonials-002-card);
-transition:border-color var(--vibeui-testimonials-002-dur-2) ease,transform var(--vibeui-testimonials-002-dur-2) ease,box-shadow var(--vibeui-testimonials-002-dur-2) ease;
-}
-[data-vibeui-block="testimonials-002"] [data-part="card"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-testimonials-002-accent) 40%,var(--vibeui-testimonials-002-border));
-transform:translateY(-2px);
-box-shadow:0 22px 44px -36px var(--vibeui-testimonials-002-shadow);
-}
-[data-vibeui-block="testimonials-002"] [data-part="quote"]{
-margin:0;flex:1 1 auto;
-font-size:1rem;line-height:1.6;
-}
-[data-vibeui-block="testimonials-002"] [data-part="quote"]::before{content:"«"}
-[data-vibeui-block="testimonials-002"] [data-part="quote"]::after{content:"»"}
-[data-vibeui-block="testimonials-002"] [data-part="author"]{
-display:flex;align-items:center;gap:0.75rem;
-padding-top:1rem;border-top:1px solid var(--vibeui-testimonials-002-border);
-}
-[data-vibeui-block="testimonials-002"] [data-part="avatar"]{
-position:relative;width:2.5rem;height:2.5rem;flex:none;border-radius:999px;
-display:grid;place-items:center;
-color:var(--vibeui-testimonials-002-accent);
-font-size:0.8125rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="testimonials-002"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-testimonials-002-accent) 15%,var(--vibeui-testimonials-002-card));}
-[data-vibeui-block="testimonials-002"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="testimonials-002"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
-[data-vibeui-block="testimonials-002"] [data-part="name"]{font-size:0.9375rem;font-weight:640}
-[data-vibeui-block="testimonials-002"] [data-part="role"]{color:var(--vibeui-testimonials-002-muted);font-size:0.8125rem;line-height:1.35}
-[data-vibeui-block="testimonials-002"] [data-part="source"]{
-margin-left:auto;flex:none;align-self:flex-start;
-padding:0.1875rem 0.5rem;border-radius:0.375rem;
-border:1px solid var(--vibeui-testimonials-002-border);
-color:var(--vibeui-testimonials-002-muted);font-size:0.6875rem;font-weight:600;white-space:nowrap;
-}
 @container (min-width: 40rem){
 [data-vibeui-block="testimonials-002"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="testimonials-002"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
@@ -221,35 +173,15 @@ export function Testimonials002({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="grid">
             {items.map((item) => (
-              <figure key={item.name} data-part="card">
-                <blockquote data-part="quote">{item.quote}</blockquote>
-                <figcaption data-part="author">
-                  <span
-                    data-part="avatar"
-                    data-empty={item.image ? undefined : "true"}
-                    aria-hidden="true"
-                  >
-                    {item.image ? (
-                      <img
-                        src={item.image}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : null}
-                    {initials(item.name)}
-                  </span>
-                  <span data-part="who">
-                    <span data-part="name">{item.name}</span>
-                    <span data-part="role">{item.role}</span>
-                  </span>
-                  <span data-part="source">{item.source}</span>
-                </figcaption>
-              </figure>
+              <Card027 key={item.name} data-part="card" name={item.name} quote={item.quote} image={item.image} role={item.role} source={item.source} accent={accent} />
             ))}
           </div>
         </div>

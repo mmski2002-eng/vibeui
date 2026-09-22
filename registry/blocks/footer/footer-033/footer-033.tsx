@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks008 } from "@/registry/components/navigation/footerlinks-008/footerlinks-008"
 
 export type Footer033Link = {
   label: string
@@ -61,10 +62,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-033"] [data-part="brand"] svg{width:2rem;height:2rem;color:var(--vibeui-footer-033-accent)}
 [data-vibeui-block="footer-033"] [data-part="tagline"]{margin:1rem 0 0;max-width:22rem;color:var(--vibeui-footer-033-muted)}
 [data-vibeui-block="footer-033"] [data-part="cols"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 1.5rem}
-[data-vibeui-block="footer-033"] [data-part="col"] h3{margin:0 0 .9rem;font-family:var(--vibeui-footer-033-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-footer-033-accent)}
-[data-vibeui-block="footer-033"] [data-part="col"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
-[data-vibeui-block="footer-033"] [data-part="col"] a{color:var(--vibeui-footer-033-fg);text-decoration:none;opacity:.8;transition:opacity .2s,color .2s}
-[data-vibeui-block="footer-033"] [data-part="col"] a:hover{opacity:1;color:var(--vibeui-footer-033-accent)}
 [data-vibeui-block="footer-033"] [data-part="contacts"]{display:grid;gap:.4rem}
 [data-vibeui-block="footer-033"] [data-part="phone"]{font-family:var(--vibeui-footer-033-display);font-weight:700;font-size:1.3rem;letter-spacing:-.02em;color:var(--vibeui-footer-033-fg);text-decoration:none;transition:color .2s}
 [data-vibeui-block="footer-033"] [data-part="phone"]:hover{color:var(--vibeui-footer-033-accent)}
@@ -136,16 +133,7 @@ export function Footer033({
             </div>
             <div data-part="cols">
               {columns.map((column) => (
-                <nav key={column.title} data-part="col" aria-label={column.title}>
-                  <h3>{column.title}</h3>
-                  <ul>
-                    {column.links.map((link) => (
-                      <li key={link.label}>
-                        <a href={link.href}>{link.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                <Footerlinks008 key={column.title} data-part="col" title={column.title} links={column.links} accent={accent} />
               ))}
               <div data-part="col">
                 <h3>{contactsTitle}</h3>

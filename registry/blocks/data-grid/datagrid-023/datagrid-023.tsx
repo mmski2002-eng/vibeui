@@ -1,6 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
+import { Card181 } from "@/registry/components/card/card-181/card-181"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid023Row = {
@@ -72,36 +73,14 @@ border:1px solid var(--vibeui-datagrid-023-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-023-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-023"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-023"] [data-part="paste"]{
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-023-border);
-background:var(--vibeui-datagrid-023-panel);
-}
-[data-vibeui-block="datagrid-023"] [data-part="paste"] label{
-display:block;margin-bottom:0.375rem;font-size:0.75rem;font-weight:600;
-}
-[data-vibeui-block="datagrid-023"] [data-part="hint"]{
-margin:0 0 0.5rem;font-size:0.6875rem;color:var(--vibeui-datagrid-023-muted);
-font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-[data-vibeui-block="datagrid-023"] textarea{
-display:block;width:100%;min-height:4.5rem;resize:vertical;
-font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.75rem;line-height:1.5;color:inherit;
-padding:0.5rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-023-border);background:transparent;
-}
-[data-vibeui-block="datagrid-023"] textarea:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:1px}
-[data-vibeui-block="datagrid-023"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin-top:0.5rem}
 [data-vibeui-block="datagrid-023"] button{
 appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
 padding:0.375rem 0.75rem;border-radius:0.5rem;
 border:1px solid var(--vibeui-datagrid-023-border);
 background:transparent;color:var(--vibeui-datagrid-023-fg);
 }
-[data-vibeui-block="datagrid-023"] [data-part="commit"]{border-color:transparent;background:var(--vibeui-datagrid-023-accent);color:oklch(from var(--vibeui-datagrid-023-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="datagrid-023"] button:disabled{opacity:.4;cursor:not-allowed}
 [data-vibeui-block="datagrid-023"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:2px}
-[data-vibeui-block="datagrid-023"] [data-part="report"]{margin:0;margin-inline-start:auto;font-size:0.75rem;color:var(--vibeui-datagrid-023-muted)}
-[data-vibeui-block="datagrid-023"] [data-part="report"][data-bad="true"]{color:var(--vibeui-datagrid-023-bad);font-weight:600}
 [data-vibeui-block="datagrid-023"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-023"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-023-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-023"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -276,58 +255,7 @@ export function Datagrid023({
         className={className}
         style={palette}
       >
-        <div data-part="paste">
-          <label htmlFor={areaId}>{pasteLabel}</label>
-          <p data-part="hint">{separatorHint}</p>
-          <textarea
-            id={areaId}
-            value={text}
-            spellCheck={false}
-            onChange={(event) => setTyped(event.target.value)}
-          />
-          <div data-part="actions">
-            <button
-              type="button"
-              data-part="commit"
-              disabled={good.length === 0}
-              onClick={() => {
-                const stamp = batch + 1
-
-                setBatch(stamp)
-                setAdded((current) => [
-                  ...(current ?? rows),
-                  ...good.map((item, index) => ({
-                    id: `p${stamp}-${index}`,
-                    sku: item.sku,
-                    title: item.title,
-                    quantity: item.quantity,
-                  })),
-                ])
-                setPasted(good.map((_, index) => `p${stamp}-${index}`))
-                setTyped("")
-              }}
-            >
-              {addTemplate.replace("{count}", String(good.length))}
-            </button>
-            <button type="button" onClick={() => setTyped("")}>
-              {clearText}
-            </button>
-            <p
-              data-part="report"
-              data-bad={bad.length > 0 ? "true" : undefined}
-              role="status"
-              aria-live="polite"
-            >
-              {parsed.length === 0
-                ? emptyText
-                : bad.length === 0
-                  ? okTemplate.replace("{count}", String(good.length))
-                  : mixedTemplate
-                      .replace("{good}", String(good.length))
-                      .replace("{bad}", String(bad.length))}
-            </p>
-          </div>
-        </div>
+        <Card181 data-part="paste" pasteLabel={pasteLabel} separatorHint={separatorHint} rows={rows} addTemplate={addTemplate} clearText={clearText} emptyText={emptyText} okTemplate={okTemplate} mixedTemplate={mixedTemplate} areaId={areaId} bad={bad} batch={batch} good={good} parsed={parsed} setAdded={setAdded} setBatch={setBatch} setPasted={setPasted} setTyped={setTyped} text={text} accent={accent} />
         <div
           data-part="scroll"
           role="region"

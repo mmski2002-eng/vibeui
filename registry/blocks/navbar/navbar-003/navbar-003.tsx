@@ -1,6 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 type Navbar003Link = {
@@ -72,6 +74,7 @@ font-family:var(--vibeui-navbar-003-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-003"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-003"] [data-part="action"]{flex:none;margin-left:auto}
 [data-vibeui-block="navbar-003"] [data-part="shell"]{
 display:flex;align-items:center;gap:1rem;
 max-width:82rem;margin:0 auto;padding:0.875rem 1rem;min-height:4rem;
@@ -118,26 +121,6 @@ opacity:1;
 transition:transform var(--vibeui-navbar-003-dur-4) var(--vibeui-navbar-003-ease),width var(--vibeui-navbar-003-dur-4) var(--vibeui-navbar-003-ease),opacity var(--vibeui-navbar-003-dur-2) ease;
 }
 
-[data-vibeui-block="navbar-003"] [data-part="action"]{
-display:inline-flex;align-items:center;gap:0.4375rem;
-min-height:2.5rem;padding:0.25rem 1.125rem;border-radius:0.6875rem;flex:none;margin-left:auto;
-background:var(--vibeui-navbar-003-accent);color:oklch(from var(--vibeui-navbar-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:0.9375rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
-box-shadow:0 0.3125rem 1rem color-mix(in oklab,var(--vibeui-navbar-003-accent) 38%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-navbar-003-dur-2) var(--vibeui-navbar-003-ease),box-shadow var(--vibeui-navbar-003-dur-3) ease;
-}
-[data-vibeui-block="navbar-003"] [data-part="action"] svg{
-width:0.875rem;height:0.875rem;flex:none;
-transition:transform var(--vibeui-navbar-003-dur-3) var(--vibeui-navbar-003-ease);
-}
-[data-vibeui-block="navbar-003"] [data-part="action"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.5rem 1.5rem color-mix(in oklab,var(--vibeui-navbar-003-accent) 48%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
-}
-[data-vibeui-block="navbar-003"] [data-part="action"]:hover svg{transform:translateX(0.1875rem)}
-
 [data-vibeui-block="navbar-003"] [data-part="menu"]{
 flex:none;display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;
 min-height:2.5rem;padding:0.25rem 0.9375rem 0.25rem 0.8125rem;border-radius:0.6875rem;
@@ -177,7 +160,7 @@ border-bottom:1px solid var(--vibeui-navbar-003-line);
 [data-vibeui-block="navbar-003"] [data-part="panel"] a:last-child{border-bottom:0}
 [data-vibeui-block="navbar-003"] [data-part="panel"] a[aria-current="page"]{color:var(--vibeui-navbar-003-accent)}
 
-[data-vibeui-block="navbar-003"] a:focus-visible,
+
 [data-vibeui-block="navbar-003"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-003-accent);outline-offset:3px;
 }
@@ -315,18 +298,15 @@ export function Navbar003({
             ))}
           </nav>
 
-          <a data-part="action" href={actionHref}>
-            {actionLabel}
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M2.5 8h11M9 3.5 13.5 8 9 12.5"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
+          <Button016
+            data-part="action"
+            label={actionLabel}
+            href={actionHref}
+            external={false}
+            size="sm"
+            tone="accent"
+            accent={accent}
+          />
 
           <button
             type="button"

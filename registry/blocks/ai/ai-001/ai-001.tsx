@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Card150 } from "@/registry/components/card/card-150/card-150"
 
 export type Ai001Step = {
   title: string
@@ -73,34 +74,10 @@ container-type:inline-size;
 [data-vibeui-block="ai-001"] [data-part="counter"] i{position:relative;display:block;width:6rem;height:2px;background:var(--vibeui-ai-001-line);overflow:hidden}
 [data-vibeui-block="ai-001"] [data-part="counter"] i::after{content:"";position:absolute;inset:0;background:var(--vibeui-ai-001-accent);transform-origin:left;transform:scaleX(var(--vibeui-ai-001-p,0));transition:transform .5s var(--vibeui-ai-001-ease)}
 [data-vibeui-block="ai-001"] [data-part="flow"]{display:grid;gap:0;margin:2.5rem 0 0;padding:0;list-style:none;grid-template-columns:1fr}
-[data-vibeui-block="ai-001"] [data-part="step"]{display:contents}
-[data-vibeui-block="ai-001"] [data-part="node"]{position:relative;opacity:.42;transform:translateY(14px) scale(.97);transition:opacity .7s var(--vibeui-ai-001-ease),transform .7s var(--vibeui-ai-001-ease)}
-[data-vibeui-block="ai-001"] [data-part="node"][data-lit="true"]{opacity:1;transform:none}
-[data-vibeui-block="ai-001"] [data-part="card"]{--vibeui-ai-001-rx:0deg;--vibeui-ai-001-ry:0deg;position:relative;height:100%;padding:1.5rem;border-radius:1.3rem;background:var(--vibeui-ai-001-glass);border:1px solid var(--vibeui-ai-001-line);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgb(255 255 255 / .1) inset;display:grid;gap:1rem;align-content:start;transform:perspective(1000px) rotateX(var(--vibeui-ai-001-rx)) rotateY(var(--vibeui-ai-001-ry));transition:transform .25s ease-out,border-color .7s,box-shadow .7s;transform-style:preserve-3d;will-change:transform}
-[data-vibeui-block="ai-001"] [data-part="node"][data-lit="true"] [data-part="card"]{border-color:color-mix(in oklab,var(--vibeui-ai-001-accent) 45%,transparent);box-shadow:0 1px 0 rgb(255 255 255 / .14) inset,0 30px 60px -30px var(--vibeui-ai-001-accent),0 0 0 1px color-mix(in oklab,var(--vibeui-ai-001-accent) 12%,transparent)}
-[data-vibeui-block="ai-001"] [data-part="node"][data-lit="true"][data-last="true"] [data-part="card"]{box-shadow:0 1px 0 rgb(255 255 255 / .14) inset,0 40px 80px -30px var(--vibeui-ai-001-accent),0 0 40px -10px color-mix(in oklab,var(--vibeui-ai-001-accent) 55%,transparent)}
-[data-vibeui-block="ai-001"] [data-part="num"]{position:absolute;top:1.1rem;right:1.2rem;font-family:var(--vibeui-ai-001-mono);font-size:.7rem;letter-spacing:.08em;color:var(--vibeui-ai-001-muted);transition:color .5s}
-[data-vibeui-block="ai-001"] [data-part="node"][data-lit="true"] [data-part="num"]{color:var(--vibeui-ai-001-accent)}
-[data-vibeui-block="ai-001"] [data-part="node"] h3{margin:0;font-family:var(--vibeui-ai-001-display);font-size:1.25rem;font-weight:700}
-[data-vibeui-block="ai-001"] [data-part="node"] p{margin:0;color:var(--vibeui-ai-001-muted);font-size:.92rem}
-[data-vibeui-block="ai-001"] [data-part="meta"]{font-family:var(--vibeui-ai-001-mono);font-size:.7rem;color:var(--vibeui-ai-001-accent)}
-[data-vibeui-block="ai-001"] [data-part="demo"]{height:5.5rem;border-radius:.8rem;background:color-mix(in oklab,var(--vibeui-ai-001-bg) 70%,transparent);border:1px solid var(--vibeui-ai-001-line);display:grid;align-items:center;padding:.8rem 1rem;overflow:hidden;transform:translateZ(18px)}
-[data-vibeui-block="ai-001"] [data-part="demo"] i,[data-vibeui-block="ai-001"] [data-part="demo"] span i{animation-play-state:paused}
-[data-vibeui-block="ai-001"] [data-part="node"][data-lit="true"] [data-part="demo"] i{animation-play-state:running}
-[data-vibeui-block="ai-001"] [data-demo="wave"]{grid-auto-flow:column;gap:3px;align-items:center;justify-content:center}
-[data-vibeui-block="ai-001"] [data-demo="wave"] i{width:4px;height:60%;border-radius:2px;background:var(--vibeui-ai-001-accent);transform:scaleY(.3);animation:vibeui-ai-001-wave 1s ease-in-out infinite alternate;animation-delay:calc(var(--vibeui-ai-001-i) * -.09s)}
-[data-vibeui-block="ai-001"] [data-demo="text"]{gap:.45rem;align-content:center}
-[data-vibeui-block="ai-001"] [data-demo="text"] i{display:block;height:.45rem;border-radius:3px;background:color-mix(in oklab,var(--vibeui-ai-001-fg) 30%,transparent);transform-origin:left;transform:scaleX(0);animation:vibeui-ai-001-type 3s ease-in-out infinite;animation-delay:calc(var(--vibeui-ai-001-i) * .4s)}
-[data-vibeui-block="ai-001"] [data-demo="text"] i:nth-child(1){width:90%}
-[data-vibeui-block="ai-001"] [data-demo="text"] i:nth-child(2){width:70%}
-[data-vibeui-block="ai-001"] [data-demo="text"] i:nth-child(3){width:80%}
-[data-vibeui-block="ai-001"] [data-demo="tasks"]{gap:.4rem;align-content:center}
-[data-vibeui-block="ai-001"] [data-demo="tasks"] span{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--vibeui-ai-001-muted)}
-[data-vibeui-block="ai-001"] [data-demo="tasks"] i{width:1rem;height:1rem;border-radius:4px;border:1px solid var(--vibeui-ai-001-line);display:grid;place-items:center;font-size:.6rem;font-style:normal;color:transparent;animation:vibeui-ai-001-check 4s ease-in-out infinite;animation-delay:calc(var(--vibeui-ai-001-i) * .6s)}
-[data-vibeui-block="ai-001"] [data-part="link"]{position:relative;height:2.6rem;margin:0 auto;width:2px;background:var(--vibeui-ai-001-line);overflow:hidden;transition:background .5s}
-[data-vibeui-block="ai-001"] [data-part="link"]::after{content:"";position:absolute;left:0;top:-40%;width:100%;height:40%;background:linear-gradient(180deg,transparent,var(--vibeui-ai-001-accent));opacity:0;animation:vibeui-ai-001-flow-v 1.2s linear infinite;animation-play-state:paused;transition:opacity .3s}
-[data-vibeui-block="ai-001"] [data-part="link"][data-run="true"]::after{opacity:1;animation-play-state:running}
-[data-vibeui-block="ai-001"] [data-part="link"][data-done="true"]{background:color-mix(in oklab,var(--vibeui-ai-001-accent) 55%,transparent)}
+[data-vibeui-block="ai-001"] [data-part="step-node"]{position:relative;opacity:.42;transform:translateY(14px) scale(.97);transition:opacity .7s var(--vibeui-ai-001-ease),transform .7s var(--vibeui-ai-001-ease)}
+[data-vibeui-block="ai-001"] [data-part="step-node"][data-lit="true"]{opacity:1;transform:none}
+[data-vibeui-block="ai-001"] [data-part="step-node"] h3{margin:0;font-family:var(--vibeui-ai-001-display);font-size:1.25rem;font-weight:700}
+[data-vibeui-block="ai-001"] [data-part="step-node"] p{margin:0;color:var(--vibeui-ai-001-muted);font-size:.92rem}
 @keyframes vibeui-ai-001-wave{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
 @keyframes vibeui-ai-001-type{0%{transform:scaleX(0)}40%,80%{transform:scaleX(1)}100%{transform:scaleX(0)}}
 @keyframes vibeui-ai-001-check{0%,30%{background:transparent;color:transparent}45%,85%{background:var(--vibeui-ai-001-accent);color:var(--vibeui-ai-001-bg);border-color:transparent}100%{background:transparent;color:transparent}}
@@ -113,11 +90,8 @@ container-type:inline-size;
 [data-vibeui-block="ai-001"] [data-part="lede"]{margin:0 0 .35rem}
 [data-vibeui-block="ai-001"] [data-part="counter"]{grid-column:1/-1}
 [data-vibeui-block="ai-001"] [data-part="flow"]{grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;margin-top:3rem}
-[data-vibeui-block="ai-001"] [data-part="link"]{height:2px;width:3.5rem;align-self:center}
-[data-vibeui-block="ai-001"] [data-part="link"]::after{top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,transparent,var(--vibeui-ai-001-accent));animation:vibeui-ai-001-flow-h 1.2s linear infinite;animation-play-state:paused}
-[data-vibeui-block="ai-001"] [data-part="link"][data-run="true"]::after{animation-play-state:running}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="ai-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="ai-001"] [data-demo="text"] i{transform:none}[data-vibeui-block="ai-001"] [data-demo="wave"] i{transform:none}[data-vibeui-block="ai-001"] [data-part="node"]{opacity:1;transform:none}[data-vibeui-block="ai-001"] [data-part="card"]{transform:none}[data-vibeui-block="ai-001"] [data-part="w"] span{transform:none}[data-vibeui-block="ai-001"] [data-part="eyebrow"],[data-vibeui-block="ai-001"] [data-part="lede"],[data-vibeui-block="ai-001"] [data-part="glow"]{opacity:1;transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="ai-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="ai-001"] [data-part="step-node"]{opacity:1;transform:none}[data-vibeui-block="ai-001"] [data-part="w"] span{transform:none}[data-vibeui-block="ai-001"] [data-part="eyebrow"],[data-vibeui-block="ai-001"] [data-part="lede"],[data-vibeui-block="ai-001"] [data-part="glow"]{opacity:1;transform:none}}`
 
 const DEFAULT_STEPS: Ai001Step[] = [
   { title: "Слушает встречу", text: "Подключается к Zoom, Meet или Телемосту как участник. Или берёт запись.", kind: "wave", meta: "во время созвона" },
@@ -162,7 +136,7 @@ export function Ai001({
         const progress = Math.min(1, Math.max(0, (viewport * 0.25 - rect.top) / spare))
         next = Math.min(total, Math.floor(progress * (total + 1)))
       } else {
-        const nodes = track.querySelectorAll<HTMLElement>('[data-part="node"]')
+        const nodes = track.querySelectorAll<HTMLElement>('[data-part="step-node"]')
         next = 0
         nodes.forEach((node) => {
           if (node.getBoundingClientRect().top < viewport * 0.8) next += 1
@@ -208,12 +182,12 @@ export function Ai001({
     const rect = node.getBoundingClientRect()
     const x = (event.clientX - rect.left) / rect.width - 0.5
     const y = (event.clientY - rect.top) / rect.height - 0.5
-    node.style.setProperty("--vibeui-ai-001-rx", `${(-y * 8).toFixed(2)}deg`)
-    node.style.setProperty("--vibeui-ai-001-ry", `${(x * 10).toFixed(2)}deg`)
+    node.style.setProperty("--vibeui-card-150-rx", `${(-y * 8).toFixed(2)}deg`)
+    node.style.setProperty("--vibeui-card-150-ry", `${(x * 10).toFixed(2)}deg`)
   }
   const onNodeLeave = (event: PointerEvent<HTMLDivElement>) => {
-    event.currentTarget.style.setProperty("--vibeui-ai-001-rx", "0deg")
-    event.currentTarget.style.setProperty("--vibeui-ai-001-ry", "0deg")
+    event.currentTarget.style.setProperty("--vibeui-card-150-rx", "0deg")
+    event.currentTarget.style.setProperty("--vibeui-card-150-ry", "0deg")
   }
 
   const words = title.split(" ").filter(Boolean)
@@ -254,33 +228,7 @@ export function Ai001({
               </div>
               <ol data-part="flow">
                 {steps.map((step, index) => (
-                  <li key={step.title} data-part="step">
-                    {index > 0 ? <div data-part="link" data-run={stage === index ? "true" : undefined} data-done={stage > index ? "true" : undefined} aria-hidden="true" /> : null}
-                    <div data-part="node" data-lit={index < stage ? "true" : undefined} data-last={index === stage - 1 ? "true" : undefined}>
-                      <div data-part="card" onPointerMove={onNodeMove} onPointerLeave={onNodeLeave}>
-                      <span data-part="num" aria-hidden="true">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <div data-part="demo" data-demo={step.kind} aria-hidden="true">
-                        {step.kind === "wave" ? Array.from({ length: 24 }, (_, i) => <i key={i} style={{ ["--vibeui-ai-001-i" as string]: i }} />) : null}
-                        {step.kind === "text" ? [0, 1, 2].map((i) => <i key={i} style={{ ["--vibeui-ai-001-i" as string]: i }} />) : null}
-                        {step.kind === "tasks"
-                          ? tasks.map((task, i) => (
-                              <span key={task}>
-                                <i style={{ ["--vibeui-ai-001-i" as string]: i }}>✓</i>
-                                {task}
-                              </span>
-                            ))
-                          : null}
-                      </div>
-                      <div>
-                        {step.meta ? <div data-part="meta">{step.meta}</div> : null}
-                        <h3>{step.title}</h3>
-                        <p>{step.text}</p>
-                      </div>
-                      </div>
-                    </div>
-                  </li>
+                  <Card150 key={step.title} data-part="step" title={step.title} kind={step.kind} meta={step.meta} text={step.text} tasks={tasks} stage={stage} onNodeMove={onNodeMove} onNodeLeave={onNodeLeave} index={index} accent={accent} />
                 ))}
               </ol>
             </div>

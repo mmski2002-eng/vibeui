@@ -2,6 +2,8 @@
 
 import { useRef, useSyncExternalStore, type CSSProperties, type MouseEvent, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type People021Author = {
   name: string
   role: string
@@ -65,13 +67,12 @@ container-type:inline-size;
 :where([data-vibeui-block="people-021"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="people-021"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-people-021-bg);color:var(--vibeui-people-021-fg);font-family:var(--vibeui-people-021-font);font-size:1rem;line-height:1.5;overflow:hidden}
 [data-vibeui-block="people-021"] *{box-sizing:border-box}
+[data-vibeui-block="people-021"] [data-part="join"]{width:max-content}
 [data-vibeui-block="people-021"] [data-part="shell"]{max-width:86rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="people-021"] [data-part="head"]{display:grid;gap:1.2rem;align-items:end}
 [data-vibeui-block="people-021"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-people-021-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-people-021-muted)}
 [data-vibeui-block="people-021"] [data-part="title"]{margin:0;max-width:22ch;font-family:var(--vibeui-people-021-display);font-weight:800;font-size:clamp(2rem,5cqi,3.6rem);line-height:.98;letter-spacing:-.04em}
 [data-vibeui-block="people-021"] [data-part="lede"]{margin:.8rem 0 0;max-width:34rem;color:var(--vibeui-people-021-muted)}
-[data-vibeui-block="people-021"] [data-part="join"]{display:inline-flex;align-items:center;gap:.5rem;height:3rem;padding:0 1.35rem;border-radius:999px;background:var(--vibeui-people-021-accent);color:var(--vibeui-people-021-on-accent);font-weight:600;text-decoration:none;white-space:nowrap;width:max-content;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="people-021"] [data-part="join"]:hover{transform:translateY(-1px);box-shadow:0 12px 30px -12px var(--vibeui-people-021-accent)}
 [data-vibeui-block="people-021"] [data-part="lane"]{display:flex;gap:1rem;margin:2.5rem 0 0;padding:.5rem max(1.25rem,calc((100% - 86rem) / 2 + 1.25rem)) 1rem;overflow-x:auto;scrollbar-width:none;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:pan-y}
 [data-vibeui-block="people-021"] [data-part="lane"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="people-021"] [data-part="lane"][data-dragging="true"]{cursor:grabbing}
@@ -211,12 +212,16 @@ export function People021({
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
             {joinLabel ? (
-              <a data-part="join" href={joinHref}>
-                {joinLabel}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 12h14m-6-6 6 6-6 6" />
-                </svg>
-              </a>
+              <Button016
+                data-part="join"
+                arrow
+                label={joinLabel}
+                href={joinHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
           </div>
         </div>

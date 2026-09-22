@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button102 } from "@/registry/components/button/button-102/button-102"
 
 export type Portfolio008Photo = {
   src: string
@@ -53,6 +54,7 @@ container-type:inline-size;
 :where([data-vibeui-block="portfolio-008"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="portfolio-008"]{box-sizing:border-box;position:relative;display:block;background:var(--vibeui-portfolio-008-bg);color:var(--vibeui-portfolio-008-fg);font-family:var(--vibeui-portfolio-008-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="portfolio-008"] *{box-sizing:border-box}
+[data-vibeui-block="portfolio-008"] [data-part="item"]{width:100%;margin:0 0 1rem}
 [data-vibeui-block="portfolio-008"] [data-part="shell"]{position:relative;z-index:1;max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="portfolio-008"]::after{content:"";position:absolute;inset:0;background-image:${GRAIN};opacity:.3;mix-blend-mode:multiply;pointer-events:none}
 [data-vibeui-block="portfolio-008"] [data-part="head"]{display:grid;gap:.6rem;max-width:40rem;margin-bottom:2.5rem}
@@ -60,15 +62,6 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-008"] [data-part="title"]{margin:0;font-family:var(--vibeui-portfolio-008-display);font-size:clamp(2rem,5cqi,3.6rem);font-weight:500;font-style:italic;line-height:1.05;color:var(--vibeui-portfolio-008-plum);text-wrap:balance}
 [data-vibeui-block="portfolio-008"] [data-part="lede"]{margin:0;color:var(--vibeui-portfolio-008-muted)}
 [data-vibeui-block="portfolio-008"] [data-part="grid"]{columns:2;column-gap:1rem}
-[data-vibeui-block="portfolio-008"] [data-part="item"]{display:block;width:100%;margin:0 0 1rem;padding:0;border:0;background:transparent;color:inherit;font:inherit;cursor:zoom-in;break-inside:avoid;text-align:left}
-[data-vibeui-block="portfolio-008"] [data-part="item"]:focus-visible{outline:2px solid var(--vibeui-portfolio-008-accent);outline-offset:4px;border-radius:.6rem}
-[data-vibeui-block="portfolio-008"] [data-part="pic"]{display:block;overflow:hidden;border-radius:.6rem;background:var(--vibeui-portfolio-008-sand);aspect-ratio:4/3;transition:transform .45s cubic-bezier(.2,.9,.3,1),box-shadow .45s}
-[data-vibeui-block="portfolio-008"] [data-part="item"][data-shape="arch"] [data-part="pic"]{aspect-ratio:4/5;border-radius:50% 50% .6rem .6rem / 36% 36% .6rem .6rem}
-[data-vibeui-block="portfolio-008"] [data-part="item"][data-shape="tall"] [data-part="pic"]{aspect-ratio:3/4}
-[data-vibeui-block="portfolio-008"] [data-part="pic"] img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(.35) saturate(.85) contrast(1.02);transition:filter .6s,transform .6s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="portfolio-008"] [data-part="item"]:hover [data-part="pic"],[data-vibeui-block="portfolio-008"] [data-part="item"]:focus-visible [data-part="pic"]{transform:translateY(-.3rem);box-shadow:0 24px 40px -24px rgb(43 26 36 / .6)}
-[data-vibeui-block="portfolio-008"] [data-part="item"]:hover img,[data-vibeui-block="portfolio-008"] [data-part="item"]:focus-visible img{filter:none;transform:scale(1.04)}
-[data-vibeui-block="portfolio-008"] [data-part="cap"]{display:block;padding:.5rem .2rem 0;font-family:var(--vibeui-portfolio-008-display);font-style:italic;font-size:1.05rem;color:var(--vibeui-portfolio-008-muted)}
 [data-vibeui-block="portfolio-008"] dialog{width:min(100%,52rem);max-width:calc(100% - 2rem);max-height:calc(100% - 2rem);margin:auto;padding:0;border:0;border-radius:1.2rem;background:#1d1620;color:#f3ebe4;box-shadow:0 40px 90px -30px rgb(0 0 0 / .8),0 0 0 1px rgb(255 255 255 / .06)}
 [data-vibeui-block="portfolio-008"] dialog::backdrop{background:rgb(23 19 26 / .78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:vibeui-portfolio-008-veil .5s ease both}
 @keyframes vibeui-portfolio-008-veil{from{opacity:0}}
@@ -86,8 +79,8 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-008"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-portfolio-008-accent);outline-offset:2px}
 [data-vibeui-block="portfolio-008"] [data-part="bar"] svg{width:1.1rem;height:1.1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @container (min-width:40rem){
-[data-vibeui-block="portfolio-008"] [data-part="grid"]{columns:3;column-gap:1.25rem}
 [data-vibeui-block="portfolio-008"] [data-part="item"]{margin-bottom:1.25rem}
+[data-vibeui-block="portfolio-008"] [data-part="grid"]{columns:3;column-gap:1.25rem}
 }
 @container (min-width:64rem){
 [data-vibeui-block="portfolio-008"] [data-part="shell"]{padding:5rem 2.5rem}
@@ -157,10 +150,7 @@ export function Portfolio008({
           </div>
           <div data-part="grid">
             {photos.map((photo, index) => (
-              <button key={photo.src + index} type="button" data-part="item" data-shape={photo.shape ?? "rect"} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`}>
-                <span data-part="pic">{photo.src ? <img src={photo.src} alt={photo.alt ?? ""} loading="lazy" /> : null}</span>
-                {photo.caption ? <span data-part="cap">{photo.caption}</span> : null}
-              </button>
+              <Button102 key={photo.src + index} data-part="item" src={photo.src} shape={photo.shape} caption={photo.caption} alt={photo.alt} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`} accent={accent} />
             ))}
           </div>
         </div>

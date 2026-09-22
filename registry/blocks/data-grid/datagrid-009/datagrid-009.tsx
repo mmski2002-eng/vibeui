@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { Card159 } from "@/registry/components/card/card-159/card-159"
 import type { ComponentProps, CSSProperties, PointerEvent } from "react"
 
 export type Datagrid009Row = {
@@ -61,18 +62,6 @@ border:1px solid var(--vibeui-datagrid-009-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-009-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-009"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-009"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-009-border);
-}
-[data-vibeui-block="datagrid-009"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-009"] [data-part="bar"] button{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
-padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-009-border);
-background:var(--vibeui-datagrid-009-field);color:var(--vibeui-datagrid-009-fg);
-}
-[data-vibeui-block="datagrid-009"] [data-part="bar"] button:focus-visible{outline:2px solid var(--vibeui-datagrid-009-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-009"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-009"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-009-accent);outline-offset:-2px}
 /* fixed: без него браузер пересчитывает ширины по содержимому и перетянутая
@@ -262,12 +251,7 @@ export function Datagrid009({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <button type="button" onClick={() => setWidths(START)}>
-            {resetLabel}
-          </button>
-        </div>
+        <Card159 data-part="bar" heading={heading} resetLabel={resetLabel} setWidths={setWidths} accent={accent} />
         <div
           data-part="scroll"
           role="region"

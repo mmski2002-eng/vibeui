@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing011Props = {
   eyebrow?: string
@@ -56,6 +59,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-011"]{color-scheme:dark}
+[data-vibeui-block="pricing-011"] [data-part="cta-button"]{margin-top:0.5rem;}
 [data-vibeui-block="pricing-011"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -68,21 +72,10 @@ font-family:var(--vibeui-pricing-011-sans);
 max-width:60rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;
 display:grid;grid-template-columns:1fr;gap:2rem;align-items:start;
 }
-[data-vibeui-block="pricing-011"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-011-accent);
-}
-[data-vibeui-block="pricing-011"] h2{
-margin:0;max-width:18ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-011"] [data-part="lede"]{margin:0.875rem 0 0;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-011-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-011"] [data-part="contact"]{
 margin:1.5rem 0 0;padding:1rem;border-radius:0.875rem;border:1px solid var(--vibeui-pricing-011-line);
 background:var(--vibeui-pricing-011-card);font-size:0.8125rem;line-height:1.55;color:var(--vibeui-pricing-011-muted);
 }
-[data-vibeui-block="pricing-011"] [data-part="contact"] a{display:inline-block;margin-top:0.5rem;color:var(--vibeui-pricing-011-accent);font-weight:650;text-decoration:none}
-[data-vibeui-block="pricing-011"] [data-part="contact"] a:hover{text-decoration:underline}
-[data-vibeui-block="pricing-011"] [data-part="contact"] a:focus-visible{outline:2px solid var(--vibeui-pricing-011-accent);outline-offset:3px}
 [data-vibeui-block="pricing-011"] [data-part="list"]{
 border:1px solid var(--vibeui-pricing-011-line);border-radius:1rem;background:var(--vibeui-pricing-011-card);overflow:hidden;
 }
@@ -187,14 +180,18 @@ export function Pricing011({
       >
         <div data-part="shell">
           <div>
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2>{title}</h2>
-            {lede ? <p data-part="lede">{lede}</p> : null}
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={lede}
+              accent={accent}
+            />
             {contact ? (
               <div data-part="contact">
                 {contact.text}
                 <br />
-                <a href={contact.href}>{contact.label}</a>
+                <Button016 data-part="cta-button" label={contact.label} href={contact.href} external={false} size="lg" tone="accent" accent={accent} />
               </div>
             ) : null}
           </div>

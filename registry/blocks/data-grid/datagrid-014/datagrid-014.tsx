@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card164 } from "@/registry/components/card/card-164/card-164"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid014Row = {
@@ -71,12 +72,6 @@ border:1px solid var(--vibeui-datagrid-014-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-014-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-014"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-014"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-014-border);
-}
-[data-vibeui-block="datagrid-014"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-014"] [data-part="state"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-014-muted)}
 [data-vibeui-block="datagrid-014"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-014"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-014-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-014"] table{
@@ -119,14 +114,6 @@ color:var(--vibeui-datagrid-014-accent);border-color:var(--vibeui-datagrid-014-a
 }
 [data-vibeui-block="datagrid-014"] [data-part="pin"]:disabled{opacity:.35;cursor:not-allowed}
 [data-vibeui-block="datagrid-014"] [data-part="pin"]:focus-visible{outline:2px solid var(--vibeui-datagrid-014-accent);outline-offset:2px}
-[data-vibeui-block="datagrid-014"] [data-part="clear"]{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
-padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-014-border);
-background:transparent;color:var(--vibeui-datagrid-014-fg);
-}
-[data-vibeui-block="datagrid-014"] [data-part="clear"]:disabled{opacity:.45;cursor:not-allowed}
-[data-vibeui-block="datagrid-014"] [data-part="clear"]:focus-visible{outline:2px solid var(--vibeui-datagrid-014-accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-014"] *{animation:none!important;transition:none!important}}
 `
 
@@ -303,24 +290,7 @@ export function Datagrid014({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="state" aria-live="polite">
-            {ordered.length === 0
-              ? emptyPinText
-              : pinnedTemplate
-                  .replace("{count}", String(ordered.length))
-                  .replace("{max}", String(maxPinned))}
-          </p>
-          <button
-            type="button"
-            data-part="clear"
-            disabled={ordered.length === 0}
-            onClick={() => setPinned([])}
-          >
-            {clearText}
-          </button>
-        </div>
+        <Card164 data-part="bar" heading={heading} emptyPinText={emptyPinText} pinnedTemplate={pinnedTemplate} maxPinned={maxPinned} clearText={clearText} ordered={ordered} setPinned={setPinned} accent={accent} />
         <div
           data-part="scroll"
           role="region"

@@ -2,6 +2,8 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button015 } from "@/registry/components/button/button-015/button-015"
+
 export type Cta021Props = {
   eyebrow?: string
   title?: string
@@ -64,11 +66,6 @@ container-type:inline-size;
 [data-vibeui-block="cta-021"] [data-part="req"]{display:grid;gap:.3rem;padding:1rem 1.1rem;border:1px dashed var(--vibeui-cta-021-line);border-radius:1rem;background:var(--vibeui-cta-021-bg)}
 [data-vibeui-block="cta-021"] [data-part="req"] span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-cta-021-muted)}
 [data-vibeui-block="cta-021"] [data-part="req"] code{font-family:var(--vibeui-cta-021-display);font-size:1.5rem;font-weight:500;letter-spacing:.06em;color:var(--vibeui-cta-021-plum);overflow-wrap:anywhere}
-[data-vibeui-block="cta-021"] [data-part="copy"]{display:inline-flex;align-items:center;gap:.5rem;height:2.9rem;margin-top:1rem;padding:0 1.3rem;border:1px solid var(--vibeui-cta-021-accent);border-radius:999px;background:var(--vibeui-cta-021-accent);color:var(--vibeui-cta-021-on-accent);font:inherit;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .2s,background .25s}
-[data-vibeui-block="cta-021"] [data-part="copy"]:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--vibeui-cta-021-accent) 88%,#000)}
-[data-vibeui-block="cta-021"] [data-part="copy"][data-copied="true"]{background:var(--vibeui-cta-021-sage);border-color:var(--vibeui-cta-021-sage)}
-[data-vibeui-block="cta-021"] [data-part="copy"]:focus-visible{outline:2px solid var(--vibeui-cta-021-accent);outline-offset:3px}
-[data-vibeui-block="cta-021"] [data-part="copy"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="cta-021"] [data-part="seal"]{position:absolute;top:-1.4rem;right:1.4rem;display:grid;place-items:center;width:4.6rem;height:4.6rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,color-mix(in oklab,var(--vibeui-cta-021-accent) 70%,#fff) 0,var(--vibeui-cta-021-accent) 35%,color-mix(in oklab,var(--vibeui-cta-021-accent) 70%,#000) 100%);color:var(--vibeui-cta-021-on-accent);font-family:var(--vibeui-cta-021-display);font-style:italic;font-size:1.25rem;box-shadow:0 10px 24px -10px rgb(43 26 36 / .6),inset 0 0 0 .3rem rgb(255 255 255 / .12);transform:rotate(-10deg);transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
 [data-vibeui-block="cta-021"] [data-part="fund"][data-copied="true"] [data-part="seal"]{transform:rotate(-10deg) scale(.92)}
 @container (min-width:56rem){
@@ -105,15 +102,6 @@ export function Cta021({
     ...style,
   } as CSSProperties
 
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(requisite)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1800)
-    } catch {
-      setCopied(false)
-    }
-  }
 
   return (
     <>
@@ -141,12 +129,15 @@ export function Cta021({
                 <span>{requisiteLabel}</span>
                 <code>{requisite}</code>
               </div>
-              <button type="button" data-part="copy" data-copied={copied ? "true" : undefined} onClick={copy} aria-live="polite">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  {copied ? <path d="M5 12l5 5L20 7" /> : <path d="M9 9h10v11H9zM5 15V4h11" />}
-                </svg>
-                {copied ? copiedLabel : copyLabel}
-              </button>
+              <Button015
+                data-part="copy-button"
+                value={requisite}
+                label={copyLabel}
+                doneLabel={copiedLabel}
+                hold={1800}
+                onCopy={() => setCopied(true)}
+                onReset={() => setCopied(false)}
+              />
             </div>
           </div>
         </div>

@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Hero019Props = {
   eyebrow?: string
@@ -9,7 +13,6 @@ export type Hero019Props = {
   formTitle?: string
   formLede?: string
   emailLabel?: string
-  emailPlaceholder?: string
   submitLabel?: string
   terms?: string
   signinPrompt?: string
@@ -62,20 +65,11 @@ box-sizing:border-box;background:var(--vibeui-hero-019-bg);color:var(--vibeui-he
 font-family:var(--vibeui-hero-019-font);
 }
 [data-vibeui-block="hero-019"] *{box-sizing:border-box}
+[data-vibeui-block="hero-019"] [data-part="submit"]{margin-top:0.875rem;width:100%}
+[data-vibeui-block="hero-019"] [data-part="submit"]{width:100%;margin-top:0.75rem}
 [data-vibeui-block="hero-019"] [data-part="frame"]{
 max-width:76rem;margin:0 auto;padding:3.5rem 1.25rem;
 display:grid;grid-template-columns:minmax(0,1fr);gap:2rem;align-items:center;
-}
-[data-vibeui-block="hero-019"] [data-part="eyebrow"]{
-margin:0 0 1rem;font-size:0.8125rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-hero-019-accent);
-}
-[data-vibeui-block="hero-019"] h1{
-margin:0;font-size:clamp(1.875rem,5.2cqi,3.25rem);line-height:1.06;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-019"] [data-part="lede"]{
-margin:1rem 0 0;max-width:34rem;font-size:clamp(1rem,1.5cqi,1.125rem);line-height:1.6;
-color:var(--vibeui-hero-019-muted);text-wrap:pretty;
 }
 [data-vibeui-block="hero-019"] [data-part="points"]{list-style:none;margin:1.75rem 0 0;padding:0;display:grid;gap:0.75rem}
 [data-vibeui-block="hero-019"] [data-part="points"] li{
@@ -97,39 +91,6 @@ box-shadow:0 18px 40px color-mix(in oklab,var(--vibeui-hero-019-fg) 8%,transpare
 [data-vibeui-block="hero-019"] h2{margin:0;font-size:1.375rem;font-weight:700;letter-spacing:-0.015em}
 [data-vibeui-block="hero-019"] [data-part="form-lede"]{
 margin:0.5rem 0 1.5rem;font-size:0.9375rem;line-height:1.5;color:var(--vibeui-hero-019-muted);
-}
-[data-vibeui-block="hero-019"] label{
-display:block;margin-bottom:0.5rem;font-size:0.875rem;font-weight:600;color:var(--vibeui-hero-019-fg);
-}
-[data-vibeui-block="hero-019"] input{
-display:block;width:100%;min-width:0;min-height:3rem;padding:0.75rem 0.9375rem;
-border:1px solid var(--vibeui-hero-019-line);border-radius:0.75rem;
-background:var(--vibeui-hero-019-field);color:var(--vibeui-hero-019-fg);
-font:inherit;font-size:1rem;
-transition:border-color var(--vibeui-hero-019-dur-2) ease,box-shadow var(--vibeui-hero-019-dur-2) ease;
-}
-[data-vibeui-block="hero-019"] input::placeholder{color:color-mix(in oklab,var(--vibeui-hero-019-muted) 80%,transparent)}
-[data-vibeui-block="hero-019"] input:focus-visible{
-outline:none;border-color:var(--vibeui-hero-019-accent);
-box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-hero-019-accent) 24%,transparent);
-}
-[data-vibeui-block="hero-019"] [data-part="submit"]{
-margin-top:0.875rem;display:flex;align-items:center;justify-content:center;
-width:100%;min-height:3rem;padding:0.75rem 1.25rem;border:1px solid transparent;border-radius:0.75rem;
-background:var(--vibeui-hero-019-accent);color:oklch(from var(--vibeui-hero-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:1rem;font-weight:650;cursor:pointer;
-box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-019-accent) 38%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-hero-019-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-019-dur-3) ease;
-}
-[data-vibeui-block="hero-019"] [data-part="submit"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-019-accent) 48%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
-}
-[data-vibeui-block="hero-019"] [data-part="submit"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="hero-019"] [data-part="submit"]:focus-visible{
-outline:3px solid color-mix(in oklab,var(--vibeui-hero-019-accent) 55%,transparent);outline-offset:2px;
 }
 [data-vibeui-block="hero-019"] [data-part="terms"]{
 margin:1rem 0 0;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-hero-019-muted);
@@ -170,7 +131,6 @@ export function Hero019({
   formTitle = "Создать аккаунт",
   formLede = "Начните с бесплатного плана. Карту вводить не нужно.",
   emailLabel = "Рабочая почта",
-  emailPlaceholder = "name@company.com",
   submitLabel = "Создать аккаунт",
   terms = "Нажимая кнопку, вы соглашаетесь с условиями использования и политикой конфиденциальности.",
   signinPrompt = "Уже есть аккаунт?",
@@ -199,9 +159,15 @@ export function Hero019({
       >
         <div data-part="frame">
           <div data-part="copy">
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h1>{title}</h1>
-            {lede ? <p data-part="lede">{lede}</p> : null}
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={lede}
+              level="h1"
+              size="lg"
+              accent={accent}
+            />
 
             <ul data-part="points">
               {points.slice(0, 4).map((point) => (
@@ -229,19 +195,11 @@ export function Hero019({
             <h2>{formTitle}</h2>
             {formLede ? <p data-part="form-lede">{formLede}</p> : null}
 
-            <label htmlFor="vibeui-hero-019-email">{emailLabel}</label>
-            <input
-              id="vibeui-hero-019-email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              placeholder={emailPlaceholder}
-              required
-            />
+            <Input001 type="email" name="email" required label={emailLabel} autoComplete="email" accent={accent} />
 
-            <button data-part="submit" type="submit">
+            <Button001 type="submit" size="lg" data-part="submit" accent={accent}>
               {submitLabel}
-            </button>
+            </Button001>
 
             {terms ? <p data-part="terms">{terms}</p> : null}
 

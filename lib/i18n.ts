@@ -178,6 +178,8 @@ type Dictionary = {
     flowChat: string
     adapt: string
     anatomy: string
+    composedOf: string
+    composedOfNote: string
     filterLead: string
     densityLabel: string
     density: { light: string; medium: string; heavy: string }
@@ -460,6 +462,9 @@ const RU: Dictionary = {
     flowChat: "добавь это на главную первым экраном:",
     adapt: "Что можно поменять",
     anatomy: "Анатомия",
+    composedOf: "Собран из",
+    composedOfNote:
+      "Команда установки поставит и эти компоненты. Блок задаёт им только пропсы: их палитра и поведение — свои.",
     filterLead: "Подобрать под свой контент",
     densityLabel: "Плотность текста",
     density: { light: "лёгкий", medium: "средний", heavy: "плотный" },
@@ -686,6 +691,9 @@ const EN: Dictionary = {
     flowChat: "put this on the home page as the hero:",
     adapt: "What you can change",
     anatomy: "Anatomy",
+    composedOf: "Built from",
+    composedOfNote:
+      "The install command brings these components too. The block only passes them props: their palette and behaviour stay their own.",
     filterLead: "Match to your content",
     densityLabel: "Text density",
     density: { light: "light", medium: "medium", heavy: "heavy" },

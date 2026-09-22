@@ -10,7 +10,10 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-049",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "people-001/people-001.tsx",
@@ -18,14 +21,15 @@
           "target": "@components/vibeui/people-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-people-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три, четыре. Люди свёрстаны списком <ul>, контакты — ссылки с aria-label, а глифы рисуются псевдоэлементами по data-kind (mail, site, chat), поэтому иконочные шрифты и логотипы брендов не нужны. Инициалы вместо фотографий: стоковые лица в разделе «Команда» вредят доверию.",
+      "docs": "Составной блок: импортирует card-049, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-people-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три, четыре. Люди свёрстаны списком <ul>, контакты — ссылки с aria-label, а глифы рисуются псевдоэлементами по data-kind (mail, site, chat), поэтому иконочные шрифты и логотипы брендов не нужны. Инициалы вместо фотографий: стоковые лица в разделе «Команда» вредят доверию.",
       "meta": {
         "tags": [
           "team",
           "grid",
           "cards",
           "about",
-          "people"
+          "people",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -175,6 +179,7 @@
           "usage": "<People001\n  title=\"Наша команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн\", links: [{ kind: \"mail\", label: \"Почта\", href: \"mailto:anna@example.com\" }] }]}\n/>",
           "summary": "Секция «Команда» сеткой карточек: надзаголовок, заголовок и люди с инициалами, ролью и контактами-глифами. Число колонок меняется от собственной ширины блока. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты card-049, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-people-001-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "инициалы вместо фотографий: стоковые лица в разделе «Команда» подрывают доверие быстрее, чем их отсутствие",
             "контакты-глифы на псевдоэлементах по data-kind — они не тянут иконочные шрифты и не устаревают вместе с логотипами брендов",
@@ -229,10 +234,11 @@
           "en": {
             "title": "Team Grid",
             "description": "A grid of team cards: initials instead of photos, a name, a role and contact links drawn as neutral glyphs. Self-contained: one file, no dependencies, no client JS.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-people-001-*. A server component. The number of columns is computed from the block's own width: one, two, three, four. People are marked up as a <ul>, contacts are links with aria-label, and the glyphs are drawn by pseudo-elements keyed by data-kind (mail, site, chat), so no icon fonts or brand logos are needed. Initials instead of photos: stock faces in a Team section hurt trust.",
+            "docs": "A composite block: imports card-049, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-people-001-*. A server component. The number of columns is computed from the block's own width: one, two, three, four. People are marked up as a <ul>, contacts are links with aria-label, and the glyphs are drawn by pseudo-elements keyed by data-kind (mail, site, chat), so no icon fonts or brand logos are needed. Initials instead of photos: stock faces in a Team section hurt trust.",
             "ai": {
               "summary": "A Team section as a card grid: an eyebrow, a heading and people with initials, a role and glyph contacts. The number of columns follows the block's own width. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the card-049, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-people-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "initials instead of photographs: stock faces in a Team section destroy trust faster than their absence",
                 "the pseudo-element contact glyphs keyed by data-kind — they pull in no icon fonts and do not age with brand logos",
@@ -435,7 +441,10 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-050",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "people-002/people-002.tsx",
@@ -443,14 +452,15 @@
           "target": "@components/vibeui/people-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-002-*. Серверный компонент: фильтр работает без JS — чипы это скрытые radio-инпуты внутри <fieldset>, а правило с :has() прячет карточки, чей слот не совпадает с выбранным значением. Отделы получают слоты d1…d6 по порядку появления в массиве людей, поэтому CSS остаётся статичным при любых названиях отделов (до шести). Выбранный чип заливается фирменным акцентным, каждая карточка несёт бейдж своего отдела.",
+      "docs": "Составной блок: импортирует card-050, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в --vibeui-people-002-*. Серверный компонент: фильтр работает без JS — чипы это скрытые radio-инпуты внутри <fieldset>, а правило с :has() прячет карточки, чей слот не совпадает с выбранным значением. Отделы получают слоты d1…d6 по порядку появления в массиве людей, поэтому CSS остаётся статичным при любых названиях отделов (до шести). Выбранный чип заливается фирменным акцентным, каждая карточка несёт бейдж своего отдела.",
       "meta": {
         "tags": [
           "team",
           "filter",
           "departments",
           "css-only",
-          "people"
+          "people",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -518,6 +528,7 @@
           "usage": "<People002\n  title=\"Наша команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\", department: \"Дизайн\" }]}\n/>",
           "summary": "Секция «Команда» с фильтром по отделам без клиентского JS: чипы — скрытые radio-инпуты, карточки прячутся CSS-селектором :has(). Список чипов собирается из отделов в данных сам. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты card-050, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-people-002-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "CSS-механику фильтра: radio-чипы плюс :has() — фильтр обязан работать без клиентского JS",
             "слоты d1…d6 на карточках и в правилах: они отвязывают CSS от конкретных названий отделов",
@@ -573,10 +584,11 @@
           "en": {
             "title": "Team With Department Filter",
             "description": "A team section with a pure-CSS department filter: radio chips and the :has() selector hide other departments' cards without a line of JS. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-002-*. A server component: the filter works without JS — the chips are hidden radio inputs inside a <fieldset>, and a :has() rule hides the cards whose slot does not match the chosen value. Departments get slots d1…d6 in order of appearance in the members array, so the CSS stays static for any department names (up to six). The selected chip is filled with the brand accent, and every card carries its department badge.",
+            "docs": "A composite block: imports card-050, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in --vibeui-people-002-*. A server component: the filter works without JS — the chips are hidden radio inputs inside a <fieldset>, and a :has() rule hides the cards whose slot does not match the chosen value. Departments get slots d1…d6 in order of appearance in the members array, so the CSS stays static for any department names (up to six). The selected chip is filled with the brand accent, and every card carries its department badge.",
             "ai": {
               "summary": "A Team section with a department filter and no client JS: the chips are hidden radio inputs, cards are hidden by the CSS :has() selector. The chip list is assembled from the departments in the data automatically. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the card-050, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-people-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the CSS filter mechanics: radio chips plus :has() — the filter has to work without client JS",
                 "the d1…d6 slots on the cards and in the rules: they decouple the CSS from the concrete department names",
@@ -699,7 +711,10 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-051",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "people-003/people-003.tsx",
@@ -707,13 +722,14 @@
           "target": "@components/vibeui/people-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-003-*. Серверный компонент. Каждый руководитель — <figure> с <blockquote> и <figcaption>; визуальный порядок «человек сверху, цитата ниже» достигается CSS-свойством order, а не перестановкой семантики. Цитата подчёркнута левой акцентной линией. До 48rem собственной ширины карточки стоят колонкой, дальше — рядом по три. Инициалы вместо фотографий: стоковые лица подрывают доверие.",
+      "docs": "Составной блок: импортирует card-051, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в --vibeui-people-003-*. Серверный компонент. Каждый руководитель — <figure> с <blockquote> и <figcaption>; визуальный порядок «человек сверху, цитата ниже» достигается CSS-свойством order, а не перестановкой семантики. Цитата подчёркнута левой акцентной линией. До 48rem собственной ширины карточки стоят колонкой, дальше — рядом по три. Инициалы вместо фотографий: стоковые лица подрывают доверие.",
       "meta": {
         "tags": [
           "team",
           "leadership",
           "quotes",
-          "founders"
+          "founders",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -745,6 +761,7 @@
           "usage": "<People003\n  title=\"Руководство\"\n  leaders={[{ name: \"Анна Ковалёва\", role: \"Директор по продукту\", quote: \"Мы продаём сэкономленный вечер, а не компоненты.\" }]}\n/>",
           "summary": "Ряд из трёх крупных карточек руководителей: инициалы, имя, должность и прямая речь с акцентной линией. Раскладка от собственной ширины: колонка в узком контейнере, ряд по три в широком. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты card-051, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-people-003-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "цитату у каждого руководителя: должность говорит, кем человек работает, а цитата — как он думает",
             "семантику figure / blockquote / figcaption: это цитата с автором, а порядок «человек сверху» сделан CSS-свойством order, не перестановкой разметки",
@@ -797,10 +814,11 @@
           "en": {
             "title": "Leadership Row",
             "description": "Three large leadership cards, each with direct speech: the role says what the person does, the quote says how they think. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-003-*. A server component. Every leader is a <figure> with a <blockquote> and a <figcaption>; the visual order — person on top, quote below — is achieved with the CSS order property, not by rearranging the semantics. The quote is underlined by an accent line on the left. Below 48rem of its own width the cards stack in a column, above it they stand three in a row. Initials instead of photos: stock faces destroy trust.",
+            "docs": "A composite block: imports card-051, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in --vibeui-people-003-*. A server component. Every leader is a <figure> with a <blockquote> and a <figcaption>; the visual order — person on top, quote below — is achieved with the CSS order property, not by rearranging the semantics. The quote is underlined by an accent line on the left. Below 48rem of its own width the cards stack in a column, above it they stand three in a row. Initials instead of photos: stock faces destroy trust.",
             "ai": {
               "summary": "A row of three large leadership cards: initials, a name, a role and direct speech with an accent line. The layout follows the block's own width: a column in a narrow container, a row of three in a wide one. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the card-051, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-people-003-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the quote on every leader: the role says what the person does, the quote says how they think",
                 "the figure / blockquote / figcaption semantics: this is a quote with an author, and the person-on-top order is done with the CSS order property, not by rearranging the markup",
@@ -883,7 +901,10 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-052",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "people-004/people-004.tsx",
@@ -891,14 +912,15 @@
           "target": "@components/vibeui/people-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-004-*. Серверный компонент. Люди — <ul>, строка — грид «аватар, имя с ролью, город со стажем», разделённый волосяными линиями; имя и роль обрезаются многоточием, а не ломают сетку. В шапке — бейдж-счётчик: по умолчанию считается из длины массива, перекрывается пропом countLabel. Узкая колонка контента (56rem): список читается как оглавление, а не как таблица на всю ширину.",
+      "docs": "Составной блок: импортирует card-052, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в --vibeui-people-004-*. Серверный компонент. Люди — <ul>, строка — грид «аватар, имя с ролью, город со стажем», разделённый волосяными линиями; имя и роль обрезаются многоточием, а не ломают сетку. В шапке — бейдж-счётчик: по умолчанию считается из длины массива, перекрывается пропом countLabel. Узкая колонка контента (56rem): список читается как оглавление, а не как таблица на всю ширину.",
       "meta": {
         "tags": [
           "team",
           "list",
           "roster",
           "compact",
-          "people"
+          "people",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -996,6 +1018,7 @@
           "usage": "<People004\n  title=\"Вся команда\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\", city: \"Москва\", since: \"с 2021\" }]}\n/>",
           "summary": "Секция «Команда» компактным списком для больших составов: строка на человека с инициалами, ролью, городом и подписью стажа, бейдж-счётчик в шапке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты card-052, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-people-004-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "строку вместо карточки: блок сделан для больших команд, где сетка карточек превращается в бесконечную стену",
             "волосяные разделители и прозрачный фон строк — список легче карточек ровно настолько, насколько задумано",
@@ -1049,10 +1072,11 @@
           "en": {
             "title": "Team as a List",
             "description": "The team as a compact list: one row per person — name, role, city and joining year. For large rosters where a card grid turns into a wall. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-004-*. A server component. People are a <ul>; a row is a grid of avatar, name with role, city with tenure, separated by hairlines; the name and the role truncate with an ellipsis instead of breaking the grid. The header carries a counter badge: by default it is computed from the array length and can be overridden with the countLabel prop. A narrow content column (56rem): the list reads like a table of contents, not a full-width table.",
+            "docs": "A composite block: imports card-052, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in --vibeui-people-004-*. A server component. People are a <ul>; a row is a grid of avatar, name with role, city with tenure, separated by hairlines; the name and the role truncate with an ellipsis instead of breaking the grid. The header carries a counter badge: by default it is computed from the array length and can be overridden with the countLabel prop. A narrow content column (56rem): the list reads like a table of contents, not a full-width table.",
             "ai": {
               "summary": "A Team section as a compact list for large rosters: one row per person with initials, a role, a city and a tenure caption, and a counter badge in the header. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the card-052, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-people-004-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the row instead of a card: the block is made for large teams, where a card grid turns into an endless wall",
                 "the hairline separators and the transparent row background — the list is lighter than cards by exactly the intended amount",
@@ -1203,7 +1227,11 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "card-053",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "people-005/people-005.tsx",
@@ -1211,14 +1239,15 @@
           "target": "@components/vibeui/people-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-005-*. Серверный компонент. Обычные карточки — инициалы, имя, роль; последняя ячейка сетки — приглашение: пунктирная рамка читается как «место не занято», тёплая подложка — color-mix от акцента, кнопка залита фирменным акцентным с почти чёрным текстом. Приглашение живёт в общей сетке, а не отдельным баннером: кандидат видит свою будущую карточку рядом с будущими коллегами. Колонки 1 → 2 → 3 → 4 от собственной ширины блока.",
+      "docs": "Составной блок: импортирует button-016, card-053, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в --vibeui-people-005-*. Серверный компонент. Обычные карточки — инициалы, имя, роль; последняя ячейка сетки — приглашение: пунктирная рамка читается как «место не занято», тёплая подложка — color-mix от акцента, кнопка залита фирменным акцентным с почти чёрным текстом. Приглашение живёт в общей сетке, а не отдельным баннером: кандидат видит свою будущую карточку рядом с будущими коллегами. Колонки 1 → 2 → 3 → 4 от собственной ширины блока.",
       "meta": {
         "tags": [
           "team",
           "hiring",
           "careers",
           "cta",
-          "grid"
+          "grid",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1267,6 +1296,7 @@
           "usage": "<People005\n  title=\"Команда растёт\"\n  ctaLabel=\"Открытые вакансии\"\n  ctaHref=\"/careers\"\n  members={[{ name: \"Анна Ковалёва\", role: \"Дизайн-система\" }]}\n/>",
           "summary": "Сетка команды с нанимающей карточкой в конце: пунктирная рамка «твоё место», пустой аватар с плюсом, текст приглашения и акцентная кнопка вакансий. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты button-016, card-053, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-people-005-* (включая accent-fill) и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "карточку-приглашение внутри общей сетки, а не отдельным баннером: кандидат видит своё место рядом с будущими коллегами",
             "пунктирную рамку и пустой аватар с плюсом — именно они означают «место ещё не занято»",
@@ -1322,10 +1352,11 @@
           "en": {
             "title": "We're Hiring",
             "description": "A team grid with an invitation card at the end: a dashed \"your seat\" frame, a warm tint and an accent vacancies button right among the future colleagues. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-005-*. A server component. Regular cards hold initials, a name and a role; the last grid cell is the invitation: the dashed border reads as an unoccupied seat, the warm tint is a color-mix of the accent, and the button is filled with the brand accent and near-black text. The invitation lives inside the shared grid rather than as a separate banner: the candidate sees their future card next to their future colleagues. Columns go 1 → 2 → 3 → 4 from the block's own width.",
+            "docs": "A composite block: imports button-016, card-053, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in --vibeui-people-005-*. A server component. Regular cards hold initials, a name and a role; the last grid cell is the invitation: the dashed border reads as an unoccupied seat, the warm tint is a color-mix of the accent, and the button is filled with the brand accent and near-black text. The invitation lives inside the shared grid rather than as a separate banner: the candidate sees their future card next to their future colleagues. Columns go 1 → 2 → 3 → 4 from the block's own width.",
             "ai": {
               "summary": "A team grid with a hiring card at the end: a dashed \"your seat\" frame, an empty avatar with a plus, invitation copy and an accent vacancies button. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the button-016, card-053, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-people-005-* palette (including accent-fill) — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the invitation card inside the shared grid, not as a separate banner: the candidate sees their seat next to their future colleagues",
                 "the dashed border and the empty avatar with a plus — they are what says the seat is not taken yet",
@@ -1432,7 +1463,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "people-006/people-006.tsx",
@@ -1440,13 +1473,14 @@
           "target": "@components/vibeui/people-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в --vibeui-people-006-*. Серверный компонент. Слева — надзаголовок, заголовок, описание и сетка кружков-инициалов (имя каждого доступно скринридеру и в title кружка). Справа — счётчики, свёрстанные <dl>: пары «значение — подпись», значение поверх подписи через flex-direction:column-reverse без перестановки семантики; цифры акцентного цвета с tabular-nums. С 48rem собственной ширины блок раскладывается в две колонки.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в --vibeui-people-006-*. Серверный компонент. Слева — надзаголовок, заголовок, описание и сетка кружков-инициалов (имя каждого доступно скринридеру и в title кружка). Справа — счётчики, свёрстанные <dl>: пары «значение — подпись», значение поверх подписи через flex-direction:column-reverse без перестановки семантики; цифры акцентного цвета с tabular-nums. С 48rem собственной ширины блок раскладывается в две колонки.",
       "meta": {
         "tags": [
           "team",
           "stats",
           "numbers",
-          "about"
+          "about",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1456,6 +1490,7 @@
           "usage": "<People006\n  title=\"Команда в цифрах\"\n  stats={[{ value: \"12\", label: \"человек в команде\" }, { value: \"9\", label: \"городов\" }]}\n  faces={[\"Анна Ковалёва\", \"Игорь Демидов\"]}\n/>",
           "summary": "Секция «Команда» цифрами: заголовок с описанием, счётчики (люди, города, стаж) как <dl> и маленькая сетка аватаров-инициалов, показывающая масштаб без лиц. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-people-006-* и не подменять её токенами вашей темы (bg-card, border-border и подобными)",
             "счётчики как <dl>: значение и подпись — пара «термин — определение», а порядок перевёрнут CSS-ом, не в разметке",
             "акцентный цвет и tabular-nums у значений: цифры — главный контент блока и обязаны стоять ровно",
@@ -1510,10 +1545,11 @@
           "en": {
             "title": "Team in Numbers",
             "description": "The team in numbers: counters for people, cities and years of experience plus a small grid of initials avatars. Answers \"who is behind this\" faster than any portraits. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in --vibeui-people-006-*. A server component. On the left — an eyebrow, a heading, a description and a grid of initials circles (each name is available to screen readers and in the circle's title). On the right — counters marked up as a <dl>: value-caption pairs, the value above the caption via flex-direction:column-reverse without rearranging the semantics; the figures are accent-coloured with tabular-nums. From 48rem of its own width the block lays out in two columns.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in --vibeui-people-006-*. A server component. On the left — an eyebrow, a heading, a description and a grid of initials circles (each name is available to screen readers and in the circle's title). On the right — counters marked up as a <dl>: value-caption pairs, the value above the caption via flex-direction:column-reverse without rearranging the semantics; the figures are accent-coloured with tabular-nums. From 48rem of its own width the block lays out in two columns.",
             "ai": {
               "summary": "A Team section in numbers: a heading with a description, counters (people, cities, experience) as a <dl> and a small grid of initials avatars that shows scale without faces. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-people-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the counters as a <dl>: the value and the caption are a term-definition pair, and the order is flipped by CSS, not in the markup",
                 "the accent colour and tabular-nums on the values: the figures are the block's main content and have to line up",
@@ -1607,7 +1643,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-054"
+      ],
       "files": [
         {
           "path": "people-007/people-007.tsx",
@@ -1615,7 +1653,7 @@
           "target": "@components/vibeui/people-007.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <ul> сеткой auto-fill minmax(14rem,1fr), от 64rem (container query) ровно четыре колонки. Карточка: media с aspect-ratio 4/5 и object-position:center top, плашка fact поверх фото, тело с именем серифом, ролью и строкой контактов через бордюр. По hover карточка translateY(-4px) с тенью, фото scale 1.04. Без изображения — подложка цвета песка. Палитра --vibeui-people-007-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-054 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. <ul> сеткой auto-fill minmax(14rem,1fr), от 64rem (container query) ровно четыре колонки. Карточка: media с aspect-ratio 4/5 и object-position:center top, плашка fact поверх фото, тело с именем серифом, ролью и строкой контактов через бордюр. По hover карточка translateY(-4px) с тенью, фото scale 1.04. Без изображения — подложка цвета песка. Палитра --vibeui-people-007-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1627,7 +1665,8 @@
           "listing",
           "team",
           "agents",
-          "portraits"
+          "portraits",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -1681,6 +1720,7 @@
           "usage": "<People007\n  title=\"Четыре человека, которые ведут вашу сделку\"\n  agents={[\n    { name: \"Марина Лебедева\", role: \"Руководитель. Исторический фонд\", fact: \"18 лет в сделках\", image: \"/photos/agent-01.webp\", phone: \"+7 812 240-00-41\", chatLabel: \"Написать\", chatHref: \"#\" },\n  ]}\n/>",
           "summary": "Самодостаточная секция команды для агентства, застройщика или юридической фирмы: крупные портреты, имя серифом, специализация, факт и контакты. Агенты — массив пропсом.",
           "preserve": [
+            "импорты card-054 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "портреты 4:5 в полную ширину карточки — в недвижимости выбирают человека, а не логотип",
             "факт-плашку на фото: конкретное число вместо «опытный специалист»",
             "подъём карточки и лёгкий scale фото по наведению"
@@ -1731,10 +1771,11 @@
           "en": {
             "title": "Agents with portraits",
             "description": "A real estate agency team: 4:5 portraits in a row, a serif name, specialisation, a fact tag on the photo (“18 years of deals”), phone and “message” under a rule. The card lifts on hover.",
-            "docs": "One file, zero dependencies, a server component. A <ul> grid of auto-fill minmax(14rem,1fr), exactly four columns from 64rem (container query). A card: media with aspect-ratio 4/5 and object-position:center top, a fact tag over the photo, a body with a serif name, role and a contacts row behind a rule. On hover the card translateY(-4px) with a shadow and the photo scales 1.04. Without an image a sand placeholder. Palette --vibeui-people-007-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-054 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A <ul> grid of auto-fill minmax(14rem,1fr), exactly four columns from 64rem (container query). A card: media with aspect-ratio 4/5 and object-position:center top, a fact tag over the photo, a body with a serif name, role and a contacts row behind a rule. On hover the card translateY(-4px) with a shadow and the photo scales 1.04. Without an image a sand placeholder. Palette --vibeui-people-007-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Cormorant Garamond and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained team section for an agency, developer or law firm: large portraits, a serif name, specialisation, a fact and contacts. Agents come in as a prop array.",
               "preserve": [
+                "the card-054 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "full-width 4:5 portraits — in real estate people choose a person, not a logo",
                 "the fact tag on the photo: a concrete number instead of “experienced specialist”",
                 "the card lift and the slight photo scale on hover"
@@ -1834,7 +1875,10 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "card-055"
+      ],
       "files": [
         {
           "path": "people-008/people-008.tsx",
@@ -1842,7 +1886,7 @@
           "target": "@components/vibeui/people-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 2/3 колонки (container query 48rem, от 68rem крупнее отступы и поля). person.color в --card, ink в --ink; data-dark переключает плашки на тёмные. Раскрытие — grid-template-rows 0fr→1fr по :hover и :focus-within (на тач-экранах — по тапу на ссылку имени). Появление — @keyframes scale с задержкой --n×60ms. Палитра --vibeui-people-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-077, card-055 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Сетка 2/3 колонки (container query 48rem, от 68rem крупнее отступы и поля). person.color в --card, ink в --ink; data-dark переключает плашки на тёмные. Раскрытие — grid-template-rows 0fr→1fr по :hover и :focus-within (на тач-экранах — по тапу на ссылку имени). Появление — @keyframes scale с задержкой --n×60ms. Палитра --vibeui-people-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1855,7 +1899,8 @@
           "speakers",
           "headliners",
           "cards",
-          "reveal"
+          "reveal",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1872,6 +1917,7 @@
           "usage": "<People008\n  title=\"Кто выходит на сцены\"\n  people={[\n    { name: \"Соня Волна\", role: \"певица, хедлайнер\", image: \"/photos/speaker-01.webp\", color: \"#ffe2d6\", tag: \"#Музыка\", when: \"сб, 20:00 · Главная сцена\", text: \"Альбом «Пригород» стал саундтреком прошлого лета.\", href: \"/lineup/sonya\" },\n  ]}\n/>",
           "summary": "Самодостаточная секция участников для фестиваля, конференции или школы: цветные карточки с портретом, ролью, временем выступления и раскрытием описания. Люди — массив пропсом с цветом на каждого.",
           "preserve": [
+            "импорты button-077, card-055 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "цвет карточки в данных, а не общий фон — каждый участник со своим цветом",
             "раскрытие описания по наведению без кнопок",
             "ровную сетку в три колонки: шесть участников — два полных ряда"
@@ -1922,10 +1968,11 @@
           "en": {
             "title": "Headliners on colour cards with a reveal",
             "description": "Festival headliners and speakers: cards on colour backdrops, a round portrait with a white ring, the strand as a pill, the name large, the role and when they perform. On hover or focus a card reveals its description and the portrait tilts. A three-column grid.",
-            "docs": "One file, zero dependencies, a server component. A 2/3-column grid (container query 48rem; from 68rem larger gaps and padding). person.color maps to --card, ink to --ink; data-dark switches tags to dark. The reveal is grid-template-rows 0fr→1fr on :hover and :focus-within (on touch via a tap on the name link). Appearance via a scale @keyframes with a --n×60ms delay. Palette --vibeui-people-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-077, card-055 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A 2/3-column grid (container query 48rem; from 68rem larger gaps and padding). person.color maps to --card, ink to --ink; data-dark switches tags to dark. The reveal is grid-template-rows 0fr→1fr on :hover and :focus-within (on touch via a tap on the name link). Appearance via a scale @keyframes with a --n×60ms delay. Palette --vibeui-people-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained line-up section for a festival, conference or school: colour cards with a portrait, role, performance time and a description reveal. People come in as a prop array with a colour each.",
               "preserve": [
+                "the button-077, card-055 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the card colour in the data rather than a shared background — each person in their own colour",
                 "the description reveal on hover without buttons",
                 "the even three-column grid: six people make two full rows"
@@ -2040,7 +2087,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-056"
+      ],
       "files": [
         {
           "path": "people-009/people-009.tsx",
@@ -2048,7 +2097,7 @@
           "target": "@components/vibeui/people-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Сцена — <li> с perspective:1400px, карточка — grid с transform-style:preserve-3d и rotateY(180deg) по :hover и :focus-within; лицо и оборот в одной grid-area с backface-visibility:hidden. Цвет обводки — artist.color в --neon: рамка, свечение и имя. Оборот aria-hidden, кнопка на нём с tabIndex=-1; для клавиатуры и ридеров есть скрытая ссылка записи. Сетка auto-fill 15rem, от 64rem (container query) четыре колонки. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-people-009-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-056 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Сцена — <li> с perspective:1400px, карточка — grid с transform-style:preserve-3d и rotateY(180deg) по :hover и :focus-within; лицо и оборот в одной grid-area с backface-visibility:hidden. Цвет обводки — artist.color в --neon: рамка, свечение и имя. Оборот aria-hidden, кнопка на нём с tabIndex=-1; для клавиатуры и ридеров есть скрытая ссылка записи. Сетка auto-fill 15rem, от 64rem (container query) четыре колонки. Появление — @keyframes с задержкой --n×90ms. Палитра --vibeui-people-009-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2061,7 +2110,8 @@
           "artists",
           "flip",
           "3d",
-          "polaroid"
+          "polaroid",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2080,6 +2130,7 @@
           "usage": "<People009\n  artists={[\n    { name: \"Ася\", styles: [\"олд-скул\", \"нео-традишнл\"], experience: \"9 лет\", image: \"/photos/artist-01.webp\", works: [\"/photos/work-02.webp\", \"/photos/work-08.webp\", \"/photos/work-05.webp\"], slot: \"окно 21 сен\", color: \"#ff2bd6\", href: \"#booking\" },\n  ]}\n/>",
           "summary": "Самодостаточная секция мастеров для тату-студии, барбершопа или салона: полароиды с неоновой обводкой, 3D-переворот к работам и кнопка записи. Мастера — массив пропсом с цветом на каждого.",
           "preserve": [
+            "импорты card-056 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "3D-переворот карточки к работам мастера по наведению и фокусу",
             "неоновую обводку и светящееся имя цветом мастера из данных",
             "ближайшее окно лаймом — вместо абстрактного «свободен»"
@@ -2130,10 +2181,11 @@
           "en": {
             "title": "Polaroid artists with neon frames and a flip",
             "description": "Tattoo studio artists: polaroid cards with a neon frame in their own colour, the portrait on top, a glowing name, styles as pills, experience and the next open slot in lime. On hover or focus the card flips in 3D and shows three of the artist’s works and a booking button on the back.",
-            "docs": "One file, zero dependencies, a server component. The scene is an <li> with perspective:1400px, the card a grid with transform-style:preserve-3d and rotateY(180deg) on :hover and :focus-within; face and back share a grid-area with backface-visibility:hidden. The frame colour is artist.color in --neon: border, glow and name. The back is aria-hidden with its button at tabIndex=-1; a hidden booking link serves keyboard and readers. An auto-fill 15rem grid, four columns from 64rem (container query). Appearance via @keyframes with a --n×90ms delay. Palette --vibeui-people-009-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-056 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The scene is an <li> with perspective:1400px, the card a grid with transform-style:preserve-3d and rotateY(180deg) on :hover and :focus-within; face and back share a grid-area with backface-visibility:hidden. The frame colour is artist.color in --neon: border, glow and name. The back is aria-hidden with its button at tabIndex=-1; a hidden booking link serves keyboard and readers. An auto-fill 15rem grid, four columns from 64rem (container query). Appearance via @keyframes with a --n×90ms delay. Palette --vibeui-people-009-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained artists section for a tattoo studio, barbershop or salon: neon-framed polaroids, a 3D flip to the works and a booking button. Artists come in as a prop array with a colour each.",
               "preserve": [
+                "the card-056 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the 3D card flip to the artist’s works on hover and focus",
                 "the neon frame and glowing name in the artist’s colour from the data",
                 "the next open slot in lime — instead of an abstract “available”"
@@ -2257,7 +2309,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-115"
+      ],
       "files": [
         {
           "path": "people-010/people-010.tsx",
@@ -2265,7 +2319,7 @@
           "target": "@components/vibeui/people-010.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Карточка — article шириной до 18rem с padding под полароид, наклон через --vibeui-people-010-tilt по nth-child(3n…), hover выпрямляет и поднимает с тенью. Кадр 1:1 object-fit:cover с приглушённой насыщенностью, песочная плашка без фото. Сетка от 44rem — auto-fit minmax(15rem,18rem) по центру. Контакт — ссылка с подчёркиванием акцентом; иконка по типу адреса: tel: — трубка, mailto: — конверт, остальное — самолётик мессенджера. Палитра --vibeui-people-010-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-115 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Карточка — article шириной до 18rem с padding под полароид, наклон через --vibeui-people-010-tilt по nth-child(3n…), hover выпрямляет и поднимает с тенью. Кадр 1:1 object-fit:cover с приглушённой насыщенностью, песочная плашка без фото. Сетка от 44rem — auto-fit minmax(15rem,18rem) по центру. Контакт — ссылка с подчёркиванием акцентом; иконка по типу адреса: tel: — трубка, mailto: — конверт, остальное — самолётик мессенджера. Палитра --vibeui-people-010-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2279,7 +2333,8 @@
           "polaroid",
           "contacts",
           "serif",
-          "cream"
+          "cream",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2323,6 +2378,7 @@
           "usage": "<People010\n  title=\"Три человека, к которым можно с любым вопросом\"\n  people={[\n    { name: \"Ксения\", role: \"Свидетельница\", text: \"Знает, где сидеть и что дарить.\", image: \"/photos/people-01.webp\", contactLabel: \"Написать в Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Полина\", role: \"Организатор\", text: \"Аллергии, отели, детские стулья — к ней.\", image: \"/photos/people-03.webp\", contactLabel: \"Позвонить\", contactHref: \"tel:+7…\" },\n  ]}\n/>",
           "summary": "Самодостаточный блок свадебной команды: свидетели и организатор полароидами вразнобой с ролью, описанием и ссылкой «написать». Люди — массив пропсом.",
           "preserve": [
+            "импорты card-115 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "полароидную рамку с толстым низом и квадратным кадром",
             "разный наклон карточек и выпрямление по наведению",
             "ссылку «написать» с подчёркиванием акцентом у каждого"
@@ -2373,10 +2429,11 @@
           "en": {
             "title": "Wedding party and planner as polaroids",
             "description": "“Who you'll meet”: the wedding party and planner as polaroids — a white frame with a thick bottom, a square photo, the name in italic serif, the role in caps and a couple of lines on what to ask this person. Cards are tilted unevenly and straighten on hover, each with a “message” link.",
-            "docs": "One file, zero dependencies, server-rendered. A card is an article up to 18rem wide with polaroid padding, tilt via --vibeui-people-010-tilt by nth-child(3n…), hover straightens and lifts with a shadow. The photo is 1:1 object-fit:cover with muted saturation, a sand placeholder without a photo. From 44rem the grid is auto-fit minmax(15rem,18rem) centred. The contact is a link with an accent underline; the icon follows the address: tel: — a handset, mailto: — an envelope, anything else — a messenger paper plane. Palette --vibeui-people-010-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-115 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. A card is an article up to 18rem wide with polaroid padding, tilt via --vibeui-people-010-tilt by nth-child(3n…), hover straightens and lifts with a shadow. The photo is 1:1 object-fit:cover with muted saturation, a sand placeholder without a photo. From 44rem the grid is auto-fit minmax(15rem,18rem) centred. The contact is a link with an accent underline; the icon follows the address: tel: — a handset, mailto: — an envelope, anything else — a messenger paper plane. Palette --vibeui-people-010-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained wedding team block: the wedding party and planner as unevenly tilted polaroids with a role, a description and a “message” link. People come as a prop array.",
               "preserve": [
+                "the card-115 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the polaroid frame with the thick bottom and the square photo",
                 "the uneven card tilt and straightening on hover",
                 "the accent-underlined “message” link on each card"
@@ -2454,7 +2511,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-116"
+      ],
       "files": [
         {
           "path": "people-011/people-011.tsx",
@@ -2462,7 +2521,7 @@
           "target": "@components/vibeui/people-011.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Карточки — <ul> 3 в ряд от 56rem (до — строкой портрет слева, текст справа); свечка — <i> со стеарином, фитилём ::before и огоньком ::after на keyframes мерцания, hover усиливает box-shadow огонька и красит рамку в свечу. Портрет — круг с двойным ободком через box-shadow. Ссылка контакта выбирает иконку по href: tel: — трубка, mailto: — конверт, иначе — самолётик. Палитра --vibeui-people-011-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-116 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Карточки — <ul> 3 в ряд от 56rem (до — строкой портрет слева, текст справа); свечка — <i> со стеарином, фитилём ::before и огоньком ::after на keyframes мерцания, hover усиливает box-shadow огонька и красит рамку в свечу. Портрет — круг с двойным ободком через box-shadow. Ссылка контакта выбирает иконку по href: tel: — трубка, mailto: — конверт, иначе — самолётик. Палитра --vibeui-people-011-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -2474,7 +2533,8 @@
           "contacts",
           "candle",
           "portraits",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2518,6 +2578,7 @@
           "usage": "<People011\n  title=\"Вас ждут у ворот\"\n  people={[\n    { name: \"Кристина\", role: \"Свидетельница\", text: \"Подруга с первого класса.\", image: \"/photos/people-01.webp\", contactLabel: \"Написать в Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Игорь\", role: \"Свидетель\", text: \"Брат Димы.\", image: \"/photos/people-02.webp\", contactLabel: \"Написать в Telegram\", contactHref: \"https://t.me/…\" },\n    { name: \"Марина\", role: \"Организатор\", text: \"Собирает вечер по минутам.\", image: \"/photos/people-03.webp\", contactLabel: \"Позвонить\", contactHref: \"tel:+7…\" },\n  ]}\n/>",
           "summary": "Самодостаточный блок «кто встречает»: свидетели и организатор в карточках со свечкой, портрет в круге, роль рукописным, контакт с иконкой по типу ссылки. Люди — массив пропсом.",
           "preserve": [
+            "импорты card-116 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "свечку с живым огоньком в углу каждой карточки, ярче по наведению",
             "портрет в круге с серебряным ободком и роль рукописным",
             "иконку контакта по типу ссылки"
@@ -2568,10 +2629,11 @@
           "en": {
             "title": "Who meets you: cards with a candle on each",
             "description": "The wedding party and planner in dark cards on glass: a round portrait with a silver rim, a candle with a live flame in the corner, the role in handwriting, a few words and a “message” link. Hover — the candle brightens, the card warms and lifts.",
-            "docs": "One file, zero dependencies, server-rendered. Cards are a <ul>, 3 per row from 56rem (a row with the portrait left and text right below); the candle is an <i> with wax, a ::before wick and a ::after flame on flicker keyframes, hover boosts the flame's box-shadow and paints the border candle-accent. The portrait is a circle with a double rim via box-shadow. The contact link picks its icon by href: tel: — a handset, mailto: — an envelope, otherwise a paper plane. Palette --vibeui-people-011-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-116 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. Cards are a <ul>, 3 per row from 56rem (a row with the portrait left and text right below); the candle is an <i> with wax, a ::before wick and a ::after flame on flicker keyframes, hover boosts the flame's box-shadow and paints the border candle-accent. The portrait is a circle with a double rim via box-shadow. The contact link picks its icon by href: tel: — a handset, mailto: — an envelope, otherwise a paper plane. Palette --vibeui-people-011-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained “who meets you” block: the wedding party and planner in cards with a candle, a round portrait, a handwritten role, a contact with an icon by link type. People come as a prop array.",
               "preserve": [
+                "the card-116 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the candle with a live flame in the corner of each card, brighter on hover",
                 "the round portrait with a silver rim and the handwritten role",
                 "the contact icon by link type"
@@ -2649,7 +2711,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-057"
+      ],
       "files": [
         {
           "path": "people-012/people-012.tsx",
@@ -2668,7 +2732,8 @@
           "cards",
           "cafe",
           "staff",
-          "portrait"
+          "portrait",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -2679,6 +2744,7 @@
           "usage": "<People012\n  title=\"Нас двое, и мы не спим\"\n  people={[\n    { name: \"Ольга\", role: \"Пекарь\", quote: \"Хлеб не терпит спешки.\", note: \"В 5 утра я одна в пекарне.\", image: \"/photos/olga.webp\" },\n    { name: \"Тимур\", role: \"Бариста\", quote: \"Эспрессо — это 25 секунд.\", note: \"Мой стандарт: 18 грамм в 36.\", image: \"/photos/timur.webp\" },\n  ]}\n/>",
           "summary": "Команда из двух–четырёх человек с характером: не сетка аватаров, а плитки с цитатой и запиской по наведению. Для кафе, студии, мастерской.",
           "preserve": [
+            "импорты card-057 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "записка выезжает transform: translateX(100%) → 0 по :hover и :focus-within; плитка фокусируемая (tabIndex)",
             "фото сдвигается на -18% и увеличивается, чтобы уступить место записке",
             "@media (hover:none) переводит плитку в две строки: фото сверху, записка снизу"
@@ -2744,6 +2810,7 @@
             "ai": {
               "summary": "A team of two to four with character: not an avatar grid but tiles with a quote and a hover note. For a café, a studio, a workshop.",
               "preserve": [
+                "the card-057 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the note slides transform: translateX(100%) → 0 on :hover and :focus-within; the tile is focusable (tabIndex)",
                 "the photo shifts by -18% and scales to make room for the note",
                 "@media (hover:none) turns the tile into two rows: photo on top, note below"
@@ -2801,10 +2868,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports card-057 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-057 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-013",
@@ -2815,7 +2884,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-117"
+      ],
       "files": [
         {
           "path": "people-013/people-013.tsx",
@@ -2833,7 +2904,8 @@
           "avatars",
           "podcast",
           "carousel",
-          "community"
+          "community",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -2844,6 +2916,7 @@
           "usage": "<People013\n  title=\"Кто был в студии\"\n  guests={[\n    { name: \"Сергей Волков\", role: \"смотритель маяка\", episode: \"№ 112\", image: \"/photos/guest-01.webp\" },\n    { name: \"Аня Резник\", role: \"керамист\", episode: \"№ 111\", image: \"/photos/guest-02.webp\" },\n  ]}\n/>",
           "summary": "Лента людей для подкаста, конференции, сообщества: десятки лиц без сетки, движение и остановка под курсором.",
           "preserve": [
+            "импорты card-117 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "лента max-content с дублем и translateX(-50%); скорость из переменной",
             "чётные карточки translateY(1.2rem); hover — scale(1.06), обводка и снятие grayscale",
             "reduced-motion разворачивает ленту в обычный перенос и прячет дубли"
@@ -2909,6 +2982,7 @@
             "ai": {
               "summary": "A lane of people for a podcast, conference or community: dozens of faces without a grid, motion and a pause under the cursor.",
               "preserve": [
+                "the card-117 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "a max-content lane with a duplicate and translateX(-50%); speed from a variable",
                 "even cards get translateY(1.2rem); hover — scale(1.06), a ring and grayscale removed",
                 "reduced-motion unwraps the lane into normal flow and hides the duplicates"
@@ -2948,10 +3022,12 @@
                 "title": "Who's been in the studio",
                 "lede": "A hundred and twelve people who do their work with hands and head. Hover — the lane stops."
               }
-            }
+            },
+            "docs": "A composite block: imports card-117 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-117 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-014",
@@ -2962,7 +3038,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-058"
+      ],
       "files": [
         {
           "path": "people-014/people-014.tsx",
@@ -2983,7 +3061,8 @@
           "tilt",
           "3d",
           "hover",
-          "photo"
+          "photo",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -2994,6 +3073,7 @@
           "usage": "<People014\n  members={[{ name: \"Артём Гущин\", role: \"Полировка и керамика\", photo: \"/photos/artem.webp\", years: \"11 лет\", cars: \"2 400\", skills: [\"Керамика\", \"Porsche\"] }]}\n/>",
           "summary": "Мастера для автосервиса: карточки с фото, 3D-наклон за курсором, стаж и число машин.",
           "preserve": [
+            "импорты card-058 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "наклон — rotateX/rotateY из --vibeui-people-014-rx/ry, ±7°, ставятся на pointermove только при pointerType mouse, снимаются на pointerleave",
             "блик — radial-gradient по --vibeui-people-014-gx/gy с mix-blend-mode:overlay, появляется по hover",
             "сетка: 1 → 2 колонки от 40rem → 3 от 64rem контейнера; карточка aspect-ratio 3/4, текст на градиенте снизу"
@@ -3058,6 +3138,7 @@
             "ai": {
               "summary": "Masters for a car service: photo cards, 3D tilt toward the cursor, years and car count.",
               "preserve": [
+                "the card-058 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "tilt is rotateX/rotateY from --vibeui-people-014-rx/ry, ±7°, set on pointermove only for pointerType mouse, removed on pointerleave",
                 "the glare is a radial-gradient at --vibeui-people-014-gx/gy with mix-blend-mode:overlay, shown on hover",
                 "grid: 1 → 2 columns from 40rem → 3 from a 64rem container; the card is aspect-ratio 3/4, text on a bottom gradient"
@@ -3134,10 +3215,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports card-058 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-058 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-015",
@@ -3148,7 +3231,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "people-015/people-015.tsx",
@@ -3169,7 +3254,8 @@
           "3d-tilt",
           "hover",
           "weekday",
-          "staff"
+          "staff",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3180,6 +3266,7 @@
           "usage": "<People015\n  title=\"Кто сегодня в клинике\"\n  doctors={[\n    { name: \"Марина Соколова\", role: \"Главный врач\", photo: \"/demo/vet/doctor-01.webp\", tags: [\"кошки\", \"УЗИ\"], days: [1, 2, 3, 4, 5], hours: \"9:00–17:00\" },\n    { name: \"Артём Гусев\", role: \"Хирург\", days: [1, 3, 5, 6], hours: \"11:00–21:00\" },\n  ]}\n/>",
           "summary": "Команда врачей с живым расписанием на сегодня и 3D-наклоном карточек.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "tilt — --rx/--ry/--gx/--gy ставятся на currentTarget в pointermove без стейта, сброс в pointerleave; сетка с perspective 1200px",
             "день недели — useSyncExternalStore(subscribe раз в минуту, getDay, () => null): при null нет бейджей и чип нейтральный",
             "недельная полоска — дни 1…6,0 через (index+1)%7, data-on для дней приёма, data-today обводит текущий"
@@ -3252,6 +3339,7 @@
             "ai": {
               "summary": "A doctors team with a live today schedule and 3D-tilting cards.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "tilt: --rx/--ry/--gx/--gy are set on currentTarget in pointermove with no state, reset on pointerleave; the grid has perspective 1200px",
                 "the weekday is useSyncExternalStore(subscribe every minute, getDay, () => null): with null there are no badges and the chip is neutral",
                 "the weekly strip lists days 1…6,0 via (index+1)%7, data-on for working days, data-today outlines the current one"
@@ -3374,10 +3462,12 @@
                 ],
                 "actionLabel": "All 11 doctors"
               }
-            }
+            },
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-017",
@@ -3388,7 +3478,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-059"
+      ],
       "files": [
         {
           "path": "people-017/people-017.tsx",
@@ -3409,7 +3501,8 @@
           "contractor",
           "cards",
           "monogram",
-          "hover"
+          "hover",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3420,6 +3513,7 @@
           "usage": "<People017\n  people={[\n    { name: \"Игорь Савельев\", role: \"Прораб\", years: 14, objects: 312, text: \"График, приёмка, отчёт.\", now: \"на Полежаевской\" },\n  ]}\n/>",
           "summary": "Секция «бригада» для стройки или сервиса: карточки с рамкой чертежа, стаж и объекты моно, бейдж «сейчас на объекте».",
           "preserve": [
+            "импорты card-059 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "четыре i[data-part=corner] с border на двух сторонах, nth-of-type задаёт угол, :hover сдвигает каждый на 4px наружу через transform",
             "монограмма — первые буквы двух слов имени через initials(); с photo рендерится img object-fit:cover",
             "карточка — grid 5rem + 1fr, mark занимает три строки, text и now растянуты на всю ширину; 2 колонки от 40rem, 3 — от 64rem"
@@ -3491,6 +3585,7 @@
             "ai": {
               "summary": "A “crew” section for construction or a service: drawing-frame cards, years and projects in mono, a “now on site” badge.",
               "preserve": [
+                "the card-059 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "four i[data-part=corner] with borders on two sides, nth-of-type picks the corner, :hover moves each 4px outward via transform",
                 "the monogram is the first letters of two name words via initials(); with photo an img object-fit:cover renders instead",
                 "a card is a 5rem + 1fr grid, mark spans three rows, text and now stretch full width; 2 columns from 40rem, 3 from 64rem"
@@ -3581,10 +3676,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports card-059 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-059 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-019",
@@ -3595,7 +3692,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-118"
+      ],
       "files": [
         {
           "path": "people-019/people-019.tsx",
@@ -3616,7 +3715,8 @@
           "polaroid",
           "audio",
           "wave",
-          "hover"
+          "hover",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -3670,6 +3770,7 @@
           "usage": "<People019\n  title=\"Люди, с которыми не страшно ошибаться\"\n  people={[{ name: \"Emma Whitfield\", role: \"английский · носитель\", from: \"Манчестер\", years: 9, note: \"любимое слово — serendipity\", accent: \"манчестерский\", image: \"/photos/emma.webp\" }]}\n/>",
           "summary": "Команда для школы или курсов: полароиды с 3D-tilt и бликом, кнопка «послушать акцент» с волной.",
           "preserve": [
+            "импорты card-118 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "наклон — onPointerMove пишет --rx/--ry/--x/--y прямо в style карточки, без setState; data-hover укорачивает transition до 0.12 с",
             "волна — семь i с --i и keyframes scaleY с отрицательной задержкой; играет только при aria-pressed=true, таймер seconds сбрасывает playing",
             "фото — aspect-ratio 4/5 с фоном-подложкой, если image пуст; бейдж города поверх"
@@ -3741,6 +3842,7 @@
             "ai": {
               "summary": "A team section for a school or courses: polaroids with a 3D tilt and glare, a “hear the accent” button with a wave.",
               "preserve": [
+                "the card-118 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the tilt is onPointerMove writing --rx/--ry/--x/--y straight into the card's style, no setState; data-hover shortens the transition to 0.12 s",
                 "the wave is seven i elements with --i and scaleY keyframes with a negative delay; it plays only at aria-pressed=true, a seconds timer resets playing",
                 "the photo is aspect-ratio 4/5 with a tinted backdrop when image is empty; the city badge sits on top"
@@ -3824,10 +3926,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports card-118 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-118 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-021",
@@ -3838,7 +3942,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "people-021/people-021.tsx",
@@ -3858,7 +3964,8 @@
           "carousel",
           "live",
           "income",
-          "counter"
+          "counter",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3869,6 +3976,7 @@
           "usage": "<People021\n  title=\"1 240 авторов зарабатывают прямо сейчас\"\n  authors={[{ name: \"Лена Заварзина\", role: \"UI-киты для Figma\", hue: 255, products: 14, baseIncome: 96400, perSecond: 0.11 }]}\n  joinLabel=\"Стать автором\"\n/>",
           "summary": "Авторы площадки с живым доходом: лента с drag-scroll, цифра тикает от текущего времени, кнопка «стать автором».",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "время — useSyncExternalStore с интервалом 1 с и серверным снимком null: на сервере и при гидрации выводится «— — —», цифры появляются после подписки",
             "доход = baseIncome + секунд с начала месяца × perSecond; форматирование с пробелами между тысячами",
             "drag: pointerdown берёт capture (кроме touch), move двигает scrollLeft, сдвиг > 4px ставит moved, onClickCapture гасит клик; scrollbar скрыт, touch-action:pan-y"
@@ -3941,6 +4049,7 @@
             "ai": {
               "summary": "Platform authors with live income: a drag-scroll lane, the number ticks from the current time, a “become an author” button.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "time is useSyncExternalStore with a 1s interval and a null server snapshot: the server and hydration render “— — —”, numbers appear after subscribing",
                 "income = baseIncome + seconds since month start × perSecond; formatted with thousands separators",
                 "drag: pointerdown takes capture (except touch), move shifts scrollLeft, a shift > 4px sets moved, onClickCapture cancels the click; scrollbar hidden, touch-action:pan-y"
@@ -4038,10 +4147,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "people-024",
@@ -4052,7 +4163,9 @@
         "team"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-060"
+      ],
       "files": [
         {
           "path": "people-024/people-024.tsx",
@@ -4071,7 +4184,8 @@
           "volunteers",
           "photos",
           "cards",
-          "nonprofit"
+          "nonprofit",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4082,6 +4196,7 @@
           "usage": "<People024\n  title=\"Нас мало, и мы все с именами\"\n  people={[{ name: \"Марина Соколова\", role: \"Директор фонда\", quote: \"«Начала с одной бабушки в своём подъезде.»\", image: \"/photos/marina.webp\" }]}\n  moreCount={40}\n/>",
           "summary": "Команда как полароиды: рукописные имена, скотч, ротация, по наведению карточка выпрямляется; карточка «ещё N волонтёров».",
           "preserve": [
+            "импорты card-060 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ротация задаётся --r по nth-child(4n+…), скотч — ::before с той же --r; hover сбрасывает в rotate(0) translateY(-8px)",
             "фото — aspect-ratio 4/5 с градиентной подложкой, если image пуст, img — object-fit cover с scale по hover",
             "карточка «ещё N» — ссылка с пунктирной рамкой и стопкой кружков-инициалов, последний — акцентом с «+»"
@@ -4155,6 +4270,7 @@
             "ai": {
               "summary": "Team as polaroids: handwritten names, tape, rotation, cards straighten on hover; an “N more volunteers” card.",
               "preserve": [
+                "the card-060 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "rotation is --r by nth-child(4n+…), the tape is a ::before with the same --r; hover resets to rotate(0) translateY(-8px)",
                 "the photo is aspect-ratio 4/5 with a gradient backing when image is empty, img is object-fit cover with a hover scale",
                 "the “N more” card is a dashed-border link with a stack of initial circles, the last one in the accent with “+”"
@@ -4216,10 +4332,12 @@
                 "moreCount": 40,
                 "moreLabel": "volunteers we hug"
               }
-            }
+            },
+            "docs": "A composite block: imports card-060 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-060 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

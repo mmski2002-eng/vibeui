@@ -1,6 +1,11 @@
 "use client"
 
-import { useId, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Slider001 } from "@/registry/components/slider/slider-001/slider-001"
 import type { CSSProperties } from "react"
 
 export type Pricing006Tier = {
@@ -63,6 +68,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-006"]{color-scheme:dark}
+[data-vibeui-block="pricing-006"] [data-part="cta-button"]{margin-top:1.25rem;}
 [data-vibeui-block="pricing-006"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -71,38 +77,13 @@ box-sizing:border-box;background:var(--vibeui-pricing-006-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-006-sans);
 }
 [data-vibeui-block="pricing-006"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-006"] [data-part="heading"]{margin-bottom:1.75rem}
+[data-vibeui-block="pricing-006"] [data-part="volume"]{margin:0.5rem 0 1rem}
 [data-vibeui-block="pricing-006"] [data-part="shell"]{max-width:60rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
-[data-vibeui-block="pricing-006"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-006-accent);
-}
-[data-vibeui-block="pricing-006"] h2{
-margin:0 0 1.75rem;max-width:24ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
 [data-vibeui-block="pricing-006"] [data-part="card"]{
 display:grid;grid-template-columns:1fr;gap:1.75rem;padding:1.75rem;border-radius:1.25rem;
 border:1px solid var(--vibeui-pricing-006-line);background:var(--vibeui-pricing-006-card);
 }
-[data-vibeui-block="pricing-006"] label{display:block;font-size:0.8125rem;font-weight:650;color:var(--vibeui-pricing-006-muted)}
-[data-vibeui-block="pricing-006"] [data-part="volume"]{
-display:flex;align-items:baseline;gap:0.5rem;margin:0.5rem 0 1rem;
-font-size:2rem;font-weight:700;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;
-}
-[data-vibeui-block="pricing-006"] [data-part="unit"]{font-size:0.875rem;font-weight:500;letter-spacing:0;color:var(--vibeui-pricing-006-muted)}
-[data-vibeui-block="pricing-006"] input{
-appearance:none;width:100%;height:1.5rem;background:none;cursor:pointer;
-}
-[data-vibeui-block="pricing-006"] input::-webkit-slider-runnable-track{height:0.375rem;border-radius:9999px;background:var(--vibeui-pricing-006-track)}
-[data-vibeui-block="pricing-006"] input::-moz-range-track{height:0.375rem;border-radius:9999px;background:var(--vibeui-pricing-006-track)}
-[data-vibeui-block="pricing-006"] input::-webkit-slider-thumb{
-appearance:none;margin-top:-0.4375rem;width:1.25rem;height:1.25rem;border-radius:9999px;
-background:var(--vibeui-pricing-006-accent);border:3px solid var(--vibeui-pricing-006-card);
-box-shadow:0 1px 4px oklch(0 0 0 / 22%);color:oklch(from var(--vibeui-pricing-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="pricing-006"] input::-moz-range-thumb{
-width:1.25rem;height:1.25rem;border-radius:9999px;
-background:var(--vibeui-pricing-006-accent);border:3px solid var(--vibeui-pricing-006-card);color:oklch(from var(--vibeui-pricing-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="pricing-006"] input:focus-visible{outline:2px solid var(--vibeui-pricing-006-accent);outline-offset:4px;border-radius:9999px}
-[data-vibeui-block="pricing-006"] [data-part="range"]{display:flex;justify-content:space-between;margin-top:0.375rem;font-size:0.75rem;color:var(--vibeui-pricing-006-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-006"] [data-part="tiers"]{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:0.375rem}
 [data-vibeui-block="pricing-006"] [data-part="tiers"] li{
 display:flex;justify-content:space-between;gap:1rem;padding:0.4375rem 0.625rem;border-radius:0.5rem;
@@ -118,13 +99,6 @@ font-size:clamp(2.25rem,7cqi,3rem);line-height:1;font-weight:700;letter-spacing:
 color:var(--vibeui-pricing-006-accent);font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="pricing-006"] [data-part="sumnote"]{margin:0.5rem 0 0;font-size:0.8125rem;color:var(--vibeui-pricing-006-muted)}
-[data-vibeui-block="pricing-006"] a{
-display:inline-flex;align-items:center;justify-content:center;margin-top:1.25rem;height:2.75rem;border-radius:0.625rem;
-background:var(--vibeui-pricing-006-accent);color:oklch(from var(--vibeui-pricing-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-006-dur-2) ease;
-}
-[data-vibeui-block="pricing-006"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-006-accent) 86%,black)}
-[data-vibeui-block="pricing-006"] a:focus-visible{outline:2px solid var(--vibeui-pricing-006-accent);outline-offset:3px}
 [data-vibeui-block="pricing-006"] [data-part="note"]{margin:1rem 0 0;font-size:0.75rem;color:var(--vibeui-pricing-006-muted)}
 @container (min-width: 34rem){
 [data-vibeui-block="pricing-006"] [data-part="shell"]{padding:5rem 2rem}
@@ -225,7 +199,6 @@ export function Pricing006({
   className,
   style,
 }: Pricing006Props) {
-  const id = useId()
   const [volume, setVolume] = useState(defaultVolume)
   const safeLocaleValue = safeLocale(locale, "ru-RU")
   const numberFormat = useMemo(
@@ -262,29 +235,28 @@ export function Pricing006({
         style={palette}
       >
         <div data-part="shell">
-          {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h2>{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
 
           <div data-part="card">
             <div>
-              <label htmlFor={`${id}-range`}>{volumeLabel}</label>
-              <p data-part="volume">
-                {numberFormat.format(volume)}
-                <span data-part="unit">{unitLabel}</span>
-              </p>
-              <input
-                id={`${id}-range`}
-                type="range"
+              {/* Ползунок объёма — slider-001: подпись, число и шкала у него, блок только считает цену. */}
+              <Slider001
+                data-part="volume"
+                label={volumeLabel}
                 min={min}
                 max={max}
                 step={step}
-                value={volume}
-                onChange={(event) => setVolume(Number(event.target.value))}
+                defaultValue={volume}
+                unit={` ${unitLabel}`}
+                format={(value) => numberFormat.format(value)}
+                onChange={setVolume}
+                accent={accent}
               />
-              <p data-part="range">
-                <span>{numberFormat.format(min)}</span>
-                <span>{numberFormat.format(max)}</span>
-              </p>
 
               <ul data-part="tiers">
                 {tiers.map((tier, index) => (
@@ -323,7 +295,7 @@ export function Pricing006({
                   base: moneyFormat.format(base),
                 })}
               </p>
-              <a href={action.href}>{action.label}</a>
+              <Button016 data-part="cta-button" label={action.label} href={action.href} external={false} size="lg" tone="accent" accent={accent} />
             </div>
           </div>
 

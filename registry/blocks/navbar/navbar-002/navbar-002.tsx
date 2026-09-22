@@ -1,6 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react"
 
 type Navbar002Link = {
@@ -143,30 +145,6 @@ transition:transform var(--vibeui-navbar-002-dur-3) var(--vibeui-navbar-002-ease
 [data-vibeui-block="navbar-002"] [data-part="login"]:hover{color:var(--vibeui-navbar-002-ink)}
 [data-vibeui-block="navbar-002"] [data-part="login"]:hover::after{transform:scaleX(1)}
 
-[data-vibeui-block="navbar-002"] [data-part="action"]{
-position:relative;overflow:hidden;
-display:inline-flex;align-items:center;min-height:2.375rem;padding:0.25rem 1.0625rem;border-radius:0.6875rem;
-background:var(--vibeui-navbar-002-accent);color:oklch(from var(--vibeui-navbar-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:0.875rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
-box-shadow:0 0.3125rem 1rem color-mix(in oklab,var(--vibeui-navbar-002-accent) 40%,transparent),
-inset 0 1px 0 rgb(255 255 255 / 40%);
-transition:transform var(--vibeui-navbar-002-dur-2) var(--vibeui-navbar-002-ease),box-shadow var(--vibeui-navbar-002-dur-3) ease;
-}
-[data-vibeui-block="navbar-002"] [data-part="action"]::before{
-content:"";position:absolute;inset:0;pointer-events:none;
-background:radial-gradient(5rem 5rem at var(--vibeui-navbar-002-mx,50%) var(--vibeui-navbar-002-my,50%),
-rgb(255 255 255 / 50%),transparent 70%);
-opacity:0;transition:opacity var(--vibeui-navbar-002-dur-2) ease;
-}
-[data-vibeui-block="navbar-002"] [data-part="action"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.5rem 1.5rem color-mix(in oklab,var(--vibeui-navbar-002-accent) 50%,transparent),
-inset 0 1px 0 rgb(255 255 255 / 50%);
-}
-[data-vibeui-block="navbar-002"] [data-part="action"]:hover::before{opacity:1}
-[data-vibeui-block="navbar-002"] [data-part="action"] span{position:relative}
-
-[data-vibeui-block="navbar-002"] a:focus-visible{outline:2px solid var(--vibeui-navbar-002-accent);outline-offset:3px}
 @container (min-width: 54rem){
 [data-vibeui-block="navbar-002"] [data-part="shell"]{padding:0.875rem 2rem;gap:1.5rem;flex-wrap:nowrap}
 [data-vibeui-block="navbar-002"] [data-part="rail"]{order:0;flex:0 1 auto;margin:0 auto;overflow:visible}
@@ -293,9 +271,16 @@ export function Navbar002({
             <a data-part="login" href={loginHref}>
               {loginLabel}
             </a>
-            <a data-part="action" href={actionHref} onPointerMove={trackPointer}>
-              <span>{actionLabel}</span>
-            </a>
+            <Button016
+              data-part="action"
+              onPointerMove={trackPointer}
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="sm"
+              tone="accent"
+              accent={accent}
+            />
           </div>
         </div>
       </header>

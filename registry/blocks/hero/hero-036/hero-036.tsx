@@ -2,6 +2,9 @@
 
 import { Fragment, useEffect, useRef, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Hero036Props = {
   eyebrow?: string
   /** Строки через «|», курсивный акцент — *между звёздочками*. */
@@ -66,11 +69,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-036"] [data-part="title"] em{font-style:italic;font-weight:500;color:var(--vibeui-hero-036-accent)}
 [data-vibeui-block="hero-036"] [data-part="lede"]{max-width:30rem;margin:1.6rem 0 0;font-size:1.05rem;color:var(--vibeui-hero-036-muted);opacity:0;animation:vibeui-hero-036-fade .8s ease-out .6s forwards}
 [data-vibeui-block="hero-036"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem;margin:1.8rem 0 0;opacity:0;animation:vibeui-hero-036-fade .8s ease-out .75s forwards}
-[data-vibeui-block="hero-036"] [data-part="primary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.5rem;border-radius:999px;background:var(--vibeui-hero-036-accent);color:var(--vibeui-hero-036-on-accent);text-decoration:none;font-weight:500;transition:transform .2s,box-shadow .25s}
-[data-vibeui-block="hero-036"] [data-part="primary"]:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px var(--vibeui-hero-036-accent)}
-[data-vibeui-block="hero-036"] [data-part="secondary"]{color:var(--vibeui-hero-036-fg);text-decoration:none;font-weight:500;border-bottom:1px solid var(--vibeui-hero-036-fg);padding-bottom:.1rem;transition:color .2s,border-color .2s}
-[data-vibeui-block="hero-036"] [data-part="secondary"]:hover{color:var(--vibeui-hero-036-accent);border-color:var(--vibeui-hero-036-accent)}
-[data-vibeui-block="hero-036"] a:focus-visible{outline:2px solid var(--vibeui-hero-036-accent);outline-offset:3px}
 [data-vibeui-block="hero-036"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:1.2rem 2.4rem;margin:2.4rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--vibeui-hero-036-line);list-style:none;opacity:0;animation:vibeui-hero-036-fade .8s ease-out .9s forwards}
 [data-vibeui-block="hero-036"] [data-part="facts"] b{display:block;font-family:var(--vibeui-hero-036-display);font-weight:600;font-size:1.9rem;line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="hero-036"] [data-part="facts"] span{display:block;margin-top:.3rem;font-size:.82rem;color:var(--vibeui-hero-036-muted)}
@@ -186,14 +184,23 @@ export function Hero036({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button077
+                  data-part="secondary"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  accent={accent}
+                />
               ) : null}
             </div>
             {facts.length > 0 ? (

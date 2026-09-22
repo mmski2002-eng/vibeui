@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card099 } from "@/registry/components/card/card-099/card-099"
 
 export type Fintech003Layer = {
   title: string
@@ -64,14 +65,6 @@ container-type:inline-size;
 [data-vibeui-block="fintech-003"] [data-part="layers"]{position:relative;margin:1.6rem 0 0;padding:0 0 0 1.4rem;list-style:none;display:grid;gap:.4rem}
 [data-vibeui-block="fintech-003"] [data-part="layers"]::before{content:"";position:absolute;left:.3rem;top:.6rem;bottom:.6rem;width:2px;border-radius:2px;background:var(--vibeui-fintech-003-line)}
 [data-vibeui-block="fintech-003"] [data-part="layers"]::after{content:"";position:absolute;left:.3rem;top:.6rem;bottom:.6rem;width:2px;border-radius:2px;background:linear-gradient(var(--vibeui-fintech-003-accent),var(--vibeui-fintech-003-mint));transform-origin:top;transform:scaleY(var(--vibeui-fintech-003-p));transition:transform .15s linear}
-[data-vibeui-block="fintech-003"] [data-part="layer"]{display:grid;grid-template-columns:auto 1fr;gap:.2rem .8rem;align-items:center;padding:.6rem .8rem;border-radius:.9rem;border:1px solid transparent;opacity:.5;transition:opacity .4s,border-color .4s,background .4s}
-[data-vibeui-block="fintech-003"] [data-part="layer"][data-active="true"]{opacity:1;background:var(--vibeui-fintech-003-glass);border-color:color-mix(in oklab,var(--vibeui-fintech-003-accent) 40%,transparent)}
-[data-vibeui-block="fintech-003"] [data-part="layer"] svg{width:1.6rem;height:1.6rem;color:var(--vibeui-fintech-003-accent);grid-row:span 2}
-[data-vibeui-block="fintech-003"] [data-part="layer"] svg path,[data-vibeui-block="fintech-003"] [data-part="layer"] svg circle{stroke-dasharray:1;stroke-dashoffset:1}
-[data-vibeui-block="fintech-003"] [data-part="layer"][data-active="true"] svg path,[data-vibeui-block="fintech-003"] [data-part="layer"][data-active="true"] svg circle{animation:vibeui-fintech-003-draw .9s cubic-bezier(.2,.7,.2,1) forwards}
-[data-vibeui-block="fintech-003"] [data-part="layer"] h3{margin:0;font-family:var(--vibeui-fintech-003-display);font-size:1rem;font-weight:700;letter-spacing:-.01em}
-[data-vibeui-block="fintech-003"] [data-part="layer"] p{margin:0;font-size:.84rem;color:var(--vibeui-fintech-003-muted);display:none}
-[data-vibeui-block="fintech-003"] [data-part="layer"][data-active="true"] p{display:block}
 [data-vibeui-block="fintech-003"] [data-part="counter"]{margin:1rem 0 0;font-family:var(--vibeui-fintech-003-mono);font-size:.75rem;color:var(--vibeui-fintech-003-muted);font-variant-numeric:tabular-nums}
 [data-vibeui-block="fintech-003"] [data-part="scene"]{position:relative;height:14rem;perspective:900px;transform-style:preserve-3d}
 [data-vibeui-block="fintech-003"] [data-part="ring"]{position:absolute;left:50%;width:15rem;height:6rem;margin-left:-7.5rem;top:calc(.5rem + var(--vibeui-fintech-003-i) * 2.8rem);border-radius:50%;border:1px solid var(--vibeui-fintech-003-line);background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-fintech-003-fg) 4%,transparent),transparent);transform:rotateX(72deg);transform-style:preserve-3d;transition:border-color .4s,box-shadow .4s}
@@ -84,8 +77,8 @@ container-type:inline-size;
 [data-vibeui-block="fintech-003"] [data-part="card"] span{font-family:var(--vibeui-fintech-003-mono);letter-spacing:.08em}
 [data-vibeui-block="fintech-003"] [data-part="scan"]{position:absolute;left:0;right:0;top:calc(.5rem + var(--vibeui-fintech-003-p) * 9rem + 2.3rem);height:1px;background:linear-gradient(90deg,transparent,var(--vibeui-fintech-003-accent),transparent);opacity:.7;pointer-events:none}
 @keyframes vibeui-fintech-003-draw{to{stroke-dashoffset:0}}
-@container (min-width: 56rem){[data-vibeui-block="fintech-003"] [data-part="sticky"]{padding:4rem 0}[data-vibeui-block="fintech-003"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem;align-items:center}[data-vibeui-block="fintech-003"] [data-part="scene"]{height:22rem}[data-vibeui-block="fintech-003"] [data-part="ring"]{width:20rem;height:8rem;margin-left:-10rem;top:calc(1rem + var(--vibeui-fintech-003-i) * 4.4rem)}[data-vibeui-block="fintech-003"] [data-part="card"]{width:11rem;margin-left:-5.5rem;font-size:.7rem;padding:.7rem .85rem;border-radius:.9rem;transform:translateY(calc(var(--vibeui-fintech-003-p) * 14.5rem)) rotateY(-14deg)}[data-vibeui-block="fintech-003"] [data-part="scan"]{top:calc(1rem + var(--vibeui-fintech-003-p) * 14.5rem + 3.4rem)}[data-vibeui-block="fintech-003"] [data-part="layer"] p{display:block}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="fintech-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="fintech-003"] [data-part="layer"] svg path,[data-vibeui-block="fintech-003"] [data-part="layer"] svg circle{stroke-dashoffset:0}}`
+@container (min-width: 56rem){[data-vibeui-block="fintech-003"] [data-part="sticky"]{padding:4rem 0}[data-vibeui-block="fintech-003"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem;align-items:center}[data-vibeui-block="fintech-003"] [data-part="scene"]{height:22rem}[data-vibeui-block="fintech-003"] [data-part="ring"]{width:20rem;height:8rem;margin-left:-10rem;top:calc(1rem + var(--vibeui-fintech-003-i) * 4.4rem)}[data-vibeui-block="fintech-003"] [data-part="card"]{width:11rem;margin-left:-5.5rem;font-size:.7rem;padding:.7rem .85rem;border-radius:.9rem;transform:translateY(calc(var(--vibeui-fintech-003-p) * 14.5rem)) rotateY(-14deg)}[data-vibeui-block="fintech-003"] [data-part="scan"]{top:calc(1rem + var(--vibeui-fintech-003-p) * 14.5rem + 3.4rem)}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="fintech-003"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_LAYERS: Fintech003Layer[] = [
   { title: "Вход по лицу и ключу", text: "Биометрия на телефоне, аппаратный ключ или подтверждение в приложении. СМС-кодов, которые перехватывают, нет.", icon: "biometrics" },
@@ -94,36 +87,6 @@ const DEFAULT_LAYERS: Fintech003Layer[] = [
   { title: "Страховка и лимиты", text: "Средства до 1,4 млн ₽ застрахованы АСВ. Лимиты на карты сотрудников — по категориям и дням.", icon: "shield" },
 ]
 
-function Icon({ kind }: { kind: NonNullable<Fintech003Layer["icon"]> }) {
-  const common = { fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, pathLength: 1 }
-  switch (kind) {
-    case "biometrics":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...common} d="M7 4.5A9 9 0 0 1 17 4.5M4 9a9 9 0 0 1 16 0M6.5 20a9 9 0 0 1-1.5-8 7 7 0 0 1 14 0c0 2-.3 4-1 6M9.5 21a7 7 0 0 1-.5-9 3 3 0 0 1 6 0c0 2.5-.5 6-1.5 8M12 12v9" />
-        </svg>
-      )
-    case "lock":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...common} d="M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5zM12 15v2.5" />
-        </svg>
-      )
-    case "radar":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <circle {...common} cx="12" cy="12" r="9" />
-          <path {...common} d="M12 3a9 9 0 0 1 9 9M12 7a5 5 0 0 1 5 5M12 12l5-5" />
-        </svg>
-      )
-    default:
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path {...common} d="M12 3l8 3v6c0 4.5-3.5 8-8 9-4.5-1-8-4.5-8-9V6zM9 12l2 2 4-4" />
-        </svg>
-      )
-  }
-}
 
 /** Безопасность: карта проходит четыре слоя защиты по прокрутке. */
 export function Fintech003({
@@ -200,11 +163,7 @@ export function Fintech003({
                 {lede ? <p data-part="lede">{lede}</p> : null}
                 <ol data-part="layers">
                   {layers.map((layer, index) => (
-                    <li key={layer.title} data-part="layer" data-active={index === step}>
-                      <Icon kind={layer.icon ?? "shield"} />
-                      <h3>{layer.title}</h3>
-                      <p>{layer.text}</p>
-                    </li>
+                    <Card099 key={layer.title} data-part="layer" title={layer.title} icon={layer.icon} text={layer.text} data-active={index === step} accent={accent} />
                   ))}
                 </ol>
                 <p data-part="counter" aria-live="polite">

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card120 } from "@/registry/components/card/card-120/card-120"
 
 export type Event007Venue = {
   name: string
@@ -58,25 +59,11 @@ container-type:inline-size;
 [data-vibeui-block="event-007"] [data-part="title"]{margin:.5rem 0 0;font-family:var(--vibeui-event-007-display);font-size:clamp(1.6rem,3.4cqi,2.4rem);font-weight:600;letter-spacing:-.03em;line-height:1.1}
 [data-vibeui-block="event-007"] [data-part="lede"]{margin:.5rem 0 1.5rem;max-width:36rem;color:var(--vibeui-event-007-muted)}
 [data-vibeui-block="event-007"] [data-part="grid"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="event-007"] [data-part="frame"]{padding:.5rem;border-radius:1.5rem;background:var(--vibeui-event-007-color);transition:padding .35s cubic-bezier(.2,.8,.2,1);animation:vibeui-event-007-in .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-event-007-n) * 70ms)}
 @keyframes vibeui-event-007-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-[data-vibeui-block="event-007"] [data-part="frame"]:hover{padding:.75rem}
-[data-vibeui-block="event-007"] [data-part="card"]{display:grid;grid-template-columns:minmax(0,1fr) 5.5rem;gap:1rem;height:100%;padding:1.1rem;border-radius:1.05rem;background:var(--vibeui-event-007-card)}
-[data-vibeui-block="event-007"] [data-part="name"]{margin:0;font-family:var(--vibeui-event-007-display);font-size:1.3rem;font-weight:600;line-height:1.15;letter-spacing:-.02em}
-[data-vibeui-block="event-007"] [data-part="name"] a:hover{opacity:.7}
-[data-vibeui-block="event-007"] [data-part="text"]{margin:.4rem 0 0;font-size:.92rem;color:var(--vibeui-event-007-muted)}
-[data-vibeui-block="event-007"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:.35rem;margin:.8rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="event-007"] [data-part="facts"] li{padding:.2rem .6rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-event-007-color) 45%,var(--vibeui-event-007-card));font-size:.78rem;font-weight:500}
-[data-vibeui-block="event-007"] [data-part="tags"]{margin:.6rem 0 0;font-size:.82rem;color:var(--vibeui-event-007-muted)}
-[data-vibeui-block="event-007"] [data-part="photo"]{align-self:start;width:5.5rem;height:5.5rem;border-radius:.9rem;overflow:hidden;background:light-dark(#efeff1,#1f2026);transition:transform .45s cubic-bezier(.2,.9,.3,1.3)}
-[data-vibeui-block="event-007"] [data-part="photo"] img{width:100%;height:100%;object-fit:cover;display:block}
-[data-vibeui-block="event-007"] [data-part="frame"]:hover [data-part="photo"]{transform:translateY(-4px) rotate(4deg) scale(1.05)}
 @container (min-width: 44rem){[data-vibeui-block="event-007"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 68rem){
 [data-vibeui-block="event-007"] [data-part="shell"]{padding:2.5rem 2rem 4rem}
 [data-vibeui-block="event-007"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}
-[data-vibeui-block="event-007"] [data-part="card"]{grid-template-columns:1fr;grid-template-rows:auto 1fr}
-[data-vibeui-block="event-007"] [data-part="photo"]{grid-row:1;width:100%;height:auto;aspect-ratio:3/2}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-007"] *{animation:none!important;transition:none!important}}`
 
@@ -120,23 +107,7 @@ export function Event007({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <ul data-part="grid">
             {venues.map((venue, index) => (
-              <li key={venue.name} data-part="frame" style={{ ["--vibeui-event-007-color" as string]: venue.color, ["--vibeui-event-007-n" as string]: index }}>
-                <div data-part="card">
-                  <div>
-                    <h3 data-part="name">{venue.href ? <a href={venue.href}>{venue.name}</a> : venue.name}</h3>
-                    {venue.text ? <p data-part="text">{venue.text}</p> : null}
-                    {venue.facts && venue.facts.length > 0 ? (
-                      <ul data-part="facts">
-                        {venue.facts.map((fact) => (
-                          <li key={fact}>{fact}</li>
-                        ))}
-                      </ul>
-                    ) : null}
-                    {venue.tags && venue.tags.length > 0 ? <p data-part="tags">{venue.tags.join(" · ")}</p> : null}
-                  </div>
-                  <div data-part="photo">{venue.image ? <img src={venue.image} alt={venue.imageAlt ?? ""} loading="lazy" /> : null}</div>
-                </div>
-              </li>
+              <Card120 key={venue.name} data-part="frame" name={venue.name} href={venue.href} text={venue.text} facts={venue.facts} tags={venue.tags} image={venue.image} imageAlt={venue.imageAlt} style={{ ["--vibeui-event-007-color" as string]: venue.color, ["--vibeui-event-007-n" as string]: index }} accent={accent} />
             ))}
           </ul>
         </div>

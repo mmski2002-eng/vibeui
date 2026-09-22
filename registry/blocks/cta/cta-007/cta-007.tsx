@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Cta007Props = {
   eyebrow?: string
@@ -20,7 +24,8 @@ export type Cta007Props = {
 // одну капсулу. Подпись поля скрыта визуально, но связана через htmlFor —
 // в однострочной форме видимая подпись сломала бы капсулу, а без связи
 // скринридер прочитал бы «поле ввода» без объяснения.
-const STYLES = `
+const STYLES = `[data-vibeui-block="cta-007"] [data-part="heading"]{margin-bottom:1.75rem}
+
 :where([data-vibeui-block="cta-007"]){
 --vibeui-cta-007-bg:transparent;
 --vibeui-cta-007-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -45,48 +50,12 @@ font-family:var(--vibeui-cta-007-font);
 [data-vibeui-block="cta-007"] [data-part="shell"]{
 max-width:44rem;margin:0 auto;padding:3rem 1.25rem;text-align:center;
 }
-[data-vibeui-block="cta-007"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;color:var(--vibeui-cta-007-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="cta-007"] [data-part="title"]{
-margin:0 auto 0.875rem;max-width:22ch;
-font-size:clamp(1.625rem,5.5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="cta-007"] [data-part="description"]{
-margin:0 auto 1.75rem;max-width:46ch;
-color:var(--vibeui-cta-007-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="cta-007"] [data-part="form"]{
 display:grid;gap:0.625rem;max-width:30rem;margin:0 auto;
 }
-[data-vibeui-block="cta-007"] [data-part="label"]{
-position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-clip:rect(0 0 0 0);white-space:nowrap;border:0;
-}
-[data-vibeui-block="cta-007"] [data-part="input"]{
-min-width:0;width:100%;
-padding:0.8125rem 1.125rem;border:1px solid var(--vibeui-cta-007-border);border-radius:999px;
-background:var(--vibeui-cta-007-field);color:var(--vibeui-cta-007-ink);
-font:inherit;font-size:0.9375rem;
-transition:border-color var(--vibeui-cta-007-dur-2) ease;
-}
-[data-vibeui-block="cta-007"] [data-part="input"]::placeholder{color:var(--vibeui-cta-007-muted)}
-[data-vibeui-block="cta-007"] [data-part="input"]:focus-visible{
-outline:2px solid var(--vibeui-cta-007-accent);outline-offset:2px;
-border-color:var(--vibeui-cta-007-accent);
-}
-[data-vibeui-block="cta-007"] [data-part="submit"]{
-padding:0.8125rem 1.5rem;border:0;border-radius:999px;cursor:pointer;
-background:var(--vibeui-cta-007-button);color:var(--vibeui-cta-007-button-ink);
-font:inherit;font-size:0.9375rem;font-weight:650;white-space:nowrap;
-transition:filter var(--vibeui-cta-007-dur-2) ease,transform var(--vibeui-cta-007-dur-2) ease;
-}
-[data-vibeui-block="cta-007"] [data-part="submit"]:hover{filter:brightness(1.05);transform:translateY(-1px)}
-[data-vibeui-block="cta-007"] [data-part="submit"]:focus-visible{
-outline:2px solid var(--vibeui-cta-007-accent);outline-offset:2px;
-}
-[data-vibeui-block="cta-007"] [data-part="note"]{
+[data-vibeui-block="cta-007"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="cta-007"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
+[data-vibeui-block="cta-007"] [data-part="footnote"]{
 margin:1rem auto 0;max-width:46ch;
 color:var(--vibeui-cta-007-muted);font-size:0.8125rem;line-height:1.5;
 }
@@ -161,27 +130,22 @@ export function Cta007({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={description}
+            align="center"
+            ledeWidth={46}
+            accent={accent}
+          />
           <form data-part="form" action={action} method="post">
-            <label data-part="label" htmlFor="vibeui-cta-007-email">
-              {emailLabel}
-            </label>
-            <input
-              data-part="input"
-              id="vibeui-cta-007-email"
-              type="email"
-              name="email"
-              autoComplete="email"
-              required
-              placeholder={placeholder}
-            />
-            <button data-part="submit" type="submit">
+            <Input001 type="email" name="email" required label={emailLabel} autoComplete="email" accent={accent} />
+            <Button001 type="submit" size="lg" accent={accent}>
               {submitLabel}
-            </button>
+            </Button001>
           </form>
-          <p data-part="note">{note}</p>
+          <p data-part="footnote">{note}</p>
         </div>
       </section>
     </>

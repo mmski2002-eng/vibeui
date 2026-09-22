@@ -1,6 +1,12 @@
 "use client"
 
 import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
+import { Button018 } from "@/registry/components/button/button-018/button-018"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
 
 export type Contact016Props = {
   eyebrow?: string
@@ -66,9 +72,10 @@ container-type:inline-size;
 :where([data-vibeui-block="contact-016"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="contact-016"]{box-sizing:border-box;display:block;background:var(--vibeui-contact-016-bg);color:var(--vibeui-contact-016-fg);font-family:var(--vibeui-contact-016-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="contact-016"] *{box-sizing:border-box}
+[data-vibeui-block="contact-016"] [data-part="pair"]{display:grid}
 [data-vibeui-block="contact-016"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem;display:grid;gap:2.5rem}
 [data-vibeui-block="contact-016"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--vibeui-contact-016-accent-ink);font-weight:600}
-[data-vibeui-block="contact-016"] [data-part="title"]{margin:0;font-family:var(--vibeui-contact-016-display);font-weight:400;font-size:clamp(2.25rem,5cqi,3.5rem);line-height:1.05;letter-spacing:-.01em}
+[data-vibeui-block="contact-016"] [data-part="heading"]{margin:0;font-family:var(--vibeui-contact-016-display);font-weight:400;font-size:clamp(2.25rem,5cqi,3.5rem);line-height:1.05;letter-spacing:-.01em}
 [data-vibeui-block="contact-016"] [data-part="lede"]{margin:.75rem 0 0;max-width:30rem;color:var(--vibeui-contact-016-muted)}
 [data-vibeui-block="contact-016"] [data-part="slots-label"]{display:block;margin:2rem 0 .6rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-contact-016-muted)}
 [data-vibeui-block="contact-016"] [data-part="slots"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none}
@@ -80,22 +87,6 @@ container-type:inline-size;
 [data-vibeui-block="contact-016"] [data-part="notes"] li::before{content:"";flex:none;width:.4rem;height:.4rem;margin-top:.55rem;border-radius:50%;background:var(--vibeui-contact-016-accent)}
 [data-vibeui-block="contact-016"] [data-part="form"]{display:grid;gap:1rem;padding:1.5rem;border-radius:1rem;background:var(--vibeui-contact-016-card);border:1px solid var(--vibeui-contact-016-line)}
 [data-vibeui-block="contact-016"] [data-part="pair"]{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-[data-vibeui-block="contact-016"] [data-part="field"]{display:grid;gap:.35rem}
-[data-vibeui-block="contact-016"] [data-part="field"] > span{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--vibeui-contact-016-muted);font-weight:600}
-[data-vibeui-block="contact-016"] input:not([type="checkbox"]),[data-vibeui-block="contact-016"] textarea{width:100%;padding:0 .9rem;border:1px solid var(--vibeui-contact-016-line);border-radius:.6rem;background:transparent;font:inherit;color:inherit;color-scheme:inherit}
-[data-vibeui-block="contact-016"] input:not([type="checkbox"]){height:3rem}
-[data-vibeui-block="contact-016"] textarea{padding:.75rem .9rem;min-height:5rem;resize:vertical}
-[data-vibeui-block="contact-016"] input:focus-visible,[data-vibeui-block="contact-016"] textarea:focus-visible,[data-vibeui-block="contact-016"] button:focus-visible{outline:2px solid var(--vibeui-contact-016-accent);outline-offset:1px}
-[data-vibeui-block="contact-016"] input::placeholder,[data-vibeui-block="contact-016"] textarea::placeholder{color:var(--vibeui-contact-016-muted);opacity:.7}
-[data-vibeui-block="contact-016"] [data-part="stepper"]{display:grid;grid-template-columns:3rem 1fr 3rem;height:3rem;border:1px solid var(--vibeui-contact-016-line);border-radius:.6rem;overflow:hidden}
-[data-vibeui-block="contact-016"] [data-part="stepper"] button{border:0;background:transparent;color:inherit;font:inherit;font-size:1.2rem;cursor:pointer;transition:background .2s}
-[data-vibeui-block="contact-016"] [data-part="stepper"] button:hover{background:var(--vibeui-contact-016-line)}
-[data-vibeui-block="contact-016"] [data-part="stepper"] output{display:grid;place-items:center;font-family:var(--vibeui-contact-016-display);font-size:1.25rem}
-[data-vibeui-block="contact-016"] [data-part="consent"]{display:flex;gap:.6rem;align-items:flex-start;font-size:.8rem;color:var(--vibeui-contact-016-muted);cursor:pointer}
-[data-vibeui-block="contact-016"] [data-part="consent"] input{margin:.2rem 0 0;accent-color:var(--vibeui-contact-016-accent-ink)}
-[data-vibeui-block="contact-016"] [data-part="submit"]{height:3.25rem;border:0;border-radius:999px;background:var(--vibeui-contact-016-accent);color:var(--vibeui-contact-016-on-accent);font:inherit;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="contact-016"] [data-part="submit"]{box-shadow:var(--vibeui-contact-016-glow)}
-[data-vibeui-block="contact-016"] [data-part="submit"]:hover{transform:translateY(-1px);filter:brightness(1.08)}
 [data-vibeui-block="contact-016"] [data-part="done"]{display:grid;gap:.5rem;padding:2.5rem 1.5rem;border-radius:1rem;background:var(--vibeui-contact-016-card);border:1px solid var(--vibeui-contact-016-line);text-align:center}
 [data-vibeui-block="contact-016"] [data-part="done"] h3{margin:0;font-family:var(--vibeui-contact-016-display);font-size:2rem;font-weight:400;line-height:1.05}
 [data-vibeui-block="contact-016"] [data-part="done"] p{margin:0;color:var(--vibeui-contact-016-muted)}
@@ -189,7 +180,7 @@ export function Contact016({
         <div data-part="shell">
           <div>
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2 data-part="title">{title}</h2>
+            <h2 data-part="heading">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
             {slots.length > 0 ? (
               <>
@@ -221,49 +212,51 @@ export function Contact016({
           ) : (
             <form data-part="form" action={action || undefined} method={action ? "post" : undefined} onSubmit={submit}>
               <div data-part="pair">
-                <label data-part="field">
-                  <span>{dateLabel}</span>
-                  <input name="date" type="date" required value={date} min={minDate || undefined} onChange={(event) => setDate(event.target.value)} />
-                </label>
-                <label data-part="field">
-                  <span>{timeLabel}</span>
-                  <input name="time" type="time" required value={time} step={900} onChange={(event) => setTime(event.target.value)} />
-                </label>
+                <Input001 name="date" type="date" required value={date} min={minDate || undefined} onChange={(event) => setDate(event.target.value)} label={dateLabel} accent={accent} />
+                <Input001 name="time" type="time" required value={time} step={900} onChange={(event) => setTime(event.target.value)} label={timeLabel} accent={accent} />
               </div>
               <div data-part="pair">
-                <div data-part="field">
-                  <span>{guestsLabel}</span>
-                  <div data-part="stepper">
-                    <button type="button" aria-label={lessLabel} onClick={() => setGuests((value) => Math.max(minGuests, value - 1))}>
-                      −
-                    </button>
-                    <output aria-live="polite">{guests}</output>
-                    <button type="button" aria-label={moreLabel} onClick={() => setGuests((value) => Math.min(maxGuests, value + 1))}>
-                      +
-                    </button>
-                    <input type="hidden" name="guests" value={guests} />
-                  </div>
+                <div data-part="guests">
+                  {/* Счётчик — button-018; значение в форму уходит скрытым полем. */}
+                  <Button018
+                    defaultValue={guests}
+                    min={minGuests}
+                    max={maxGuests}
+                    label={guestsLabel}
+                    unit=""
+                    decreaseLabel={lessLabel}
+                    increaseLabel={moreLabel}
+                    onChange={setGuests}
+                    accent={accent}
+                  />
+                  <input type="hidden" name="guests" value={guests} />
                 </div>
-                <label data-part="field">
-                  <span>{nameLabel}</span>
-                  <input name="name" required placeholder={namePlaceholder} autoComplete="name" />
-                </label>
+                <Input001
+                  name="name"
+                  autoComplete="name"
+                  required
+                  label={nameLabel}
+                  accent={accent}
+                />
               </div>
-              <label data-part="field">
-                <span>{phoneLabel}</span>
-                <input name="phone" type="tel" required inputMode="tel" autoComplete="tel" placeholder={phonePlaceholder} />
-              </label>
-              <label data-part="field">
-                <span>{noteLabel}</span>
-                <textarea name="note" placeholder={notePlaceholder} />
-              </label>
-              <label data-part="consent">
-                <input type="checkbox" name="consent" required />
-                <span>{consentLabel}</span>
-              </label>
-              <button type="submit" data-part="submit">
+              <Input001
+                name="phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                required
+                label={phoneLabel}
+                accent={accent}
+              />
+              <Input034
+                name="note"
+                label={noteLabel}
+                accent={accent}
+              />
+              <Checkbox001 name="consent" required label={consentLabel} description="" accent={accent} />
+              <Button001 type="submit" size="lg" accent={accent}>
                 {submitLabel}
-              </button>
+              </Button001>
             </form>
           )}
         </div>

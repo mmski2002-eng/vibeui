@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Hero010Props = {
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -53,16 +56,6 @@ font-family:var(--vibeui-hero-010-sans);
 [data-vibeui-block="hero-010"] [data-part="shell"]{display:grid;grid-template-columns:1fr;align-items:stretch}
 [data-vibeui-block="hero-010"] [data-part="copy"]{padding:3rem 1.25rem;display:flex;flex-direction:column;justify-content:center}
 [data-vibeui-block="hero-010"] [data-part="inner"]{max-width:34rem;width:100%}
-[data-vibeui-block="hero-010"] [data-part="eyebrow"]{
-margin:0 0 1rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-hero-010-accent);
-}
-[data-vibeui-block="hero-010"] h1{
-margin:0;font-size:clamp(1.875rem,5.4cqi,3.125rem);line-height:1.08;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-010"] [data-part="lede"]{
-margin:1rem 0 0;font-size:clamp(0.9375rem,1.4cqi,1.0625rem);line-height:1.6;color:var(--vibeui-hero-010-muted);text-wrap:pretty;
-}
 [data-vibeui-block="hero-010"] ul{list-style:none;margin:1.5rem 0 0;padding:0;display:grid;gap:0.625rem}
 [data-vibeui-block="hero-010"] li{display:flex;align-items:flex-start;gap:0.625rem;font-size:0.875rem;line-height:1.5}
 [data-vibeui-block="hero-010"] [data-part="tick"]{
@@ -71,15 +64,6 @@ display:flex;align-items:center;justify-content:center;
 background:color-mix(in oklab,var(--vibeui-hero-010-accent) 18%,transparent);color:var(--vibeui-hero-010-accent);
 }
 [data-vibeui-block="hero-010"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.625rem;margin-top:1.875rem}
-[data-vibeui-block="hero-010"] a{
-display:inline-flex;align-items:center;justify-content:center;height:2.75rem;padding:0 1.375rem;border-radius:0.5rem;
-font-size:0.9375rem;font-weight:600;text-decoration:none;transition:background-color var(--vibeui-hero-010-dur-2) ease,border-color var(--vibeui-hero-010-dur-2) ease;
-}
-[data-vibeui-block="hero-010"] [data-part="primary"]{background:var(--vibeui-hero-010-accent);color:oklch(from var(--vibeui-hero-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-010-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-010-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-010-dur-3) ease,background-color var(--vibeui-hero-010-dur-2) ease}
-[data-vibeui-block="hero-010"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-010-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
-[data-vibeui-block="hero-010"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-010-line);color:var(--vibeui-hero-010-fg)}
-[data-vibeui-block="hero-010"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-010-fg)}
-[data-vibeui-block="hero-010"] a:focus-visible{outline:2px solid var(--vibeui-hero-010-accent);outline-offset:3px}
 [data-vibeui-block="hero-010"] figure{
 position:relative;margin:0;min-height:16rem;overflow:hidden;
 background:
@@ -188,9 +172,15 @@ export function Hero010({
         <div data-part="shell">
           <div data-part="copy">
             <div data-part="inner">
-              {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-              <h1>{title}</h1>
-              {lede ? <p data-part="lede">{lede}</p> : null}
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                lede={lede}
+                level="h1"
+                size="lg"
+                accent={accent}
+              />
               {bullets.length > 0 ? (
                 <ul>
                   {bullets.slice(0, 4).map((bullet) => (
@@ -213,12 +203,24 @@ export function Hero010({
                 </ul>
               ) : null}
               <div data-part="actions">
-                <a data-part="primary" href={primary.href}>
-                  {primary.label}
-                </a>
-                <a data-part="secondary" href={secondary.href}>
-                  {secondary.label}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primary.label}
+                  href={primary.href}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondary.label}
+                  href={secondary.href}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               </div>
             </div>
           </div>

@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Avatar001 } from "@/registry/components/avatar/avatar-001/avatar-001"
+
 export type Blog002Section = {
   id: string
   heading: string
@@ -63,6 +65,7 @@ background:var(--vibeui-blog-002-bg);color:var(--vibeui-blog-002-fg);
 font-family:var(--vibeui-blog-002-sans);
 }
 [data-vibeui-block="blog-002"] *{box-sizing:border-box}
+[data-vibeui-block="blog-002"] [data-part="avatar"]{width:2rem}
 [data-vibeui-block="blog-002"] [data-part="frame"]{
 max-width:72rem;margin:0 auto;padding:2.5rem 1.25rem 3rem;display:grid;gap:1.75rem;
 }
@@ -84,17 +87,6 @@ margin:0;font-size:1.0625rem;line-height:1.65;color:var(--vibeui-blog-002-muted)
 display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;
 padding-top:0.75rem;border-top:1px solid var(--vibeui-blog-002-border);
 font-size:0.8125rem;color:var(--vibeui-blog-002-muted);
-}
-[data-vibeui-block="blog-002"] [data-part="avatar"]{
-position:relative;display:inline-flex;align-items:center;justify-content:center;
-width:2rem;height:2rem;border-radius:9999px;color:var(--vibeui-blog-002-on-accent);
-font-size:0.75rem;font-weight:700;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="blog-002"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-blog-002-accent);color:oklch(from var(--vibeui-blog-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="blog-002"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="blog-002"] [data-part="author"]{color:var(--vibeui-blog-002-fg);font-weight:640}
 [data-vibeui-block="blog-002"] [data-part="dot"]{opacity:.5}
@@ -256,21 +248,7 @@ export function Blog002({
             <h2>{title}</h2>
             <p data-part="lede">{lede}</p>
             <p data-part="byline">
-              <span
-                data-part="avatar"
-                data-empty={avatarImage ? undefined : "true"}
-                aria-hidden="true"
-              >
-                {avatarImage ? (
-                  <img
-                    src={avatarImage}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : null}
-                {author.slice(0, 1)}
-              </span>
+              <Avatar001 data-part="avatar" name={author} src={avatarImage} size="sm" status="none" aria-hidden="true" />
               <span data-part="author">{author}</span>
               <span>{role}</span>
               <span data-part="dot">·</span>

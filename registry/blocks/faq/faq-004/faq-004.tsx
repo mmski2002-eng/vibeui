@@ -1,9 +1,11 @@
 import type { CSSProperties } from "react"
 
-type Faq004Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion001,
+  type Accordion001Item,
+} from "@/registry/components/accordion/accordion-001/accordion-001"
+
+type Faq004Item = Accordion001Item
 
 export type Faq004Props = {
   eyebrow?: string
@@ -11,16 +13,19 @@ export type Faq004Props = {
   items?: Faq004Item[]
   name?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
+  openFirst?: boolean
   background?: string
   accent?: string
   className?: string
   style?: CSSProperties
 }
 
-// Согласованный аккордеон без единой строки JS: у всех <details> одинаковый
-// атрибут name, и браузер сам закрывает предыдущий ответ при открытии
-// следующего. Это ровно тот случай, когда одновременное раскрытие вредно —
-// длинные ответы про условия читают по одному, сравнивая их между собой.
+// Согласованный аккордеон без единой строки JS — accordion-001 в режиме
+// exclusive: у всех <details> одинаковый атрибут name, и браузер сам
+// закрывает предыдущий ответ при открытии следующего. Это ровно тот случай,
+// когда одновременное раскрытие вредно — длинные ответы про условия читают
+// по одному. Составной блок: ему остаются заголовок и поля секции.
 //
 // Тема приходит из color-scheme окружения через light-dark(): подложки у
 // секции по умолчанию нет, она темнеет вместе со страницей.
@@ -58,40 +63,9 @@ margin:0 0 2rem;max-width:18ch;
 font-family:var(--vibeui-faq-004-serif);
 font-size:clamp(1.75rem,5.4cqi,2.75rem);line-height:1.08;letter-spacing:-0.02em;font-weight:600;
 }
-[data-vibeui-block="faq-004"] [data-part="item"]{
-border-top:1px solid var(--vibeui-faq-004-border);
-}
-[data-vibeui-block="faq-004"] [data-part="item"]:last-child{border-bottom:1px solid var(--vibeui-faq-004-border)}
-[data-vibeui-block="faq-004"] [data-part="item"] summary{
-cursor:pointer;list-style:none;position:relative;
-display:flex;align-items:baseline;gap:0.875rem;
-padding:1.125rem 2.25rem 1.125rem 0;
-font-size:1.0625rem;font-weight:600;line-height:1.35;
-transition:color var(--vibeui-faq-004-dur-2) ease;
-}
-[data-vibeui-block="faq-004"] [data-part="item"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-004"] [data-part="item"] summary:hover{color:var(--vibeui-faq-004-accent)}
-[data-vibeui-block="faq-004"] [data-part="item"] summary::after{
-content:"";position:absolute;right:0.25rem;top:1.4375rem;
-width:0.5rem;height:0.5rem;
-border-right:2px solid var(--vibeui-faq-004-accent);border-bottom:2px solid var(--vibeui-faq-004-accent);
-transform:rotate(45deg);
-transition:transform var(--vibeui-faq-004-dur-2) ease;
-}
-[data-vibeui-block="faq-004"] [data-part="item"][open] summary::after{transform:rotate(-135deg)}
-[data-vibeui-block="faq-004"] [data-part="item"] summary:focus-visible{outline:2px solid var(--vibeui-faq-004-accent);outline-offset:-2px}
-[data-vibeui-block="faq-004"] [data-part="num"]{
-flex:none;color:var(--vibeui-faq-004-accent);
-font-family:var(--vibeui-faq-004-serif);font-size:0.9375rem;font-style:italic;
-}
-[data-vibeui-block="faq-004"] [data-part="answer"]{
-margin:0;padding:0 2.25rem 1.5rem 2.375rem;max-width:62ch;
-color:var(--vibeui-faq-004-muted);font-size:1rem;line-height:1.65;
-}
+[data-vibeui-block="faq-004"] [data-part="list"]{width:100%;max-width:none}
 @container (min-width: 40rem){
 [data-vibeui-block="faq-004"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="faq-004"] [data-part="item"] summary{font-size:1.25rem;padding-block:1.375rem}
-[data-vibeui-block="faq-004"] [data-part="answer"]{padding-left:2.75rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-004"] *{animation:none!important;transition:none!important}}
 `
@@ -147,12 +121,14 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Согласованный аккордеон: одновременно открыт только один ответ, без JS. */
+/** Один открытый ответ: accordion-001 в режиме exclusive, без JS. */
 export function Faq004({
   eyebrow = "Условия работы",
   title = "Что спрашивают до подписания договора",
   items = DEFAULT_ITEMS,
   name = "vibeui-faq-004",
+  marker = "chevron",
+  openFirst = false,
   background = "",
   accent,
   className,
@@ -182,15 +158,16 @@ export function Faq004({
         <div data-part="shell">
           <p data-part="eyebrow">{eyebrow}</p>
           <h2 data-part="title">{title}</h2>
-          {items.map((item, index) => (
-            <details key={item.question} data-part="item" name={name}>
-              <summary>
-                <span data-part="num">{index + 1}</span>
-                {item.question}
-              </summary>
-              <p data-part="answer">{item.answer}</p>
-            </details>
-          ))}
+          <Accordion001
+            defaultOpen={openFirst ? 0 : -1}
+            marker={marker}
+            data-part="list"
+            items={items}
+            exclusive
+            group={name}
+            divider="line"
+            accent={accent}
+          />
         </div>
       </section>
     </>

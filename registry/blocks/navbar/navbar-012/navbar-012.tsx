@@ -1,6 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 type Navbar012Link = {
@@ -70,6 +72,8 @@ font-family:var(--vibeui-navbar-012-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-012"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-012"] [data-part="issue"]{display:none}
+[data-vibeui-block="navbar-012"] [data-part="subscribe"]{margin-left:auto;flex:none}
 [data-vibeui-block="navbar-012"] [data-part="shell"]{
 max-width:82rem;margin:0 auto;padding:0.75rem 1rem 0;
 display:flex;flex-direction:column;
@@ -83,22 +87,6 @@ color:var(--vibeui-navbar-012-muted);
 }
 [data-vibeui-block="navbar-012"] [data-part="issue"]{
 display:none;padding-left:0.75rem;border-left:1px solid var(--vibeui-navbar-012-line);
-}
-[data-vibeui-block="navbar-012"] [data-part="subscribe"]{
-margin-left:auto;flex:none;
-display:inline-flex;align-items:center;
-padding:0.3125rem 0.75rem;border-radius:999px;
-background:var(--vibeui-navbar-012-accent);color:oklch(from var(--vibeui-navbar-012-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;
-font-size:0.6875rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;
-box-shadow:0 0.1875rem 0.625rem color-mix(in oklab,var(--vibeui-navbar-012-accent) 40%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-navbar-012-dur-2) var(--vibeui-navbar-012-ease),box-shadow var(--vibeui-navbar-012-dur-3) ease;
-}
-[data-vibeui-block="navbar-012"] [data-part="subscribe"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.375rem 1rem color-mix(in oklab,var(--vibeui-navbar-012-accent) 50%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
 }
 
 [data-vibeui-block="navbar-012"] [data-part="brand"]{
@@ -149,9 +137,6 @@ transition:color var(--vibeui-navbar-012-dur-1) ease,transform var(--vibeui-navb
 color:var(--vibeui-navbar-012-accent);transform:scale(1.08);
 }
 [data-vibeui-block="navbar-012"] a[data-part="search"] svg{width:1.125rem;height:1.125rem}
-[data-vibeui-block="navbar-012"] a:focus-visible{
-outline:2px solid var(--vibeui-navbar-012-accent);outline-offset:3px;
-}
 @container (min-width: 40rem){
 [data-vibeui-block="navbar-012"] [data-part="issue"]{display:inline}
 }
@@ -264,9 +249,15 @@ export function Navbar012({
           <div data-part="service">
             <span>{dateline}</span>
             {issue ? <span data-part="issue">{issue}</span> : null}
-            <a data-part="subscribe" href={subscribeHref}>
-              {subscribeLabel}
-            </a>
+            <Button016
+              data-part="subscribe"
+              label={subscribeLabel}
+              href={subscribeHref}
+              external={false}
+              size="sm"
+              tone="accent"
+              accent={accent}
+            />
           </div>
 
           <a data-part="brand" href="#top">

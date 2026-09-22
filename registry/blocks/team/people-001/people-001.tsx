@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card049 } from "@/registry/components/card/card-049/card-049"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 
 type People001Link = {
   kind: "mail" | "site" | "chat"
@@ -30,7 +33,8 @@ export type People001Props = {
 // «Команда» подрывают доверие быстрее, чем их отсутствие. Глифы контактов
 // рисуются CSS-символами, а не логотипами брендов: логотипы устаревают и тянут
 // за собой иконочные шрифты.
-const STYLES = `
+const STYLES = `[data-vibeui-block="people-001"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="people-001"]){
 --vibeui-people-001-bg:transparent;
 --vibeui-people-001-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -54,60 +58,7 @@ display:block;background:var(--vibeui-people-001-bg);color:var(--vibeui-people-0
 font-family:var(--vibeui-people-001-font);
 }
 [data-vibeui-block="people-001"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="people-001"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-people-001-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="people-001"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="people-001"] [data-part="grid"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="people-001"] [data-part="card"]{
-min-inline-size:0;display:flex;flex-direction:column;align-items:center;gap:0.25rem;
-padding:1.75rem 1.25rem;text-align:center;
-border:1px solid var(--vibeui-people-001-border);border-radius:1.125rem;
-background:var(--vibeui-people-001-card);
-transition:border-color var(--vibeui-people-001-dur-2) ease,transform var(--vibeui-people-001-dur-2) ease,box-shadow var(--vibeui-people-001-dur-2) ease;
-}
-[data-vibeui-block="people-001"] [data-part="card"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-people-001-accent) 40%,var(--vibeui-people-001-border));
-transform:translateY(-2px);
-box-shadow:0 22px 44px -36px var(--vibeui-people-001-shadow);
-}
-[data-vibeui-block="people-001"] [data-part="avatar"]{
-position:relative;width:3.5rem;height:3.5rem;flex:none;border-radius:999px;margin-bottom:0.625rem;
-display:grid;place-items:center;
-color:var(--vibeui-people-001-accent);
-font-size:1rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="people-001"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-001-accent) 12%,var(--vibeui-people-001-card));}
-[data-vibeui-block="people-001"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="people-001"] [data-part="name"]{margin:0;font-size:1rem;font-weight:650}
-[data-vibeui-block="people-001"] [data-part="role"]{margin:0;color:var(--vibeui-people-001-muted);font-size:0.8125rem;line-height:1.4}
-[data-vibeui-block="people-001"] [data-part="links"]{display:flex;gap:0.5rem;margin-top:0.875rem}
-[data-vibeui-block="people-001"] [data-part="link"]{
-width:2rem;height:2rem;border-radius:999px;display:grid;place-items:center;
-border:1px solid var(--vibeui-people-001-border);
-color:var(--vibeui-people-001-muted);text-decoration:none;
-font-size:0.875rem;font-weight:650;line-height:1;
-transition:color var(--vibeui-people-001-dur-2) ease,border-color var(--vibeui-people-001-dur-2) ease,background var(--vibeui-people-001-dur-2) ease;
-}
-[data-vibeui-block="people-001"] [data-part="link"]:hover{
-color:var(--vibeui-people-001-accent);
-border-color:color-mix(in oklab,var(--vibeui-people-001-accent) 45%,var(--vibeui-people-001-border));
-background:color-mix(in oklab,var(--vibeui-people-001-accent) 8%,var(--vibeui-people-001-card));
-}
-[data-vibeui-block="people-001"] [data-part="link"]:focus-visible{
-outline:2px solid var(--vibeui-people-001-accent);outline-offset:2px;
-}
-[data-vibeui-block="people-001"] [data-part="link"][data-kind="mail"]::before{content:"@"}
-[data-vibeui-block="people-001"] [data-part="link"][data-kind="site"]::before{content:"↗"}
-[data-vibeui-block="people-001"] [data-part="link"][data-kind="chat"]::before{content:"#"}
 @container (min-width: 30rem){
 [data-vibeui-block="people-001"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -250,42 +201,15 @@ export function People001({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ul data-part="grid">
             {members.map((member) => (
-              <li key={member.name} data-part="card">
-                <span
-                  data-part="avatar"
-                  data-empty={member.image ? undefined : "true"}
-                  aria-hidden="true"
-                >
-                  {member.image ? (
-                    <img
-                      src={member.image}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
-                  {initials(member.name)}
-                </span>
-                <p data-part="name">{member.name}</p>
-                <p data-part="role">{member.role}</p>
-                {member.links && member.links.length > 0 ? (
-                  <span data-part="links">
-                    {member.links.map((link) => (
-                      <a
-                        key={link.kind + link.label}
-                        data-part="link"
-                        data-kind={link.kind}
-                        href={link.href}
-                        aria-label={`${link.label} — ${member.name}`}
-                      />
-                    ))}
-                  </span>
-                ) : null}
-              </li>
+              <Card049 key={member.name} data-part="card" name={member.name} image={member.image} role={member.role} links={member.links} accent={accent} />
             ))}
           </ul>
         </div>

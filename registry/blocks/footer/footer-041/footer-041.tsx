@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks013 } from "@/registry/components/navigation/footerlinks-013/footerlinks-013"
 
 export type Footer041Link = {
   label: string
@@ -67,11 +68,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-041"] [data-part="lamp"]{position:relative;width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-footer-041-accent);box-shadow:0 0 8px var(--vibeui-footer-041-accent)}
 [data-vibeui-block="footer-041"] [data-part="lamp"]::after{content:"";position:absolute;inset:-.25rem;border-radius:50%;border:1px solid var(--vibeui-footer-041-accent);animation:vibeui-footer-041-ping 2.2s ease-out infinite}
 [data-vibeui-block="footer-041"] [data-part="cols"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
-[data-vibeui-block="footer-041"] [data-part="cols"] h3{margin:0 0 .7rem;font-family:var(--vibeui-footer-041-mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-footer-041-muted)}
-[data-vibeui-block="footer-041"] [data-part="cols"] h3::before{content:"// ";color:var(--vibeui-footer-041-accent)}
-[data-vibeui-block="footer-041"] [data-part="cols"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.45rem}
-[data-vibeui-block="footer-041"] [data-part="cols"] a{color:var(--vibeui-footer-041-fg);text-decoration:none;transition:color .2s}
-[data-vibeui-block="footer-041"] [data-part="cols"] a:hover{color:var(--vibeui-footer-041-accent)}
 [data-vibeui-block="footer-041"] a:focus-visible{outline:2px solid var(--vibeui-footer-041-accent);outline-offset:2px}
 [data-vibeui-block="footer-041"] [data-part="bottom"]{display:grid;gap:1rem;padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-041-line);font-size:.78rem;color:var(--vibeui-footer-041-muted)}
 [data-vibeui-block="footer-041"] [data-part="build"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none;font-family:var(--vibeui-footer-041-mono);font-size:.68rem}
@@ -145,16 +141,7 @@ export function Footer041({
           </div>
           <nav data-part="cols" aria-label={navLabel}>
             {columns.map((column) => (
-              <div key={column.title}>
-                <h3>{column.title}</h3>
-                <ul>
-                  {column.links.map((link) => (
-                    <li key={link.href}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Footerlinks013 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </nav>
           <div data-part="bottom">

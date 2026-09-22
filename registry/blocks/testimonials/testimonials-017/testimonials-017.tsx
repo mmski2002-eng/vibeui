@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card034 } from "@/registry/components/card/card-034/card-034"
 
 export type Testimonials017Review = {
   quote: string
@@ -60,14 +61,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-017"] [data-part="score"] b{font-family:var(--vibeui-testimonials-017-display);font-size:4rem;font-weight:400;line-height:1;color:var(--vibeui-testimonials-017-accent-ink);text-shadow:0 0 30px rgb(125 42 58 / .5)}
 [data-vibeui-block="testimonials-017"] [data-part="score"] span{font-size:.8rem;color:var(--vibeui-testimonials-017-muted);max-width:9rem;line-height:1.3}
 [data-vibeui-block="testimonials-017"] [data-part="list"]{display:grid;gap:1.25rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-017"] [data-part="card"]{display:flex;flex-direction:column;gap:1rem;padding:1.5rem;border-radius:1rem;border:1px solid var(--vibeui-testimonials-017-line);background:var(--vibeui-testimonials-017-glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:vibeui-testimonials-017-in .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-testimonials-017-n) * 100ms)}
 @keyframes vibeui-testimonials-017-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-[data-vibeui-block="testimonials-017"] [data-part="stars"]{color:var(--vibeui-testimonials-017-accent-ink);letter-spacing:.1em;font-size:.85rem;text-shadow:0 0 12px rgb(125 42 58 / .6)}
-[data-vibeui-block="testimonials-017"] [data-part="quote"]{margin:0;font-family:var(--vibeui-testimonials-017-display);font-style:italic;font-size:1.25rem;line-height:1.35}
-[data-vibeui-block="testimonials-017"] [data-part="who"]{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--vibeui-testimonials-017-line)}
-[data-vibeui-block="testimonials-017"] [data-part="who"] b{display:block;font-size:.9rem}
-[data-vibeui-block="testimonials-017"] [data-part="who"] small{display:block;font-size:.75rem;color:var(--vibeui-testimonials-017-muted)}
-[data-vibeui-block="testimonials-017"] [data-part="source"]{flex:none;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-testimonials-017-muted)}
 @container (min-width: 48rem){[data-vibeui-block="testimonials-017"] [data-part="list"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="testimonials-017"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,2.6fr);gap:4rem;padding:6rem 2rem;align-items:start}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-017"] *{animation:none!important;transition:none!important}}`
@@ -123,21 +117,7 @@ export function Testimonials017({
           </div>
           <ul data-part="list">
             {reviews.map((review, index) => (
-              <li key={review.name + review.quote.slice(0, 12)} data-part="card" style={{ ["--vibeui-testimonials-017-n" as string]: index }}>
-                {review.rating ? (
-                  <span data-part="stars" aria-label={ratingLabel.replace("{n}", String(review.rating))}>
-                    {"★".repeat(Math.max(0, Math.min(5, Math.round(review.rating))))}
-                  </span>
-                ) : null}
-                <blockquote data-part="quote">{review.quote}</blockquote>
-                <div data-part="who">
-                  <div>
-                    <b>{review.name}</b>
-                    {review.occasion ? <small>{review.occasion}</small> : null}
-                  </div>
-                  {review.source ? <span data-part="source">{review.source}</span> : null}
-                </div>
-              </li>
+              <Card034 key={review.name + review.quote.slice(0, 12)} data-part="card" name={review.name} quote={review.quote} rating={review.rating} occasion={review.occasion} source={review.source} ratingLabel={ratingLabel} index={index} accent={accent} />
             ))}
           </ul>
         </div>

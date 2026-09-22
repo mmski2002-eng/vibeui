@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card125 } from "@/registry/components/card/card-125/card-125"
 
 export type Event013Slot = {
   time: string
@@ -73,24 +74,13 @@ container-type:inline-size;
 [data-vibeui-block="event-013"] [data-part="moon"] i::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 35%,transparent 55%,rgb(120 100 70 / .18) 56%,transparent 70%),radial-gradient(circle at 65% 65%,rgb(120 100 70 / .16) 0 18%,transparent 19%)}
 [data-vibeui-block="event-013"] [data-part="skynote"]{position:absolute;left:1.1rem;bottom:.9rem;margin:0;font-family:var(--vibeui-event-013-script);font-size:1.15rem;color:rgb(242 238 230 / .8)}
 [data-vibeui-block="event-013"] [data-part="list"]{display:grid;gap:.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="event-013"] [data-part="slot"]{position:relative;display:grid;grid-template-columns:4.2rem minmax(0,1fr);gap:.2rem 1rem;padding:1.1rem 1.2rem 1.1rem 1rem;border:1px solid transparent;border-radius:.8rem;transition:background .5s,border-color .5s,box-shadow .5s}
-[data-vibeui-block="event-013"] [data-part="slot"][data-active="true"]{background:var(--vibeui-event-013-card);border-color:rgb(242 182 79 / .4);box-shadow:0 0 0 1px rgb(242 182 79 / .12),0 20px 40px -28px rgb(242 182 79 / .5)}
-[data-vibeui-block="event-013"] [data-part="slot"] time{grid-row:span 3;align-self:start;font-family:var(--vibeui-event-013-display);font-size:1.6rem;font-weight:500;line-height:1;font-variant-numeric:lining-nums tabular-nums;color:var(--vibeui-event-013-muted);transition:color .5s}
-[data-vibeui-block="event-013"] [data-part="slot"][data-active="true"] time{color:var(--vibeui-event-013-accent);text-shadow:0 0 18px rgb(242 182 79 / .5)}
-[data-vibeui-block="event-013"] [data-part="slot"] h3{margin:0;font-family:var(--vibeui-event-013-display);font-size:1.45rem;font-weight:500;line-height:1.15}
-[data-vibeui-block="event-013"] [data-part="slot"] h3 span{margin-left:.6rem;font-family:var(--vibeui-event-013-script);font-size:1.05rem;font-weight:400;color:var(--vibeui-event-013-silver)}
-[data-vibeui-block="event-013"] [data-part="slot"] p{margin:0;font-size:.92rem;color:var(--vibeui-event-013-muted)}
-[data-vibeui-block="event-013"] [data-part="slot"] i{position:absolute;left:-.35rem;top:1.35rem;width:.7rem;height:.7rem;border-radius:50%;background:var(--vibeui-event-013-line);transition:background .5s,box-shadow .5s}
-[data-vibeui-block="event-013"] [data-part="slot"][data-active="true"] i,[data-vibeui-block="event-013"] [data-part="slot"][data-done="true"] i{background:var(--vibeui-event-013-accent);box-shadow:0 0 10px var(--vibeui-event-013-accent)}
 [data-vibeui-block="event-013"] [data-part="list"]{position:relative;padding-left:.6rem}
 [data-vibeui-block="event-013"] [data-part="list"]::before{content:"";position:absolute;left:0;top:1.5rem;bottom:1.5rem;width:1px;background:linear-gradient(180deg,var(--vibeui-event-013-accent) calc(var(--vibeui-event-013-k) * 100%),var(--vibeui-event-013-line) calc(var(--vibeui-event-013-k) * 100%))}
-[data-vibeui-block="event-013"] [data-part="slot"] i{left:.25rem}
 @container (min-width:56rem){
 [data-vibeui-block="event-013"] [data-part="grid"]{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:3rem;align-items:start}
 [data-vibeui-block="event-013"] [data-part="sky"]{position:sticky;top:6rem;height:24rem}
 [data-vibeui-block="event-013"] [data-part="moon"] i{top:-14rem;width:4rem;height:4rem;left:-2rem}
 [data-vibeui-block="event-013"] [data-part="list"]{padding-left:1rem}
-[data-vibeui-block="event-013"] [data-part="slot"]{padding:1.3rem 1.5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-013"] *{animation:none!important;transition:none!important}}`
 
@@ -187,15 +177,7 @@ export function Event013({
             </div>
             <ol data-part="list">
               {slots.map((slot, index) => (
-                <li key={slot.time + slot.title} data-part="slot" data-active={index === active ? "true" : undefined} data-done={index < active ? "true" : undefined}>
-                  <i aria-hidden="true" />
-                  <time>{slot.time}</time>
-                  <h3>
-                    {slot.title}
-                    {slot.place ? <span>{slot.place}</span> : null}
-                  </h3>
-                  {slot.text ? <p>{slot.text}</p> : null}
-                </li>
+                <Card125 key={slot.time + slot.title} data-part="slot" time={slot.time} title={slot.title} place={slot.place} text={slot.text} data-active={index === active ? "true" : undefined} data-done={index < active ? "true" : undefined} accent={accent} />
               ))}
             </ol>
           </div>

@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Writer001Format = {
   /** Короткое имя формата: «Бумага», «Электронная», «Аудио». */
   name: string
@@ -113,9 +115,6 @@ container-type:inline-size;
 [data-vibeui-block="writer-001"] [data-part="price"]{display:grid;gap:.1rem}
 [data-vibeui-block="writer-001"] [data-part="price"] b{font-family:var(--vibeui-writer-001-display);font-weight:500;font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;animation:vibeui-writer-001-swap .5s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="writer-001"] [data-part="price"] small{font-size:.82rem;font-style:italic;color:var(--vibeui-writer-001-muted)}
-[data-vibeui-block="writer-001"] [data-part="action"]{display:inline-flex;align-items:center;justify-content:center;padding:.85rem 1.6rem;border-radius:999px;background:var(--vibeui-writer-001-accent);color:var(--vibeui-writer-001-on-accent);text-decoration:none;font-style:italic;font-size:1.02rem;white-space:nowrap;transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
-[data-vibeui-block="writer-001"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px var(--vibeui-writer-001-accent)}
-[data-vibeui-block="writer-001"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-writer-001-fg);outline-offset:3px}
 [data-vibeui-block="writer-001"] [data-part="counter"]{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 1.5rem;padding:1.2rem 0 0;border-top:1px solid var(--vibeui-writer-001-line);font-size:.85rem;font-style:italic;color:var(--vibeui-writer-001-muted)}
 [data-vibeui-block="writer-001"] [data-part="counter"] output{font-family:var(--vibeui-writer-001-display);font-style:normal;font-weight:500;font-size:1.9rem;line-height:1;color:var(--vibeui-writer-001-fg);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 [data-vibeui-block="writer-001"] [data-part="counter"] output[data-tick="true"]{animation:vibeui-writer-001-tick .5s ease-out}
@@ -263,9 +262,15 @@ export function Writer001({
                   </b>
                   <small>{format.note}</small>
                 </div>
-                <a data-part="action" href={format.actionHref ?? "#"}>
-                  {format.actionLabel}
-                </a>
+                <Button016
+                  data-part="action"
+                  label={format.actionLabel}
+                  href={format.actionHref ?? "#"}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               </div>
             ) : null}
           </div>

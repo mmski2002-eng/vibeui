@@ -2,6 +2,8 @@
 
 import { useId, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar020Link = {
   label: string
   href: string
@@ -58,6 +60,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-020"]{position:relative;z-index:20;box-sizing:border-box;display:block;background:color-mix(in oklab,var(--vibeui-navbar-020-bg) 94%,transparent);backdrop-filter:blur(8px);color:var(--vibeui-navbar-020-fg);font-family:var(--vibeui-navbar-020-font);font-size:.9375rem;line-height:1.3;border-bottom:1px solid var(--vibeui-navbar-020-line)}
 [data-vibeui-block="navbar-020"][data-sticky]{position:sticky;top:0}
 [data-vibeui-block="navbar-020"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-020"] [data-part="action"]{display:none}
 [data-vibeui-block="navbar-020"] [data-part="bar"]{max-width:76rem;margin:0 auto;padding:.9rem 1.25rem;display:flex;align-items:center;gap:1rem 2rem}
 [data-vibeui-block="navbar-020"] [data-part="brand"]{display:flex;flex-direction:column;color:inherit;text-decoration:none;margin-right:auto;min-width:0;flex:none}
 [data-vibeui-block="navbar-020"] [data-part="name"]{font-family:var(--vibeui-navbar-020-display);font-size:1.75rem;font-weight:600;line-height:1;letter-spacing:.01em;white-space:nowrap}
@@ -67,16 +70,14 @@ container-type:inline-size;
 [data-vibeui-block="navbar-020"] [data-part="link"]::after{content:"";position:absolute;left:0;right:0;bottom:-.1rem;height:1px;background:var(--vibeui-navbar-020-accent);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="navbar-020"] [data-part="link"]:hover::after,[data-vibeui-block="navbar-020"] [data-part="link"][aria-current]::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-020"] [data-part="phone"]{display:none;font-family:var(--vibeui-navbar-020-display);font-size:1.35rem;font-weight:600;color:inherit;text-decoration:none;white-space:nowrap;letter-spacing:.01em}
-[data-vibeui-block="navbar-020"] [data-part="action"]{display:none;align-items:center;padding:.65rem 1.25rem;border-radius:999px;background:var(--vibeui-navbar-020-accent);color:var(--vibeui-navbar-020-on-accent);font-weight:600;font-size:.875rem;text-decoration:none;white-space:nowrap;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="navbar-020"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 10px 24px -12px var(--vibeui-navbar-020-accent)}
-[data-vibeui-block="navbar-020"] [data-part="link"]:focus-visible,[data-vibeui-block="navbar-020"] [data-part="action"]:focus-visible,[data-vibeui-block="navbar-020"] [data-part="toggle"]:focus-visible,[data-vibeui-block="navbar-020"] [data-part="phone"]:focus-visible{outline:2px solid var(--vibeui-navbar-020-accent);outline-offset:3px}
+[data-vibeui-block="navbar-020"] [data-part="link"]:focus-visible,[data-vibeui-block="navbar-020"] [data-part="toggle"]:focus-visible,[data-vibeui-block="navbar-020"] [data-part="phone"]:focus-visible{outline:2px solid var(--vibeui-navbar-020-accent);outline-offset:3px}
 [data-vibeui-block="navbar-020"] [data-part="toggle"]{appearance:none;border:1px solid var(--vibeui-navbar-020-line);background:none;border-radius:999px;padding:.5rem .9rem;font:inherit;font-weight:600;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-020"] [data-part="sheet"]{display:grid;gap:.75rem;padding:.5rem 1.25rem 1.25rem;margin:0;list-style:none;border-top:1px solid var(--vibeui-navbar-020-line)}
 [data-vibeui-block="navbar-020"] [data-part="sheet"][hidden]{display:none}
-[data-vibeui-block="navbar-020"] [data-part="sheet"] [data-part="link"],[data-vibeui-block="navbar-020"] [data-part="sheet"] [data-part="phone"],[data-vibeui-block="navbar-020"] [data-part="sheet"] [data-part="action"]{display:inline-flex;font-size:1.1rem}
+[data-vibeui-block="navbar-020"] [data-part="sheet"] [data-part="link"],[data-vibeui-block="navbar-020"] [data-part="sheet"] [data-part="phone"]{display:inline-flex;font-size:1.1rem}
 @container (max-width: 47.99rem){[data-vibeui-block="navbar-020"] [data-part="caption"]{max-width:14rem;overflow:hidden;text-overflow:ellipsis}}
 @container (min-width: 48rem) and (max-width: 71.99rem){[data-vibeui-block="navbar-020"] [data-part="caption"]{display:none}}
-@container (min-width: 64rem){[data-vibeui-block="navbar-020"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-020"] [data-part="action"]{display:inline-flex}}
+@container (min-width: 64rem){[data-vibeui-block="navbar-020"] [data-part="nav"]{display:flex}}
 @container (min-width: 72rem){[data-vibeui-block="navbar-020"] [data-part="phone"]{display:inline-flex}}
 @container (min-width: 60rem){
 [data-vibeui-block="navbar-020"] [data-part="bar"]{padding:1rem 2rem}
@@ -157,9 +158,15 @@ export function Navbar020({
             </a>
           ) : null}
           {actionLabel ? (
-            <a href={actionHref} data-part="action">
-              {actionLabel}
-            </a>
+            <Button016
+              data-part="action"
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="sm"
+              tone="accent"
+              accent={accent}
+            />
           ) : null}
           <button type="button" data-part="toggle" aria-expanded={open} aria-controls={id} onClick={() => setOpen((value) => !value)}>
             {menuLabel}
@@ -176,9 +183,15 @@ export function Navbar020({
           ) : null}
           {actionLabel ? (
             <li>
-              <a href={actionHref} data-part="action">
-                {actionLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="sm"
+                tone="accent"
+                accent={accent}
+              />
             </li>
           ) : null}
         </ul>

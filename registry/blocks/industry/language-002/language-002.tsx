@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState, useSyncExternalStore, type CSSProperties } from "react"
+import { Button091 } from "@/registry/components/button/button-091/button-091"
 
 export type Language002Language = {
   /** Код: «en». Им помечены группы. */
@@ -103,10 +104,6 @@ container-type:inline-size;
 [data-vibeui-block="language-002"] [data-part="filters"]{display:grid;gap:.8rem;margin:0 0 1.5rem}
 [data-vibeui-block="language-002"] [data-part="filter"]{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem}
 [data-vibeui-block="language-002"] [data-part="filter"] > span{margin-right:.4rem;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-language-002-muted)}
-[data-vibeui-block="language-002"] [data-part="chip"]{display:inline-flex;align-items:center;padding:.45rem .85rem;border-radius:999px;border:1.5px solid var(--vibeui-language-002-line);background:transparent;color:var(--vibeui-language-002-fg);font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .18s,border-color .2s,background .2s,color .2s}
-[data-vibeui-block="language-002"] [data-part="chip"]:hover{transform:translateY(-1px);border-color:var(--vibeui-language-002-fg)}
-[data-vibeui-block="language-002"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-language-002-fg);color:var(--vibeui-language-002-bg);border-color:transparent}
-[data-vibeui-block="language-002"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-language-002-accent);outline-offset:2px}
 [data-vibeui-block="language-002"] [data-part="grid"]{display:grid;gap:.6rem;animation:vibeui-language-002-fade .45s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="language-002"] [data-part="row"]{display:contents}
 [data-vibeui-block="language-002"] [data-part="dayhead"]{display:none}
@@ -321,24 +318,16 @@ export function Language002({
           <div data-part="filters">
             <div data-part="filter" role="group" aria-label={langFilterLabel}>
               <span>{langShort}</span>
-              <button data-part="chip" type="button" aria-pressed={lang === "all"} onClick={() => setLang("all")}>
-                {allLabel}
-              </button>
+              <Button091 data-part="chip" label={allLabel} aria-pressed={lang === "all"} onClick={() => setLang("all")} accent={accent} />
               {languages.map((item) => (
-                <button key={item.code} data-part="chip" type="button" aria-pressed={lang === item.code} onClick={() => setLang(item.code)}>
-                  {item.label}
-                </button>
+                <Button091 key={item.code} data-part="chip" label={item.label} aria-pressed={lang === item.code} onClick={() => setLang(item.code)} accent={accent} />
               ))}
             </div>
             <div data-part="filter" role="group" aria-label={levelFilterLabel}>
               <span>{levelShort}</span>
-              <button data-part="chip" type="button" aria-pressed={level === "all"} onClick={() => setLevel("all")}>
-                {anyLabel}
-              </button>
+              <Button091 data-part="chip" label={anyLabel} aria-pressed={level === "all"} onClick={() => setLevel("all")} accent={accent} />
               {levels.map((item) => (
-                <button key={item} data-part="chip" type="button" aria-pressed={level === item} onClick={() => setLevel(item)}>
-                  {item}
-                </button>
+                <Button091 key={item} data-part="chip" label={item} aria-pressed={level === item} onClick={() => setLevel(item)} accent={accent} />
               ))}
             </div>
           </div>

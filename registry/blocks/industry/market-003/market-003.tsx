@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Card102 } from "@/registry/components/card/card-102/card-102"
 
 export type Market003License = {
   name: string
@@ -89,30 +90,10 @@ container-type:inline-size;
 [data-vibeui-block="market-003"] [data-part="stepper"] button:disabled{opacity:.3;cursor:default}
 [data-vibeui-block="market-003"] [data-part="stepper"] output{min-width:4.2rem;text-align:center;font-family:var(--vibeui-market-003-mono);font-size:.8rem;font-variant-numeric:tabular-nums}
 [data-vibeui-block="market-003"] [data-part="grid"]{display:grid;gap:1.2rem;margin:2.5rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="market-003"] [data-part="ticket"]{position:relative;display:grid;grid-template-rows:auto 1fr;border-radius:1.2rem;background:var(--vibeui-market-003-paper);border:1px solid var(--vibeui-market-003-line);isolation:isolate}
-[data-vibeui-block="market-003"] [data-part="ticket"][data-featured="true"]{border-color:var(--vibeui-market-003-accent);box-shadow:0 30px 60px -40px var(--vibeui-market-003-accent)}
-[data-vibeui-block="market-003"] [data-part="stub"]{position:relative;padding:1.4rem 1.4rem 1.6rem;border-bottom:2px dashed var(--vibeui-market-003-line)}
-[data-vibeui-block="market-003"] [data-part="stub"]::before,[data-vibeui-block="market-003"] [data-part="stub"]::after{content:"";position:absolute;bottom:-.65rem;width:1.3rem;height:1.3rem;border-radius:50%;background:var(--vibeui-market-003-bg);border:1px solid var(--vibeui-market-003-line);z-index:1}
-[data-vibeui-block="market-003"] [data-part="stub"]::before{left:-.7rem;clip-path:inset(0 0 0 50%)}
-[data-vibeui-block="market-003"] [data-part="stub"]::after{right:-.7rem;clip-path:inset(0 50% 0 0)}
-[data-vibeui-block="market-003"] [data-part="ticket"][data-featured="true"] [data-part="stub"]::before,[data-vibeui-block="market-003"] [data-part="ticket"][data-featured="true"] [data-part="stub"]::after{border-color:var(--vibeui-market-003-accent)}
-[data-vibeui-block="market-003"] [data-part="ticket"] h3{margin:0;font-family:var(--vibeui-market-003-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
-[data-vibeui-block="market-003"] [data-part="who"]{margin:.3rem 0 0;font-size:.86rem;color:var(--vibeui-market-003-muted)}
-[data-vibeui-block="market-003"] [data-part="amount"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .5rem;margin:1.2rem 0 0;font-family:var(--vibeui-market-003-display);font-weight:800;font-size:2.4rem;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-[data-vibeui-block="market-003"] [data-part="amount"] small{font-family:var(--vibeui-market-003-mono);font-weight:400;font-size:.68rem;letter-spacing:.02em;color:var(--vibeui-market-003-muted)}
-[data-vibeui-block="market-003"] [data-part="amount"] output{animation:vibeui-market-003-pop .35s cubic-bezier(.2,1.2,.4,1)}
-[data-vibeui-block="market-003"] [data-part="sticker"]{position:absolute;top:-.8rem;right:1rem;padding:.3rem .7rem;border-radius:.4rem;background:var(--vibeui-market-003-accent);color:var(--vibeui-market-003-on-accent);font-family:var(--vibeui-market-003-mono);font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;transform:rotate(3deg);box-shadow:0 6px 16px -8px rgb(0 0 0 / .5)}
-[data-vibeui-block="market-003"] [data-part="rules"]{margin:0;padding:1.3rem 1.4rem 1.5rem;list-style:none;display:grid;gap:.55rem;align-content:start;font-size:.9rem}
-[data-vibeui-block="market-003"] [data-part="rules"] li{display:flex;gap:.6rem;align-items:baseline}
-[data-vibeui-block="market-003"] [data-part="rules"] li::before{content:attr(data-sign);flex-shrink:0;width:1.2rem;height:1.2rem;border-radius:999px;display:inline-grid;place-items:center;font-family:var(--vibeui-market-003-mono);font-size:.7rem;line-height:1;transform:translateY(.15rem)}
-[data-vibeui-block="market-003"] [data-part="rules"] li[data-sign="+"]::before{background:color-mix(in oklab,var(--vibeui-market-003-accent) 15%,transparent);color:var(--vibeui-market-003-accent)}
-[data-vibeui-block="market-003"] [data-part="rules"] li[data-sign="−"]{color:var(--vibeui-market-003-muted)}
-[data-vibeui-block="market-003"] [data-part="rules"] li[data-sign="−"]::before{background:var(--vibeui-market-003-line)}
-[data-vibeui-block="market-003"] [data-part="rules"] li[data-sign="−"] span{text-decoration:line-through;text-decoration-color:color-mix(in oklab,var(--vibeui-market-003-fg) 30%,transparent)}
 [data-vibeui-block="market-003"] button:focus-visible{outline:2px solid var(--vibeui-market-003-accent);outline-offset:2px}
 @keyframes vibeui-market-003-pop{0%{transform:scale(.94);opacity:.4}100%{transform:scale(1);opacity:1}}
 @container (min-width: 40rem){[data-vibeui-block="market-003"] [data-part="controls"]{grid-template-columns:auto auto;justify-content:start;gap:2rem}}
-@container (min-width: 56rem){[data-vibeui-block="market-003"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}[data-vibeui-block="market-003"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}[data-vibeui-block="market-003"] [data-part="ticket"][data-featured="true"]{transform:translateY(-.6rem)}}
+@container (min-width: 56rem){[data-vibeui-block="market-003"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}[data-vibeui-block="market-003"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="market-003"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_LICENSES: Market003License[] = [
@@ -217,27 +198,7 @@ export function Market003({
             {licenses.map((license) => {
               const price = priceFor(license)
               return (
-                <li key={license.name} data-part="ticket" data-featured={license.featured ? "true" : undefined}>
-                  <div data-part="stub">
-                    {license.featured ? <span data-part="sticker">{featuredLabel}</span> : null}
-                    <h3>{license.name}</h3>
-                    <p data-part="who">{license.who}</p>
-                    <div data-part="amount">
-                      <output key={price}>{formatMoney(price, currency)}</output>
-                      <small>{license.seatsIncluded ? `${seatsLine.replace("{n}", String(seats)).replace("{factor}", String(license.factor))}${seats > license.seatsIncluded ? extraLabel : ""}` : factorLine.replace("{factor}", String(license.factor))}</small>
-                    </div>
-                  </div>
-                  <ul data-part="rules">
-                    {license.rules.map((rule) => {
-                      const sign = rule.trim().startsWith("−") || rule.trim().startsWith("-") ? "−" : "+"
-                      return (
-                        <li key={rule} data-sign={sign}>
-                          <span>{rule.replace(/^[+−-]\s*/, "")}</span>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </li>
+                <Card102 key={license.name} data-part="ticket" name={license.name} featured={license.featured} who={license.who} seatsIncluded={license.seatsIncluded} factor={license.factor} rules={license.rules} featuredLabel={featuredLabel} currency={currency} seatsLine={seatsLine} extraLabel={extraLabel} factorLine={factorLine} price={price} seats={seats} accent={accent} />
               )
             })}
           </ul>

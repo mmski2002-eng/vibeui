@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties, type ReactNode } from "react"
+import { Cell001 } from "@/registry/components/typography/cell-001/cell-001"
 
 export type Comparison015Row = {
   label: string
@@ -75,10 +76,6 @@ container-type:inline-size;
 [data-vibeui-block="comparison-015"] [data-part="row"]:hover{background:color-mix(in oklab,var(--vibeui-comparison-015-fg) 3%,transparent)}
 [data-vibeui-block="comparison-015"] [data-part="row"]:focus-visible{outline:2px solid var(--vibeui-comparison-015-accent);outline-offset:-2px}
 [data-vibeui-block="comparison-015"] [data-part="row"] [data-part="label"]{font-weight:600;font-size:.95rem}
-[data-vibeui-block="comparison-015"] [data-part="row"] [data-part="value"]{font-family:var(--vibeui-comparison-015-mono);font-size:.82rem;color:var(--vibeui-comparison-015-muted);font-variant-numeric:tabular-nums}
-[data-vibeui-block="comparison-015"] [data-part="row"] [data-part="value"]:nth-child(n+3):not([data-part="chev"]){display:none}
-[data-vibeui-block="comparison-015"] [data-part="row"] [data-part="value"][data-us]{color:var(--vibeui-comparison-015-fg);font-weight:600;display:block}
-[data-vibeui-block="comparison-015"] [data-part="row"] [data-part="value"][data-us]::before{content:"";display:inline-block;width:.4rem;height:.4rem;margin-right:.45rem;border-radius:50%;background:var(--vibeui-comparison-015-accent);box-shadow:0 0 6px var(--vibeui-comparison-015-accent);vertical-align:.1em}
 [data-vibeui-block="comparison-015"] [data-part="chev"]{display:grid;place-items:center;width:1.5rem;height:1.5rem;border:1px solid var(--vibeui-comparison-015-line);border-radius:.4rem;color:var(--vibeui-comparison-015-muted);transition:transform .3s,color .2s,border-color .2s}
 [data-vibeui-block="comparison-015"] [data-part="chev"] svg{width:.8rem;height:.8rem}
 [data-vibeui-block="comparison-015"] [data-part="row"][aria-expanded="true"] [data-part="chev"]{transform:rotate(180deg);color:var(--vibeui-comparison-015-accent);border-color:var(--vibeui-comparison-015-accent)}
@@ -86,7 +83,6 @@ container-type:inline-size;
 [data-vibeui-block="comparison-015"] [data-part="item"][data-open="true"] [data-part="detail"]{grid-template-rows:1fr}
 [data-vibeui-block="comparison-015"] [data-part="detail"] > div{overflow:hidden}
 [data-vibeui-block="comparison-015"] [data-part="inner"]{display:grid;gap:1rem;padding:0 1.1rem 1.1rem}
-[data-vibeui-block="comparison-015"] [data-part="sr"]{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 [data-vibeui-block="comparison-015"] [data-part="others"]{display:grid;gap:.3rem;margin:0 0 .8rem;padding:0;list-style:none;font-family:var(--vibeui-comparison-015-mono);font-size:.76rem;color:var(--vibeui-comparison-015-muted)}
 [data-vibeui-block="comparison-015"] [data-part="others"] li{display:flex;justify-content:space-between;gap:1rem;padding:.35rem 0;border-bottom:1px dashed var(--vibeui-comparison-015-line)}
 [data-vibeui-block="comparison-015"] [data-part="others"] b{color:var(--vibeui-comparison-015-fg);font-weight:500}
@@ -96,7 +92,7 @@ container-type:inline-size;
 [data-vibeui-block="comparison-015"] [data-part="sample"] [data-t="s"]{color:var(--vibeui-comparison-015-accent)}
 [data-vibeui-block="comparison-015"] [data-part="sample"] [data-t="n"]{color:var(--vibeui-comparison-015-number)}
 [data-vibeui-block="comparison-015"] [data-part="note"]{margin:1rem 0 0;font-size:.78rem;color:var(--vibeui-comparison-015-muted)}
-@container (min-width: 56rem){[data-vibeui-block="comparison-015"] [data-part="cols"],[data-vibeui-block="comparison-015"] [data-part="row"]{grid-template-columns:minmax(0,1.6fr) repeat(var(--vibeui-comparison-015-n),minmax(0,1fr)) 1.5rem}[data-vibeui-block="comparison-015"] [data-part="cols"] span:nth-child(n+3),[data-vibeui-block="comparison-015"] [data-part="row"] [data-part="value"]:nth-child(n+3):not([data-part="chev"]){display:block}[data-vibeui-block="comparison-015"] [data-part="others"]{display:none}[data-vibeui-block="comparison-015"] [data-part="inner"]{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start}}
+@container (min-width: 56rem){[data-vibeui-block="comparison-015"] [data-part="cols"],[data-vibeui-block="comparison-015"] [data-part="row"]{grid-template-columns:minmax(0,1.6fr) repeat(var(--vibeui-comparison-015-n),minmax(0,1fr)) 1.5rem}[data-vibeui-block="comparison-015"] [data-part="cols"] span:nth-child(n+3){display:block}[data-vibeui-block="comparison-015"] [data-part="others"]{display:none}[data-vibeui-block="comparison-015"] [data-part="inner"]{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="comparison-015"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_ROWS: Comparison015Row[] = [
@@ -197,10 +193,7 @@ export function Comparison015({
                     <button data-part="row" type="button" aria-expanded={isOpen} aria-controls={id} onClick={() => setOpen(isOpen ? null : index)}>
                       <span data-part="label">{row.label}</span>
                       {row.values.map((value, column) => (
-                        <span key={column} data-part="value" data-us={column === 0 ? "" : undefined}>
-                          <span data-part="sr">{columns[column]}: </span>
-                          {value}
-                        </span>
+                        <Cell001 key={column} data-part="value" value={value} columns={columns} column={column} data-us={column === 0 ? "" : undefined} accent={accent} />
                       ))}
                       <span data-part="chev" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

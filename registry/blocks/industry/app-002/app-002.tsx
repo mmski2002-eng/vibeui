@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Card105 } from "@/registry/components/card/card-105/card-105"
 
 export type App002Props = {
   eyebrow?: string
@@ -54,6 +55,7 @@ container-type:inline-size;
 :where([data-vibeui-block="app-002"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="app-002"]{box-sizing:border-box;position:relative;overflow:hidden;padding:5rem 0;background:var(--vibeui-app-002-bg);color:var(--vibeui-app-002-fg);font-family:var(--vibeui-app-002-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="app-002"] *{box-sizing:border-box}
+[data-vibeui-block="app-002"] [data-part="notes"]{margin-top:1.8rem}
 [data-vibeui-block="app-002"] [data-part="mesh"]{position:absolute;inset:0;pointer-events:none}
 [data-vibeui-block="app-002"] [data-part="mesh"] i{position:absolute;border-radius:50%;filter:blur(50px);opacity:.45;animation:vibeui-app-002-float 20s ease-in-out infinite alternate}
 [data-vibeui-block="app-002"] [data-part="mesh"] i:nth-child(1){left:-10%;top:-20%;width:42%;aspect-ratio:1;background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-app-002-accent) 30%,transparent),transparent 65%)}
@@ -65,17 +67,7 @@ container-type:inline-size;
 [data-vibeui-block="app-002"] [data-part="w"] span{display:inline-block;transition:transform 1s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--vibeui-app-002-i) * .06s)}
 [data-vibeui-block="app-002"][data-motion="true"] [data-reveal]:not([data-in="true"]) [data-part="w"] span{transform:translateY(112%)}
 [data-vibeui-block="app-002"] [data-part="lede"]{margin:1rem 0 0;max-width:28rem;color:var(--vibeui-app-002-muted)}
-[data-vibeui-block="app-002"] [data-part="notes"]{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.8rem}
-[data-vibeui-block="app-002"] [data-part="notes"] div{padding:1.1rem 1.2rem;border-radius:1.1rem;background:var(--vibeui-app-002-panel);transition:opacity .3s,transform .3s}
-[data-vibeui-block="app-002"][data-motion="true"] [data-part="notes"]:not([data-in="true"]) div{opacity:0}
-[data-vibeui-block="app-002"] [data-part="notes"][data-in="true"] div{animation:vibeui-app-002-rise .8s cubic-bezier(.2,.8,.2,1) backwards}
-[data-vibeui-block="app-002"] [data-part="notes"][data-in="true"] div:last-child{animation-delay:.12s}
-[data-vibeui-block="app-002"] [data-part="notes"] div:first-child{opacity:calc(1 - var(--vibeui-app-002-p) * .6)}
-[data-vibeui-block="app-002"] [data-part="notes"] div:last-child{opacity:calc(.4 + var(--vibeui-app-002-p) * .6);box-shadow:0 0 0 1px color-mix(in oklab,var(--vibeui-app-002-accent) 50%,transparent) inset,0 20px 40px -30px color-mix(in oklab,var(--vibeui-app-002-accent) 60%,transparent)}
-[data-vibeui-block="app-002"] [data-part="notes"] small{display:block;font-family:var(--vibeui-app-002-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-app-002-muted)}
-[data-vibeui-block="app-002"] [data-part="notes"] b{display:block;margin-top:.3rem;font-size:2rem;font-weight:800;letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
-[data-vibeui-block="app-002"] [data-part="notes"] div:last-child b{color:var(--vibeui-app-002-accent)}
-[data-vibeui-block="app-002"] [data-part="notes"] span{font-size:.82rem;color:var(--vibeui-app-002-muted)}
+[data-vibeui-block="app-002"][data-motion="true"] [data-vibeui-block="card-105"]:not([data-in="true"]) div{opacity:0}
 [data-vibeui-block="app-002"] [data-part="compare"]{position:relative;height:22rem;border-radius:1.6rem;background:var(--vibeui-app-002-panel);box-shadow:0 0 0 1px var(--vibeui-app-002-line),0 40px 80px -50px color-mix(in oklab,var(--vibeui-app-002-accent) 50%,transparent);overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:ew-resize;transition:opacity .8s,transform .9s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="app-002"][data-motion="true"] [data-part="compare"]:not([data-in="true"]){opacity:0;transform:translateY(2rem) scale(.98)}
 [data-vibeui-block="app-002"] [data-part="chart"]{position:absolute;inset:0;display:flex;align-items:flex-end;gap:.6rem;padding:3rem 1.5rem 2.4rem}
@@ -108,7 +100,7 @@ container-type:inline-size;
 @keyframes vibeui-app-002-float{from{transform:translate(0,0)}to{transform:translate(8%,-10%)}}
 @container (min-width: 60rem){[data-vibeui-block="app-002"] [data-part="shell"]{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:4rem}}
 [data-vibeui-block="app-002"] [data-part="w"]:not(:last-child)::after{content:"\\00a0"}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="app-002"] *{animation:none!important;transition:none!important}[data-vibeui-block="app-002"] [data-part="compare"],[data-vibeui-block="app-002"] [data-part="notes"] div,[data-vibeui-block="app-002"] [data-part="w"] span,[data-vibeui-block="app-002"] [data-part="chart"] i{opacity:1!important;transform:none!important}[data-vibeui-block="app-002"] [data-part="notes"] div:first-child{opacity:calc(1 - var(--vibeui-app-002-p) * .6)!important}[data-vibeui-block="app-002"] [data-part="notes"] div:last-child{opacity:calc(.4 + var(--vibeui-app-002-p) * .6)!important}[data-vibeui-block="app-002"] svg path{stroke-dashoffset:0!important}[data-vibeui-block="app-002"] svg circle{opacity:1!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="app-002"] *{animation:none!important;transition:none!important}[data-vibeui-block="app-002"] [data-part="compare"],[data-vibeui-block="app-002"] [data-part="w"] span,[data-vibeui-block="app-002"] [data-part="chart"] i{opacity:1!important;transform:none!important}[data-vibeui-block="app-002"] svg path{stroke-dashoffset:0!important}[data-vibeui-block="app-002"] svg circle{opacity:1!important}}`
 
 const avg = (list: readonly number[]) => list.reduce((a, b) => a + b, 0) / Math.max(1, list.length)
 
@@ -296,18 +288,7 @@ export function App002({
               <Words text={title} />
             </h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
-            <div ref={notes} data-part="notes" data-reveal="">
-              <div>
-                <small>{beforeLabel}</small>
-                <b>{(targets[0] * tick).toFixed(1)} {hoursUnit}</b>
-                <span>{beforeNote}</span>
-              </div>
-              <div>
-                <small>{afterLabel}</small>
-                <b>{(targets[1] * tick).toFixed(1)} {hoursUnit}</b>
-                <span>{afterNote}</span>
-              </div>
-            </div>
+            <Card105 data-part="notes" beforeLabel={beforeLabel} hoursUnit={hoursUnit} beforeNote={beforeNote} afterLabel={afterLabel} afterNote={afterNote} tick={tick} targets={targets} ref={notes} accent={accent} />
           </div>
           <div ref={box} data-part="compare" data-reveal="" data-touched={touched} onPointerDown={down} onPointerMove={move} onPointerUp={release} onPointerCancel={release}>
             <div data-part="chart" data-side="before" aria-hidden="true">

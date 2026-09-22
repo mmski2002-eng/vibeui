@@ -2,6 +2,11 @@
 
 import { useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+
 export type Testimonials022Note = {
   name: string
   text: string
@@ -54,6 +59,7 @@ container-type:inline-size;
 :where([data-vibeui-block="testimonials-022"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="testimonials-022"]{box-sizing:border-box;display:block;background:var(--vibeui-testimonials-022-bg);color:var(--vibeui-testimonials-022-fg);font-family:var(--vibeui-testimonials-022-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="testimonials-022"] *{box-sizing:border-box}
+[data-vibeui-block="testimonials-022"] [data-part="submit"]{justify-self:start}
 [data-vibeui-block="testimonials-022"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4.5rem 1.25rem}
 [data-vibeui-block="testimonials-022"] [data-part="grid"]{display:grid;gap:2rem}
 [data-vibeui-block="testimonials-022"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-testimonials-022-display);font-size:.85rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--vibeui-testimonials-022-silver)}
@@ -61,27 +67,18 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-022"] [data-part="lede"]{max-width:30rem;margin:1rem 0 0;color:var(--vibeui-testimonials-022-muted)}
 [data-vibeui-block="testimonials-022"] [data-part="form"]{display:grid;gap:.9rem;margin-top:1.6rem;padding:1.4rem;border:1px solid var(--vibeui-testimonials-022-line);border-radius:1rem;background:var(--vibeui-testimonials-022-card)}
 [data-vibeui-block="testimonials-022"] [data-part="form"] h3{margin:0 0 .2rem;font-family:var(--vibeui-testimonials-022-display);font-size:1.5rem;font-weight:500}
-[data-vibeui-block="testimonials-022"] label{display:grid;gap:.35rem}
-[data-vibeui-block="testimonials-022"] label span{font-family:var(--vibeui-testimonials-022-display);font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-testimonials-022-muted)}
-[data-vibeui-block="testimonials-022"] input,[data-vibeui-block="testimonials-022"] textarea{width:100%;padding:.7rem .9rem;border:1px solid var(--vibeui-testimonials-022-line);border-radius:.6rem;background:rgb(11 18 32 / .25);color:inherit;font-family:var(--vibeui-testimonials-022-script);font-size:1.2rem;transition:border-color .25s,box-shadow .25s}
-[data-vibeui-block="testimonials-022"] input:focus,[data-vibeui-block="testimonials-022"] textarea:focus{outline:none;border-color:var(--vibeui-testimonials-022-accent);box-shadow:0 0 0 3px rgb(242 182 79 / .18)}
-[data-vibeui-block="testimonials-022"] textarea{min-height:6rem;resize:vertical}
-[data-vibeui-block="testimonials-022"] [data-part="submit"]{display:inline-flex;align-items:center;gap:.5rem;justify-self:start;height:2.9rem;padding:0 1.3rem;border:0;border-radius:999px;background:var(--vibeui-testimonials-022-accent);color:var(--vibeui-testimonials-022-on-accent);font-family:var(--vibeui-testimonials-022-display);font-size:1.02rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 26px -6px var(--vibeui-testimonials-022-accent);transition:transform .2s}
-[data-vibeui-block="testimonials-022"] [data-part="submit"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="testimonials-022"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-testimonials-022-fg);outline-offset:3px}
-[data-vibeui-block="testimonials-022"] [data-part="submit"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="testimonials-022"] [data-part="window"]{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:24rem;padding:1.4rem;border:1px solid rgb(242 238 230 / .14);border-radius:1.2rem;background:radial-gradient(60% 50% at 30% 20%,rgb(242 238 230 / .12),transparent 70%),radial-gradient(50% 45% at 80% 90%,rgb(159 176 200 / .12),transparent 70%),var(--vibeui-testimonials-022-glass);-webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1);overflow:hidden;box-shadow:inset 0 1px 0 rgb(242 238 230 / .2),inset 0 0 90px rgb(159 176 200 / .1),0 40px 90px -50px rgb(0 0 0 / .9)}
 [data-vibeui-block="testimonials-022"] [data-part="window"]::before{content:"";position:absolute;inset:0;background-image:radial-gradient(3px 4px at 12% 18%,rgb(242 238 230 / .35) 50%,transparent 51%),radial-gradient(2px 3px at 70% 8%,rgb(242 238 230 / .3) 50%,transparent 51%),radial-gradient(4px 6px at 88% 44%,rgb(242 238 230 / .28) 50%,transparent 51%),radial-gradient(2px 3px at 40% 70%,rgb(242 238 230 / .3) 50%,transparent 51%),radial-gradient(3px 5px at 22% 92%,rgb(242 238 230 / .3) 50%,transparent 51%),radial-gradient(2px 2px at 58% 36%,rgb(242 238 230 / .35) 50%,transparent 51%);pointer-events:none}
 [data-vibeui-block="testimonials-022"] [data-part="wall"]{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-022"] [data-part="note"]{position:relative;display:grid;gap:.6rem;padding:1.2rem 1.3rem 1rem;border-radius:1.2rem 1.6rem 1.3rem 1.8rem;background:rgb(242 238 230 / .07);border:1px solid rgb(242 238 230 / .12);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);transform:rotate(-.6deg);transition:transform .4s cubic-bezier(.2,.9,.3,1),background .4s}
-[data-vibeui-block="testimonials-022"] li:nth-child(3n) [data-part="note"]{transform:rotate(.8deg)}
-[data-vibeui-block="testimonials-022"] li:nth-child(4n+1) [data-part="note"]{transform:rotate(.3deg)}
-[data-vibeui-block="testimonials-022"] [data-part="note"]:hover{transform:rotate(0) translateY(-.2rem);background:rgb(242 238 230 / .12)}
-[data-vibeui-block="testimonials-022"] [data-part="note"][data-fresh="true"]{animation:vibeui-testimonials-022-wipe 1.4s cubic-bezier(.2,.9,.3,1) both}
+[data-vibeui-block="testimonials-022"] [data-part="footnote"]{position:relative;display:grid;gap:.6rem;padding:1.2rem 1.3rem 1rem;border-radius:1.2rem 1.6rem 1.3rem 1.8rem;background:rgb(242 238 230 / .07);border:1px solid rgb(242 238 230 / .12);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);transform:rotate(-.6deg);transition:transform .4s cubic-bezier(.2,.9,.3,1),background .4s}
+[data-vibeui-block="testimonials-022"] li:nth-child(3n) [data-part="footnote"]{transform:rotate(.8deg)}
+[data-vibeui-block="testimonials-022"] li:nth-child(4n+1) [data-part="footnote"]{transform:rotate(.3deg)}
+[data-vibeui-block="testimonials-022"] [data-part="footnote"]:hover{transform:rotate(0) translateY(-.2rem);background:rgb(242 238 230 / .12)}
+[data-vibeui-block="testimonials-022"] [data-part="footnote"][data-fresh="true"]{animation:vibeui-testimonials-022-wipe 1.4s cubic-bezier(.2,.9,.3,1) both}
 @keyframes vibeui-testimonials-022-wipe{from{clip-path:circle(0 at 20% 30%);opacity:.4}to{clip-path:circle(140% at 20% 30%);opacity:1}}
-[data-vibeui-block="testimonials-022"] [data-part="note"] p{margin:0;font-family:var(--vibeui-testimonials-022-script);font-size:1.3rem;line-height:1.3;color:var(--vibeui-testimonials-022-fg);text-shadow:0 0 12px rgb(242 238 230 / .25)}
-[data-vibeui-block="testimonials-022"] [data-part="note"] b{justify-self:end;font-family:var(--vibeui-testimonials-022-script);font-size:1.1rem;font-weight:400;color:var(--vibeui-testimonials-022-accent)}
-[data-vibeui-block="testimonials-022"] [data-part="note"] svg{position:absolute;right:1rem;top:.9rem;width:.9rem;height:.9rem;fill:none;stroke:rgb(242 238 230 / .35);stroke-width:1.2;stroke-linecap:round}
+[data-vibeui-block="testimonials-022"] [data-part="footnote"] p{margin:0;font-family:var(--vibeui-testimonials-022-script);font-size:1.3rem;line-height:1.3;color:var(--vibeui-testimonials-022-fg);text-shadow:0 0 12px rgb(242 238 230 / .25)}
+[data-vibeui-block="testimonials-022"] [data-part="footnote"] b{justify-self:end;font-family:var(--vibeui-testimonials-022-script);font-size:1.1rem;font-weight:400;color:var(--vibeui-testimonials-022-accent)}
+[data-vibeui-block="testimonials-022"] [data-part="footnote"] svg{position:absolute;right:1rem;top:.9rem;width:.9rem;height:.9rem;fill:none;stroke:rgb(242 238 230 / .35);stroke-width:1.2;stroke-linecap:round}
 @container (min-width:56rem){
 [data-vibeui-block="testimonials-022"] [data-part="shell"]{padding:5rem 2.5rem}
 [data-vibeui-block="testimonials-022"] [data-part="grid"]{grid-template-columns:minmax(0,.8fr) minmax(0,1.7fr);gap:3rem;align-items:stretch}
@@ -150,27 +147,34 @@ export function Testimonials022({
               {lede ? <p data-part="lede">{lede}</p> : null}
               <form data-part="form" method="post" action={action} onSubmit={submit}>
                 <h3>{formTitle}</h3>
-                <label>
-                  <span>{nameLabel}</span>
-                  <input type="text" name="name" value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" required />
-                </label>
-                <label>
-                  <span>{textLabel}</span>
-                  <textarea name="text" value={text} onChange={(event) => setText(event.target.value)} required />
-                </label>
-                <button type="submit" data-part="submit">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M4 20l4-1 11-11-3-3L5 16zM13 8l3 3" />
-                  </svg>
+                <Input001
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  autoComplete="name"
+                  required
+                  label={nameLabel}
+                  accent={accent}
+                />
+                <Input034
+                  name="text"
+                  value={text}
+                  onChange={(event) => setText(event.target.value)}
+                  required
+                  label={textLabel}
+                  accent={accent}
+                />
+                <Button001 data-part="submit" type="submit" size="lg" tone="solid" accent={accent}>
                   {submitLabel}
-                </button>
+                </Button001>
               </form>
             </div>
             <div data-part="window">
               <ul data-part="wall" aria-live="polite">
                 {[...added, ...notes].map((note, index) => (
                   <li key={`${note.name}-${index}`}>
-                    <article data-part="note" data-fresh={index < added.length ? "true" : undefined}>
+                    <article data-part="footnote" data-fresh={index < added.length ? "true" : undefined}>
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18" />
                       </svg>

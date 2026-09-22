@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type About005Item = {
   title: string
@@ -20,7 +21,8 @@ export type About005Props = {
 // пояснение. Номера считаются из индекса массива прямо в JSX — без CSS-счётчиков,
 // чтобы серверный рендер был детерминированным, а список оставался честным <ol>.
 // Разделители-линии превращают перечень в документ, который хочется дочитать.
-const STYLES = `
+const STYLES = `[data-vibeui-block="about-005"] [data-part="heading"]{margin-bottom:1.5rem}
+
 :where([data-vibeui-block="about-005"]){
 --vibeui-about-005-bg:transparent;
 --vibeui-about-005-ink:light-dark(oklch(0.17 0 0),oklch(0.97 0 0));
@@ -42,14 +44,6 @@ font-family:var(--vibeui-about-005-font);
 }
 [data-vibeui-block="about-005"] [data-part="shell"]{
 max-width:60rem;margin:0 auto;padding:3.5rem 1.25rem;
-}
-[data-vibeui-block="about-005"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-about-005-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="about-005"] [data-part="title"]{
-margin:0 0 1.5rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="about-005"] [data-part="list"]{
 list-style:none;margin:0;padding:0;
@@ -154,8 +148,12 @@ export function About005({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ol data-part="list">
             {items.map((item, index) => (
               <li key={item.title} data-part="principle">

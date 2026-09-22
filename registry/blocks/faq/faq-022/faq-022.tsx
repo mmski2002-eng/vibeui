@@ -1,6 +1,11 @@
 import { useId, type CSSProperties } from "react"
 
-export type Faq022Item = { question: string; answer: string }
+import {
+  Accordion022,
+  type Accordion022Item,
+} from "@/registry/components/accordion/accordion-022/accordion-022"
+
+export type Faq022Item = Accordion022Item
 
 export type Faq022Props = {
   eyebrow?: string
@@ -13,6 +18,7 @@ export type Faq022Props = {
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
+  openFirst?: boolean
   background?: string
   className?: string
   style?: CSSProperties
@@ -43,29 +49,19 @@ container-type:inline-size;
 :where([data-vibeui-block="faq-022"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="faq-022"]{box-sizing:border-box;display:block;background:var(--vibeui-faq-022-bg);color:var(--vibeui-faq-022-fg);font-family:var(--vibeui-faq-022-font);font-size:1rem;line-height:1.5;interpolate-size:allow-keywords}
 [data-vibeui-block="faq-022"] *{box-sizing:border-box}
-[data-vibeui-block="faq-022"] a{color:inherit}
+[data-vibeui-block="faq-022"] [data-part="grid"]{margin-top:2.5rem}
+[data-vibeui-block="faq-022"] [data-part="ask"] a{color:inherit}
 [data-vibeui-block="faq-022"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4.5rem 1.25rem}
+/* Список вопросов — accordion-022, ему отдаётся вся колонка. */
+[data-vibeui-block="faq-022"] [data-part="grid"]{width:100%;max-width:none;margin-top:2.5rem}
 [data-vibeui-block="faq-022"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-faq-022-display);font-size:.85rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--vibeui-faq-022-silver)}
 [data-vibeui-block="faq-022"] [data-part="title"]{margin:0;font-family:var(--vibeui-faq-022-display);font-size:clamp(2.2rem,5.5cqi,3.8rem);font-weight:500;line-height:1.05}
 [data-vibeui-block="faq-022"] [data-part="lede"]{max-width:36rem;margin:1rem 0 0;color:var(--vibeui-faq-022-muted)}
 [data-vibeui-block="faq-022"] [data-part="ask"]{margin:1rem 0 0;font-family:var(--vibeui-faq-022-script);font-size:1.25rem;color:var(--vibeui-faq-022-muted)}
 [data-vibeui-block="faq-022"] [data-part="ask"] a{color:var(--vibeui-faq-022-accent);text-decoration:none;border-bottom:1px solid rgb(242 182 79 / .4)}
-[data-vibeui-block="faq-022"] [data-part="grid"]{display:grid;gap:.8rem;margin-top:2.5rem}
-[data-vibeui-block="faq-022"] details{position:relative;border:1px solid var(--vibeui-faq-022-line);border-radius:.9rem;background:var(--vibeui-faq-022-card);overflow:hidden;transition:border-color .35s,box-shadow .35s}
-[data-vibeui-block="faq-022"] details::before{content:"";position:absolute;inset:0;background:radial-gradient(30% 40% at 0 0,rgb(242 238 230 / .08),transparent 70%),radial-gradient(25% 35% at 100% 100%,rgb(242 238 230 / .06),transparent 70%);pointer-events:none}
-[data-vibeui-block="faq-022"] details[open]{border-color:rgb(242 182 79 / .45);box-shadow:0 0 0 1px rgb(242 182 79 / .12),0 0 40px -10px rgb(242 182 79 / .4)}
-[data-vibeui-block="faq-022"] details::details-content{block-size:0;overflow:hidden;opacity:0;transition:block-size .45s cubic-bezier(.2,.9,.3,1),opacity .35s,content-visibility .45s allow-discrete}
-[data-vibeui-block="faq-022"] details[open]::details-content{block-size:auto;opacity:1}
-[data-vibeui-block="faq-022"] summary{position:relative;display:grid;grid-template-columns:1.6rem minmax(0,1fr);align-items:center;gap:1rem;padding:1.1rem 1.3rem;cursor:pointer;list-style:none;font-family:var(--vibeui-faq-022-display);font-size:1.35rem;font-weight:500;line-height:1.2}
-[data-vibeui-block="faq-022"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-022"] summary:focus-visible{outline:2px solid var(--vibeui-faq-022-accent);outline-offset:-4px;border-radius:.9rem}
-[data-vibeui-block="faq-022"] [data-part="mark"]{width:1.6rem;height:1.6rem;fill:none;stroke:var(--vibeui-faq-022-silver);stroke-width:1.4;stroke-linecap:round;transition:transform .5s cubic-bezier(.2,.9,.3,1),stroke .35s,filter .35s}
-[data-vibeui-block="faq-022"] details[open] [data-part="mark"]{transform:rotate(90deg);stroke:var(--vibeui-faq-022-accent);filter:drop-shadow(0 0 6px var(--vibeui-faq-022-accent))}
-[data-vibeui-block="faq-022"] [data-part="answer"]{margin:0;padding:0 1.3rem 1.3rem 3.9rem;font-size:.95rem;color:var(--vibeui-faq-022-muted);animation:vibeui-faq-022-in .4s cubic-bezier(.2,.9,.3,1) both}
-@keyframes vibeui-faq-022-in{from{opacity:0;transform:translateY(-.3rem)}}
+}
 @container (min-width:56rem){
 [data-vibeui-block="faq-022"] [data-part="shell"]{padding:5rem 2.5rem}
-[data-vibeui-block="faq-022"] [data-part="grid"]{grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-022"] *{animation:none!important;transition:none!important}}`
 
@@ -90,6 +86,7 @@ export function Faq022({
   tone = "auto",
   accent,
   ink,
+  openFirst = false,
   background,
   className,
   style,
@@ -118,19 +115,15 @@ export function Faq022({
               {askText} <a href={askHref}>{askLabel}</a>
             </p>
           ) : null}
-          <div data-part="grid">
-            {items.map((item) => (
-              <details key={item.question} name={group}>
-                <summary>
-                  <svg data-part="mark" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4M12 3l-2 2M12 3l2 2M12 21l-2-2M12 21l2-2M3 12l2-2M3 12l2 2M21 12l-2-2M21 12l-2 2" />
-                  </svg>
-                  <span>{item.question}</span>
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
+          <Accordion022
+            defaultOpen={openFirst ? 0 : -1}
+            data-part="grid"
+            items={items}
+            group={group}
+            accent={accent}
+            ink={ink}
+            background={background}
+          />
         </div>
       </section>
     </>

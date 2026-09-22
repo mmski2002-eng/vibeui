@@ -2,6 +2,10 @@
 
 import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+
 export type Contact020Option = { value: string; label: string }
 
 export type Contact020Labels = {
@@ -142,22 +146,11 @@ container-type:inline-size;
 [data-vibeui-block="contact-020"] [data-part="step"] h3{margin:0 0 .25rem;font-family:var(--vibeui-contact-020-display);font-size:1.9rem;font-weight:500;line-height:1.1}
 [data-vibeui-block="contact-020"] [data-part="step"] > p{margin:0 0 1.2rem;font-size:.92rem;color:var(--vibeui-contact-020-paper-muted)}
 [data-vibeui-block="contact-020"] [data-part="row"]{display:grid;gap:0 .8rem}
-[data-vibeui-block="contact-020"] label{display:block;margin-bottom:1rem}
-[data-vibeui-block="contact-020"] label > span{display:block;margin-bottom:.35rem;font-family:var(--vibeui-contact-020-display);font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-contact-020-paper-muted)}
-[data-vibeui-block="contact-020"] input,[data-vibeui-block="contact-020"] textarea{width:100%;padding:.7rem .9rem;border:1px solid var(--vibeui-contact-020-paper-line);border-radius:.45rem;background:#fffdf8;color:var(--vibeui-contact-020-ink);font-family:var(--vibeui-contact-020-display);font-size:1.15rem;font-weight:500;box-shadow:inset 0 1px 2px rgb(28 39 64 / .05);transition:border-color .25s,box-shadow .25s}
-[data-vibeui-block="contact-020"] input::placeholder,[data-vibeui-block="contact-020"] textarea::placeholder{color:#a89e8a;font-weight:400}
-[data-vibeui-block="contact-020"] input:focus,[data-vibeui-block="contact-020"] textarea:focus{outline:none;border-color:var(--vibeui-contact-020-wax);box-shadow:0 0 0 3px rgb(122 43 53 / .14)}
-[data-vibeui-block="contact-020"] textarea{min-height:5.5rem;resize:vertical}
 [data-vibeui-block="contact-020"] [data-part="choices"]{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
 [data-vibeui-block="contact-020"] [data-part="choice"]{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border:1px solid var(--vibeui-contact-020-paper-line);border-radius:999px;background:var(--vibeui-contact-020-field);color:var(--vibeui-contact-020-ink);font-family:var(--vibeui-contact-020-display);font-size:1.02rem;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:border-color .25s,background .25s,color .25s,transform .2s}
 [data-vibeui-block="contact-020"] [data-part="choice"]:hover{border-color:var(--vibeui-contact-020-wax);transform:translateY(-1px)}
 [data-vibeui-block="contact-020"] [data-part="choice"][aria-pressed="true"]{border-color:var(--vibeui-contact-020-wax);background:var(--vibeui-contact-020-wax);color:#f7f3ea}
-[data-vibeui-block="contact-020"] [data-part="choice"]:focus-visible,[data-vibeui-block="contact-020"] [data-part="nav"] button:focus-visible{outline:2px solid var(--vibeui-contact-020-wax);outline-offset:3px}
 [data-vibeui-block="contact-020"] [data-part="nav"]{position:relative;display:flex;justify-content:space-between;gap:.75rem;margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--vibeui-contact-020-paper-line)}
-[data-vibeui-block="contact-020"] [data-part="nav"] button{display:inline-flex;align-items:center;gap:.4rem;height:2.9rem;padding:0 1.3rem;border-radius:999px;border:1px solid var(--vibeui-contact-020-paper-line);background:transparent;color:var(--vibeui-contact-020-ink);font-family:var(--vibeui-contact-020-display);font-size:1rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s,background .25s,opacity .25s}
-[data-vibeui-block="contact-020"] [data-part="nav"] button:disabled{opacity:.4;cursor:not-allowed}
-[data-vibeui-block="contact-020"] [data-part="nav"] button[data-primary]{margin-left:auto;background:var(--vibeui-contact-020-wax);border-color:var(--vibeui-contact-020-wax);color:#f7f3ea;box-shadow:0 12px 24px -14px var(--vibeui-contact-020-wax)}
-[data-vibeui-block="contact-020"] [data-part="nav"] button:not(:disabled):hover{transform:translateY(-1px)}
 [data-vibeui-block="contact-020"] [data-part="envelope"]{position:relative;align-self:start;overflow:hidden;border:1px solid var(--vibeui-contact-020-line);border-radius:.6rem;background:var(--vibeui-contact-020-envelope);box-shadow:0 30px 60px -40px rgb(0 0 0 / .8)}
 [data-vibeui-block="contact-020"] [data-part="flap"]{position:relative;height:5.2rem;background:linear-gradient(180deg,rgb(159 176 200 / .12),transparent);border-bottom:1px solid var(--vibeui-contact-020-line)}
 [data-vibeui-block="contact-020"] [data-part="flap"]::before,[data-vibeui-block="contact-020"] [data-part="flap"]::after{content:"";position:absolute;top:0;width:50%;height:100%;background:linear-gradient(to bottom right,transparent 49.5%,var(--vibeui-contact-020-line) 49.5%,var(--vibeui-contact-020-line) 50.5%,transparent 50.5%)}
@@ -188,7 +181,10 @@ container-type:inline-size;
 [data-vibeui-block="contact-020"] [data-part="form"]{padding:2.25rem 2.5rem}
 [data-vibeui-block="contact-020"] [data-part="envelope"]{position:sticky;top:5rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-020"] *{animation:none!important;transition:none!important}[data-vibeui-block="contact-020"] [data-part="envelope"][data-sent="true"] [data-part="stamp"]{opacity:.95}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-020"] *{animation:none!important;transition:none!important}[data-vibeui-block="contact-020"] [data-part="envelope"][data-sent="true"] [data-part="stamp"]{opacity:.95}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="contact-020"] [data-part="choice"]:focus-visible{outline:2px solid var(--vibeui-contact-020-wax);outline-offset:3px}
+`
 
 function subscribe() {
   return () => {}
@@ -353,18 +349,26 @@ export function Contact020({
                     <div data-part="step" key="who">
                       <h3>{t.whoTitle}</h3>
                       <p>{t.whoText}</p>
-                      <label>
-                        <span>{t.nameLabel}</span>
-                        <input type="text" name="name" value={name} onChange={(event) => set("name", event.target.value)} autoComplete="name" placeholder={t.namePlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={(event) => set("name", event.target.value)}
+                        autoComplete="name"
+                        label={t.nameLabel}
+                        accent={accent}
+                      />
                       <div data-part="choices">
                         {choice(answers.coming === "yes", t.comingYes, () => set("coming", "yes"))}
                         {choice(answers.coming === "no", t.comingNo, () => set("coming", "no"))}
                       </div>
-                      <label>
-                        <span>{t.companionsLabel}</span>
-                        <input type="text" value={answers.companions} onChange={(event) => set("companions", event.target.value)} placeholder={t.companionsPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.companions}
+                        onChange={(event) => set("companions", event.target.value)}
+                        label={t.companionsLabel}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   {step === 1 ? (
@@ -400,38 +404,46 @@ export function Contact020({
                       <div data-part="choices" role="group" aria-label={stepLabels[3]}>
                         {menu.map((item) => choice(answers.menu === item.value, item.label, () => set("menu", item.value)))}
                       </div>
-                      <label>
-                        <span>{t.allergies}</span>
-                        <input type="text" value={answers.allergies} onChange={(event) => set("allergies", event.target.value)} placeholder={t.allergiesPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.allergies}
+                        onChange={(event) => set("allergies", event.target.value)}
+                        label={t.allergies}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   {step === 4 ? (
                     <div data-part="step" key="song">
                       <h3>{t.songTitle}</h3>
                       <p>{t.songText}</p>
-                      <label>
-                        <span>{t.songLabel}</span>
-                        <input type="text" value={answers.song} onChange={(event) => set("song", event.target.value)} placeholder={t.songPlaceholder} />
-                      </label>
-                      <label>
-                        <span>{t.wishLabel}</span>
-                        <textarea value={answers.wish} onChange={(event) => set("wish", event.target.value)} placeholder={t.wishPlaceholder} />
-                      </label>
+                      <Input001
+                        type="text"
+                        value={answers.song}
+                        onChange={(event) => set("song", event.target.value)}
+                        label={t.songLabel}
+                        accent={accent}
+                      />
+                      <Input034
+                        value={answers.wish}
+                        onChange={(event) => set("wish", event.target.value)}
+                        label={t.wishLabel}
+                        accent={accent}
+                      />
                     </div>
                   ) : null}
                   <div data-part="nav">
-                    <button type="button" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
+                    <Button001 type="button" tone="soft" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))} accent={accent}>
                       {t.back}
-                    </button>
+                    </Button001>
                     {step < last ? (
-                      <button type="button" data-primary="" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))}>
+                      <Button001 type="button" tone="solid" disabled={!canNext} onClick={() => setStep((value) => Math.min(last, value + 1))} accent={accent}>
                         {t.next}
-                      </button>
+                      </Button001>
                     ) : (
-                      <button type="submit" data-primary="">
+                      <Button001 type="submit" size="lg" accent={accent}>
                         {submitLabel}
-                      </button>
+                      </Button001>
                     )}
                   </div>
                 </>

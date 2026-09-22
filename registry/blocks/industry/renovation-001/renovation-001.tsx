@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button085 } from "@/registry/components/button/button-085/button-085"
 
 export type Renovation001Type = {
   id: string
@@ -91,6 +92,7 @@ container-type:inline-size;
 :where([data-vibeui-block="renovation-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="renovation-001"]{box-sizing:border-box;padding:5rem 0;background-color:var(--vibeui-renovation-001-bg);background-image:linear-gradient(var(--vibeui-renovation-001-grid) 1px,transparent 1px),linear-gradient(90deg,var(--vibeui-renovation-001-grid) 1px,transparent 1px);background-size:5rem 5rem;color:var(--vibeui-renovation-001-fg);font-family:var(--vibeui-renovation-001-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="renovation-001"] *{box-sizing:border-box}
+[data-vibeui-block="renovation-001"] [data-part="type"]{width:100%}
 [data-vibeui-block="renovation-001"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="renovation-001"] [data-part="head"]{max-width:44rem;margin-bottom:2.5rem}
 [data-vibeui-block="renovation-001"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 1rem;font-family:var(--vibeui-renovation-001-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-renovation-001-muted)}
@@ -111,11 +113,6 @@ container-type:inline-size;
 [data-vibeui-block="renovation-001"] [data-part="range"]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:.2rem;background:var(--vibeui-renovation-001-fg);border:3px solid var(--vibeui-renovation-001-accent);cursor:grab}
 [data-vibeui-block="renovation-001"] [data-part="range"]:focus-visible{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-renovation-001-accent) 50%,transparent)}
 [data-vibeui-block="renovation-001"] [data-part="types"]{display:grid;gap:.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="renovation-001"] [data-part="type"]{display:grid;gap:.25rem;width:100%;padding:.9rem 1rem;border:1px solid var(--vibeui-renovation-001-line);border-radius:.4rem;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .2s,background .2s,transform .18s}
-[data-vibeui-block="renovation-001"] [data-part="type"] b{font-family:var(--vibeui-renovation-001-display);font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
-[data-vibeui-block="renovation-001"] [data-part="type"] span{font-family:var(--vibeui-renovation-001-mono);font-size:.72rem;color:var(--vibeui-renovation-001-muted)}
-[data-vibeui-block="renovation-001"] [data-part="type"]:hover{border-color:color-mix(in oklab,var(--vibeui-renovation-001-fg) 40%,transparent)}
-[data-vibeui-block="renovation-001"] [data-part="type"][aria-checked="true"]{border-color:var(--vibeui-renovation-001-accent);background:color-mix(in oklab,var(--vibeui-renovation-001-accent) 14%,transparent);box-shadow:0 0 0 1px var(--vibeui-renovation-001-accent) inset}
 [data-vibeui-block="renovation-001"] [data-part="chips"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="renovation-001"] [data-part="chip"]{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .9rem;border:1px solid var(--vibeui-renovation-001-line);border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:.88rem;font-weight:500;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
 [data-vibeui-block="renovation-001"] [data-part="chip"]::before{content:"+";font-family:var(--vibeui-renovation-001-mono);font-weight:600;color:var(--vibeui-renovation-001-muted);transition:transform .25s}
@@ -322,12 +319,7 @@ export function Renovation001({
                 <ul data-part="types" role="radiogroup" aria-labelledby="vibeui-renovation-001-type">
                   {types.map((item) => (
                     <li key={item.id}>
-                      <button data-part="type" type="button" role="radio" aria-checked={item.id === type.id} onClick={() => setTypeId(item.id)}>
-                        <b>{item.name}</b>
-                        <span>
-                          {fromLabel} {formatMoney(item.rate)} {currency}/{areaUnit}{item.note ? ` · ${item.note}` : ""}
-                        </span>
-                      </button>
+                      <Button085 data-part="type" name={item.name} rate={item.rate} note={item.note} fromLabel={fromLabel} currency={currency} areaUnit={areaUnit} aria-checked={item.id === type.id} onClick={() => setTypeId(item.id)} accent={accent} />
                     </li>
                   ))}
                 </ul>

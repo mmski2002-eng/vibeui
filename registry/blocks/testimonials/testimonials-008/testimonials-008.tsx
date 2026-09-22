@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react"
+import { Card030 } from "@/registry/components/card/card-030/card-030"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Testimonials008Item = {
   metric: string
@@ -23,7 +25,9 @@ export type Testimonials008Props = {
 // Цифра отвечает на вопрос «что мне это даст» быстрее любой цитаты, а
 // цитата под цифрой объясняет, откуда результат взялся, — вместе они
 // работают лучше, чем порознь.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-008"] [data-part="heading"]{margin-bottom:2rem}
+[data-vibeui-block="testimonials-008"] [data-part="card"]{margin:0}
+
 :where([data-vibeui-block="testimonials-008"]){
 --vibeui-testimonials-008-bg:transparent;
 --vibeui-testimonials-008-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -43,42 +47,7 @@ font-family:var(--vibeui-testimonials-008-font);
 [data-vibeui-block="testimonials-008"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="testimonials-008"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-testimonials-008-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="testimonials-008"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="testimonials-008"] [data-part="grid"]{display:grid;gap:1rem}
-[data-vibeui-block="testimonials-008"] [data-part="card"]{
-min-inline-size:0;
-display:flex;flex-direction:column;margin:0;
-padding:1.75rem 1.5rem;border:1px solid var(--vibeui-testimonials-008-border);border-radius:1.125rem;
-background:var(--vibeui-testimonials-008-card);
-}
-[data-vibeui-block="testimonials-008"] [data-part="metric"]{
-color:var(--vibeui-testimonials-008-accent);
-font-size:clamp(2.5rem,7cqi,3.25rem);line-height:1;letter-spacing:-0.03em;font-weight:750;
-font-variant-numeric:tabular-nums;
-}
-[data-vibeui-block="testimonials-008"] [data-part="metric-label"]{
-margin:0.375rem 0 0;color:var(--vibeui-testimonials-008-muted);
-font-size:0.8125rem;font-weight:600;letter-spacing:0.02em;
-}
-[data-vibeui-block="testimonials-008"] [data-part="quote"]{
-margin:1.25rem 0 0;flex:1 1 auto;
-padding-top:1.25rem;border-top:1px solid var(--vibeui-testimonials-008-border);
-font-size:0.9375rem;line-height:1.6;
-}
-[data-vibeui-block="testimonials-008"] [data-part="quote"]::before{content:"«"}
-[data-vibeui-block="testimonials-008"] [data-part="quote"]::after{content:"»"}
-[data-vibeui-block="testimonials-008"] [data-part="author"]{
-margin-top:1.25rem;display:grid;gap:0.0625rem;
-}
-[data-vibeui-block="testimonials-008"] [data-part="name"]{font-size:0.875rem;font-weight:640}
-[data-vibeui-block="testimonials-008"] [data-part="role"]{color:var(--vibeui-testimonials-008-muted);font-size:0.8125rem;line-height:1.35}
 @container (min-width: 40rem){
 [data-vibeui-block="testimonials-008"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="testimonials-008"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
@@ -170,19 +139,15 @@ export function Testimonials008({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="grid">
             {items.map((item) => (
-              <figure key={item.name} data-part="card">
-                <span data-part="metric">{item.metric}</span>
-                <p data-part="metric-label">{item.metricLabel}</p>
-                <blockquote data-part="quote">{item.quote}</blockquote>
-                <figcaption data-part="author">
-                  <span data-part="name">{item.name}</span>
-                  <span data-part="role">{item.role}</span>
-                </figcaption>
-              </figure>
+              <Card030 key={item.name} data-part="card" name={item.name} metric={item.metric} metricLabel={item.metricLabel} quote={item.quote} role={item.role} accent={accent} />
             ))}
           </div>
         </div>

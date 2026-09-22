@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Hero022Fact = {
   value: string
   label: string
@@ -86,13 +89,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-022"] [data-part="row"]{display:grid;gap:1.25rem;align-items:end;animation:vibeui-hero-022-fade .8s .5s both}
 [data-vibeui-block="hero-022"] [data-part="lede"]{margin:0;max-width:34rem;font-size:1.05rem;color:var(--vibeui-hero-022-muted)}
 [data-vibeui-block="hero-022"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem}
-[data-vibeui-block="hero-022"] [data-part="primary"]{position:relative;display:inline-flex;align-items:center;height:3.25rem;padding:0 1.6rem;border-radius:999px;background:var(--vibeui-hero-022-accent);color:var(--vibeui-hero-022-on-accent);font-weight:600;text-decoration:none;overflow:hidden;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="hero-022"] [data-part="primary"]::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgb(255 255 255 / .35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
-[data-vibeui-block="hero-022"] [data-part="primary"]:hover{transform:translateY(-2px);box-shadow:0 16px 32px -14px var(--vibeui-hero-022-accent)}
-[data-vibeui-block="hero-022"] [data-part="primary"]:hover::after{transform:translateX(120%)}
-[data-vibeui-block="hero-022"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;color:inherit;font-weight:600;text-decoration:none}
-[data-vibeui-block="hero-022"] [data-part="secondary"]::before{content:"";width:2.25rem;height:2.25rem;border-radius:50%;border:1px solid var(--vibeui-hero-022-line);background:var(--vibeui-hero-022-card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%234f46e5'/%3E%3C/svg%3E") center/1.1rem no-repeat}
-[data-vibeui-block="hero-022"] a:focus-visible{outline:2px solid var(--vibeui-hero-022-accent);outline-offset:3px}
 [data-vibeui-block="hero-022"] [data-part="bento"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:0;padding:0;list-style:none;perspective:1200px;animation:vibeui-hero-022-fade .9s .7s both}
 [data-vibeui-block="hero-022"] [data-part="tile"]{position:relative;overflow:hidden;border-radius:1.25rem;border:1px solid var(--vibeui-hero-022-line);background:var(--vibeui-hero-022-card);min-height:9rem;transform:rotateX(var(--vibeui-hero-022-rx,0)) rotateY(var(--vibeui-hero-022-ry,0));transform-style:preserve-3d;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s;box-shadow:0 20px 40px -30px rgb(17 24 39 / .35)}
 [data-vibeui-block="hero-022"] [data-part="tile"]:hover{box-shadow:0 30px 60px -30px rgb(17 24 39 / .45)}
@@ -288,14 +284,23 @@ export function Hero022({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button077
+                  data-part="secondary"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

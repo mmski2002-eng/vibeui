@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Case002Metric = {
   value: string
@@ -25,7 +28,9 @@ export type Case002Props = {
 // метрик справа, кнопка «Читать историю». Так делают, когда есть один
 // по-настоящему сильный проект: развёрнутая цитата даёт контекст, метрики —
 // доказательство, а кнопка честно признаёт, что вся история сюда не влезет.
-const STYLES = `
+const STYLES = `[data-vibeui-block="case-002"] [data-part="heading"]{margin-bottom:2rem}
+[data-vibeui-block="case-002"] [data-part="button"]{align-self:flex-start}
+
 :where([data-vibeui-block="case-002"]){
 --vibeui-case-002-bg:transparent;
 --vibeui-case-002-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -48,14 +53,6 @@ font-family:var(--vibeui-case-002-font);
 [data-vibeui-block="case-002"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="case-002"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-case-002-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="case-002"] [data-part="title"]{
-margin:0 0 2rem;max-width:24ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="case-002"] [data-part="panel"]{
 display:grid;gap:2rem;
 padding:clamp(1.5rem,4cqi,2.75rem);
@@ -72,17 +69,6 @@ font-size:clamp(1.125rem,2.6cqi,1.375rem);line-height:1.55;font-weight:500;lette
 [data-vibeui-block="case-002"] [data-part="author"]{display:grid;gap:0.125rem}
 [data-vibeui-block="case-002"] [data-part="name"]{font-size:0.9375rem;font-weight:640}
 [data-vibeui-block="case-002"] [data-part="role"]{color:var(--vibeui-case-002-muted);font-size:0.8125rem;line-height:1.4}
-[data-vibeui-block="case-002"] [data-part="button"]{
-align-self:flex-start;display:inline-block;
-padding:0.6875rem 1.375rem;border-radius:999px;
-background:var(--vibeui-case-002-accent-fill);color:var(--vibeui-case-002-on-accent);
-font-size:0.9375rem;font-weight:650;text-decoration:none;
-transition:filter var(--vibeui-case-002-dur-2) ease,transform var(--vibeui-case-002-dur-2) ease;
-}
-[data-vibeui-block="case-002"] [data-part="button"]:hover{filter:brightness(1.06);transform:translateY(-1px)}
-[data-vibeui-block="case-002"] [data-part="button"]:focus-visible{
-outline:2px solid var(--vibeui-case-002-accent);outline-offset:3px;
-}
 [data-vibeui-block="case-002"] [data-part="metrics"]{
 display:grid;gap:1rem;margin:0;
 padding-top:1.75rem;border-top:1px solid var(--vibeui-case-002-border);
@@ -184,8 +170,12 @@ export function Case002({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="panel">
             <figure data-part="story">
               <blockquote data-part="quote">{quote}</blockquote>
@@ -193,9 +183,15 @@ export function Case002({
                 <span data-part="name">{author}</span>
                 <span data-part="role">{role}</span>
               </figcaption>
-              <a data-part="button" href={buttonHref}>
-                {buttonLabel}
-              </a>
+              <Button016
+                data-part="button"
+                label={buttonLabel}
+                href={buttonHref}
+                external={false}
+                size="md"
+                tone="neutral"
+                accent={accent}
+              />
             </figure>
             <dl data-part="metrics">
               {metrics.map((metric) => (

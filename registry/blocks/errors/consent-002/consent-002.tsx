@@ -1,6 +1,10 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+
 
 type Consent002Category = {
   id: string
@@ -26,7 +30,8 @@ export type Consent002Props = {
 // категорию. Обязательная категория заблокирована и всегда включена.
 // Тумблеры — настоящие checkbox, объявленные aria, состояние держит
 // компонент. Формат окна «Настроить cookie» из бара согласия.
-const STYLES = `
+const STYLES = `[data-vibeui-block="consent-002"] [data-part="heading"]{margin-bottom:0.375rem}
+
 :where([data-vibeui-block="consent-002"]){
 --vibeui-consent-002-bg:transparent;
 --vibeui-consent-002-panel:light-dark(oklch(1 0 0),oklch(0.2 0 0));
@@ -53,7 +58,6 @@ max-width:34rem;margin:0 auto;
 padding:1.5rem;border:1px solid var(--vibeui-consent-002-border);border-radius:1rem;
 background:var(--vibeui-consent-002-panel);box-shadow:0 12px 32px -20px oklch(0 0 0 / 40%);
 }
-[data-vibeui-block="consent-002"] [data-part="title"]{margin:0 0 0.375rem;font-size:1.1875rem;font-weight:700}
 [data-vibeui-block="consent-002"] [data-part="summary"]{margin:0 0 1.25rem;font-size:0.875rem;line-height:1.5;color:var(--vibeui-consent-002-muted)}
 [data-vibeui-block="consent-002"] [data-part="list"]{list-style:none;margin:0 0 1.25rem;padding:0;display:grid;gap:0.75rem}
 [data-vibeui-block="consent-002"] [data-part="row"]{
@@ -73,13 +77,6 @@ padding:0.875rem 0;border-bottom:1px solid var(--vibeui-consent-002-border);
 [data-vibeui-block="consent-002"] [data-part="switch"] input:focus-visible+[data-part="track"]{outline:2px solid var(--vibeui-consent-002-accent);outline-offset:2px}
 [data-vibeui-block="consent-002"] [data-part="switch"] input:disabled+[data-part="track"]{opacity:.6}
 [data-vibeui-block="consent-002"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:flex-end}
-[data-vibeui-block="consent-002"] [data-part="btn"]{
-height:2.625rem;padding:0 1.25rem;border-radius:0.75rem;cursor:pointer;font:inherit;font-size:0.875rem;font-weight:640;
-border:1px solid var(--vibeui-consent-002-border);background:transparent;color:inherit;transition:border-color var(--vibeui-consent-002-dur-2) ease;
-}
-[data-vibeui-block="consent-002"] [data-part="btn"]:hover{border-color:var(--vibeui-consent-002-accent)}
-[data-vibeui-block="consent-002"] [data-part="btn"]:focus-visible{outline:2px solid var(--vibeui-consent-002-accent);outline-offset:2px}
-[data-vibeui-block="consent-002"] [data-part="btn"][data-variant="primary"]{border-color:transparent;background:var(--vibeui-consent-002-accent);color:oklch(from var(--vibeui-consent-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @container (min-width: 40rem){[data-vibeui-block="consent-002"] [data-part="panel"]{padding:2rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="consent-002"] *{animation:none!important;transition:none!important}}
 `
@@ -166,7 +163,12 @@ export function Consent002({
         aria-label="Настройки cookie"
       >
         <div data-part="panel">
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            title={title}
+            size="xs"
+            accent={accent}
+          />
           <p data-part="summary">{summary}</p>
           <ul data-part="list">
             {categories.map((category) => (
@@ -196,12 +198,12 @@ export function Consent002({
             ))}
           </ul>
           <div data-part="actions">
-            <button data-part="btn" type="button">
+            <Button001 data-part="btn" type="button" tone="outline" accent={accent}>
               {saveLabel}
-            </button>
-            <button data-part="btn" data-variant="primary" type="button">
+            </Button001>
+            <Button001 data-part="btn" type="button" tone="solid" accent={accent}>
               {acceptAllLabel}
-            </button>
+            </Button001>
           </div>
         </div>
       </section>

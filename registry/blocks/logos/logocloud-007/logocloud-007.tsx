@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Badge032 } from "@/registry/components/badge/badge-032/badge-032"
 
 export type Logocloud007Props = {
   label?: string
@@ -39,15 +40,8 @@ container-type:inline-size;
 [data-vibeui-block="logocloud-007"] [data-part="label"]{max-width:80rem;margin:0 auto 1rem;padding:0 1.25rem;font-family:var(--vibeui-logocloud-007-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-logocloud-007-muted)}
 [data-vibeui-block="logocloud-007"] [data-part="lane"]{display:flex;align-items:center;width:max-content;animation:vibeui-logocloud-007-run var(--vibeui-logocloud-007-s) linear infinite}
 [data-vibeui-block="logocloud-007"] [data-part="lane"]:hover{animation-play-state:paused}
-[data-vibeui-block="logocloud-007"] [data-part="name"]{display:inline-flex;align-items:center;gap:1.6rem;padding-right:1.6rem;font-size:clamp(1.6rem,3.6cqi,2.6rem);line-height:1;white-space:nowrap;color:var(--vibeui-logocloud-007-muted);transition:color .25s}
-[data-vibeui-block="logocloud-007"] [data-part="name"]:hover{color:var(--vibeui-logocloud-007-fg)}
-[data-vibeui-block="logocloud-007"] [data-part="name"]::after{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-logocloud-007-accent)}
-[data-vibeui-block="logocloud-007"] [data-part="name"][data-kind="0"]{font-weight:800;letter-spacing:-.04em}
-[data-vibeui-block="logocloud-007"] [data-part="name"][data-kind="1"]{font-weight:400;letter-spacing:-.02em}
-[data-vibeui-block="logocloud-007"] [data-part="name"][data-kind="2"]{font-family:var(--vibeui-logocloud-007-mono);font-weight:500;font-size:clamp(1.2rem,2.6cqi,1.9rem);text-transform:uppercase;letter-spacing:.06em}
-[data-vibeui-block="logocloud-007"] [data-part="name"][data-kind="3"]{font-style:italic;font-weight:500}
 @keyframes vibeui-logocloud-007-run{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="logocloud-007"] [data-part="lane"]{animation:none!important;flex-wrap:wrap;width:auto;padding:0 1.25rem;gap:.6rem 0}[data-vibeui-block="logocloud-007"] [data-part="name"][aria-hidden="true"]{display:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="logocloud-007"] [data-part="lane"]{animation:none!important;flex-wrap:wrap;width:auto;padding:0 1.25rem;gap:.6rem 0}}`
 
 /** «Работал с»: названия текстом бегущей строкой с чередованием начертаний. */
 export function Logocloud007({
@@ -80,9 +74,7 @@ export function Logocloud007({
         {label ? <p data-part="label">{label}</p> : null}
         <div data-part="lane">
           {tape.map((name, index) => (
-            <span key={`${name}-${index}`} data-part="name" data-kind={index % 4} aria-hidden={index >= names.length}>
-              {name}
-            </span>
+            <Badge032 key={`${name}-${index}`} data-part="name" name={name} data-kind={index % 4} aria-hidden={index >= names.length} accent={accent} />
           ))}
         </div>
       </section>

@@ -49,6 +49,22 @@ export async function ItemPage({
   // перестаёт их различать и просто пролистывает.
   const adapt = (block.meta?.ai?.adapt ?? []).slice(0, 3)
   const slots = block.meta?.slots
+  // Составной блок: компоненты каталога, из которых он собран. Ставятся
+  // вместе с ним одной командой (docs/PLAN-BLOCKS-FROM-COMPONENTS.md).
+  const parts = (block.registryDependencies ?? []).flatMap((name) => {
+    const part = getCatalogItem(name)
+    const partKind = getItemKind(name)
+
+    return part && partKind
+      ? [
+          {
+            name,
+            title: localizeItem(part, locale).title ?? name,
+            path: `${catalogBasePath(partKind)}/${name}`,
+          },
+        ]
+      : []
+  })
 
   const rootLabel =
     kind === "block"
@@ -214,6 +230,38 @@ export async function ItemPage({
                   </li>
                 ))}
               </ul>
+            </section>
+          ) : null}
+
+          {parts.length > 0 ? (
+            <section
+              aria-labelledby="parts-heading"
+              className="border-shell-border mb-10 rounded-xl border p-5"
+            >
+              <h2
+                id="parts-heading"
+                className="text-shell-muted mb-3 text-xs font-medium tracking-wide uppercase"
+              >
+                {t.item.composedOf}
+              </h2>
+              <ul className="flex flex-wrap gap-2">
+                {parts.map((part) => (
+                  <li key={part.name}>
+                    <Link
+                      href={localePath(locale, part.path)}
+                      className="border-shell-border text-shell-fg hover:border-shell-accent-line hover:text-shell-accent inline-flex items-baseline gap-1.5 rounded-full border px-3 py-1 text-sm transition-colors"
+                    >
+                      {part.title}
+                      <span className="text-shell-muted font-mono text-xs">
+                        {part.name}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
+                {t.item.composedOfNote}
+              </p>
             </section>
           ) : null}
 

@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing010Props = {
   eyebrow?: string
@@ -65,6 +68,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-010"]{color-scheme:dark}
+[data-vibeui-block="pricing-010"] [data-part="cta-button"]{margin-top:1.5rem;}
 [data-vibeui-block="pricing-010"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -73,18 +77,11 @@ box-sizing:border-box;background:var(--vibeui-pricing-010-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-010-sans);
 }
 [data-vibeui-block="pricing-010"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-010"] [data-part="reassure"]{margin:1.25rem 0 0;display:grid}
 [data-vibeui-block="pricing-010"] [data-part="shell"]{
 max-width:62rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;
 display:grid;grid-template-columns:1fr;gap:2rem;
 }
-[data-vibeui-block="pricing-010"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-010-accent);
-}
-[data-vibeui-block="pricing-010"] h2{
-margin:0;max-width:20ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-010"] [data-part="lede"]{margin:0.875rem 0 0;max-width:32rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-010-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-010"] [data-part="days"]{
 display:inline-flex;align-items:baseline;gap:0.5rem;margin:1.5rem 0 0;padding:0.75rem 1.125rem;border-radius:0.875rem;
 background:var(--vibeui-pricing-010-accent);color:oklch(from var(--vibeui-pricing-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
@@ -93,13 +90,6 @@ background:var(--vibeui-pricing-010-accent);color:oklch(from var(--vibeui-pricin
 [data-vibeui-block="pricing-010"] [data-part="dayslabel"]{font-size:0.875rem;font-weight:600}
 [data-vibeui-block="pricing-010"] [data-part="after"]{margin:1rem 0 0;font-size:0.875rem;color:var(--vibeui-pricing-010-muted)}
 [data-vibeui-block="pricing-010"] [data-part="after"] b{color:var(--vibeui-pricing-010-fg);font-variant-numeric:tabular-nums}
-[data-vibeui-block="pricing-010"] a{
-display:inline-flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.875rem;padding:0 1.5rem;
-border-radius:0.75rem;background:var(--vibeui-pricing-010-accent);color:oklch(from var(--vibeui-pricing-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-010-dur-2) ease;
-}
-[data-vibeui-block="pricing-010"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-010-accent) 86%,black)}
-[data-vibeui-block="pricing-010"] a:focus-visible{outline:2px solid var(--vibeui-pricing-010-accent);outline-offset:3px}
 [data-vibeui-block="pricing-010"] [data-part="reassure"]{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="pricing-010"] [data-part="reassure"] li{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-pricing-010-muted)}
 [data-vibeui-block="pricing-010"] [data-part="tick"]{flex:0 0 auto;margin-top:0.1875rem;color:var(--vibeui-pricing-010-accent)}
@@ -204,9 +194,13 @@ export function Pricing010({
       >
         <div data-part="shell">
           <div>
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2>{title}</h2>
-            {lede ? <p data-part="lede">{lede}</p> : null}
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={lede}
+              accent={accent}
+            />
 
             <p data-part="days">
               <span data-part="daysnum">{trialDays}</span>
@@ -219,7 +213,7 @@ export function Pricing010({
               {afterPrice.replace("{period}", period)}
             </p>
 
-            <a href={action.href}>{action.label}</a>
+            <Button016 data-part="cta-button" label={action.label} href={action.href} external={false} size="lg" tone="accent" accent={accent} />
 
             <ul data-part="reassure">
               {reassurance.slice(0, 4).map((item) => (

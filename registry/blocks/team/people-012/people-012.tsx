@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card057 } from "@/registry/components/card/card-057/card-057"
 
 export type People012Person = {
   name: string
@@ -65,20 +66,6 @@ container-type:inline-size;
 [data-vibeui-block="people-012"] [data-part="word"] i{display:inline-block;font-style:normal}
 [data-vibeui-block="people-012"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-people-012-muted);max-width:34rem;margin:1rem 0 0}
 [data-vibeui-block="people-012"] [data-part="tiles"]{display:grid;gap:1.25rem;margin-top:2.5rem}
-[data-vibeui-block="people-012"] [data-part="tile"]{position:relative;display:grid;border-radius:1.4rem;overflow:clip;min-height:28rem;background:var(--vibeui-people-012-panel);box-shadow:0 30px 60px -40px rgb(0 0 0 / .5),0 0 0 1px var(--vibeui-people-012-line);transition:box-shadow .5s,transform .5s var(--vibeui-people-012-ease)}
-[data-vibeui-block="people-012"] [data-part="tile"]:hover{transform:translateY(-.4rem);box-shadow:0 40px 70px -40px color-mix(in oklab,var(--vibeui-people-012-accent) 40%,rgb(0 0 0 / .6)),0 0 0 1px var(--vibeui-people-012-line)}
-[data-vibeui-block="people-012"] [data-part="tile"] img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;object-position:50% 12%;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="people-012"] [data-part="tile"]:hover img,[data-vibeui-block="people-012"] [data-part="tile"]:focus-within img{transform:translateX(-18%) scale(1.04)}
-[data-vibeui-block="people-012"] [data-part="front"]{position:relative;z-index:1;align-self:end;padding:1.5rem;background:linear-gradient(180deg,transparent,rgb(0 0 0 / .72));color:#fff}
-[data-vibeui-block="people-012"] [data-part="front"] h3{margin:0;font-family:var(--vibeui-people-012-display);font-size:1.7rem;font-weight:600;letter-spacing:-.02em;line-height:1.05}
-[data-vibeui-block="people-012"] [data-part="front"] p{margin:.3rem 0 0;opacity:.85;font-size:.92rem}
-[data-vibeui-block="people-012"] [data-part="front"] q{display:block;margin-top:.9rem;font-family:var(--vibeui-people-012-hand);font-size:1.4rem;line-height:1.15;quotes:"«" "»"}
-[data-vibeui-block="people-012"] [data-part="back"]{position:absolute;right:0;top:0;bottom:0;width:min(62%,20rem);z-index:2;padding:1.5rem;display:grid;align-content:center;gap:.75rem;background:var(--vibeui-people-012-panel);color:var(--vibeui-people-012-fg);transform:translateX(100%);transition:transform .6s cubic-bezier(.2,.8,.2,1);box-shadow:-20px 0 40px -30px rgb(0 0 0 / .5)}
-[data-vibeui-block="people-012"] [data-part="tile"]:hover [data-part="back"],[data-vibeui-block="people-012"] [data-part="tile"]:focus-within [data-part="back"]{transform:none}
-[data-vibeui-block="people-012"] [data-part="back"] small{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--vibeui-people-012-accent)}
-[data-vibeui-block="people-012"] [data-part="back"] p{margin:0;font-family:var(--vibeui-people-012-hand);font-size:1.45rem;line-height:1.15}
-[data-vibeui-block="people-012"] [data-part="back"]::before{content:"";position:absolute;left:.9rem;top:.9rem;width:2.4rem;height:.9rem;background:color-mix(in oklab,var(--vibeui-people-012-accent) 50%,transparent);transform:rotate(-8deg);border-radius:2px}
-[data-vibeui-block="people-012"] [data-part="peek"]{position:absolute;right:1rem;top:1rem;z-index:3;padding:.4rem .7rem;border-radius:999px;background:rgb(255 255 255 / .85);backdrop-filter:blur(6px);font-size:.72rem;font-weight:600;color:#1a1a1a;animation:vibeui-people-012-nudge 2.6s ease-in-out infinite}
 @keyframes vibeui-people-012-nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-.25rem)}}
 @keyframes vibeui-people-012-rise{from{transform:translateY(112%)}to{transform:none}}
 @keyframes vibeui-people-012-in{from{opacity:0;translate:0 3rem;rotate:var(--vibeui-people-012-r,0deg)}to{opacity:1;translate:0 0;rotate:0deg}}
@@ -86,12 +73,9 @@ container-type:inline-size;
 @supports (animation-timeline: view()){
 [data-vibeui-block="people-012"] [data-part="word"] i{animation:vibeui-people-012-rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
 [data-vibeui-block="people-012"] [data-part="lede"]{animation:vibeui-people-012-in linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
-[data-vibeui-block="people-012"] [data-part="tile"]{animation:vibeui-people-012-in linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
-[data-vibeui-block="people-012"] [data-part="tile"] img{animation:vibeui-people-012-drift linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
 }
-[data-vibeui-block="people-012"] [data-part="tile"]:focus-visible{outline:2px solid var(--vibeui-people-012-accent);outline-offset:3px}
 @container (min-width: 52rem){[data-vibeui-block="people-012"] [data-part="tiles"]{grid-template-columns:1fr 1fr}}
-@media (hover:none){[data-vibeui-block="people-012"] [data-part="back"]{position:relative;width:auto;transform:none;box-shadow:none}[data-vibeui-block="people-012"] [data-part="tile"]{grid-template-rows:20rem auto}[data-vibeui-block="people-012"] [data-part="tile"] img{position:relative;height:20rem;inset:auto;animation:none}[data-vibeui-block="people-012"] [data-part="front"]{position:absolute;left:0;right:0;top:0;height:20rem;align-content:end;display:grid}[data-vibeui-block="people-012"] [data-part="peek"]{display:none}}
+
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="people-012"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_PEOPLE: People012Person[] = [
@@ -144,25 +128,7 @@ export function People012({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="tiles">
             {people.map((person, index) => (
-              <article key={person.name} data-part="tile" tabIndex={person.note ? 0 : undefined} style={{ ["--vibeui-people-012-r" as string]: `${index % 2 === 0 ? -1.5 : 1.5}deg` }}>
-                {person.image ? <img src={person.image} alt={person.imageAlt ?? `${person.name}${person.role ? `, ${person.role.toLowerCase()}` : ""}`} /> : null}
-                {person.note && peekLabel ? (
-                  <span data-part="peek" aria-hidden="true">
-                    {peekLabel}
-                  </span>
-                ) : null}
-                <div data-part="front">
-                  <h3>{person.name}</h3>
-                  {person.role ? <p>{person.role}</p> : null}
-                  {person.quote ? <q>{person.quote}</q> : null}
-                </div>
-                {person.note ? (
-                  <div data-part="back">
-                    <small>{noteLabel}</small>
-                    <p>{person.note}</p>
-                  </div>
-                ) : null}
-              </article>
+              <Card057 key={person.name} data-part="tile" name={person.name} note={person.note} image={person.image} imageAlt={person.imageAlt} role={person.role} quote={person.quote} peekLabel={peekLabel} noteLabel={noteLabel} index={index} accent={accent} />
             ))}
           </div>
         </div>

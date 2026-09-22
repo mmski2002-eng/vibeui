@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
+import { Button117 } from "@/registry/components/button/button-117/button-117"
 
 export type Cta018Props = {
   label?: string
@@ -50,11 +51,6 @@ const STYLES = `
 [data-vibeui-block="cta-018"][data-show="true"] [data-part="bar"]{transform:none;opacity:1}
 [data-vibeui-block="cta-018"] [data-part="caption"]{display:none;font-size:.85rem;color:var(--vibeui-cta-018-muted);white-space:nowrap}
 [data-vibeui-block="cta-018"] [data-part="caption"]::before{content:"";display:inline-block;width:.5rem;height:.5rem;margin-right:.5rem;border-radius:50%;background:var(--vibeui-cta-018-marker);box-shadow:0 0 0 3px rgb(217 249 157 / .25);vertical-align:.05em}
-[data-vibeui-block="cta-018"] [data-part="link"]{display:inline-flex;align-items:center;gap:.6rem;height:3rem;padding:0 .4rem 0 1.25rem;border-radius:999px;background:var(--vibeui-cta-018-accent);color:var(--vibeui-cta-018-on-accent);font-weight:600;text-decoration:none;white-space:nowrap;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="cta-018"] [data-part="link"]:hover{transform:translateY(-1px);box-shadow:0 14px 30px -12px var(--vibeui-cta-018-accent)}
-[data-vibeui-block="cta-018"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-cta-018-marker);outline-offset:3px}
-[data-vibeui-block="cta-018"] [data-part="price"]{display:inline-flex;align-items:center;height:2.2rem;padding:0 .8rem;border-radius:999px;background:rgb(255 255 255 / .18);font-family:var(--vibeui-cta-018-display);font-size:.8rem;font-weight:600;font-variant-numeric:tabular-nums}
-[data-vibeui-block="cta-018"] [data-part="link"]:only-child{margin-left:0}
 [data-vibeui-block="cta-018"][data-placement="static"]{position:static;padding:1.5rem 1rem;background:light-dark(#ffffff,#0f1117)}
 @container (min-width: 40rem){[data-vibeui-block="cta-018"] [data-part="caption"]{display:inline}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-018"] *{transition:none!important}}`
@@ -130,10 +126,7 @@ export function Cta018({
       <div data-vibeui-block="cta-018" data-tone={tone === "auto" ? undefined : tone} data-show={shown} data-placement={placement} className={className} style={palette}>
         <div data-part="bar" aria-hidden={!shown}>
           {caption ? <span data-part="caption">{caption}</span> : null}
-          <a data-part="link" href={href} tabIndex={shown ? undefined : -1}>
-            {label}
-            {price ? <span data-part="price">{price}</span> : null}
-          </a>
+          <Button117 data-part="link" href={href} label={label} price={price} tabIndex={shown ? undefined : -1} accent={accent} />
         </div>
       </div>
     </>

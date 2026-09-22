@@ -1,6 +1,10 @@
 "use client"
 
 import { useState, type CSSProperties, type FormEvent } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Waitlist001Props = {
   eyebrow?: string
@@ -22,7 +26,8 @@ export type Waitlist001Props = {
 // бэкенда: по submit поле сменяется сообщением об успехе. Счётчик под формой
 // подтверждает, что список живой. Формат приглашения в лист ожидания для
 // первого экрана продукта, которого ещё нет в общем доступе.
-const STYLES = `
+const STYLES = `[data-vibeui-block="waitlist-001"] [data-part="heading"]{margin-bottom:0.75rem}
+
 :where([data-vibeui-block="waitlist-001"]){
 --vibeui-waitlist-001-bg:transparent;
 --vibeui-waitlist-001-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -44,23 +49,10 @@ display:block;background:var(--vibeui-waitlist-001-bg);color:var(--vibeui-waitli
 font-family:var(--vibeui-waitlist-001-font);
 }
 [data-vibeui-block="waitlist-001"] [data-part="shell"]{max-width:34rem;margin:0 auto;padding:3.5rem 1.25rem;text-align:center}
-[data-vibeui-block="waitlist-001"] [data-part="eyebrow"]{margin:0 0 0.625rem;color:var(--vibeui-waitlist-001-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="waitlist-001"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.75rem,6cqi,2.75rem);line-height:1.08;letter-spacing:-0.025em;font-weight:700}
-[data-vibeui-block="waitlist-001"] [data-part="summary"]{margin:0 0 1.75rem;color:var(--vibeui-waitlist-001-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="waitlist-001"] [data-part="form"]{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center}
-[data-vibeui-block="waitlist-001"] [data-part="input"]{
-flex:1 1 14rem;min-width:0;height:2.875rem;padding:0 1rem;
-border:1px solid var(--vibeui-waitlist-001-border);border-radius:0.75rem;
-background:var(--vibeui-waitlist-001-field);color:inherit;font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="waitlist-001"] [data-part="input"]:focus-visible{outline:2px solid var(--vibeui-waitlist-001-accent);outline-offset:1px;border-color:transparent}
-[data-vibeui-block="waitlist-001"] [data-part="submit"]{
-height:2.875rem;padding:0 1.5rem;border:0;border-radius:0.75rem;cursor:pointer;
-background:var(--vibeui-waitlist-001-accent);color:oklch(from var(--vibeui-waitlist-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;transition:opacity var(--vibeui-waitlist-001-dur-2) ease;
-}
-[data-vibeui-block="waitlist-001"] [data-part="submit"]:hover{opacity:.9}
-[data-vibeui-block="waitlist-001"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-waitlist-001-accent);outline-offset:2px}
+/* Поле input-001 растягивается на остаток строки, кнопка — button-001. */
+[data-vibeui-block="waitlist-001"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="waitlist-001"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="waitlist-001"] [data-part="success"]{
 margin:0;padding:0.875rem 1rem;border-radius:0.75rem;
 background:color-mix(in oklab,var(--vibeui-waitlist-001-accent) 12%,transparent);
@@ -137,25 +129,31 @@ export function Waitlist001({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="summary">{summary}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            align="center"
+            accent={accent}
+            lede={summary}
+          />
           {sent ? (
             <p data-part="success" role="status">
               {successNote}
             </p>
           ) : (
             <form data-part="form" onSubmit={handleSubmit}>
-              <input
-                data-part="input"
+              <Input001
                 type="email"
+                name="email"
                 required
-                placeholder={placeholder}
-                aria-label="Электронная почта"
+                label={placeholder}
+                autoComplete="email"
+                accent={accent}
               />
-              <button data-part="submit" type="submit">
+              <Button001 type="submit" size="lg" accent={accent}>
                 {ctaLabel}
-              </button>
+              </Button001>
             </form>
           )}
           <p data-part="count">

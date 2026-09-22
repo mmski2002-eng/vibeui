@@ -38,3 +38,24 @@ export async function getBlockSource(slug: string): Promise<string | null> {
 
   return readFile(path.join(process.cwd(), "registry", relativePath), "utf8")
 }
+
+/**
+ * Импорты других items реестра в том виде, в каком они нужны в чужом
+ * проекте: `@/registry/components/<cat>/<name>/<name>` → `@/components/vibeui/<name>`,
+ * то есть путь, куда `files[0].target` кладёт зависимость. Составной блок
+ * в репозитории импортирует исходник соседа напрямую, чтобы превью и
+ * типы работали без сборки; пользователю уезжает версия под его дерево.
+ */
+export function rewriteRegistryImports(source: string): string {
+  return source.replace(
+    /(["'])@\/registry\/(?:animations|blocks|components)\/[\w-]+\/([\w-]+)\/\2\1/g,
+    "$1@/components/vibeui/$2$1",
+  )
+}
+
+/** Исходник item'а как он устанавливается: с переписанными импортами. */
+export async function getDeliverableSource(slug: string): Promise<string | null> {
+  const source = await getBlockSource(slug)
+
+  return source === null ? null : rewriteRegistryImports(source)
+}

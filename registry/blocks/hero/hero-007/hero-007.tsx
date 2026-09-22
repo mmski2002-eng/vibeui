@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 export type Hero007Props = {
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -52,17 +53,6 @@ font-family:var(--vibeui-hero-007-sans);
 }
 [data-vibeui-block="hero-007"] *{box-sizing:border-box}
 [data-vibeui-block="hero-007"] [data-part="shell"]{max-width:66rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
-[data-vibeui-block="hero-007"] [data-part="eyebrow"]{
-margin:0 0 0.875rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-hero-007-accent);
-}
-[data-vibeui-block="hero-007"] h1{
-margin:0;max-width:24ch;font-size:clamp(1.875rem,5.6cqi,3.25rem);line-height:1.08;letter-spacing:-0.03em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-007"] [data-part="lede"]{
-margin:1rem 0 0;max-width:36rem;font-size:clamp(0.9375rem,1.5cqi,1.0625rem);line-height:1.6;
-color:var(--vibeui-hero-007-muted);text-wrap:pretty;
-}
 [data-vibeui-block="hero-007"] [data-part="player"]{
 position:relative;display:block;margin:2.25rem 0 0;aspect-ratio:16 / 9;border-radius:1rem;overflow:hidden;
 border:1px solid var(--vibeui-hero-007-line);text-decoration:none;color:var(--vibeui-hero-007-on-poster);
@@ -182,9 +172,15 @@ export function Hero007({
         style={palette}
       >
         <div data-part="shell">
-          {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-          <h1>{title}</h1>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={lede}
+            level="h1"
+            size="lg"
+            accent={accent}
+          />
 
           <a
             data-part="player"

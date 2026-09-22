@@ -276,4 +276,154 @@ export const PREVIEWS = {
   "toggle-015": dynamic(() =>
     import("@/registry/components/button/toggle-015/toggle-015").then((module) => module.Toggle015),
   ),
+  "button-077": dynamic(() =>
+    import("@/registry/components/button/button-077/button-077").then((module) => module.Button077),
+  ),
+  "button-078": dynamic(() =>
+    import("@/registry/components/button/button-078/button-078").then((module) => module.Button078),
+  ),
+  "button-080": dynamic(() =>
+    import("@/registry/components/button/button-080/button-080").then((module) => module.Button080),
+  ),
+  "button-081": dynamic(() =>
+    import("@/registry/components/button/button-081/button-081").then((module) => module.Button081),
+  ),
+  "button-082": dynamic(() =>
+    import("@/registry/components/button/button-082/button-082").then((module) => module.Button082),
+  ),
+  "button-083": dynamic(() =>
+    import("@/registry/components/button/button-083/button-083").then((module) => module.Button083),
+  ),
+  "button-084": dynamic(() =>
+    import("@/registry/components/button/button-084/button-084").then((module) => module.Button084),
+  ),
+  "button-085": dynamic(() =>
+    import("@/registry/components/button/button-085/button-085").then((module) => module.Button085),
+  ),
+  "button-086": dynamic(() =>
+    import("@/registry/components/button/button-086/button-086").then((module) => module.Button086),
+  ),
+  "button-087": dynamic(() =>
+    import("@/registry/components/button/button-087/button-087").then((module) => module.Button087),
+  ),
+  "button-088": dynamic(() =>
+    import("@/registry/components/button/button-088/button-088").then((module) => module.Button088),
+  ),
+  "button-089": dynamic(() =>
+    import("@/registry/components/button/button-089/button-089").then((module) => module.Button089),
+  ),
+  "button-090": dynamic(() =>
+    import("@/registry/components/button/button-090/button-090").then((module) => module.Button090),
+  ),
+  "button-092": dynamic(() =>
+    import("@/registry/components/button/button-092/button-092").then((module) => module.Button092),
+  ),
+  "button-093": dynamic(() =>
+    import("@/registry/components/button/button-093/button-093").then((module) => module.Button093),
+  ),
+  "button-094": dynamic(() =>
+    import("@/registry/components/button/button-094/button-094").then((module) => module.Button094),
+  ),
+  "button-095": dynamic(() =>
+    import("@/registry/components/button/button-095/button-095").then((module) => module.Button095),
+  ),
+  "button-091": dynamic(() =>
+    import("@/registry/components/button/button-091/button-091").then((module) => module.Button091),
+  ),
+  "button-098": dynamic(() =>
+    import("@/registry/components/button/button-098/button-098").then((module) => module.Button098),
+  ),
+  "button-096": dynamic(() =>
+    import("@/registry/components/button/button-096/button-096").then((module) => module.Button096),
+  ),
+  "button-099": dynamic(() =>
+    import("@/registry/components/button/button-099/button-099").then((module) => module.Button099),
+  ),
+  "button-097": dynamic(() =>
+    import("@/registry/components/button/button-097/button-097").then((module) => module.Button097),
+  ),
+  "button-100": dynamic(() =>
+    import("@/registry/components/button/button-100/button-100").then((module) => module.Button100),
+  ),
+  "button-101": dynamic(() =>
+    import("@/registry/components/button/button-101/button-101").then((module) => module.Button101),
+  ),
+  "button-102": dynamic(() =>
+    import("@/registry/components/button/button-102/button-102").then((module) => module.Button102),
+  ),
+  "button-104": dynamic(() =>
+    import("@/registry/components/button/button-104/button-104").then((module) => module.Button104),
+  ),
+  "button-103": dynamic(() =>
+    import("@/registry/components/button/button-103/button-103").then((module) => module.Button103),
+  ),
+  "button-105": dynamic(() =>
+    import("@/registry/components/button/button-105/button-105").then((module) => module.Button105),
+  ),
+  "button-106": dynamic(() =>
+    import("@/registry/components/button/button-106/button-106").then((module) => module.Button106),
+  ),
+  "button-107": dynamic(() =>
+    import("@/registry/components/button/button-107/button-107").then((module) => module.Button107),
+  ),
+  "button-108": dynamic(() =>
+    import("@/registry/components/button/button-108/button-108").then((module) => module.Button108),
+  ),
+  "button-110": dynamic(() =>
+    import("@/registry/components/button/button-110/button-110").then((module) => module.Button110),
+  ),
+  "button-111": dynamic(() =>
+    import("@/registry/components/button/button-111/button-111").then((module) => module.Button111),
+  ),
+  "button-113": dynamic(() =>
+    import("@/registry/components/button/button-113/button-113").then((module) => module.Button113),
+  ),
+  "button-114": dynamic(() =>
+    import("@/registry/components/button/button-114/button-114").then((module) => module.Button114),
+  ),
+  "button-112": dynamic(() =>
+    import("@/registry/components/button/button-112/button-112").then((module) => module.Button112),
+  ),
+  "button-109": dynamic(() =>
+    import("@/registry/components/button/button-109/button-109").then((module) => module.Button109),
+  ),
+  "button-115": dynamic(() =>
+    import("@/registry/components/button/button-115/button-115").then((module) => module.Button115),
+  ),
+  "button-116": dynamic(() =>
+    import("@/registry/components/button/button-116/button-116").then((module) => module.Button116),
+  ),
+  "button-117": dynamic(() =>
+    import("@/registry/components/button/button-117/button-117").then((module) => module.Button117),
+  ),
+  "button-118": dynamic(() =>
+    import("@/registry/components/button/button-118/button-118").then((module) => module.Button118),
+  ),
+  "button-119": dynamic(() =>
+    import("@/registry/components/button/button-119/button-119").then((module) => module.Button119),
+  ),
+  "button-120": dynamic(() =>
+    import("@/registry/components/button/button-120/button-120").then((module) => module.Button120),
+  ),
+  "button-121": dynamic(() =>
+    import("@/registry/components/button/button-121/button-121").then((module) => module.Button121),
+  ),
+  "button-122": dynamic(() =>
+    import("@/registry/components/button/button-122/button-122").then((module) => module.Button122),
+  ),
+  "button-123": dynamic(() =>
+    import("@/registry/components/button/button-123/button-123").then((module) => module.Button123),
+  ),
+  "button-124": dynamic(() =>
+    import("@/registry/components/button/button-124/button-124").then((module) => module.Button124),
+  ),
+  "button-125": dynamic(() =>
+    import("@/registry/components/button/button-125/button-125").then((module) => module.Button125),
+  ),
+  "button-126": dynamic(() =>
+    import("@/registry/components/button/button-126/button-126").then((module) => module.Button126),
+  ),
+  "button-079": dynamic(() =>
+    import("@/registry/components/button/button-079/button-079").then((module) => module.Button079),
+  ),
 } satisfies PreviewMap

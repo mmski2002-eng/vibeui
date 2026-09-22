@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useSyncExternalStore, type CSSProperties } from "react"
+import { useSyncExternalStore, type CSSProperties } from "react"
+import { Card085 } from "@/registry/components/card/card-085/card-085"
 
 export type Delivery005Review = {
   name: string
@@ -74,24 +75,6 @@ container-type:inline-size;
 [data-vibeui-block="delivery-005"] [data-part="counter"] span::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-delivery-005-accent);box-shadow:0 0 0 0 var(--vibeui-delivery-005-accent);animation:vibeui-delivery-005-pulse 1.6s ease-out infinite}
 [data-vibeui-block="delivery-005"] [data-part="counter"] b{font-family:var(--vibeui-delivery-005-display);font-weight:900;font-size:clamp(2.2rem,6cqi,3.4rem);line-height:1;letter-spacing:-.03em;color:var(--vibeui-delivery-005-accent);font-variant-numeric:tabular-nums;min-width:5ch}
 [data-vibeui-block="delivery-005"] [data-part="grid"]{display:grid;gap:1.6rem 1.2rem;margin:3rem 0 0;padding:.5rem 0 0;list-style:none}
-[data-vibeui-block="delivery-005"] [data-part="sticker"]{position:relative;display:grid;gap:.8rem;padding:1.6rem 1.3rem 1.2rem;border-radius:.4rem;background:var(--vibeui-delivery-005-paper);color:var(--vibeui-delivery-005-on-fg);box-shadow:0 20px 40px -22px rgb(0 0 0 / .6);transform:rotate(var(--vibeui-delivery-005-r));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="delivery-005"] [data-part="sticker"]:hover{transform:rotate(0) translateY(-4px) scale(1.02);z-index:2}
-[data-vibeui-block="delivery-005"] [data-part="sticker"][data-color="lemon"]{background:var(--vibeui-delivery-005-lemon)}
-[data-vibeui-block="delivery-005"] [data-part="sticker"][data-color="mint"]{background:var(--vibeui-delivery-005-mint)}
-[data-vibeui-block="delivery-005"] [data-part="sticker"][data-color="accent"]{background:var(--vibeui-delivery-005-accent);color:var(--vibeui-delivery-005-on-accent)}
-[data-vibeui-block="delivery-005"] [data-part="sticker"]::before{content:"";position:absolute;left:50%;top:-.6rem;width:5rem;height:1.3rem;transform:translateX(-50%) rotate(var(--vibeui-delivery-005-t));background:rgb(255 255 255 / .45);backdrop-filter:blur(2px);box-shadow:0 1px 3px rgb(0 0 0 / .15)}
-[data-vibeui-block="delivery-005"] [data-part="who"]{display:flex;align-items:baseline;justify-content:space-between;gap:.6rem}
-[data-vibeui-block="delivery-005"] [data-part="who"] b{font-family:var(--vibeui-delivery-005-display);font-weight:700;font-size:.95rem}
-[data-vibeui-block="delivery-005"] [data-part="who"] span{font-size:.78rem;opacity:.7;text-align:right}
-[data-vibeui-block="delivery-005"] [data-part="text"]{margin:0;font-family:var(--vibeui-delivery-005-hand);font-size:1.45rem;line-height:1.25}
-[data-vibeui-block="delivery-005"] [data-part="dish"]{position:absolute;right:-.5rem;top:1rem;padding:.3rem .6rem;border-radius:.4rem;background:var(--vibeui-delivery-005-bg);color:var(--vibeui-delivery-005-fg);font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;transform:rotate(6deg);box-shadow:0 6px 14px -6px rgb(0 0 0 / .5)}
-[data-vibeui-block="delivery-005"] [data-part="reactions"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="delivery-005"] [data-part="reactions"] button{display:inline-flex;align-items:center;gap:.3rem;height:1.9rem;padding:0 .6rem 0 .45rem;border-radius:999px;border:1px solid rgb(0 0 0 / .12);background:rgb(255 255 255 / .55);color:#1a1a1a;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer;transition:transform .18s cubic-bezier(.34,1.56,.64,1),background .2s}
-[data-vibeui-block="delivery-005"] [data-part="reactions"] button:hover{transform:scale(1.08);background:rgb(255 255 255 / .8)}
-[data-vibeui-block="delivery-005"] [data-part="reactions"] button[data-on="true"]{background:#1a1a1a;color:#fff;border-color:transparent}
-[data-vibeui-block="delivery-005"] [data-part="reactions"] button:focus-visible{outline:2px solid #1a1a1a;outline-offset:2px}
-[data-vibeui-block="delivery-005"] [data-part="reactions"] i{font-style:normal;font-size:1rem;line-height:1;display:inline-block}
-[data-vibeui-block="delivery-005"] [data-part="reactions"] button[data-pop="true"] i{animation:vibeui-delivery-005-pop .45s cubic-bezier(.34,1.56,.64,1)}
 @keyframes vibeui-delivery-005-pulse{to{box-shadow:0 0 0 .5rem transparent}}
 @keyframes vibeui-delivery-005-pop{40%{transform:translateY(-.5rem) scale(1.5) rotate(-12deg)}}
 @container (min-width: 40rem){[data-vibeui-block="delivery-005"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -109,7 +92,6 @@ const DEFAULT_REVIEWS: Delivery005Review[] = [
 ]
 
 const COLORS = ["paper", "lemon", "accent", "mint", "paper", "lemon"] as const
-const TILTS = [-2.5, 1.8, -1.2, 2.4, -1.8, 1.4]
 
 function subscribe(callback: () => void) {
   const timer = window.setInterval(callback, 10000)
@@ -132,50 +114,6 @@ function formatNumber(value: number) {
   return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
-function Sticker({ review, index, emojis, reactionsLabel, reactionLabel }: { review: Delivery005Review; index: number; emojis: readonly string[]; reactionsLabel: string; reactionLabel: string }) {
-  const [counts, setCounts] = useState<Record<string, number>>(() => ({ ...review.reactions }))
-  const [mine, setMine] = useState<string | null>(null)
-  const [pop, setPop] = useState<string | null>(null)
-
-  const react = (emoji: string) => {
-    setCounts((map) => {
-      const copy = { ...map }
-      if (mine === emoji) {
-        copy[emoji] = Math.max(0, (copy[emoji] ?? 0) - 1)
-      } else {
-        if (mine) copy[mine] = Math.max(0, (copy[mine] ?? 0) - 1)
-        copy[emoji] = (copy[emoji] ?? 0) + 1
-      }
-      return copy
-    })
-    setMine((current) => (current === emoji ? null : emoji))
-    setPop(emoji)
-    window.setTimeout(() => setPop(null), 500)
-  }
-
-  const stickerStyle = { ["--vibeui-delivery-005-r" as string]: `${TILTS[index % TILTS.length]}deg`, ["--vibeui-delivery-005-t" as string]: `${(index % 2 ? 4 : -3)}deg` } as CSSProperties
-
-  return (
-    <li data-part="sticker" data-color={COLORS[index % COLORS.length]} style={stickerStyle}>
-      {review.dish ? <span data-part="dish">{review.dish}</span> : null}
-      <p data-part="who">
-        <b>{review.name}</b>
-        {review.meta ? <span>{review.meta}</span> : null}
-      </p>
-      <blockquote data-part="text">{review.text}</blockquote>
-      <ul data-part="reactions" aria-label={reactionsLabel}>
-        {emojis.map((emoji) => (
-          <li key={emoji}>
-            <button type="button" data-on={mine === emoji} data-pop={pop === emoji} aria-pressed={mine === emoji} aria-label={reactionLabel.replace("{emoji}", emoji).replace("{n}", String(counts[emoji] ?? 0))} onClick={() => react(emoji)}>
-              <i aria-hidden="true">{emoji}</i>
-              {counts[emoji] ?? 0}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </li>
-  )
-}
 
 /** Отзывы-стикеры с эмодзи-реакциями и живым счётчиком заказов. */
 export function Delivery005({
@@ -225,7 +163,7 @@ export function Delivery005({
           </div>
           <ul data-part="grid">
             {reviews.map((review, index) => (
-              <Sticker key={review.name} review={review} index={index} emojis={emojis} reactionsLabel={reactionsLabel} reactionLabel={reactionLabel} />
+              <Card085 key={review.name} data-part="sticker" {...review} reactionsLabel={reactionsLabel} emojis={emojis} reactionLabel={reactionLabel} index={index} data-color={COLORS[index % COLORS.length]} accent={accent} />
             ))}
           </ul>
         </div>

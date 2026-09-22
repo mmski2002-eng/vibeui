@@ -1,9 +1,13 @@
 import { useId, type CSSProperties } from "react"
 
-export type Faq017Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion017,
+  type Accordion017Item,
+} from "@/registry/components/accordion/accordion-017/accordion-017"
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Card024 } from "@/registry/components/card/card-024/card-024"
+
+export type Faq017Item = Accordion017Item
 
 export type Faq017Props = {
   eyebrow?: string
@@ -18,6 +22,8 @@ export type Faq017Props = {
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
+  openFirst?: boolean
+  tint?: "neutral" | "accent"
   background?: string
   className?: string
   style?: CSSProperties
@@ -47,27 +53,13 @@ container-type:inline-size;
 [data-vibeui-block="faq-017"]{box-sizing:border-box;display:block;background:var(--vibeui-faq-017-bg);color:var(--vibeui-faq-017-fg);font-family:var(--vibeui-faq-017-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="faq-017"] *{box-sizing:border-box}
 [data-vibeui-block="faq-017"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem;display:grid;gap:2rem}
+/* Список вопросов — accordion-017, ему отдаётся вся колонка. */
+[data-vibeui-block="faq-017"] [data-part="list"]{width:100%;max-width:none}
+[data-vibeui-block="faq-017"] [data-part="ask"]{margin-top:1.5rem}
 [data-vibeui-block="faq-017"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-faq-017-accent);font-weight:700}
-[data-vibeui-block="faq-017"] [data-part="title"]{margin:0;font-family:var(--vibeui-faq-017-display);font-weight:700;font-size:clamp(1.8rem,3.6cqi,2.75rem);line-height:1.1;letter-spacing:-.02em}
+[data-vibeui-block="faq-017"] [data-part="heading"]{margin:0;font-family:var(--vibeui-faq-017-display);font-weight:700;font-size:clamp(1.8rem,3.6cqi,2.75rem);line-height:1.1;letter-spacing:-.02em}
 [data-vibeui-block="faq-017"] [data-part="lede"]{margin:.75rem 0 0;max-width:26rem;color:var(--vibeui-faq-017-muted)}
-[data-vibeui-block="faq-017"] [data-part="ask"]{margin-top:1.5rem;padding:1.25rem;border-radius:1rem;background:var(--vibeui-faq-017-card);border:1px solid var(--vibeui-faq-017-line)}
-[data-vibeui-block="faq-017"] [data-part="ask-title"]{margin:0;font-weight:600}
-[data-vibeui-block="faq-017"] [data-part="ask-text"]{margin:.35rem 0 0;font-size:.875rem;color:var(--vibeui-faq-017-muted)}
-[data-vibeui-block="faq-017"] [data-part="ask-link"]{display:inline-flex;align-items:center;height:2.6rem;margin-top:1rem;padding:0 1.1rem;border-radius:999px;background:var(--vibeui-faq-017-accent);color:var(--vibeui-faq-017-on-accent);font-size:.85rem;font-weight:600;text-decoration:none;transition:transform .2s}
-[data-vibeui-block="faq-017"] [data-part="ask-link"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="faq-017"] [data-part="ask-link"]:focus-visible{outline:2px solid var(--vibeui-faq-017-accent);outline-offset:3px}
-[data-vibeui-block="faq-017"] [data-part="list"]{display:grid;gap:.6rem}
-[data-vibeui-block="faq-017"] details{border:1px solid var(--vibeui-faq-017-line);border-left:3px solid transparent;border-radius:.9rem;background:var(--vibeui-faq-017-card);transition:border-color .25s}
-[data-vibeui-block="faq-017"] details[open]{border-left-color:var(--vibeui-faq-017-accent)}
-[data-vibeui-block="faq-017"] summary{display:grid;grid-template-columns:minmax(0,1fr) 1.5rem;align-items:center;gap:1rem;padding:1rem 1.1rem;cursor:pointer;list-style:none;font-weight:600;font-size:1rem}
-[data-vibeui-block="faq-017"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-017"] summary:focus-visible{outline:2px solid var(--vibeui-faq-017-accent);outline-offset:-2px;border-radius:.9rem}
-[data-vibeui-block="faq-017"] [data-part="plus"]{position:relative;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-faq-017-bg);border:1px solid var(--vibeui-faq-017-line);transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s}
-[data-vibeui-block="faq-017"] [data-part="plus"]::before,[data-vibeui-block="faq-017"] [data-part="plus"]::after{content:"";position:absolute;left:50%;top:50%;width:.7rem;height:1.5px;background:currentColor;transform:translate(-50%,-50%)}
-[data-vibeui-block="faq-017"] [data-part="plus"]::after{transform:translate(-50%,-50%) rotate(90deg)}
-[data-vibeui-block="faq-017"] details[open] [data-part="plus"]{transform:rotate(45deg);background:var(--vibeui-faq-017-accent);border-color:var(--vibeui-faq-017-accent);color:var(--vibeui-faq-017-on-accent)}
-[data-vibeui-block="faq-017"] [data-part="answer"]{margin:0;padding:0 2.75rem 1.1rem 1.1rem;color:var(--vibeui-faq-017-muted);animation:vibeui-faq-017-in .35s ease}
-@keyframes vibeui-faq-017-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+to{opacity:1;transform:none}}
 @container (min-width: 56rem){
 [data-vibeui-block="faq-017"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:4rem;padding:5.5rem 2rem;align-items:start}
 [data-vibeui-block="faq-017"] [data-part="head"]{position:sticky;top:6rem}
@@ -96,6 +88,8 @@ export function Faq017({
   tone = "auto",
   accent,
   ink,
+  openFirst = false,
+  tint = "accent",
   background,
   className,
   style,
@@ -118,31 +112,42 @@ export function Faq017({
         <div data-part="shell">
           <div data-part="head">
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2 data-part="title">{title}</h2>
+            <h2 data-part="heading">{title}</h2>
             {lede ? <p data-part="lede">{lede}</p> : null}
             {askTitle ? (
-              <div data-part="ask">
-                <p data-part="ask-title">{askTitle}</p>
-                {askText ? <p data-part="ask-text">{askText}</p> : null}
+              <Card024
+                tint={tint}
+                data-part="ask"
+                title={askTitle}
+                text={askText}
+                note=""
+                accent={accent}
+                ink={ink}
+                background={background}
+              >
                 {askLabel ? (
-                  <a data-part="ask-link" href={askHref} target="_blank" rel="noreferrer noopener">
-                    {askLabel}
-                  </a>
+                  <Button016
+                    label={askLabel}
+                    href={askHref}
+                    external
+                    size="lg"
+                    externalHint="(откроется в новой вкладке)"
+                    tone="accent"
+                    accent={accent}
+                  />
                 ) : null}
-              </div>
+              </Card024>
             ) : null}
           </div>
-          <div data-part="list">
-            {items.map((item) => (
-              <details key={item.question} name={group}>
-                <summary>
-                  <span>{item.question}</span>
-                  <span data-part="plus" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
+          <Accordion017
+            defaultOpen={openFirst ? 0 : -1}
+            data-part="list"
+            items={items}
+            group={group}
+            accent={accent}
+            ink={ink}
+            background={background}
+          />
         </div>
       </section>
     </>

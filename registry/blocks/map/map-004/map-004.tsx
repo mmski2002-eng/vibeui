@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card136 } from "@/registry/components/card/card-136/card-136"
 
 export type Map004Point = {
   name: string
@@ -87,15 +88,6 @@ container-type:inline-size;
 [data-vibeui-block="map-004"] [data-part="pin"][data-active="true"]{background:var(--vibeui-map-004-fg);color:var(--vibeui-map-004-bg);transform:translate(-50%,-100%) scale(1.08)}
 [data-vibeui-block="map-004"] [data-part="pin"] b{font-family:var(--vibeui-map-004-display);font-size:.95rem;font-weight:600}
 [data-vibeui-block="map-004"] [data-part="list"]{display:grid;gap:.75rem;margin:0;padding:0;list-style:none;align-content:start}
-[data-vibeui-block="map-004"] [data-part="card"]{display:grid;grid-template-columns:4rem minmax(0,1fr) auto;gap:.9rem;align-items:center;padding:.6rem .9rem .6rem .6rem;border-radius:.9rem;background:var(--vibeui-map-004-card);border:1px solid var(--vibeui-map-004-line);color:inherit;text-decoration:none;transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,box-shadow .25s}
-[data-vibeui-block="map-004"] [data-part="card"]:hover,[data-vibeui-block="map-004"] [data-part="card"][data-active="true"]{transform:translateX(4px);border-color:var(--vibeui-map-004-accent);box-shadow:0 18px 30px -24px rgb(20 33 27 / .5)}
-[data-vibeui-block="map-004"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-map-004-accent);outline-offset:2px}
-[data-vibeui-block="map-004"] [data-part="thumb"]{width:4rem;height:3rem;border-radius:.5rem;object-fit:cover;background:var(--vibeui-map-004-canvas)}
-[data-vibeui-block="map-004"] [data-part="name"]{display:block;font-weight:600}
-[data-vibeui-block="map-004"] [data-part="note"]{display:block;font-size:.78rem;color:var(--vibeui-map-004-muted)}
-[data-vibeui-block="map-004"] [data-part="price"]{text-align:right}
-[data-vibeui-block="map-004"] [data-part="price"] b{display:block;font-family:var(--vibeui-map-004-display);font-size:1.35rem;font-weight:600;line-height:1;color:var(--vibeui-map-004-accent)}
-[data-vibeui-block="map-004"] [data-part="price"] span{display:block;font-size:.72rem;color:var(--vibeui-map-004-muted);margin-top:.2rem;white-space:nowrap}
 [data-vibeui-block="map-004"] [data-part="status"]{position:absolute;left:.75rem;top:.75rem;z-index:2;margin:0;padding:.4rem .7rem;border-radius:.5rem;background:var(--vibeui-map-004-card);border:1px solid var(--vibeui-map-004-line);font-size:.7rem;color:var(--vibeui-map-004-muted);max-width:22rem}
 @container (min-width: 56rem){
 [data-vibeui-block="map-004"] [data-part="shell"]{padding:5.5rem 2rem}
@@ -271,25 +263,7 @@ export function Map004({
             <ul data-part="list">
               {points.map((point, index) => (
                 <li key={point.name}>
-                  <a
-                    href={point.href ?? "#"}
-                    data-part="card"
-                    data-active={active === index}
-                    onMouseEnter={() => setActive(index)}
-                    onMouseLeave={() => setActive(null)}
-                    onFocus={() => setActive(index)}
-                    onBlur={() => setActive(null)}
-                  >
-                    {point.image ? <img data-part="thumb" src={point.image} alt="" loading="lazy" /> : <span data-part="thumb" />}
-                    <span>
-                      <span data-part="name">{point.name}</span>
-                      {point.note ? <span data-part="note">{point.note}</span> : null}
-                    </span>
-                    <span data-part="price">
-                      <b>{point.price}</b>
-                      {point.count ? <span>{point.count}</span> : null}
-                    </span>
-                  </a>
+                  <Card136 data-part="card" href={point.href} image={point.image} name={point.name} note={point.note} price={point.price} count={point.count} data-active={active === index} onMouseEnter={() => setActive(index)} onMouseLeave={() => setActive(null)} onFocus={() => setActive(index)} onBlur={() => setActive(null)} accent={accent} />
                 </li>
               ))}
             </ul>

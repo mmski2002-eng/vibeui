@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks007 } from "@/registry/components/navigation/footerlinks-007/footerlinks-007"
 
 export type Footer032Link = {
   label: string
@@ -72,12 +73,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-032"] [data-part="status"] i{position:relative;width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-footer-032-ok)}
 [data-vibeui-block="footer-032"] [data-part="status"] i::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--vibeui-footer-032-ok);opacity:0;animation:vibeui-footer-032-pulse 2s ease-out infinite}
 [data-vibeui-block="footer-032"] [data-part="columns"]{display:grid;gap:2rem;grid-template-columns:repeat(2,minmax(0,1fr))}
-[data-vibeui-block="footer-032"] [data-part="columns"] h3{margin:0 0 .8rem;font-family:var(--vibeui-footer-032-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-032-muted)}
-[data-vibeui-block="footer-032"] [data-part="columns"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
-[data-vibeui-block="footer-032"] [data-part="columns"] a{position:relative;display:inline-block;color:var(--vibeui-footer-032-fg);text-decoration:none;transition:color .3s,transform .4s var(--vibeui-footer-032-ease)}
-[data-vibeui-block="footer-032"] [data-part="columns"] a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--vibeui-footer-032-accent);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--vibeui-footer-032-ease)}
-[data-vibeui-block="footer-032"] [data-part="columns"] a:hover{color:var(--vibeui-footer-032-accent);transform:translateX(3px)}
-[data-vibeui-block="footer-032"] [data-part="columns"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="footer-032"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.5rem;padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-032-line);font-size:.8rem;color:var(--vibeui-footer-032-muted)}
 [data-vibeui-block="footer-032"] [data-part="legal"]{display:flex;flex-wrap:wrap;gap:1.2rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="footer-032"] [data-part="legal"] a{color:inherit;text-decoration:none}
@@ -91,7 +86,7 @@ container-type:inline-size;
 @keyframes vibeui-footer-032-pulse{0%{transform:scale(.6);opacity:.8}100%{transform:scale(1.8);opacity:0}}
 @keyframes vibeui-footer-032-up{from{opacity:0;translate:0 16px}to{opacity:1;translate:0 0}}
 @supports (animation-timeline: view()){
-[data-vibeui-block="footer-032"] [data-part="shell"]>div:first-child,[data-vibeui-block="footer-032"] [data-part="columns"]>div,[data-vibeui-block="footer-032"] [data-part="bottom"]{animation:vibeui-footer-032-up linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+[data-vibeui-block="footer-032"] [data-part="shell"]>div:first-child,[data-vibeui-block="footer-032"] [data-part="bottom"]{animation:vibeui-footer-032-up linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
 [data-vibeui-block="footer-032"] [data-part="ghost"]{animation:vibeui-footer-032-up linear both;animation-timeline:view();animation-range:entry -50% entry 100%}
 }
 @container (min-width: 44rem){[data-vibeui-block="footer-032"] [data-part="columns"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -157,16 +152,7 @@ export function Footer032({
           </div>
           <nav data-part="columns" aria-label={navLabel}>
             {columns.map((column) => (
-              <div key={column.title}>
-                <h3>{column.title}</h3>
-                <ul>
-                  {column.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Footerlinks007 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </nav>
           <div data-part="bottom">

@@ -72,4 +72,8 @@ export const PREVIEWS = {
     import("@/registry/components/chart/sparkline-004/sparkline-004").then((module) => module.Sparkline004),
   "sparkline-005": () =>
     import("@/registry/components/chart/sparkline-005/sparkline-005").then((module) => module.Sparkline005),
+  "chart-030": () =>
+    import("@/registry/components/chart/chart-030/chart-030").then((module) => module.Chart030),
+  "chart-031": () =>
+    import("@/registry/components/chart/chart-031/chart-031").then((module) => module.Chart031),
 } satisfies PreviewLoaderMap

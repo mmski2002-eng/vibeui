@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState, type CSSProperties } from "react"
+import { Card108 } from "@/registry/components/card/card-108/card-108"
 
 export type Testimonials018Item = {
   quote: string
@@ -58,6 +59,7 @@ container-type:inline-size;
 :where([data-vibeui-block="testimonials-018"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="testimonials-018"]{box-sizing:border-box;display:block;overflow:hidden;background:var(--vibeui-testimonials-018-bg);color:var(--vibeui-testimonials-018-fg);font-family:var(--vibeui-testimonials-018-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="testimonials-018"] *{box-sizing:border-box}
+[data-vibeui-block="testimonials-018"] [data-part="card"]{width:min(22rem,78vw)}
 [data-vibeui-block="testimonials-018"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem 0}
 [data-vibeui-block="testimonials-018"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem 3rem;margin-bottom:2.5rem}
 [data-vibeui-block="testimonials-018"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-testimonials-018-accent);font-weight:700}
@@ -74,23 +76,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-018"] [data-part="row"]:hover [data-part="track"],[data-vibeui-block="testimonials-018"] [data-part="row"]:focus-within [data-part="track"]{animation-play-state:paused}
 @keyframes vibeui-testimonials-018-run{to{transform:translateX(-50%)}}
 [data-vibeui-block="testimonials-018"] [data-part="track"] ul{display:flex;gap:1.25rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-018"] [data-part="card"]{display:flex;flex-direction:column;gap:1rem;width:min(22rem,78vw);padding:1.5rem;border-radius:1.25rem;background:var(--vibeui-testimonials-018-card);border:1px solid var(--vibeui-testimonials-018-line);transition:border-color .3s,transform .3s}
-[data-vibeui-block="testimonials-018"] [data-part="card"]:hover{border-color:color-mix(in oklab,var(--vibeui-testimonials-018-accent) 40%,var(--vibeui-testimonials-018-line));transform:translateY(-3px)}
-[data-vibeui-block="testimonials-018"] [data-part="video"]{position:relative;display:block;width:100%;aspect-ratio:16/10;overflow:hidden;border:0;padding:0;border-radius:.9rem;background:light-dark(#e5e7eb,#1f2430);cursor:pointer;font:inherit;color:inherit}
-[data-vibeui-block="testimonials-018"] [data-part="video"] img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="testimonials-018"] [data-part="video"]:hover img{transform:scale(1.04)}
-[data-vibeui-block="testimonials-018"] [data-part="video"]:focus-visible{outline:2px solid var(--vibeui-testimonials-018-accent);outline-offset:3px}
-[data-vibeui-block="testimonials-018"] [data-part="play"]{position:absolute;left:1rem;bottom:1rem;display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .9rem .5rem .5rem;border-radius:999px;background:#fff;color:#111827;font-size:.8rem;font-weight:600}
-[data-vibeui-block="testimonials-018"] [data-part="play"]::before{content:"";width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-testimonials-018-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23fff'/%3E%3C/svg%3E") center/1rem no-repeat}
-[data-vibeui-block="testimonials-018"] [data-part="quote"]{margin:0;font-size:.98rem;line-height:1.5}
-[data-vibeui-block="testimonials-018"] [data-part="quote"]::before{content:"“";display:block;font-family:var(--vibeui-testimonials-018-display);font-size:2.5rem;line-height:.6;color:var(--vibeui-testimonials-018-accent);margin-bottom:.4rem}
-[data-vibeui-block="testimonials-018"] [data-part="who"]{display:flex;align-items:center;gap:.75rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--vibeui-testimonials-018-line)}
-[data-vibeui-block="testimonials-018"] [data-part="avatar"]{width:2.5rem;height:2.5rem;border-radius:50%;object-fit:cover;flex:none;background:light-dark(#e5e7eb,#1f2430)}
-[data-vibeui-block="testimonials-018"] [data-part="name"]{display:block;font-weight:600;color:inherit;text-decoration:none}
-[data-vibeui-block="testimonials-018"] a[data-part="name"]{border-bottom:1px solid var(--vibeui-testimonials-018-accent)}
 [data-vibeui-block="testimonials-018"] a:focus-visible{outline:2px solid var(--vibeui-testimonials-018-accent);outline-offset:3px}
-[data-vibeui-block="testimonials-018"] [data-part="role"]{display:block;font-size:.8rem;color:var(--vibeui-testimonials-018-muted)}
-[data-vibeui-block="testimonials-018"] [data-part="cohort"]{margin-left:auto;flex:none;padding:.25rem .55rem;border-radius:.4rem;background:var(--vibeui-testimonials-018-marker);color:#1a2e05;font-size:.68rem;font-weight:700}
 [data-vibeui-block="testimonials-018"] [data-part="dialog"]{width:min(56rem,calc(100vw - 2rem));max-width:none;padding:0;border:0;border-radius:1.25rem;background:#0b0d12;color:#fff;overflow:hidden;box-shadow:0 40px 80px -30px rgb(0 0 0 / .6)}
 [data-vibeui-block="testimonials-018"] [data-part="dialog"]::backdrop{background:rgb(11 13 18 / .75);backdrop-filter:blur(8px)}
 [data-vibeui-block="testimonials-018"] [data-part="dialog"][open]{animation:vibeui-testimonials-018-pop .35s cubic-bezier(.2,.8,.2,1)}
@@ -180,31 +166,12 @@ export function Testimonials018({
               <div data-part="track">
                 {[0, 1].map((copy) => (
                   <ul key={copy} aria-hidden={copy === 1 ? "true" : undefined}>
-                    {row.map((item) => (
-                      <li key={item.name} data-part="card">
-                        {item.videoHref ? (
-                          <button type="button" data-part="video" onClick={() => open(item)} aria-label={`${videoLabel}: ${item.name}`} tabIndex={copy === 1 ? -1 : undefined}>
-                            {item.video ? <img src={item.video} alt="" loading="lazy" /> : null}
-                            <span data-part="play">{videoLabel}</span>
-                          </button>
-                        ) : null}
-                        <blockquote data-part="quote">{item.quote}</blockquote>
-                        <div data-part="who">
-                          {item.image ? <img data-part="avatar" src={item.image} alt="" loading="lazy" /> : <span data-part="avatar" />}
-                          <span>
-                            {item.href ? (
-                              <a data-part="name" href={item.href} tabIndex={copy === 1 ? -1 : undefined}>
-                                {item.name}
-                              </a>
-                            ) : (
-                              <span data-part="name">{item.name}</span>
-                            )}
-                            <span data-part="role">{item.role}</span>
-                          </span>
-                          {item.cohort ? <span data-part="cohort">{item.cohort}</span> : null}
-                        </div>
-                      </li>
-                    ))}
+                    {row.map((item) => {
+                      const onVideo = () => open(item)
+                      return (
+                      <Card108 key={item.name} data-part="card" name={item.name} videoHref={item.videoHref} video={item.video} quote={item.quote} image={item.image} href={item.href} role={item.role} cohort={item.cohort} videoLabel={videoLabel} onVideo={onVideo} copy={copy} accent={accent} />
+                      )
+                    })}
                   </ul>
                 ))}
               </div>

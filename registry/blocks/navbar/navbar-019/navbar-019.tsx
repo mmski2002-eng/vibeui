@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Button109 } from "@/registry/components/button/button-109/button-109"
 
 type Navbar019Item = {
   label: string
@@ -71,40 +72,9 @@ background:color-mix(in oklab,var(--vibeui-navbar-019-bg) 72%,transparent);
 backdrop-filter:blur(1.25rem) saturate(180%);
 }
 [data-vibeui-block="navbar-019"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-019"] [data-part="item"]{flex:1 1 0;min-width:0}
 [data-vibeui-block="navbar-019"] [data-part="rail"]{
 display:flex;align-items:stretch;gap:0.125rem;padding:0.375rem 0.375rem 0.4375rem;
-}
-[data-vibeui-block="navbar-019"] [data-part="item"]{
-flex:1 1 0;min-width:0;position:relative;
-display:flex;flex-direction:column;align-items:center;gap:0.25rem;
-padding:0.4375rem 0.25rem 0.5rem;border-radius:0.875rem;
-color:var(--vibeui-navbar-019-muted);text-decoration:none;
-font-size:0.6875rem;font-weight:560;
-transition:color var(--vibeui-navbar-019-dur-1) ease,background-color var(--vibeui-navbar-019-dur-2) ease;
-}
-[data-vibeui-block="navbar-019"] [data-part="item"]:hover{color:var(--vibeui-navbar-019-ink)}
-[data-vibeui-block="navbar-019"] [data-part="item"][aria-current="page"]{
-color:var(--vibeui-navbar-019-ink);font-weight:620;
-background:var(--vibeui-navbar-019-pill);
-}
-[data-vibeui-block="navbar-019"] [data-part="item"] svg{
-width:1.375rem;height:1.375rem;
-transition:transform var(--vibeui-navbar-019-dur-3) var(--vibeui-navbar-019-ease);
-}
-[data-vibeui-block="navbar-019"] [data-part="item"][aria-current="page"] svg{
-color:var(--vibeui-navbar-019-accent);transform:scale(1.08);
-}
-[data-vibeui-block="navbar-019"] [data-part="item"]:active svg{transform:scale(.92)}
-[data-vibeui-block="navbar-019"] [data-part="label"]{
-max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-[data-vibeui-block="navbar-019"] [data-part="badge"]{
-position:absolute;top:0.1875rem;left:calc(50% + 0.3125rem);
-min-width:1.0625rem;height:1.0625rem;padding:0 0.1875rem;
-display:inline-flex;align-items:center;justify-content:center;
-background:var(--vibeui-navbar-019-accent);color:oklch(from var(--vibeui-navbar-019-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-border-radius:999px;font-size:0.625rem;font-weight:700;
-box-shadow:0 0 0 2px var(--vibeui-navbar-019-bg);
 }
 [data-vibeui-block="navbar-019"] a:focus-visible{
 outline:2px solid var(--vibeui-navbar-019-accent);outline-offset:-2px;
@@ -112,74 +82,6 @@ outline:2px solid var(--vibeui-navbar-019-accent);outline-offset:-2px;
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-019"] *{animation:none!important;transition:none!important}}
 `
 
-const ICONS = {
-  home: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M4 10.5 12 4l8 6.5V20h-5.5v-5h-5v5H4Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  search: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="m16.5 16.5 4 4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  heart: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M12 20.5S4 15.5 4 9.9C4 7.2 6.1 5 8.7 5c1.4 0 2.6.6 3.3 1.7C12.7 5.6 14 5 15.3 5 17.9 5 20 7.2 20 9.9c0 5.6-8 10.6-8 10.6Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  cart: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M5 8h14l-1 12H6L5 8Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 10V6.5A3 3 0 0 1 12 3.5a3 3 0 0 1 3 3V10"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  user: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M4.5 20a7.5 7.5 0 0 1 15 0"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  grid: (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="2" />
-      <rect x="13" y="4" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="2" />
-      <rect x="4" y="13" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="2" />
-      <rect x="13" y="13" width="7" height="7" rx="1.5" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  ),
-} as const
 
 const DEFAULT_ITEMS: Navbar019Item[] = [
   { label: "Главная", href: "#home", icon: "home", current: true },
@@ -219,23 +121,7 @@ export function Navbar019({
       >
         <div data-part="rail">
           {items.map((item) => (
-            <a
-              data-part="item"
-              key={item.href}
-              href={item.href}
-              aria-current={item.current ? "page" : undefined}
-            >
-              {ICONS[item.icon]}
-              <span data-part="label">{item.label}</span>
-              {item.badge ? (
-                <span
-                  data-part="badge"
-                  aria-label={`${item.label}: ${item.badge}`}
-                >
-                  {item.badge}
-                </span>
-              ) : null}
-            </a>
+            <Button109 key={item.href} data-part="item" href={item.href} current={item.current} icon={item.icon} label={item.label} badge={item.badge} accent={accent} />
           ))}
         </div>
       </nav>

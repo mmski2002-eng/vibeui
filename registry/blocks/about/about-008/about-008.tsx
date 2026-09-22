@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type About008Fact = {
   value: string
   label: string
@@ -55,6 +57,7 @@ container-type:inline-size;
 :where([data-vibeui-block="about-008"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="about-008"]{box-sizing:border-box;display:block;overflow:hidden;background:var(--vibeui-about-008-bg);color:var(--vibeui-about-008-fg);font-family:var(--vibeui-about-008-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="about-008"] *{box-sizing:border-box}
+[data-vibeui-block="about-008"] [data-part="link"]{margin-top:1.5rem}
 [data-vibeui-block="about-008"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem 0}
 [data-vibeui-block="about-008"] [data-part="eyebrow"]{margin:0 0 1.25rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-about-008-accent);font-weight:700}
 [data-vibeui-block="about-008"] [data-part="quote"]{margin:0 0 3rem;font-family:var(--vibeui-about-008-display);font-weight:600;font-size:clamp(1.35rem,3.2cqi,2.5rem);line-height:1.25;letter-spacing:-.02em;text-wrap:balance;max-width:30ch}
@@ -78,8 +81,6 @@ container-type:inline-size;
 [data-vibeui-block="about-008"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem;margin:1.75rem 0 0;padding:1.5rem 0 0;list-style:none;border-top:1px solid var(--vibeui-about-008-line)}
 [data-vibeui-block="about-008"] [data-part="fact"] b{display:block;font-family:var(--vibeui-about-008-display);font-size:1.75rem;font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--vibeui-about-008-accent)}
 [data-vibeui-block="about-008"] [data-part="fact"] span{display:block;margin-top:.3rem;font-size:.8rem;color:var(--vibeui-about-008-muted)}
-[data-vibeui-block="about-008"] [data-part="link"]{display:inline-block;margin-top:1.5rem;color:inherit;font-weight:600;text-decoration:none;border-bottom:1px solid var(--vibeui-about-008-accent);padding-bottom:.1rem}
-[data-vibeui-block="about-008"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-about-008-accent);outline-offset:3px}
 [data-vibeui-block="about-008"] [data-part="ticker"]{position:relative;margin-top:3.5rem;padding:1.1rem 0;border-top:1px solid var(--vibeui-about-008-line);border-bottom:1px solid var(--vibeui-about-008-line);overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 [data-vibeui-block="about-008"] [data-part="track"]{display:flex;gap:3rem;width:max-content;animation:vibeui-about-008-run 32s linear infinite}
 [data-vibeui-block="about-008"] [data-part="ticker"]:hover [data-part="track"]{animation-play-state:paused}
@@ -175,9 +176,7 @@ export function About008({
                 </ul>
               ) : null}
               {linkLabel ? (
-                <a data-part="link" href={linkHref}>
-                  {linkLabel} →
-                </a>
+                <Button077 data-part="link" label={linkLabel} href={linkHref} accent={accent} />
               ) : null}
             </div>
           </div>

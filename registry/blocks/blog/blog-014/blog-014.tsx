@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 type Blog014Item = {
   topic: string
@@ -49,17 +52,6 @@ max-width:52rem;margin:0 auto;padding:3rem 1.25rem;
 display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:0.5rem 1rem;
 margin:0 0 1.25rem;
 }
-[data-vibeui-block="blog-014"] [data-part="title"]{
-margin:0;font-size:clamp(1.25rem,3.5cqi,1.625rem);line-height:1.15;letter-spacing:-0.02em;font-weight:750;
-}
-[data-vibeui-block="blog-014"] [data-part="all"]{
-color:var(--vibeui-blog-014-accent);text-decoration:none;
-font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="blog-014"] [data-part="all"]:hover{text-decoration:underline}
-[data-vibeui-block="blog-014"] [data-part="all"]:focus-visible{
-outline:2px solid var(--vibeui-blog-014-accent);outline-offset:2px;border-radius:0.25rem;
-}
 [data-vibeui-block="blog-014"] [data-part="list"]{
 display:flex;flex-direction:column;margin:0;padding:0;list-style:none;
 border-top:1px solid var(--vibeui-blog-014-border);
@@ -93,12 +85,12 @@ content:"";position:absolute;inset:0;
 [data-vibeui-block="blog-014"] [data-part="time"]{
 flex:none;color:var(--vibeui-blog-014-muted);font-size:0.75rem;white-space:nowrap;
 }
-[data-vibeui-block="blog-014"] [data-part="arrow"]{
+[data-vibeui-block="blog-014"] [data-part="link-arrow"]{
 flex:none;color:var(--vibeui-blog-014-accent);
 font-size:1.125rem;line-height:1;
 transition:transform var(--vibeui-blog-014-dur-2) ease;
 }
-[data-vibeui-block="blog-014"] [data-part="row"]:hover [data-part="arrow"]{
+[data-vibeui-block="blog-014"] [data-part="row"]:hover [data-part="link-arrow"]{
 transform:translateX(0.25rem);
 }
 @container (min-width: 40rem){
@@ -183,10 +175,18 @@ export function Blog014({
       >
         <div data-part="shell">
           <div data-part="head">
-            <h2 data-part="title">{title}</h2>
-            <a data-part="all" href={allHref}>
-              {allLabel}
-            </a>
+            <Heading001
+              data-part="heading"
+              title={title}
+              size="sm"
+              accent={accent}
+            />
+            <Button077
+              data-part="all"
+              label={allLabel}
+              href={allHref}
+              accent={accent}
+            />
           </div>
           <ul data-part="list">
             {items.map((item) => (
@@ -200,7 +200,7 @@ export function Blog014({
                   </h3>
                 </div>
                 <span data-part="time">{item.readingTime}</span>
-                <span data-part="arrow" aria-hidden="true">
+                <span data-part="link-arrow" aria-hidden="true">
                   →
                 </span>
               </li>

@@ -2,6 +2,9 @@
 
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Cta017Props = {
   eyebrow?: string
   title?: string
@@ -82,11 +85,8 @@ container-type:inline-size;
 [data-vibeui-block="cta-017"] [data-part="timer-label"]{margin:.75rem 0 0;font-size:.8rem;color:var(--vibeui-cta-017-muted);text-align:center}
 [data-vibeui-block="cta-017"] [data-part="form"]{position:relative;display:grid;gap:.75rem}
 [data-vibeui-block="cta-017"] [data-part="row"]{display:grid;gap:.6rem}
-[data-vibeui-block="cta-017"] input[type="email"]{height:3.25rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--vibeui-cta-017-line);background:rgb(248 250 252 / .06);color:inherit;font:inherit}
-[data-vibeui-block="cta-017"] input[type="email"]::placeholder{color:var(--vibeui-cta-017-muted)}
-[data-vibeui-block="cta-017"] input:focus-visible,[data-vibeui-block="cta-017"] button:focus-visible{outline:2px solid var(--vibeui-cta-017-marker);outline-offset:2px}
-[data-vibeui-block="cta-017"] [data-part="submit"]{height:3.25rem;padding:0 1.5rem;border:0;border-radius:999px;background:var(--vibeui-cta-017-plate-accent);color:var(--vibeui-cta-017-plate-on-accent);font:inherit;font-weight:600;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="cta-017"] [data-part="submit"]:hover{transform:translateY(-1px);box-shadow:0 14px 30px -14px var(--vibeui-cta-017-plate-accent)}
+[data-vibeui-block="cta-017"] [data-part="row"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="cta-017"] [data-part="row"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="cta-017"] [data-part="seats"]{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--vibeui-cta-017-muted)}
 [data-vibeui-block="cta-017"] [data-part="seats"]::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-cta-017-marker);box-shadow:0 0 0 3px rgb(217 249 157 / .25)}
 [data-vibeui-block="cta-017"] [data-part="consent"]{margin:0;font-size:.72rem;color:var(--vibeui-cta-017-muted)}
@@ -198,10 +198,10 @@ export function Cta017({
               ) : (
                 <form data-part="form" action={action || undefined} method={action ? "post" : undefined} onSubmit={submit} style={{ marginTop: "1.5rem" }}>
                   <div data-part="row">
-                    <input type="email" name="email" required placeholder={placeholder} autoComplete="email" aria-label={placeholder} />
-                    <button type="submit" data-part="submit">
+                    <Input001 type="email" name="email" required label={placeholder} autoComplete="email" accent={accent} />
+                    <Button001 type="submit" size="lg" accent={accent}>
                       {submitLabel}
-                    </button>
+                    </Button001>
                   </div>
                   {seats ? <span data-part="seats">{seats}</span> : null}
                   {consent ? <p data-part="consent">{consent}</p> : null}

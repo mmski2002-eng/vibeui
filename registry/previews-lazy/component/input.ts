@@ -297,4 +297,7 @@ export const PREVIEWS = {
   "label-013": dynamic(() =>
     import("@/registry/components/input/label-013/label-013").then((module) => module.Label013),
   ),
+  "input-034": dynamic(() =>
+    import("@/registry/components/input/input-034/input-034").then((module) => module.Input034),
+  ),
 } satisfies PreviewMap

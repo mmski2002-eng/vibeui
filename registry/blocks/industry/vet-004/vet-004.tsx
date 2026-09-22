@@ -2,6 +2,10 @@
 
 import { useState, type CSSProperties } from "react"
 
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Slider013 } from "@/registry/components/slider/slider-013/slider-013"
+
 export type Vet004Size = {
   key: string
   label: string
@@ -85,6 +89,7 @@ container-type:inline-size;
 :where([data-vibeui-block="vet-004"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="vet-004"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-vet-004-bg);color:var(--vibeui-vet-004-fg);font-family:var(--vibeui-vet-004-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="vet-004"] *{box-sizing:border-box}
+[data-vibeui-block="vet-004"] [data-part="range"]{width:100%;margin:0}
 [data-vibeui-block="vet-004"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2rem;align-items:center}
 [data-vibeui-block="vet-004"] [data-part="eyebrow"]{margin:0 0 .7rem;font-weight:600;font-size:.85rem;letter-spacing:.02em;color:var(--vibeui-vet-004-accent)}
 [data-vibeui-block="vet-004"] [data-part="title"]{margin:0;font-family:var(--vibeui-vet-004-display);font-weight:900;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1;letter-spacing:-.03em}
@@ -110,11 +115,6 @@ container-type:inline-size;
 [data-vibeui-block="vet-004"] [data-part="row"]{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;font-size:.9rem;font-weight:600}
 [data-vibeui-block="vet-004"] [data-part="row"] output{font-family:var(--vibeui-vet-004-display);font-weight:900;font-size:1.5rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:right}
 [data-vibeui-block="vet-004"] [data-part="row"] output small{display:block;font-family:var(--vibeui-vet-004-font);font-weight:500;font-size:.8rem;color:var(--vibeui-vet-004-muted)}
-[data-vibeui-block="vet-004"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.6rem;margin:0;border-radius:999px;background:linear-gradient(90deg,var(--vibeui-vet-004-accent) var(--vibeui-vet-004-fill),var(--vibeui-vet-004-line) var(--vibeui-vet-004-fill));outline:none;cursor:pointer}
-[data-vibeui-block="vet-004"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--vibeui-vet-004-card);border:3px solid var(--vibeui-vet-004-accent);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-vet-004-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="vet-004"] [data-part="range"]::-moz-range-thumb{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--vibeui-vet-004-card);border:3px solid var(--vibeui-vet-004-accent);box-shadow:0 0 0 6px color-mix(in oklab,var(--vibeui-vet-004-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="vet-004"] [data-part="range"]:focus-visible{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-vet-004-accent) 40%,transparent)}
-[data-vibeui-block="vet-004"] [data-part="label"]{margin:0;font-size:.85rem;font-weight:600}
 [data-vibeui-block="vet-004"] [data-part="sizes"]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin:.5rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="vet-004"] [data-part="sizes"] button{width:100%;display:grid;gap:.1rem;padding:.7rem .6rem;border:1px solid var(--vibeui-vet-004-line);border-radius:1rem;background:transparent;color:var(--vibeui-vet-004-fg);font:inherit;text-align:left;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .2s cubic-bezier(.34,1.56,.64,1)}
 [data-vibeui-block="vet-004"] [data-part="sizes"] button b{font-family:var(--vibeui-vet-004-display);font-weight:900;font-size:1.1rem}
@@ -126,13 +126,9 @@ container-type:inline-size;
 [data-vibeui-block="vet-004"] [data-part="extras"] button small{color:var(--vibeui-vet-004-muted);font-size:.78rem}
 [data-vibeui-block="vet-004"] [data-part="extras"] button[aria-pressed="true"]{background:var(--vibeui-vet-004-accent);color:var(--vibeui-vet-004-on-accent);border-color:transparent}
 [data-vibeui-block="vet-004"] [data-part="extras"] button[aria-pressed="true"] small{color:inherit;opacity:.8}
-[data-vibeui-block="vet-004"] button:focus-visible{outline:2px solid var(--vibeui-vet-004-accent);outline-offset:2px}
 [data-vibeui-block="vet-004"] [data-part="total"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;padding-top:1.2rem;border-top:1px dashed var(--vibeui-vet-004-line)}
 [data-vibeui-block="vet-004"] [data-part="total"] b{font-family:var(--vibeui-vet-004-display);font-weight:900;font-size:2rem;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="vet-004"] [data-part="total"] b small{display:block;font-family:var(--vibeui-vet-004-font);font-weight:500;font-size:.8rem;color:var(--vibeui-vet-004-muted);letter-spacing:0;margin-top:.3rem}
-[data-vibeui-block="vet-004"] [data-part="action"]{display:inline-flex;align-items:center;padding:.8rem 1.3rem;border-radius:999px;background:var(--vibeui-vet-004-accent);color:var(--vibeui-vet-004-on-accent);text-decoration:none;font-family:var(--vibeui-vet-004-display);font-weight:800;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
-[data-vibeui-block="vet-004"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px var(--vibeui-vet-004-accent)}
-[data-vibeui-block="vet-004"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-vet-004-fg);outline-offset:2px}
 @keyframes vibeui-vet-004-pant{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.8)}}
 @keyframes vibeui-vet-004-snip{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
 @container (min-width: 60rem){[data-vibeui-block="vet-004"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:3rem}}
@@ -271,7 +267,7 @@ export function Vet004({
                   <small>{mark?.label}</small>
                 </output>
               </label>
-              <input data-part="range" id="vibeui-vet-004-range" type="range" min={minLength} max={maxLength} value={length} onChange={(event) => setLength(Number(event.target.value))} style={{ ["--vibeui-vet-004-fill" as string]: `${ratio * 100}%` }} />
+              <Slider013 data-part="range" id="vibeui-vet-004-range" value={length} min={minLength} max={maxLength} onChange={setLength} surface="var(--vibeui-vet-004-card)" accent={accent} />
             </div>
             <div>
               <p data-part="label">{sizeLabel}</p>
@@ -307,9 +303,15 @@ export function Vet004({
                 <small>{summaryLine.replace("{minutes}", String(minutes)).replace("{size}", size?.label ?? "").replace("{length}", String(length))}</small>
               </b>
               {actionLabel ? (
-                <a data-part="action" href={actionHref}>
-                  {actionLabel}
-                </a>
+                <Button016
+                  data-part="action"
+                  label={actionLabel}
+                  href={actionHref}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

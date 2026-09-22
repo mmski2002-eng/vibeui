@@ -2,6 +2,8 @@
 
 import { useMemo, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Auto001Service = {
   name: string
   /** Цена для компакта, ₽. Классы авто умножают. */
@@ -113,10 +115,7 @@ container-type:inline-size;
 [data-vibeui-block="auto-001"] [data-part="total"] output{font-family:var(--vibeui-auto-001-display);font-weight:900;font-size:clamp(1.5rem,3.2cqi,2.2rem);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="auto-001"] [data-part="total"][data-kind="price"] output{color:var(--vibeui-auto-001-accent)}
 [data-vibeui-block="auto-001"] [data-part="count"]{font-size:.85rem;color:var(--vibeui-auto-001-muted)}
-[data-vibeui-block="auto-001"] [data-part="action"]{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:1rem 1.5rem;border-radius:.7rem;border:0;background:var(--vibeui-auto-001-accent);color:var(--vibeui-auto-001-on-accent);font:inherit;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .25s,opacity .2s}
-[data-vibeui-block="auto-001"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 14px 34px -12px var(--vibeui-auto-001-accent)}
-[data-vibeui-block="auto-001"] [data-part="action"][aria-disabled="true"]{opacity:.45;pointer-events:none}
-[data-vibeui-block="auto-001"] [data-part="action"]:focus-visible,[data-vibeui-block="auto-001"] [data-part="class"]:focus-visible{outline:2px solid var(--vibeui-auto-001-accent);outline-offset:2px}
+[data-vibeui-block="auto-001"] [data-part="class"]:focus-visible{outline:2px solid var(--vibeui-auto-001-accent);outline-offset:2px}
 @container (min-width: 36rem){[data-vibeui-block="auto-001"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="auto-001"] [data-part="classes"]{grid-template-columns:repeat(4,minmax(0,1fr))}[data-vibeui-block="auto-001"] [data-part="bar"]{grid-template-columns:1fr auto;align-items:center}}
 @container (min-width: 56rem){[data-vibeui-block="auto-001"] [data-part="head"]{grid-template-columns:minmax(0,1fr) minmax(0,26rem);gap:2rem}}
 @container (min-width: 64rem){[data-vibeui-block="auto-001"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
@@ -292,12 +291,17 @@ export function Auto001({
                 </output>
               </div>
             </div>
-            <a data-part="action" href={actionHref} aria-disabled={count === 0} onClick={book}>
-              {actionLabel}
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </a>
+            <Button016
+              data-part="action"
+              aria-disabled={count === 0}
+              onClick={book}
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="md"
+              tone="accent"
+              accent={accent}
+            />
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks025 } from "@/registry/components/navigation/footerlinks-025/footerlinks-025"
 
 export type Footer036Link = {
   label: string
@@ -71,16 +72,12 @@ container-type:inline-size;
 [data-vibeui-block="footer-036"] [data-part="cell"] dd{margin:0;font-family:var(--vibeui-footer-036-mono);font-size:.82rem;font-weight:500;overflow-wrap:anywhere}
 [data-vibeui-block="footer-036"] [data-part="cell"] a{color:inherit;text-decoration:none;border-bottom:1px solid var(--vibeui-footer-036-line);transition:border-color .2s}
 [data-vibeui-block="footer-036"] [data-part="cell"] a:hover{border-color:var(--vibeui-footer-036-accent)}
-[data-vibeui-block="footer-036"] [data-part="links"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;padding:1rem 1.2rem;border-bottom:1px solid var(--vibeui-footer-036-fg)}
-[data-vibeui-block="footer-036"] [data-part="links"] h3{margin:0 0 .5rem;font-family:var(--vibeui-footer-036-mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-036-muted);font-weight:500}
-[data-vibeui-block="footer-036"] [data-part="links"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.35rem}
-[data-vibeui-block="footer-036"] [data-part="links"] a{color:var(--vibeui-footer-036-fg);text-decoration:none;font-weight:500;transition:color .2s}
-[data-vibeui-block="footer-036"] [data-part="links"] a:hover{color:var(--vibeui-footer-036-muted)}
 [data-vibeui-block="footer-036"] a:focus-visible{outline:2px solid var(--vibeui-footer-036-accent);outline-offset:2px}
 [data-vibeui-block="footer-036"] [data-part="bottom"]{display:grid;gap:.5rem;padding:.7rem 1.2rem;font-family:var(--vibeui-footer-036-mono);font-size:.66rem;letter-spacing:.02em;color:var(--vibeui-footer-036-muted)}
 [data-vibeui-block="footer-036"] [data-part="bottom"] p{margin:0}
 @container (min-width: 44rem){[data-vibeui-block="footer-036"] [data-part="cells"]{grid-template-columns:repeat(4,minmax(0,1fr))}[data-vibeui-block="footer-036"] [data-part="cell"]:nth-child(2n){border-right:1px solid var(--vibeui-footer-036-fg)}[data-vibeui-block="footer-036"] [data-part="cell"]:nth-child(4n){border-right:0}[data-vibeui-block="footer-036"] [data-part="bottom"]{grid-template-columns:minmax(0,1fr) auto}}
-@container (min-width: 64rem){[data-vibeui-block="footer-036"] [data-part="frame"]{grid-template-columns:18rem minmax(0,1fr) 16rem;grid-template-areas:"brand cells links" "bottom bottom bottom"}[data-vibeui-block="footer-036"] [data-part="brand"]{grid-area:brand;border-bottom:0;border-right:1px solid var(--vibeui-footer-036-fg)}[data-vibeui-block="footer-036"] [data-part="cells"]{grid-area:cells;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;border-right:1px solid var(--vibeui-footer-036-fg)}[data-vibeui-block="footer-036"] [data-part="cell"]:nth-child(4n){border-right:1px solid var(--vibeui-footer-036-fg)}[data-vibeui-block="footer-036"] [data-part="cell"]:nth-child(2n){border-right:0}[data-vibeui-block="footer-036"] [data-part="links"]{grid-area:links;border-bottom:0;grid-template-columns:1fr;align-content:start}[data-vibeui-block="footer-036"] [data-part="bottom"]{grid-area:bottom;border-top:1px solid var(--vibeui-footer-036-fg)}}
+@container (min-width: 64rem){
+[data-vibeui-block="footer-036"] [data-part="links"]{grid-area:links}[data-vibeui-block="footer-036"] [data-part="frame"]{grid-template-columns:18rem minmax(0,1fr) 16rem;grid-template-areas:"brand cells links" "bottom bottom bottom"}[data-vibeui-block="footer-036"] [data-part="brand"]{grid-area:brand;border-bottom:0;border-right:1px solid var(--vibeui-footer-036-fg)}[data-vibeui-block="footer-036"] [data-part="cells"]{grid-area:cells;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;border-right:1px solid var(--vibeui-footer-036-fg)}[data-vibeui-block="footer-036"] [data-part="cell"]:nth-child(4n){border-right:1px solid var(--vibeui-footer-036-fg)}[data-vibeui-block="footer-036"] [data-part="cell"]:nth-child(2n){border-right:0}[data-vibeui-block="footer-036"] [data-part="bottom"]{grid-area:bottom;border-top:1px solid var(--vibeui-footer-036-fg)}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-036"] *{animation:none!important;transition:none!important}}`
 
 /** Подвал-штамп чертежа с ячейками реквизитов. */
@@ -149,32 +146,7 @@ export function Footer036({
                   </div>
                 ))}
               </dl>
-              <div data-part="links">
-                {nav.length > 0 ? (
-                  <nav aria-label={navTitle}>
-                    <h3>{navTitle}</h3>
-                    <ul>
-                      {nav.map((link) => (
-                        <li key={link.href}>
-                          <a href={link.href}>{link.label}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </nav>
-                ) : null}
-                {legal.length > 0 ? (
-                  <nav aria-label={legalTitle}>
-                    <h3>{legalTitle}</h3>
-                    <ul>
-                      {legal.map((link) => (
-                        <li key={link.href}>
-                          <a href={link.href}>{link.label}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  </nav>
-                ) : null}
-              </div>
+              <Footerlinks025 data-part="links" nav={nav} navTitle={navTitle} legal={legal} legalTitle={legalTitle} accent={accent} />
               <div data-part="bottom">
                 {requisites ? <p>{requisites}</p> : null}
                 {copyright ? <p>{copyright}</p> : null}

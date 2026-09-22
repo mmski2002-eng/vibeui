@@ -2,6 +2,8 @@
 
 import { useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+
 export type Charity005Role = {
   label: string
   /** Что делать: «привозить продукты раз в неделю». */
@@ -72,6 +74,7 @@ container-type:inline-size;
 :where([data-vibeui-block="charity-005"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="charity-005"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-charity-005-bg);color:var(--vibeui-charity-005-fg);font-family:var(--vibeui-charity-005-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="charity-005"] *{box-sizing:border-box}
+[data-vibeui-block="charity-005"] [data-part="submit"]{justify-self:start}
 [data-vibeui-block="charity-005"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem;align-items:start}
 [data-vibeui-block="charity-005"] [data-part="eyebrow"]{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1rem;margin:0 0 .8rem;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-charity-005-accent)}
 [data-vibeui-block="charity-005"] [data-part="today"]{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .7rem;border-radius:999px;background:var(--vibeui-charity-005-soft);font-size:.78rem;letter-spacing:.02em;text-transform:none;color:var(--vibeui-charity-005-fg);font-variant-numeric:tabular-nums}
@@ -89,9 +92,6 @@ container-type:inline-size;
 [data-vibeui-block="charity-005"] [data-part="chip"][data-day]{width:3rem;height:3rem;padding:0;border-radius:50%;text-align:center}
 [data-vibeui-block="charity-005"] [data-part="input"]{width:100%;height:3.2rem;padding:0 1rem;border-radius:.8rem;border:1px solid var(--vibeui-charity-005-line);background:transparent;color:var(--vibeui-charity-005-fg);font:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
 [data-vibeui-block="charity-005"] [data-part="input"]:focus-visible{border-color:var(--vibeui-charity-005-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-charity-005-accent) 22%,transparent)}
-[data-vibeui-block="charity-005"] [data-part="submit"]{justify-self:start;display:inline-flex;align-items:center;gap:.5rem;padding:.95rem 1.6rem;border-radius:999px;border:0;background:var(--vibeui-charity-005-fg);color:var(--vibeui-charity-005-bg);font:inherit;font-weight:600;font-size:1rem;cursor:pointer;transition:transform .18s,box-shadow .2s,opacity .2s}
-[data-vibeui-block="charity-005"] [data-part="submit"]:hover{transform:translateY(-1px);box-shadow:0 12px 30px -14px var(--vibeui-charity-005-fg)}
-[data-vibeui-block="charity-005"] [data-part="submit"]:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 [data-vibeui-block="charity-005"] button:focus-visible{outline:2px solid var(--vibeui-charity-005-accent);outline-offset:2px}
 [data-vibeui-block="charity-005"] [data-part="stage"]{position:relative;padding:2.5rem 0 1rem}
 [data-vibeui-block="charity-005"] [data-part="lanyard"]{position:absolute;left:50%;top:0;width:1.2rem;height:3.2rem;transform:translateX(-50%);background:repeating-linear-gradient(180deg,var(--vibeui-charity-005-accent) 0 .5rem,color-mix(in oklab,var(--vibeui-charity-005-accent) 70%,#fff) .5rem 1rem);border-radius:0 0 .3rem .3rem}
@@ -248,9 +248,9 @@ export function Charity005({
                 <label htmlFor="vibeui-charity-005-name">{nameLabel}</label>
                 <input data-part="input" id="vibeui-charity-005-name" type="text" value={name} placeholder={namePlaceholder} autoComplete="given-name" maxLength={40} onChange={(event) => setName(event.target.value)} />
               </div>
-              <button data-part="submit" type="submit" disabled={done || role === null || pickedCount === 0}>
+              <Button001 data-part="submit" type="submit" disabled={done || role === null || pickedCount === 0} size="lg" tone="solid" accent={accent}>
                 {actionLabel}
-              </button>
+              </Button001>
             </form>
           </div>
           <div data-part="stage" aria-live="polite">

@@ -1,9 +1,13 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-type Faq014Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion001,
+  type Accordion001Item,
+} from "@/registry/components/accordion/accordion-001/accordion-001"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
+type Faq014Item = Accordion001Item
 
 export type Faq014Props = {
   title?: string
@@ -11,6 +15,7 @@ export type Faq014Props = {
   linkLabel?: string
   linkHref?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  marker?: "chevron" | "triangle" | "square" | "plus" | "none"
   background?: string
   accent?: string
   className?: string
@@ -21,7 +26,11 @@ export type Faq014Props = {
 // страницу. Компактность намеренная — перед призывом к действию человек
 // снимает последние сомнения, а не читает справочник. Раскладка считается
 // от собственной ширины блока (container queries), а не от ширины окна.
-const STYLES = `
+// Составной блок: список — accordion-001, ссылка — button-077.
+const STYLES = `[data-vibeui-block="faq-014"] [data-part="heading"]{margin-bottom:1.25rem}
+
+[data-vibeui-block="faq-014"] [data-part="more"]{margin-top:1.25rem}
+
 :where([data-vibeui-block="faq-014"]){
 --vibeui-faq-014-bg:transparent;
 --vibeui-faq-014-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
@@ -39,55 +48,10 @@ display:block;background:var(--vibeui-faq-014-bg);color:var(--vibeui-faq-014-ink
 font-family:var(--vibeui-faq-014-font);
 }
 [data-vibeui-block="faq-014"] [data-part="shell"]{max-width:40rem;margin:0 auto;padding:2.5rem 1.25rem}
-[data-vibeui-block="faq-014"] [data-part="title"]{
-margin:0 0 1.25rem;
-font-size:clamp(1.375rem,4.5cqi,1.75rem);line-height:1.15;letter-spacing:-0.02em;font-weight:700;
-}
-[data-vibeui-block="faq-014"] [data-part="list"]{display:grid;border-top:1px solid var(--vibeui-faq-014-border)}
-[data-vibeui-block="faq-014"] [data-part="item"]{border-bottom:1px solid var(--vibeui-faq-014-border)}
-[data-vibeui-block="faq-014"] [data-part="question"]{
-display:flex;align-items:baseline;gap:0.75rem;
-padding:0.875rem 0.125rem;cursor:pointer;list-style:none;
-font-size:0.9375rem;font-weight:640;line-height:1.4;
-}
-[data-vibeui-block="faq-014"] [data-part="question"]::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-014"] [data-part="question"]:focus-visible{
-outline:2px solid var(--vibeui-faq-014-accent);outline-offset:2px;border-radius:0.375rem;
-}
-[data-vibeui-block="faq-014"] [data-part="sign"]{
-margin-left:auto;flex:none;align-self:center;width:0.75rem;height:0.75rem;position:relative;
-color:var(--vibeui-faq-014-accent);
-transition:transform var(--vibeui-faq-014-dur-2) ease;
-}
-[data-vibeui-block="faq-014"] [data-part="sign"]::before,
-[data-vibeui-block="faq-014"] [data-part="sign"]::after{
-content:"";position:absolute;inset:0;margin:auto;background:currentColor;border-radius:1px;
-}
-[data-vibeui-block="faq-014"] [data-part="sign"]::before{width:100%;height:2px}
-[data-vibeui-block="faq-014"] [data-part="sign"]::after{width:2px;height:100%}
-[data-vibeui-block="faq-014"] [data-part="item"][open] [data-part="sign"]{transform:rotate(45deg)}
-[data-vibeui-block="faq-014"] [data-part="answer"]{
-margin:0;padding:0 0.125rem 1rem;
-color:var(--vibeui-faq-014-muted);font-size:0.875rem;line-height:1.6;
-}
-[data-vibeui-block="faq-014"] [data-part="more"]{
-display:inline-flex;align-items:center;gap:0.375rem;margin-top:1.25rem;
-color:var(--vibeui-faq-014-accent);
-font-size:0.9375rem;font-weight:700;text-decoration:none;
-}
-[data-vibeui-block="faq-014"] [data-part="more"]:hover{text-decoration:underline;text-underline-offset:0.2em}
-[data-vibeui-block="faq-014"] [data-part="more"]:focus-visible{
-outline:2px solid var(--vibeui-faq-014-accent);outline-offset:3px;border-radius:0.25rem;
-}
-[data-vibeui-block="faq-014"] [data-part="more"]::after{
-content:"";width:0.5rem;height:0.5rem;
-border-top:2px solid currentColor;border-right:2px solid currentColor;
-transform:rotate(45deg);transition:transform var(--vibeui-faq-014-dur-2) ease;
-}
-[data-vibeui-block="faq-014"] [data-part="more"]:hover::after{transform:rotate(45deg) translate(1px,-1px)}
+[data-vibeui-block="faq-014"] [data-part="list"]{width:100%;max-width:none}
+[data-vibeui-block="faq-014"] [data-part="more"]{margin-top:1.25rem}
 @container (min-width: 36rem){
 [data-vibeui-block="faq-014"] [data-part="shell"]{padding:3.5rem 2rem}
-[data-vibeui-block="faq-014"] [data-part="question"]{font-size:1rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-014"] *{animation:none!important;transition:none!important}}
 `
@@ -132,12 +96,13 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Компактный мини-FAQ для конца лендинга: три вопроса и ссылка на все. */
+/** Мини-FAQ для конца лендинга: accordion-001 и ссылка button-077. */
 export function Faq014({
   title = "Остались вопросы?",
   items = DEFAULT_ITEMS,
   linkLabel = "Все вопросы и ответы",
   linkHref = "#faq",
+  marker = "plus",
   background = "",
   accent,
   className,
@@ -165,21 +130,26 @@ export function Faq014({
         style={palette}
       >
         <div data-part="shell">
-          <h2 data-part="title">{title}</h2>
-          <div data-part="list">
-            {items.map((item) => (
-              <details key={item.question} data-part="item">
-                <summary data-part="question">
-                  <span>{item.question}</span>
-                  <span data-part="sign" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-          <a data-part="more" href={linkHref}>
-            {linkLabel}
-          </a>
+          <Heading001
+            data-part="heading"
+            title={title}
+            size="sm"
+            accent={accent}
+          />
+          <Accordion001
+            marker={marker}
+            data-part="list"
+            items={items}
+            exclusive={false}
+            divider="line"
+            accent={accent}
+          />
+          <Button077
+            data-part="more"
+            label={linkLabel}
+            href={linkHref}
+            accent={accent}
+          />
         </div>
       </section>
     </>

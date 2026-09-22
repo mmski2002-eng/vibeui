@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card138 } from "@/registry/components/card/card-138/card-138"
 
 export type Map007Way = {
   /** Как: «На машине». */
@@ -86,11 +87,6 @@ container-type:inline-size;
 [data-vibeui-block="map-007"] [data-part="map"]{position:relative;min-height:18rem;border:1px solid var(--vibeui-map-007-line);border-radius:1.2rem;overflow:hidden;background:var(--vibeui-map-007-card)}
 [data-vibeui-block="map-007"] iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:saturate(.7) sepia(.15)}
 [data-vibeui-block="map-007"] [data-part="ways"]{display:grid;gap:1rem;margin:2.5rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="map-007"] [data-part="way"]{display:grid;grid-template-columns:2.6rem minmax(0,1fr);gap:.9rem;padding:1.2rem;border:1px solid var(--vibeui-map-007-line);border-radius:1rem;background:var(--vibeui-map-007-card);transition:transform .25s,border-color .25s}
-[data-vibeui-block="map-007"] [data-part="way"]:hover{transform:translateY(-2px);border-color:var(--vibeui-map-007-accent)}
-[data-vibeui-block="map-007"] [data-part="way"] svg{width:2.6rem;height:2.6rem;padding:.6rem;border-radius:50%;background:color-mix(in oklab,var(--vibeui-map-007-sage) 18%,transparent);color:var(--vibeui-map-007-plum);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-[data-vibeui-block="map-007"] [data-part="way"] h3{margin:0 0 .2rem;font-family:var(--vibeui-map-007-display);font-size:1.35rem;font-weight:500;line-height:1.15}
-[data-vibeui-block="map-007"] [data-part="way"] p{margin:0;font-size:.92rem;color:var(--vibeui-map-007-muted)}
 [data-vibeui-block="map-007"] [data-part="stays"]{margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--vibeui-map-007-line)}
 [data-vibeui-block="map-007"] [data-part="stays"] h3{margin:0;font-family:var(--vibeui-map-007-display);font-size:1.6rem;font-weight:500;font-style:italic;color:var(--vibeui-map-007-plum)}
 [data-vibeui-block="map-007"] [data-part="stays"] > p{margin:.3rem 0 1rem;font-size:.92rem;color:var(--vibeui-map-007-muted)}
@@ -110,12 +106,6 @@ container-type:inline-size;
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="map-007"] *{animation:none!important;transition:none!important}}`
 
-const ICONS: Record<string, string> = {
-  car: "M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13M4 13h16v5H4zM7 18v2M17 18v2M7.5 15.5h.01M16.5 15.5h.01",
-  bus: "M5 4h14a1 1 0 0 1 1 1v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1zM4 10h16M7 18v2M17 18v2M8 14h.01M16 14h.01",
-  taxi: "M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13M4 13h16v5H4zM7 18v2M17 18v2M9 7V5h6v2",
-  train: "M6 4h12a1 1 0 0 1 1 1v10a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V5a1 1 0 0 1 1-1zM5 10h14M8 18l-2 3M16 18l2 3M9 14h.01M15 14h.01",
-}
 
 /** «Как добраться» для загородной свадьбы: фото места в арке, Яндекс Карта, три способа доехать и где переночевать. */
 export function Map007({
@@ -192,15 +182,7 @@ export function Map007({
           <h3 hidden>{waysTitle}</h3>
           <ul data-part="ways" aria-label={waysTitle}>
             {ways.map((way) => (
-              <li key={way.mode} data-part="way">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d={ICONS[way.icon ?? ""] ?? ICONS.car} />
-                </svg>
-                <div>
-                  <h3>{way.mode}</h3>
-                  <p>{way.text}</p>
-                </div>
-              </li>
+              <Card138 key={way.mode} data-part="way" mode={way.mode} icon={way.icon} text={way.text} accent={accent} />
             ))}
           </ul>
           {stays.length > 0 ? (

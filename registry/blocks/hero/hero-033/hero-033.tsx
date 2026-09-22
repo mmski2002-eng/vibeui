@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero033Line = {
   /** Кто говорит в расшифровке. */
   who: string
@@ -71,6 +73,7 @@ container-type:inline-size;
 :where([data-vibeui-block="hero-033"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-033"]{box-sizing:border-box;position:relative;overflow:hidden;isolation:isolate;background:var(--vibeui-hero-033-bg);color:var(--vibeui-hero-033-fg);font-family:var(--vibeui-hero-033-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-033"] *{box-sizing:border-box}
+[data-vibeui-block="hero-033"] [data-part="primary"]{transition:transform .4s var(--vibeui-hero-033-ease)}
 [data-vibeui-block="hero-033"] [data-part="noise"]{position:absolute;inset:0;z-index:1;background-image:${NOISE};background-size:200px;opacity:.06;mix-blend-mode:soft-light;pointer-events:none}
 [data-vibeui-block="hero-033"] [data-part="aurora"]{position:absolute;inset:-25% -15% auto;height:80%;pointer-events:none;filter:blur(48px);transform:translate3d(calc(var(--vibeui-hero-033-px) * 2.5%),calc(var(--vibeui-hero-033-py) * 2.5%),0);transition:transform .9s var(--vibeui-hero-033-ease)}
 [data-vibeui-block="hero-033"] [data-part="blob"]{position:absolute;border-radius:50%;animation:vibeui-hero-033-drift 18s ease-in-out infinite alternate}
@@ -86,13 +89,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-033"] [data-part="w"] span[data-em]{background:linear-gradient(100deg,var(--vibeui-hero-033-accent),var(--vibeui-hero-033-a2) 50%,var(--vibeui-hero-033-a3));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:vibeui-hero-033-mask .9s var(--vibeui-hero-033-ease) forwards,vibeui-hero-033-hue 6s linear infinite;animation-delay:calc(.12s + var(--vibeui-hero-033-i) * .07s),0s}
 [data-vibeui-block="hero-033"] [data-part="lede"]{margin:1.4rem 0 0;max-width:32rem;font-size:1.12rem;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .55s both}
 [data-vibeui-block="hero-033"] [data-part="actions"]{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.8rem;animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .7s both}
-[data-vibeui-block="hero-033"] [data-part="primary"],[data-vibeui-block="hero-033"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.4rem;border-radius:.9rem;font-weight:600;text-decoration:none;font-size:.95rem;transition:transform .4s var(--vibeui-hero-033-ease),filter .3s,background .3s,box-shadow .4s;will-change:transform}
-[data-vibeui-block="hero-033"] [data-part="primary"]{position:relative;background:var(--vibeui-hero-033-accent);color:var(--vibeui-hero-033-on-accent);box-shadow:0 0 30px -6px var(--vibeui-hero-033-accent),0 10px 30px -14px var(--vibeui-hero-033-accent)}
-[data-vibeui-block="hero-033"] [data-part="primary"]:hover{filter:brightness(1.08);box-shadow:0 0 44px -6px var(--vibeui-hero-033-accent),0 16px 34px -14px var(--vibeui-hero-033-accent)}
-[data-vibeui-block="hero-033"] [data-part="primary"] svg{width:1em;height:1em;transition:transform .4s var(--vibeui-hero-033-ease)}
-[data-vibeui-block="hero-033"] [data-part="primary"]:hover svg{transform:translateX(3px)}
-[data-vibeui-block="hero-033"] [data-part="secondary"]{color:inherit;border:1px solid var(--vibeui-hero-033-line);background:var(--vibeui-hero-033-glass)}
-[data-vibeui-block="hero-033"] [data-part="secondary"]:hover{background:var(--vibeui-hero-033-line);transform:translateY(-2px)}
 [data-vibeui-block="hero-033"] [data-part="trust"]{margin:1.4rem 0 0;font-size:.85rem;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .85s both}
 [data-vibeui-block="hero-033"] [data-part="demo"]{--vibeui-hero-033-x:50%;--vibeui-hero-033-y:30%;position:relative;overflow:hidden;display:grid;gap:.8rem;border-radius:1.4rem;padding:.8rem;background:var(--vibeui-hero-033-glass);border:1px solid color-mix(in oklab,var(--vibeui-hero-033-fg) 18%,transparent);backdrop-filter:blur(18px);box-shadow:0 50px 100px -40px rgb(0 0 0 / .75),0 30px 80px -50px var(--vibeui-hero-033-accent),0 1px 0 rgb(255 255 255 / .16) inset;animation:vibeui-hero-033-rise 1.1s var(--vibeui-hero-033-ease) .35s both;transition:transform .8s var(--vibeui-hero-033-ease)}
 [data-vibeui-block="hero-033"] [data-part="demo"]::before{content:"";position:absolute;inset:0;background:radial-gradient(28rem circle at var(--vibeui-hero-033-x) var(--vibeui-hero-033-y),color-mix(in oklab,var(--vibeui-hero-033-accent) 22%,transparent),transparent 55%);opacity:0;transition:opacity .5s;pointer-events:none}
@@ -107,11 +103,10 @@ container-type:inline-size;
 [data-vibeui-block="hero-033"] [data-part="lines"] li b{font-weight:600;color:var(--vibeui-hero-033-fg)}
 [data-vibeui-block="hero-033"] [data-part="lines"] li[data-active="true"]{background:color-mix(in oklab,var(--vibeui-hero-033-accent) 14%,transparent);color:var(--vibeui-hero-033-fg);border-left-color:var(--vibeui-hero-033-accent);transform:translateX(3px)}
 [data-vibeui-block="hero-033"] [data-part="lines"] li[data-active="true"] b{color:var(--vibeui-hero-033-accent)}
-[data-vibeui-block="hero-033"] [data-part="out"]{margin:0;white-space:pre-wrap;word-break:break-word;line-height:1.55}
-[data-vibeui-block="hero-033"] [data-part="out"] b{display:block;margin-top:.55rem;font-family:var(--vibeui-hero-033-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-hero-033-accent);animation:vibeui-hero-033-up .5s var(--vibeui-hero-033-ease) both}
-[data-vibeui-block="hero-033"] [data-part="out"] b:first-child{margin-top:0}
-[data-vibeui-block="hero-033"] [data-part="out"] i{display:inline-block;width:.5em;height:1em;vertical-align:text-bottom;background:var(--vibeui-hero-033-accent);box-shadow:0 0 10px var(--vibeui-hero-033-accent);animation:vibeui-hero-033-cursor 1s steps(1) infinite}
-[data-vibeui-block="hero-033"] a:focus-visible{outline:2px solid var(--vibeui-hero-033-accent);outline-offset:3px}
+[data-vibeui-block="hero-033"] [data-part="output"]{margin:0;white-space:pre-wrap;word-break:break-word;line-height:1.55}
+[data-vibeui-block="hero-033"] [data-part="output"] b{display:block;margin-top:.55rem;font-family:var(--vibeui-hero-033-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-hero-033-accent);animation:vibeui-hero-033-up .5s var(--vibeui-hero-033-ease) both}
+[data-vibeui-block="hero-033"] [data-part="output"] b:first-child{margin-top:0}
+[data-vibeui-block="hero-033"] [data-part="output"] i{display:inline-block;width:.5em;height:1em;vertical-align:text-bottom;background:var(--vibeui-hero-033-accent);box-shadow:0 0 10px var(--vibeui-hero-033-accent);animation:vibeui-hero-033-cursor 1s steps(1) infinite}
 @keyframes vibeui-hero-033-drift{from{transform:translate(-6%,-4%) scale(1)}to{transform:translate(6%,6%) scale(1.15)}}
 @keyframes vibeui-hero-033-pulse{50%{opacity:.4}}
 @keyframes vibeui-hero-033-cursor{50%{opacity:0}}
@@ -309,17 +304,18 @@ export function Hero033({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a ref={primaryRef} data-part="primary" href={primaryHref} onPointerMove={onPrimaryMove} onPointerLeave={onPrimaryLeave}>
-                  {primaryLabel}
-                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M3 8h10M9 4l4 4-4 4" />
-                  </svg>
-                </a>
+                <Button016 ref={primaryRef} data-part="primary" label={primaryLabel} href={primaryHref} external={false} arrow size="lg" tone="accent" accent={accent} onPointerMove={onPrimaryMove} onPointerLeave={onPrimaryLeave} />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
             {trust ? <p data-part="trust">{trust}</p> : null}
@@ -343,7 +339,7 @@ export function Hero033({
                 <i aria-hidden="true" />
                 {summaryTitle}
               </p>
-              <pre data-part="out" aria-live="polite">
+              <pre data-part="output" aria-live="polite">
                 {tokens.slice(0, count).map((token, index) => (token.startsWith("# ") ? <b key={index}>{token.slice(2)}</b> : <span key={index}>{token}</span>))}
                 <i aria-hidden="true" />
               </pre>

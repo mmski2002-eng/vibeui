@@ -2,6 +2,9 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Vet001Props = {
   /** Подпись на пилюле. */
   label?: string
@@ -53,6 +56,7 @@ container-type:inline-size;
 [data-vibeui-block="vet-001"][data-fixed="false"]{padding:3rem 0;background:var(--vibeui-vet-001-bg)}
 [data-vibeui-block="vet-001"][data-fixed="true"]{height:0;overflow:visible}
 [data-vibeui-block="vet-001"] *{box-sizing:border-box}
+[data-vibeui-block="vet-001"] [data-part="call"]{margin:1rem 0 0}
 [data-vibeui-block="vet-001"] [data-part="dock"]{display:grid;justify-items:end;gap:.7rem}
 [data-vibeui-block="vet-001"] [data-part="dock"][data-fixed="true"]{position:fixed;right:1rem;bottom:1rem;z-index:60;width:22rem;max-width:calc(100vw - 2rem)}
 [data-vibeui-block="vet-001"] [data-part="dock"][data-fixed="false"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;justify-items:center}
@@ -71,10 +75,6 @@ container-type:inline-size;
 [data-vibeui-block="vet-001"] [data-part="head"] p{margin:.3rem 0 0;font-size:.88rem;color:var(--vibeui-vet-001-muted)}
 [data-vibeui-block="vet-001"] [data-part="close"]{margin-left:auto;flex-shrink:0;width:2rem;height:2rem;border:1px solid var(--vibeui-vet-001-line);border-radius:50%;background:transparent;color:inherit;font-size:1.1rem;line-height:1;cursor:pointer}
 [data-vibeui-block="vet-001"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-vet-001-accent);outline-offset:2px}
-[data-vibeui-block="vet-001"] [data-part="call"]{display:flex;align-items:center;justify-content:center;gap:.5rem;margin:1rem 0 0;padding:.85rem 1rem;border-radius:1rem;background:var(--vibeui-vet-001-accent);color:var(--vibeui-vet-001-on-accent);text-decoration:none;font-family:var(--vibeui-vet-001-display);font-weight:900;font-size:1.25rem;letter-spacing:-.01em;transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
-[data-vibeui-block="vet-001"] [data-part="call"]:hover{transform:translateY(-2px)}
-[data-vibeui-block="vet-001"] [data-part="call"]:focus-visible{outline:2px solid var(--vibeui-vet-001-fg);outline-offset:2px}
-[data-vibeui-block="vet-001"] [data-part="call"] svg{width:1.1rem;height:1.1rem}
 [data-vibeui-block="vet-001"] [data-part="steps"]{margin:1rem 0 0;padding:0;list-style:none;display:grid;gap:.35rem}
 [data-vibeui-block="vet-001"] [data-part="steps"] label{display:flex;gap:.65rem;align-items:flex-start;padding:.5rem .6rem;border-radius:.8rem;font-size:.92rem;cursor:pointer;transition:background .2s}
 [data-vibeui-block="vet-001"] [data-part="steps"] label:hover{background:color-mix(in oklab,var(--vibeui-vet-001-fg) 5%,transparent)}
@@ -157,10 +157,15 @@ export function Vet001({
                 ×
               </button>
             </div>
-            <a data-part="call" href={phoneHref}>
-              <PhoneIcon />
-              {phone}
-            </a>
+            <Button016
+              data-part="call"
+              label={phone}
+              href={phoneHref}
+              external={false}
+              size="lg"
+              tone="accent"
+              accent={accent}
+            />
             {steps.length > 0 ? (
               <ul data-part="steps">
                 {steps.map((step) => (

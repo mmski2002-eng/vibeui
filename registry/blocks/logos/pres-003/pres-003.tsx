@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Pres003Fact = {
   label: string
@@ -24,7 +27,9 @@ export type Pres003Props = {
 // пресс-службы с кнопкой письма, справа сетка ключевых фактов (основана,
 // команда, пользователи). Формат нижней части пресс-страницы, где журналист
 // берёт цифры и связывается напрямую.
-const STYLES = `
+const STYLES = `[data-vibeui-block="pres-003"] [data-part="heading"]{margin-bottom:0.75rem}
+[data-vibeui-block="pres-003"] [data-part="cta"]{margin-top:1rem}
+
 :where([data-vibeui-block="pres-003"]){
 --vibeui-pres-003-bg:transparent;
 --vibeui-pres-003-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -46,20 +51,12 @@ display:block;background:var(--vibeui-pres-003-bg);color:var(--vibeui-pres-003-i
 font-family:var(--vibeui-pres-003-font);
 }
 [data-vibeui-block="pres-003"] [data-part="shell"]{max-width:64rem;margin:0 auto;padding:3rem 1.25rem;display:grid;gap:2rem;align-items:start}
-[data-vibeui-block="pres-003"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-pres-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="pres-003"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="pres-003"] [data-part="summary"]{margin:0 0 1.5rem;color:var(--vibeui-pres-003-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="pres-003"] [data-part="contact"]{padding:1.25rem;border:1px solid var(--vibeui-pres-003-border);border-radius:1rem;background:var(--vibeui-pres-003-card)}
 [data-vibeui-block="pres-003"] [data-part="contact-label"]{margin:0 0 0.25rem;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--vibeui-pres-003-muted)}
 [data-vibeui-block="pres-003"] [data-part="contact-name"]{margin:0;font-size:1rem;font-weight:640}
 [data-vibeui-block="pres-003"] [data-part="contact-email"]{color:var(--vibeui-pres-003-accent);font-size:0.9375rem;text-decoration:none}
 [data-vibeui-block="pres-003"] [data-part="contact-email"]:hover{text-decoration:underline;text-underline-offset:2px}
-[data-vibeui-block="pres-003"] [data-part="cta"]{
-display:inline-flex;align-items:center;height:2.75rem;padding:0 1.25rem;margin-top:1rem;border-radius:0.75rem;
-background:var(--vibeui-pres-003-accent);color:oklch(from var(--vibeui-pres-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-pres-003-dur-2) ease}
-[data-vibeui-block="pres-003"] [data-part="cta"]:hover{opacity:.9}
-[data-vibeui-block="pres-003"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-pres-003-accent);outline-offset:3px}
 [data-vibeui-block="pres-003"] [data-part="facts"]{list-style:none;margin:0;padding:0;display:grid;gap:1rem;grid-template-columns:1fr 1fr}
 [data-vibeui-block="pres-003"] [data-part="fact"]{padding:1.25rem;border:1px solid var(--vibeui-pres-003-border);border-radius:1rem;background:var(--vibeui-pres-003-card)}
 [data-vibeui-block="pres-003"] [data-part="fact-value"]{font-size:1.75rem;font-weight:750;line-height:1.05;color:var(--vibeui-pres-003-accent)}
@@ -136,8 +133,12 @@ export function Pres003({
       >
         <div data-part="shell">
           <div>
-            <p data-part="eyebrow">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              accent={accent}
+            />
             <p data-part="summary">{summary}</p>
             <div data-part="contact">
               <p data-part="contact-label">Пресс-служба</p>
@@ -146,9 +147,15 @@ export function Pres003({
                 {contactEmail}
               </a>
             </div>
-            <a href={`mailto:${contactEmail}`} data-part="cta">
-              {ctaLabel}
-            </a>
+            <Button016
+              data-part="cta"
+              label={ctaLabel}
+              href={`mailto:${contactEmail}`}
+              external={false}
+              size="lg"
+              tone="accent"
+              accent={accent}
+            />
           </div>
           <ul data-part="facts">
             {facts.map((fact) => (

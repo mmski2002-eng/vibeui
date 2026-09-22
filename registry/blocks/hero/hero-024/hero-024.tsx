@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero024Fact = {
   value: string
   label: string
@@ -80,12 +82,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-024"] [data-part="lede"]{margin:1.5rem 0 0;max-width:34rem;font-size:1.15rem;color:var(--vibeui-hero-024-muted);animation:vibeui-hero-024-in .8s 1.2s both}
 @keyframes vibeui-hero-024-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 [data-vibeui-block="hero-024"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.75rem;margin:1.75rem 0 0;animation:vibeui-hero-024-in .8s 1.4s both}
-[data-vibeui-block="hero-024"] [data-part="primary"],[data-vibeui-block="hero-024"] [data-part="secondary"]{display:inline-flex;align-items:center;justify-content:center;height:3.4rem;padding:0 1.75rem;border-radius:.7rem;font-weight:700;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .3s,background .3s}
-[data-vibeui-block="hero-024"] [data-part="primary"]{background:var(--vibeui-hero-024-accent);color:var(--vibeui-hero-024-on-accent);box-shadow:0 0 20px color-mix(in oklab,var(--vibeui-hero-024-accent) 60%,transparent),0 0 60px color-mix(in oklab,var(--vibeui-hero-024-accent) 30%,transparent)}
-[data-vibeui-block="hero-024"] [data-part="primary"]:hover{transform:translateY(-2px);box-shadow:0 0 30px var(--vibeui-hero-024-accent),0 0 90px color-mix(in oklab,var(--vibeui-hero-024-accent) 50%,transparent)}
-[data-vibeui-block="hero-024"] [data-part="secondary"]{border:1px solid color-mix(in oklab,var(--vibeui-hero-024-cyan) 60%,transparent);color:var(--vibeui-hero-024-cyan);box-shadow:inset 0 0 12px color-mix(in oklab,var(--vibeui-hero-024-cyan) 15%,transparent)}
-[data-vibeui-block="hero-024"] [data-part="secondary"]:hover{background:color-mix(in oklab,var(--vibeui-hero-024-cyan) 12%,transparent);box-shadow:0 0 18px color-mix(in oklab,var(--vibeui-hero-024-cyan) 40%,transparent)}
-[data-vibeui-block="hero-024"] a:focus-visible{outline:2px solid var(--vibeui-hero-024-cyan);outline-offset:3px}
 [data-vibeui-block="hero-024"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem;margin:3rem 0 0;padding:1.5rem 0 0;list-style:none;border-top:1px solid var(--vibeui-hero-024-line);animation:vibeui-hero-024-in .8s 1.6s both}
 [data-vibeui-block="hero-024"] [data-part="fact"] b{display:block;font-family:var(--vibeui-hero-024-mono);font-size:2rem;font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--vibeui-hero-024-cyan);text-shadow:0 0 12px color-mix(in oklab,var(--vibeui-hero-024-cyan) 60%,transparent);font-variant-numeric:tabular-nums}
 [data-vibeui-block="hero-024"] [data-part="fact"] span{display:block;margin-top:.35rem;font-size:.85rem;color:var(--vibeui-hero-024-muted)}
@@ -203,14 +199,26 @@ export function Hero024({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="actions">
             {primaryLabel ? (
-              <a data-part="primary" href={primaryHref}>
-                {primaryLabel}
-              </a>
+              <Button016
+                data-part="primary"
+                size="lg"
+                label={primaryLabel}
+                href={primaryHref}
+                external={false}
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
             {secondaryLabel ? (
-              <a data-part="secondary" href={secondaryHref}>
-                {secondaryLabel}
-              </a>
+              <Button016
+                data-part="secondary"
+                size="lg"
+                label={secondaryLabel}
+                href={secondaryHref}
+                external={false}
+                tone="neutral"
+                accent={accent}
+              />
             ) : null}
           </div>
           {facts.length > 0 ? (

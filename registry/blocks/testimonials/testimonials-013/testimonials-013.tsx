@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react"
+import { Card044 } from "@/registry/components/card/card-044/card-044"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 export type Testimonials013Props = {
   eyebrow?: string
@@ -21,7 +23,8 @@ export type Testimonials013Props = {
 // панель результата стоят рядом: контраст виден до чтения, по одному
 // оформлению. Цитата под панелями подтверждает перемену голосом человека —
 // без неё сравнение читается как обещание маркетолога, а не как опыт.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-013"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="testimonials-013"]){
 --vibeui-testimonials-013-bg:transparent;
 --vibeui-testimonials-013-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -40,14 +43,6 @@ font-family:var(--vibeui-testimonials-013-font);
 }
 [data-vibeui-block="testimonials-013"] [data-part="shell"]{
 max-width:64rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="testimonials-013"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-testimonials-013-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="testimonials-013"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="testimonials-013"] [data-part="compare"]{display:grid;gap:1rem}
 [data-vibeui-block="testimonials-013"] [data-part="pane"]{
@@ -70,18 +65,8 @@ color:var(--vibeui-testimonials-013-accent);
 [data-vibeui-block="testimonials-013"] [data-part="points"]{
 margin:0;padding:0;list-style:none;display:grid;gap:0.75rem;
 }
-[data-vibeui-block="testimonials-013"] [data-part="point"]{
-display:flex;gap:0.625rem;align-items:baseline;
-font-size:0.9375rem;line-height:1.5;
-}
 [data-vibeui-block="testimonials-013"] [data-part="pane"][data-kind="before"] [data-part="point"]{
 color:var(--vibeui-testimonials-013-muted);
-}
-[data-vibeui-block="testimonials-013"] [data-part="mark"]{
-flex:none;font-weight:700;font-size:0.8125rem;
-}
-[data-vibeui-block="testimonials-013"] [data-part="pane"][data-kind="after"] [data-part="mark"]{
-color:var(--vibeui-testimonials-013-accent);
 }
 [data-vibeui-block="testimonials-013"] [data-part="figure"]{
 margin:2rem 0 0;display:grid;gap:1rem;
@@ -178,19 +163,18 @@ export function Testimonials013({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="compare">
             <article data-part="pane" data-kind="before">
               <h3 data-part="pane-title">{beforeTitle}</h3>
               <ul data-part="points">
                 {beforePoints.map((point) => (
-                  <li key={point} data-part="point">
-                    <span data-part="mark" aria-hidden="true">
-                      —
-                    </span>
-                    {point}
-                  </li>
+                  <Card044 key={point} data-part="point" point={point} accent={accent} />
                 ))}
               </ul>
             </article>
@@ -198,12 +182,7 @@ export function Testimonials013({
               <h3 data-part="pane-title">{afterTitle}</h3>
               <ul data-part="points">
                 {afterPoints.map((point) => (
-                  <li key={point} data-part="point">
-                    <span data-part="mark" aria-hidden="true">
-                      ✓
-                    </span>
-                    {point}
-                  </li>
+                  <Card044 key={point} data-part="point" point={point} accent={accent} />
                 ))}
               </ul>
             </article>

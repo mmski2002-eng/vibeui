@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card114 } from "@/registry/components/card/card-114/card-114"
 
 export type Testimonials031Review = {
   name: string
@@ -67,23 +68,7 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-031"] [data-part="title"]{margin:0;font-family:var(--vibeui-testimonials-031-display);font-weight:800;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1.05;letter-spacing:-.03em;text-wrap:balance}
 [data-vibeui-block="testimonials-031"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-testimonials-031-muted)}
 [data-vibeui-block="testimonials-031"] [data-part="grid"]{display:grid;gap:1.4rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-031"] [data-part="card"]{position:relative;display:grid;gap:1rem;align-content:start;padding:1.6rem 1.4rem 1.4rem 2.8rem;border-radius:.4rem 1.2rem 1.2rem .4rem;background:var(--vibeui-testimonials-031-paper);background-image:linear-gradient(90deg,transparent 1.9rem,color-mix(in oklab,var(--vibeui-testimonials-031-accent) 45%,transparent) 1.9rem,color-mix(in oklab,var(--vibeui-testimonials-031-accent) 45%,transparent) calc(1.9rem + 1px),transparent calc(1.9rem + 1px)),repeating-linear-gradient(180deg,transparent 0 calc(1.6rem - 1px),var(--vibeui-testimonials-031-rule) calc(1.6rem - 1px) 1.6rem);border:1px solid var(--vibeui-testimonials-031-line);transform:rotate(calc(var(--vibeui-testimonials-031-tilt) * 1deg));transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
-[data-vibeui-block="testimonials-031"] [data-part="card"]:hover{transform:rotate(0) translateY(-4px);box-shadow:0 30px 50px -30px color-mix(in oklab,var(--vibeui-testimonials-031-fg) 55%,transparent)}
-[data-vibeui-block="testimonials-031"] [data-part="sticker"]{position:absolute;right:-.5rem;top:-.8rem;padding:.35rem .7rem;border-radius:.3rem;background:var(--vibeui-testimonials-031-accent);color:var(--vibeui-testimonials-031-on-accent);font-family:var(--vibeui-testimonials-031-hand);font-size:1.1rem;line-height:1.1;transform:rotate(4deg)}
-[data-vibeui-block="testimonials-031"] [data-part="quote"]{margin:0;font-size:1.02rem;line-height:1.6rem}
-[data-vibeui-block="testimonials-031"] [data-part="quote"]::before{content:"«";color:var(--vibeui-testimonials-031-accent);font-family:var(--vibeui-testimonials-031-display);font-weight:800;font-size:1.4em;line-height:0;margin-right:.1em}
-[data-vibeui-block="testimonials-031"] [data-part="note"]{margin:0;font-family:var(--vibeui-testimonials-031-hand);font-size:1.15rem;color:var(--vibeui-testimonials-031-accent);transform:rotate(-1.5deg);transform-origin:left}
-[data-vibeui-block="testimonials-031"] [data-part="who"]{margin:0;font-size:.85rem;color:var(--vibeui-testimonials-031-muted)}
-[data-vibeui-block="testimonials-031"] [data-part="who"] b{font-family:var(--vibeui-testimonials-031-display);font-weight:700;color:var(--vibeui-testimonials-031-fg)}
-[data-vibeui-block="testimonials-031"] [data-part="scale"]{position:relative;margin:.4rem 0 0;padding:.2rem 0 1.3rem}
-[data-vibeui-block="testimonials-031"] [data-part="track"]{position:relative;height:.35rem;border-radius:999px;background:var(--vibeui-testimonials-031-line)}
-[data-vibeui-block="testimonials-031"] [data-part="fill"]{position:absolute;top:0;bottom:0;left:calc(var(--vibeui-testimonials-031-from) * 1%);width:calc((var(--vibeui-testimonials-031-to) - var(--vibeui-testimonials-031-from)) * 1%);border-radius:999px;background:var(--vibeui-testimonials-031-accent);transform-origin:left}
-[data-vibeui-block="testimonials-031"] [data-part="pin"]{position:absolute;top:50%;width:.95rem;height:.95rem;border-radius:50%;transform:translate(-50%,-50%);background:var(--vibeui-testimonials-031-paper);border:2px solid var(--vibeui-testimonials-031-muted)}
-[data-vibeui-block="testimonials-031"] [data-part="pin"][data-kind="after"]{background:var(--vibeui-testimonials-031-accent);border-color:var(--vibeui-testimonials-031-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-testimonials-031-accent) 22%,transparent)}
-[data-vibeui-block="testimonials-031"] [data-part="ticks"]{display:flex;justify-content:space-between;margin:.5rem 0 0;padding:0;list-style:none;font-family:var(--vibeui-testimonials-031-display);font-size:.68rem;font-weight:700;color:var(--vibeui-testimonials-031-muted)}
-[data-vibeui-block="testimonials-031"] [data-part="ticks"] li[data-from]{color:var(--vibeui-testimonials-031-fg)}
-[data-vibeui-block="testimonials-031"] [data-part="ticks"] li[data-to]{color:var(--vibeui-testimonials-031-accent)}
-@supports (animation-timeline: view()){[data-vibeui-block="testimonials-031"] [data-part="fill"]{animation:vibeui-testimonials-031-grow linear both;animation-timeline:view();animation-range:entry 30% entry 90%}[data-vibeui-block="testimonials-031"] [data-part="pin"][data-kind="after"]{animation:vibeui-testimonials-031-pop linear both;animation-timeline:view();animation-range:entry 70% entry 100%}}
+@supports (animation-timeline: view()){}
 @keyframes vibeui-testimonials-031-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes vibeui-testimonials-031-pop{from{transform:translate(-50%,-50%) scale(0)}to{transform:translate(-50%,-50%) scale(1)}}
 @container (min-width: 40rem){[data-vibeui-block="testimonials-031"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -101,21 +86,7 @@ const DEFAULT_REVIEWS: Testimonials031Review[] = [
   { name: "Игорь", lang: "английский", months: 12, before: "A1", after: "B1", quote: "Мне 47, начинал с нуля. Не стыдно было ни разу — это, наверное, главное. Теперь переписываюсь с сыном в Канаде без переводчика.", note: "лучший год" },
 ]
 
-function pluralMonths(count: number, units: readonly [string, string, string]) {
-  const mod10 = count % 10
-  const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return units[0]
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
-  return units[2]
-}
 
-function pluralLevels(count: number, units: readonly [string, string, string]) {
-  const mod10 = count % 10
-  const mod100 = count % 100
-  if (mod10 === 1 && mod100 !== 11) return units[0]
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return units[1]
-  return units[2]
-}
 
 /** Отзывы с уровнем «до → после» на шкале A1–C1. */
 export function Testimonials031({
@@ -165,32 +136,7 @@ export function Testimonials031({
               const to = position(review.after)
               const gained = Math.max(0, levels.indexOf(review.after) - levels.indexOf(review.before))
               return (
-                <li key={review.name + index} data-part="card" style={{ ["--vibeui-testimonials-031-tilt" as string]: index % 3 === 0 ? -0.8 : index % 3 === 1 ? 0.6 : -0.3 }}>
-                  {gained > 0 ? (
-                    <span data-part="sticker">
-                      +{gained} {pluralLevels(gained, levelUnits)}
-                    </span>
-                  ) : null}
-                  <blockquote data-part="quote">{review.quote}</blockquote>
-                  {review.note ? <p data-part="note">{review.note}</p> : null}
-                  <p data-part="who">
-                    <b>{review.name}</b> · {review.lang} · {review.months} {pluralMonths(review.months, monthUnits)}
-                  </p>
-                  <div data-part="scale" aria-label={scaleLabel.replace("{before}", review.before).replace("{after}", review.after)}>
-                    <div data-part="track" style={{ ["--vibeui-testimonials-031-from" as string]: from, ["--vibeui-testimonials-031-to" as string]: to }}>
-                      <i data-part="fill" />
-                      <i data-part="pin" data-kind="before" style={{ left: `${from}%` }} />
-                      <i data-part="pin" data-kind="after" style={{ left: `${to}%` }} />
-                    </div>
-                    <ul data-part="ticks" aria-hidden="true">
-                      {levels.map((level) => (
-                        <li key={level} data-from={level === review.before ? "" : undefined} data-to={level === review.after ? "" : undefined}>
-                          {level}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
+                <Card114 key={review.name + index} data-part="card" name={review.name} quote={review.quote} note={review.note} lang={review.lang} months={review.months} before={review.before} after={review.after} levelUnits={levelUnits} monthUnits={monthUnits} scaleLabel={scaleLabel} levels={levels} from={from} to={to} gained={gained} style={{ ["--vibeui-testimonials-031-tilt" as string]: index % 3 === 0 ? -0.8 : index % 3 === 1 ? 0.6 : -0.3 }} accent={accent} />
               )
             })}
           </ul>

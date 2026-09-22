@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero031Props = {
   /** Строка над именем: «привет, я». */
   greeting?: string
@@ -58,6 +60,8 @@ container-type:inline-size;
 :where([data-vibeui-block="hero-031"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-031"]{box-sizing:border-box;position:relative;overflow:hidden;background:var(--vibeui-hero-031-bg);color:var(--vibeui-hero-031-fg);font-family:var(--vibeui-hero-031-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-031"] *{box-sizing:border-box}
+[data-vibeui-block="hero-031"] [data-part="btn"]{transform:translate(calc(var(--vibeui-hero-031-mx) * 1px),calc(var(--vibeui-hero-031-my) * 1px)) scale(var(--vibeui-hero-031-ms,1));transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="hero-031"] [data-part="btn"]:hover{--vibeui-hero-031-ms:1.04}
 [data-vibeui-block="hero-031"] [data-part="mesh"]{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 [data-vibeui-block="hero-031"] [data-part="mesh"] i{position:absolute;display:block;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
 [data-vibeui-block="hero-031"] [data-part="mesh"] i:nth-child(1){width:38rem;height:38rem;right:-12rem;top:-14rem;background:color-mix(in oklab,var(--vibeui-hero-031-accent) 45%,transparent);animation:vibeui-hero-031-float 18s ease-in-out infinite alternate}
@@ -74,12 +78,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-031"] [data-part="role"] i{display:inline-block;width:.08em;height:1em;margin-left:.1em;vertical-align:-.1em;background:var(--vibeui-hero-031-accent);animation:vibeui-hero-031-blink 1s steps(1) infinite}
 [data-vibeui-block="hero-031"] [data-part="lede"]{margin:1.6rem 0 0;max-width:34rem;font-size:1.1rem;color:var(--vibeui-hero-031-muted);animation:vibeui-hero-031-fade 1s .75s var(--vibeui-hero-031-ease) both}
 [data-vibeui-block="hero-031"] [data-part="actions"]{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2.2rem;animation:vibeui-hero-031-fade 1s .9s var(--vibeui-hero-031-ease) both}
-[data-vibeui-block="hero-031"] [data-part="btn"]{position:relative;display:inline-flex;align-items:center;gap:.5rem;padding:1rem 1.6rem;border-radius:999px;font-weight:600;text-decoration:none;font-size:1rem;color:var(--vibeui-hero-031-fg);border:1px solid var(--vibeui-hero-031-line);transform:translate(calc(var(--vibeui-hero-031-mx) * 1px),calc(var(--vibeui-hero-031-my) * 1px)) scale(var(--vibeui-hero-031-ms,1));transition:transform .35s var(--vibeui-hero-031-ease),background .25s,color .25s,box-shadow .35s}
-[data-vibeui-block="hero-031"] [data-part="btn"][data-primary="true"]{background:var(--vibeui-hero-031-fg);color:var(--vibeui-hero-031-bg);border-color:transparent;box-shadow:0 10px 30px -14px color-mix(in oklab,var(--vibeui-hero-031-accent) 60%,transparent)}
-[data-vibeui-block="hero-031"] [data-part="btn"][data-primary="true"]:hover{background:var(--vibeui-hero-031-accent);color:var(--vibeui-hero-031-on-accent);box-shadow:0 18px 40px -14px color-mix(in oklab,var(--vibeui-hero-031-accent) 80%,transparent)}
-[data-vibeui-block="hero-031"] [data-part="btn"]:not([data-primary="true"]):hover{background:var(--vibeui-hero-031-line)}
-[data-vibeui-block="hero-031"] [data-part="btn"]:hover{--vibeui-hero-031-ms:1.04}
-[data-vibeui-block="hero-031"] [data-part="btn"]:focus-visible{outline:2px solid var(--vibeui-hero-031-accent);outline-offset:3px}
 [data-vibeui-block="hero-031"] [data-part="hint"]{position:absolute;left:1.25rem;bottom:1.5rem;display:inline-flex;align-items:center;gap:.5rem;font-family:var(--vibeui-hero-031-mono);font-size:.72rem;color:var(--vibeui-hero-031-muted);letter-spacing:.08em;text-transform:uppercase}
 [data-vibeui-block="hero-031"] [data-part="hint"] i{display:inline-block;width:1px;height:2rem;background:currentColor;transform-origin:top;animation:vibeui-hero-031-drop 1.6s ease-in-out infinite}
 [data-vibeui-block="hero-031"] [data-part="badge"]{display:none;position:absolute;right:2rem;bottom:2rem;width:9rem;height:9rem;color:var(--vibeui-hero-031-fg);animation:vibeui-hero-031-spin 22s linear infinite}
@@ -232,14 +230,10 @@ export function Hero031({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="actions">
             {primaryLabel ? (
-              <a data-part="btn" data-primary="true" href={primaryHref} onPointerMove={magnet} onPointerLeave={release} style={{ ["--vibeui-hero-031-mx" as string]: 0, ["--vibeui-hero-031-my" as string]: 0 }}>
-                {primaryLabel} →
-              </a>
+              <Button016 data-part="btn" label={primaryLabel} href={primaryHref} external={false} arrow size="lg" tone="accent" accent={accent} onPointerMove={magnet} onPointerLeave={release} style={{ ["--vibeui-hero-031-mx" as string]: 0, ["--vibeui-hero-031-my" as string]: 0 }} />
             ) : null}
             {secondaryLabel ? (
-              <a data-part="btn" href={secondaryHref} onPointerMove={magnet} onPointerLeave={release} style={{ ["--vibeui-hero-031-mx" as string]: 0, ["--vibeui-hero-031-my" as string]: 0 }}>
-                {secondaryLabel}
-              </a>
+              <Button016 data-part="btn" label={secondaryLabel} href={secondaryHref} external={false} size="lg" tone="neutral" accent={accent} onPointerMove={magnet} onPointerLeave={release} style={{ ["--vibeui-hero-031-mx" as string]: 0, ["--vibeui-hero-031-my" as string]: 0 }} />
             ) : null}
           </div>
           {scrollHint ? (

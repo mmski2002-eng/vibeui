@@ -1,5 +1,10 @@
 import type { CSSProperties } from "react"
 
+import { Card025 } from "@/registry/components/card/card-025/card-025"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Event002Props = {
   /** Фото. Без него на том же месте остаётся цветная подложка. */
   image?: string
@@ -25,7 +30,9 @@ export type Event002Props = {
 // заголовок, описание, строка деталей (дата, время, место, цена) и список
 // спикеров инициалами, кнопка записи. Формат страницы отдельного мероприятия
 // или конференции, куда ведёт афиша.
-const STYLES = `
+const STYLES = `[data-vibeui-block="event-002"] [data-part="heading"]{margin-bottom:0.5rem}
+[data-vibeui-block="event-002"] [data-part="cta"]{width:100%}
+
 :where([data-vibeui-block="event-002"]){
 --vibeui-event-002-bg:transparent;
 --vibeui-event-002-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -48,22 +55,7 @@ font-family:var(--vibeui-event-002-font);
 }
 [data-vibeui-block="event-002"] [data-part="shell"]{max-width:40rem;margin:0 auto;padding:3rem 1.25rem}
 [data-vibeui-block="event-002"] [data-part="card"]{border:1px solid var(--vibeui-event-002-border);border-radius:1.25rem;overflow:hidden;background:var(--vibeui-event-002-card)}
-[data-vibeui-block="event-002"] [data-part="cover"]{
-position:relative;aspect-ratio:21 / 9;display:flex;align-items:flex-start;padding:1.25rem;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="event-002"] [data-part="cover"][data-empty="true"]{background:linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.42 0.14 28));}
-[data-vibeui-block="event-002"] [data-part="cover"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-}
-[data-vibeui-block="event-002"] [data-part="badge"]{
-padding:0.25rem 0.75rem;border-radius:999px;font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
-background:oklch(0.15 0 0 / 55%);color:oklch(0.98 0 0);
-}
 [data-vibeui-block="event-002"] [data-part="body"]{padding:1.5rem}
-[data-vibeui-block="event-002"] [data-part="eyebrow"]{margin:0 0 0.375rem;color:var(--vibeui-event-002-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase}
-[data-vibeui-block="event-002"] [data-part="title"]{margin:0 0 0.5rem;font-size:clamp(1.375rem,4.5cqi,1.875rem);line-height:1.15;letter-spacing:-0.02em;font-weight:700}
 [data-vibeui-block="event-002"] [data-part="summary"]{margin:0 0 1.25rem;color:var(--vibeui-event-002-muted);font-size:0.9375rem;line-height:1.55}
 [data-vibeui-block="event-002"] [data-part="facts"]{list-style:none;margin:0 0 1.25rem;padding:0;display:grid;gap:0.5rem;grid-template-columns:1fr 1fr}
 [data-vibeui-block="event-002"] [data-part="fact"]{display:flex;flex-direction:column;gap:0.0625rem}
@@ -78,13 +70,6 @@ margin-left:-0.5rem;box-shadow:0 0 0 2px var(--vibeui-event-002-card);
 }
 [data-vibeui-block="event-002"] [data-part="avatar"]:first-child{margin-left:0}
 [data-vibeui-block="event-002"] [data-part="speakers-note"]{font-size:0.8125rem;color:var(--vibeui-event-002-muted)}
-[data-vibeui-block="event-002"] [data-part="cta"]{
-display:inline-flex;align-items:center;justify-content:center;width:100%;height:2.875rem;border-radius:0.75rem;
-background:var(--vibeui-event-002-accent);color:oklch(from var(--vibeui-event-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-event-002-dur-2) ease;
-}
-[data-vibeui-block="event-002"] [data-part="cta"]:hover{opacity:.9}
-[data-vibeui-block="event-002"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-event-002-accent);outline-offset:3px}
 @container (min-width: 36rem){[data-vibeui-block="event-002"] [data-part="shell"]{padding:4rem 2rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-002"] *{animation:none!important;transition:none!important}}
 `
@@ -163,15 +148,24 @@ export function Event002({
       >
         <div data-part="shell">
           <div data-part="card">
-            <div data-part="cover" data-empty={image ? undefined : "true"}>
-              {image ? (
-                <img src={image} alt="" loading="lazy" decoding="async" />
-              ) : null}
-              <span data-part="badge">{badge}</span>
-            </div>
+            <Card025
+              data-part="cover"
+              src={image}
+              alt=""
+              ratio="21/9"
+              radius="none"
+              badge={badge}
+              background={image ? undefined : "linear-gradient(140deg,light-dark(oklch(0.2 0 0),oklch(0.92 0 0)),oklch(0.42 0.14 28))"}
+              accent={accent}
+            />
             <div data-part="body">
-              <p data-part="eyebrow">{eyebrow}</p>
-              <h2 data-part="title">{title}</h2>
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                size="sm"
+                accent={accent}
+              />
               <p data-part="summary">{summary}</p>
               <ul data-part="facts">
                 <li data-part="fact">
@@ -201,9 +195,15 @@ export function Event002({
                   {speakers.length} спикеров
                 </span>
               </div>
-              <a href={ctaHref} data-part="cta">
-                {ctaLabel}
-              </a>
+              <Button016
+                data-part="cta"
+                label={ctaLabel}
+                href={ctaHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
             </div>
           </div>
         </div>

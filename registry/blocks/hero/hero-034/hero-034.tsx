@@ -2,6 +2,8 @@
 
 import { useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero034Zone = {
   /** Часть машины, на которую наводят. */
   id: "hood" | "lights" | "wheels" | "body" | "glass"
@@ -63,6 +65,7 @@ container-type:inline-size;
 :where([data-vibeui-block="hero-034"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-034"]{box-sizing:border-box;position:relative;overflow:hidden;isolation:isolate;padding:4rem 0 3.5rem;background:var(--vibeui-hero-034-bg);color:var(--vibeui-hero-034-fg);font-family:var(--vibeui-hero-034-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-034"] *{box-sizing:border-box}
+[data-vibeui-block="hero-034"] [data-part="primary"]{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
 [data-vibeui-block="hero-034"] [data-part="grid-bg"]{position:absolute;inset:0;z-index:-2;background-image:linear-gradient(var(--vibeui-hero-034-line) 1px,transparent 1px),linear-gradient(90deg,var(--vibeui-hero-034-line) 1px,transparent 1px);background-size:4rem 4rem;mask-image:radial-gradient(ellipse 70% 60% at 70% 50%,#000 20%,transparent 80%);opacity:.5}
 [data-vibeui-block="hero-034"] [data-part="glow"]{position:absolute;z-index:-2;right:-10%;top:10%;width:50%;aspect-ratio:1;border-radius:50%;background:var(--vibeui-hero-034-accent);filter:blur(120px);opacity:.14;pointer-events:none}
 [data-vibeui-block="hero-034"] [data-part="grain"]{position:absolute;inset:0;z-index:-1;opacity:.07;pointer-events:none;mix-blend-mode:overlay}
@@ -76,13 +79,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-034"] [data-part="lede"]{margin:1.4rem 0 0;max-width:30rem;font-size:1.05rem;color:var(--vibeui-hero-034-muted);opacity:0;animation:vibeui-hero-034-fade .8s ease-out .6s forwards}
 [data-vibeui-block="hero-034"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.8rem;margin:2rem 0 0;opacity:0;animation:vibeui-hero-034-fade .8s ease-out .8s forwards}
 [data-vibeui-block="hero-034"] [data-part="magnet"]{display:inline-block;padding:.6rem;margin:-.6rem;border-radius:1rem}
-[data-vibeui-block="hero-034"] [data-part="primary"]{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.6rem;border-radius:.7rem;background:var(--vibeui-hero-034-accent);color:var(--vibeui-hero-034-on-accent);font-weight:700;font-size:1rem;text-decoration:none;white-space:nowrap;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .3s;will-change:transform}
-[data-vibeui-block="hero-034"] [data-part="primary"]:hover{box-shadow:0 18px 40px -14px var(--vibeui-hero-034-accent)}
-[data-vibeui-block="hero-034"] [data-part="primary"] svg{width:1.1rem;height:1.1rem;transition:transform .3s}
-[data-vibeui-block="hero-034"] [data-part="primary"]:hover svg{transform:translateX(3px)}
-[data-vibeui-block="hero-034"] [data-part="secondary"]{display:inline-flex;align-items:center;padding:1rem 1.4rem;border-radius:.7rem;border:1px solid var(--vibeui-hero-034-line);color:var(--vibeui-hero-034-fg);font-weight:600;text-decoration:none;white-space:nowrap;transition:border-color .2s,background .2s}
-[data-vibeui-block="hero-034"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-034-fg);background:var(--vibeui-hero-034-glass)}
-[data-vibeui-block="hero-034"] a:focus-visible,[data-vibeui-block="hero-034"] button:focus-visible{outline:2px solid var(--vibeui-hero-034-accent);outline-offset:3px}
+[data-vibeui-block="hero-034"] button:focus-visible{outline:2px solid var(--vibeui-hero-034-accent);outline-offset:3px}
 [data-vibeui-block="hero-034"] [data-part="stage"]{display:grid;gap:1rem}
 [data-vibeui-block="hero-034"] [data-part="car"]{width:100%;height:auto;display:block;overflow:visible;color:var(--vibeui-hero-034-fg)}
 [data-vibeui-block="hero-034"] [data-part="stroke"]{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-hero-034-draw 1.6s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--vibeui-hero-034-d,0s)}
@@ -224,18 +221,19 @@ export function Hero034({
             <div data-part="actions">
               {primaryLabel ? (
                 <span data-part="magnet" onPointerMove={magnetMove} onPointerLeave={magnetLeave}>
-                  <a ref={magnetRef} data-part="primary" href={primaryHref}>
-                    {primaryLabel}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </a>
+                  <Button016 ref={magnetRef} data-part="primary" label={primaryLabel} href={primaryHref} external={false} arrow size="lg" tone="accent" accent={accent} />
                 </span>
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

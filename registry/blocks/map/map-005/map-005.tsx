@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card137 } from "@/registry/components/card/card-137/card-137"
 
 export type Map005Hours = {
   days: string
@@ -80,23 +81,12 @@ container-type:inline-size;
 [data-vibeui-block="map-005"] iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:var(--vibeui-map-005-map-filter,none)}
 [data-vibeui-block="map-005"] [data-part="pin"]{position:relative;width:1.4rem;height:1.4rem;transform:translate(-50%,-100%);border-radius:50% 50% 50% 0;background:var(--vibeui-map-005-accent);box-shadow:var(--vibeui-map-005-glow);rotate:-45deg}
 [data-vibeui-block="map-005"] [data-part="pin"]::after{content:"";position:absolute;inset:.35rem;border-radius:50%;background:var(--vibeui-map-005-card)}
-[data-vibeui-block="map-005"] [data-part="card"]{position:relative;z-index:2;display:grid;gap:1.25rem;padding:1.5rem;background:var(--vibeui-map-005-card);border-top:1px solid var(--vibeui-map-005-line)}
-[data-vibeui-block="map-005"] [data-part="address"]{margin:0;font-family:var(--vibeui-map-005-display);font-size:1.5rem;font-weight:500;line-height:1.2;font-style:normal}
-[data-vibeui-block="map-005"] [data-part="hours"]{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.25rem;font-size:.9rem}
-[data-vibeui-block="map-005"] [data-part="hours"] dt{color:var(--vibeui-map-005-muted)}
-[data-vibeui-block="map-005"] [data-part="hours"] dd{margin:0;font-variant-numeric:tabular-nums}
-[data-vibeui-block="map-005"] [data-part="details"]{margin:0;padding:0;list-style:none;display:grid;gap:.4rem;font-size:.85rem;color:var(--vibeui-map-005-muted)}
-[data-vibeui-block="map-005"] [data-part="details"] li{display:flex;gap:.6rem;align-items:flex-start}
-[data-vibeui-block="map-005"] [data-part="details"] li::before{content:"";flex:none;width:.4rem;height:.4rem;margin-top:.5rem;border-radius:50%;background:var(--vibeui-map-005-accent)}
-[data-vibeui-block="map-005"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.6rem}
-[data-vibeui-block="map-005"] [data-part="actions"] a{display:inline-flex;align-items:center;height:2.75rem;padding:0 1.2rem;border-radius:999px;text-decoration:none;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--vibeui-map-005-accent);color:var(--vibeui-map-005-on-accent);box-shadow:var(--vibeui-map-005-glow)}
-[data-vibeui-block="map-005"] [data-part="actions"] a[data-variant="ghost"]{background:transparent;color:inherit;border:1px solid var(--vibeui-map-005-line);box-shadow:none}
 [data-vibeui-block="map-005"] a:focus-visible{outline:2px solid var(--vibeui-map-005-accent);outline-offset:2px}
 [data-vibeui-block="map-005"] [data-part="status"]{position:absolute;left:.75rem;top:.75rem;z-index:2;margin:0;padding:.4rem .7rem;border-radius:.5rem;background:var(--vibeui-map-005-card);border:1px solid var(--vibeui-map-005-line);font-size:.7rem;color:var(--vibeui-map-005-muted);max-width:22rem}
 @container (min-width: 56rem){
+[data-vibeui-block="map-005"] [data-part="card"]{width:22rem}
 [data-vibeui-block="map-005"] [data-part="shell"]{padding:5.5rem 2rem}
 [data-vibeui-block="map-005"] [data-part="map"]{height:clamp(24rem,46cqi,34rem)}
-[data-vibeui-block="map-005"] [data-part="card"]{position:absolute;left:1.5rem;top:1.5rem;max-height:calc(100% - 3rem);width:22rem;border:1px solid var(--vibeui-map-005-line);border-radius:.9rem;box-shadow:0 30px 50px -30px rgb(0 0 0 / .6);align-content:start;overflow:auto}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="map-005"] *{transition:none!important}}`
 
@@ -236,36 +226,7 @@ export function Map005({
               {status === "ready" ? null : <iframe src={embed} title={`${providerLabel}: ${address}`} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />}
               {status === "failed" ? <p data-part="status">{failedText}</p> : null}
             </div>
-            <div data-part="card">
-              <address data-part="address">{address}</address>
-              {hours.length > 0 ? (
-                <dl data-part="hours">
-                  {hours.map((row) => (
-                    <div key={row.days} style={{ display: "contents" }}>
-                      <dt>{row.days}</dt>
-                      <dd>{row.time}</dd>
-                    </div>
-                  ))}
-                </dl>
-              ) : null}
-              {details.length > 0 ? (
-                <ul data-part="details">
-                  {details.map((detail) => (
-                    <li key={detail}>{detail}</li>
-                  ))}
-                </ul>
-              ) : null}
-              <div data-part="actions">
-                <a href={routeHref} target="_blank" rel="noreferrer noopener">
-                  {routeLabel}
-                </a>
-                {phone ? (
-                  <a data-variant="ghost" href={phoneHref}>
-                    {phone}
-                  </a>
-                ) : null}
-              </div>
-            </div>
+            <Card137 data-part="card" address={address} hours={hours} details={details} routeLabel={routeLabel} phone={phone} phoneHref={phoneHref} routeHref={routeHref} accent={accent} />
           </div>
         </div>
       </section>

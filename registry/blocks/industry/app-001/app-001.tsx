@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card104 } from "@/registry/components/card/card-104/card-104"
 
 export type App001Feature = {
   title: string
@@ -51,7 +52,7 @@ const STYLES = `
 --vibeui-app-001-screen-fg:#f4f2fb;
 --vibeui-app-001-font:"Manrope",ui-sans-serif,system-ui,sans-serif;
 --vibeui-app-001-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
---vibeui-app-001-p:0;
+--vibeui-card-104-p:0;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="app-001"]{color-scheme:dark}
@@ -71,21 +72,9 @@ container-type:inline-size;
 [data-vibeui-block="app-001"][data-motion="true"] [data-reveal]:not([data-in="true"]) [data-part="w"] span{transform:translateY(112%)}
 [data-vibeui-block="app-001"] [data-part="grid"]{display:grid;gap:2rem;align-items:start}
 [data-vibeui-block="app-001"] [data-part="list"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none;counter-reset:vibeui-app-001}
-[data-vibeui-block="app-001"] [data-part="f"]{position:relative;padding:1.4rem 1.4rem 1.4rem 1.9rem;border-radius:1.3rem;background:var(--vibeui-app-001-bg);box-shadow:0 0 0 1px var(--vibeui-app-001-line);min-height:11rem;counter-increment:vibeui-app-001;transition:box-shadow .5s,transform .7s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="app-001"][data-motion="true"] [data-part="f"]:not([data-in="true"]){opacity:0}
-[data-vibeui-block="app-001"] [data-part="f"][data-in="true"]{animation:vibeui-app-001-rise .8s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--vibeui-app-001-i) * .09s)}
-[data-vibeui-block="app-001"] [data-part="f"]::before{content:"";position:absolute;left:0;top:1.4rem;bottom:1.4rem;width:3px;border-radius:3px;background:var(--vibeui-app-001-line)}
-[data-vibeui-block="app-001"] [data-part="f"]::after{content:"";position:absolute;left:0;top:1.4rem;bottom:1.4rem;width:3px;border-radius:3px;background:var(--vibeui-app-001-accent);transform:scaleY(0);transform-origin:top;transition:transform .15s linear}
-[data-vibeui-block="app-001"] [data-part="f"][data-active="true"]{box-shadow:0 0 0 1px var(--vibeui-app-001-accent),0 30px 60px -30px color-mix(in oklab,var(--vibeui-app-001-accent) 55%,transparent);transform:translateX(.4rem)}
-[data-vibeui-block="app-001"] [data-part="f"][data-active="true"]::after{transform:scaleY(var(--vibeui-app-001-p))}
-[data-vibeui-block="app-001"] [data-part="f"][data-done="true"]::after{transform:scaleY(1)}
-[data-vibeui-block="app-001"] [data-part="f"] h3{margin:0;font-size:1.5rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
-[data-vibeui-block="app-001"] [data-part="f"] h3::before{content:"0" counter(vibeui-app-001);display:block;margin-bottom:.6rem;font-family:var(--vibeui-app-001-mono);font-size:.72rem;font-weight:500;letter-spacing:.08em;color:var(--vibeui-app-001-muted);transition:color .3s}
-[data-vibeui-block="app-001"] [data-part="f"][data-active="true"] h3::before{color:var(--vibeui-app-001-accent)}
-[data-vibeui-block="app-001"] [data-part="f"] p{margin:.6rem 0 0;color:var(--vibeui-app-001-muted);font-size:1.05rem;max-width:30rem}
-[data-vibeui-block="app-001"] [data-part="f"] [data-part="mini"]{display:none}
+[data-vibeui-block="app-001"][data-motion="true"] [data-vibeui-block="card-104"]:not([data-in="true"]){opacity:0}
 [data-vibeui-block="app-001"] [data-part="sticky"]{display:none;position:sticky;top:5rem;justify-content:center;perspective:1400px}
-[data-vibeui-block="app-001"] [data-part="phone"]{position:relative;width:17rem;aspect-ratio:9 / 19;border-radius:2.4rem;background:#0b0b16;padding:.55rem;box-shadow:0 60px 100px -36px color-mix(in oklab,var(--vibeui-app-001-accent) 60%,transparent),0 30px 50px -30px rgb(0 0 0 / .6),0 0 0 2px #2a2a3a,0 0 0 6px #0b0b16;transform:rotateY(calc((var(--vibeui-app-001-p) - .5) * -10deg)) rotateX(calc((var(--vibeui-app-001-p) - .5) * 4deg));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="app-001"] [data-part="phone"]{position:relative;width:17rem;aspect-ratio:9 / 19;border-radius:2.4rem;background:#0b0b16;padding:.55rem;box-shadow:0 60px 100px -36px color-mix(in oklab,var(--vibeui-app-001-accent) 60%,transparent),0 30px 50px -30px rgb(0 0 0 / .6),0 0 0 2px #2a2a3a,0 0 0 6px #0b0b16;transform:rotateY(calc((var(--vibeui-card-104-p) - .5) * -10deg)) rotateX(calc((var(--vibeui-card-104-p) - .5) * 4deg));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="app-001"] [data-part="phone"]::before{content:"";position:absolute;left:50%;top:.85rem;width:4.5rem;height:1.3rem;border-radius:999px;background:#0b0b16;transform:translateX(-50%);z-index:2}
 [data-vibeui-block="app-001"] [data-part="phone"]::after{content:"";position:absolute;inset:.55rem;border-radius:1.9rem;background:linear-gradient(115deg,transparent 40%,rgb(255 255 255 / .1) 50%,transparent 60%);pointer-events:none;z-index:3}
 [data-vibeui-block="app-001"] [data-part="screen"]{position:relative;height:100%;border-radius:1.9rem;background:var(--vibeui-app-001-screen);color:var(--vibeui-app-001-screen-fg);overflow:hidden}
@@ -113,10 +102,10 @@ container-type:inline-size;
 @keyframes vibeui-app-001-rise{from{opacity:0;transform:translateY(2rem)}}
 @keyframes vibeui-app-001-blink{0%,100%{opacity:.3}50%{opacity:1}}
 @keyframes vibeui-app-001-float{from{transform:translate(0,0)}to{transform:translate(-8%,10%)}}
-@container (min-width: 60rem){[data-vibeui-block="app-001"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) 22rem;gap:4rem}[data-vibeui-block="app-001"] [data-part="sticky"]{display:flex}[data-vibeui-block="app-001"] [data-part="f"]{min-height:13rem;display:grid;align-content:center;padding:2rem 2rem 2rem 2.4rem}}
-@container (max-width: 59.98rem){[data-vibeui-block="app-001"] [data-part="f"] [data-part="mini"]{display:block;margin-top:1rem;font-family:var(--vibeui-app-001-mono);font-size:.72rem;color:var(--vibeui-app-001-accent)}}
+@container (min-width: 60rem){[data-vibeui-block="app-001"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) 22rem;gap:4rem}[data-vibeui-block="app-001"] [data-part="sticky"]{display:flex}}
+
 [data-vibeui-block="app-001"] [data-part="w"]:not(:last-child)::after{content:"\\00a0"}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="app-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="app-001"] [data-part="f"],[data-vibeui-block="app-001"] [data-part="w"] span{opacity:1!important;transform:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="app-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="app-001"] [data-part="w"] span{opacity:1!important;transform:none!important}}`
 
 const DEFAULT_FEATURES: App001Feature[] = [
   { title: "Дыхание, которое ведёт", text: "Круг растёт и сжимается, а вы просто следуете. Три практики: 4-7-8, коробочное, «вечер».", screen: "breath", screenTitle: "Вечернее дыхание" },
@@ -232,7 +221,7 @@ export function App001({
       const rect = item.getBoundingClientRect()
       const middle = window.innerHeight / 2
       const progress = Math.min(1, Math.max(0, (middle - rect.top) / Math.max(1, rect.height)))
-      element.style.setProperty("--vibeui-app-001-p", progress.toFixed(3))
+      element.style.setProperty("--vibeui-card-104-p", progress.toFixed(3))
     }
     const onScroll = () => {
       if (!frame) frame = window.requestAnimationFrame(measure)
@@ -271,13 +260,7 @@ export function App001({
           <div data-part="grid">
             <ol ref={list} data-part="list">
               {features.map((feature, index) => (
-                <li key={feature.title} data-part="f" data-reveal="" data-active={index === active} data-done={index < active} style={{ ["--vibeui-app-001-i" as string]: index }}>
-                  <h3>{feature.title}</h3>
-                  <p>{feature.text}</p>
-                  <span data-part="mini">
-                    {screenPrefix} · {feature.screenTitle ?? feature.screen}
-                  </span>
-                </li>
+                <Card104 key={feature.title} data-part="f" title={feature.title} text={feature.text} screenTitle={feature.screenTitle} screen={feature.screen} screenPrefix={screenPrefix} data-active={index === active} data-done={index < active} style={{ ["--vibeui-app-001-i" as string]: index }} accent={accent} />
               ))}
             </ol>
             <div data-part="sticky">

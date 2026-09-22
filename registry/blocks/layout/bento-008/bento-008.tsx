@@ -1,4 +1,6 @@
 import type { CSSProperties } from "react"
+import { Badge027 } from "@/registry/components/badge/badge-027/badge-027"
+import { Avatar033 } from "@/registry/components/avatar/avatar-033/avatar-033"
 
 export type Bento008Segment = {
   label: string
@@ -99,15 +101,9 @@ container-type:inline-size;
 [data-vibeui-block="bento-008"] [data-part="ring"]::before{content:"";position:absolute;inset:.7rem;border-radius:50%;background:var(--vibeui-bento-008-paper)}
 [data-vibeui-block="bento-008"] [data-part="ring"] b{position:relative;font-family:var(--vibeui-bento-008-display);font-weight:800;font-size:1.5rem;letter-spacing:-.03em}
 [data-vibeui-block="bento-008"] [data-part="faces"]{display:flex;margin:.4rem 0 .2rem;padding:0;list-style:none}
-[data-vibeui-block="bento-008"] [data-part="faces"] li{position:relative;display:grid;place-items:center;width:2.6rem;height:2.6rem;margin-left:-.6rem;border-radius:50%;border:2px solid var(--vibeui-bento-008-paper);background:color-mix(in oklab,var(--vibeui-bento-008-accent) calc(var(--vibeui-bento-008-i) * 12% + 20%),var(--vibeui-bento-008-fg));color:#fff;font-family:var(--vibeui-bento-008-display);font-size:.72rem;font-weight:700}
-[data-vibeui-block="bento-008"] [data-part="faces"] li:first-child{margin-left:0}
-[data-vibeui-block="bento-008"] [data-part="faces"] li[data-hand="true"]{animation:vibeui-bento-008-hand 3s ease-in-out infinite}
-[data-vibeui-block="bento-008"] [data-part="faces"] li[data-hand="true"]::after{content:"✋";position:absolute;right:-.5rem;top:-.6rem;font-size:.9rem;animation:vibeui-bento-008-wave 3s ease-in-out infinite}
 [data-vibeui-block="bento-008"] [data-part="tile"][data-kind="homework"]{background-image:repeating-linear-gradient(180deg,transparent 0 calc(1.6rem - 1px),var(--vibeui-bento-008-rule) calc(1.6rem - 1px) 1.6rem)}
 [data-vibeui-block="bento-008"] p[data-part="ink"]{margin:.6rem 0 0;font-family:var(--vibeui-bento-008-hand);font-size:1.3rem;line-height:1.6rem;color:var(--vibeui-bento-008-accent);clip-path:inset(0 100% 0 0);animation:vibeui-bento-008-write 6s cubic-bezier(.4,0,.6,1) infinite}
 [data-vibeui-block="bento-008"] [data-part="chips"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="bento-008"] [data-part="chips"] li{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border-radius:999px;border:1px solid var(--vibeui-bento-008-line);background:var(--vibeui-bento-008-bg);font-size:.8rem;font-weight:600;transform:rotate(calc(var(--vibeui-bento-008-r) * 1deg))}
-[data-vibeui-block="bento-008"] [data-part="chips"] li::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-bento-008-accent)}
 [data-vibeui-block="bento-008"] [data-part="list"]{display:grid;gap:.4rem;margin:.6rem 0 0;padding:0;list-style:none;font-size:.9rem}
 [data-vibeui-block="bento-008"] [data-part="list"] li{display:flex;gap:.5rem;align-items:baseline}
 [data-vibeui-block="bento-008"] [data-part="list"] li::before{content:"✓";font-weight:700;color:var(--vibeui-bento-008-accent)}
@@ -217,9 +213,7 @@ export function Bento008({
               <h3>{groupTitle}</h3>
               <ul data-part="faces" aria-hidden="true">
                 {group.map((initials, index) => (
-                  <li key={`${initials}-${index}`} data-hand={index === group.length - 2 ? "true" : undefined} style={{ ["--vibeui-bento-008-i" as string]: index }}>
-                    {initials}
-                  </li>
+                  <Avatar033 key={`${initials}-${index}`} data-part="face" initials={initials} data-hand={index === group.length - 2 ? "true" : undefined} style={{ ["--vibeui-bento-008-i" as string]: index }} accent={accent} />
                 ))}
               </ul>
               <p>{groupText}</p>
@@ -233,9 +227,7 @@ export function Bento008({
               <p>{nativeText}</p>
               <ul data-part="chips">
                 {natives.map((native, index) => (
-                  <li key={native} style={{ ["--vibeui-bento-008-r" as string]: index % 2 === 0 ? -2 : 2 }}>
-                    {native}
-                  </li>
+                  <Badge027 key={native} data-part="chip" label={native} style={{ ["--vibeui-bento-008-r" as string]: index % 2 === 0 ? -2 : 2 }} accent={accent} />
                 ))}
               </ul>
             </article>

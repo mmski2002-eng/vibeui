@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type About009Fact = {
   value: string
   label: string
@@ -48,6 +50,7 @@ container-type:inline-size;
 :where([data-vibeui-block="about-009"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="about-009"]{box-sizing:border-box;display:block;background:var(--vibeui-about-009-bg);color:var(--vibeui-about-009-fg);font-family:var(--vibeui-about-009-font);font-size:1rem;line-height:1.4}
 [data-vibeui-block="about-009"] *{box-sizing:border-box}
+[data-vibeui-block="about-009"] [data-part="link"]{margin-top:1.5rem}
 [data-vibeui-block="about-009"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:2rem 1.25rem 3rem}
 [data-vibeui-block="about-009"] [data-part="label"]{margin:0;padding-top:1.25rem;border-top:1px solid var(--vibeui-about-009-line);font-size:1.05rem}
 [data-vibeui-block="about-009"] [data-part="text"]{margin:1rem 0 0;max-width:22ch;font-family:var(--vibeui-about-009-display);font-size:clamp(1.6rem,4.2cqi,3.25rem);line-height:1.12;letter-spacing:-.03em;font-weight:500;text-wrap:pretty}
@@ -59,9 +62,6 @@ container-type:inline-size;
 [data-vibeui-block="about-009"] [data-part="fact"]:hover{transform:translateY(-3px) rotate(-1deg)}
 [data-vibeui-block="about-009"] [data-part="fact"] b{font-family:var(--vibeui-about-009-display);font-size:1.35rem;font-weight:700;letter-spacing:-.02em;line-height:1}
 [data-vibeui-block="about-009"] [data-part="fact"] span{font-size:.9rem;opacity:.8}
-[data-vibeui-block="about-009"] [data-part="link"]{display:inline-flex;align-items:center;height:2.6rem;padding:0 1.15rem;margin-top:1.5rem;border-radius:999px;background:light-dark(#f1f1f3,#1f2026);color:inherit;font-weight:500;text-decoration:none;transition:transform .2s}
-[data-vibeui-block="about-009"] [data-part="link"]:hover{transform:translateY(-2px)}
-[data-vibeui-block="about-009"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-about-009-fg);outline-offset:3px}
 @supports (animation-timeline: view()){
 [data-vibeui-block="about-009"] [data-part="text"],[data-vibeui-block="about-009"] [data-part="note"],[data-vibeui-block="about-009"] [data-part="facts"]{animation:vibeui-about-009-in linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
 }
@@ -127,9 +127,15 @@ export function About009({
             </ul>
           ) : null}
           {linkLabel ? (
-            <a data-part="link" href={linkHref}>
-              {linkLabel}
-            </a>
+            <Button016
+              data-part="link"
+              label={linkLabel}
+              href={linkHref}
+              external={false}
+              size="md"
+              tone="neutral"
+              accent={accent}
+            />
           ) : null}
         </div>
       </section>

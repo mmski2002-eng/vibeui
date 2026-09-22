@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react"
+import { Mockup013 } from "@/registry/components/mockup/mockup-013/mockup-013"
 
 export type Surface009Props = {
   /** Контент поверх фона. Без него блок показывает демонстрационный пример. */
@@ -23,7 +24,7 @@ export type Surface009Props = {
 
 // Жидкое стекло: под контентом стеклянная плита, которая преломляет живой
 // фон — у кромок картинка изгибается, каналы расходятся хроматикой, по краю
-// бежит блик. Геометрия плиты — DOM-элемент [data-part="slab"]: его прямо-
+// бежит блик. Геометрия плиты — DOM-элемент [data-part="ghost-slab"]: его прямо-
 // угольник измеряется и уходит в шейдер, так контент и линза совпадают
 // на любой ширине. Фон под стеклом — мягкие пятна той же палитры.
 // Палитра живёт в CSS с light-dark и читается в шейдер через computed-цвета
@@ -54,6 +55,7 @@ background:var(--vibeui-surface-009-c1);color:var(--vibeui-surface-009-ink);
 font-family:var(--vibeui-surface-009-font);
 }
 [data-vibeui-block="surface-009"] *{box-sizing:border-box}
+[data-vibeui-block="surface-009"] [data-part="ghost"]{flex:1}
 /* Заглушка того же характера: пока холст не ожил — и навсегда там, где
    нет WebGL 2, — те же цвета лежат мягкими пятнами. */
 [data-vibeui-block="surface-009"] [data-part="still"]{
@@ -80,21 +82,14 @@ opacity:0;transition:opacity 0.8s ease;
 position:relative;max-width:80rem;margin:0 auto;min-height:28rem;
 padding:2rem clamp(1.5rem,6cqi,4rem);display:flex;flex-direction:column;
 }
-/* Призрак: заголовок и стеклянная плита — сама плита рисуется шейдером
-   по прямоугольнику этого элемента, DOM даёт только геометрию и контент. */
-[data-vibeui-block="surface-009"] [data-part="ghost"]{display:flex;flex-direction:column;flex:1;gap:2.5rem}
-[data-vibeui-block="surface-009"] [data-part="nav"]{display:flex;align-items:center;gap:0.75rem}
-[data-vibeui-block="surface-009"] [data-part="mark"]{width:1.5rem;height:1.5rem;flex:none;border-radius:0.375rem;background:var(--vibeui-surface-009-ink)}
-[data-vibeui-block="surface-009"] [data-part="nav"] span:not([data-part]){width:3rem;height:0.5rem;border-radius:999px;background:var(--vibeui-surface-009-ghost-soft)}
-[data-vibeui-block="surface-009"] [data-part="nav"] span:last-child{margin-inline-start:auto;width:4.5rem;height:1.75rem;border-radius:0.5rem;background:var(--vibeui-surface-009-ink)}
-[data-vibeui-block="surface-009"] [data-part="slab"]{position:relative;margin:auto;width:min(40rem,100%);min-height:14rem;padding:2rem;display:flex;flex-direction:column;gap:1rem;justify-content:center;border-radius:1.25rem}
-[data-vibeui-block="surface-009"] [data-part="slab"] span{height:1rem;border-radius:999px;background:var(--vibeui-surface-009-ghost);width:70%}
-[data-vibeui-block="surface-009"] [data-part="slab"] span:nth-child(2){width:45%}
-[data-vibeui-block="surface-009"] [data-part="slab"] span:nth-child(3){height:0.625rem;width:55%;background:var(--vibeui-surface-009-ghost-soft)}
-[data-vibeui-block="surface-009"] [data-part="slab"] span:last-child{margin-top:1rem;width:7rem;height:2.5rem;border-radius:0.75rem;background:var(--vibeui-surface-009-ink)}
+[data-vibeui-block="surface-009"] [data-part="ghost-slab"]{position:relative;margin:auto;width:min(40rem,100%);min-height:14rem;padding:2rem;display:flex;flex-direction:column;gap:1rem;justify-content:center;border-radius:1.25rem}
+[data-vibeui-block="surface-009"] [data-part="ghost-slab"] span{height:1rem;border-radius:999px;background:var(--vibeui-surface-009-ghost);width:70%}
+[data-vibeui-block="surface-009"] [data-part="ghost-slab"] span:nth-child(2){width:45%}
+[data-vibeui-block="surface-009"] [data-part="ghost-slab"] span:nth-child(3){height:0.625rem;width:55%;background:var(--vibeui-surface-009-ghost-soft)}
+[data-vibeui-block="surface-009"] [data-part="ghost-slab"] span:last-child{margin-top:1rem;width:7rem;height:2.5rem;border-radius:0.75rem;background:var(--vibeui-surface-009-ink)}
 @container (min-width: 48rem){
 [data-vibeui-block="surface-009"] [data-part="frame"]{min-height:34rem;padding-block:2.5rem 3rem}
-[data-vibeui-block="surface-009"] [data-part="slab"]{min-height:16rem;padding:2.5rem}
+[data-vibeui-block="surface-009"] [data-part="ghost-slab"]{min-height:16rem;padding:2.5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="surface-009"] *{animation:none!important;transition:none!important}}
 `
@@ -456,25 +451,11 @@ export function Surface009({
         <canvas ref={canvasRef} aria-hidden="true" />
         <div data-part="frame">
           {children ? (
-            <div data-part="slab" ref={slabRef}>
+            <div data-part="ghost-slab" ref={slabRef}>
               {children}
             </div>
           ) : (
-            <div data-part="ghost" aria-hidden="true">
-              <div data-part="nav">
-                <span data-part="mark" />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <div data-part="slab" ref={slabRef}>
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
+            <Mockup013 data-part="ghost" slabRef={slabRef} accent={accent} />
           )}
         </div>
       </section>

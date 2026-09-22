@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card106 } from "@/registry/components/card/card-106/card-106"
 
 export type Podcast005Quote = {
   text: string
@@ -58,25 +59,14 @@ container-type:inline-size;
 [data-vibeui-block="podcast-005"] [data-part="lane"]:hover{animation-play-state:paused}
 [data-vibeui-block="podcast-005"] [data-part="lane"][data-dir="left"]{animation:vibeui-podcast-005-left var(--vibeui-podcast-005-s) linear infinite}
 [data-vibeui-block="podcast-005"] [data-part="lane"][data-dir="right"]{animation:vibeui-podcast-005-right calc(var(--vibeui-podcast-005-s) * 1.3) linear infinite;margin-top:.8rem}
-[data-vibeui-block="podcast-005"] [data-part="q"]{position:relative;display:inline-flex;align-items:baseline;gap:1rem;padding:.1em 2rem .35em;color:inherit;text-decoration:none;white-space:nowrap}
-[data-vibeui-block="podcast-005"] [data-part="q"] b{font-family:var(--vibeui-podcast-005-display);font-weight:800;font-size:clamp(2.6rem,6.5cqi,5rem);line-height:1;text-transform:uppercase;letter-spacing:-.01em;transition:color .3s,translate .4s var(--vibeui-podcast-005-ease)}
-[data-vibeui-block="podcast-005"] [data-part="lane"][data-dir="right"] [data-part="q"] b{color:transparent;-webkit-text-stroke:.02em color-mix(in oklab,var(--vibeui-podcast-005-fg) 60%,transparent);paint-order:stroke fill}
-[data-vibeui-block="podcast-005"] [data-part="q"]:hover b{color:var(--vibeui-podcast-005-accent);translate:0 -.06em}
-[data-vibeui-block="podcast-005"] [data-part="lane"][data-dir="right"] [data-part="q"]:hover b{-webkit-text-stroke-color:var(--vibeui-podcast-005-accent)}
-[data-vibeui-block="podcast-005"] [data-part="q"] small{font-family:var(--vibeui-podcast-005-mono);font-size:.72rem;letter-spacing:.1em;color:var(--vibeui-podcast-005-muted);text-transform:uppercase}
-[data-vibeui-block="podcast-005"] [data-part="q"]::after{content:"◆";margin-left:2rem;color:var(--vibeui-podcast-005-accent);font-size:.9rem;align-self:center}
-[data-vibeui-block="podcast-005"] [data-part="q"]::before{content:"";position:absolute;left:2rem;right:4.5rem;bottom:0;height:3px;border-radius:999px;background:color-mix(in oklab,var(--vibeui-podcast-005-accent) 35%,transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--vibeui-podcast-005-ease)}
-[data-vibeui-block="podcast-005"] [data-part="q"]:hover::before,[data-vibeui-block="podcast-005"] [data-part="q"]:focus-visible::before{transform:none}
-[data-vibeui-block="podcast-005"] [data-part="q"] u{position:absolute;left:2rem;right:4.5rem;bottom:-.1rem;height:.4rem;container-type:inline-size;pointer-events:none;text-decoration:none;overflow:hidden;border-radius:999px}
-[data-vibeui-block="podcast-005"] [data-part="q"] u::after{content:"";position:absolute;inset:0 auto 0 0;width:3rem;border-radius:999px;background:linear-gradient(90deg,transparent,var(--vibeui-podcast-005-accent) 60%,#fff);box-shadow:0 0 12px var(--vibeui-podcast-005-accent);opacity:0;translate:-100% 0}
-[data-vibeui-block="podcast-005"] [data-part="q"]:hover u::after{opacity:1;animation:vibeui-podcast-005-run 1.3s var(--vibeui-podcast-005-ease) .15s infinite}
-[data-vibeui-block="podcast-005"] [data-part="q"]:focus-visible{outline:2px solid var(--vibeui-podcast-005-accent);outline-offset:3px}
+[data-vibeui-block="podcast-005"] [data-part="lane"][data-dir="right"] [data-vibeui-block="card-106"] b{color:transparent;-webkit-text-stroke:.02em color-mix(in oklab,var(--vibeui-podcast-005-fg) 60%,transparent);paint-order:stroke fill}
+[data-vibeui-block="podcast-005"] [data-part="lane"][data-dir="right"] [data-vibeui-block="card-106"]:hover b{-webkit-text-stroke-color:var(--vibeui-card-106-accent)}
 @keyframes vibeui-podcast-005-left{to{transform:translateX(-50%)}}
 @keyframes vibeui-podcast-005-right{from{transform:translateX(-50%)}to{transform:none}}
 @keyframes vibeui-podcast-005-run{from{translate:-100% 0}to{translate:100cqw 0}}
 @keyframes vibeui-podcast-005-in{from{opacity:0;translate:0 3rem}}
 @supports (animation-timeline: view()){[data-vibeui-block="podcast-005"] [data-part="eyebrow"],[data-vibeui-block="podcast-005"] [data-part="tilt"]{animation:vibeui-podcast-005-in linear both;animation-timeline:view();animation-range:entry 0% entry 60%}[data-vibeui-block="podcast-005"] [data-part="tilt"]{animation-range:entry 0% entry 80%}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="podcast-005"] *{animation:none!important;transition:none!important}[data-vibeui-block="podcast-005"] [data-part="tilt"]{rotate:none;scale:none}[data-vibeui-block="podcast-005"] [data-part="lane"]{flex-wrap:wrap;width:auto}[data-vibeui-block="podcast-005"] [data-part="q"][aria-hidden="true"]{display:none}[data-vibeui-block="podcast-005"] [data-part="q"] b{white-space:normal}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="podcast-005"] *{animation:none!important;transition:none!important}[data-vibeui-block="podcast-005"] [data-part="tilt"]{rotate:none;scale:none}[data-vibeui-block="podcast-005"] [data-part="lane"]{flex-wrap:wrap;width:auto}}`
 
 const DEFAULT_TOP: Podcast005Quote[] = [
   { text: "Одиночество — это не когда никого нет, а когда некому позвонить", who: "Сергей Волков · № 112", href: "#episodes" },
@@ -90,16 +80,12 @@ const DEFAULT_BOTTOM: Podcast005Quote[] = [
   { text: "Тишина — это тоже звук, просто редкий", who: "Ольга Мень · № 107", href: "#episodes" },
 ]
 
-function Lane({ quotes, dir }: { quotes: readonly Podcast005Quote[]; dir: "left" | "right" }) {
+function Lane({ quotes, dir, accent }: { quotes: readonly Podcast005Quote[]; dir: "left" | "right"; accent?: string }) {
   const tape = [...quotes, ...quotes]
   return (
     <div data-part="lane" data-dir={dir}>
       {tape.map((quote, index) => (
-        <a key={`${quote.text}-${index}`} data-part="q" href={quote.href ?? "#"} aria-hidden={index >= quotes.length} tabIndex={index >= quotes.length ? -1 : undefined}>
-          <b>«{quote.text}»</b>
-          {quote.who ? <small>{quote.who}</small> : null}
-          <u aria-hidden="true" />
-        </a>
+        <Card106 key={`${quote.text}-${index}`} data-part="q" text={quote.text} href={quote.href} who={quote.who} aria-hidden={index >= quotes.length} tabIndex={index >= quotes.length ? -1 : undefined} accent={accent} />
       ))}
     </div>
   )
@@ -124,8 +110,8 @@ export function Podcast005({ eyebrow = "Сказано в эфире", top = DEF
       <section data-vibeui-block="podcast-005" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette} aria-label={eyebrow}>
         {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
         <div data-part="tilt">
-          <Lane quotes={top} dir="left" />
-          {bottom.length > 0 ? <Lane quotes={bottom} dir="right" /> : null}
+          <Lane quotes={top} dir="left" accent={accent} />
+          {bottom.length > 0 ? <Lane quotes={bottom} dir="right" accent={accent} /> : null}
         </div>
       </section>
     </>

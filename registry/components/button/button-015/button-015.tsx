@@ -12,6 +12,9 @@ export type Button015Props = Omit<
   doneLabel?: string
   /** Сколько держать состояние «скопировано», мс. */
   hold?: number
+  /** Вызывается после удачного копирования и после возврата подписи — блоку вокруг, чтобы подсветить своё. */
+  onCopy?: (value: string) => void
+  onReset?: () => void
   /** Пусто — подложки нет, кнопка лежит прямо на фоне страницы. */
   background?: string
 }
@@ -95,6 +98,8 @@ export function Button015({
   label = "Скопировать",
   doneLabel = "Скопировано",
   hold = 2000,
+  onCopy,
+  onReset,
   background = "",
   type = "button",
   className,
@@ -130,8 +135,12 @@ export function Button015({
       return
     }
     setDone(true)
+    onCopy?.(value)
     if (timer.current) clearTimeout(timer.current)
-    timer.current = setTimeout(() => setDone(false), hold)
+    timer.current = setTimeout(() => {
+      setDone(false)
+      onReset?.()
+    }, hold)
   }
 
   return (

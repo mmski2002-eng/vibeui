@@ -2,6 +2,8 @@
 
 import { useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type People015Doctor = {
   name: string
   role: string
@@ -66,6 +68,7 @@ container-type:inline-size;
 :where([data-vibeui-block="people-015"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="people-015"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-people-015-bg);color:var(--vibeui-people-015-fg);font-family:var(--vibeui-people-015-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="people-015"] *{box-sizing:border-box}
+[data-vibeui-block="people-015"] [data-part="action"]{margin:2rem 0 0}
 [data-vibeui-block="people-015"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="people-015"] [data-part="head"]{display:grid;gap:1.2rem;align-items:end}
 [data-vibeui-block="people-015"] [data-part="eyebrow"]{margin:0 0 .7rem;font-weight:600;font-size:.85rem;letter-spacing:.02em;color:var(--vibeui-people-015-accent)}
@@ -99,9 +102,6 @@ container-type:inline-size;
 [data-vibeui-block="people-015"] [data-part="week"] li[data-today="true"]{box-shadow:0 0 0 2px var(--vibeui-people-015-today)}
 [data-vibeui-block="people-015"] [data-part="hours"]{margin:.6rem 0 0;font-size:.82rem;color:var(--vibeui-people-015-muted)}
 [data-vibeui-block="people-015"] [data-part="hours"] b{color:var(--vibeui-people-015-fg);font-weight:600}
-[data-vibeui-block="people-015"] [data-part="action"]{display:inline-flex;align-items:center;margin:2rem 0 0;padding:.8rem 1.3rem;border-radius:999px;border:1px solid var(--vibeui-people-015-line);color:var(--vibeui-people-015-fg);text-decoration:none;font-family:var(--vibeui-people-015-display);font-weight:800;transition:background .2s,color .2s,border-color .2s}
-[data-vibeui-block="people-015"] [data-part="action"]:hover{background:var(--vibeui-people-015-accent);color:var(--vibeui-people-015-on-accent);border-color:transparent}
-[data-vibeui-block="people-015"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-people-015-accent);outline-offset:2px}
 @keyframes vibeui-people-015-pulse{0%{transform:scale(.6);opacity:.8}100%{transform:scale(2);opacity:0}}
 @keyframes vibeui-people-015-pop{from{opacity:0;transform:scale(.6)}}
 @container (min-width: 40rem){[data-vibeui-block="people-015"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -250,9 +250,15 @@ export function People015({
             })}
           </ul>
           {actionLabel ? (
-            <a data-part="action" href={actionHref}>
-              {actionLabel}
-            </a>
+            <Button016
+              data-part="action"
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="md"
+              tone="neutral"
+              accent={accent}
+            />
           ) : null}
         </div>
       </section>

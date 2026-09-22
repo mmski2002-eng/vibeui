@@ -1,6 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 import type { CSSProperties } from "react"
 
 export type Auth002Props = {
@@ -69,18 +73,11 @@ border:1px solid var(--vibeui-auth-002-border);border-radius:1rem;
 font-family:var(--vibeui-auth-002-sans);color:var(--vibeui-auth-002-fg);
 }
 [data-vibeui-block="auth-002"] *{box-sizing:border-box}
-[data-vibeui-block="auth-002"] h2{margin:0 0 0.25rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.01em}
+[data-vibeui-block="auth-002"] [data-part="heading"]{margin-bottom:0.25rem}
+[data-vibeui-block="auth-002"] form{display:grid;gap:0.75rem}
+[data-vibeui-block="auth-002"] [data-part="submit"]{width:100%;margin-top:0.875rem}
 [data-vibeui-block="auth-002"] [data-part="lead"]{margin:0 0 1rem;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-auth-002-muted)}
-[data-vibeui-block="auth-002"] [data-part="field"]{display:flex;flex-direction:column;gap:0.3125rem;margin-bottom:0.75rem}
-[data-vibeui-block="auth-002"] label{font-size:0.8125rem;font-weight:600}
-[data-vibeui-block="auth-002"] input[type="text"],
-[data-vibeui-block="auth-002"] input[type="email"],
-[data-vibeui-block="auth-002"] input[type="password"]{
-width:100%;height:2.5rem;padding:0 0.75rem;
-border:1px solid var(--vibeui-auth-002-border);border-radius:0.625rem;
-background:var(--vibeui-auth-002-bg);color:inherit;font:inherit;font-size:0.875rem;
-}
-[data-vibeui-block="auth-002"] input:focus-visible{outline:2px solid var(--vibeui-auth-002-accent);outline-offset:1px;border-color:var(--vibeui-auth-002-accent)}
+[data-vibeui-block="auth-002"] label:not([data-slot] *){font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="auth-002"] [data-part="pass"]{position:relative;display:flex}
 [data-vibeui-block="auth-002"] [data-part="pass"] input{padding-right:5rem}
 [data-vibeui-block="auth-002"] [data-part="peek"]{
@@ -110,25 +107,7 @@ display:flex;flex-wrap:wrap;gap:0.25rem 0.75rem;
 font-size:0.6875rem;color:var(--vibeui-auth-002-muted);
 }
 [data-vibeui-block="auth-002"] li{display:flex;align-items:center;gap:0.25rem}
-[data-vibeui-block="auth-002"] [data-part="mark"]{
-display:inline-flex;align-items:center;justify-content:center;
-width:0.875rem;height:0.875rem;border-radius:9999px;
-box-shadow:inset 0 0 0 1.5px var(--vibeui-auth-002-border);
-font-size:0.5625rem;line-height:1;
-}
-[data-vibeui-block="auth-002"] [data-ok="true"] [data-part="mark"]{
-background:var(--vibeui-auth-002-good);color:var(--vibeui-auth-002-on-accent);box-shadow:none;
-}
 [data-vibeui-block="auth-002"] [data-ok="true"]{color:var(--vibeui-auth-002-fg)}
-[data-vibeui-block="auth-002"] [data-part="submit"]{
-width:100%;margin-top:0.875rem;appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:2.625rem;padding:0.375rem 1rem;
-border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-002-accent);color:oklch(from var(--vibeui-auth-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="auth-002"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-002-accent);outline-offset:2px}
 [data-vibeui-block="auth-002"] [data-part="terms"]{
 margin:0.625rem 0 0;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-auth-002-muted);text-align:center;
 }
@@ -235,35 +214,35 @@ export function Auth002({
         style={palette}
         aria-label={title}
       >
-        <h2>{title}</h2>
+        <Heading001
+          data-part="heading"
+          title={title}
+          size="xs"
+          accent={accent}
+        />
         <p data-part="lead">{lead}</p>
 
         <form>
-          <div data-part="field">
-            <label htmlFor="vibeui-auth-002-name">{nameLabel}</label>
-            <input
-              key={nameValue}
-              id="vibeui-auth-002-name"
-              name="name"
-              type="text"
-              autoComplete="name"
-              defaultValue={nameValue}
-            />
-          </div>
+          <Input001
+            key={nameValue}
+            name="name"
+            type="text"
+            autoComplete="name"
+            defaultValue={nameValue}
+            label={nameLabel}
+            accent={accent}
+          />
 
-          <div data-part="field">
-            <label htmlFor="vibeui-auth-002-email">{emailLabel}</label>
-            <input
-              id="vibeui-auth-002-email"
-              name="email"
-              type="email"
-              autoComplete="username"
-              placeholder={emailPlaceholder}
-              required
-            />
-          </div>
+          <Input001
+            name="email"
+            type="email"
+            autoComplete="username"
+            required
+            label={emailLabel}
+            accent={accent}
+          />
 
-          <div data-part="field" data-score={points}>
+          <div data-part="form-field" data-score={points}>
             <label htmlFor="vibeui-auth-002-password">{passwordLabel}</label>
             <span data-part="pass">
               <input
@@ -313,9 +292,9 @@ export function Auth002({
             </ul>
           </div>
 
-          <button type="submit" data-part="submit">
+          <Button001 type="submit" data-part="submit" size="lg" accent={accent}>
             {submit}
-          </button>
+          </Button001>
         </form>
 
         <p data-part="terms">{terms}</p>

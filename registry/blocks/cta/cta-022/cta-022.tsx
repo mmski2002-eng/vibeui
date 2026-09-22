@@ -2,6 +2,8 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button015 } from "@/registry/components/button/button-015/button-015"
+
 export type Cta022Props = {
   eyebrow?: string
   title?: string
@@ -78,11 +80,6 @@ container-type:inline-size;
 [data-vibeui-block="cta-022"] [data-part="req"]{display:grid;gap:.25rem;padding:.9rem 1rem;border:1px dashed var(--vibeui-cta-022-line);border-radius:.6rem;background:var(--vibeui-cta-022-bg)}
 [data-vibeui-block="cta-022"] [data-part="req"] span{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-cta-022-muted)}
 [data-vibeui-block="cta-022"] [data-part="req"] code{font-family:var(--vibeui-cta-022-display);font-size:1.4rem;font-weight:600;letter-spacing:.08em;overflow-wrap:anywhere}
-[data-vibeui-block="cta-022"] [data-part="copy"]{display:inline-flex;align-items:center;gap:.5rem;height:2.9rem;margin-top:1rem;padding:0 1.3rem;border:0;border-radius:.6rem;background:var(--vibeui-cta-022-accent);color:var(--vibeui-cta-022-on-accent);font-family:var(--vibeui-cta-022-display);font-size:.9rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 24px -14px var(--vibeui-cta-022-accent);transition:transform .2s,background .25s}
-[data-vibeui-block="cta-022"] [data-part="copy"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="cta-022"] [data-part="copy"][data-copied="true"]{background:var(--vibeui-cta-022-sea)}
-[data-vibeui-block="cta-022"] [data-part="copy"]:focus-visible{outline:2px solid var(--vibeui-cta-022-fg);outline-offset:3px}
-[data-vibeui-block="cta-022"] [data-part="copy"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="cta-022"] [data-part="paid"]{position:absolute;right:1.4rem;bottom:1.4rem;padding:.3rem .8rem;border:3px solid var(--vibeui-cta-022-sea);border-radius:.4rem;color:var(--vibeui-cta-022-sea);font-family:var(--vibeui-cta-022-display);font-size:1.1rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transform:rotate(-10deg);opacity:0;pointer-events:none;mix-blend-mode:multiply}
 [data-vibeui-block="cta-022"] [data-part="ticket"][data-copied="true"] [data-part="paid"]{animation:vibeui-cta-022-stamp .5s cubic-bezier(.2,.9,.3,1.4) both}
 @keyframes vibeui-cta-022-stamp{from{opacity:0;transform:rotate(-10deg) scale(2)}to{opacity:.9;transform:rotate(-10deg) scale(1)}}
@@ -124,15 +121,6 @@ export function Cta022({
   } as CSSProperties
   const [head, tail] = title.split(" — ")
 
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(requisite)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 2200)
-    } catch {
-      setCopied(false)
-    }
-  }
 
   return (
     <>
@@ -173,12 +161,15 @@ export function Cta022({
                   <span>{requisiteLabel}</span>
                   <code>{requisite}</code>
                 </div>
-                <button type="button" data-part="copy" data-copied={copied ? "true" : undefined} onClick={copy} aria-live="polite">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    {copied ? <path d="M5 12l5 5L20 7" /> : <path d="M9 9h10v11H9zM5 15V4h11" />}
-                  </svg>
-                  {copied ? copiedLabel : copyLabel}
-                </button>
+                <Button015
+                  data-part="copy-button"
+                  value={requisite}
+                  label={copyLabel}
+                  doneLabel={copiedLabel}
+                  hold={2200}
+                  onCopy={() => setCopied(true)}
+                  onReset={() => setCopied(false)}
+                />
               </div>
               <span data-part="paid" aria-hidden="true">
                 Paid

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Card119 } from "@/registry/components/card/card-119/card-119"
 
 export type Event006Day = {
   /** Ключ дня: «fri». */
@@ -85,21 +86,10 @@ container-type:inline-size;
 [data-vibeui-block="event-006"] [data-part="filter"]{height:2.1rem;padding:0 .85rem;border-radius:999px;border:0;background:var(--vibeui-event-006-chip);color:inherit;font:inherit;font-size:.85rem;font-weight:500;cursor:pointer;transition:background .2s,color .2s}
 [data-vibeui-block="event-006"] [data-part="filter"][aria-pressed="true"]{background:var(--vibeui-event-006-fg);color:var(--vibeui-event-006-bg)}
 [data-vibeui-block="event-006"] [data-part="slots"]{margin:1.75rem 0 0;padding:0;list-style:none;border-top:1px solid var(--vibeui-event-006-line)}
-[data-vibeui-block="event-006"] [data-part="slot"]{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:.25rem 1rem;padding:1rem 0;border-bottom:1px solid var(--vibeui-event-006-line);animation:vibeui-event-006-in .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-event-006-n) * 40ms);transition:background .2s}
 @keyframes vibeui-event-006-in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
-[data-vibeui-block="event-006"] [data-part="time"]{position:relative;padding-left:.9rem;font-family:var(--vibeui-event-006-display);font-size:1.25rem;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}
-[data-vibeui-block="event-006"] [data-part="time"]::before{content:"";position:absolute;left:0;top:.15rem;bottom:.1rem;width:4px;border-radius:4px;background:var(--vibeui-event-006-day)}
-[data-vibeui-block="event-006"] [data-part="slot-title"]{margin:0;font-family:var(--vibeui-event-006-display);font-size:1.2rem;font-weight:600;line-height:1.25;letter-spacing:-.02em}
-[data-vibeui-block="event-006"] [data-part="slot-title"] a:hover{opacity:.7}
-[data-vibeui-block="event-006"] [data-part="slot-meta"]{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;margin:.25rem 0 0;font-size:.9rem;color:var(--vibeui-event-006-muted)}
-[data-vibeui-block="event-006"] [data-part="tag"]{padding:.15rem .55rem;border-radius:999px;background:var(--vibeui-event-006-tag,#f1f1f3);color:var(--vibeui-event-006-ink,#111);font-size:.78rem;font-weight:500}
-[data-vibeui-block="event-006"] [data-part="note"]{padding:.15rem .55rem;border-radius:999px;background:var(--vibeui-event-006-chip);font-size:.78rem}
 [data-vibeui-block="event-006"] [data-part="empty"]{margin:1.5rem 0 0;padding:2rem;border-radius:1rem;background:var(--vibeui-event-006-chip);text-align:center;color:var(--vibeui-event-006-muted)}
 @container (min-width: 56rem){
 [data-vibeui-block="event-006"] [data-part="shell"]{padding:2.5rem 2rem 4rem}
-[data-vibeui-block="event-006"] [data-part="slot"]{grid-template-columns:6rem minmax(0,1fr) auto;align-items:baseline;padding:1.1rem 0}
-[data-vibeui-block="event-006"] [data-part="slot-meta"]{grid-column:3;margin:0;justify-content:flex-end}
-[data-vibeui-block="event-006"] [data-part="slot"]:hover{background:linear-gradient(90deg,color-mix(in oklab,var(--vibeui-event-006-day) 14%,transparent),transparent 60%)}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-006"] *{animation:none!important;transition:none!important}}`
 
@@ -194,21 +184,7 @@ export function Event006({
           {visible.length > 0 ? (
             <ol key={day + tag} data-part="slots" style={{ ["--vibeui-event-006-day" as string]: current?.color ?? "#111" }}>
               {visible.map((slot, index) => (
-                <li key={slot.time + slot.title} data-part="slot" style={{ ["--vibeui-event-006-n" as string]: index }}>
-                  <span data-part="time">{slot.time}</span>
-                  <div>
-                    <h3 data-part="slot-title">{slot.href ? <a href={slot.href}>{slot.title}</a> : slot.title}</h3>
-                  </div>
-                  <p data-part="slot-meta">
-                    {slot.stage ? <span>{slot.stage}</span> : null}
-                    {slot.tag ? (
-                      <span data-part="tag" style={{ ["--vibeui-event-006-tag" as string]: slot.tagColor, ["--vibeui-event-006-ink" as string]: slot.tagInk ?? "#111" }}>
-                        {slot.tag}
-                      </span>
-                    ) : null}
-                    {slot.note ? <span data-part="note">{slot.note}</span> : null}
-                  </p>
-                </li>
+                <Card119 key={slot.time + slot.title} data-part="slot" time={slot.time} title={slot.title} href={slot.href} stage={slot.stage} tag={slot.tag} tagColor={slot.tagColor} tagInk={slot.tagInk} note={slot.note} style={{ ["--vibeui-event-006-n" as string]: index }} accent={accent} />
               ))}
             </ol>
           ) : (

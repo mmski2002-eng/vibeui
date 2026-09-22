@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card094 } from "@/registry/components/card/card-094/card-094"
 
 export type Realty005Step = {
   title: string
@@ -49,16 +50,10 @@ container-type:inline-size;
 [data-vibeui-block="realty-005"] [data-part="lede"]{margin:.75rem 0 0;max-width:36rem;color:var(--vibeui-realty-005-muted)}
 [data-vibeui-block="realty-005"] [data-part="steps"]{position:relative;display:grid;gap:2rem;margin:3rem 0 0;padding:0 0 0 2.5rem;list-style:none}
 [data-vibeui-block="realty-005"] [data-part="steps"]::before{content:"";position:absolute;left:.9rem;top:.5rem;bottom:.5rem;width:1px;background:var(--vibeui-realty-005-line)}
-[data-vibeui-block="realty-005"] [data-part="step"]{position:relative}
-[data-vibeui-block="realty-005"] [data-part="num"]{position:absolute;left:-2.5rem;top:-.35rem;width:1.8rem;height:1.8rem;display:grid;place-items:center;border-radius:50%;background:var(--vibeui-realty-005-bg);border:1px solid var(--vibeui-realty-005-accent);font-family:var(--vibeui-realty-005-display);font-size:1rem;font-weight:600;color:var(--vibeui-realty-005-accent)}
-[data-vibeui-block="realty-005"] [data-part="step"] h3{margin:0 0 .35rem;font-family:var(--vibeui-realty-005-display);font-size:1.5rem;font-weight:600;line-height:1.1}
-[data-vibeui-block="realty-005"] [data-part="step"] p{margin:0;color:var(--vibeui-realty-005-muted);max-width:26rem}
-[data-vibeui-block="realty-005"] [data-part="time"]{display:inline-block;margin-top:.6rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-realty-005-accent)}
 @container (min-width: 60rem){
 [data-vibeui-block="realty-005"] [data-part="shell"]{padding:5.5rem 2rem}
 [data-vibeui-block="realty-005"] [data-part="steps"]{grid-template-columns:repeat(5,minmax(0,1fr));gap:2rem;padding:3rem 0 0}
 [data-vibeui-block="realty-005"] [data-part="steps"]::before{left:.9rem;right:.9rem;top:.9rem;bottom:auto;width:auto;height:1px}
-[data-vibeui-block="realty-005"] [data-part="num"]{position:static;width:1.8rem;height:1.8rem;margin:-3.9rem 0 1.5rem}
 }`
 
 const DEFAULT_STEPS: Realty005Step[] = [
@@ -102,14 +97,7 @@ export function Realty005({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <ol data-part="steps">
             {steps.map((step, index) => (
-              <li key={step.title} data-part="step">
-                <span data-part="num" aria-hidden="true">
-                  {index + 1}
-                </span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-                {step.time ? <span data-part="time">{step.time}</span> : null}
-              </li>
+              <Card094 key={step.title} data-part="step" title={step.title} text={step.text} time={step.time} index={index} accent={accent} />
             ))}
           </ol>
         </div>

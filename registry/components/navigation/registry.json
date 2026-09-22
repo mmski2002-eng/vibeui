@@ -7600,6 +7600,2985 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "footerlinks-001",
+      "type": "registry:component",
+      "title": "Колонка ссылок подвала",
+      "description": "Колонка подвала: заголовок раздела капителью и список ссылок; nav с aria-label по заголовку, ссылки приглушённые, акцент по наведению.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-001/footerlinks-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-002 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "ai": {
+          "export": "Footerlinks001",
+          "usage": "<Footerlinks001 title=\"Продукт\" />",
+          "summary": "Колонка подвала: заголовок раздела капителью и список ссылок; nav с aria-label по заголовку, ссылки приглушённые, акцент по наведению.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Продукт",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer link column",
+            "description": "A footer column: an uppercase section title and the list of links; a nav labelled by the title, muted links with the accent on hover.",
+            "docs": "Extracted from the footer-002 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column: an uppercase section title and the list of links; a nav labelled by the title, muted links with the accent on hover.",
+              "usage": "<Footerlinks001 title=\"Продукт\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Продукт"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-002",
+      "type": "registry:component",
+      "title": "Колонка ссылок с засечками",
+      "description": "Колонка подвала бутика: заголовок с засечками, ссылки тонкой строкой.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-002/footerlinks-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-002.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-021 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-002-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks002",
+          "usage": "<Footerlinks002 title=\"Курс\" />",
+          "summary": "Колонка подвала бутика: заголовок с засечками, ссылки тонкой строкой.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-002-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Курс",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Serif footer link column",
+            "description": "A boutique footer column: a serif title, links in a thin line.",
+            "docs": "Extracted from the footer-021 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-002-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A boutique footer column: a serif title, links in a thin line.",
+              "usage": "<Footerlinks002 title=\"Курс\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-002-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Курс"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-003",
+      "type": "registry:component",
+      "title": "Колонка ссылок с цветной полосой",
+      "description": "Колонка подвала над цветной полосой: заголовок капителью, ссылки с подчёркиванием по наведению.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-003/footerlinks-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-003.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-022 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-003-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks003",
+          "usage": "<Footerlinks003 title=\"Фестиваль\" />",
+          "summary": "Колонка подвала над цветной полосой: заголовок капителью, ссылки с подчёркиванием по наведению.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-003-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Фестиваль",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer column with a colour stripe",
+            "description": "A footer column above a colour stripe: an uppercase title, links underlined on hover.",
+            "docs": "Extracted from the footer-022 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-003-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column above a colour stripe: an uppercase title, links underlined on hover.",
+              "usage": "<Footerlinks003 title=\"Фестиваль\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-003-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Фестиваль"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-004",
+      "type": "registry:component",
+      "title": "Колонка ссылок у карты",
+      "description": "Колонка ссылок для подвала с картой: компактный заголовок и короткий список.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-004/footerlinks-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-004.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-023 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-004-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks004",
+          "usage": "<Footerlinks004 title=\"Студия\" />",
+          "summary": "Колонка ссылок для подвала с картой: компактный заголовок и короткий список.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-004-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Студия",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer column next to a map",
+            "description": "A link column for a footer with a map: a compact title and a short list.",
+            "docs": "Extracted from the footer-023 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-004-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A link column for a footer with a map: a compact title and a short list.",
+              "usage": "<Footerlinks004 title=\"Студия\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-004-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Студия"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-005",
+      "type": "registry:component",
+      "title": "Колонка ссылок с часами работы",
+      "description": "Колонка подвала кафе: заголовок и ссылки строкой рядом с часами работы.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-005/footerlinks-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-005.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-027 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-005-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks005",
+          "usage": "<Footerlinks005 title=\"Разделы\" />",
+          "summary": "Колонка подвала кафе: заголовок и ссылки строкой рядом с часами работы.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-005-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Разделы",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer column with opening hours",
+            "description": "A café footer column: a title and inline links next to the opening hours.",
+            "docs": "Extracted from the footer-027 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-005-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A café footer column: a title and inline links next to the opening hours.",
+              "usage": "<Footerlinks005 title=\"Разделы\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-005-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Разделы"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-006",
+      "type": "registry:component",
+      "title": "Колонка ссылок моно",
+      "description": "Колонка подвала с моноширинным заголовком и ссылками-строками.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-006/footerlinks-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-006.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-029 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-006-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks006",
+          "usage": "<Footerlinks006 title=\"Проект\" />",
+          "summary": "Колонка подвала с моноширинным заголовком и ссылками-строками.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-006-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Проект",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Mono footer link column",
+            "description": "A footer column with a monospace title and line links.",
+            "docs": "Extracted from the footer-029 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-006-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column with a monospace title and line links.",
+              "usage": "<Footerlinks006 title=\"Проект\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-006-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Проект"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-007",
+      "type": "registry:component",
+      "title": "Колонка ссылок на тёмном",
+      "description": "Колонка подвала на тёмной подложке: светлый заголовок, ссылки на полутоне.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-007/footerlinks-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-007.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-032 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-007-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks007",
+          "usage": "<Footerlinks007 title=\"Продукт\" />",
+          "summary": "Колонка подвала на тёмной подложке: светлый заголовок, ссылки на полутоне.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-007-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Продукт",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer link column on dark",
+            "description": "A footer column on a dark surface: a light title, links in a half-tone.",
+            "docs": "Extracted from the footer-032 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-007-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column on a dark surface: a light title, links in a half-tone.",
+              "usage": "<Footerlinks007 title=\"Продукт\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-007-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Продукт"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-008",
+      "type": "registry:component",
+      "title": "Колонка ссылок с моно-заголовком",
+      "description": "Колонка подвала: заголовок моноширинной капителью, ссылки с отступом.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-008/footerlinks-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-008.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-033 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-008-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks008",
+          "usage": "<Footerlinks008 title=\"Услуги\" />",
+          "summary": "Колонка подвала: заголовок моноширинной капителью, ссылки с отступом.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-008-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Услуги",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer column with a mono heading",
+            "description": "A footer column: a monospace uppercase title, indented links.",
+            "docs": "Extracted from the footer-033 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-008-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column: a monospace uppercase title, indented links.",
+              "usage": "<Footerlinks008 title=\"Услуги\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-008-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Услуги"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-009",
+      "type": "registry:component",
+      "title": "Колонка ссылок с лапками",
+      "description": "Колонка подвала зоомагазина: округлый заголовок, ссылки с мягким подчёркиванием.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-009/footerlinks-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-009.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-034 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-009-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks009",
+          "usage": "<Footerlinks009 title=\"Услуги\" />",
+          "summary": "Колонка подвала зоомагазина: округлый заголовок, ссылки с мягким подчёркиванием.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-009-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Услуги",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Paw-print footer column",
+            "description": "A pet-shop footer column: a rounded title, links with a soft underline.",
+            "docs": "Extracted from the footer-034 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-009-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A pet-shop footer column: a rounded title, links with a soft underline.",
+              "usage": "<Footerlinks009 title=\"Услуги\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-009-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Услуги"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-010",
+      "type": "registry:component",
+      "title": "Колонка ссылок в списке",
+      "description": "Колонка подвала как элемент списка: заголовок и ссылки для горизонтального ряда.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-010/footerlinks-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-010.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-037 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-010-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks010",
+          "usage": "<Footerlinks010 title=\"Меню\" />",
+          "summary": "Колонка подвала как элемент списка: заголовок и ссылки для горизонтального ряда.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-010-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Меню",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer column as a list item",
+            "description": "A footer column as a list item: a title and links for a horizontal row.",
+            "docs": "Extracted from the footer-037 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-010-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column as a list item: a title and links for a horizontal row.",
+              "usage": "<Footerlinks010 title=\"Меню\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-010-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Меню"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-011",
+      "type": "registry:component",
+      "title": "Колонка ссылок рукописная",
+      "description": "Колонка подвала с рукописным заголовком и ссылками, подчёркнутыми линией.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-011/footerlinks-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-011.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-038 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-011-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks011",
+          "usage": "<Footerlinks011 title=\"языки\" />",
+          "summary": "Колонка подвала с рукописным заголовком и ссылками, подчёркнутыми линией.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-011-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "языки",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Handwritten footer column",
+            "description": "A footer column with a handwritten title and line-underlined links.",
+            "docs": "Extracted from the footer-038 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-011-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column with a handwritten title and line-underlined links.",
+              "usage": "<Footerlinks011 title=\"языки\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-011-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "языки"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-012",
+      "type": "registry:component",
+      "title": "Колонка ссылок терминала",
+      "description": "Колонка подвала в духе терминала: моно-заголовок с префиксом и ссылки-команды.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-012/footerlinks-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-012.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-040 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-012-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks012",
+          "usage": "<Footerlinks012 title=\"Каталог\" />",
+          "summary": "Колонка подвала в духе терминала: моно-заголовок с префиксом и ссылки-команды.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-012-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Каталог",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Terminal footer column",
+            "description": "A terminal-style footer column: a mono title with a prefix and command-like links.",
+            "docs": "Extracted from the footer-040 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-012-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A terminal-style footer column: a mono title with a prefix and command-like links.",
+              "usage": "<Footerlinks012 title=\"Каталог\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-012-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Каталог"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-013",
+      "type": "registry:component",
+      "title": "Колонка ссылок с «//»",
+      "description": "Колонка подвала разработчика: заголовок с префиксом «//», ссылки моноширинные.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-013/footerlinks-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-013.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-041 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-013-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks013",
+          "usage": "<Footerlinks013 title=\"Продукт\" />",
+          "summary": "Колонка подвала разработчика: заголовок с префиксом «//», ссылки моноширинные.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-013-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Продукт",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer column with a «//» prefix",
+            "description": "A developer footer column: a title with a «//» prefix, monospace links.",
+            "docs": "Extracted from the footer-041 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-013-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A developer footer column: a title with a «//» prefix, monospace links.",
+              "usage": "<Footerlinks013 title=\"Продукт\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-013-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Продукт"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-014",
+      "type": "registry:component",
+      "title": "Колонка ссылок капителью",
+      "description": "Колонка подвала: мелкий моно-заголовок капителью и ссылки с плотным интерлиньяжем.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-014/footerlinks-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-014.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-042 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-014-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks014",
+          "usage": "<Footerlinks014 title=\"Продукт\" />",
+          "summary": "Колонка подвала: мелкий моно-заголовок капителью и ссылки с плотным интерлиньяжем.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-014-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "title",
+            "type": "text",
+            "default": "Продукт",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Uppercase footer column",
+            "description": "A footer column: a small monospace uppercase title and tightly leaded links.",
+            "docs": "Extracted from the footer-042 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-014-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer column: a small monospace uppercase title and tightly leaded links.",
+              "usage": "<Footerlinks014 title=\"Продукт\" />",
+              "preserve": [
+                "the local --vibeui-footerlinks-014-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "title": {
+                "label": "title",
+                "default": "Продукт"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-015",
+      "type": "registry:component",
+      "title": "Строка ссылок подвала",
+      "description": "Горизонтальный ряд ссылок подвала: список без маркеров, ссылки приглушённые.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-015/footerlinks-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-015.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-019 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-015-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks015",
+          "usage": "<Footerlinks015  />",
+          "summary": "Горизонтальный ряд ссылок подвала: список без маркеров, ссылки приглушённые.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-015-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer inline links",
+            "description": "A horizontal row of footer links: an unstyled list, muted links.",
+            "docs": "Extracted from the footer-019 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-015-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A horizontal row of footer links: an unstyled list, muted links.",
+              "usage": "<Footerlinks015  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-015-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sociallinks-001",
+      "type": "registry:component",
+      "title": "Ряд соцсетей",
+      "description": "Ряд ссылок на соцсети: круглые кнопки со значками и подписью для скринридера.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sociallinks-001/sociallinks-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sociallinks-001.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-006 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-sociallinks-001-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "social",
+          "navigation"
+        ],
+        "ai": {
+          "export": "Sociallinks001",
+          "usage": "<Sociallinks001  />",
+          "summary": "Ряд ссылок на соцсети: круглые кнопки со значками и подписью для скринридера.",
+          "preserve": [
+            "локальную палитру --vibeui-sociallinks-001-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "socialsLabel, socials — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Social links row",
+            "description": "A row of social links: round icon buttons with a screen-reader label.",
+            "docs": "Extracted from the footer-006 block as is: one file, no dependencies, its own palette in the --vibeui-sociallinks-001-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A row of social links: round icon buttons with a screen-reader label.",
+              "usage": "<Sociallinks001  />",
+              "preserve": [
+                "the local --vibeui-sociallinks-001-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "socialsLabel, socials — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-016",
+      "type": "registry:component",
+      "title": "Юридические ссылки подвала",
+      "description": "Строка юридических ссылок мелким кеглем: политика, оферта, cookies.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-016/footerlinks-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-016.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-008 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-016-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "legal",
+          "navigation"
+        ],
+        "ai": {
+          "export": "Footerlinks016",
+          "usage": "<Footerlinks016  />",
+          "summary": "Строка юридических ссылок мелким кеглем: политика, оферта, cookies.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-016-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "legalLinksLabel, legalLinks — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer legal links",
+            "description": "A row of legal links in small type: policy, terms, cookies.",
+            "docs": "Extracted from the footer-008 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-016-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A row of legal links in small type: policy, terms, cookies.",
+              "usage": "<Footerlinks016  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-016-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "legalLinksLabel, legalLinks — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-017",
+      "type": "registry:component",
+      "title": "Ссылки подвала в одну строку",
+      "description": "Одна строка ссылок подвала с разделителями-точками.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-017/footerlinks-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-017.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-013 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-017-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "ai": {
+          "export": "Footerlinks017",
+          "usage": "<Footerlinks017  />",
+          "summary": "Одна строка ссылок подвала с разделителями-точками.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-017-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Single-line footer links",
+            "description": "A single row of footer links with dot separators.",
+            "docs": "Extracted from the footer-013 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-017-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A single row of footer links with dot separators.",
+              "usage": "<Footerlinks017  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-017-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sociallinks-002",
+      "type": "registry:component",
+      "title": "Соцсети текстом",
+      "description": "Ряд соцсетей текстовыми ссылками через точку.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sociallinks-002/sociallinks-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sociallinks-002.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-013 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-sociallinks-002-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "social",
+          "navigation"
+        ],
+        "ai": {
+          "export": "Sociallinks002",
+          "usage": "<Sociallinks002  />",
+          "summary": "Ряд соцсетей текстовыми ссылками через точку.",
+          "preserve": [
+            "локальную палитру --vibeui-sociallinks-002-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "social — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Social links as text",
+            "description": "A row of social links as text with dot separators.",
+            "docs": "Extracted from the footer-013 block as is: one file, no dependencies, its own palette in the --vibeui-sociallinks-002-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A row of social links as text with dot separators.",
+              "usage": "<Sociallinks002  />",
+              "preserve": [
+                "the local --vibeui-sociallinks-002-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "social — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-018",
+      "type": "registry:component",
+      "title": "Ссылки подвала кафе",
+      "description": "Строка ссылок подвала кафе: мягкая гарнитура, подчёркивание по наведению.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-018/footerlinks-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-018.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-020 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-018-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks018",
+          "usage": "<Footerlinks018  />",
+          "summary": "Строка ссылок подвала кафе: мягкая гарнитура, подчёркивание по наведению.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-018-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Café footer links",
+            "description": "A café footer link row: a soft typeface, underline on hover.",
+            "docs": "Extracted from the footer-020 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-018-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A café footer link row: a soft typeface, underline on hover.",
+              "usage": "<Footerlinks018  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-018-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-019",
+      "type": "registry:component",
+      "title": "Ссылки свадебного подвала",
+      "description": "Строка ссылок свадебного подвала: засечки, тонкие разделители.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-019/footerlinks-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-019.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-024 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-019-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks019",
+          "usage": "<Footerlinks019  />",
+          "summary": "Строка ссылок свадебного подвала: засечки, тонкие разделители.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-019-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Wedding footer links",
+            "description": "A wedding footer link row: serifs, thin separators.",
+            "docs": "Extracted from the footer-024 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-019-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A wedding footer link row: serifs, thin separators.",
+              "usage": "<Footerlinks019  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-019-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-020",
+      "type": "registry:component",
+      "title": "Ссылки подвала с координатами",
+      "description": "Строка ссылок подвала в духе посадочного талона: моно-капитель.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-020/footerlinks-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-020.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-025 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-020-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks020",
+          "usage": "<Footerlinks020  />",
+          "summary": "Строка ссылок подвала в духе посадочного талона: моно-капитель.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-020-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer links with coordinates",
+            "description": "A boarding-pass style footer link row: monospace uppercase.",
+            "docs": "Extracted from the footer-025 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-020-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A boarding-pass style footer link row: monospace uppercase.",
+              "usage": "<Footerlinks020  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-020-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-021",
+      "type": "registry:component",
+      "title": "Ссылки подвала с датой",
+      "description": "Строка ссылок подвала приглашения: курсив, разделители.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-021/footerlinks-021.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-021.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-026 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-021-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "ai": {
+          "export": "Footerlinks021",
+          "usage": "<Footerlinks021  />",
+          "summary": "Строка ссылок подвала приглашения: курсив, разделители.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-021-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer links with a date",
+            "description": "An invitation footer link row: italics, separators.",
+            "docs": "Extracted from the footer-026 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-021-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "An invitation footer link row: italics, separators.",
+              "usage": "<Footerlinks021  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-021-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-022",
+      "type": "registry:component",
+      "title": "Ссылки подвала портфолио",
+      "description": "Строка ссылок подвала портфолио: крупные, с подчёркиванием по наведению.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-022/footerlinks-022.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-022.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-030 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-022-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks022",
+          "usage": "<Footerlinks022  />",
+          "summary": "Строка ссылок подвала портфолио: крупные, с подчёркиванием по наведению.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-022-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Portfolio footer links",
+            "description": "A portfolio footer link row: large, underline on hover.",
+            "docs": "Extracted from the footer-030 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-022-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A portfolio footer link row: large, underline on hover.",
+              "usage": "<Footerlinks022  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-022-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-023",
+      "type": "registry:component",
+      "title": "Ссылки подвала приложения",
+      "description": "Строка ссылок подвала приложения: компактные ссылки рядом с кнопками сторов.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-023/footerlinks-023.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-023.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-031 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-023-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks023",
+          "usage": "<Footerlinks023  />",
+          "summary": "Строка ссылок подвала приложения: компактные ссылки рядом с кнопками сторов.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-023-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "App footer links",
+            "description": "An app footer link row: compact links next to store buttons.",
+            "docs": "Extracted from the footer-031 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-023-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "An app footer link row: compact links next to store buttons.",
+              "usage": "<Footerlinks023  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-023-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-024",
+      "type": "registry:component",
+      "title": "Юридическая строка приложения",
+      "description": "Строка юридических ссылок подвала приложения мелким кеглем.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-024/footerlinks-024.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-024.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-031 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-024-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "legal",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks024",
+          "usage": "<Footerlinks024  />",
+          "summary": "Строка юридических ссылок подвала приложения мелким кеглем.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-024-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "legal — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "App legal row",
+            "description": "A small-type legal link row for an app footer.",
+            "docs": "Extracted from the footer-031 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-024-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A small-type legal link row for an app footer.",
+              "usage": "<Footerlinks024  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-024-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "legal — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sociallinks-003",
+      "type": "registry:component",
+      "title": "Соцсети крупными буквами",
+      "description": "Ряд соцсетей крупной капителью с подчёркиванием-линией.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sociallinks-003/sociallinks-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sociallinks-003.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-035 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-sociallinks-003-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "social",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Sociallinks003",
+          "usage": "<Sociallinks003  />",
+          "summary": "Ряд соцсетей крупной капителью с подчёркиванием-линией.",
+          "preserve": [
+            "локальную палитру --vibeui-sociallinks-003-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "socialsLabel, socials — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Social links in big letters",
+            "description": "A row of social links in large uppercase with a line underline.",
+            "docs": "Extracted from the footer-035 block as is: one file, no dependencies, its own palette in the --vibeui-sociallinks-003-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A row of social links in large uppercase with a line underline.",
+              "usage": "<Sociallinks003  />",
+              "preserve": [
+                "the local --vibeui-sociallinks-003-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "socialsLabel, socials — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-025",
+      "type": "registry:component",
+      "title": "Ссылки подвала на плитках",
+      "description": "Строка ссылок подвала-таблицы: ссылки в ячейках с рамкой.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-025/footerlinks-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-025.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-036 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-025-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks025",
+          "usage": "<Footerlinks025  />",
+          "summary": "Строка ссылок подвала-таблицы: ссылки в ячейках с рамкой.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-025-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "nav, navTitle, legal, legalTitle — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Footer links on tiles",
+            "description": "A table-footer link row: links in framed cells.",
+            "docs": "Extracted from the footer-036 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-025-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A table-footer link row: links in framed cells.",
+              "usage": "<Footerlinks025  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-025-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "nav, navTitle, legal, legalTitle — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sociallinks-004",
+      "type": "registry:component",
+      "title": "Соцсети благотворительного подвала",
+      "description": "Ряд соцсетей с круглыми значками и подписями.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sociallinks-004/sociallinks-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sociallinks-004.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-043 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-sociallinks-004-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "social",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Sociallinks004",
+          "usage": "<Sociallinks004  />",
+          "summary": "Ряд соцсетей с круглыми значками и подписями.",
+          "preserve": [
+            "локальную палитру --vibeui-sociallinks-004-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "socialsLabel, socials — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Charity footer socials",
+            "description": "A row of social links with round icons and labels.",
+            "docs": "Extracted from the footer-043 block as is: one file, no dependencies, its own palette in the --vibeui-sociallinks-004-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A row of social links with round icons and labels.",
+              "usage": "<Sociallinks004  />",
+              "preserve": [
+                "the local --vibeui-sociallinks-004-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "socialsLabel, socials — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-026",
+      "type": "registry:component",
+      "title": "Навигация подвала с орнаментом",
+      "description": "Строка навигации подвала с засечками и орнаментом-разделителем.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-026/footerlinks-026.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-026.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-044 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-026-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks026",
+          "usage": "<Footerlinks026  />",
+          "summary": "Строка навигации подвала с засечками и орнаментом-разделителем.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-026-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Ornamented footer nav",
+            "description": "A footer nav row with serifs and an ornament separator.",
+            "docs": "Extracted from the footer-044 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-026-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A footer nav row with serifs and an ornament separator.",
+              "usage": "<Footerlinks026  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-026-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sociallinks-005",
+      "type": "registry:component",
+      "title": "Соцсети с орнаментом",
+      "description": "Ряд ссылок на соцсети текстом с засечками, разделённых орнаментом; подпись для скринридера.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "sociallinks-005/sociallinks-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/sociallinks-005.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-044 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-sociallinks-005-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "social",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Sociallinks005",
+          "usage": "<Sociallinks005  />",
+          "summary": "Ряд ссылок на соцсети текстом с засечками, разделённых орнаментом; подпись для скринридера.",
+          "preserve": [
+            "локальную палитру --vibeui-sociallinks-005-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "socialsLabel, socials — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Ornamented social links",
+            "description": "A row of serif text social links.",
+            "docs": "Extracted from the footer-044 block as is: one file, no dependencies, its own palette in the --vibeui-sociallinks-005-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A row of serif text social links.",
+              "usage": "<Sociallinks005  />",
+              "preserve": [
+                "the local --vibeui-sociallinks-005-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "socialsLabel, socials — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "footerlinks-027",
+      "type": "registry:component",
+      "title": "Колонка ссылок подкаста",
+      "description": "Колонка футера: заголовок в моно и список ссылок с подчёркиванием при наведении.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footerlinks-027/footerlinks-027.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footerlinks-027.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока footer-028 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-footerlinks-027-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "footer",
+          "links",
+          "column",
+          "navigation"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Footerlinks027",
+          "usage": "<Footerlinks027  />",
+          "summary": "Колонка футера: заголовок в моно и список ссылок с подчёркиванием при наведении.",
+          "preserve": [
+            "локальную палитру --vibeui-footerlinks-027-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "title, links — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Podcast link column",
+            "description": "Footer column: mono heading and a list of links underlined on hover.",
+            "docs": "Extracted from the footer-028 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-027-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Footer column: mono heading and a list of links underlined on hover.",
+              "usage": "<Footerlinks027  />",
+              "preserve": [
+                "the local --vibeui-footerlinks-027-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "title, links — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

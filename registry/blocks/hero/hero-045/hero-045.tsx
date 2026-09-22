@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Hero045Props = {
   /** Строки имени: каждая въезжает отдельно. */
   lines?: readonly string[]
@@ -90,12 +93,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-045"] [data-part="pen"]{display:inline-block;width:.6em;height:.6em;margin-left:.15em;vertical-align:-.05em;color:var(--vibeui-hero-045-accent);transform-origin:80% 80%;animation:vibeui-hero-045-blink 1s steps(2) infinite}
 [data-vibeui-block="hero-045"] [data-part="quote"][data-writing="true"] [data-part="pen"]{animation:vibeui-hero-045-scribble .18s ease-in-out infinite alternate}
 [data-vibeui-block="hero-045"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;opacity:0;animation:vibeui-hero-045-fade 1s ease-out 1.4s forwards}
-[data-vibeui-block="hero-045"] [data-part="primary"]{display:inline-flex;align-items:center;justify-content:center;padding:.8rem 1.5rem;border-radius:999px;background:var(--vibeui-hero-045-accent);color:var(--vibeui-hero-045-on-accent);text-decoration:none;font-style:italic;font-size:1.02rem;transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
-[data-vibeui-block="hero-045"] [data-part="primary"]:hover{transform:translateY(-2px);box-shadow:0 14px 30px -14px var(--vibeui-hero-045-accent)}
-[data-vibeui-block="hero-045"] [data-part="secondary"]{position:relative;color:var(--vibeui-hero-045-fg);text-decoration:none;font-style:italic;font-size:1.02rem;padding:.4rem .1rem}
-[data-vibeui-block="hero-045"] [data-part="secondary"]::after{content:"";position:absolute;left:0;right:0;bottom:.1rem;height:1px;background:var(--vibeui-hero-045-accent);transform:scaleX(.4);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="hero-045"] [data-part="secondary"]:hover::after{transform:scaleX(1)}
-[data-vibeui-block="hero-045"] a:focus-visible,[data-vibeui-block="hero-045"] button:focus-visible{outline:2px solid var(--vibeui-hero-045-accent);outline-offset:3px}
+[data-vibeui-block="hero-045"] button:focus-visible{outline:2px solid var(--vibeui-hero-045-accent);outline-offset:3px}
 @keyframes vibeui-hero-045-rise{to{transform:translateY(0)}}
 @keyframes vibeui-hero-045-fade{to{opacity:1}}
 @keyframes vibeui-hero-045-blink{50%{opacity:0}}
@@ -263,14 +261,23 @@ export function Hero045({
             </div>
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button077
+                  data-part="secondary"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

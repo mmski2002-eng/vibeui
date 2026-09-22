@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Cta008Props = {
   eyebrow?: string
@@ -24,7 +27,8 @@ export type Cta008Props = {
 // Отсчёт намеренно статический: цифры приходят пропсами, тикание — забота
 // проекта. Серверный компонент с setInterval невозможен, а класть JS в
 // registry-блок ради секундной стрелки — плохой размен.
-const STYLES = `
+const STYLES = `[data-vibeui-block="cta-008"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="cta-008"]){
 --vibeui-cta-008-bg:transparent;
 --vibeui-cta-008-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -49,18 +53,6 @@ font-family:var(--vibeui-cta-008-font);
 [data-vibeui-block="cta-008"] [data-part="shell"]{
 max-width:46rem;margin:0 auto;padding:3rem 1.25rem;text-align:center;
 }
-[data-vibeui-block="cta-008"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;color:var(--vibeui-cta-008-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="cta-008"] [data-part="title"]{
-margin:0 auto 0.875rem;max-width:22ch;
-font-size:clamp(1.625rem,5.5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="cta-008"] [data-part="description"]{
-margin:0 auto 2rem;max-width:48ch;
-color:var(--vibeui-cta-008-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="cta-008"] [data-part="timer"]{
 display:flex;justify-content:center;align-items:stretch;gap:0.5rem;margin:0 0 2rem;
 }
@@ -81,16 +73,6 @@ letter-spacing:0.08em;text-transform:uppercase;
 [data-vibeui-block="cta-008"] [data-part="colon"]{
 align-self:center;color:var(--vibeui-cta-008-muted);
 font-size:1.5rem;font-weight:700;line-height:1;
-}
-[data-vibeui-block="cta-008"] [data-part="action"]{
-display:inline-block;padding:0.875rem 1.75rem;border-radius:999px;
-background:var(--vibeui-cta-008-button);color:var(--vibeui-cta-008-button-ink);
-font-size:0.9375rem;font-weight:650;text-decoration:none;
-transition:filter var(--vibeui-cta-008-dur-2) ease,transform var(--vibeui-cta-008-dur-2) ease;
-}
-[data-vibeui-block="cta-008"] [data-part="action"]:hover{filter:brightness(1.05);transform:translateY(-1px)}
-[data-vibeui-block="cta-008"] [data-part="action"]:focus-visible{
-outline:2px solid var(--vibeui-cta-008-accent);outline-offset:2px;
 }
 [data-vibeui-block="cta-008"] [data-part="note"]{
 margin:1rem auto 0;max-width:44ch;
@@ -178,9 +160,15 @@ export function Cta008({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={description}
+            align="center"
+            ledeWidth={48}
+            accent={accent}
+          />
           <div data-part="timer">
             {units.map((unit, index) => [
               index > 0 ? (
@@ -198,9 +186,15 @@ export function Cta008({
               </span>,
             ])}
           </div>
-          <a data-part="action" href={actionHref}>
-            {actionLabel}
-          </a>
+          <Button016
+            data-part="action"
+            label={actionLabel}
+            href={actionHref}
+            external={false}
+            size="lg"
+            tone="accent"
+            accent={accent}
+          />
           <p data-part="note">{note}</p>
         </div>
       </section>

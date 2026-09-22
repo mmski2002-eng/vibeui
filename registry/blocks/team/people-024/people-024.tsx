@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card060 } from "@/registry/components/card/card-060/card-060"
 
 export type People024Person = {
   name: string
@@ -64,19 +65,6 @@ container-type:inline-size;
 [data-vibeui-block="people-024"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-024-display);font-weight:500;font-size:clamp(2rem,4.6cqi,3.4rem);line-height:1.08;letter-spacing:-.02em}
 [data-vibeui-block="people-024"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-people-024-muted)}
 [data-vibeui-block="people-024"] [data-part="grid"]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:2.5rem 1.6rem;margin:3.5rem 0 0;padding:0 .5rem;list-style:none}
-[data-vibeui-block="people-024"] [data-part="card"]{position:relative;padding:.75rem .75rem 1rem;background:var(--vibeui-people-024-paper);border:1px solid var(--vibeui-people-024-line);box-shadow:0 24px 40px -28px rgb(0 0 0 / .5);transform:rotate(var(--vibeui-people-024-r));transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
-[data-vibeui-block="people-024"] [data-part="card"]:nth-child(4n+1){--vibeui-people-024-r:-2.2deg}
-[data-vibeui-block="people-024"] [data-part="card"]:nth-child(4n+2){--vibeui-people-024-r:1.6deg}
-[data-vibeui-block="people-024"] [data-part="card"]:nth-child(4n+3){--vibeui-people-024-r:-1deg}
-[data-vibeui-block="people-024"] [data-part="card"]:nth-child(4n+4){--vibeui-people-024-r:2.4deg}
-[data-vibeui-block="people-024"] [data-part="card"]:hover{transform:rotate(0) translateY(-8px);box-shadow:0 34px 50px -30px rgb(0 0 0 / .55);z-index:1}
-[data-vibeui-block="people-024"] [data-part="card"]::before{content:"";position:absolute;top:-.7rem;left:50%;width:5rem;height:1.4rem;transform:translateX(-50%) rotate(var(--vibeui-people-024-r));background:color-mix(in oklab,var(--vibeui-people-024-second) 55%,transparent);opacity:.85}
-[data-vibeui-block="people-024"] [data-part="photo"]{position:relative;aspect-ratio:4/5;overflow:hidden;background:linear-gradient(135deg,var(--vibeui-people-024-soft),color-mix(in oklab,var(--vibeui-people-024-accent) 28%,var(--vibeui-people-024-bg)))}
-[data-vibeui-block="people-024"] [data-part="photo"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="people-024"] [data-part="card"]:hover [data-part="photo"] img{transform:scale(1.05)}
-[data-vibeui-block="people-024"] [data-part="name"]{margin:.9rem 0 0;font-family:var(--vibeui-people-024-hand);font-weight:700;font-size:1.75rem;line-height:1.05;color:var(--vibeui-people-024-fg)}
-[data-vibeui-block="people-024"] [data-part="role"]{margin:.15rem 0 0;font-size:.82rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-people-024-accent)}
-[data-vibeui-block="people-024"] [data-part="quote"]{margin:.6rem 0 0;font-family:var(--vibeui-people-024-hand);font-size:1.2rem;line-height:1.2;color:var(--vibeui-people-024-muted)}
 [data-vibeui-block="people-024"] [data-part="more"]{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1rem;padding:1.5rem;border:1px dashed var(--vibeui-people-024-line);border-radius:1rem;text-decoration:none;color:inherit;transition:border-color .2s,background .2s}
 [data-vibeui-block="people-024"] [data-part="more"]:hover{border-color:var(--vibeui-people-024-accent);background:var(--vibeui-people-024-soft)}
 [data-vibeui-block="people-024"] [data-part="more"]:focus-visible{outline:2px solid var(--vibeui-people-024-accent);outline-offset:2px}
@@ -137,12 +125,7 @@ export function People024({
           </div>
           <ul data-part="grid">
             {people.map((person) => (
-              <li key={person.name} data-part="card">
-                <div data-part="photo">{person.image ? <img src={person.image} alt={person.imageAlt ?? person.name} /> : null}</div>
-                <h3 data-part="name">{person.name}</h3>
-                <p data-part="role">{person.role}</p>
-                {person.quote ? <p data-part="quote">{person.quote}</p> : null}
-              </li>
+              <Card060 key={person.name} data-part="card" name={person.name} image={person.image} imageAlt={person.imageAlt} role={person.role} quote={person.quote} accent={accent} />
             ))}
             {moreCount > 0 ? (
               <li>

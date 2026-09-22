@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks012 } from "@/registry/components/navigation/footerlinks-012/footerlinks-012"
 
 export type Footer040Link = {
   label: string
@@ -58,11 +59,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-040"] [data-part="caption"]{margin:0;max-width:22rem;color:var(--vibeui-footer-040-muted)}
 [data-vibeui-block="footer-040"] [data-part="caption"] b{display:block;margin-bottom:.4rem;font-family:var(--vibeui-footer-040-display);font-weight:700;font-size:1.1rem;letter-spacing:-.03em;color:var(--vibeui-footer-040-fg)}
 [data-vibeui-block="footer-040"] [data-part="columns"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 1rem}
-[data-vibeui-block="footer-040"] [data-part="column"] h3{margin:0 0 .7rem;font-family:var(--vibeui-footer-040-mono);font-weight:500;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-040-muted)}
-[data-vibeui-block="footer-040"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.35rem}
-[data-vibeui-block="footer-040"] [data-part="column"] a{position:relative;color:var(--vibeui-footer-040-fg);text-decoration:none;font-weight:500}
-[data-vibeui-block="footer-040"] [data-part="column"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.1rem;height:1px;background:var(--vibeui-footer-040-accent);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="footer-040"] [data-part="column"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="footer-040"] [data-part="word"]{position:relative;display:block;margin:3rem 0 0;font-family:var(--vibeui-footer-040-display);font-weight:800;font-size:clamp(5rem,22cqi,17rem);line-height:.78;letter-spacing:-.07em;white-space:nowrap;user-select:none}
 [data-vibeui-block="footer-040"] [data-part="glyph"]{position:relative;display:inline-block}
 [data-vibeui-block="footer-040"] [data-part="word"] i{position:absolute;left:calc(100% + .05em);bottom:.08em;width:.14em;height:.14em;border-radius:.02em;background:var(--vibeui-footer-040-accent)}
@@ -123,16 +119,7 @@ export function Footer040({
             </p>
             <div data-part="columns">
               {columns.map((column) => (
-                <nav key={column.title} data-part="column" aria-label={column.title}>
-                  <h3>{column.title}</h3>
-                  <ul>
-                    {column.links.map((link) => (
-                      <li key={link.label}>
-                        <a href={link.href}>{link.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                <Footerlinks012 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
           </div>

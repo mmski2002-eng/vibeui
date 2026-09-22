@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Changelog001Entry = {
   version: string
@@ -23,7 +24,8 @@ export type Changelog001Props = {
 // Дата и номер версии — на самой оси, тег типа релиза и список изменений —
 // в карточке справа. Ось задаёт хронологию визуально: читается сверху вниз
 // как «что менялось со временем», а не как разрозненные карточки.
-const STYLES = `
+const STYLES = `[data-vibeui-block="changelog-001"] [data-part="heading"]{margin-bottom:2.5rem}
+
 :where([data-vibeui-block="changelog-001"]){
 --vibeui-changelog-001-bg:transparent;
 --vibeui-changelog-001-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -44,13 +46,6 @@ display:block;background:var(--vibeui-changelog-001-bg);color:var(--vibeui-chang
 font-family:var(--vibeui-changelog-001-font);
 }
 [data-vibeui-block="changelog-001"] [data-part="shell"]{max-width:52rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="changelog-001"] [data-part="eyebrow"]{
-margin:0 0 0.5rem;color:var(--vibeui-changelog-001-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="changelog-001"] [data-part="title"]{
-margin:0 0 2.5rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="changelog-001"] [data-part="list"]{list-style:none;margin:0;padding:0}
 [data-vibeui-block="changelog-001"] [data-part="row"]{
 position:relative;display:grid;gap:0.75rem;
@@ -181,8 +176,12 @@ export function Changelog001({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ol data-part="list">
             {entries.map((entry) => (
               <li key={entry.version} data-part="row">

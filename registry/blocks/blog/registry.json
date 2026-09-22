@@ -10,7 +10,10 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-025",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-001/blog-001.tsx",
@@ -18,13 +21,14 @@
           "target": "@components/vibeui/blog-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-001-*. Серверный: хуков нет. Обложка рисуется линейным градиентом от оттенка, который получается хешированием названия рубрики, — ассетов и картинок нет вовсе. Ссылка заголовка растянута псевдоэлементом ::after на всю карточку, поэтому кликается любое место, а текстом ссылки остаётся заголовок. Сетка на две и три колонки включается container query.",
+      "docs": "Составной блок: импортирует card-025, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-001-*. Серверный: хуков нет. Обложка рисуется линейным градиентом от оттенка, который получается хешированием названия рубрики, — ассетов и картинок нет вовсе. Ссылка заголовка растянута псевдоэлементом ::after на всю карточку, поэтому кликается любое место, а текстом ссылки остаётся заголовок. Сетка на две и три колонки включается container query.",
       "meta": {
         "tags": [
           "blog",
           "cards",
           "feed",
-          "articles"
+          "articles",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -65,6 +69,7 @@
           "usage": "<Blog001 title=\"Как мы делаем интерфейсы\" posts={[{ title: \"…\", excerpt: \"…\", topic: \"Вёрстка\", date: \"4 марта 2025\", readingTime: \"11 мин\", author: \"Кирилл\" }]} />",
           "summary": "Секция ленты статей: заголовок раздела и карточки с обложкой, рубрикой, автором, датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты card-025, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-001-* и не подменять её токенами вашей темы",
             "растянутую ссылку на заголовке: отдельная кнопка «читать» бесполезна в списке ссылок",
             ":focus-within на карточке — иначе при клавиатурном обходе не видно, где вы находитесь",
@@ -123,6 +128,7 @@
             "ai": {
               "summary": "An article feed section: a section heading and cards with cover, topic, author, date and reading time. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the card-025, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-001-* palette — do not swap it for your theme tokens",
                 "the stretched link on the heading: a separate «read more» is useless in a link list",
                 ":focus-within on the card — otherwise keyboard navigation gives no sense of place",
@@ -202,7 +208,7 @@
                 "title": "How we build interfaces"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-001-*. A server component: there are no hooks. The cover is drawn with a linear gradient from a hue obtained by hashing the topic name — there are no assets or images at all. The heading link is stretched over the whole card with an ::after pseudo-element, so any spot is clickable while the link text stays the heading. The two- and three-column grid is turned on by a container query."
+            "docs": "A composite block: imports card-025, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-001-*. A server component: there are no hooks. The cover is drawn with a linear gradient from a hue obtained by hashing the topic name — there are no assets or images at all. The heading link is stretched over the whole card with an ::after pseudo-element, so any spot is clickable while the link text stays the heading. The two- and three-column grid is turned on by a container query."
           }
         },
         "cardControls": [
@@ -222,7 +228,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "avatar-001"
+      ],
       "files": [
         {
           "path": "blog-002/blog-002.tsx",
@@ -230,13 +238,14 @@
           "target": "@components/vibeui/blog-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-002-*. Серверный: оглавление собрано из тех же секций, что и текст, раскрытие держит нативный <details open>. На широком блоке контейнерный запрос делает колонку липкой и гасит стрелку, а у summary снимает pointer-events, чтобы оглавление нельзя было свернуть. Заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
+      "docs": "Составной блок: импортирует avatar-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-002-*. Серверный: оглавление собрано из тех же секций, что и текст, раскрытие держит нативный <details open>. На широком блоке контейнерный запрос делает колонку липкой и гасит стрелку, а у summary снимает pointer-events, чтобы оглавление нельзя было свернуть. Заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
       "meta": {
         "tags": [
           "blog",
           "article",
           "toc",
-          "longread"
+          "longread",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -249,6 +258,7 @@
           "usage": "<Blog002 title=\"Контейнерные запросы\" sections={[{ id: \"why\", heading: \"Почему\", paragraphs: [\"…\"] }]} />",
           "summary": "Страница длинной статьи: шапка с автором и временем чтения, оглавление из секций и сам текст с врезками. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты avatar-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-002-* и не подменять её токенами вашей темы",
             "оглавление из тех же секций, что и текст: руками собранный список разойдётся с содержанием",
             "scroll-margin-top у заголовков — без него якорь прилипает к кромке окна",
@@ -307,6 +317,7 @@
             "ai": {
               "summary": "A longread page: a header with author and reading time, a table of contents built from the sections and the text itself with callouts. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the avatar-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-002-* palette — do not swap it for your theme tokens",
                 "the contents built from the same sections as the text: a hand-written list drifts from the content",
                 "scroll-margin-top on the headings — without it the anchor sticks to the window edge",
@@ -389,7 +400,7 @@
                 "avatarImage": "/demo/avatars/anna-256.webp"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-002-*. A server component: the contents are built from the same sections as the text, and a native <details open> holds the disclosure. On a wide block a container query makes the column sticky and hides the arrow, and removes pointer-events from summary so that the contents cannot be collapsed. The headings carry an id and scroll-margin-top, and the text width is limited in ch."
+            "docs": "A composite block: imports avatar-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-002-*. A server component: the contents are built from the same sections as the text, and a native <details open> holds the disclosure. On a wide block a container query makes the column sticky and hides the arrow, and removes pointer-events from summary so that the contents cannot be collapsed. The headings carry an id and scroll-margin-top, and the text width is limited in ch."
           }
         },
         "cardControls": [
@@ -409,7 +420,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "avatar-001"
+      ],
       "files": [
         {
           "path": "blog-003/blog-003.tsx",
@@ -417,13 +430,14 @@
           "target": "@components/vibeui/blog-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-003-*. Серверный: хуков нет. Обложка собрана из слоёв радиальных градиентов поверх линейного, оттенок задаётся числом hue. Ссылка заголовка растянута ::after на всю карточку, состояние обводки держит :focus-within. Раскладка в две колонки включается container query, на узком блоке обложка становится горизонтальной.",
+      "docs": "Составной блок: импортирует avatar-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-003-*. Серверный: хуков нет. Обложка собрана из слоёв радиальных градиентов поверх линейного, оттенок задаётся числом hue. Ссылка заголовка растянута ::after на всю карточку, состояние обводки держит :focus-within. Раскладка в две колонки включается container query, на узком блоке обложка становится горизонтальной.",
       "meta": {
         "tags": [
           "blog",
           "featured",
           "announce",
-          "author"
+          "author",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -437,6 +451,7 @@
           "usage": "<Blog003 badge=\"Свежее\" title=\"Почему мы отказались от библиотеки иконок\" readingTime=\"7 минут\" hue={300} />",
           "summary": "Один крупный анонс: метка, рубрика, заголовок, анонс, автор и метрики чтения. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты avatar-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-003-* и не подменять её токенами вашей темы",
             "время чтения рядом с автором: это последний вопрос перед кликом, а не подвальная мелочь",
             "растянутую ссылку с заголовком в качестве текста — «читать далее» в списке ссылок бесполезно",
@@ -496,6 +511,7 @@
             "ai": {
               "summary": "A single large announcement: badge, topic, heading, excerpt, author and reading metrics. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the avatar-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-003-* palette — do not swap it for your theme tokens",
                 "the reading time next to the author: it is the last question before a click, not a footer detail",
                 "the stretched link with the heading as its text — «read more» is useless in a link list",
@@ -554,7 +570,7 @@
                 "avatarImage": "/demo/avatars/maria-256.webp"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-003-*. A server component: there are no hooks. The cover is assembled from layers of radial gradients over a linear one, and the hue is set by the hue number. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring state. The two-column layout is turned on by a container query; on a narrow block the cover becomes horizontal."
+            "docs": "A composite block: imports avatar-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-003-*. A server component: there are no hooks. The cover is assembled from layers of radial gradients over a linear one, and the hue is set by the hue number. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring state. The two-column layout is turned on by a container query; on a narrow block the cover becomes horizontal."
           }
         },
         "cardControls": [
@@ -574,7 +590,12 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "checkbox-001",
+        "heading-001",
+        "input-001"
+      ],
       "files": [
         {
           "path": "blog-004/blog-004.tsx",
@@ -582,13 +603,14 @@
           "target": "@components/vibeui/blog-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-004-*. Серверный: валидация нативная — type=\"email\" и required, ошибка показывается по :user-invalid, а не :invalid. Текст ошибки всегда есть в разметке, но визуально скрыт clip-path, и связан с полем через aria-describedby. Тёмная подложка своя, поэтому блок читается и на светлой странице, и на тёмной карточке каталога. Отправку реализует вызывающий код.",
+      "docs": "Составной блок: импортирует button-001, checkbox-001, heading-001, input-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-004-*. Серверный: валидация нативная — type=\"email\" и required, ошибка показывается по :user-invalid, а не :invalid. Текст ошибки всегда есть в разметке, но визуально скрыт clip-path, и связан с полем через aria-describedby. Тёмная подложка своя, поэтому блок читается и на светлой странице, и на тёмной карточке каталога. Отправку реализует вызывающий код.",
       "meta": {
         "tags": [
           "blog",
           "newsletter",
           "subscribe",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -598,6 +620,7 @@
           "usage": "<Blog004 title=\"Письмо раз в две недели\" bullets={[\"Разбор решения\", \"Список правок\"]} submitLabel=\"Подписаться\" />",
           "summary": "Секция подписки: обещание списком, поле почты с нативной проверкой, согласие и социальное доказательство. Ноль зависимостей, один файл.",
           "preserve": [
+            "импорты button-001, checkbox-001, heading-001, input-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-004-* и не подменять её токенами вашей темы",
             ":user-invalid вместо :invalid — пустое поле не должно краснеть до первого ввода",
             "текст ошибки в разметке всегда: появившийся из ниоткуда узел скринридер не найдёт",
@@ -648,6 +671,7 @@
             "ai": {
               "summary": "A subscribe section: the promise as a list, an email field with native validation, consent and social proof. Zero dependencies, one file.",
               "preserve": [
+                "the button-001, checkbox-001, heading-001, input-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-004-* palette — do not swap it for your theme tokens",
                 ":user-invalid instead of :invalid — an untouched field must not turn red",
                 "the error text always present in the markup: a node appearing from nowhere is not found by a screen reader",
@@ -703,7 +727,7 @@
                 "submitLabel": "Subscribe"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-004-*. A server component: the validation is native — type=\"email\" and required, and the error is shown by :user-invalid rather than :invalid. The error text is always present in the markup but visually hidden with clip-path, and is tied to the field through aria-describedby. The dark ground is the block's own, so the block reads both on a light page and on a dark catalogue card. Submission is implemented by the calling code."
+            "docs": "A composite block: imports button-001, checkbox-001, heading-001, input-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-004-*. A server component: the validation is native — type=\"email\" and required, and the error is shown by :user-invalid rather than :invalid. The error text is always present in the markup but visually hidden with clip-path, and is tied to the field through aria-describedby. The dark ground is the block's own, so the block reads both on a light page and on a dark catalogue card. Submission is implemented by the calling code."
           }
         },
         "cardControls": [
@@ -722,7 +746,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-005/blog-005.tsx",
@@ -730,13 +756,14 @@
           "target": "@components/vibeui/blog-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-005-*. Клиентский: \"use client\" ради фильтра в useState. Список рубрик выводится из массива записей через Set, счётчик считает те же записи, что покажет фильтр. Обёртка списка объявлена aria-live=\"polite\". На широком блоке container query переносит дату и рубрику в отдельную колонку слева.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-005-*. Клиентский: \"use client\" ради фильтра в useState. Список рубрик выводится из массива записей через Set, счётчик считает те же записи, что покажет фильтр. Обёртка списка объявлена aria-live=\"polite\". На широком блоке container query переносит дату и рубрику в отдельную колонку слева.",
       "meta": {
         "tags": [
           "blog",
           "archive",
           "filter",
-          "list"
+          "list",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -746,6 +773,7 @@
           "usage": "<Blog005 title=\"Все статьи по рубрикам\" allLabel=\"Все\" entries={[{ title: \"…\", excerpt: \"…\", topic: \"Вёрстка\", date: \"4 марта 2025\", readingTime: \"11 мин\" }]} />",
           "summary": "Архив статей строками: фильтр по рубрикам со счётчиками, дата, время чтения и анонс у каждой записи. Ноль зависимостей, один файл.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-005-* и не подменять её токенами вашей темы",
             "сбор рубрик из самих записей: отдельный список фильтров рано или поздно разойдётся с архивом",
             "счётчики у рубрик — они показывают объём до нажатия",
@@ -804,6 +832,7 @@
             "ai": {
               "summary": "An article archive as rows: a topic filter with counters, plus date, reading time and excerpt per entry. Zero dependencies, one file.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-005-* palette — do not swap it for your theme tokens",
                 "deriving topics from the entries: a separate filter list drifts from the archive",
                 "the counters on the topics — they show the volume before a click",
@@ -900,7 +929,7 @@
                 "allLabel": "All"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-005-*. A client component: \"use client\" is there for the filter in useState. The list of topics is derived from the entries array through a Set, and the counter counts the same entries the filter will show. The list wrapper is declared aria-live=\"polite\". On a wide block a container query moves the date and the topic into a separate column on the left."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-005-*. A client component: \"use client\" is there for the filter in useState. The list of topics is derived from the entries array through a Set, and the counter counts the same entries the filter will show. The list wrapper is declared aria-live=\"polite\". On a wide block a container query moves the date and the topic into a separate column on the left."
           }
         },
         "cardControls": [
@@ -920,7 +949,10 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-006/blog-006.tsx",
@@ -928,13 +960,14 @@
           "target": "@components/vibeui/blog-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-006-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Ссылка заголовка растянута ::after на карточку, обводка держится на :focus-within. Порядковая подпись занимает место рубрики. Три колонки включаются container query.",
+      "docs": "Составной блок: импортирует button-077, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-006-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Ссылка заголовка растянута ::after на карточку, обводка держится на :focus-within. Порядковая подпись занимает место рубрики. Три колонки включаются container query.",
       "meta": {
         "tags": [
           "blog",
           "related",
           "recirculation",
-          "cards"
+          "cards",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -944,6 +977,7 @@
           "usage": "<Blog006 afterTitle=\"Контейнерные запросы\" items={[{ title: \"…\", reason: \"Продолжение разбора\", topic: \"Вёрстка\", readingTime: \"6 мин\" }]} />",
           "summary": "Блок похожих статей под материалом: карточки с причиной связи, рубрикой, временем чтения и ссылкой на архив. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты button-077, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-006-* и не подменять её токенами вашей темы",
             "строку «почему рядом»: без объяснения связи блок похожих статей просто пролистывают",
             "<aside> с aria-label — это дополнение к статье, а не равный ей раздел",
@@ -1002,6 +1036,7 @@
             "ai": {
               "summary": "A related-articles block under a piece: cards with the reason for the link, topic, reading time and a link to the archive. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the button-077, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-006-* palette — do not swap it for your theme tokens",
                 "the «why this one» line: without an explained link a related block is simply scrolled past",
                 "the <aside> with aria-label — this supplements the article, it is not its equal",
@@ -1073,7 +1108,7 @@
                 "afterTitle": "Container queries over breakpoints"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-006-*. A server component: there are no hooks. The root is an <aside> with aria-label: this supplements the article, it is not a section in its own right. The heading link is stretched over the card with ::after, and the ring rests on :focus-within. The sequence caption takes the place of the topic. Three columns are turned on by a container query."
+            "docs": "A composite block: imports button-077, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-006-*. A server component: there are no hooks. The root is an <aside> with aria-label: this supplements the article, it is not a section in its own right. The heading link is stretched over the card with ::after, and the ring rests on :focus-within. The sequence caption takes the place of the topic. Three columns are turned on by a container query."
           }
         },
         "cardControls": [
@@ -1093,7 +1128,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-007/blog-007.tsx",
@@ -1101,14 +1138,15 @@
           "target": "@components/vibeui/blog-007.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-007-*. Серверный: хуков нет. Обложка — линейный градиент из трёх остановок акцентной заливки, номер выпуска вдавлен полупрозрачной тёмной краской, ассетов и картинок нет вовсе. Ссылка заголовка растянута ::after на всю карточку, обводку держит :focus-within. Две и три колонки включаются container query.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-007-*. Серверный: хуков нет. Обложка — линейный градиент из трёх остановок акцентной заливки, номер выпуска вдавлен полупрозрачной тёмной краской, ассетов и картинок нет вовсе. Ссылка заголовка растянута ::after на всю карточку, обводку держит :focus-within. Две и три колонки включаются container query.",
       "meta": {
         "tags": [
           "blog",
           "cards",
           "gradient",
           "issues",
-          "grid"
+          "grid",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1146,6 +1184,7 @@
           "usage": "<Blog007 title=\"Выпуски о сборке сайтов\" posts={[{ issue: \"№14\", title: \"Блок без зависимостей\", excerpt: \"…\", date: \"20 марта 2026\", readingTime: \"7 мин\" }]} />",
           "summary": "Сетка выпусков журнала: карточки с градиентной обложкой, номером выпуска, анонсом, датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-007-* и не подменять её токенами вашей темы",
             "обложку-градиент с номером выпуска: сериальность видна сразу, а публикация не ждёт иллюстратора",
             "растянутую ссылку на заголовке — отдельная кнопка «читать» в списке ссылок бесполезна",
@@ -1201,10 +1240,11 @@
           "en": {
             "title": "Issue Cards",
             "description": "A grid of journal issues with covers made of the brand accent gradient: a large issue number instead of illustrations, so publishing never waits for a designer.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-007-*. A server component: there are no hooks. The cover is a linear gradient of three accent stops, the issue number is pressed in with translucent dark ink, and there are no assets or images at all. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring. Two and three columns are turned on by a container query.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-007-*. A server component: there are no hooks. The cover is a linear gradient of three accent stops, the issue number is pressed in with translucent dark ink, and there are no assets or images at all. The heading link is stretched over the whole card with ::after, and :focus-within holds the ring. Two and three columns are turned on by a container query.",
             "ai": {
               "summary": "A grid of journal issues: cards with a gradient cover, issue number, excerpt, date and reading time. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-007-* palette — do not swap it for your theme tokens",
                 "the gradient cover with the issue number: seriality is visible at once, and publishing never waits for an illustrator",
                 "the stretched link on the heading — a separate «read more» is useless in a link list",
@@ -1297,7 +1337,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-008/blog-008.tsx",
@@ -1305,14 +1347,15 @@
           "target": "@components/vibeui/blog-008.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-008-*. Серверный: хуков нет. Featured-карточка лежит на тёплом тинте color-mix от акцента, лента справа — строки без обложек: строка стоит дешевле карточки и не спорит с главным материалом. Обе зоны кликаются растянутыми ссылками ::after, обводку держит :focus-within. Две колонки включает container query на 56rem, до этого лента стоит под карточкой.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-008-*. Серверный: хуков нет. Featured-карточка лежит на тёплом тинте color-mix от акцента, лента справа — строки без обложек: строка стоит дешевле карточки и не спорит с главным материалом. Обе зоны кликаются растянутыми ссылками ::after, обводку держит :focus-within. Две колонки включает container query на 56rem, до этого лента стоит под карточкой.",
       "meta": {
         "tags": [
           "blog",
           "featured",
           "feed",
           "layout",
-          "magazine"
+          "magazine",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1322,6 +1365,7 @@
           "usage": "<Blog008 featured={{ topic: \"Практика\", title: \"…\", excerpt: \"…\", author: \"…\", date: \"…\", readingTime: \"9 мин\" }} items={[{ topic: \"Вёрстка\", title: \"…\", date: \"…\", readingTime: \"7 мин\" }]} />",
           "summary": "Главная блога: один крупный анонс с автором и лента из четырёх компактных строк. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-008-* и не подменять её токенами вашей темы",
             "иерархию «один крупный плюс четыре строки»: раздать всем карточки — значит потерять главный материал",
             "строки без обложек в ленте — строка стоит дешевле карточки и не спорит с featured",
@@ -1377,10 +1421,11 @@
           "en": {
             "title": "Front Page Feed",
             "description": "A journal front page: a large featured piece on a warm accent panel on the left, a dense four-row feed on the right — one text gets all the attention, the rest are listed.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-008-*. A server component: there are no hooks. The featured card sits on a warm color-mix tint of the accent, and the feed on the right is rows without covers: a row costs less than a card and does not compete with the lead piece. Both zones are clickable through stretched ::after links, and :focus-within holds the ring. Two columns are turned on by a container query at 56rem; below that the feed stacks under the card.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-008-*. A server component: there are no hooks. The featured card sits on a warm color-mix tint of the accent, and the feed on the right is rows without covers: a row costs less than a card and does not compete with the lead piece. Both zones are clickable through stretched ::after links, and :focus-within holds the ring. Two columns are turned on by a container query at 56rem; below that the feed stacks under the card.",
             "ai": {
               "summary": "A blog front page: one large announcement with an author and a feed of four compact rows. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-008-* palette — do not swap it for your theme tokens",
                 "the «one large plus four rows» hierarchy: giving everyone a card means losing the lead piece",
                 "rows without covers in the feed — a row costs less than a card and does not compete with the featured one",
@@ -1480,7 +1525,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "avatar-001"
+      ],
       "files": [
         {
           "path": "blog-009/blog-009.tsx",
@@ -1488,14 +1535,15 @@
           "target": "@components/vibeui/blog-009.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-009-*. Серверный: хуков нет. Аватар — инициалы на тёплой акцентной заливке color-mix, картинок и ассетов нет. Соцссылки — настоящие <a> пилюлями с видимым фокус-кольцом, список последних статей — отдельная колонка, которую container query уводит вправо на широком блоке.",
+      "docs": "Составной блок: импортирует avatar-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-009-*. Серверный: хуков нет. Аватар — инициалы на тёплой акцентной заливке color-mix, картинок и ассетов нет. Соцссылки — настоящие <a> пилюлями с видимым фокус-кольцом, список последних статей — отдельная колонка, которую container query уводит вправо на широком блоке.",
       "meta": {
         "tags": [
           "blog",
           "author",
           "profile",
           "bio",
-          "links"
+          "links",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1508,6 +1556,7 @@
           "usage": "<Blog009 name=\"Вера Славина\" role=\"Редактор VibeUI\" links={[{ label: \"Телеграм\", href: \"#\" }]} articles={[{ title: \"…\", date: \"…\", readingTime: \"6 мин\" }]} />",
           "summary": "Карточка автора: инициалы-аватар, роль, биография, соцссылки и три последних статьи. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты avatar-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-009-* и не подменять её токенами вашей темы",
             "аватар из инициалов на тёплой заливке: карточка не ждёт фотографии и не тянет ассеты",
             "список последних статей рядом с биографией — автору верят по текстам, а не по должности",
@@ -1563,10 +1612,11 @@
           "en": {
             "title": "Author Card",
             "description": "A blog author card: an initials avatar, role, bio and social links on the left, the three latest articles on the right — trust in an author is checked by their texts.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-009-*. A server component: there are no hooks. The avatar is initials on a warm accent color-mix fill; there are no images or assets. The social links are real <a> pills with a visible focus ring, and the latest-articles list is a separate column that a container query moves to the right on a wide block.",
+            "docs": "A composite block: imports avatar-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-009-*. A server component: there are no hooks. The avatar is initials on a warm accent color-mix fill; there are no images or assets. The social links are real <a> pills with a visible focus ring, and the latest-articles list is a separate column that a container query moves to the right on a wide block.",
             "ai": {
               "summary": "An author card: initials avatar, role, bio, social links and the three latest articles. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the avatar-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-009-* palette — do not swap it for your theme tokens",
                 "the initials avatar on a warm fill: the card does not wait for a photo and pulls no assets",
                 "the latest-articles list beside the bio — an author is trusted by texts, not by job title",
@@ -1664,7 +1714,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-010/blog-010.tsx",
@@ -1672,14 +1724,15 @@
           "target": "@components/vibeui/blog-010.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-010-*. Серверный: активный пункт задаётся пропом activeId и помечается aria-current — наблюдателя пересечений нет намеренно. Оглавление — nav с aria-label, пункты сидят на общей левой линии, активный перекрывает её акцентной полосой. Липкость включает container query на 56rem, заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-010-*. Серверный: активный пункт задаётся пропом activeId и помечается aria-current — наблюдателя пересечений нет намеренно. Оглавление — nav с aria-label, пункты сидят на общей левой линии, активный перекрывает её акцентной полосой. Липкость включает container query на 56rem, заголовки несут id и scroll-margin-top, ширина текста ограничена в ch.",
       "meta": {
         "tags": [
           "blog",
           "toc",
           "sticky",
           "article",
-          "navigation"
+          "navigation",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1689,6 +1742,7 @@
           "usage": "<Blog010 title=\"Путь блока\" activeId=\"copy\" sections={[{ id: \"copy\", heading: \"Что копирует Copy for AI\", paragraphs: [\"…\"] }]} />",
           "summary": "Макет статьи с липким оглавлением: nav-колонка едет с прокруткой, активный пункт акцентный, текст собран из тех же секций. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-010-* и не подменять её токенами вашей темы",
             "оглавление из тех же секций, что и текст: руками собранный список разойдётся с содержанием",
             "aria-current у активного пункта — состояние не должно отличаться только цветом",
@@ -1745,10 +1799,11 @@
           "en": {
             "title": "Sticky Contents",
             "description": "An article layout with a sticky table of contents: the active item is marked with an accent bar and colour, and on a narrow block the column becomes a plain list before the text.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-010-*. A server component: the active item is set by the activeId prop and marked with aria-current — there is deliberately no intersection observer. The contents are a nav with aria-label, the items sit on a shared left line, and the active one overlays it with an accent bar. Stickiness is turned on by a container query at 56rem, the headings carry an id and scroll-margin-top, and the text measure is limited in ch.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-010-*. A server component: the active item is set by the activeId prop and marked with aria-current — there is deliberately no intersection observer. The contents are a nav with aria-label, the items sit on a shared left line, and the active one overlays it with an accent bar. Stickiness is turned on by a container query at 56rem, the headings carry an id and scroll-margin-top, and the text measure is limited in ch.",
             "ai": {
               "summary": "An article layout with sticky contents: the nav column travels with the scroll, the active item is accent, and the text is built from the same sections. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-010-* palette — do not swap it for your theme tokens",
                 "the contents built from the same sections as the text: a hand-written list drifts from the content",
                 "aria-current on the active item — state must not differ by colour alone",
@@ -1850,7 +1905,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-011/blog-011.tsx",
@@ -1858,14 +1915,15 @@
           "target": "@components/vibeui/blog-011.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-011-*. Серверный: хуков нет. Ось — левая граница списка, точка месяца сидит на ней псевдоэлементом и оторвана от линии обводкой цветом страницы. Группы — ol по месяцам, внутри ul статей. На широком блоке container query переносит дату и время чтения к правому краю строки.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-011-*. Серверный: хуков нет. Ось — левая граница списка, точка месяца сидит на ней псевдоэлементом и оторвана от линии обводкой цветом страницы. Группы — ol по месяцам, внутри ul статей. На широком блоке container query переносит дату и время чтения к правому краю строки.",
       "meta": {
         "tags": [
           "blog",
           "archive",
           "timeline",
           "months",
-          "list"
+          "list",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1875,6 +1933,7 @@
           "usage": "<Blog011 title=\"Журнал по месяцам\" groups={[{ month: \"Март 2026\", posts: [{ title: \"…\", date: \"26 марта\", readingTime: \"9 мин\" }] }]} />",
           "summary": "Архив статей таймлайном: месяцы с акцентными точками на вертикальной оси, под каждым — список статей с датой и временем чтения. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-011-* и не подменять её токенами вашей темы",
             "ось с точками месяцев: ритм публикаций виден без чтения дат",
             "обводку точки цветом страницы — без неё точка сливается с линией оси",
@@ -1929,10 +1988,11 @@
           "en": {
             "title": "Monthly Archive",
             "description": "A timeline archive: articles grouped by month along a vertical axis with accent dots — pauses and busy months are visible without reading the dates.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-011-*. A server component: there are no hooks. The axis is the list's left border, and each month's dot sits on it as a pseudo-element, separated from the line by a ring in the page colour. The groups are an ol of months with a ul of articles inside. On a wide block a container query moves the date and reading time to the right edge of the row.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-011-*. A server component: there are no hooks. The axis is the list's left border, and each month's dot sits on it as a pseudo-element, separated from the line by a ring in the page colour. The groups are an ol of months with a ul of articles inside. On a wide block a container query moves the date and reading time to the right edge of the row.",
             "ai": {
               "summary": "An article archive as a timeline: months with accent dots on a vertical axis, each followed by a list of articles with date and reading time. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-011-* palette — do not swap it for your theme tokens",
                 "the axis with month dots: the publishing rhythm is visible without reading the dates",
                 "the page-coloured ring around the dot — without it the dot merges with the axis line",
@@ -2049,7 +2109,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-012/blog-012.tsx",
@@ -2057,14 +2119,15 @@
           "target": "@components/vibeui/blog-012.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-012-*. Серверный: хуков нет. Счётчик набран крупно акцентом, подпись под числом отдаёт проп countLabel. Плитка кликается растянутой ссылкой ::after на имени рубрики, hover подкладывает тёплый тинт color-mix от акцента. Две и три колонки включаются container query.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-012-*. Серверный: хуков нет. Счётчик набран крупно акцентом, подпись под числом отдаёт проп countLabel. Плитка кликается растянутой ссылкой ::after на имени рубрики, hover подкладывает тёплый тинт color-mix от акцента. Две и три колонки включаются container query.",
       "meta": {
         "tags": [
           "blog",
           "topics",
           "categories",
           "grid",
-          "tiles"
+          "tiles",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2074,6 +2137,7 @@
           "usage": "<Blog012 title=\"О чём пишет журнал\" topics={[{ name: \"Вёрстка\", count: \"14\", note: \"Раскладки и container queries\" }]} />",
           "summary": "Сетка рубрик плитками: имя темы, крупный счётчик статей и описание в одну строку. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-012-* и не подменять её токенами вашей темы",
             "крупный счётчик: число статей — главный ответ рубрики, прятать его мелким кеглем нечестно",
             "растянутую ссылку на имени рубрики и :focus-within на плитке",
@@ -2128,10 +2192,11 @@
           "en": {
             "title": "Topic Tiles",
             "description": "A grid of blog topics as tiles: the topic name, a large accent article counter and one line on the contents — an honest answer to whether there is anything to read.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-012-*. A server component: there are no hooks. The counter is set large in the accent colour, and the caption under the number comes from the countLabel prop. The tile is clickable through a stretched ::after link on the topic name, and hover lays a warm color-mix tint of the accent underneath. Two and three columns are turned on by a container query.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-012-*. A server component: there are no hooks. The counter is set large in the accent colour, and the caption under the number comes from the countLabel prop. The tile is clickable through a stretched ::after link on the topic name, and hover lays a warm color-mix tint of the accent underneath. Two and three columns are turned on by a container query.",
             "ai": {
               "summary": "A grid of topic tiles: the name, a large article counter and a one-line description. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-012-* palette — do not swap it for your theme tokens",
                 "the large counter: the article count is the topic's main answer, hiding it in small type is dishonest",
                 "the stretched link on the topic name and :focus-within on the tile",
@@ -2229,7 +2294,10 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "avatar-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-013/blog-013.tsx",
@@ -2237,14 +2305,15 @@
           "target": "@components/vibeui/blog-013.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-013-*. Серверный: полоса прогресса статичная и декоративная — ширину задаёт проп progress в процентах, живой прогресс требует скролл-слушателя и остаётся вызывающему коду. Корень — <header> с h1: блок рассчитан на верх страницы статьи. Аватар — инициалы на тёплой заливке, полоса скрыта aria-hidden.",
+      "docs": "Составной блок: импортирует avatar-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-013-*. Серверный: полоса прогресса статичная и декоративная — ширину задаёт проп progress в процентах, живой прогресс требует скролл-слушателя и остаётся вызывающему коду. Корень — <header> с h1: блок рассчитан на верх страницы статьи. Аватар — инициалы на тёплой заливке, полоса скрыта aria-hidden.",
       "meta": {
         "tags": [
           "blog",
           "hero",
           "article",
           "header",
-          "progress"
+          "progress",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2257,6 +2326,7 @@
           "usage": "<Blog013 topic=\"Работа с ИИ\" title=\"Отдайте вёрстку агенту\" author=\"Вера Славина\" readingTime=\"9 минут чтения\" progress={24} />",
           "summary": "Шапка статьи: тег, заголовок h1, лид, автор с инициалами-аватаром, дата, время чтения и декоративная полоса прогресса сверху. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты avatar-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-013-* и не подменять её токенами вашей темы",
             "h1 в корне: это шапка страницы статьи, второй h1 на странице недопустим",
             "тонкую полосу прогресса и её трек из полупрозрачного акцента — она обозначает жанр лонгрида, а не меряет скролл",
@@ -2312,10 +2382,11 @@
           "en": {
             "title": "Article Hero",
             "description": "A post hero: a topic tag, a large heading, a lede and an author line with date and reading time; on top — a decorative accent reading-progress bar.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-013-*. A server component: the progress bar is static and decorative — its width is set by the progress prop in percent, and live progress needs a scroll listener, which stays with the caller. The root is a <header> with an h1: the block is meant for the top of an article page. The avatar is initials on a warm fill, and the bar is hidden with aria-hidden.",
+            "docs": "A composite block: imports avatar-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-013-*. A server component: the progress bar is static and decorative — its width is set by the progress prop in percent, and live progress needs a scroll listener, which stays with the caller. The root is a <header> with an h1: the block is meant for the top of an article page. The avatar is initials on a warm fill, and the bar is hidden with aria-hidden.",
             "ai": {
               "summary": "An article hero: tag, h1 heading, lede, author with an initials avatar, date, reading time and a decorative progress bar on top. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the avatar-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-013-* palette — do not swap it for your theme tokens",
                 "the h1 at the root: this is the article page header, a second h1 on the page is not allowed",
                 "the thin progress bar and its track of translucent accent — it signals the longread genre rather than measuring scroll",
@@ -2388,7 +2459,10 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-014/blog-014.tsx",
@@ -2396,14 +2470,15 @@
           "target": "@components/vibeui/blog-014.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-014-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Строки кликаются растянутой ссылкой ::after, обводку держит :focus-within, стрелка уезжает вправо на hover и глушится prefers-reduced-motion. Ссылка на весь архив стоит в шапке блока.",
+      "docs": "Составной блок: импортирует button-077, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-014-*. Серверный: хуков нет. Корень — <aside> с aria-label: это дополнение к статье, а не самостоятельный раздел. Строки кликаются растянутой ссылкой ::after, обводку держит :focus-within, стрелка уезжает вправо на hover и глушится prefers-reduced-motion. Ссылка на весь архив стоит в шапке блока.",
       "meta": {
         "tags": [
           "blog",
           "related",
           "next",
           "rows",
-          "recirculation"
+          "recirculation",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2413,6 +2488,7 @@
           "usage": "<Blog014 title=\"Читать дальше\" items={[{ topic: \"Вёрстка\", title: \"…\", readingTime: \"7 мин\" }]} allLabel=\"Все статьи журнала\" />",
           "summary": "Три горизонтальные строки «читать дальше» со стрелкой у правого края и ссылка на все статьи. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты button-077, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-014-* и не подменять её токенами вашей темы",
             "строки вместо карточек: под дочитанной статьёй вертикальное место дорого",
             "<aside> с aria-label — это дополнение к статье, а не равный ей раздел",
@@ -2467,10 +2543,11 @@
           "en": {
             "title": "Up Next",
             "description": "An «up next» block as horizontal rows: topic, title, reading time and an arrow at the edge — under a finished article three rows take less screen than a row of covers.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-014-*. A server component: there are no hooks. The root is an <aside> with aria-label: this supplements the article, it is not a section in its own right. The rows are clickable through a stretched ::after link, :focus-within holds the ring, and the arrow slides right on hover and is muted by prefers-reduced-motion. The link to the whole archive sits in the block header.",
+            "docs": "A composite block: imports button-077, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-014-*. A server component: there are no hooks. The root is an <aside> with aria-label: this supplements the article, it is not a section in its own right. The rows are clickable through a stretched ::after link, :focus-within holds the ring, and the arrow slides right on hover and is muted by prefers-reduced-motion. The link to the whole archive sits in the block header.",
             "ai": {
               "summary": "Three horizontal «up next» rows with an arrow at the right edge and a link to all articles. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the button-077, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-014-* palette — do not swap it for your theme tokens",
                 "rows instead of cards: vertical space under a finished article is expensive",
                 "the <aside> with aria-label — this supplements the article, it is not its equal",
@@ -2552,7 +2629,10 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "blog-015/blog-015.tsx",
@@ -2560,14 +2640,15 @@
           "target": "@components/vibeui/blog-015.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-blog-015-*. Серверный: хуков нет. Номера ставит CSS-счётчик с decimal-leading-zero — порядок на экране нельзя рассинхронизировать с разметкой. Каждая запись — грид «номер плюс текст», номер тянется на три ряда. Плашка подписки — ссылка-кнопка с акцентной заливкой и почти чёрным текстом; формы и отправки в блоке нет намеренно.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-blog-015-*. Серверный: хуков нет. Номера ставит CSS-счётчик с decimal-leading-zero — порядок на экране нельзя рассинхронизировать с разметкой. Каждая запись — грид «номер плюс текст», номер тянется на три ряда. Плашка подписки — ссылка-кнопка с акцентной заливкой и почти чёрным текстом; формы и отправки в блоке нет намеренно.",
       "meta": {
         "tags": [
           "blog",
           "digest",
           "links",
           "newsletter",
-          "list"
+          "list",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2577,6 +2658,7 @@
           "usage": "<Blog015 title=\"Дайджест недели\" links={[{ title: \"…\", note: \"…\", source: \"Журнал VibeUI\" }]} subscribeLabel=\"Подписаться\" />",
           "summary": "Дайджест: нумерованный список из пяти ссылок с комментариями и источником, снизу плашка подписки с кнопкой. Ноль зависимостей, один файл, клиентского JS нет.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-blog-015-* и не подменять её токенами вашей темы",
             "комментарий у каждой ссылки: ссылка без объяснения, зачем её открывать, в дайджесте не живёт",
             "номера CSS-счётчиком — порядок нельзя рассинхронизировать с разметкой",
@@ -2632,10 +2714,11 @@
           "en": {
             "title": "Weekly Digest",
             "description": "A numbered digest: five links with a comment and a source, numbers drawn by a CSS counter, and a subscribe strip with an accent button at the bottom.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local variables --vibeui-blog-015-*. A server component: there are no hooks. The numbers are set by a CSS counter with decimal-leading-zero — the on-screen order cannot drift from the markup. Every entry is a «number plus text» grid with the number spanning three rows. The subscribe strip is a button-styled link with the accent fill and near-black text; there is deliberately no form or submission in the block.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-blog-015-*. A server component: there are no hooks. The numbers are set by a CSS counter with decimal-leading-zero — the on-screen order cannot drift from the markup. Every entry is a «number plus text» grid with the number spanning three rows. The subscribe strip is a button-styled link with the accent fill and near-black text; there is deliberately no form or submission in the block.",
             "ai": {
               "summary": "A digest: a numbered list of five links with comments and a source, plus a subscribe strip with a button below. Zero dependencies, one file, no client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-blog-015-* palette — do not swap it for your theme tokens",
                 "the comment on every link: a link without a reason to open it does not belong in a digest",
                 "the CSS-counter numbers — the order cannot drift from the markup",
@@ -2731,7 +2814,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "changelog-001/changelog-001.tsx",
@@ -2739,14 +2824,15 @@
           "target": "@components/vibeui/changelog-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-001-*. Серверный компонент. Вертикальная ось — border-left у каждой строки, точки на оси — псевдоэлементы с брендовой заливкой; у последней строки линия обнулена, чтобы ось не свисала. Разметка: ol/li, версия в моношрифте.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-changelog-001-*. Серверный компонент. Вертикальная ось — border-left у каждой строки, точки на оси — псевдоэлементы с брендовой заливкой; у последней строки линия обнулена, чтобы ось не свисала. Разметка: ol/li, версия в моношрифте.",
       "meta": {
         "tags": [
           "changelog",
           "timeline",
           "releases",
           "versions",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2756,6 +2842,7 @@
           "usage": "<Changelog001\n  title=\"Что нового\"\n  entries={[{ version: \"v2.4.0\", date: \"6 сентября\", tag: \"Новое\", title: \"Каталог вырос\", points: [\"Новые разделы\"] }]}\n/>",
           "summary": "Лента версий хронологической осью: надзаголовок, заголовок и релизы от нового к старому. У каждого — номер версии в моношрифте, тег типа, дата и маркированный список изменений. Ось задаёт чтение сверху вниз. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-changelog-001-* и не подменять её токенами вашей темы",
             "вертикальную ось на border-left с псевдоэлементами-точками: это приём, отличающий ленту от набора карточек",
             "обнуление линии у последней строки — иначе ось свисает под последним релизом",
@@ -2820,6 +2907,7 @@
             "ai": {
               "summary": "A version feed on a chronological axis: eyebrow, title and releases newest-first. Each carries a monospace version number, a type tag, a date and a bulleted list of changes. The axis drives top-to-bottom reading. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-changelog-001-* palette — do not swap it for your theme tokens",
                 "the vertical axis via border-left with pseudo-element dots: this is the trick separating a feed from a set of cards",
                 "clearing the line on the last row — otherwise the axis dangles below the final release",
@@ -2862,7 +2950,7 @@
               }
             },
             "title": "Version Timeline",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-001-* variables. A server component. The vertical axis is a border-left on each row, the axis dots are pseudo-elements with a brand fill; the last row's line is cleared so the axis does not dangle. Markup: ol/li, version in a monospace font."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-changelog-001-* variables. A server component. The vertical axis is a border-left on each row, the axis dots are pseudo-elements with a brand fill; the last row's line is cleared so the axis does not dangle. Markup: ol/li, version in a monospace font."
           }
         }
       }
@@ -2876,7 +2964,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "changelog-002/changelog-002.tsx",
@@ -2884,14 +2974,15 @@
           "target": "@components/vibeui/changelog-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-002-*. Серверный компонент. Формат для свежего релиза наверху страницы: одна версия крупно, резюме и список изменений, где тип каждого пункта подписан тегом фиксированной ширины слева. Сетка grid-template-columns:auto 1fr держит теги в столбец.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-changelog-002-*. Серверный компонент. Формат для свежего релиза наверху страницы: одна версия крупно, резюме и список изменений, где тип каждого пункта подписан тегом фиксированной ширины слева. Сетка grid-template-columns:auto 1fr держит теги в столбец.",
       "meta": {
         "tags": [
           "changelog",
           "release",
           "announcement",
           "versions",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2901,6 +2992,7 @@
           "usage": "<Changelog002\n  version=\"v2.4.0\"\n  title=\"Крупное обновление\"\n  changes={[{ tag: \"Добавлено\", text: \"Новые блоки\" }]}\n/>",
           "summary": "Хайлайт одного релиза: крупный номер версии с датой, короткое резюме и список изменений, разбитый по типам. Тег типа стоит слева фиксированной колонкой, текст изменения — справа. Формат «свежий релиз наверху», не лента истории. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-changelog-002-* и не подменять её токенами вашей темы",
             "крупный номер версии брендовым акцентом — это смысловой центр блока",
             "сетку grid-template-columns:auto 1fr у строки изменения: теги обязаны стоять ровным столбцом",
@@ -2965,6 +3057,7 @@
             "ai": {
               "summary": "A single-release highlight: a large version number with date, a short summary and a list of changes grouped by type. The type tag sits in a fixed left column, the change text on the right. A newest-release-on-top format, not a history feed. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-changelog-002-* palette — do not swap it for your theme tokens",
                 "the large version number in the brand accent — it's the semantic centre of the block",
                 "the grid-template-columns:auto 1fr on each change row: tags must line up in a column",
@@ -3007,7 +3100,7 @@
               }
             },
             "title": "Release Highlight",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-002-* variables. A server component. A format for a fresh release at the top of the page: one version large, a summary and a change list where each item's type is labelled by a fixed-width tag on the left. The grid-template-columns:auto 1fr keeps tags in a column."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-changelog-002-* variables. A server component. A format for a fresh release at the top of the page: one version large, a summary and a change list where each item's type is labelled by a fixed-width tag on the left. The grid-template-columns:auto 1fr keeps tags in a column."
           }
         }
       }
@@ -3021,7 +3114,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "changelog-003/changelog-003.tsx",
@@ -3029,14 +3124,15 @@
           "target": "@components/vibeui/changelog-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-changelog-003-*. Клиентский компонент: чипы фильтруют список по типу записи через состояние активного чипа и атрибут hidden на строках. Чипы объявлены через aria-pressed, набор типов выводится из данных, поэтому лишних чипов не появляется.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-changelog-003-*. Клиентский компонент: чипы фильтруют список по типу записи через состояние активного чипа и атрибут hidden на строках. Чипы объявлены через aria-pressed, набор типов выводится из данных, поэтому лишних чипов не появляется.",
       "meta": {
         "tags": [
           "changelog",
           "filter",
           "releases",
           "versions",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3046,6 +3142,7 @@
           "usage": "<Changelog003\n  title=\"Все обновления\"\n  entries={[{ version: \"v2.4.0\", date: \"6 сен\", type: \"Новое\", text: \"Новые блоки\" }]}\n/>",
           "summary": "Лента изменений с клиентским фильтром по типу: чипы «Все» плюс по чипу на каждый тип из данных прячут неподходящие записи через атрибут hidden. Активный чип объявлен через aria-pressed. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-changelog-003-* и не подменять её токенами вашей темы",
             "вывод набора чипов из данных: лишний тип не появится, отсутствующий не потеряется",
             "aria-pressed на чипах — состояние фильтра объявлено, а не показано только цветом",
@@ -3110,6 +3207,7 @@
             "ai": {
               "summary": "A changelog with a client-side type filter: an All chip plus one chip per type derived from the data hide non-matching entries via the hidden attribute. The active chip is announced through aria-pressed. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-changelog-003-* palette — do not swap it for your theme tokens",
                 "deriving the chip set from the data: no stray type appears, no present one is lost",
                 "aria-pressed on the chips — the filter state is announced, not shown by colour alone",
@@ -3152,7 +3250,7 @@
               }
             },
             "title": "Filtered Changelog",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-changelog-003-* variables. A client component: chips filter the list by entry type via the active-chip state and the hidden attribute on rows. Chips are announced through aria-pressed, and the type set is derived from the data, so no stray chips appear."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-changelog-003-* variables. A client component: chips filter the list by entry type via the active-chip state and the hidden attribute on rows. Chips are announced through aria-pressed, and the type set is derived from the data, so no stray chips appear."
           }
         }
       }
@@ -3166,7 +3264,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077"
+      ],
       "files": [
         {
           "path": "changelog-004/changelog-004.tsx",
@@ -3184,7 +3284,8 @@
           "open source",
           "accordion",
           "semver",
-          "developer"
+          "developer",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3195,6 +3296,7 @@
           "usage": "<Changelog004\n  releases={[\n    { version: \"2.4.1\", date: \"18 сен 2026\", title: \"Виртуализация с переменной высотой\", items: [\"строки разной высоты\", \"scrollTo(rowIndex)\"] },\n    { version: \"2.0.0\", date: \"1 июн 2026\", title: \"Headless по-настоящему\", breaking: true, items: [\"!удалён <Table>\", \"4,1 КБ вместо 11\"] },\n  ]}\n/>",
           "summary": "Changelog для библиотеки, приложения, API: аккордеон релизов с честными метками ломающих изменений.",
           "preserve": [
+            "импорты button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "раскрытие — grid-template-rows 0fr → 1fr, состояние — индекс открытого релиза, кнопка с aria-expanded",
             "точка последнего релиза пульсирует keyframes box-shadow",
             "пункт с префиксом «!» получает data-breaking и красную метку"
@@ -3260,6 +3362,7 @@
             "ai": {
               "summary": "A changelog for a library, app or API: a release accordion with honest breaking-change markers.",
               "preserve": [
+                "the button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "expansion is grid-template-rows 0fr → 1fr, state is the open release index, a button with aria-expanded",
                 "the latest release dot pulses with box-shadow keyframes",
                 "an item prefixed with “!” gets data-breaking and a red marker"
@@ -3344,10 +3447,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "changelog-013",
@@ -3358,7 +3463,9 @@
         "blog"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077"
+      ],
       "files": [
         {
           "path": "changelog-013/changelog-013.tsx",
@@ -3378,7 +3485,8 @@
           "copy",
           "counter",
           "live",
-          "developer"
+          "developer",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3389,6 +3497,7 @@
           "usage": "<Changelog013\n  entries={[{ version: \"v2.4.0\", date: \"12 сен 2026\", title: \"Подсказки с геопозицией\", tags: [\"new\"], items: [\"/suggest принимает lat/lon\"] }]}\n  installs={[{ label: \"npm\", command: \"npm i @geokod/sdk\" }]}\n  perSecond={1240}\n/>",
           "summary": "История версий API с тегами, командой установки и тикающими счётчиками нагрузки.",
           "preserve": [
+            "импорты button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "счётчики — setInterval 1 с в useEffect: rate = perSecond·(0.94 + random·0.12), today += rate",
             "вкладки установки меняют команду, копирование — navigator.clipboard с fallback-тишиной и «готово» на 1,5 с",
             "первая запись — акцентная точка со свечением, теги breaking — янтарные"
@@ -3462,6 +3571,7 @@
             "ai": {
               "summary": "API version history with tags, an install command and ticking load counters.",
               "preserve": [
+                "the button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "counters are a 1 s setInterval in useEffect: rate = perSecond·(0.94 + random·0.12), today += rate",
                 "install tabs swap the command, copying uses navigator.clipboard with a silent fallback and “done” for 1.5 s",
                 "the first entry has a glowing accent dot, breaking tags are amber"
@@ -3560,10 +3670,12 @@
                 "allLabel": "All versions",
                 "installTitle": "Install the SDK"
               }
-            }
+            },
+            "docs": "A composite block: imports button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

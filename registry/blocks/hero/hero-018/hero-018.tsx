@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Hero018Props = {
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -59,6 +62,12 @@ background:var(--vibeui-hero-018-bg);color:var(--vibeui-hero-018-fg);
 font-family:var(--vibeui-hero-018-font);
 }
 [data-vibeui-block="hero-018"] *{box-sizing:border-box}
+[data-vibeui-block="hero-018"] [data-part="badge"]{
+display:inline-flex;align-items:center;gap:0.5rem;margin:0 0 1.5rem;
+padding:0.4375rem 0.875rem;border:1px solid var(--vibeui-hero-018-line);border-radius:999px;
+background:var(--vibeui-hero-018-surface);color:var(--vibeui-hero-018-fg);
+font-size:0.8125rem;font-weight:600;letter-spacing:0.01em;
+}
 [data-vibeui-block="hero-018"] [data-part="frame"]{
 position:relative;overflow:hidden;padding:3.5rem 1.25rem;
 }
@@ -94,63 +103,16 @@ background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-hero-018
 [data-vibeui-block="hero-018"] [data-part="inner"]{
 position:relative;z-index:3;max-width:52rem;margin:0 auto;text-align:center;
 }
-[data-vibeui-block="hero-018"] [data-part="eyebrow"]{
-display:inline-flex;align-items:center;gap:0.5rem;margin:0 0 1.5rem;
-padding:0.4375rem 0.875rem;border:1px solid var(--vibeui-hero-018-line);border-radius:999px;
-background:var(--vibeui-hero-018-surface);color:var(--vibeui-hero-018-fg);
-font-size:0.8125rem;font-weight:600;letter-spacing:0.01em;
-}
 [data-vibeui-block="hero-018"] [data-part="dot"]{
 width:0.4375rem;height:0.4375rem;border-radius:999px;background:var(--vibeui-hero-018-accent);flex:0 0 auto;color:oklch(from var(--vibeui-hero-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="hero-018"] h1{
-margin:0;font-size:clamp(2rem,7cqi,4.25rem);line-height:1.02;letter-spacing:-0.035em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="hero-018"] [data-part="mark"]{
-background:linear-gradient(transparent 62%,color-mix(in oklab,var(--vibeui-hero-018-accent) 30%,transparent) 0);
-padding:0 0.1em;
-}
-[data-vibeui-block="hero-018"] [data-part="lede"]{
-margin:1.25rem auto 0;max-width:36rem;font-size:clamp(1rem,1.7cqi,1.25rem);line-height:1.55;
-color:var(--vibeui-hero-018-muted);text-wrap:pretty;
-}
 [data-vibeui-block="hero-018"] [data-part="actions"]{
 display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem;margin:2rem 0 0;
-}
-[data-vibeui-block="hero-018"] [data-part="primary"],
-[data-vibeui-block="hero-018"] [data-part="secondary"]{
-display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-min-height:3rem;padding:0.75rem 1.5rem;border-radius:0.75rem;
-font-size:1rem;font-weight:650;text-decoration:none;
-transition:transform var(--vibeui-hero-018-dur-2) ease,box-shadow var(--vibeui-hero-018-dur-2) ease,background-color var(--vibeui-hero-018-dur-2) ease;
-}
-[data-vibeui-block="hero-018"] [data-part="primary"]{
-background:var(--vibeui-hero-018-accent);color:oklch(from var(--vibeui-hero-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-border:1px solid transparent;
-box-shadow:0 0.5rem 1.5rem color-mix(in oklab,var(--vibeui-hero-018-accent) 34%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 45%,transparent);
-transition:transform var(--vibeui-hero-018-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-018-dur-3) ease;
-}
-[data-vibeui-block="hero-018"] [data-part="primary"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.75rem 2rem color-mix(in oklab,var(--vibeui-hero-018-accent) 44%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 55%,transparent);
-}
-[data-vibeui-block="hero-018"] [data-part="secondary"]{
-background:var(--vibeui-hero-018-surface);color:var(--vibeui-hero-018-fg);
-border:1px solid var(--vibeui-hero-018-line);
-}
-[data-vibeui-block="hero-018"] [data-part="primary"]:hover,
-[data-vibeui-block="hero-018"] [data-part="secondary"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="hero-018"] a:focus-visible{
-outline:3px solid color-mix(in oklab,var(--vibeui-hero-018-accent) 55%,transparent);outline-offset:2px;
 }
 [data-vibeui-block="hero-018"] [data-part="note"]{
 margin:1.25rem 0 0;font-size:0.875rem;color:var(--vibeui-hero-018-muted);
 }
 @container (min-width: 40rem){
 [data-vibeui-block="hero-018"] [data-part="frame"]{padding:5rem 2rem}
-[data-vibeui-block="hero-018"] [data-part="primary"],
-[data-vibeui-block="hero-018"] [data-part="secondary"]{padding:0.875rem 1.75rem;font-size:1.0625rem}
 }
 @container (min-width: 64rem){
 [data-vibeui-block="hero-018"] [data-part="frame"]{padding:7rem 3rem}
@@ -200,31 +162,42 @@ export function Hero018({
 
           <div data-part="inner">
             {eyebrow ? (
-              <p data-part="eyebrow">
+              <p data-part="badge">
                 <span data-part="dot" aria-hidden="true" />
                 {eyebrow}
               </p>
             ) : null}
 
-            <h1>
-              {title}
-              {titleAccent ? (
-                <>
-                  {" "}
-                  <span data-part="mark">{titleAccent}</span>
-                </>
-              ) : null}
-            </h1>
-
-            {lede ? <p data-part="lede">{lede}</p> : null}
+            <Heading001
+              data-part="heading"
+              title={title}
+              titleAccent={titleAccent}
+              lede={lede}
+              level="h1"
+              size="xl"
+              align="center"
+              accent={accent}
+            />
 
             <div data-part="actions">
-              <a data-part="primary" href={primaryHref}>
-                {primaryLabel}
-              </a>
-              <a data-part="secondary" href={secondaryHref}>
-                {secondaryLabel}
-              </a>
+              <Button016
+                data-part="primary"
+                size="lg"
+                label={primaryLabel}
+                href={primaryHref}
+                external={false}
+                tone="accent"
+                accent={accent}
+              />
+              <Button016
+                data-part="secondary"
+                size="lg"
+                label={secondaryLabel}
+                href={secondaryHref}
+                external={false}
+                tone="neutral"
+                accent={accent}
+              />
             </div>
 
             {note ? <p data-part="note">{note}</p> : null}

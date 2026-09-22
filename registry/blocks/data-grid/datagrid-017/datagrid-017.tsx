@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Card167 } from "@/registry/components/card/card-167/card-167"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid017Row = {
@@ -81,19 +82,6 @@ border:1px solid var(--vibeui-datagrid-017-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-017-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-017"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-017"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-017-border);
-}
-[data-vibeui-block="datagrid-017"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-017"] [data-part="status"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-017-muted)}
-[data-vibeui-block="datagrid-017"] [data-part="go"]{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;font-weight:600;
-padding:0.375rem 0.75rem;border-radius:0.5rem;border:1px solid transparent;
-background:var(--vibeui-datagrid-017-accent);color:oklch(from var(--vibeui-datagrid-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-}
-[data-vibeui-block="datagrid-017"] [data-part="go"]:disabled{opacity:.4;cursor:not-allowed}
-[data-vibeui-block="datagrid-017"] [data-part="go"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-017"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-017"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-017-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-017"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -150,7 +138,6 @@ border-color:transparent;background:var(--vibeui-datagrid-017-accent);color:oklc
 display:block;position:relative;width:100%;min-height:22rem;
 }
 [data-vibeui-block="datagrid-017"] dialog:not(:modal){position:absolute;max-width:100%;max-height:100%;z-index:1}
-[data-vibeui-block="datagrid-017"]:has(dialog:not(:modal)[open]) [data-part="go"]{display:none}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="datagrid-017"] *{animation:none!important;transition:none!important}}
 `
 
@@ -305,26 +292,7 @@ export function Datagrid017({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="status" role="status" aria-live="polite">
-            {done ||
-              statusTemplate
-                .replace("{count}", String(selected.length))
-                .replace("{total}", String(rows.length))}
-          </p>
-          <button
-            type="button"
-            data-part="go"
-            disabled={selected.length === 0}
-            onClick={() => {
-              setDone("")
-              dialogRef.current?.showModal()
-            }}
-          >
-            {exportLabel}
-          </button>
-        </div>
+        <Card167 data-part="bar" heading={heading} statusTemplate={statusTemplate} rows={rows} exportLabel={exportLabel} done={done} selected={selected} setDone={setDone} accent={accent} />
         <div
           data-part="scroll"
           role="region"

@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 type Hero003Action = {
   label: string
   href: string
@@ -124,9 +126,6 @@ const TILE_IN =
 
 const TILE =
   "rounded-md border border-[var(--vibeui-hero-003-border)] bg-[var(--vibeui-hero-003-card)]"
-
-const ACTION_BASE =
-  "group inline-flex h-11 items-center justify-center gap-2 rounded-sm px-5 text-[0.9375rem] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vibeui-hero-003-ring)]"
 
 function cx(...classes: (string | false | undefined)[]) {
   return classes.filter(Boolean).join(" ")
@@ -263,41 +262,11 @@ export function Hero003({
               className="mt-7 flex w-full max-w-full flex-col gap-3"
             >
               {primaryAction ? (
-                <a
-                  href={primaryAction.href}
-                  className={cx(
-                    ACTION_BASE,
-                    "bg-[var(--vibeui-hero-003-accent)] text-[var(--vibeui-hero-003-accent-fg)] shadow-[0_0.375rem_1.25rem_color-mix(in_oklab,var(--vibeui-hero-003-accent)_42%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_42%,transparent)] transition-[transform,box-shadow] duration-200 hover:-translate-y-px hover:shadow-[0_0.625rem_1.75rem_color-mix(in_oklab,var(--vibeui-hero-003-accent)_52%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_52%,transparent)]",
-                  )}
-                >
-                  {primaryAction.label}
-                </a>
+                <Button016 label={primaryAction.label} href={primaryAction.href} external={false} size="lg" tone="accent" accent={accent} />
               ) : null}
 
               {secondaryAction ? (
-                <a
-                  href={secondaryAction.href}
-                  className={cx(
-                    ACTION_BASE,
-                    "border border-[var(--vibeui-hero-003-ink)] transition-colors duration-150 hover:bg-[color-mix(in_oklab,var(--vibeui-hero-003-ink)_8%,transparent)]",
-                  )}
-                >
-                  {secondaryAction.label}
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    className="size-4 transition-transform duration-150 group-hover:translate-x-0.5"
-                  >
-                    <path
-                      d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
+                <Button016 label={secondaryAction.label} href={secondaryAction.href} external={false} size="lg" tone="neutral" arrow accent={accent} />
               ) : null}
             </div>
           </div>

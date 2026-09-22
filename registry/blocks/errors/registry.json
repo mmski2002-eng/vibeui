@@ -10,7 +10,11 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "errorpage-001/errorpage-001.tsx",
@@ -18,14 +22,15 @@
           "target": "@components/vibeui/errorpage-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-001-*. Серверный компонент, форма поиска — обычный GET-submit без JS. Цифры кода набраны штрихом через -webkit-text-stroke с фолбэком @supports: где штриха нет, цифры остаются залитыми акцентом. Раскладка центрированная колонка, размер цифр считается от собственной ширины блока (cqi). Ссылки разделов — nav с чипами, форма — role=search.",
+      "docs": "Составной блок: импортирует button-001, button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-errorpage-001-*. Серверный компонент, форма поиска — обычный GET-submit без JS. Цифры кода набраны штрихом через -webkit-text-stroke с фолбэком @supports: где штриха нет, цифры остаются залитыми акцентом. Раскладка центрированная колонка, размер цифр считается от собственной ширины блока (cqi). Ссылки разделов — nav с чипами, форма — role=search.",
       "meta": {
         "tags": [
           "404",
           "error",
           "search",
           "not found",
-          "typography"
+          "typography",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -35,6 +40,7 @@
           "usage": "<Errorpage001\n  title=\"Такой страницы нет\"\n  searchAction=\"/search\"\n  links={[{ label: \"Каталог\", href: \"/components\" }]}\n/>",
           "summary": "Страница 404: контурные цифры-плакат с акцентным штрихом, поисковая строка и чипы главных разделов. Серверный компонент, поиск работает обычным GET-submit. Один файл, своя палитра, ноль зависимостей и клиентского JS.",
           "preserve": [
+            "импорты button-001, button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-errorpage-001-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "штрих вместо заливки на цифрах: залитые цифры такого размера давят на текст, а фолбэк @supports сам вернёт заливку там, где штриха нет",
             "поиск и ссылки под кодом ошибки: 404 обязана предлагать выход, а не заканчиваться тупиком",
@@ -87,10 +93,11 @@
           "en": {
             "title": "404 Poster with Search",
             "description": "A 404 page with giant outlined digits in an accent stroke: below them a catalog search and links to the main sections, turning a dead end into a fork.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-001-* variables. A server component; the search form is a plain GET submit without JS. The code digits are drawn as a stroke via -webkit-text-stroke with an @supports fallback: where the stroke is unavailable the digits stay filled with the accent. The layout is a centered column and the digit size is computed from the block's own width (cqi). Section links are a nav of chips, the form carries role=search.",
+            "docs": "A composite block: imports button-001, button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-errorpage-001-* variables. A server component; the search form is a plain GET submit without JS. The code digits are drawn as a stroke via -webkit-text-stroke with an @supports fallback: where the stroke is unavailable the digits stay filled with the accent. The layout is a centered column and the digit size is computed from the block's own width (cqi). Section links are a nav of chips, the form carries role=search.",
             "ai": {
               "summary": "A 404 page: outlined poster digits with an accent stroke, a search bar and chips for the main sections. A server component, the search works as a plain GET submit. One file, its own palette, zero dependencies and zero client JS.",
               "preserve": [
+                "the button-001, button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-errorpage-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the stroke instead of a fill on the digits: filled digits this large crush the text, and the @supports fallback restores the fill where the stroke is unavailable",
                 "the search and links under the error code: a 404 has to offer a way out, not end in a dead end",
@@ -174,7 +181,10 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "errorpage-002/errorpage-002.tsx",
@@ -182,14 +192,15 @@
           "target": "@components/vibeui/errorpage-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-002-*. Серверный компонент без JS: кнопка «обновить» — ссылка с пустым href, которая ведёт на текущий адрес, а при 500 повторный запрос обычно уже проходит. Сигнальная лента нарисована repeating-linear-gradient — никаких изображений. Код инцидента размечен как dl и выделен user-select:all: одно касание выделяет его целиком для копирования в тикет.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-errorpage-002-*. Серверный компонент без JS: кнопка «обновить» — ссылка с пустым href, которая ведёт на текущий адрес, а при 500 повторный запрос обычно уже проходит. Сигнальная лента нарисована repeating-linear-gradient — никаких изображений. Код инцидента размечен как dl и выделен user-select:all: одно касание выделяет его целиком для копирования в тикет.",
       "meta": {
         "tags": [
           "500",
           "error",
           "incident",
           "status",
-          "server"
+          "server",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -199,6 +210,7 @@
           "usage": "<Errorpage002\n  incident=\"INC-0906-2417\"\n  statusHref=\"/status\"\n/>",
           "summary": "Страница 500: сигнальная лента из CSS-полос, честное «сломалось у нас», код инцидента в пунктирной рамке, кнопка обновления и ссылка на страницу статуса. Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-errorpage-002-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "код инцидента на видном месте: с ним обращение в поддержку решается за минуты, без него — перепиской «а что вы делали»",
             "user-select:all на коде инцидента — одно касание выделяет его целиком, на странице ошибки у человека нет терпения выделять мышью",
@@ -251,10 +263,11 @@
           "en": {
             "title": "500 with Incident Code",
             "description": "A 500 page in the \"we are already on it\" spirit: a hazard tape of CSS stripes, an incident code for support in a dashed frame, a refresh button and a link to the service status.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-002-* variables. A server component with no JS: the refresh button is a link with an empty href that points at the current address, and after a 500 a repeated request usually goes through. The hazard tape is drawn with repeating-linear-gradient — no images. The incident code is marked up as a dl and carries user-select:all: one tap selects it whole for pasting into a ticket.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-errorpage-002-* variables. A server component with no JS: the refresh button is a link with an empty href that points at the current address, and after a 500 a repeated request usually goes through. The hazard tape is drawn with repeating-linear-gradient — no images. The incident code is marked up as a dl and carries user-select:all: one tap selects it whole for pasting into a ticket.",
             "ai": {
               "summary": "A 500 page: a hazard tape of CSS stripes, an honest \"it broke on our side\", an incident code in a dashed frame, a refresh button and a status page link. A server component, one file, its own palette, zero dependencies and zero client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-errorpage-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the incident code in plain sight: with it a support request is resolved in minutes, without it — in a back-and-forth of \"what were you doing\"",
                 "user-select:all on the incident code — one tap selects it whole; on an error page nobody has the patience to drag-select",
@@ -321,7 +334,10 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "errorpage-003/errorpage-003.tsx",
@@ -329,14 +345,15 @@
           "target": "@components/vibeui/errorpage-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-003-*. Серверный компонент: прогресс приходит пропом 0–100 и кладётся в ширину заливки инлайн-стилем — это динамическое значение, классом его не выразить. Дорожка размечена role=progressbar с aria-value*. Бегущие полоски заливки и пульс точки в бейдже — CSS-анимации, обе глушатся prefers-reduced-motion. Форма подписки — обычный GET-submit без JS.",
+      "docs": "Составной блок: импортирует button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-errorpage-003-*. Серверный компонент: прогресс приходит пропом 0–100 и кладётся в ширину заливки инлайн-стилем — это динамическое значение, классом его не выразить. Дорожка размечена role=progressbar с aria-value*. Бегущие полоски заливки и пульс точки в бейдже — CSS-анимации, обе глушатся prefers-reduced-motion. Форма подписки — обычный GET-submit без JS.",
       "meta": {
         "tags": [
           "maintenance",
           "progress",
           "downtime",
           "notify",
-          "status"
+          "status",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -346,6 +363,7 @@
           "export": "Errorpage003",
           "summary": "Страница технических работ: пульсирующий бейдж, время окончания, полоса прогресса с бегущими полосками и процентами, подписка на уведомление по почте. Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
           "preserve": [
+            "импорты button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-errorpage-003-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "тройку «время — прогресс — подписка»: она снимает три тревоги разом — когда закончится, идёт ли процесс и можно ли закрыть вкладку",
             "role=progressbar с aria-value* на дорожке: без них полоса для скринридера — просто цветной прямоугольник",
@@ -398,10 +416,11 @@
           "en": {
             "title": "Maintenance Page",
             "description": "A maintenance page that removes the anxiety: the finish time, a striped progress bar with a percentage and a \"we will write when we are back\" subscription. The percentage and the time arrive as props.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-003-* variables. A server component: the progress arrives as a 0–100 prop and goes into the fill width as an inline style — a dynamic value that cannot be expressed with a class. The track is marked up as role=progressbar with aria-value*. The running stripes of the fill and the pulsing badge dot are CSS animations, both silenced by prefers-reduced-motion. The subscription form is a plain GET submit without JS.",
+            "docs": "A composite block: imports button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-errorpage-003-* variables. A server component: the progress arrives as a 0–100 prop and goes into the fill width as an inline style — a dynamic value that cannot be expressed with a class. The track is marked up as role=progressbar with aria-value*. The running stripes of the fill and the pulsing badge dot are CSS animations, both silenced by prefers-reduced-motion. The subscription form is a plain GET submit without JS.",
             "ai": {
               "summary": "A maintenance page: a pulsing badge, the finish time, a progress bar with running stripes and a percentage, and an email notification signup. A server component, one file, its own palette, zero dependencies and zero client JS.",
               "preserve": [
+                "the button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-errorpage-003-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the trio of time, progress and signup: it removes three anxieties at once — when it ends, whether it is moving and whether the tab can be closed",
                 "role=progressbar with aria-value* on the track: without them the bar is just a coloured rectangle to a screen reader",
@@ -471,7 +490,10 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "errorpage-004/errorpage-004.tsx",
@@ -479,14 +501,15 @@
           "target": "@components/vibeui/errorpage-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-004-*. Серверный компонент без JS. Замок собран из двух элементов: дужка — рамка со скруглением без нижней стороны, корпус — акцентная плита, скважина — два псевдоэлемента (круг и ножка). Иллюстрация помечена aria-hidden — смысл несут заголовок и текст. Два действия: заливная кнопка «сменить аккаунт» и контурная «запросить доступ», под ними подсказка о сроке ответа.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-errorpage-004-*. Серверный компонент без JS. Замок собран из двух элементов: дужка — рамка со скруглением без нижней стороны, корпус — акцентная плита, скважина — два псевдоэлемента (круг и ножка). Иллюстрация помечена aria-hidden — смысл несут заголовок и текст. Два действия: заливная кнопка «сменить аккаунт» и контурная «запросить доступ», под ними подсказка о сроке ответа.",
       "meta": {
         "tags": [
           "403",
           "forbidden",
           "access",
           "lock",
-          "permissions"
+          "permissions",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -496,6 +519,7 @@
           "usage": "<Errorpage004\n  switchHref=\"/login\"\n  requestHref=\"/access\"\n/>",
           "summary": "Страница 403: замок из чистого CSS, спокойное объяснение причины и два выхода — сменить аккаунт (заливная кнопка) или запросить доступ (контурная). Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-errorpage-004-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "замок как CSS-элементы, а не картинку или иконку из библиотеки: блок обязан остаться одним файлом без ресурсов",
             "оба выхода — «сменить аккаунт» и «запросить доступ»: у 403 всегда две причины, не тот аккаунт или не выданы права, и страница закрывает обе",
@@ -548,10 +572,11 @@
           "en": {
             "title": "403 with a CSS Lock",
             "description": "An access-denied page with a padlock drawn in pure CSS: a calm explanation and two ways out — switch the account or request access from the owner.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-004-* variables. A server component with no JS. The padlock is built from two elements: the shackle is a rounded border with no bottom side, the body is an accent slab, the keyhole is two pseudo-elements (a circle and a stem). The illustration is marked aria-hidden — the heading and the text carry the meaning. Two actions: a filled \"switch account\" button and an outlined \"request access\" one, with a response-time hint below.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-errorpage-004-* variables. A server component with no JS. The padlock is built from two elements: the shackle is a rounded border with no bottom side, the body is an accent slab, the keyhole is two pseudo-elements (a circle and a stem). The illustration is marked aria-hidden — the heading and the text carry the meaning. Two actions: a filled \"switch account\" button and an outlined \"request access\" one, with a response-time hint below.",
             "ai": {
               "summary": "A 403 page: a padlock in pure CSS, a calm explanation of the cause and two ways out — switch the account (filled button) or request access (outlined). A server component, one file, its own palette, zero dependencies and zero client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-errorpage-004-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the padlock as CSS elements, not an image or a library icon: the block has to stay a single file with no assets",
                 "both ways out — \"switch account\" and \"request access\": a 403 always has two causes, the wrong account or missing rights, and the page covers both",
@@ -618,7 +643,10 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "errorpage-005/errorpage-005.tsx",
@@ -626,14 +654,15 @@
           "target": "@components/vibeui/errorpage-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-005-*. Серверный компонент без JS. Волна — повторяющийся радиальный градиент (арки), поверх — маска из вертикальных штрихов, дающая пунктир; медленный дрейф — CSS-анимация background-position, глушится prefers-reduced-motion. Никаких изображений: в оффлайне внешние ресурсы не загрузятся. Чек-лист — ul с CSS-чекбоксами, кнопка повтора — ссылка с пустым href на текущий адрес.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-errorpage-005-*. Серверный компонент без JS. Волна — повторяющийся радиальный градиент (арки), поверх — маска из вертикальных штрихов, дающая пунктир; медленный дрейф — CSS-анимация background-position, глушится prefers-reduced-motion. Никаких изображений: в оффлайне внешние ресурсы не загрузятся. Чек-лист — ul с CSS-чекбоксами, кнопка повтора — ссылка с пустым href на текущий адрес.",
       "meta": {
         "tags": [
           "offline",
           "network",
           "connection",
           "checklist",
-          "retry"
+          "retry",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -643,6 +672,7 @@
           "usage": "<Errorpage005\n  checklist={[\"Wi-Fi включён\", \"Авиарежим выключен\"]}\n/>",
           "summary": "Оффлайн-страница: пунктирная волна сигнала из градиента и маски, чек-лист причин на стороне пользователя и кнопка повтора. Серверный компонент, один файл, своя палитра, ноль зависимостей, изображений и клиентского JS.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-errorpage-005-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "волну как градиент с маской, а не картинку или SVG-файл: в оффлайне внешние ресурсы не загрузятся, иллюстрация обязана жить в CSS",
             "чек-лист вместо извинений: оффлайн чинится на стороне пользователя, и полезнее подсказать, что проверить",
@@ -695,10 +725,11 @@
           "en": {
             "title": "Offline with a Checklist",
             "description": "A no-connection page: a signal wave, a short \"check these\" list and a retry button. Works with the network down. Change the headline, the list items and the button label.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-005-* variables. A server component with no JS. The wave is a repeating radial gradient (arcs) with a mask of vertical dashes on top that makes it dotted; the slow drift is a background-position CSS animation, silenced by prefers-reduced-motion. No images: offline, external resources will not load. The checklist is a ul with CSS checkboxes, the retry button is a link with an empty href pointing at the current address.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-errorpage-005-* variables. A server component with no JS. The wave is a repeating radial gradient (arcs) with a mask of vertical dashes on top that makes it dotted; the slow drift is a background-position CSS animation, silenced by prefers-reduced-motion. No images: offline, external resources will not load. The checklist is a ul with CSS checkboxes, the retry button is a link with an empty href pointing at the current address.",
             "ai": {
               "summary": "An offline page: a dashed signal wave made of a gradient and a mask, a checklist of user-side causes and a retry button. A server component, one file, its own palette, zero dependencies, images or client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-errorpage-005-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the wave as a gradient with a mask, not an image or an SVG file: offline, external resources will not load, so the illustration has to live in the CSS",
                 "the checklist instead of apologies: offline is fixed on the user's side, and it is more useful to suggest what to check",
@@ -769,7 +800,9 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "errorpage-006/errorpage-006.tsx",
@@ -777,14 +810,15 @@
           "target": "@components/vibeui/errorpage-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-errorpage-006-*. Серверный компонент без JS. Запрос показан крупнее заголовка и обёрнут в кавычки-псевдоэлементы: человек сразу видит, что именно искалось, и замечает опечатку; overflow-wrap страхует от длинных запросов. Лупа — кольцо-рамка с повёрнутой ручкой-псевдоэлементом. Два уровня помощи: советы (ul на тёплой тинт-подложке) и популярные разделы (nav с чипами).",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-errorpage-006-*. Серверный компонент без JS. Запрос показан крупнее заголовка и обёрнут в кавычки-псевдоэлементы: человек сразу видит, что именно искалось, и замечает опечатку; overflow-wrap страхует от длинных запросов. Лупа — кольцо-рамка с повёрнутой ручкой-псевдоэлементом. Два уровня помощи: советы (ul на тёплой тинт-подложке) и популярные разделы (nav с чипами).",
       "meta": {
         "tags": [
           "search",
           "empty state",
           "no results",
           "tips",
-          "suggestions"
+          "suggestions",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -794,6 +828,7 @@
           "usage": "<Errorpage006\n  query=\"фиолетовый навбар со стеклом\"\n  popular={[{ label: \"Навбары\", href: \"/components?c=navbar\" }]}\n/>",
           "summary": "Пустая выдача поиска: запрос крупно в акцентных кавычках, CSS-лупа, советы по переформулировке и чипы популярных разделов. Серверный компонент, один файл, своя палитра, ноль зависимостей и клиентского JS.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-errorpage-006-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "запрос крупнее заголовка: главное на этой странице — что именно искалось, так человек сам замечает опечатку",
             "кавычки псевдоэлементами — не дублировать их в тексте запроса, иначе получится двойное цитирование",
@@ -846,10 +881,11 @@
           "en": {
             "title": "Empty Search Results",
             "description": "A no-results page: the query set large in accent quotation marks, a CSS magnifier, tips on rephrasing and chips of popular sections — an empty result always links onward.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-errorpage-006-* variables. A server component with no JS. The query is set larger than the heading and wrapped in pseudo-element quotation marks: the person immediately sees what exactly was searched and spots a typo; overflow-wrap guards against long queries. The magnifier is a ring border with a rotated pseudo-element handle. Two levels of help: tips (a ul on a warm tinted panel) and popular sections (a nav of chips).",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-errorpage-006-* variables. A server component with no JS. The query is set larger than the heading and wrapped in pseudo-element quotation marks: the person immediately sees what exactly was searched and spots a typo; overflow-wrap guards against long queries. The magnifier is a ring border with a rotated pseudo-element handle. Two levels of help: tips (a ul on a warm tinted panel) and popular sections (a nav of chips).",
             "ai": {
               "summary": "Empty search results: the query set large in accent quotation marks, a CSS magnifier, rephrasing tips and chips of popular sections. A server component, one file, its own palette, zero dependencies and zero client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-errorpage-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the query set larger than the heading: what was searched is the main thing on this page, that is how the person spots their own typo",
                 "the quotation marks as pseudo-elements — do not repeat them in the query text, or you get double quoting",
@@ -938,7 +974,9 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001"
+      ],
       "files": [
         {
           "path": "consent-001/consent-001.tsx",
@@ -946,14 +984,15 @@
           "target": "@components/vibeui/consent-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-consent-001-*. Клиентский компонент: по любому нажатию полоса скрывается через состояние (демо без записи выбора). В превью бар в потоке страницы, а не position:fixed, чтобы не перекрывать каталог — в проекте прижмите его к низу окна. Обёртка role=\"region\" с aria-label.",
+      "docs": "Составной блок: импортирует button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-consent-001-*. Клиентский компонент: по любому нажатию полоса скрывается через состояние (демо без записи выбора). В превью бар в потоке страницы, а не position:fixed, чтобы не перекрывать каталог — в проекте прижмите его к низу окна. Обёртка role=\"region\" с aria-label.",
       "meta": {
         "tags": [
           "consent",
           "cookie",
           "gdpr",
           "banner",
-          "application"
+          "application",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -963,6 +1002,7 @@
           "usage": "<Consent001\n  title=\"Мы используем cookie\"\n  policyHref=\"/privacy\"\n/>",
           "summary": "Бар согласия на cookie: текст со ссылкой на политику и три действия — принять, отклонить, настроить. По нажатию полоса скрывается. В превью в потоке страницы, в проекте — прижимается к низу окна. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-consent-001-* и не подменять её токенами вашей темы",
             "три действия — принять, отклонить, настроить: отказ обязателен наравне с согласием",
             "role=\"region\" с aria-label у обёртки — бар объявлен как отдельная область",
@@ -1020,6 +1060,7 @@
             "ai": {
               "summary": "A cookie consent bar: text with a policy link and three actions — accept, reject, configure. Clicking dismisses the bar. In the preview it sits in the page flow, in your project it pins to the bottom of the viewport. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-consent-001-* palette — do not swap it for your theme tokens",
                 "the three actions — accept, reject, configure: rejection is offered on par with consent",
                 "role=\"region\" with aria-label on the wrapper — the bar is announced as a distinct area",
@@ -1055,7 +1096,7 @@
               }
             },
             "title": "Cookie Bar",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-consent-001-* variables. A client component: any click dismisses the bar via state (a demo without persisting the choice). In the preview the bar sits in the page flow, not position:fixed, so it doesn't cover the catalog — in your project pin it to the bottom of the viewport. The wrapper has role=\"region\" with an aria-label."
+            "docs": "A composite block: imports button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-consent-001-* variables. A client component: any click dismisses the bar via state (a demo without persisting the choice). In the preview the bar sits in the page flow, not position:fixed, so it doesn't cover the catalog — in your project pin it to the bottom of the viewport. The wrapper has role=\"region\" with an aria-label."
           }
         }
       }
@@ -1069,7 +1110,10 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "consent-002/consent-002.tsx",
@@ -1077,14 +1121,15 @@
           "target": "@components/vibeui/consent-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-consent-002-*. Клиентский компонент. Тумблеры — настоящие checkbox с визуальной дорожкой на смежном span (input:checked+track). Обязательная категория с required приходит checked и disabled. Обёртка role=\"region\".",
+      "docs": "Составной блок: импортирует button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-consent-002-*. Клиентский компонент. Тумблеры — настоящие checkbox с визуальной дорожкой на смежном span (input:checked+track). Обязательная категория с required приходит checked и disabled. Обёртка role=\"region\".",
       "meta": {
         "tags": [
           "consent",
           "cookie",
           "settings",
           "toggles",
-          "application"
+          "application",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1094,6 +1139,7 @@
           "usage": "<Consent002\n  categories={[{ id: \"analytics\", title: \"Аналитика\", note: \"Помогают понять поведение\" }]}\n/>",
           "summary": "Панель настройки категорий cookie: строки с тумблером на каждую категорию и описанием. Обязательная категория заблокирована и всегда включена. Тумблеры — настоящие checkbox с дорожкой на смежном span. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-consent-002-* и не подменять её токенами вашей темы",
             "тумблер на настоящем checkbox с дорожкой через input:checked+track — доступность без JS-виджета",
             "блокировку обязательной категории: required приходит checked и disabled",
@@ -1151,6 +1197,7 @@
             "ai": {
               "summary": "A cookie category settings panel: a row with a toggle per category and a description. The required category is locked and always on. Toggles are real checkboxes with a track on the adjacent span. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-consent-002-* palette — do not swap it for your theme tokens",
                 "the toggle on a real checkbox with a track via input:checked+track — accessibility without a JS widget",
                 "locking the required category: required arrives checked and disabled",
@@ -1186,7 +1233,7 @@
               }
             },
             "title": "Category Settings",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-consent-002-* variables. A client component. Toggles are real checkboxes with a visual track on the adjacent span (input:checked+track). The required category arrives checked and disabled. The wrapper has role=\"region\"."
+            "docs": "A composite block: imports button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-consent-002-* variables. A client component. Toggles are real checkboxes with a visual track on the adjacent span (input:checked+track). The required category arrives checked and disabled. The wrapper has role=\"region\"."
           }
         }
       }
@@ -1200,7 +1247,10 @@
         "errors"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "consent-003/consent-003.tsx",
@@ -1208,14 +1258,15 @@
           "target": "@components/vibeui/consent-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-consent-003-*. Клиентский компонент. Чекбоксы стилизованы через appearance:none и псевдоэлемент-галочку. Кнопка disabled, пока не отмечены все обязательные согласия; по submit форма сменяется сообщением с role=\"status\". Метка связана с чекбоксом через htmlFor.",
+      "docs": "Составной блок: импортирует button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-consent-003-*. Клиентский компонент. Чекбоксы стилизованы через appearance:none и псевдоэлемент-галочку. Кнопка disabled, пока не отмечены все обязательные согласия; по submit форма сменяется сообщением с role=\"status\". Метка связана с чекбоксом через htmlFor.",
       "meta": {
         "tags": [
           "consent",
           "gdpr",
           "checkbox",
           "privacy",
-          "application"
+          "application",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1225,6 +1276,7 @@
           "usage": "<Consent003\n  items={[{ id: \"terms\", label: \"Согласен с условиями\", required: true }]}\n/>",
           "summary": "Форма согласий на обработку данных: список чекбоксов, обязательные помечены звёздочкой и блокируют кнопку, пока не отмечены. По отправке форма сменяется сообщением. Формат GDPR-согласия явными галочками вместо одной общей. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-consent-003-* и не подменять её токенами вашей темы",
             "блокировку кнопки, пока не отмечены все обязательные согласия — это суть явного согласия",
             "связь метки и чекбокса через htmlFor и стилизацию через appearance:none",
@@ -1282,6 +1334,7 @@
             "ai": {
               "summary": "A data-processing consent form: a list of checkboxes, the required ones marked with an asterisk and blocking the button until checked. On submit the form turns into a message. A GDPR-consent format with explicit checkboxes instead of one blanket box. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-consent-003-* palette — do not swap it for your theme tokens",
                 "blocking the button until all required consents are checked — that's the essence of explicit consent",
                 "the label-checkbox link via htmlFor and styling via appearance:none",
@@ -1317,7 +1370,7 @@
               }
             },
             "title": "Consent Form",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-consent-003-* variables. A client component. Checkboxes are styled via appearance:none and a pseudo-element check. The button is disabled until all required consents are checked; on submit the form turns into a message with role=\"status\". The label is linked to the checkbox via htmlFor."
+            "docs": "A composite block: imports button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-consent-003-* variables. A client component. Checkboxes are styled via appearance:none and a pseudo-element check. The button is disabled until all required consents are checked; on submit the form turns into a message with role=\"status\". The label is linked to the checkbox via htmlFor."
           }
         }
       }

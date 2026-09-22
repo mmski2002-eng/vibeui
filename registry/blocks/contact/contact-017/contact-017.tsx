@@ -1,6 +1,10 @@
 "use client"
 
 import { useId, useState, type CSSProperties, type FormEvent } from "react"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
 
 export type Contact017Artist = {
   key: string
@@ -83,6 +87,7 @@ container-type:inline-size;
 :where([data-vibeui-block="contact-017"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="contact-017"]{box-sizing:border-box;display:block;background:var(--vibeui-contact-017-bg);color:var(--vibeui-contact-017-fg);font-family:var(--vibeui-contact-017-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="contact-017"] *{box-sizing:border-box}
+[data-vibeui-block="contact-017"] [data-part="file"]{display:flex}
 [data-vibeui-block="contact-017"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="contact-017"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 .75rem;font-family:var(--vibeui-contact-017-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-contact-017-cyan);text-shadow:0 0 10px color-mix(in oklab,var(--vibeui-contact-017-cyan) 70%,transparent)}
 [data-vibeui-block="contact-017"] [data-part="eyebrow"]::before{content:"";width:2rem;height:1px;background:var(--vibeui-contact-017-cyan);box-shadow:0 0 8px var(--vibeui-contact-017-cyan)}
@@ -97,7 +102,6 @@ container-type:inline-size;
 [data-vibeui-block="contact-017"] [data-part="stepper"] li[data-active="true"]{color:var(--vibeui-contact-017-fg)}
 [data-vibeui-block="contact-017"] [data-part="step"]{display:grid;gap:1.25rem;animation:vibeui-contact-017-in .4s cubic-bezier(.2,.8,.2,1)}
 @keyframes vibeui-contact-017-in{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
-[data-vibeui-block="contact-017"] [data-part="label"]{display:block;margin:0 0 .6rem;font-family:var(--vibeui-contact-017-mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-contact-017-muted)}
 [data-vibeui-block="contact-017"] [data-part="chips"]{display:flex;flex-wrap:wrap;gap:.45rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="contact-017"] [data-part="chip"]{display:inline-flex;align-items:center;gap:.5rem;min-height:2.5rem;padding:.35rem .9rem;border-radius:.5rem;border:1px solid var(--vibeui-contact-017-line);background:transparent;color:var(--vibeui-contact-017-muted);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:color .25s,border-color .25s,box-shadow .3s,background .25s}
 [data-vibeui-block="contact-017"] [data-part="chip"] small{font-weight:400;font-size:.75rem;opacity:.75}
@@ -105,18 +109,10 @@ container-type:inline-size;
 [data-vibeui-block="contact-017"] [data-part="chip"][aria-pressed="true"]{color:var(--vibeui-contact-017-fg);border-color:var(--vibeui-contact-017-neon,var(--vibeui-contact-017-accent));background:color-mix(in oklab,var(--vibeui-contact-017-neon,var(--vibeui-contact-017-accent)) 14%,transparent);box-shadow:0 0 14px color-mix(in oklab,var(--vibeui-contact-017-neon,var(--vibeui-contact-017-accent)) 45%,transparent)}
 [data-vibeui-block="contact-017"] [data-part="chip"][data-free="true"]{border-color:color-mix(in oklab,var(--vibeui-contact-017-ok) 50%,transparent);color:var(--vibeui-contact-017-ok)}
 [data-vibeui-block="contact-017"] [data-part="chip"][data-free="true"][aria-pressed="true"]{background:color-mix(in oklab,var(--vibeui-contact-017-ok) 16%,transparent);box-shadow:0 0 14px color-mix(in oklab,var(--vibeui-contact-017-ok) 45%,transparent)}
-[data-vibeui-block="contact-017"] [data-part="chip"]:focus-visible,[data-vibeui-block="contact-017"] input:focus-visible,[data-vibeui-block="contact-017"] textarea:focus-visible,[data-vibeui-block="contact-017"] button:focus-visible{outline:2px solid var(--vibeui-contact-017-cyan);outline-offset:2px}
 [data-vibeui-block="contact-017"] [data-part="fields"]{display:grid;gap:.75rem}
-[data-vibeui-block="contact-017"] input[type="text"],[data-vibeui-block="contact-017"] input[type="tel"],[data-vibeui-block="contact-017"] textarea{width:100%;padding:.8rem 1rem;border-radius:.6rem;border:1px solid var(--vibeui-contact-017-line);background:rgb(255 255 255 / .04);color:inherit;font:inherit;transition:border-color .25s,box-shadow .3s}
-[data-vibeui-block="contact-017"] input:focus,[data-vibeui-block="contact-017"] textarea:focus{border-color:var(--vibeui-contact-017-cyan);box-shadow:0 0 12px color-mix(in oklab,var(--vibeui-contact-017-cyan) 35%,transparent)}
-[data-vibeui-block="contact-017"] textarea{min-height:6rem;resize:vertical}
 [data-vibeui-block="contact-017"] [data-part="file"]{display:flex;align-items:center;gap:.75rem;padding:.8rem 1rem;border-radius:.6rem;border:1px dashed var(--vibeui-contact-017-line);font-size:.9rem;color:var(--vibeui-contact-017-muted);cursor:pointer}
 [data-vibeui-block="contact-017"] [data-part="file"] input{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 [data-vibeui-block="contact-017"] [data-part="nav"]{display:flex;justify-content:space-between;gap:.75rem;padding-top:.5rem}
-[data-vibeui-block="contact-017"] [data-part="btn"]{display:inline-flex;align-items:center;justify-content:center;height:3rem;padding:0 1.4rem;border-radius:.6rem;border:1px solid var(--vibeui-contact-017-line);background:transparent;color:inherit;font:inherit;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .3s}
-[data-vibeui-block="contact-017"] [data-part="btn"][data-primary="true"]{background:var(--vibeui-contact-017-accent);border-color:transparent;color:var(--vibeui-contact-017-on-accent);box-shadow:0 0 18px color-mix(in oklab,var(--vibeui-contact-017-accent) 55%,transparent)}
-[data-vibeui-block="contact-017"] [data-part="btn"]:hover{transform:translateY(-2px)}
-[data-vibeui-block="contact-017"] [data-part="btn"]:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none}
 [data-vibeui-block="contact-017"] [data-part="consent"]{margin:0;font-size:.75rem;color:var(--vibeui-contact-017-muted)}
 [data-vibeui-block="contact-017"] [data-part="summary"]{display:grid;gap:.75rem;align-content:start;padding:1.5rem;border-radius:1.1rem;border:1px solid color-mix(in oklab,var(--vibeui-contact-017-cyan) 40%,transparent);background:linear-gradient(160deg,color-mix(in oklab,var(--vibeui-contact-017-cyan) 8%,var(--vibeui-contact-017-card)),var(--vibeui-contact-017-card));box-shadow:0 0 30px color-mix(in oklab,var(--vibeui-contact-017-cyan) 12%,transparent)}
 [data-vibeui-block="contact-017"] [data-part="summary"] h3{margin:0;font-family:var(--vibeui-contact-017-display);font-size:1rem;font-weight:600}
@@ -132,9 +128,12 @@ container-type:inline-size;
 [data-vibeui-block="contact-017"] [data-part="form"]{padding:2rem}
 [data-vibeui-block="contact-017"] [data-part="summary"]{position:sticky;top:6rem}
 [data-vibeui-block="contact-017"] [data-part="fields"]{grid-template-columns:1fr 1fr}
-[data-vibeui-block="contact-017"] [data-part="fields"]>textarea,[data-vibeui-block="contact-017"] [data-part="fields"]>[data-part="file"]{grid-column:1/-1}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-017"] *{animation:none!important;transition:none!important}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-017"] *{animation:none!important;transition:none!important}}
+/* возвращено после разборки списков селекторов */
+[data-vibeui-block="contact-017"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-contact-017-cyan);outline-offset:2px}
+[data-vibeui-block="contact-017"] [data-part="fields"]>[data-part="file"]{grid-column:1/-1}
+`
 
 const DEFAULT_ARTISTS: Contact017Artist[] = [
   { key: "asya", name: "Ася", styles: "олд-скул", color: "#ff2bd6" },
@@ -244,7 +243,7 @@ export function Contact017({
                 {step === 0 ? (
                   <div key="s0" data-part="step">
                     <div>
-                      <span data-part="label" id={`${id}-artist`}>
+                      <span data-part="group-label" id={`${id}-artist`}>
                         {artistLabel}
                       </span>
                       <ul data-part="chips" role="group" aria-labelledby={`${id}-artist`}>
@@ -259,7 +258,7 @@ export function Contact017({
                       </ul>
                     </div>
                     <div>
-                      <span data-part="label" id={`${id}-zone`}>
+                      <span data-part="group-label" id={`${id}-zone`}>
                         {zoneLabel}
                       </span>
                       <ul data-part="chips" role="group" aria-labelledby={`${id}-zone`}>
@@ -277,7 +276,7 @@ export function Contact017({
                 {step === 1 ? (
                   <div key="s1" data-part="step">
                     <div>
-                      <span data-part="label" id={`${id}-date`}>
+                      <span data-part="group-label" id={`${id}-date`}>
                         {dateLabel}
                       </span>
                       <ul data-part="chips" role="group" aria-labelledby={`${id}-date`}>
@@ -293,7 +292,7 @@ export function Contact017({
                     </div>
                     {date ? (
                       <div>
-                        <span data-part="label" id={`${id}-time`}>
+                        <span data-part="group-label" id={`${id}-time`}>
                           {timeLabel}
                         </span>
                         <ul data-part="chips" role="group" aria-labelledby={`${id}-time`}>
@@ -312,9 +311,9 @@ export function Contact017({
                 {step === 2 ? (
                   <div key="s2" data-part="step">
                     <div data-part="fields">
-                      <input type="text" name="name" required placeholder={namePlaceholder} aria-label={nameLabel} autoComplete="name" />
-                      <input type="tel" name="phone" required placeholder={phonePlaceholder} aria-label={phonePlaceholder} autoComplete="tel" />
-                      <textarea name="idea" placeholder={ideaPlaceholder} aria-label={ideaLabel} />
+                      <Input001 type="text" name="name" required label={nameLabel} autoComplete="name" accent={accent} />
+                      <Input001 type="tel" name="phone" required label={phonePlaceholder} autoComplete="tel" accent={accent} />
+                      <Input034 name="idea" label={ideaLabel} hint={ideaPlaceholder} rows={3} accent={accent} />
                       <label data-part="file">
                         <input type="file" name="reference" accept="image/*" />
                         {fileLabel}
@@ -324,17 +323,17 @@ export function Contact017({
                   </div>
                 ) : null}
                 <div data-part="nav">
-                  <button type="button" data-part="btn" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))}>
+                  <Button001 type="button" tone="soft" disabled={step === 0} onClick={() => setStep((value) => Math.max(0, value - 1))} accent={accent}>
                     {backLabel}
-                  </button>
+                  </Button001>
                   {step < 2 ? (
-                    <button type="button" data-part="btn" data-primary="true" disabled={!canNext} onClick={() => setStep((value) => value + 1)}>
+                    <Button001 type="button" tone="solid" disabled={!canNext} onClick={() => setStep((value) => value + 1)} accent={accent}>
                       {nextLabel}
-                    </button>
+                    </Button001>
                   ) : (
-                    <button type="submit" data-part="btn" data-primary="true">
+                    <Button001 type="submit" size="lg" accent={accent}>
                       {submitLabel}
-                    </button>
+                    </Button001>
                   )}
                 </div>
               </form>

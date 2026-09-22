@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card177 } from "@/registry/components/card/card-177/card-177"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid029Row = {
@@ -70,20 +71,6 @@ border:1px solid var(--vibeui-datagrid-029-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-029-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-029"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-029"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
-padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-029-border);
-}
-[data-vibeui-block="datagrid-029"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-029"] [data-part="state"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-029-muted)}
-[data-vibeui-block="datagrid-029"] [data-part="state"][data-bad="true"]{color:var(--vibeui-datagrid-029-bad);font-weight:600}
-[data-vibeui-block="datagrid-029"] [data-part="sim"]{
-appearance:none;cursor:pointer;font:inherit;font-size:0.75rem;
-padding:0.3125rem 0.625rem;border-radius:0.5rem;
-border:1px solid var(--vibeui-datagrid-029-border);
-background:transparent;color:var(--vibeui-datagrid-029-fg);
-}
-[data-vibeui-block="datagrid-029"] [data-part="sim"]:focus-visible{outline:2px solid var(--vibeui-datagrid-029-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-029"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-029"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-029-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-029"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -244,25 +231,7 @@ export function Datagrid029({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="state" data-bad={failed ? "true" : undefined}>
-            {failed
-              ? failedStateText
-              : loadedStateText.replace("{count}", String(rows.length))}
-          </p>
-          <button
-            type="button"
-            data-part="sim"
-            aria-pressed={failed}
-            onClick={() => {
-              setFailed((value) => !value)
-              setTries(0)
-            }}
-          >
-            {simulateText}
-          </button>
-        </div>
+        <Card177 data-part="bar" heading={heading} failedStateText={failedStateText} loadedStateText={loadedStateText} rows={rows} simulateText={simulateText} failed={failed} setFailed={setFailed} setTries={setTries} accent={accent} />
         <div
           data-part="scroll"
           role="region"

@@ -1,6 +1,7 @@
 import { denialText, resolveAccess } from "@/lib/access"
 import { verifyRegistryLink } from "@/lib/registry-link"
 import { buildRegistryItem } from "@/lib/registry-item"
+import { getSiteBaseUrl } from "@/lib/site"
 import { getCatalogItem } from "@/registry/index"
 
 /**
@@ -42,7 +43,8 @@ export async function GET(
     }
   }
 
-  const item = await buildRegistryItem(slug)
+  const siteUrl = getSiteBaseUrl() ?? new URL(request.url).origin
+  const item = await buildRegistryItem(slug, siteUrl)
 
   if (!item) {
     return new Response("Not found\n", { status: 404 })

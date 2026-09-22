@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Counter001 } from "@/registry/components/typography/counter-001/counter-001"
 
 export type Bakery004Frame = {
   /** Часы на табло: «18:00». */
@@ -71,7 +72,6 @@ container-type:inline-size;
 [data-vibeui-block="bakery-004"] [data-part="frame"] img[data-active="true"]{opacity:1;transform:none}
 [data-vibeui-block="bakery-004"] [data-part="frame"]::after{content:"";position:absolute;inset:0;pointer-events:none;background:var(--vibeui-bakery-004-night);opacity:calc(var(--vibeui-bakery-004-n) * .35);mix-blend-mode:multiply}
 [data-vibeui-block="bakery-004"] [data-part="frame"]{transform:perspective(60rem) rotateY(calc((.5 - var(--vibeui-bakery-004-n)) * 4deg))}
-[data-vibeui-block="bakery-004"] [data-part="count"]{position:absolute;left:1rem;top:1rem;padding:.35rem .7rem;border-radius:999px;background:rgb(0 0 0 / .45);color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.12em;backdrop-filter:blur(6px)}
 [data-vibeui-block="bakery-004"] [data-part="copy"]{display:grid;gap:1rem}
 [data-vibeui-block="bakery-004"] [data-part="eyebrow"]{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;opacity:.7;margin:0}
 [data-vibeui-block="bakery-004"] [data-part="clock"]{font-family:var(--vibeui-bakery-004-display);font-weight:700;font-size:clamp(3.4rem,10cqi,7.5rem);letter-spacing:-.05em;line-height:1;display:flex;font-variant-numeric:tabular-nums}
@@ -178,9 +178,7 @@ export function Bakery004({
           <div data-part="shell">
             <div data-part="frame">
               {frames.map((item, i) => (item.image ? <img key={i} src={item.image} alt={i === index ? item.title : ""} data-active={i === index} /> : null))}
-              <span data-part="count">
-                {index + 1} / {frames.length}
-              </span>
+              <Counter001 data-part="count" frames={frames} index={index} accent={accent} />
             </div>
             <div data-part="copy" aria-live="polite">
               {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}

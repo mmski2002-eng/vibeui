@@ -75,4 +75,31 @@ export const PREVIEWS = {
   "collapsible-010": dynamic(() =>
     import("@/registry/components/accordion/collapsible-010/collapsible-010").then((module) => module.Collapsible010),
   ),
+  "accordion-015": dynamic(() =>
+    import("@/registry/components/accordion/accordion-015/accordion-015").then((module) => module.Accordion015),
+  ),
+  "accordion-016": dynamic(() =>
+    import("@/registry/components/accordion/accordion-016/accordion-016").then((module) => module.Accordion016),
+  ),
+  "accordion-017": dynamic(() =>
+    import("@/registry/components/accordion/accordion-017/accordion-017").then((module) => module.Accordion017),
+  ),
+  "accordion-018": dynamic(() =>
+    import("@/registry/components/accordion/accordion-018/accordion-018").then((module) => module.Accordion018),
+  ),
+  "accordion-019": dynamic(() =>
+    import("@/registry/components/accordion/accordion-019/accordion-019").then((module) => module.Accordion019),
+  ),
+  "accordion-020": dynamic(() =>
+    import("@/registry/components/accordion/accordion-020/accordion-020").then((module) => module.Accordion020),
+  ),
+  "accordion-021": dynamic(() =>
+    import("@/registry/components/accordion/accordion-021/accordion-021").then((module) => module.Accordion021),
+  ),
+  "accordion-022": dynamic(() =>
+    import("@/registry/components/accordion/accordion-022/accordion-022").then((module) => module.Accordion022),
+  ),
+  "accordion-023": dynamic(() =>
+    import("@/registry/components/accordion/accordion-023/accordion-023").then((module) => module.Accordion023),
+  ),
 } satisfies PreviewMap

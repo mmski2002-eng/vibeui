@@ -141,4 +141,100 @@ export const PREVIEWS = {
   "scrollspy-007": dynamic(() =>
     import("@/registry/components/navigation/scrollspy-007/scrollspy-007").then((module) => module.Scrollspy007),
   ),
+  "footerlinks-001": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-001/footerlinks-001").then((module) => module.Footerlinks001),
+  ),
+  "footerlinks-002": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-002/footerlinks-002").then((module) => module.Footerlinks002),
+  ),
+  "footerlinks-003": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-003/footerlinks-003").then((module) => module.Footerlinks003),
+  ),
+  "footerlinks-004": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-004/footerlinks-004").then((module) => module.Footerlinks004),
+  ),
+  "footerlinks-005": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-005/footerlinks-005").then((module) => module.Footerlinks005),
+  ),
+  "footerlinks-006": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-006/footerlinks-006").then((module) => module.Footerlinks006),
+  ),
+  "footerlinks-007": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-007/footerlinks-007").then((module) => module.Footerlinks007),
+  ),
+  "footerlinks-008": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-008/footerlinks-008").then((module) => module.Footerlinks008),
+  ),
+  "footerlinks-009": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-009/footerlinks-009").then((module) => module.Footerlinks009),
+  ),
+  "footerlinks-010": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-010/footerlinks-010").then((module) => module.Footerlinks010),
+  ),
+  "footerlinks-011": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-011/footerlinks-011").then((module) => module.Footerlinks011),
+  ),
+  "footerlinks-012": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-012/footerlinks-012").then((module) => module.Footerlinks012),
+  ),
+  "footerlinks-013": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-013/footerlinks-013").then((module) => module.Footerlinks013),
+  ),
+  "footerlinks-014": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-014/footerlinks-014").then((module) => module.Footerlinks014),
+  ),
+  "footerlinks-015": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-015/footerlinks-015").then((module) => module.Footerlinks015),
+  ),
+  "sociallinks-001": dynamic(() =>
+    import("@/registry/components/navigation/sociallinks-001/sociallinks-001").then((module) => module.Sociallinks001),
+  ),
+  "footerlinks-016": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-016/footerlinks-016").then((module) => module.Footerlinks016),
+  ),
+  "footerlinks-017": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-017/footerlinks-017").then((module) => module.Footerlinks017),
+  ),
+  "sociallinks-002": dynamic(() =>
+    import("@/registry/components/navigation/sociallinks-002/sociallinks-002").then((module) => module.Sociallinks002),
+  ),
+  "footerlinks-018": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-018/footerlinks-018").then((module) => module.Footerlinks018),
+  ),
+  "footerlinks-019": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-019/footerlinks-019").then((module) => module.Footerlinks019),
+  ),
+  "footerlinks-020": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-020/footerlinks-020").then((module) => module.Footerlinks020),
+  ),
+  "footerlinks-021": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-021/footerlinks-021").then((module) => module.Footerlinks021),
+  ),
+  "footerlinks-022": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-022/footerlinks-022").then((module) => module.Footerlinks022),
+  ),
+  "footerlinks-023": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-023/footerlinks-023").then((module) => module.Footerlinks023),
+  ),
+  "footerlinks-024": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-024/footerlinks-024").then((module) => module.Footerlinks024),
+  ),
+  "sociallinks-003": dynamic(() =>
+    import("@/registry/components/navigation/sociallinks-003/sociallinks-003").then((module) => module.Sociallinks003),
+  ),
+  "footerlinks-025": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-025/footerlinks-025").then((module) => module.Footerlinks025),
+  ),
+  "sociallinks-004": dynamic(() =>
+    import("@/registry/components/navigation/sociallinks-004/sociallinks-004").then((module) => module.Sociallinks004),
+  ),
+  "footerlinks-026": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-026/footerlinks-026").then((module) => module.Footerlinks026),
+  ),
+  "sociallinks-005": dynamic(() =>
+    import("@/registry/components/navigation/sociallinks-005/sociallinks-005").then((module) => module.Sociallinks005),
+  ),
+  "footerlinks-027": dynamic(() =>
+    import("@/registry/components/navigation/footerlinks-027/footerlinks-027").then((module) => module.Footerlinks027),
+  ),
 } satisfies PreviewMap

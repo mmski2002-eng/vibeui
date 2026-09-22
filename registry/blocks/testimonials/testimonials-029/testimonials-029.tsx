@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card113 } from "@/registry/components/card/card-113/card-113"
 
 export type Testimonials029Review = {
   /** Номер акта: «0214». */
@@ -70,29 +71,11 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-029"] [data-part="title"]{margin:0;font-family:var(--vibeui-testimonials-029-display);font-weight:800;font-size:clamp(2rem,5cqi,3.6rem);line-height:1;letter-spacing:-.035em;text-wrap:balance}
 [data-vibeui-block="testimonials-029"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-testimonials-029-muted)}
 [data-vibeui-block="testimonials-029"] [data-part="grid"]{display:grid;gap:1.2rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-029"] [data-part="act"]{position:relative;display:flex;flex-direction:column;gap:1rem;padding:1.4rem;border:1px solid var(--vibeui-testimonials-029-fg);background:var(--vibeui-testimonials-029-paper);box-shadow:0 20px 40px -32px rgb(0 0 0 / .5);overflow:hidden}
-[data-vibeui-block="testimonials-029"] [data-part="act"]::before{content:"";position:absolute;inset:.4rem;border:1px solid var(--vibeui-testimonials-029-line);pointer-events:none}
-[data-vibeui-block="testimonials-029"] [data-part="act-head"]{display:grid;gap:.15rem;padding-bottom:.8rem;border-bottom:1px solid var(--vibeui-testimonials-029-line);font-family:var(--vibeui-testimonials-029-mono);font-size:.7rem;letter-spacing:.04em;color:var(--vibeui-testimonials-029-muted)}
-[data-vibeui-block="testimonials-029"] [data-part="act-head"] b{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-testimonials-029-fg)}
-[data-vibeui-block="testimonials-029"] [data-part="quote"]{margin:0;font-size:1rem;line-height:1.55}
-[data-vibeui-block="testimonials-029"] [data-part="quote"]::before{content:"«"}
-[data-vibeui-block="testimonials-029"] [data-part="quote"]::after{content:"»"}
-[data-vibeui-block="testimonials-029"] [data-part="stars"]{display:inline-flex;gap:.15rem;font-family:var(--vibeui-testimonials-029-mono);font-size:.85rem;letter-spacing:.1em;color:var(--vibeui-testimonials-029-accent)}
-[data-vibeui-block="testimonials-029"] [data-part="stars"] [data-off="true"]{color:var(--vibeui-testimonials-029-line)}
-[data-vibeui-block="testimonials-029"] [data-part="remark"]{margin:0;padding:.6rem .8rem;border-left:2px solid var(--vibeui-testimonials-029-accent);background:color-mix(in oklab,var(--vibeui-testimonials-029-fg) 5%,transparent);font-size:.82rem;color:var(--vibeui-testimonials-029-muted)}
-[data-vibeui-block="testimonials-029"] [data-part="remark"] b{font-family:var(--vibeui-testimonials-029-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-testimonials-029-fg)}
-[data-vibeui-block="testimonials-029"] [data-part="sign"]{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:1rem;margin-top:auto;padding-top:.6rem;min-height:3.4rem}
-[data-vibeui-block="testimonials-029"] [data-part="sign"] div{display:grid;gap:.1rem;max-width:calc(100% - 10rem);border-bottom:1px solid var(--vibeui-testimonials-029-fg);padding-bottom:.1rem}
-[data-vibeui-block="testimonials-029"] [data-part="sign"] i{font-family:var(--vibeui-testimonials-029-hand);font-style:normal;font-weight:600;font-size:1.7rem;line-height:1;color:color-mix(in oklab,var(--vibeui-testimonials-029-fg) 85%,#1d4ed8)}
-[data-vibeui-block="testimonials-029"] [data-part="sign"] small{font-family:var(--vibeui-testimonials-029-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-testimonials-029-muted)}
-[data-vibeui-block="testimonials-029"] [data-part="stamp"]{position:absolute;right:1.3rem;bottom:1.1rem;max-width:9.5rem;padding:.45rem .7rem;text-align:center;line-height:1.35;border:2px solid var(--vibeui-testimonials-029-fg);color:var(--vibeui-testimonials-029-fg);background:color-mix(in oklab,var(--vibeui-testimonials-029-accent) 55%,transparent);font-family:var(--vibeui-testimonials-029-mono);font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transform:rotate(-8deg);opacity:.95;pointer-events:none;animation:vibeui-testimonials-029-stamp .6s cubic-bezier(.2,1.4,.4,1) both}
-[data-vibeui-block="testimonials-029"] [data-part="stamp"]::after{content:"";position:absolute;inset:3px;border:1px solid currentColor;opacity:.5}
-[data-vibeui-block="testimonials-029"] [data-part="stamp"][data-kind="remark"]{background:transparent;border-style:dashed}
-@supports (animation-timeline: view()){[data-vibeui-block="testimonials-029"] [data-part="stamp"]{animation:vibeui-testimonials-029-stamp linear both;animation-timeline:view();animation-range:entry 20% entry 70%}}
+@supports (animation-timeline: view()){}
 @keyframes vibeui-testimonials-029-stamp{from{transform:rotate(-8deg) scale(1.7);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:.95}}
 @container (min-width: 40rem){[data-vibeui-block="testimonials-029"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="testimonials-029"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-029"] *{animation:none!important;transition:none!important}[data-vibeui-block="testimonials-029"] [data-part="stamp"]{transform:rotate(-8deg);opacity:.95}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-029"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_REVIEWS: Testimonials029Review[] = [
   { number: "0298", object: "Двушка на Ленинском, 62 м²", date: "14.08.2026", text: "Сдали на два дня раньше срока. Каждый вечер фото в чате, я ни разу не ездила проверять. Плитку в санузле переложили бы, если бы я попросила — не пришлось.", name: "Анна Р.", stars: 5 },
@@ -146,36 +129,7 @@ export function Testimonials029({
             {reviews.map((review) => {
               const stars = Math.max(0, Math.min(5, review.stars ?? 5))
               return (
-                <li key={review.number} data-part="act">
-                  <div data-part="act-head">
-                    <b>{actLabel.replace("{n}", review.number)}</b>
-                    <span>{review.object}</span>
-                    <span>{review.date}</span>
-                  </div>
-                  <blockquote data-part="quote">{review.text}</blockquote>
-                  <span data-part="stars" role="img" aria-label={starsLabel.replace("{n}", String(stars))}>
-                    {[0, 1, 2, 3, 4].map((index) => (
-                      <span key={index} data-off={index >= stars} aria-hidden="true">
-                        ★
-                      </span>
-                    ))}
-                  </span>
-                  {review.remark ? (
-                    <p data-part="remark">
-                      <b>{remarkLabel}</b>
-                      {review.remark}
-                    </p>
-                  ) : null}
-                  <div data-part="sign">
-                    <div>
-                      <i>{review.name}</i>
-                      <small>{signLabel}</small>
-                    </div>
-                  </div>
-                  <span data-part="stamp" data-kind={review.remark ? "remark" : "ok"} aria-hidden="true">
-                    {review.remark ? remarkStampLabel : stampLabel}
-                  </span>
-                </li>
+                <Card113 key={review.number} data-part="act" number={review.number} object={review.object} date={review.date} text={review.text} remark={review.remark} name={review.name} actLabel={actLabel} starsLabel={starsLabel} remarkLabel={remarkLabel} signLabel={signLabel} remarkStampLabel={remarkStampLabel} stampLabel={stampLabel} stars={stars} accent={accent} />
               )
             })}
           </ul>

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Changelog002Change = {
   tag: string
@@ -22,7 +23,8 @@ export type Changelog002Props = {
 // резюме и разбивка изменений по типам (Добавлено / Исправлено / Изменено).
 // Формат для «свежий релиз наверху страницы» — не лента истории, а анонс
 // одной версии, где тип каждого пункта подписан тегом слева.
-const STYLES = `
+const STYLES = `[data-vibeui-block="changelog-002"] [data-part="heading"]{margin-bottom:0.5rem}
+
 :where([data-vibeui-block="changelog-002"]){
 --vibeui-changelog-002-bg:transparent;
 --vibeui-changelog-002-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -51,7 +53,6 @@ font-family:var(--vibeui-changelog-002-mono);font-size:clamp(1.5rem,4cqi,2.25rem
 color:var(--vibeui-changelog-002-accent);
 }
 [data-vibeui-block="changelog-002"] [data-part="date"]{color:var(--vibeui-changelog-002-muted);font-size:0.875rem}
-[data-vibeui-block="changelog-002"] [data-part="title"]{margin:0 0 0.5rem;font-size:1.375rem;line-height:1.2;letter-spacing:-0.02em;font-weight:700}
 [data-vibeui-block="changelog-002"] [data-part="summary"]{margin:0 0 1.75rem;color:var(--vibeui-changelog-002-muted);font-size:1rem;line-height:1.6}
 [data-vibeui-block="changelog-002"] [data-part="list"]{
 list-style:none;margin:0;padding:0;display:grid;gap:0.75rem;
@@ -151,7 +152,12 @@ export function Changelog002({
             <span data-part="version">{version}</span>
             <span data-part="date">{date}</span>
           </div>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            title={title}
+            size="xs"
+            accent={accent}
+          />
           <p data-part="summary">{summary}</p>
           <ul data-part="list">
             {changes.map((change) => (

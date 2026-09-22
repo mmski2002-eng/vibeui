@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 type Pricing001Action = {
   label: string
   href: string
@@ -89,9 +91,6 @@ container-type:inline-size;
 
 const ENTER =
   "animate-[vibeui-pricing-001-fade-up_0.5s_cubic-bezier(0.16,1,0.3,1)_both]"
-
-const ACTION_BASE =
-  "inline-flex h-10 w-full items-center justify-center rounded-lg px-4 text-[0.875rem] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vibeui-pricing-001-ring)]"
 
 const PLAN_DELAYS = [
   "[animation-delay:90ms]",
@@ -321,18 +320,16 @@ export function Pricing001({
                     ) : null}
                   </p>
 
-                  <a
+                  {/* Кнопка тарифа — button-016: у выделенного плана заливка, у остальных контур. */}
+                  <Button016
+                    className="mt-5 w-full"
+                    label={plan.action.label}
                     href={plan.action.href}
-                    className={cx(
-                      ACTION_BASE,
-                      "mt-5",
-                      featured
-                        ? "bg-[var(--vibeui-pricing-001-accent)] text-[var(--vibeui-pricing-001-accent-fg)] transition-[filter] duration-150 hover:brightness-110"
-                        : "border border-[var(--vibeui-pricing-001-border)] transition-colors duration-150 hover:bg-[var(--vibeui-pricing-001-tint)]",
-                    )}
-                  >
-                    {plan.action.label}
-                  </a>
+                    external={false}
+                    size="lg"
+                    tone={featured ? "accent" : "neutral"}
+                    accent={accent}
+                  />
 
                   <ul className="mt-6 flex flex-col gap-2.5">
                     {plan.features.slice(0, 4).map((feature) => (

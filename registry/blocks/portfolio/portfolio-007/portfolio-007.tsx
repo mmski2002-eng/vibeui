@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react"
+import { Button101 } from "@/registry/components/button/button-101/button-101"
 
 export type Portfolio007Work = {
   title: string
@@ -67,6 +68,7 @@ container-type:inline-size;
 :where([data-vibeui-block="portfolio-007"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="portfolio-007"]{box-sizing:border-box;display:block;background:var(--vibeui-portfolio-007-bg);color:var(--vibeui-portfolio-007-fg);font-family:var(--vibeui-portfolio-007-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="portfolio-007"] *{box-sizing:border-box}
+[data-vibeui-block="portfolio-007"] [data-part="tile"]{width:100%}
 [data-vibeui-block="portfolio-007"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="portfolio-007"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 2rem;margin-bottom:1.75rem}
 [data-vibeui-block="portfolio-007"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 .75rem;font-family:var(--vibeui-portfolio-007-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-portfolio-007-cyan);text-shadow:0 0 10px color-mix(in oklab,var(--vibeui-portfolio-007-cyan) 70%,transparent)}
@@ -76,20 +78,10 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-007"] [data-part="filter"]{height:2.4rem;padding:0 1rem;border-radius:.5rem;border:1px solid var(--vibeui-portfolio-007-line);background:transparent;color:var(--vibeui-portfolio-007-muted);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:color .25s,border-color .25s,box-shadow .3s,background .25s}
 [data-vibeui-block="portfolio-007"] [data-part="filter"]:hover{color:var(--vibeui-portfolio-007-fg);border-color:color-mix(in oklab,var(--vibeui-portfolio-007-accent) 60%,transparent)}
 [data-vibeui-block="portfolio-007"] [data-part="filter"][aria-pressed="true"]{color:var(--vibeui-portfolio-007-fg);border-color:var(--vibeui-portfolio-007-accent);background:color-mix(in oklab,var(--vibeui-portfolio-007-accent) 14%,transparent);box-shadow:0 0 14px color-mix(in oklab,var(--vibeui-portfolio-007-accent) 45%,transparent),inset 0 0 10px color-mix(in oklab,var(--vibeui-portfolio-007-accent) 20%,transparent)}
-[data-vibeui-block="portfolio-007"] [data-part="filter"]:focus-visible,[data-vibeui-block="portfolio-007"] [data-part="tile"]:focus-visible,[data-vibeui-block="portfolio-007"] [data-part="nav"]:focus-visible,[data-vibeui-block="portfolio-007"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-portfolio-007-cyan);outline-offset:3px}
+[data-vibeui-block="portfolio-007"] [data-part="filter"]:focus-visible,[data-vibeui-block="portfolio-007"] [data-part="nav"]:focus-visible,[data-vibeui-block="portfolio-007"] [data-part="close"]:focus-visible{outline:2px solid var(--vibeui-portfolio-007-cyan);outline-offset:3px}
 [data-vibeui-block="portfolio-007"] [data-part="grid"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="portfolio-007"] [data-part="grid"] li{animation:vibeui-portfolio-007-in .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-portfolio-007-n) * 45ms)}
 @keyframes vibeui-portfolio-007-in{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
-[data-vibeui-block="portfolio-007"] [data-part="tile"]{position:relative;display:block;width:100%;aspect-ratio:4/5;padding:0;border:0;border-radius:.9rem;overflow:hidden;background:var(--vibeui-portfolio-007-card);cursor:pointer;color:inherit;font:inherit;text-align:left;isolation:isolate}
-[data-vibeui-block="portfolio-007"] [data-part="tile"] img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.1);transition:filter .6s,transform .9s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="portfolio-007"] [data-part="tile"]:hover img,[data-vibeui-block="portfolio-007"] [data-part="tile"]:focus-visible img{filter:grayscale(0) contrast(1);transform:scale(1.05)}
-[data-vibeui-block="portfolio-007"] [data-part="tile"]::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .4s;pointer-events:none;z-index:2}
-[data-vibeui-block="portfolio-007"] [data-part="tile"]:hover::before{box-shadow:inset 0 0 0 1px var(--vibeui-portfolio-007-accent),inset 0 0 24px color-mix(in oklab,var(--vibeui-portfolio-007-accent) 35%,transparent),0 0 24px color-mix(in oklab,var(--vibeui-portfolio-007-accent) 45%,transparent)}
-[data-vibeui-block="portfolio-007"] [data-part="cap"]{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:2.5rem .9rem .9rem;background:linear-gradient(0deg,rgb(7 6 11 / .9),transparent);transform:translateY(30%);opacity:0;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .4s}
-[data-vibeui-block="portfolio-007"] [data-part="tile"]:hover [data-part="cap"],[data-vibeui-block="portfolio-007"] [data-part="tile"]:focus-visible [data-part="cap"]{transform:none;opacity:1}
-[data-vibeui-block="portfolio-007"] [data-part="cap"] b{display:block;font-family:var(--vibeui-portfolio-007-display);font-size:.95rem;font-weight:600;line-height:1.2}
-[data-vibeui-block="portfolio-007"] [data-part="cap"] span{display:block;margin-top:.2rem;font-size:.78rem;color:var(--vibeui-portfolio-007-muted)}
-[data-vibeui-block="portfolio-007"] [data-part="style-tag"]{position:absolute;left:.7rem;top:.7rem;z-index:1;padding:.25rem .55rem;border-radius:.35rem;background:rgb(7 6 11 / .65);border:1px solid var(--vibeui-portfolio-007-line);font-family:var(--vibeui-portfolio-007-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(6px)}
 [data-vibeui-block="portfolio-007"] [data-part="empty"]{padding:3rem;border-radius:.9rem;border:1px dashed var(--vibeui-portfolio-007-line);text-align:center;color:var(--vibeui-portfolio-007-muted)}
 [data-vibeui-block="portfolio-007"] [data-part="dialog"]{width:min(72rem,calc(100vw - 2rem));max-width:none;max-height:calc(100vh - 2rem);padding:0;border:1px solid color-mix(in oklab,var(--vibeui-portfolio-007-accent) 50%,transparent);border-radius:1rem;background:#0b0912;color:var(--vibeui-portfolio-007-fg);overflow:hidden;box-shadow:0 0 40px color-mix(in oklab,var(--vibeui-portfolio-007-accent) 40%,transparent),0 40px 80px -30px rgb(0 0 0 / .8)}
 [data-vibeui-block="portfolio-007"] [data-part="dialog"]::backdrop{background:rgb(7 6 11 / .85);backdrop-filter:blur(10px)}
@@ -118,7 +110,7 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-007"] [data-part="stage"] img{max-height:calc(100vh - 2rem);height:100%}
 [data-vibeui-block="portfolio-007"] [data-part="info"]{align-content:start;padding:2rem 1.75rem;border-top:0;border-left:1px solid var(--vibeui-portfolio-007-line)}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="portfolio-007"] *{animation:none!important;transition:none!important}[data-vibeui-block="portfolio-007"] [data-part="tile"] img{filter:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="portfolio-007"] *{animation:none!important;transition:none!important}}`
 
 const P = "/demo/tattoo"
 
@@ -227,14 +219,7 @@ export function Portfolio007({
             <ul key={filter} data-part="grid">
               {visible.map((item, index) => (
                 <li key={item.image} style={{ ["--vibeui-portfolio-007-n" as string]: index }}>
-                  <button type="button" data-part="tile" onClick={() => open(index)} aria-label={`${item.title}, ${styleLabel(item.style)}`}>
-                    <img src={item.image} alt={item.imageAlt ?? ""} loading="lazy" />
-                    <span data-part="style-tag">{styleLabel(item.style)}</span>
-                    <span data-part="cap">
-                      <b>{item.title}</b>
-                      {item.meta ? <span>{item.meta}</span> : null}
-                    </span>
-                  </button>
+                  <Button101 data-part="tile" title={item.title} styleText={item.style} image={item.image} imageAlt={item.imageAlt} meta={item.meta} styleLabel={styleLabel} onClick={() => open(index)} accent={accent} />
                 </li>
               ))}
             </ul>

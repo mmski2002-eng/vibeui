@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Download005Props = {
   version?: string
   date?: string
@@ -26,6 +29,7 @@ export type Download005Props = {
 // Полоса — одна карточка, а не секция во весь экран: её ставят между
 // разделами, и высокий блок разорвал бы ритм страницы.
 const STYLES = `
+
 :where([data-vibeui-block="download-005"]){
 --vibeui-download-005-bg:transparent;
 --vibeui-download-005-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -62,25 +66,13 @@ color:var(--vibeui-download-005-accent);
 font-family:var(--vibeui-download-005-mono);font-size:0.875rem;font-weight:700;
 }
 [data-vibeui-block="download-005"] [data-part="date"]{color:var(--vibeui-download-005-muted);font-size:0.875rem}
-[data-vibeui-block="download-005"] [data-part="notes"]{color:var(--vibeui-download-005-muted);font-size:0.875rem;text-decoration:none;border-bottom:1px solid var(--vibeui-download-005-border)}
-[data-vibeui-block="download-005"] [data-part="notes"]:hover{color:var(--vibeui-download-005-ink);border-color:var(--vibeui-download-005-accent)}
 [data-vibeui-block="download-005"] [data-part="changes"]{list-style:none;margin:0;padding:0;display:grid;gap:0.375rem}
 [data-vibeui-block="download-005"] [data-part="change"]{position:relative;padding-left:1.125rem;font-size:0.9375rem;line-height:1.5}
 [data-vibeui-block="download-005"] [data-part="change"]::before{
 content:"";position:absolute;left:0.1875rem;top:0.5rem;
 width:0.375rem;height:0.375rem;border-radius:999px;background:var(--vibeui-download-005-accent);color:oklch(from var(--vibeui-download-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="download-005"] [data-part="actions"]{display:flex;flex-direction:column;gap:0.5rem;align-items:flex-start}
-[data-vibeui-block="download-005"] [data-part="primary"]{
-display:inline-flex;align-items:center;justify-content:center;
-padding:0.75rem 1.5rem;border-radius:0.875rem;
-background:var(--vibeui-download-005-accent);color:oklch(from var(--vibeui-download-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:700;text-decoration:none;transition:opacity var(--vibeui-download-005-dur-2) ease;
-}
-[data-vibeui-block="download-005"] [data-part="primary"]:hover{opacity:.9}
-[data-vibeui-block="download-005"] [data-part="primary"]:focus-visible{outline:2px solid var(--vibeui-download-005-accent);outline-offset:3px}
 [data-vibeui-block="download-005"] [data-part="hint"]{color:var(--vibeui-download-005-muted);font-size:0.8125rem}
-[data-vibeui-block="download-005"] [data-part="secondary"]{color:var(--vibeui-download-005-ink);font-size:0.875rem;text-decoration:none;border-bottom:1px solid var(--vibeui-download-005-accent)}
-[data-vibeui-block="download-005"] [data-part="secondary"]:hover{color:var(--vibeui-download-005-accent)}
 @container (min-width: 42rem){
 [data-vibeui-block="download-005"] [data-part="shell"]{padding:3rem 2rem}
 [data-vibeui-block="download-005"] [data-part="card"]{grid-template-columns:minmax(0,1fr) auto;padding:1.75rem 2rem;gap:2.5rem}
@@ -162,9 +154,12 @@ export function Download005({
                 <span data-part="version">{version}</span>
                 <span data-part="date">{date}</span>
                 {notesLabel ? (
-                  <a data-part="notes" href={notesHref}>
-                    {notesLabel}
-                  </a>
+                  <Button077
+                    data-part="notes"
+                    label={notesLabel}
+                    href={notesHref}
+                    accent={accent}
+                  />
                 ) : null}
               </p>
 
@@ -178,14 +173,26 @@ export function Download005({
             </div>
 
             <div data-part="actions">
-              <a data-part="primary" href={primaryHref}>
-                {primaryLabel}
-              </a>
+              <Button016
+                data-part="primary"
+                label={primaryLabel}
+                href={primaryHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
               {primaryNote ? <span data-part="hint">{primaryNote}</span> : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  size="lg"
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

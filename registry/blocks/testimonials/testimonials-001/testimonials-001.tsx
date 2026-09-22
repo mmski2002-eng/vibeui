@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card040 } from "@/registry/components/card/card-040/card-040"
 
 type Testimonials001Item = {
   quote: string
@@ -67,46 +68,12 @@ margin:0;max-width:22ch;
 font-size:clamp(1.625rem,3.6cqi,2.5rem);line-height:1.1;letter-spacing:-0.02em;font-weight:670;
 }
 [data-vibeui-block="testimonials-001"] [data-part="grid"]{display:grid;gap:1rem}
-[data-vibeui-block="testimonials-001"] figure{
-display:flex;flex-direction:column;gap:1rem;margin:0;
-padding:1.25rem;
-border:1px solid var(--vibeui-testimonials-001-border);border-radius:1rem;
-background:var(--vibeui-testimonials-001-card);
-}
-[data-vibeui-block="testimonials-001"] blockquote{
-margin:0;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-testimonials-001-ink);
-}
-[data-vibeui-block="testimonials-001"] figcaption{
-display:flex;align-items:center;gap:0.625rem;margin-top:auto;
-font-size:0.8125rem;color:var(--vibeui-testimonials-001-muted);
-}
-/* Аватар — инициалы на подложке: фотографии в отзывах чаще всего стоковые. */
-[data-vibeui-block="testimonials-001"] [data-part="mark"]{
-display:flex;align-items:center;justify-content:center;flex:none;
-width:2rem;height:2rem;border-radius:9999px;
-background:color-mix(in oklab,var(--vibeui-testimonials-001-accent) 14%,transparent);
-color:var(--vibeui-testimonials-001-accent);
-font-size:0.75rem;font-weight:650;
-}
-[data-vibeui-block="testimonials-001"] [data-part="name"]{
-display:block;color:var(--vibeui-testimonials-001-ink);font-weight:560;
-}
-/* Главный отзыв: крупная засечная цитата и две колонки сетки. */
-[data-vibeui-block="testimonials-001"] figure[data-featured="true"] blockquote{
-font-family:var(--vibeui-testimonials-001-serif);
-font-size:clamp(1.125rem,2.2cqi,1.5rem);line-height:1.4;letter-spacing:-0.01em;
-}
-[data-vibeui-block="testimonials-001"] figure[data-featured="true"]{
-border-color:color-mix(in oklab,var(--vibeui-testimonials-001-accent) 30%,var(--vibeui-testimonials-001-border));
-}
 @container (min-width: 44rem){
 [data-vibeui-block="testimonials-001"] [data-part="grid"]{grid-template-columns:repeat(2,1fr)}
-[data-vibeui-block="testimonials-001"] figure[data-featured="true"]{grid-column:span 2}
 }
 @container (min-width: 64rem){
 [data-vibeui-block="testimonials-001"] [data-part="frame"]{padding:5rem 3rem}
 [data-vibeui-block="testimonials-001"] [data-part="grid"]{grid-template-columns:repeat(3,1fr)}
-[data-vibeui-block="testimonials-001"] figure{padding:1.5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-001"] *{animation:none!important;transition:none!important}}
 `
@@ -218,21 +185,7 @@ export function Testimonials001({
           </div>
           <div data-part="grid">
             {items.map((item) => (
-              <figure
-                key={item.name}
-                data-featured={item.featured || undefined}
-              >
-                <blockquote>«{item.quote}»</blockquote>
-                <figcaption>
-                  <span data-part="mark" aria-hidden="true">
-                    {initialsOf(item.name)}
-                  </span>
-                  <span>
-                    <span data-part="name">{item.name}</span>
-                    {item.role}
-                  </span>
-                </figcaption>
-              </figure>
+              <Card040 key={item.name} data-part="card" name={item.name} featured={item.featured} quote={item.quote} role={item.role} accent={accent} />
             ))}
           </div>
         </div>

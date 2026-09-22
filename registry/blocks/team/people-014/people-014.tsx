@@ -1,6 +1,7 @@
 "use client"
 
 import { type CSSProperties, type PointerEvent } from "react"
+import { Card058 } from "@/registry/components/card/card-058/card-058"
 
 export type People014Member = {
   name: string
@@ -63,28 +64,10 @@ container-type:inline-size;
 [data-vibeui-block="people-014"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-014-display);font-weight:900;font-size:clamp(1.8rem,4.4cqi,3.2rem);line-height:1.02;letter-spacing:-.03em;text-transform:uppercase}
 [data-vibeui-block="people-014"] [data-part="lede"]{margin:0;max-width:30rem;color:var(--vibeui-people-014-muted)}
 [data-vibeui-block="people-014"] [data-part="grid"]{display:grid;gap:1.2rem;margin:0;padding:0;list-style:none;perspective:1400px}
-[data-vibeui-block="people-014"] [data-part="card"]{position:relative;overflow:hidden;aspect-ratio:3/4;border-radius:1.4rem;border:1px solid var(--vibeui-people-014-line);background:var(--vibeui-people-014-glass);transform:rotateX(var(--vibeui-people-014-rx,0deg)) rotateY(var(--vibeui-people-014-ry,0deg));transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;--vibeui-people-014-gx:50%;--vibeui-people-014-gy:30%}
-[data-vibeui-block="people-014"] [data-part="card"]:hover{transition:transform .08s linear;box-shadow:0 40px 80px -40px rgb(0 0 0 / .7)}
-[data-vibeui-block="people-014"] [data-part="photo"]{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="people-014"] [data-part="card"]:hover [data-part="photo"]{transform:scale(1.05)}
-[data-vibeui-block="people-014"] [data-part="initials"]{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--vibeui-people-014-display);font-weight:900;font-size:clamp(4rem,10cqi,7rem);letter-spacing:-.05em;color:color-mix(in oklab,var(--vibeui-people-014-fg) 12%,transparent)}
-[data-vibeui-block="people-014"] [data-part="glare"]{position:absolute;inset:0;background:radial-gradient(28rem circle at var(--vibeui-people-014-gx) var(--vibeui-people-014-gy),rgb(255 255 255 / .22),transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none;mix-blend-mode:overlay}
-[data-vibeui-block="people-014"] [data-part="card"]:hover [data-part="glare"]{opacity:1}
-[data-vibeui-block="people-014"] [data-part="shade"]{position:absolute;inset:0;background:linear-gradient(to top,rgb(0 0 0 / .85) 0%,rgb(0 0 0 / .35) 45%,transparent 75%);pointer-events:none}
-[data-vibeui-block="people-014"] [data-part="badge"]{position:absolute;top:1rem;left:1rem;padding:.35rem .7rem;border-radius:999px;background:var(--vibeui-people-014-accent);color:var(--vibeui-people-014-on-accent);font-family:var(--vibeui-people-014-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
-[data-vibeui-block="people-014"] [data-part="info"]{position:absolute;left:0;right:0;bottom:0;padding:1.3rem;color:#fff;display:grid;gap:.5rem}
-[data-vibeui-block="people-014"] [data-part="name"]{margin:0;font-family:var(--vibeui-people-014-display);font-weight:700;font-size:1.3rem;letter-spacing:-.02em;line-height:1.1}
-[data-vibeui-block="people-014"] [data-part="role"]{margin:0;font-size:.9rem;color:rgb(255 255 255 / .75)}
-[data-vibeui-block="people-014"] [data-part="stats"]{display:flex;gap:1.4rem;margin:.3rem 0 0;padding:.7rem 0 0;border-top:1px solid rgb(255 255 255 / .18)}
-[data-vibeui-block="people-014"] [data-part="stats"] div{display:grid}
-[data-vibeui-block="people-014"] [data-part="stats"] b{font-family:var(--vibeui-people-014-display);font-weight:900;font-size:1.3rem;line-height:1;letter-spacing:-.03em;color:var(--vibeui-people-014-accent);font-variant-numeric:tabular-nums}
-[data-vibeui-block="people-014"] [data-part="stats"] small{font-family:var(--vibeui-people-014-mono);font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;color:rgb(255 255 255 / .6)}
-[data-vibeui-block="people-014"] [data-part="skills"]{display:flex;flex-wrap:wrap;gap:.35rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="people-014"] [data-part="skills"] li{padding:.25rem .55rem;border-radius:999px;border:1px solid rgb(255 255 255 / .3);font-size:.72rem;color:rgb(255 255 255 / .85);backdrop-filter:blur(6px)}
 @container (min-width: 40rem){[data-vibeui-block="people-014"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 56rem){[data-vibeui-block="people-014"] [data-part="head"]{grid-template-columns:minmax(0,1fr) minmax(0,26rem);gap:2rem}}
 @container (min-width: 64rem){[data-vibeui-block="people-014"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="people-014"] *{animation:none!important;transition:none!important}[data-vibeui-block="people-014"] [data-part="card"]{transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="people-014"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_MEMBERS: People014Member[] = [
   { name: "Артём Гущин", role: "Основатель, полировка и керамика", photo: "/demo/auto/master-01.webp", years: "11 лет", cars: "2 400", skills: ["Керамика", "Голограммы", "Porsche"] },
@@ -158,39 +141,7 @@ export function People014({
           </div>
           <ul data-part="grid">
             {members.map((member, index) => (
-              <li key={member.name} data-part="card" onPointerMove={tilt} onPointerLeave={reset}>
-                {member.photo ? <img data-part="photo" src={member.photo} alt={member.name} loading="lazy" /> : <span data-part="initials" aria-hidden="true">{initials(member.name)}</span>}
-                <i data-part="shade" aria-hidden="true" />
-                <i data-part="glare" aria-hidden="true" />
-                <span data-part="badge">№ {String(index + 1).padStart(2, "0")}</span>
-                <div data-part="info">
-                  <h3 data-part="name">{member.name}</h3>
-                  <p data-part="role">{member.role}</p>
-                  {member.skills && member.skills.length > 0 ? (
-                    <ul data-part="skills">
-                      {member.skills.map((skill) => (
-                        <li key={skill}>{skill}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-                  {member.years || member.cars ? (
-                    <div data-part="stats">
-                      {member.years ? (
-                        <div>
-                          <b>{member.years}</b>
-                          <small>{yearsLabel}</small>
-                        </div>
-                      ) : null}
-                      {member.cars ? (
-                        <div>
-                          <b>{member.cars}</b>
-                          <small>{carsLabel}</small>
-                        </div>
-                      ) : null}
-                    </div>
-                  ) : null}
-                </div>
-              </li>
+              <Card058 key={member.name} data-part="card" name={member.name} photo={member.photo} role={member.role} skills={member.skills} years={member.years} cars={member.cars} yearsLabel={yearsLabel} carsLabel={carsLabel} index={index} onPointerMove={tilt} onPointerLeave={reset} accent={accent} />
             ))}
           </ul>
         </div>

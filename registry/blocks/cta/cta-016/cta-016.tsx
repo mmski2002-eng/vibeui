@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Cta016Props = {
   /** Капитель слева: «Вино недели». */
   label?: string
@@ -53,9 +55,6 @@ container-type:inline-size;
 [data-vibeui-block="cta-016"] [data-part="text"]{margin:.2rem 0 0;font-size:.85rem;opacity:.85}
 [data-vibeui-block="cta-016"] [data-part="tail"]{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
 [data-vibeui-block="cta-016"] [data-part="price"]{font-family:var(--vibeui-cta-016-display);font-size:1.75rem;line-height:1;white-space:nowrap}
-[data-vibeui-block="cta-016"] [data-part="action"]{display:inline-flex;align-items:center;height:2.6rem;padding:0 1.1rem;border-radius:999px;background:var(--vibeui-cta-016-bg);color:var(--vibeui-cta-016-fg);text-decoration:none;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;transition:transform .2s}
-[data-vibeui-block="cta-016"] [data-part="action"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="cta-016"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-cta-016-fg);outline-offset:2px}
 @container (min-width: 52rem){
 [data-vibeui-block="cta-016"] [data-part="shell"]{padding:0 2rem}
 [data-vibeui-block="cta-016"] [data-part="band"]{grid-template-columns:auto minmax(0,1fr) auto;gap:2rem;padding:1.25rem 2rem}
@@ -106,9 +105,15 @@ export function Cta016({
             <div data-part="tail">
               {price ? <span data-part="price">{price}</span> : null}
               {actionLabel ? (
-                <a data-part="action" href={actionHref}>
-                  {actionLabel}
-                </a>
+                <Button016
+                  data-part="action"
+                  label={actionLabel}
+                  href={actionHref}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

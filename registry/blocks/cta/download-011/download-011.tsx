@@ -2,6 +2,9 @@
 
 import { useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Download011Props = {
   eyebrow?: string
   title?: string
@@ -77,15 +80,11 @@ container-type:inline-size;
 [data-vibeui-block="download-011"] [data-part="stores"] a:hover{transform:translateY(-2px)}
 [data-vibeui-block="download-011"] [data-part="stores"] svg{width:1.2rem;height:1.2rem}
 [data-vibeui-block="download-011"] [data-part="form"]{display:grid;gap:.6rem;margin:1.4rem 0 0;max-width:26rem}
-[data-vibeui-block="download-011"] [data-part="form"] input{width:100%;height:3rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--vibeui-download-011-line);background:color-mix(in oklab,var(--vibeui-download-011-on-fg) 6%,transparent);color:inherit;font:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
-[data-vibeui-block="download-011"] [data-part="form"] input::placeholder{color:var(--vibeui-download-011-muted)}
-[data-vibeui-block="download-011"] [data-part="form"] input:focus-visible{border-color:var(--vibeui-download-011-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-download-011-accent) 25%,transparent)}
-[data-vibeui-block="download-011"] [data-part="form"] button{height:3rem;padding:0 1.3rem;border-radius:999px;border:1px solid var(--vibeui-download-011-on-fg);background:transparent;color:inherit;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
-[data-vibeui-block="download-011"] [data-part="form"] button:hover{background:var(--vibeui-download-011-on-fg);color:var(--vibeui-download-011-fg)}
+[data-vibeui-block="download-011"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="download-011"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="download-011"] [data-part="done"]{display:inline-flex;align-items:center;gap:.6rem;margin:1.4rem 0 0;font-weight:600}
 [data-vibeui-block="download-011"] [data-part="done"] svg{width:1.6rem;height:1.6rem;color:var(--vibeui-download-011-accent)}
 [data-vibeui-block="download-011"] [data-part="done"] path{stroke-dasharray:30;stroke-dashoffset:30;animation:vibeui-download-011-draw .5s ease-out .1s forwards}
-[data-vibeui-block="download-011"] button:focus-visible,[data-vibeui-block="download-011"] a:focus-visible{outline:2px solid var(--vibeui-download-011-accent);outline-offset:2px}
 [data-vibeui-block="download-011"] [data-part="side"]{position:relative;display:grid;place-items:center;min-height:18rem}
 [data-vibeui-block="download-011"] [data-part="photo"]{position:absolute;left:50%;top:50%;width:min(100%,22rem);aspect-ratio:1;transform:translate(-50%,-50%) rotate(8deg);object-fit:cover;border-radius:58% 42% 50% 50% / 45% 55% 45% 55%;opacity:.9;animation:vibeui-download-011-morph 10s ease-in-out infinite alternate}
 [data-vibeui-block="download-011"] [data-part="qr"]{position:relative;display:grid;gap:.6rem;justify-items:center;width:12rem;padding:.9rem .9rem .7rem;border-radius:1rem;background:#fff;color:#111;box-shadow:0 30px 60px -20px rgb(0 0 0 / .6);transform:rotate(-4deg);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
@@ -254,8 +253,10 @@ export function Download011({
                 </p>
               ) : (
                 <form data-part="form" onSubmit={submit}>
-                  <input type="tel" name="phone" required placeholder={phonePlaceholder} aria-label={phoneLabel} autoComplete="tel" />
-                  <button type="submit">{smsLabel}</button>
+                  <Input001 type="tel" name="phone" required label={phonePlaceholder} autoComplete="tel" accent={accent} />
+                  <Button001 type="submit" size="lg" accent={accent}>
+                    {smsLabel}
+                  </Button001>
                 </form>
               )}
             </div>

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero035PetKey = "cat" | "dog" | "rabbit"
 
 export type Hero035Pet = {
@@ -89,13 +91,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-035"] [data-part="title"] em::after{content:"";position:absolute;left:0;right:0;bottom:-.05em;height:.18em;border-radius:1em;background:color-mix(in oklab,var(--vibeui-hero-035-accent) 25%,transparent);z-index:-1}
 [data-vibeui-block="hero-035"] [data-part="lede"]{margin:1.2rem 0 0;max-width:32rem;font-size:1.08rem;color:var(--vibeui-hero-035-muted);animation:vibeui-hero-035-rise .5s .08s cubic-bezier(.2,.8,.2,1) both}
 [data-vibeui-block="hero-035"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.8rem 0 0}
-[data-vibeui-block="hero-035"] [data-part="primary"],[data-vibeui-block="hero-035"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.4rem;border-radius:999px;font-family:var(--vibeui-hero-035-display);font-weight:800;font-size:1rem;text-decoration:none;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,background .2s}
-[data-vibeui-block="hero-035"] [data-part="primary"]{background:var(--vibeui-hero-035-accent);color:var(--vibeui-hero-035-on-accent)}
-[data-vibeui-block="hero-035"] [data-part="primary"]:hover{transform:translateY(-2px) rotate(-1deg);box-shadow:0 14px 30px -12px var(--vibeui-hero-035-accent)}
-[data-vibeui-block="hero-035"] [data-part="secondary"]{color:var(--vibeui-hero-035-fg);border:1px solid var(--vibeui-hero-035-line);background:var(--vibeui-hero-035-card)}
-[data-vibeui-block="hero-035"] [data-part="secondary"]:hover{transform:translateY(-2px) rotate(1deg)}
-[data-vibeui-block="hero-035"] [data-part="secondary"] svg{width:1rem;height:1rem;color:var(--vibeui-hero-035-accent)}
-[data-vibeui-block="hero-035"] a:focus-visible{outline:2px solid var(--vibeui-hero-035-accent);outline-offset:2px}
 [data-vibeui-block="hero-035"] [data-part="stats"]{display:flex;flex-wrap:wrap;gap:1.2rem 2.2rem;margin:2.4rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="hero-035"] [data-part="stats"] b{display:block;font-family:var(--vibeui-hero-035-display);font-weight:900;font-size:1.9rem;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="hero-035"] [data-part="stats"] span{display:block;margin-top:.25rem;font-size:.82rem;color:var(--vibeui-hero-035-muted)}
@@ -278,17 +273,18 @@ export function Hero035({
             </p>
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M4 12h3l2-6 4 12 2-6h5" />
-                  </svg>
-                  {secondaryLabel}
-                </a>
+                <Button016 data-part="secondary" label={secondaryLabel} href={secondaryHref} external={false} size="lg" tone="neutral" accent={accent} />
               ) : null}
             </div>
             {stats.length > 0 ? (

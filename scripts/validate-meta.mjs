@@ -35,6 +35,19 @@ const THEME_TOKENS =
 /** Единственный разрешённый источник импорта в файле item'а. */
 const ALLOWED_IMPORT = "react"
 
+/**
+ * Импорт другого item'а реестра: `@/registry/<kind>/<cat>/<name>/<name>`.
+ * При доставке переписывается в `@/components/vibeui/<name>`
+ * (registry/source.server.ts), поэтому имя item'а обязано стоять и в
+ * registryDependencies — иначе CLI не поставит файл, на который ссылается
+ * импорт (docs/PLAN-BLOCKS-FROM-COMPONENTS.md).
+ */
+const REGISTRY_IMPORT =
+  /^@\/registry\/(components|animations|blocks)\/[\w-]+\/([\w-]+)\/\2$/
+
+/** Все items каталога: имя → kind и pro. Заполняется до проверок. */
+const CATALOG = new Map()
+
 /** Локали помимо русского: русский лежит в обычных полях. */
 const LOCALES = ["en"]
 
@@ -288,12 +301,54 @@ function validateSource(where, directory, item) {
     errors.push(`${where}: нет экспорта ${symbol}`)
   }
 
+  // Правила ниже — про компоненты. Блоки живут по своим: это целые секции,
+  // их не встраивают в чужую разметку и не цепляют за data-slot.
+  const isComponent = directory.split(path.sep).includes("components")
+  const isBlock = directory.split(path.sep).includes("blocks")
+  const kind = isBlock ? "block" : directory.split(path.sep).includes("components") ? "component" : "animation"
+
   // Чужие пакеты допустимы только объявленные в dependencies: их ставит
   // `Copy for AI`, всё остальное item тащить не может.
   const declared = new Set(item.dependencies ?? [])
+  const registryDeclared = new Set(item.registryDependencies ?? [])
+  const registryImported = new Set()
 
   for (const match of source.matchAll(/^import[^"']+["']([^"']+)["']/gm)) {
     const specifier = match[1]
+    const registryImport = specifier.match(REGISTRY_IMPORT)
+
+    // Составной item: зависимость — компонент или анимация из реестра.
+    // Блок → компонент, компонент → компонент (карточка с аватаром);
+    // от блока не зависит никто, анимация ни от чего не зависит.
+    if (registryImport) {
+      const [, tree, name] = registryImport
+      const dependency = CATALOG.get(name)
+
+      registryImported.add(name)
+
+      if (!isBlock && kind !== "component") {
+        errors.push(
+          `${where}: импорт "${specifier}" — зависеть от других items могут только блоки и компоненты`,
+        )
+      } else if (tree === "blocks") {
+        errors.push(
+          `${where}: импорт "${specifier}" — от блока зависеть нельзя`,
+        )
+      } else if (!dependency) {
+        errors.push(`${where}: импорт "${specifier}" — item "${name}" не найден`)
+      } else if (!registryDeclared.has(name)) {
+        errors.push(
+          `${where}: импорт "${specifier}" — "${name}" не объявлен в registryDependencies, CLI его не поставит`,
+        )
+      } else if (dependency.pro && !item.meta?.pro) {
+        errors.push(
+          `${where}: free-блок зависит от pro-компонента "${name}" — public/r раздал бы его без подписки`,
+        )
+      }
+
+      continue
+    }
+
     const pkg = specifier.startsWith("@")
       ? specifier.split("/").slice(0, 2).join("/")
       : specifier.split("/")[0]
@@ -305,9 +360,68 @@ function validateSource(where, directory, item) {
     }
   }
 
-  // Правила ниже — про компоненты. Блоки живут по своим: это целые секции,
-  // их не встраивают в чужую разметку и не цепляют за data-slot.
-  const isComponent = directory.split(path.sep).includes("components")
+  // Правило блока по тегу (`[data-part="actions"] a`) достаёт до корня
+  // компонента внутри — кнопка-ссылка получает чужую высоту и радиус.
+  // Составной блок адресует свои элементы только через data-part.
+  if (registryDeclared.size > 0) {
+    const styles = source.match(/const STYLES = `([\s\S]*?)`/)?.[1] ?? ""
+
+    for (const rule of styles.matchAll(/([^{}]+)\{[^{}]*\}/g)) {
+      // Комментарий перед правилом — не часть селектора.
+      const selector = rule[1].replace(/\/\*[\s\S]*?\*\//g, "").trim()
+
+      if (selector.startsWith("@") || !selector.includes("data-vibeui-block")) continue
+
+      const tag = selector.match(
+        /(?:^|[\s>+~,])(a|button|input|select|textarea|details|summary|svg|label|kbd)(?=$|[\s:>+~,.[])/,
+      )
+
+      if (tag) {
+        // Тег сразу после корня блока накрывает всё, включая части, —
+        // ошибка. Тег внутри своей data-part может быть и безобидным
+        // (`[data-part="clock"] svg`): это предупреждение для глаз.
+        const rootScoped = /^\[data-vibeui-block="[^"]+"\]\s+(?:a|button|input|select|textarea|details|summary|svg|label|kbd)/.test(selector)
+        const message = `${where}: селектор «${selector.slice(0, 70)}» бьёт по тегу <${tag[1]}> — если внутри стоит компонент, он получит чужой стиль; адресуй через data-part`
+
+        if (rootScoped) {
+          errors.push(message)
+          break
+        }
+
+        warnings.push(message)
+      }
+    }
+  }
+
+  for (const name of registryDeclared) {
+    if (!registryImported.has(name)) {
+      errors.push(
+        `${where}: registryDependencies содержит "${name}", но исходник его не импортирует`,
+      )
+      continue
+    }
+
+    // Стили блока адресуют части потомковым селектором
+    // `[data-vibeui-block="faq-005"] [data-part="title"]` — он достаёт и до
+    // одноимённой части внутри компонента. Совпадение имён ловится здесь,
+    // а не глазами: заголовок аккордеона в 2.5rem заметили только на витрине.
+    const dependencySource = CATALOG.get(name)?.source ?? ""
+    const partsOfDependency = new Set(
+      [...dependencySource.matchAll(/data-part="([\w-]+)"/g)].map((match) => match[1]),
+    )
+    // Явный дотяг через корень компонента — `[data-vibeui-block="card-068"] [data-part="rows"]` —
+    // осознанный: состояние живёт на предке в блоке (свёрнутый сайдбар), а часть — в компоненте.
+    const reach = new RegExp(`\\[data-vibeui-block="${name}"\\][^,{]*`, "g")
+    const shared = [...source.replace(reach, "").matchAll(/data-part="([\w-]+)"/g)]
+      .map((match) => match[1])
+      .filter((part, index, all) => partsOfDependency.has(part) && all.indexOf(part) === index)
+
+    if (shared.length > 0) {
+      errors.push(
+        `${where}: data-part ${shared.map((part) => `"${part}"`).join(", ")} есть и в блоке, и в "${name}" — стили блока дотянутся до части компонента, переименуй часть блока`,
+      )
+    }
+  }
 
   // Точка стилизации в проекте пользователя. Без неё чужой проект не может
   // дотянуться до компонента иначе как по нашему внутреннему атрибуту.
@@ -377,8 +491,14 @@ function validateSource(where, directory, item) {
   // самому. Правило внутри @container, целящее в корень блока, молча не
   // работает: раскладка на узкой ширине остаётся прежней, и это замечают
   // только глазами. Проверяем, потому что ловушка уже срабатывала.
-  for (const query of source.matchAll(/@container[^{]*\{([\s\S]*?)\n\}/g)) {
-    const selfRule = query[1].match(/\[data-vibeui-block="[^"]+"\]\s*\{[^}]*\}/)
+  // Скобки считаются, а не ищется «\n}»: однострочный @container {…{…}}
+  // иначе тянется до следующего закрытия и ловит чужие правила.
+  for (const query of source.matchAll(/@container[^{]*\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/g)) {
+    // Только собственный корень как единственный селектор: `[side] [data-vibeui-block="card-068"]{…}`
+    // — правило блока для корня вложенного компонента, это потомок.
+    const selfRule = query[1].match(
+      new RegExp(`(?:^|[,{\\n])\\s*\\[data-vibeui-block="${item.name}"\\]\\s*\\{[^}]*\\}`),
+    )
 
     if (selfRule) {
       errors.push(
@@ -626,17 +746,37 @@ function validateItem(file, item, { requireApi }) {
   }
 }
 
-for (const [directory, options] of [
+const TREES = [
   ["registry/components", { requireApi: true }],
   ["registry/blocks", { requireApi: false }],
   ["registry/animations", { requireApi: true }],
-]) {
-  for (const file of registriesIn(directory)) {
-    const registry = JSON.parse(readFileSync(file, "utf8"))
+]
 
-    for (const item of registry.items ?? []) {
-      validateItem(file, item, options)
-    }
+const registries = TREES.flatMap(([directory, options]) =>
+  registriesIn(directory).map((file) => ({
+    file,
+    options,
+    items: JSON.parse(readFileSync(file, "utf8")).items ?? [],
+  })),
+)
+
+// Зависимости блока проверяются по всему каталогу, поэтому карта items
+// собирается до первой проверки.
+for (const { file, items } of registries) {
+  for (const item of items) {
+    const relative = item.files?.find((entry) => entry.path?.endsWith(".tsx"))?.path
+    const source = relative ? path.join(path.dirname(file), relative) : null
+
+    CATALOG.set(item.name, {
+      pro: Boolean(item.meta?.pro),
+      source: source && existsSync(source) ? readFileSync(source, "utf8") : "",
+    })
+  }
+}
+
+for (const { file, options, items } of registries) {
+  for (const item of items) {
+    validateItem(file, item, options)
   }
 }
 

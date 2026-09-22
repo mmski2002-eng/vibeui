@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Blog015Link = {
   title: string
@@ -26,7 +29,9 @@ export type Blog015Props = {
 // источником, снизу плашка подписки. Номера рисует CSS-счётчик — порядок
 // в разметке и на экране один и тот же, а комментарий обязателен: ссылка
 // без объяснения, зачем её открывать, в дайджесте не живёт.
-const STYLES = `
+const STYLES = `[data-vibeui-block="blog-015"] [data-part="heading"]{margin-bottom:1.75rem}
+[data-vibeui-block="blog-015"] [data-part="subscribe-link"]{align-self:flex-start}
+
 :where([data-vibeui-block="blog-015"]){
 --vibeui-blog-015-bg:transparent;
 --vibeui-blog-015-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
@@ -50,14 +55,6 @@ font-family:var(--vibeui-blog-015-font);
 }
 [data-vibeui-block="blog-015"] [data-part="shell"]{
 max-width:46rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="blog-015"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-blog-015-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="blog-015"] [data-part="title"]{
-margin:0 0 1.75rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="blog-015"] [data-part="list"]{
 margin:0 0 2rem;padding:0;list-style:none;counter-reset:vibeui-blog-015;
@@ -103,24 +100,13 @@ margin:0;font-size:1.0625rem;font-weight:700;letter-spacing:-0.01em;
 [data-vibeui-block="blog-015"] [data-part="subscribe-note"]{
 margin:0;color:var(--vibeui-blog-015-muted);font-size:0.875rem;line-height:1.5;
 }
-[data-vibeui-block="blog-015"] [data-part="subscribe-link"]{
-align-self:flex-start;
-padding:0.625rem 1.25rem;border-radius:999px;
-background:var(--vibeui-blog-015-fill);color:var(--vibeui-blog-015-fill-ink);
-text-decoration:none;font-size:0.875rem;font-weight:700;
-transition:filter var(--vibeui-blog-015-dur-2) ease;
-}
-[data-vibeui-block="blog-015"] [data-part="subscribe-link"]:hover{filter:brightness(1.06)}
-[data-vibeui-block="blog-015"] [data-part="subscribe-link"]:focus-visible{
-outline:2px solid var(--vibeui-blog-015-accent);outline-offset:2px;
-}
 @container (min-width: 40rem){
+[data-vibeui-block="blog-015"] [data-part="subscribe-link"]{align-self:center;flex:none}
 [data-vibeui-block="blog-015"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="blog-015"] [data-part="subscribe"]{
 flex-direction:row;align-items:center;gap:1.25rem;padding:1.5rem 1.75rem;
 }
 [data-vibeui-block="blog-015"] [data-part="subscribe-text"]{flex:1 1 auto;display:grid;gap:0.25rem}
-[data-vibeui-block="blog-015"] [data-part="subscribe-link"]{align-self:center;flex:none;white-space:nowrap}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="blog-015"] *{animation:none!important;transition:none!important}}
 `
@@ -213,8 +199,12 @@ export function Blog015({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ol data-part="list">
             {links.map((link) => (
               <li key={link.title} data-part="entry">
@@ -231,9 +221,15 @@ export function Blog015({
               <h3 data-part="subscribe-title">{subscribeTitle}</h3>
               <p data-part="subscribe-note">{subscribeNote}</p>
             </div>
-            <a data-part="subscribe-link" href={subscribeHref}>
-              {subscribeLabel}
-            </a>
+            <Button016
+              data-part="subscribe-link"
+              label={subscribeLabel}
+              href={subscribeHref}
+              external={false}
+              size="md"
+              tone="neutral"
+              accent={accent}
+            />
           </div>
         </div>
       </section>

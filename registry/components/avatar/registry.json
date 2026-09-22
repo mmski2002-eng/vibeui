@@ -4368,186 +4368,6 @@
       }
     },
     {
-      "name": "avatar-033",
-      "type": "registry:component",
-      "title": "Говорящий участник",
-      "description": "Строка участника звонка: у говорящего от портрета расходится кольцо, микрофон нарисован отдельным значком, а состояние названо словом.",
-      "categories": [
-        "avatar"
-      ],
-      "dependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "avatar-033/avatar-033.tsx",
-          "type": "registry:component",
-          "target": "@components/vibeui/avatar-033.tsx"
-        }
-      ],
-      "docs": "Компонент самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-avatar-033-*. Серверный: хуков нет. Кольцо-пульс расходится от портрета: движение ловится боковым зрением, а список из десяти человек глазами не сканируют. Но движение не может быть единственным признаком — в prefers-reduced-motion пульс заменяется ровным кольцом того же цвета, микрофон нарисован псевдоэлементами (капсула на ножке, у выключенного перечёркнутая), а состояние продублировано словом. Три состояния переключаются атрибутом data-state. Тема берётся из color-scheme окружения через light-dark(): тёмная ветка не инверсия светлой, у заливки кружка, колец и статусов свои пары светлот.",
-      "meta": {
-        "tags": [
-          "avatar",
-          "call",
-          "speaking",
-          "microphone"
-        ],
-        "preview": {
-          "width": "full",
-          "props": {
-            "src": "/demo/avatars/irina-256.webp"
-          }
-        },
-        "ai": {
-          "export": "Avatar033",
-          "usage": "<Avatar033 name=\"Ким Сон\" state=\"speaking\" />",
-          "summary": "Строка участника звонка: пульсирующее кольцо у говорящего, значок микрофона и состояние словом. Ноль зависимостей, один файл, клиентского JS нет. Тема приходит из color-scheme окружения через light-dark().",
-          "preserve": [
-            "локальную палитру --vibeui-avatar-033-* и не подменять её токенами вашей темы",
-            "замену пульса ровным кольцом в prefers-reduced-motion: без движения состояние обязано остаться видимым",
-            "значок микрофона рядом с пульсом — «говорит» и «микрофон включён» это разные вещи",
-            "перечёркнутый микрофон у выключенного: красный кружок без черты читается как запись",
-            "состояние словом: пульс и цвет значка вслух не читаются",
-            "собственную светлую подложку строки: без неё тёмный текст пропадает на тёмном фоне",
-            "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
-            "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку",
-            "вывод приглушённого текста из основного цвета: фиксированный серый тонет на цветной подложке"
-          ],
-          "adapt": [
-            "имя через name",
-            "состояние через state — speaking, listening или muted",
-            "цвета живого и выключенного микрофона в переменных",
-            "скорость пульса в keyframes",
-            "background — подложка компонента; пусто означает «без подложки», по цвету страницы",
-            "фотографию через src — без неё остаются инициалы",
-            "цвет основного текста через textColor",
-            "цвет приглушённого текста через mutedColor"
-          ],
-          "notes": [
-            "Тема берётся из color-scheme, а классовую тёмную тему компонент подхватывает сам: правило :where(.dark,[data-theme=\"dark\"]) выставляет ему color-scheme: dark. Поэтому он темнеет и в проекте на next-themes с классом, и там, где объявлен color-scheme: light dark.",
-            "Состояние приходит снаружи: связывать его с реальным потоком звука должен вызывающий код.",
-            "Пульс выходит за границы портрета: в плотном списке заложите на него запас по высоте строки.",
-            "Не превращайте пульс в единственный признак: в списке из двадцати человек мигание становится шумом.",
-            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом.",
-            "Приглушённый текст выводится из основного через color-mix, поэтому на своей подложке он остаётся читаемым: задавать его отдельно нужно только ради оттенка."
-          ]
-        },
-        "controls": [
-          {
-            "prop": "state",
-            "label": "Состояние",
-            "type": "select",
-            "default": "speaking",
-            "options": [
-              "speaking",
-              "listening",
-              "muted"
-            ]
-          },
-          {
-            "prop": "name",
-            "label": "Имя",
-            "type": "text",
-            "default": "Ирина Ким",
-            "maxLength": 40
-          },
-          {
-            "prop": "background",
-            "label": "Фон",
-            "type": "color",
-            "default": ""
-          },
-          {
-            "prop": "textColor",
-            "label": "Цвет имени",
-            "type": "color",
-            "default": ""
-          },
-          {
-            "prop": "mutedColor",
-            "label": "Цвет остального текста",
-            "type": "color",
-            "default": ""
-          }
-        ],
-        "i18n": {
-          "en": {
-            "description": "A call participant row: a ring spreads out from the speaker's portrait, the microphone is a separate mark, and the state is spelled out.",
-            "ai": {
-              "summary": "A call participant row: a pulsing ring for the speaker, a microphone badge and the state in words. Zero dependencies, one file, no client JS. The theme comes from the surrounding color-scheme through light-dark().",
-              "preserve": [
-                "the local --vibeui-avatar-033-* palette — do not swap it for your theme tokens",
-                "replacing the pulse with a steady ring under prefers-reduced-motion: the state must survive without motion",
-                "the microphone badge alongside the pulse — \"speaking\" and \"mic is on\" are different facts",
-                "the struck-through microphone when muted: a red circle without the stroke reads as recording",
-                "the state in words: a pulse and a badge colour are not read aloud",
-                "the row's own light surface: without it the dark text disappears on a dark background",
-                "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
-                "the transparent background by default — the component sits on the page background instead of laying a panel under itself",
-                "deriving the muted text from the main colour: a fixed grey drowns on a coloured background"
-              ],
-              "adapt": [
-                "the name through name",
-                "the state through state — speaking, listening or muted",
-                "the live and muted microphone colours in the variables",
-                "the pulse speed in the keyframes",
-                "background — the component background; empty means no background, taking the page colour",
-                "the photo via src — without it the initials stay",
-                "the main text colour via textColor",
-                "the muted text colour via mutedColor"
-              ],
-              "notes": [
-                "The theme comes from color-scheme, and a class-based dark theme is picked up by the component itself: a :where(.dark,[data-theme=\"dark\"]) rule sets color-scheme: dark on it. So it darkens both in a next-themes project that toggles a class and where color-scheme: light dark is declared.",
-                "The state comes from outside: wiring it to a real audio stream is the caller's job.",
-                "The pulse extends past the portrait: budget extra row height in a dense list.",
-                "Do not make the pulse the only cue: across twenty rows the blinking becomes noise.",
-                "Do not lift the CSS variables into globals.css: the component has to stay a single file.",
-                "The muted text is derived from the main colour with color-mix, so it stays readable on your own background: set it separately only for the sake of the hue."
-              ],
-              "usage": "<Avatar033 name=\"Kim Son\" state=\"speaking\" />"
-            },
-            "controls": {
-              "state": {
-                "label": "State"
-              },
-              "name": {
-                "label": "Name",
-                "default": "Irina Kim"
-              },
-              "background": {
-                "label": "Background"
-              },
-              "textColor": {
-                "label": "Name colour"
-              },
-              "mutedColor": {
-                "label": "Secondary text colour"
-              }
-            },
-            "title": "Speaking Row",
-            "preview": {
-              "props": {
-                "name": "Irina Kim",
-                "stateText": {
-                  "speaking": "speaking",
-                  "listening": "mic on",
-                  "muted": "mic off"
-                }
-              }
-            },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-avatar-033-* variables. Server-side: there are no hooks. The pulsing ring spreads out from the portrait: movement is caught by peripheral vision, and a list of ten people is not scanned by eye. But movement cannot be the only sign — under prefers-reduced-motion the pulse is replaced by a steady ring of the same colour, the microphone is drawn with pseudo-elements (a capsule on a stem, struck through when muted), and the state is duplicated by a word. The three states are switched by the data-state attribute. The theme comes from the surrounding color-scheme through light-dark(): the dark branch is not an inversion of the light one — the circle fill, the rings and the statuses each have their own pair of lightnesses."
-          }
-        },
-        "cardControls": [
-          "state",
-          "name",
-          "background",
-          "textColor",
-          "mutedColor"
-        ]
-      }
-    },
-    {
       "name": "avatar-034",
       "type": "registry:component",
       "title": "Время последнего визита",
@@ -9151,6 +8971,96 @@
         ],
         "preview": {
           "width": "full"
+        }
+      }
+    },
+    {
+      "name": "avatar-033",
+      "type": "registry:component",
+      "title": "Кружок с инициалами",
+      "description": "Круглый аватар с инициалами для стопки лиц; с data-hand машет рукой.",
+      "categories": [
+        "avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "avatar-033/avatar-033.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/avatar-033.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока bento-008 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-avatar-033-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "initials",
+          "face",
+          "wave",
+          "avatar",
+          "bento"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Avatar033",
+          "usage": "<Avatar033  />",
+          "summary": "Круглый аватар с инициалами для стопки лиц; с data-hand машет рукой.",
+          "preserve": [
+            "локальную палитру --vibeui-avatar-033-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            " — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Initials circle",
+            "description": "Round initials avatar for a face stack; waves a hand with data-hand.",
+            "docs": "Extracted from the bento-008 block as is: one file, no dependencies, its own palette in the --vibeui-avatar-033-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Round initials avatar for a face stack; waves a hand with data-hand.",
+              "usage": "<Avatar033  />",
+              "preserve": [
+                "the local --vibeui-avatar-033-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                " — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
         }
       }
     }

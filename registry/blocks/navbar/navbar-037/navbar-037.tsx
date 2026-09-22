@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar037Link = {
   label: string
   href: string
@@ -78,10 +80,6 @@ container-type:inline-size;
 [data-vibeui-block="navbar-037"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:1rem}
 [data-vibeui-block="navbar-037"] [data-part="phone"]{display:none;font-family:var(--vibeui-navbar-037-mono);font-size:.85rem;font-weight:500;color:var(--vibeui-navbar-037-fg);text-decoration:none;letter-spacing:-.01em;transition:color .2s}
 [data-vibeui-block="navbar-037"] [data-part="phone"]:hover{color:var(--vibeui-navbar-037-muted)}
-[data-vibeui-block="navbar-037"] [data-part="action"]{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.1rem;border-radius:.35rem;background:var(--vibeui-navbar-037-accent);color:var(--vibeui-navbar-037-on-accent);text-decoration:none;font-weight:600;font-size:.88rem;white-space:nowrap;box-shadow:0 0 0 1px color-mix(in oklab,var(--vibeui-navbar-037-fg) 20%,transparent) inset;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="navbar-037"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 0 0 1px color-mix(in oklab,var(--vibeui-navbar-037-fg) 20%,transparent) inset,0 10px 24px -10px var(--vibeui-navbar-037-accent)}
-[data-vibeui-block="navbar-037"] [data-part="action"] svg{width:.9rem;height:.9rem}
-[data-vibeui-block="navbar-037"] a:focus-visible{outline:2px solid var(--vibeui-navbar-037-accent);outline-offset:2px}
 [data-vibeui-block="navbar-037"] [data-part="tape"]{position:relative;height:6px;border-top:1px solid var(--vibeui-navbar-037-line);background:repeating-linear-gradient(90deg,color-mix(in oklab,var(--vibeui-navbar-037-fg) 35%,transparent) 0 1px,transparent 1px 40px),repeating-linear-gradient(90deg,var(--vibeui-navbar-037-line) 0 1px,transparent 1px 8px)}
 [data-vibeui-block="navbar-037"] [data-part="tape"]::after{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--vibeui-navbar-037-accent);transform:scaleX(var(--vibeui-navbar-037-progress));transform-origin:left;opacity:.9}
 @keyframes vibeui-navbar-037-bubble{0%{transform:translateX(-.9rem)}55%{transform:translateX(.25rem)}100%{transform:translateX(0)}}
@@ -188,12 +186,15 @@ export function Navbar037({
               </a>
             ) : null}
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                  <path d="M2 4h12M2 12h12M2 4v3M14 4v3M2 9v3M14 9v3M5 4v2M8 4v3M11 4v2M5 12v-2M8 12v-3M11 12v-2" />
-                </svg>
-                {actionLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="sm"
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
           </div>
           <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-037-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>

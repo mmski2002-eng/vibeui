@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card080 } from "@/registry/components/card/card-080/card-080"
 
 export type Bento014Number = {
   value: number
@@ -100,9 +101,6 @@ container-type:inline-size;
 [data-vibeui-block="bento-014"] [data-part="numbers"] b span{color:var(--vibeui-bento-014-accent)}
 [data-vibeui-block="bento-014"] [data-part="numbers"] small{display:block;margin-top:.4rem;font-size:.8rem;font-style:italic;color:var(--vibeui-bento-014-muted)}
 [data-vibeui-block="bento-014"] [data-part="cities"]{margin:0;padding:0;list-style:none;display:grid}
-[data-vibeui-block="bento-014"] [data-part="cities"] li{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.55rem 0;border-top:1px solid var(--vibeui-bento-014-line);font-family:var(--vibeui-bento-014-display);font-size:1.35rem;transition:padding-left .4s cubic-bezier(.2,.8,.2,1),color .3s}
-[data-vibeui-block="bento-014"] [data-part="cities"] li:hover{padding-left:.6rem;color:var(--vibeui-bento-014-accent)}
-[data-vibeui-block="bento-014"] [data-part="cities"] small{font-family:var(--vibeui-bento-014-font);font-size:.8rem;font-style:italic;color:var(--vibeui-bento-014-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 [data-vibeui-block="bento-014"] [data-part="fact"]{margin:0;font-family:var(--vibeui-bento-014-display);font-style:italic;font-size:clamp(1.5rem,2.6cqi,2rem);line-height:1.3}
 [data-vibeui-block="bento-014"] [data-part="fact"]::before{content:"«";color:var(--vibeui-bento-014-accent)}
 [data-vibeui-block="bento-014"] [data-part="fact"]::after{content:"»";color:var(--vibeui-bento-014-accent)}
@@ -282,10 +280,7 @@ export function Bento014({
               <p data-part="label">{citiesLabel}</p>
               <ul data-part="cities">
                 {cities.map((city, i) => (
-                  <li key={city.name + i}>
-                    <span>{city.name}</span>
-                    <small>{city.years}</small>
-                  </li>
+                  <Card080 key={city.name + i} data-part="city" name={city.name} years={city.years} accent={accent} />
                 ))}
               </ul>
             </div>

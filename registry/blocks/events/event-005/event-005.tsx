@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Event005Item = {
   title: string
   image?: string
@@ -74,8 +77,6 @@ container-type:inline-size;
 [data-vibeui-block="event-005"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.5rem 1rem;padding-top:1.25rem;border-top:1px solid var(--vibeui-event-005-line)}
 [data-vibeui-block="event-005"] [data-part="eyebrow"]{margin:0;font-size:1.05rem}
 [data-vibeui-block="event-005"] [data-part="title"]{margin:.5rem 0 1.5rem;font-family:var(--vibeui-event-005-display);font-size:clamp(1.6rem,3.4cqi,2.4rem);font-weight:600;letter-spacing:-.03em;line-height:1.1}
-[data-vibeui-block="event-005"] [data-part="more"]{font-size:1rem;color:var(--vibeui-event-005-muted);transition:color .2s}
-[data-vibeui-block="event-005"] [data-part="more"]:hover{color:var(--vibeui-event-005-fg)}
 [data-vibeui-block="event-005"] [data-part="list"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 1.25rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="event-005"] [data-part="card"]{display:grid;gap:.75rem;animation:vibeui-event-005-in .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-event-005-n) * 60ms)}
 @keyframes vibeui-event-005-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -96,8 +97,6 @@ container-type:inline-size;
 [data-vibeui-block="event-005"] [data-part="pick-card"]{padding:1rem 1.1rem;border-radius:1rem;background:rgb(255 255 255 / .16);backdrop-filter:blur(14px);border:1px solid rgb(255 255 255 / .18)}
 [data-vibeui-block="event-005"] [data-part="pick-title"]{margin:0;font-family:var(--vibeui-event-005-display);font-size:1.35rem;font-weight:600;line-height:1.2;letter-spacing:-.02em}
 [data-vibeui-block="event-005"] [data-part="pick-date"]{margin:.4rem 0 0;font-size:.9rem;opacity:.85}
-[data-vibeui-block="event-005"] [data-part="pick-action"]{display:inline-flex;align-items:center;justify-content:center;height:3.2rem;border-radius:999px;background:var(--vibeui-event-005-accent);color:var(--vibeui-event-005-on-accent);font-size:1.05rem;font-weight:600;transition:transform .2s,filter .2s}
-[data-vibeui-block="event-005"] [data-part="pick-action"]:hover{transform:translateY(-2px);filter:brightness(.97)}
 @container (min-width: 48rem){
 [data-vibeui-block="event-005"] [data-part="list"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
@@ -156,9 +155,12 @@ export function Event005({
               <div data-part="head">
                 {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
                 {moreLabel ? (
-                  <a data-part="more" href={moreHref}>
-                    {moreLabel}
-                  </a>
+                  <Button077
+                    data-part="more"
+                    label={moreLabel}
+                    href={moreHref}
+                    accent={accent}
+                  />
                 ) : null}
               </div>
               <h2 data-part="title">{title}</h2>
@@ -194,9 +196,15 @@ export function Event005({
                       {pick.date ? <p data-part="pick-date">{pick.date}</p> : null}
                     </div>
                     {pick.actionLabel ? (
-                      <a data-part="pick-action" href={pick.href ?? "#"}>
-                        {pick.actionLabel}
-                      </a>
+                      <Button016
+                        data-part="pick-action"
+                        label={pick.actionLabel}
+                        href={pick.href ?? "#"}
+                        external={false}
+                        size="md"
+                        tone="accent"
+                        accent={accent}
+                      />
                     ) : null}
                   </div>
                 </div>

@@ -26,15 +26,16 @@ export const metadata = {
 
 const page: CSSProperties = {
   colorScheme: "light",
-  background: "#f3ede3",
-  color: "#173b2e",
+  background: "#f4f6f4",
+  color: "#13322b",
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
 // Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
-const realty = { tone: "light", background: "#f3ede3", ink: "#173b2e", accent: "#b8925a" } as const
-// Инверсные секции: чернильно-зелёная плита со светлым текстом.
-const realtyDark = { ...realty, background: "#173b2e", ink: "#eef0ea" } as const
+// Холодная природная палитра: офф-вайт фон, глубокий зелёный, шалфейный акцент.
+const realty = { tone: "light", background: "#f4f6f4", ink: "#13322b", accent: "#8f9a86" } as const
+// Инверсные секции: глубоко-зелёная плита со светлым текстом.
+const realtyDark = { ...realty, background: "#13322b", ink: "#eef1ec" } as const
 
 const PHOTOS = "/demo/realty"
 
@@ -102,8 +103,10 @@ export default function Page() {
       <div id="hero">
         <Hero020
           {...realty}
-          image={`${PHOTOS}/hero.webp`}
-          imageAlt="Гостиная квартиры в историческом доме с видом на Неву"
+          video={`${PHOTOS}/hero.mp4`}
+          videoWebm={`${PHOTOS}/hero.webm`}
+          image={`${PHOTOS}/hero-poster.webp`}
+          imageAlt="Современный жилой дом премиум-класса среди зелени"
           eyebrow="Петербург · с 2007 года"
           title="Квартира, в которую хочется вернуться"
           lede="Подбираем жильё в Петербурге под ваш бюджет и ритм жизни: от студии у метро до дома с садом. Проверяем каждый объект юристом."

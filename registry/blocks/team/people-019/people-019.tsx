@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties, type PointerEvent } from "react"
+import { Card118 } from "@/registry/components/card/card-118/card-118"
 
 export type People019Person = {
   name: string
@@ -69,29 +70,10 @@ container-type:inline-size;
 [data-vibeui-block="people-019"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-019-display);font-weight:800;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1.05;letter-spacing:-.03em;text-wrap:balance}
 [data-vibeui-block="people-019"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-people-019-muted)}
 [data-vibeui-block="people-019"] [data-part="grid"]{display:grid;gap:1.5rem;margin:0;padding:0;list-style:none;perspective:1200px}
-[data-vibeui-block="people-019"] [data-part="card"]{position:relative;display:grid;gap:.6rem;padding:.8rem .8rem 1.1rem;border-radius:.6rem;background:var(--vibeui-people-019-paper);border:1px solid var(--vibeui-people-019-line);box-shadow:0 20px 40px -30px color-mix(in oklab,var(--vibeui-people-019-fg) 60%,transparent);transform:rotate(calc(var(--vibeui-people-019-tilt) * 1deg)) rotateX(calc(var(--vibeui-people-019-rx,0) * 1deg)) rotateY(calc(var(--vibeui-people-019-ry,0) * 1deg));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;will-change:transform}
-[data-vibeui-block="people-019"] [data-part="card"][data-hover="true"]{transition:transform .12s ease-out;box-shadow:0 40px 60px -30px color-mix(in oklab,var(--vibeui-people-019-fg) 60%,transparent)}
-[data-vibeui-block="people-019"] [data-part="card"]::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(18rem circle at calc(var(--vibeui-people-019-x,50) * 1%) calc(var(--vibeui-people-019-y,50) * 1%),rgb(255 255 255 / .35),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;mix-blend-mode:soft-light}
-[data-vibeui-block="people-019"] [data-part="card"][data-hover="true"]::after{opacity:1}
-[data-vibeui-block="people-019"] [data-part="photo"]{position:relative;aspect-ratio:4/5;border-radius:.3rem;overflow:hidden;background:color-mix(in oklab,var(--vibeui-people-019-accent) 18%,var(--vibeui-people-019-bg))}
-[data-vibeui-block="people-019"] [data-part="photo"] img{width:100%;height:100%;object-fit:cover;display:block}
-[data-vibeui-block="people-019"] [data-part="photo"] span{position:absolute;left:.6rem;top:.6rem;padding:.25rem .6rem;border-radius:.4rem;background:var(--vibeui-people-019-accent);color:var(--vibeui-people-019-on-accent);font-family:var(--vibeui-people-019-display);font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
-[data-vibeui-block="people-019"] [data-part="card"] h3{margin:.3rem 0 0;font-family:var(--vibeui-people-019-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em;line-height:1.2}
-[data-vibeui-block="people-019"] [data-part="meta"]{margin:0;font-size:.85rem;color:var(--vibeui-people-019-muted)}
-[data-vibeui-block="people-019"] [data-part="note"]{margin:.2rem 0 0;font-family:var(--vibeui-people-019-hand);font-size:1.2rem;line-height:1.25;color:var(--vibeui-people-019-accent);transform:rotate(-1.5deg);transform-origin:left}
-[data-vibeui-block="people-019"] [data-part="listen"]{display:flex;align-items:center;gap:.7rem;margin-top:.3rem;padding:.55rem .8rem;border-radius:999px;border:1.5px solid var(--vibeui-people-019-line);background:var(--vibeui-people-019-bg);color:var(--vibeui-people-019-fg);font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;text-align:left;transition:border-color .2s,background .2s}
-[data-vibeui-block="people-019"] [data-part="listen"]:hover{border-color:var(--vibeui-people-019-accent)}
-[data-vibeui-block="people-019"] [data-part="listen"][aria-pressed="true"]{border-color:var(--vibeui-people-019-accent);background:color-mix(in oklab,var(--vibeui-people-019-accent) 10%,var(--vibeui-people-019-bg))}
-[data-vibeui-block="people-019"] [data-part="listen"]:focus-visible{outline:2px solid var(--vibeui-people-019-accent);outline-offset:2px}
-[data-vibeui-block="people-019"] [data-part="play"]{display:grid;place-items:center;flex:none;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--vibeui-people-019-accent);color:var(--vibeui-people-019-on-accent)}
-[data-vibeui-block="people-019"] [data-part="play"] svg{width:.7rem;height:.7rem}
-[data-vibeui-block="people-019"] [data-part="wave"]{display:flex;align-items:center;gap:2px;height:1.2rem;margin-left:auto}
-[data-vibeui-block="people-019"] [data-part="wave"] i{width:3px;height:100%;border-radius:2px;background:var(--vibeui-people-019-accent);transform:scaleY(.18);transform-origin:center;transition:transform .3s}
-[data-vibeui-block="people-019"] [data-part="listen"][aria-pressed="true"] [data-part="wave"] i{animation:vibeui-people-019-wave 1s ease-in-out infinite;animation-delay:calc(var(--vibeui-people-019-i) * -.13s)}
 @keyframes vibeui-people-019-wave{0%,100%{transform:scaleY(.2)}30%{transform:scaleY(1)}60%{transform:scaleY(.45)}}
 @container (min-width: 36rem){[data-vibeui-block="people-019"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (min-width: 64rem){[data-vibeui-block="people-019"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="people-019"] *{animation:none!important;transition:none!important}[data-vibeui-block="people-019"] [data-part="listen"][aria-pressed="true"] [data-part="wave"] i{transform:scaleY(.7)}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="people-019"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_PEOPLE: People019Person[] = [
   { name: "Emma Whitfield", role: "английский · носитель", from: "Манчестер", years: 9, note: "любимое слово — serendipity", accent: "манчестерский", image: "", imageAlt: "Эмма, преподаватель английского" },
@@ -165,45 +147,7 @@ export function People019({
           </div>
           <ul data-part="grid">
             {people.map((person, index) => (
-              <li
-                key={person.name}
-                data-part="card"
-                data-hover={hovered === index ? "true" : undefined}
-                style={{ ["--vibeui-people-019-tilt" as string]: index % 2 === 0 ? -1.5 : 1.5 }}
-                onPointerMove={tilt}
-                onPointerEnter={() => setHovered(index)}
-                onPointerLeave={reset}
-              >
-                <div data-part="photo">
-                  {person.image ? <img src={person.image} alt={person.imageAlt ?? person.name} loading="lazy" /> : null}
-                  <span>{person.from}</span>
-                </div>
-                <h3>{person.name}</h3>
-                <p data-part="meta">
-                  {person.role} · {person.years} {yearsUnit}
-                </p>
-                {person.note ? <p data-part="note">{person.note}</p> : null}
-                <button data-part="listen" type="button" aria-pressed={playing === index} onClick={() => setPlaying(playing === index ? null : index)} aria-label={`${listenLabel}: ${person.accent ?? person.from}`}>
-                  <span data-part="play" aria-hidden="true">
-                    {playing === index ? (
-                      <svg viewBox="0 0 10 10" fill="currentColor">
-                        <rect x="1" y="1" width="3" height="8" rx="1" />
-                        <rect x="6" y="1" width="3" height="8" rx="1" />
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 10 10" fill="currentColor">
-                        <path d="M2 1.5v7l6-3.5z" />
-                      </svg>
-                    )}
-                  </span>
-                  <span>{person.accent ?? listenLabel}</span>
-                  <span data-part="wave" aria-hidden="true">
-                    {[0, 1, 2, 3, 4, 5, 6].map((bar) => (
-                      <i key={bar} style={{ ["--vibeui-people-019-i" as string]: bar }} />
-                    ))}
-                  </span>
-                </button>
-              </li>
+              <Card118 key={person.name} data-part="card" name={person.name} image={person.image} imageAlt={person.imageAlt} from={person.from} role={person.role} years={person.years} note={person.note} accentText={person.accent} yearsUnit={yearsUnit} listenLabel={listenLabel} playing={playing} setPlaying={setPlaying} index={index} data-hover={hovered === index ? "true" : undefined} style={{ ["--vibeui-people-019-tilt" as string]: index % 2 === 0 ? -1.5 : 1.5 }} onPointerMove={tilt} onPointerEnter={() => setHovered(index)} onPointerLeave={reset} accent={accent} />
             ))}
           </ul>
         </div>

@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 export type Cta011Props = {
   title?: string
@@ -23,7 +27,10 @@ export type Cta011Props = {
 // с кнопкой демо. Аудитории входят по-разному, и смешивать их входы в одну
 // кнопку — терять обе: разработчику нужна команда, руководителю — человек.
 // Код-плашка тёмная в обеих темах: терминал не бывает светло-серым.
-const STYLES = `
+const STYLES = `[data-vibeui-block="cta-011"] [data-part="heading"]{margin-bottom:2.25rem}
+[data-vibeui-block="cta-011"] [data-part="link"]{align-self:flex-start}
+[data-vibeui-block="cta-011"] [data-part="action"]{align-self:flex-start}
+
 :where([data-vibeui-block="cta-011"]){
 --vibeui-cta-011-bg:transparent;
 --vibeui-cta-011-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -51,14 +58,6 @@ font-family:var(--vibeui-cta-011-font);
 [data-vibeui-block="cta-011"] [data-part="shell"]{
 max-width:70rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="cta-011"] [data-part="title"]{
-margin:0 auto 0.75rem;max-width:24ch;text-align:center;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="cta-011"] [data-part="description"]{
-margin:0 auto 2.25rem;max-width:52ch;text-align:center;
-color:var(--vibeui-cta-011-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="cta-011"] [data-part="grid"]{display:grid;gap:1rem}
 [data-vibeui-block="cta-011"] [data-part="panel"]{
 display:flex;flex-direction:column;gap:0.75rem;min-inline-size:0;
@@ -84,24 +83,6 @@ overflow-x:auto;white-space:nowrap;
 [data-vibeui-block="cta-011"] [data-part="prompt"]{
 color:var(--vibeui-cta-011-accent);user-select:none;margin-right:0.5ch;
 }
-[data-vibeui-block="cta-011"] [data-part="link"]{
-align-self:flex-start;color:var(--vibeui-cta-011-accent);
-font-size:0.875rem;font-weight:600;text-decoration:none;
-border-bottom:1px solid color-mix(in oklab,var(--vibeui-cta-011-accent) 40%,transparent);
-}
-[data-vibeui-block="cta-011"] [data-part="link"]:hover{border-bottom-color:var(--vibeui-cta-011-accent)}
-[data-vibeui-block="cta-011"] [data-part="link"]:focus-visible,
-[data-vibeui-block="cta-011"] [data-part="action"]:focus-visible{
-outline:2px solid var(--vibeui-cta-011-accent);outline-offset:2px;
-}
-[data-vibeui-block="cta-011"] [data-part="action"]{
-align-self:flex-start;display:inline-block;
-padding:0.75rem 1.5rem;border-radius:999px;
-background:var(--vibeui-cta-011-button);color:var(--vibeui-cta-011-button-ink);
-font-size:0.9375rem;font-weight:650;text-decoration:none;
-transition:filter var(--vibeui-cta-011-dur-2) ease,transform var(--vibeui-cta-011-dur-2) ease;
-}
-[data-vibeui-block="cta-011"] [data-part="action"]:hover{filter:brightness(1.05);transform:translateY(-1px)}
 @container (min-width: 44rem){
 [data-vibeui-block="cta-011"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="cta-011"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
@@ -177,8 +158,14 @@ export function Cta011({
         style={palette}
       >
         <div data-part="shell">
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={description}
+            align="center"
+            ledeWidth={52}
+            accent={accent}
+          />
           <div data-part="grid">
             <article data-part="panel" data-variant="dev">
               <h3 data-part="panel-title">{devTitle}</h3>
@@ -191,16 +178,25 @@ export function Cta011({
                   {command}
                 </code>
               </pre>
-              <a data-part="link" href={devLinkHref}>
-                {devLinkLabel}
-              </a>
+              <Button077
+                data-part="link"
+                label={devLinkLabel}
+                href={devLinkHref}
+                accent={accent}
+              />
             </article>
             <article data-part="panel" data-variant="team">
               <h3 data-part="panel-title">{teamTitle}</h3>
               <p data-part="panel-text">{teamText}</p>
-              <a data-part="action" href={teamActionHref}>
-                {teamActionLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={teamActionLabel}
+                href={teamActionHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
             </article>
           </div>
         </div>

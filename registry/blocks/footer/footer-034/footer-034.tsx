@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks009 } from "@/registry/components/navigation/footerlinks-009/footerlinks-009"
 
 export type Footer034Link = {
   label: string
@@ -67,10 +68,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-034"] [data-part="where"]{margin:.5rem 0 0;color:var(--vibeui-footer-034-muted)}
 [data-vibeui-block="footer-034"] [data-part="where"] b{display:block;color:var(--vibeui-footer-034-fg);font-weight:600}
 [data-vibeui-block="footer-034"] [data-part="columns"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
-[data-vibeui-block="footer-034"] [data-part="columns"] h3{margin:0 0 .7rem;font-family:var(--vibeui-footer-034-display);font-weight:800;font-size:.95rem}
-[data-vibeui-block="footer-034"] [data-part="columns"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.4rem}
-[data-vibeui-block="footer-034"] [data-part="columns"] a{color:var(--vibeui-footer-034-muted);text-decoration:none;transition:color .2s}
-[data-vibeui-block="footer-034"] [data-part="columns"] a:hover{color:var(--vibeui-footer-034-accent)}
 [data-vibeui-block="footer-034"] [data-part="license"]{margin:0;padding:1rem 1.2rem;border-radius:1rem;background:color-mix(in oklab,var(--vibeui-footer-034-fg) 5%,transparent);font-size:.82rem;color:var(--vibeui-footer-034-muted)}
 [data-vibeui-block="footer-034"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.5rem;padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-034-line);font-size:.8rem;color:var(--vibeui-footer-034-muted)}
 [data-vibeui-block="footer-034"] [data-part="socials"]{display:flex;gap:.5rem;margin:0;padding:0;list-style:none}
@@ -172,16 +169,7 @@ export function Footer034({
           </div>
           <div data-part="columns">
             {columns.map((column) => (
-              <div key={column.title}>
-                <h3>{column.title}</h3>
-                <ul>
-                  {column.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Footerlinks009 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </div>
           {license ? <p data-part="license">{license}</p> : null}

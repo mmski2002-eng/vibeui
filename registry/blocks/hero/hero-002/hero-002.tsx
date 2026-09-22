@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Hero002Action = {
   label: string
@@ -72,7 +75,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-002"] [data-part="dots"]{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(var(--vibeui-hero-002-dot) 1px,transparent 1px);background-size:20px 20px;-webkit-mask-image:radial-gradient(80% 60% at 30% 40%,black,transparent 100%);mask-image:radial-gradient(80% 60% at 30% 40%,black,transparent 100%)}
 [data-vibeui-block="hero-002"] [data-part="window"]{box-shadow:0 30px 60px -30px var(--vibeui-hero-002-shadow)}
 [data-vibeui-block="hero-002"] [data-part="chip"]{box-shadow:0 12px 28px -16px var(--vibeui-hero-002-shadow)}
-[data-vibeui-block="hero-002"] [data-part="cta-primary"]{box-shadow:0 8px 20px -10px color-mix(in oklab,var(--vibeui-hero-002-accent) 70%,transparent)}
 @container (min-width:40rem){
 [data-vibeui-block="hero-002"] [data-part="frame"]{min-height:600px;padding-left:2.5rem;padding-right:2.5rem}
 [data-vibeui-block="hero-002"] [data-part="actions"]{width:auto;flex-direction:row}
@@ -106,9 +108,6 @@ animation:vibeui-hero-002-draw 1.6s cubic-bezier(.32,.72,0,1) .25s forwards;
 
 const ENTER =
   "animate-[vibeui-hero-002-fade-up_0.6s_cubic-bezier(0.16,1,0.3,1)_both]"
-
-const ACTION_BASE =
-  "group inline-flex h-11 items-center justify-center gap-2 rounded-lg px-5 text-[0.9375rem] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--vibeui-hero-002-ring)]"
 
 const SURFACE =
   "border border-[var(--vibeui-hero-002-border)] bg-[var(--vibeui-hero-002-panel)]"
@@ -382,33 +381,16 @@ export function Hero002({
               </p>
             ) : null}
 
-            <h1
-              className={cx(
-                ENTER,
-                "mt-6 text-[clamp(2rem,4.1cqi,3.25rem)] leading-[1.06] font-semibold tracking-tight text-balance break-words [animation-delay:60ms]",
-              )}
-            >
-              {title}
-              {titleAccent ? (
-                <>
-                  {" "}
-                  <span className="text-[var(--vibeui-hero-002-accent)]">
-                    {titleAccent}
-                  </span>
-                </>
-              ) : null}
-            </h1>
-
-            {description ? (
-              <p
-                className={cx(
-                  ENTER,
-                  "mt-5 max-w-[34rem] text-[clamp(1rem,1.35cqi,1.0625rem)] leading-relaxed text-pretty break-words text-[var(--vibeui-hero-002-muted)] [animation-delay:120ms]",
-                )}
-              >
-                {description}
-              </p>
-            ) : null}
+            <Heading001
+              data-part="heading"
+              className="mt-6"
+              title={title}
+              titleAccent={titleAccent}
+              lede={description}
+              level="h1"
+              size="lg"
+              accent={accent}
+            />
 
             <div
               data-part="actions"
@@ -418,43 +400,11 @@ export function Hero002({
               )}
             >
               {primaryAction ? (
-                <a
-                  href={primaryAction.href}
-                  data-part="cta-primary"
-                  className={cx(
-                    ACTION_BASE,
-                    "bg-[var(--vibeui-hero-002-accent)] text-[var(--vibeui-hero-002-accent-fg)] shadow-[0_0.375rem_1.25rem_color-mix(in_oklab,var(--vibeui-hero-002-accent)_40%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_42%,transparent)] hover:shadow-[0_0.625rem_1.75rem_color-mix(in_oklab,var(--vibeui-hero-002-accent)_50%,transparent),inset_0_1px_0_color-mix(in_oklab,#ffffff_52%,transparent)] transition-[box-shadow,transform] duration-200 hover:-translate-y-px",
-                  )}
-                >
-                  {primaryAction.label}
-                </a>
+                <Button016 label={primaryAction.label} href={primaryAction.href} external={false} size="lg" tone="accent" accent={accent} />
               ) : null}
 
               {secondaryAction ? (
-                <a
-                  href={secondaryAction.href}
-                  className={cx(
-                    ACTION_BASE,
-                    SURFACE,
-                    "transition-colors duration-150 hover:bg-[var(--vibeui-hero-002-panel-alt)]",
-                  )}
-                >
-                  {secondaryAction.label}
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    className="size-4 transition-transform duration-150 group-hover:translate-x-0.5"
-                  >
-                    <path
-                      d="M3 8h9m0 0L8.5 4.5M12 8l-3.5 3.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
+                <Button016 label={secondaryAction.label} href={secondaryAction.href} external={false} size="lg" tone="neutral" arrow accent={accent} />
               ) : null}
             </div>
 

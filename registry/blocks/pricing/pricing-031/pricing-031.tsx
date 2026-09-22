@@ -2,6 +2,10 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button013 } from "@/registry/components/button/button-013/button-013"
+import { Slider013 } from "@/registry/components/slider/slider-013/slider-013"
+
 export type Pricing031Format = {
   key: string
   label: string
@@ -85,6 +89,9 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-031"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-031"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-pricing-031-bg);color:var(--vibeui-pricing-031-fg);font-family:var(--vibeui-pricing-031-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="pricing-031"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-031"] [data-part="range"]{width:100%}
+[data-vibeui-block="pricing-031"] [data-part="ticks"]{display:flex;margin:.5rem 0 0}
+[data-vibeui-block="pricing-031"] [data-part="segments"]{display:grid;grid-template-columns:repeat(var(--vibeui-pricing-031-n),minmax(0,1fr));width:100%}
 [data-vibeui-block="pricing-031"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="pricing-031"] [data-part="head"]{max-width:40rem;margin:0 0 2.5rem}
 [data-vibeui-block="pricing-031"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-pricing-031-hand);font-size:1.4rem;color:var(--vibeui-pricing-031-accent)}
@@ -93,19 +100,10 @@ container-type:inline-size;
 [data-vibeui-block="pricing-031"] [data-part="calc"]{display:grid;gap:1.5rem;align-items:start}
 [data-vibeui-block="pricing-031"] [data-part="controls"]{display:grid;gap:1.4rem;padding:1.4rem;border-radius:1.4rem;background:var(--vibeui-pricing-031-paper);border:1px solid var(--vibeui-pricing-031-line)}
 [data-vibeui-block="pricing-031"] [data-part="label"]{margin:0 0 .6rem;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-pricing-031-muted)}
-[data-vibeui-block="pricing-031"] [data-part="segments"]{position:relative;display:grid;grid-template-columns:repeat(var(--vibeui-pricing-031-n),minmax(0,1fr));padding:.3rem;border-radius:1rem;background:var(--vibeui-pricing-031-bg);border:1px solid var(--vibeui-pricing-031-line)}
-[data-vibeui-block="pricing-031"] [data-part="segments"]::before{content:"";position:absolute;top:.3rem;bottom:.3rem;left:.3rem;width:calc((100% - .6rem) / var(--vibeui-pricing-031-n));border-radius:.75rem;background:var(--vibeui-pricing-031-fg);transform:translateX(calc(var(--vibeui-pricing-031-active) * 100%));transition:transform .4s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="pricing-031"] [data-part="segment"]{position:relative;padding:.7rem .4rem;border:0;border-radius:.75rem;background:transparent;color:var(--vibeui-pricing-031-muted);font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:color .3s}
-[data-vibeui-block="pricing-031"] [data-part="segment"][aria-pressed="true"]{color:var(--vibeui-pricing-031-bg)}
-[data-vibeui-block="pricing-031"] [data-part="segment"]:focus-visible{outline:2px solid var(--vibeui-pricing-031-accent);outline-offset:2px}
 [data-vibeui-block="pricing-031"] [data-part="size"]{margin:.6rem 0 0;font-family:var(--vibeui-pricing-031-hand);font-size:1.15rem;color:var(--vibeui-pricing-031-accent)}
 [data-vibeui-block="pricing-031"] [data-part="perweek"]{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 .6rem}
 [data-vibeui-block="pricing-031"] [data-part="perweek"] [data-part="label"]{margin:0}
 [data-vibeui-block="pricing-031"] [data-part="perweek"] output{font-family:var(--vibeui-pricing-031-display);font-weight:800;font-size:1.4rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-[data-vibeui-block="pricing-031"] [data-part="range"]{-webkit-appearance:none;appearance:none;width:100%;height:.5rem;border-radius:999px;background:linear-gradient(90deg,var(--vibeui-pricing-031-accent) var(--vibeui-pricing-031-fill),var(--vibeui-pricing-031-line) var(--vibeui-pricing-031-fill));outline:none;cursor:pointer}
-[data-vibeui-block="pricing-031"] [data-part="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-pricing-031-paper);border:3px solid var(--vibeui-pricing-031-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-pricing-031-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="pricing-031"] [data-part="range"]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-pricing-031-paper);border:3px solid var(--vibeui-pricing-031-accent);box-shadow:0 0 0 5px color-mix(in oklab,var(--vibeui-pricing-031-accent) 18%,transparent);cursor:grab}
-[data-vibeui-block="pricing-031"] [data-part="range"]:focus-visible{box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-pricing-031-accent) 40%,transparent)}
 [data-vibeui-block="pricing-031"] [data-part="ticks"]{display:flex;justify-content:space-between;margin:.5rem 0 0;padding:0;list-style:none;font-size:.72rem;color:var(--vibeui-pricing-031-muted)}
 [data-vibeui-block="pricing-031"] [data-part="receipt"]{position:relative;display:grid;gap:1rem;padding:1.8rem 1.6rem 2.2rem;background:var(--vibeui-pricing-031-paper);border:1px solid var(--vibeui-pricing-031-line);border-bottom:0;border-radius:1.2rem 1.2rem 0 0;transform:rotate(.6deg)}
 [data-vibeui-block="pricing-031"] [data-part="receipt"]::after{content:"";position:absolute;left:0;right:0;bottom:-.7rem;height:.7rem;background:linear-gradient(135deg,var(--vibeui-pricing-031-paper) 50%,transparent 50%) 0 0/.7rem .7rem repeat-x,linear-gradient(-135deg,var(--vibeui-pricing-031-paper) 50%,transparent 50%) 0 0/.7rem .7rem repeat-x;filter:drop-shadow(0 1px 0 var(--vibeui-pricing-031-line))}
@@ -119,9 +117,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-031"] [data-part="features"]{margin:0;padding:1rem 0 0;border-top:1px dashed var(--vibeui-pricing-031-line);list-style:none;display:grid;gap:.45rem;font-size:.92rem}
 [data-vibeui-block="pricing-031"] [data-part="features"] li{display:flex;gap:.5rem;align-items:baseline}
 [data-vibeui-block="pricing-031"] [data-part="features"] li::before{content:"✓";font-weight:700;color:var(--vibeui-pricing-031-accent)}
-[data-vibeui-block="pricing-031"] [data-part="action"]{display:inline-flex;justify-content:center;align-items:center;padding:.9rem 1.3rem;border-radius:1rem;background:var(--vibeui-pricing-031-accent);color:var(--vibeui-pricing-031-on-accent);font-weight:600;text-decoration:none;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="pricing-031"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px var(--vibeui-pricing-031-accent)}
-[data-vibeui-block="pricing-031"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-pricing-031-fg);outline-offset:2px}
 [data-vibeui-block="pricing-031"] [data-part="compare"]{margin:4rem 0 0}
 [data-vibeui-block="pricing-031"] [data-part="compare"] h3{margin:0 0 1.2rem;font-family:var(--vibeui-pricing-031-display);font-weight:800;font-size:clamp(1.5rem,3cqi,2.1rem);letter-spacing:-.03em}
 [data-vibeui-block="pricing-031"] [data-part="table"]{width:100%;border-collapse:separate;border-spacing:0;font-size:.9rem}
@@ -205,7 +200,6 @@ export function Pricing031({
   const format = formats[Math.min(active, formats.length - 1)]
   const lessons = perWeek * weeksPerMonth
   const monthly = format ? format.perLesson * lessons : 0
-  const fill = `${((perWeek - minPerWeek) / Math.max(1, maxPerWeek - minPerWeek)) * 100}%`
 
   const palette = {
     ...(accent ? { "--vibeui-pricing-031-accent": accent } : null),
@@ -231,13 +225,15 @@ export function Pricing031({
             <div data-part="controls">
               <div>
                 <p data-part="label">{formatLabel}</p>
-                <div data-part="segments" role="group" aria-label={formatAria} style={{ ["--vibeui-pricing-031-n" as string]: formats.length, ["--vibeui-pricing-031-active" as string]: active }}>
-                  {formats.map((item, index) => (
-                    <button key={item.key} data-part="segment" type="button" aria-pressed={active === index} onClick={() => setActive(index)}>
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
+                <Button013
+                  data-part="segments"
+                  options={formats.map((item) => item.label)}
+                  defaultValue={formats[active]?.label}
+                  label={formatAria}
+                  onChange={(value) => setActive(Math.max(0, formats.findIndex((item) => item.label === value)))}
+                  accent={accent}
+                  style={{ ["--vibeui-pricing-031-n" as string]: formats.length }}
+                />
                 {format ? <p data-part="size">{format.size}</p> : null}
               </div>
               <div>
@@ -245,7 +241,7 @@ export function Pricing031({
                   <p data-part="label">{perWeekLabel}</p>
                   <output>{perWeek}</output>
                 </div>
-                <input data-part="range" type="range" min={minPerWeek} max={maxPerWeek} step={1} value={perWeek} onChange={(event) => setPerWeek(Number(event.target.value))} aria-label={perWeekLabel} style={{ ["--vibeui-pricing-031-fill" as string]: fill }} />
+                <Slider013 data-part="range" value={perWeek} min={minPerWeek} max={maxPerWeek} step={1} onChange={setPerWeek} aria-label={perWeekLabel} surface="var(--vibeui-pricing-031-paper)" accent="var(--vibeui-pricing-031-accent)" />
                 <ul data-part="ticks" aria-hidden="true">
                   {Array.from({ length: maxPerWeek - minPerWeek + 1 }, (_, index) => (
                     <li key={index}>{minPerWeek + index}</li>
@@ -287,9 +283,15 @@ export function Pricing031({
                   ))}
                 </ul>
                 {actionLabel ? (
-                  <a data-part="action" href={actionHref}>
-                    {actionLabel}
-                  </a>
+                  <Button016
+                    data-part="action"
+                    size="lg"
+                    label={actionLabel}
+                    href={actionHref}
+                    external={false}
+                    tone="accent"
+                    accent={accent}
+                  />
                 ) : null}
               </div>
             ) : null}

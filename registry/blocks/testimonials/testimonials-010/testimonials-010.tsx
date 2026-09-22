@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card107 } from "@/registry/components/card/card-107/card-107"
 
 export type Testimonials010Props = {
   quote?: string
@@ -15,7 +16,8 @@ export type Testimonials010Props = {
 // у нас есть отзыв, который стоит целой секции. Оранжевая кавычка задаёт
 // масштаб и маркирует жанр раньше, чем прочитано первое слово. Второй
 // такой блок на странице отменяет эффект первого.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-010"] [data-part="figure"]{margin:0}
+
 :where([data-vibeui-block="testimonials-010"]){
 --vibeui-testimonials-010-bg:transparent;
 --vibeui-testimonials-010-ink:light-dark(oklch(0.17 0 0),oklch(0.96 0 0));
@@ -34,38 +36,8 @@ font-family:var(--vibeui-testimonials-010-font);
 [data-vibeui-block="testimonials-010"] [data-part="shell"]{
 max-width:64rem;margin:0 auto;padding:4rem 1.25rem;
 }
-[data-vibeui-block="testimonials-010"] [data-part="figure"]{
-margin:0;display:grid;gap:2rem;
-}
-[data-vibeui-block="testimonials-010"] [data-part="quote"]{
-position:relative;margin:0;padding-top:2.5rem;
-font-family:var(--vibeui-testimonials-010-serif);
-font-size:clamp(1.75rem,6.5cqi,4.25rem);line-height:1.12;letter-spacing:-0.02em;font-weight:500;
-text-wrap:balance;
-}
-[data-vibeui-block="testimonials-010"] [data-part="quote"]::before{
-content:"\\201C";position:absolute;top:-0.05em;left:-0.04em;
-color:var(--vibeui-testimonials-010-accent);
-font-size:1.9em;line-height:1;pointer-events:none;
-}
-[data-vibeui-block="testimonials-010"] [data-part="quote"]::after{
-content:"\\201D";margin-left:0.08em;
-color:var(--vibeui-testimonials-010-accent);
-}
-[data-vibeui-block="testimonials-010"] [data-part="author"]{
-display:flex;align-items:baseline;gap:0.625rem;flex-wrap:wrap;
-}
-[data-vibeui-block="testimonials-010"] [data-part="author"]::before{
-content:"";align-self:center;
-width:2.5rem;height:2px;border-radius:2px;
-background:var(--vibeui-testimonials-010-accent);color:oklch(from var(--vibeui-testimonials-010-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="testimonials-010"] [data-part="name"]{font-size:1rem;font-weight:660}
-[data-vibeui-block="testimonials-010"] [data-part="role"]{color:var(--vibeui-testimonials-010-muted);font-size:0.9375rem}
 @container (min-width: 48rem){
 [data-vibeui-block="testimonials-010"] [data-part="shell"]{padding:6.5rem 3rem}
-[data-vibeui-block="testimonials-010"] [data-part="quote"]{padding-top:0;padding-left:1.1em}
-[data-vibeui-block="testimonials-010"] [data-part="quote"]::before{left:-0.08em}
-[data-vibeui-block="testimonials-010"] [data-part="author"]{padding-left:2.35em}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-010"] *{animation:none!important;transition:none!important}}
 `
@@ -124,13 +96,7 @@ export function Testimonials010({
         style={palette}
       >
         <div data-part="shell">
-          <figure data-part="figure">
-            <blockquote data-part="quote">{quote}</blockquote>
-            <figcaption data-part="author">
-              <span data-part="name">{name}</span>
-              <span data-part="role">{role}</span>
-            </figcaption>
-          </figure>
+          <Card107 data-part="figure" quote={quote} name={name} role={role} accent={accent} />
         </div>
       </section>
     </>

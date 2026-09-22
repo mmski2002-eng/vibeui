@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button083 } from "@/registry/components/button/button-083/button-083"
 
 export type Auto002Pair = {
   /** Подпись вкладки: «Фары», «Кузов», «Салон». */
@@ -68,9 +69,6 @@ container-type:inline-size;
 [data-vibeui-block="auto-002"] [data-part="title"]{margin:0;font-family:var(--vibeui-auto-002-display);font-weight:900;font-size:clamp(1.8rem,4.4cqi,3.2rem);line-height:1.02;letter-spacing:-.03em;text-transform:uppercase}
 [data-vibeui-block="auto-002"] [data-part="lede"]{margin:1rem 0 0;max-width:30rem;color:var(--vibeui-auto-002-muted)}
 [data-vibeui-block="auto-002"] [data-part="tabs"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:1.6rem 0 0;padding:.35rem;border-radius:999px;border:1px solid var(--vibeui-auto-002-line);background:var(--vibeui-auto-002-glass);width:fit-content}
-[data-vibeui-block="auto-002"] [data-part="tab"]{padding:.6rem 1.1rem;border-radius:999px;border:0;background:transparent;color:var(--vibeui-auto-002-muted);font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;transition:background .25s,color .25s}
-[data-vibeui-block="auto-002"] [data-part="tab"][aria-selected="true"]{background:var(--vibeui-auto-002-accent);color:var(--vibeui-auto-002-on-accent)}
-[data-vibeui-block="auto-002"] [data-part="tab"]:focus-visible{outline:2px solid var(--vibeui-auto-002-accent);outline-offset:2px}
 [data-vibeui-block="auto-002"] [data-part="work"]{margin:1.4rem 0 0;padding:1rem 1.2rem;border-radius:1rem;border:1px solid var(--vibeui-auto-002-line);background:var(--vibeui-auto-002-glass);display:grid;gap:.3rem}
 [data-vibeui-block="auto-002"] [data-part="work"] small{font-family:var(--vibeui-auto-002-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-auto-002-accent)}
 [data-vibeui-block="auto-002"] [data-part="work"] p{margin:0}
@@ -163,9 +161,7 @@ export function Auto002({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="tabs" role="tablist" aria-label={tabsLabel}>
               {pairs.map((pair, index) => (
-                <button key={pair.label} data-part="tab" type="button" role="tab" aria-selected={tab === index} onClick={() => pick(index)}>
-                  {pair.label}
-                </button>
+                <Button083 key={pair.label} data-part="tab" label={pair.label} aria-selected={tab === index} onClick={() => pick(index)} accent={accent} />
               ))}
             </div>
             {current ? (

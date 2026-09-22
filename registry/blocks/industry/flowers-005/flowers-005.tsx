@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Button082 } from "@/registry/components/button/button-082/button-082"
 
 export type Flowers005Item = {
   title: string
@@ -53,6 +54,7 @@ container-type:inline-size;
 :where([data-vibeui-block="flowers-005"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="flowers-005"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-flowers-005-bg);color:var(--vibeui-flowers-005-fg);font-family:var(--vibeui-flowers-005-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-005"] *{box-sizing:border-box}
+[data-vibeui-block="flowers-005"] [data-part="head"]{width:100%}
 [data-vibeui-block="flowers-005"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem;align-items:start}
 [data-vibeui-block="flowers-005"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-flowers-005-muted)}
 [data-vibeui-block="flowers-005"] [data-part="title"]{margin:0;font-family:var(--vibeui-flowers-005-display);font-weight:500;font-size:clamp(2.2rem,5.4cqi,4.2rem);line-height:1;letter-spacing:-.02em}
@@ -63,62 +65,17 @@ container-type:inline-size;
 [data-vibeui-block="flowers-005"] [data-part="counter"] em{display:block;margin-top:.4rem;font-family:var(--vibeui-flowers-005-hand);font-style:normal;font-size:1.35rem;line-height:1.1;color:var(--vibeui-flowers-005-muted);transform:rotate(-2deg);transform-origin:left}
 [data-vibeui-block="flowers-005"] [data-part="list"]{margin:0;padding:0;list-style:none;border-top:1px solid var(--vibeui-flowers-005-line)}
 [data-vibeui-block="flowers-005"] [data-part="item"]{border-bottom:1px solid var(--vibeui-flowers-005-line)}
-[data-vibeui-block="flowers-005"] [data-part="head"]{display:grid;grid-template-columns:2.4rem minmax(0,1fr) 1.6rem;align-items:center;gap:1.1rem;width:100%;padding:1.2rem 0;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
-[data-vibeui-block="flowers-005"] [data-part="head"]:focus-visible{outline:2px solid var(--vibeui-flowers-005-accent);outline-offset:3px;border-radius:.4rem}
-[data-vibeui-block="flowers-005"] [data-part="icon"]{width:2.4rem;height:2.4rem;color:var(--vibeui-flowers-005-muted);transition:color .3s}
-[data-vibeui-block="flowers-005"] [data-part="icon"] path,[data-vibeui-block="flowers-005"] [data-part="icon"] circle{stroke-dasharray:100;stroke-dashoffset:0;opacity:.55;transition:opacity .3s}
-[data-vibeui-block="flowers-005"] [data-part="head"][aria-expanded="true"] [data-part="icon"]{color:var(--vibeui-flowers-005-accent)}
-[data-vibeui-block="flowers-005"] [data-part="head"][aria-expanded="true"] [data-part="icon"] :is(path,circle){opacity:1;animation:vibeui-flowers-005-draw .9s cubic-bezier(.2,.7,.2,1) both}
+circle){opacity:1;animation:vibeui-flowers-005-draw .9s cubic-bezier(.2,.7,.2,1) both}
 @keyframes vibeui-flowers-005-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
-[data-vibeui-block="flowers-005"] [data-part="head"][aria-expanded="true"] [data-part="icon"] :is(path,circle):nth-child(2){transition-delay:.15s}
-[data-vibeui-block="flowers-005"] [data-part="head"][aria-expanded="true"] [data-part="icon"] :is(path,circle):nth-child(3){transition-delay:.3s}
-[data-vibeui-block="flowers-005"] [data-part="head"] h3{margin:0;font-family:var(--vibeui-flowers-005-display);font-weight:600;font-size:1.5rem;line-height:1.1;transition:color .3s}
-[data-vibeui-block="flowers-005"] [data-part="head"]:hover h3{color:var(--vibeui-flowers-005-accent)}
-[data-vibeui-block="flowers-005"] [data-part="plus"]{position:relative;width:1.6rem;height:1.6rem;border-radius:50%;border:1px solid var(--vibeui-flowers-005-line)}
-[data-vibeui-block="flowers-005"] [data-part="plus"]::before,[data-vibeui-block="flowers-005"] [data-part="plus"]::after{content:"";position:absolute;left:50%;top:50%;width:.7rem;height:1px;background:currentColor;transform:translate(-50%,-50%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="flowers-005"] [data-part="plus"]::after{transform:translate(-50%,-50%) rotate(90deg)}
-[data-vibeui-block="flowers-005"] [data-part="head"][aria-expanded="true"] [data-part="plus"]::after{transform:translate(-50%,-50%) rotate(0)}
+circle):nth-child(2){transition-delay:.15s}
+circle):nth-child(3){transition-delay:.3s}
 [data-vibeui-block="flowers-005"] [data-part="panel"]{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
 [data-vibeui-block="flowers-005"] [data-part="panel"][data-open="true"]{grid-template-rows:1fr}
 [data-vibeui-block="flowers-005"] [data-part="panel"]>div{overflow:hidden}
 [data-vibeui-block="flowers-005"] [data-part="panel"] p{margin:0;padding:0 0 1.4rem 3.5rem;max-width:34rem;color:var(--vibeui-flowers-005-muted)}
 @container (min-width: 60rem){[data-vibeui-block="flowers-005"] [data-part="shell"]{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:4rem}[data-vibeui-block="flowers-005"] [data-part="aside"]{position:sticky;top:5.5rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-005"] *{animation:none!important;transition:none!important}[data-vibeui-block="flowers-005"] [data-part="icon"] :is(path,circle){stroke-dashoffset:0}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-005"] *{animation:none!important;transition:none!important}circle){stroke-dashoffset:0}}`
 
-const ICONS = {
-  scissors: (
-    <>
-      <circle pathLength={100} cx="6" cy="6" r="3" />
-      <circle pathLength={100} cx="6" cy="18" r="3" />
-      <path pathLength={100} d="M20 4 8.5 15.5M8.5 8.5 20 20" />
-    </>
-  ),
-  water: (
-    <>
-      <path pathLength={100} d="M12 3c-3.5 5-6 8-6 11.5a6 6 0 0 0 12 0C18 11 15.5 8 12 3Z" />
-      <path pathLength={100} d="M9 15.5a3 3 0 0 0 2 2.5" />
-    </>
-  ),
-  sun: (
-    <>
-      <circle pathLength={100} cx="12" cy="12" r="4" />
-      <path pathLength={100} d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-    </>
-  ),
-  thermometer: (
-    <>
-      <path pathLength={100} d="M10 4a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0Z" />
-      <path pathLength={100} d="M12 9v7" />
-      <circle pathLength={100} cx="12" cy="17" r="1.2" />
-    </>
-  ),
-  vase: (
-    <>
-      <path pathLength={100} d="M8 3h8c0 3 2 4 2 8s-2 8-4 10H10C8 19 6 15 6 11s2-5 2-8Z" />
-      <path pathLength={100} d="M9 5h6" />
-    </>
-  ),
-}
 
 const DEFAULT_ITEMS: Flowers005Item[] = [
   { title: "Подрежьте стебли наискосок", text: "Два сантиметра острым ножом под углом 45°, лучше под водой — так стебель не втянет воздух и сразу начнёт пить. Повторяйте раз в два дня.", icon: "scissors" },
@@ -207,13 +164,7 @@ export function Flowers005({
               const expanded = open === index
               return (
                 <li key={item.title} data-part="item">
-                  <button data-part="head" type="button" aria-expanded={expanded} onClick={() => setOpen(expanded ? -1 : index)}>
-                    <svg data-part="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      {ICONS[item.icon ?? "vase"]}
-                    </svg>
-                    <h3>{item.title}</h3>
-                    <i data-part="plus" aria-hidden="true" />
-                  </button>
+                  <Button082 data-part="head" icon={item.icon} title={item.title} aria-expanded={expanded} onClick={() => setOpen(expanded ? -1 : index)} accent={accent} />
                   <div data-part="panel" data-open={expanded}>
                     <div>
                       <p>{item.text}</p>

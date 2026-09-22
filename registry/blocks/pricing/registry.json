@@ -10,7 +10,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "pricing-001/pricing-001.tsx",
@@ -18,7 +20,7 @@
           "target": "@components/vibeui/pricing-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей. Цвета живут в локальных переменных --vibeui-pricing-001-* и объявлены через light-dark(), поэтому секция следует color-scheme окружения; акцент меняется пропом accent, подложка — пропом background, по умолчанию её нет. Раскладка переключается container-запросами от ширины самого блока. Это секция лендинга, а не checkout: цены — статический контент, CTA — обычные ссылки, никакой логики биллинга в блоке нет.",
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей. Цвета живут в локальных переменных --vibeui-pricing-001-* и объявлены через light-dark(), поэтому секция следует color-scheme окружения; акцент меняется пропом accent, подложка — пропом background, по умолчанию её нет. Раскладка переключается container-запросами от ширины самого блока. Это секция лендинга, а не checkout: цены — статический контент, CTA — обычные ссылки, никакой логики биллинга в блоке нет.",
       "meta": {
         "tags": [
           "light",
@@ -26,12 +28,14 @@
           "saas",
           "plans",
           "landing",
-          "section"
+          "section",
+          "composite"
         ],
         "ai": {
           "export": "Pricing001",
           "summary": "Секция тарифов, следующая теме окружения. Центрированная шапка: eyebrow, h2 в две части и описание. Ниже три плана в ряд: имя, описание, крупная цена с периодом, CTA-ссылка и список до четырёх пунктов с галочками. Рекомендованный план — единственная тяжёлая поверхность в блоке: инвертированная тёмная панель с акцентным бейджем, приподнятая относительно соседей. Под планами строка-сноска про условия. Ноль зависимостей, один файл, раскладка и типографика считаются от ширины блока через container-запросы и cqi.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "иерархию: ровно один рекомендованный план выделен инвертированной тёмной панелью, остальные остаются светлыми и без теней — не выравнивай все три в одинаковые карточки",
             "инверсию как приём: тёмная панель это единственная тяжёлая поверхность секции, она и создаёт акцент; не заменяй её на рамку, тень или другой оттенок светлого",
             "приподнятость рекомендованного плана относительно соседей от 48rem ширины блока",
@@ -76,6 +80,7 @@
             "ai": {
               "summary": "A pricing section that follows the surrounding theme. A centred header: eyebrow, a two-part h2 and a description. Below it three plans in a row: name, description, a large price with its period, a CTA link and a list of up to four points with checkmarks. The recommended plan is the only heavy surface in the block: an inverted dark panel with an accent badge, raised above its neighbours. A footnote about terms sits under the plans. Zero dependencies, one file; layout and typography are measured against the block's own width through container queries and cqi.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the hierarchy: exactly one recommended plan marked by an inverted dark panel, the others staying light and shadowless — do not level all three into identical cards",
                 "inversion as the device: the dark panel is the only heavy surface in the section and it is what creates the accent; do not replace it with a border, a shadow or another shade of light",
                 "the recommended plan sitting raised above its neighbours from 48rem of block width",
@@ -130,7 +135,7 @@
                 "default": "Recommended"
               }
             },
-            "docs": "The block is self-contained: one file, no dependencies. The colours live in the local variables --vibeui-pricing-001-* and are declared through light-dark(), so the section follows the surrounding color-scheme; the accent is changed with the accent prop and the background with the background prop, and by default there is none. The layout is switched by container queries against the block's own width. This is a landing section, not a checkout: the prices are static content, the CTAs are ordinary links, and the block holds no billing logic."
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies. The colours live in the local variables --vibeui-pricing-001-* and are declared through light-dark(), so the section follows the surrounding color-scheme; the accent is changed with the accent prop and the background with the background prop, and by default there is none. The layout is switched by container queries against the block's own width. This is a landing section, not a checkout: the prices are static content, the CTAs are ordinary links, and the block holds no billing logic."
           }
         },
         "controls": [
@@ -180,7 +185,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-002/pricing-002.tsx",
@@ -188,13 +196,14 @@
           "target": "@components/vibeui/pricing-002.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-002-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Рекомендованный тариф помечается атрибутом data-featured: он получает толстую акцентную рамку, тень и бейдж, а на широкой ширине ещё и увеличенные вертикальные отступы. Карточки — flex-колонки, кнопка прижата к низу через margin-top:auto, поэтому нижний край ряда ровный при разном числе пунктов. Раскладка: столбец до 58rem, три колонки от 58rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-002-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Рекомендованный тариф помечается атрибутом data-featured: он получает толстую акцентную рамку, тень и бейдж, а на широкой ширине ещё и увеличенные вертикальные отступы. Карточки — flex-колонки, кнопка прижата к низу через margin-top:auto, поэтому нижний край ряда ровный при разном числе пунктов. Раскладка: столбец до 58rem, три колонки от 58rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "plans",
           "featured",
-          "cards"
+          "cards",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -204,6 +213,7 @@
           "usage": "<Pricing002 plans={[{ name: \"Команда\", price: \"1 490 ₽\", period: \"в месяц\", description: \"Для команд.\", features: [\"До пяти участников\"], action: { label: \"Попробовать\", href: \"#\" }, featured: true, badge: \"Рекомендуем\" }]} />",
           "summary": "Секция тарифов: центрированная шапка и три карточки с названием, описанием, ценой, списком возможностей и кнопкой. Рекомендованный выделен рамкой, тенью и бейджем со словом. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "бейдж словами у рекомендованного тарифа: цветной рамки мало — она не читается дальтоником и исчезает при печати",
             "кнопку, прижатую к низу через margin-top:auto: без неё нижний край ряда пляшет при разном числе пунктов",
             "три тарифа: четвёртая колонка не помещается в раскладку и делает выбор мучительным",
@@ -262,6 +272,7 @@
             "ai": {
               "summary": "A pricing section: a centred header and three cards with a name, a description, a price, a feature list and a button. The recommended plan is marked by a border, a shadow and a worded badge. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the worded badge on the recommended plan: a coloured border alone fails colour-blind readers and disappears in print",
                 "the button pinned to the bottom with margin-top:auto: without it the bottom edge of the row dances with the item count",
                 "three plans: a fourth column does not fit the layout and makes the choice painful",
@@ -363,7 +374,7 @@
                 ]
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-002-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; it has no background of its own and one is turned on by the background prop. The recommended plan is marked with the data-featured attribute: it gets a thick accent border, a shadow and a badge, and at a wide width increased vertical padding as well. The cards are flex columns and the button is pinned to the bottom with margin-top:auto, so the bottom edge of the row stays level across different numbers of points. The layout: a column up to 58rem, three columns from 58rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-002-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; it has no background of its own and one is turned on by the background prop. The recommended plan is marked with the data-featured attribute: it gets a thick accent border, a shadow and a badge, and at a wide width increased vertical padding as well. The cards are flex columns and the button is pinned to the bottom with margin-top:auto, so the bottom edge of the row stays level across different numbers of points. The layout: a column up to 58rem, three columns from 58rem through a container query."
           }
         },
         "cardControls": [
@@ -383,7 +394,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-003/pricing-003.tsx",
@@ -391,13 +405,14 @@
           "target": "@components/vibeui/pricing-003.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-003-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Обе цены лежат в разметке, лишняя скрыта через display:none; выбор делается правилом вида [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). Радиокнопки уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Скидка подписана бейджем прямо в переключателе. Раскладка: столбец до 56rem, три колонки от 56rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-003-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; собственной подложки у него нет, она включается пропом background. Обе цены лежат в разметке, лишняя скрыта через display:none; выбор делается правилом вида [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). Радиокнопки уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Скидка подписана бейджем прямо в переключателе. Раскладка: столбец до 56rem, три колонки от 56rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "toggle",
           "no-js",
-          "annual"
+          "annual",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -407,6 +422,7 @@
           "usage": "<Pricing003 monthLabel=\"Помесячно\" yearLabel=\"За год\" saveLabel=\"−17 %\" />",
           "summary": "Секция тарифов с переключателем периода: заголовок, pill-переключатель месяц/год с бейджем скидки и три карточки, в которых цена и подпись о годовой оплате меняются на CSS. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "переключение на радиокнопках и :has() вместо скрипта: секция остаётся серверной и работает до гидратации",
             "обе цены в разметке: это сознательный размен — разметка тяжелее, зато цена не «прыгает» после гидратации",
             "радиокнопки в потоке фокуса: display:none у них сломал бы переключение с клавиатуры",
@@ -473,6 +489,7 @@
             "ai": {
               "summary": "A pricing section with a period switch: a headline, a monthly/annual pill switch with a discount badge and three cards whose price and annual note swap in CSS. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the radio-and-:has() switching instead of a script: the section stays server-rendered and works before hydration",
                 "both prices living in the markup: it is a deliberate trade — heavier markup, but the price never jumps after hydration",
                 "the radio buttons staying in the focus order: display:none on them would break keyboard switching",
@@ -580,7 +597,7 @@
                 ]
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-003-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; it has no background of its own and one is turned on by the background prop. Both prices sit in the markup and the extra one is hidden with display:none; the choice is made by a rule of the form [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). The radio buttons are moved off screen but stay in the focus order, and the ring is drawn on the label. The discount is captioned with a badge right inside the switch. The layout: a column up to 56rem, three columns from 56rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-003-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; it has no background of its own and one is turned on by the background prop. Both prices sit in the markup and the extra one is hidden with display:none; the choice is made by a rule of the form [data-vibeui-block=\"pricing-003\"]:has([data-part=\"periodyear\"]:checked). The radio buttons are moved off screen but stay in the focus order, and the ring is drawn on the label. The discount is captioned with a badge right inside the switch. The layout: a column up to 56rem, three columns from 56rem through a container query."
           }
         },
         "cardControls": [
@@ -601,7 +618,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-004/pricing-004.tsx",
@@ -609,13 +629,14 @@
           "target": "@components/vibeui/pricing-004.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-004-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background, а таблица лежит на собственной поверхности --vibeui-pricing-004-card. Разметка — настоящая таблица с несколькими <tbody>: заголовок раздела вынесен в <th scope=\"colgroup\"> с colspan, поэтому скринридер объявляет и раздел, и колонку. Шапка с ценами держится на position:sticky, иначе на длинной таблице теряется, какая колонка чья. Обёртка со overflow-x:auto и min-width:40rem у таблицы. Значение true рисуется словом из valueText.yes, false — из valueText.no.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-004-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background, а таблица лежит на собственной поверхности --vibeui-pricing-004-card. Разметка — настоящая таблица с несколькими <tbody>: заголовок раздела вынесен в <th scope=\"colgroup\"> с colspan, поэтому скринридер объявляет и раздел, и колонку. Шапка с ценами держится на position:sticky, иначе на длинной таблице теряется, какая колонка чья. Обёртка со overflow-x:auto и min-width:40rem у таблицы. Значение true рисуется словом из valueText.yes, false — из valueText.no.",
       "meta": {
         "tags": [
           "pricing",
           "comparison",
           "table",
-          "grouped"
+          "grouped",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -625,6 +646,7 @@
           "usage": "<Pricing004 plans={[{ name: \"Команда\", price: \"1 490 ₽ / мес\", href: \"#\", featured: true }]} groups={[{ title: \"Каталог\", rows: [{ feature: \"Секций\", values: [\"10\", \"Все\", \"Все\"] }] }]} />",
           "summary": "Секция сравнения тарифов: заголовок и таблица из трёх колонок с ценами и кнопками в залипающей шапке, строки разбиты на три раздела по три признака. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "залипающую шапку с ценами: на таблице в девять строк пользователь иначе забывает, какая колонка чья",
             "группировку строк через отдельные <tbody> с заголовком в th scope=\"colgroup\": без неё девять признаков подряд не читаются",
             "настоящую разметку таблицы со scope у заголовков: сетка из div'ов оставляет скринридер без контекста",
@@ -692,6 +714,7 @@
             "ai": {
               "summary": "A plan comparison section: a headline and a three-column table with prices and buttons in a sticky header, its rows split into three sections of three criteria. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the sticky price header: across nine rows the reader otherwise forgets which column is which",
                 "the row grouping through separate <tbody> elements with a th scope=\"colgroup\" heading: without it nine criteria in a row do not get read",
                 "the real table markup with scope on the headers: a grid of divs leaves screen readers without context",
@@ -860,7 +883,7 @@
                 ]
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-004-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop, while the table sits on its own surface --vibeui-pricing-004-card. The markup is a real table with several <tbody> elements: the section heading is put into a <th scope=\"colgroup\"> with colspan, so a screen reader announces both the section and the column. The header with the prices rests on position:sticky, otherwise on a long table it is lost which column is which. The wrapper carries overflow-x:auto and the table a min-width:40rem. A true value is drawn with the word from valueText.yes, false with the one from valueText.no."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-004-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop, while the table sits on its own surface --vibeui-pricing-004-card. The markup is a real table with several <tbody> elements: the section heading is put into a <th scope=\"colgroup\"> with colspan, so a screen reader announces both the section and the column. The header with the prices rests on position:sticky, otherwise on a long table it is lost which column is which. The wrapper carries overflow-x:auto and the table a min-width:40rem. A true value is drawn with the word from valueText.yes, false with the one from valueText.no."
           }
         },
         "cardControls": [
@@ -881,7 +904,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-005/pricing-005.tsx",
@@ -889,13 +915,14 @@
           "target": "@components/vibeui/pricing-005.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-005-*, тёмная фиолетовая база с тёплым акцентом. Старая цена размечена как <s>: это не оформление, а семантика — скринридер объявит её как удалённую. Перечень длинный намеренно: у одного тарифа список входящего заменяет сравнение с соседями, поэтому он занимает большую долю карточки и раскладывается в две колонки от 34rem. Раскладка карточки: один столбец до 56rem, две колонки от 56rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-005-*, тёмная фиолетовая база с тёплым акцентом. Старая цена размечена как <s>: это не оформление, а семантика — скринридер объявит её как удалённую. Перечень длинный намеренно: у одного тарифа список входящего заменяет сравнение с соседями, поэтому он занимает большую долю карточки и раскладывается в две колонки от 34rem. Раскладка карточки: один столбец до 56rem, две колонки от 56rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "single",
           "dark",
-          "included"
+          "included",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -905,6 +932,7 @@
           "usage": "<Pricing005 price=\"9 900 ₽\" period=\"в год\" oldPrice=\"14 900 ₽\" included={[\"Все секции каталога\"]} />",
           "summary": "Тёмная секция с одним тарифом: слева eyebrow, заголовок, описание, цена со старой ценой и две кнопки с гарантией, справа перечень из десяти пунктов в две колонки. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "единственный тариф без соседей: как только появляется второй, теряется приём — длинный перечень вместо сравнения",
             "старую цену в <s>: скринридер обязан объявить её как удалённую, а не прочитать как вторую цену",
             "длинный перечень входящего в две колонки: он и есть замена сравнительной таблицы",
@@ -955,6 +983,7 @@
             "ai": {
               "summary": "A dark single-plan section: an eyebrow, headline, description, a price with an old price and two buttons with a guarantee on the left; a ten-item list in two columns on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the single plan with no neighbours: the moment a second appears, the device — a long list instead of a comparison — is lost",
                 "the old price inside <s>: a screen reader has to announce it as deleted, not read it as a second price",
                 "the long two-column list of what is included: it is the replacement for a comparison table",
@@ -1022,7 +1051,7 @@
                 "guarantee": "A refund within 30 days, no reasons asked."
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-005-* palette, a dark violet base with a warm accent. The old price is marked up as <s>: this is not styling but semantics — a screen reader will announce it as deleted. The list is long on purpose: with a single plan the list of what is included replaces a comparison with neighbours, so it takes up a large share of the card and is laid out in two columns from 34rem. The card layout: one column up to 56rem, two columns from 56rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-005-* palette, a dark violet base with a warm accent. The old price is marked up as <s>: this is not styling but semantics — a screen reader will announce it as deleted. The list is long on purpose: with a single plan the list of what is included replaces a comparison with neighbours, so it takes up a large share of the card and is laid out in two columns from 34rem. The card layout: one column up to 56rem, two columns from 56rem through a container query."
           }
         },
         "cardControls": [
@@ -1041,7 +1070,11 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001",
+        "slider-001"
+      ],
       "files": [
         {
           "path": "pricing-006/pricing-006.tsx",
@@ -1049,13 +1082,14 @@
           "target": "@components/vibeui/pricing-006.tsx"
         }
       ],
-      "docs": "Клиентский компонент (\"use client\"): без состояния ползунок остаётся декорацией. Один файл, ноль зависимостей, палитра --vibeui-pricing-006-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Ступени заданы массивом «до скольки — почём», итог считается последовательно по ступеням, а не одной ставкой на весь объём: так работают реальные объёмные тарифы и не возникает скачка цены на границе. Значение объявляется через aria-live, активная ступень подсвечивается. Ползунок — нативный input type=range со стилизованными треком и бегунком для WebKit и Gecko.",
+      "docs": "Составной блок: импортирует button-016, heading-001, slider-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nКлиентский компонент (\"use client\"): без состояния ползунок остаётся декорацией. Один файл, ноль зависимостей, палитра --vibeui-pricing-006-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Ступени заданы массивом «до скольки — почём», итог считается последовательно по ступеням, а не одной ставкой на весь объём: так работают реальные объёмные тарифы и не возникает скачка цены на границе. Значение объявляется через aria-live, активная ступень подсвечивается. Ползунок — нативный input type=range со стилизованными треком и бегунком для WebKit и Gecko.",
       "meta": {
         "tags": [
           "pricing",
           "calculator",
           "slider",
-          "client"
+          "client",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1065,10 +1099,10 @@
           "usage": "<Pricing006 base={990} tiers={[{ upTo: 10000, perUnit: 0.9 }]} defaultVolume={25000} />",
           "summary": "Секция с калькулятором: ползунок объёма, подписи границ диапазона, список ступеней тарифа с подсветкой активной и панель итога с суммой, пояснением и кнопкой. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001, slider-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "\"use client\" в начале файла: секция считает сумму на месте, и без состояния ползунок бессмысленен",
             "ступенчатый расчёт вместо одной ставки: одна ставка на весь объём даёт скачок цены на границе ступени и выглядит как обман",
             "aria-live у итога: пересчёт должен быть слышен, а не только виден",
-            "нативный input type=range: перетаскивание, стрелки клавиатуры и поддержка тачскрина достаются от браузера",
             "подсветку активной ступени в списке: без неё непонятно, по какой ставке считается текущий объём",
             "локальную палитру --vibeui-pricing-006-* и container-запрос, разводящий карточку в две колонки от 52rem",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
@@ -1133,10 +1167,10 @@
             "ai": {
               "summary": "A calculator section: a volume slider, range bounds, a list of rate tiers with the active one highlighted, and a total panel with the sum, an explanation and a button. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001, slider-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "\"use client\" at the top of the file: the section computes the sum in place, and without state the slider is decoration",
                 "the tiered calculation instead of a single rate: one rate across the whole volume creates a price jump at the tier boundary and reads as a trick",
                 "aria-live on the total: the recalculation has to be heard, not only seen",
-                "the native input type=range: dragging, arrow keys and touch support all come from the browser",
                 "the highlight on the active tier: without it there is no telling which rate the current volume is charged at",
                 "the local --vibeui-pricing-006-* palette and the container query that splits the card into two columns from 52rem",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
@@ -1203,7 +1237,7 @@
                 "note": "Billed monthly, the volume is trued up as it comes. Tiers apply one after another."
               }
             },
-            "docs": "A client component (\"use client\"): without state the slider stays decoration. One file, zero dependencies, and the --vibeui-pricing-006-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The tiers are given as an array of \"up to how much — at what rate\", and the total is computed through the tiers in sequence rather than at one rate across the whole volume: that is how real volume pricing works and it avoids a price jump at a tier boundary. The value is announced through aria-live and the active tier is highlighted. The slider is a native input type=range with the track and thumb styled for WebKit and Gecko."
+            "docs": "A composite block: imports button-016, heading-001, slider-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA client component (\"use client\"): without state the slider stays decoration. One file, zero npm dependencies, and the --vibeui-pricing-006-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The tiers are given as an array of \"up to how much — at what rate\", and the total is computed through the tiers in sequence rather than at one rate across the whole volume: that is how real volume pricing works and it avoids a price jump at a tier boundary. The value is announced through aria-live and the active tier is highlighted. The slider is a native input type=range with the track and thumb styled for WebKit and Gecko."
           }
         },
         "cardControls": [
@@ -1224,7 +1258,13 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "heading-001",
+        "input-001",
+        "input-034",
+        "select-001"
+      ],
       "files": [
         {
           "path": "pricing-007/pricing-007.tsx",
@@ -1232,13 +1272,14 @@
           "target": "@components/vibeui/pricing-007.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-007-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Полей ровно столько, сколько нужно менеджеру для первого ответа: имя, рабочая почта, размер команды и задача. Размер команды — <select>, а не свободный текст: это единственное поле, по которому заявку сортируют. У всех полей есть <label> и id, подсветка на :focus-visible. Обработчика отправки нет: блок серверный, подключите action или серверное действие. От 34rem имя и почта встают в пару, от 56rem форма уходит в правую колонку.",
+      "docs": "Составной блок: импортирует button-001, heading-001, input-001, input-034, select-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-007-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Полей ровно столько, сколько нужно менеджеру для первого ответа: имя, рабочая почта, размер команды и задача. Размер команды — <select>, а не свободный текст: это единственное поле, по которому заявку сортируют. У всех полей есть <label> и id, подсветка на :focus-visible. Обработчика отправки нет: блок серверный, подключите action или серверное действие. От 34rem имя и почта встают в пару, от 56rem форма уходит в правую колонку.",
       "meta": {
         "tags": [
           "pricing",
           "enterprise",
           "contact",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1248,11 +1289,11 @@
           "usage": "<Pricing007 formTitle=\"Оставьте заявку\" sizes={[\"до 10 человек\", \"10–50 человек\"]} />",
           "summary": "Корпоративная секция: слева заголовок, описание и четыре аргумента с маркерами плюс прямой адрес почты, справа форма из имени, рабочей почты, размера команды и задачи. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-001, heading-001, input-001, input-034, select-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "четыре поля и не больше: каждое лишнее поле в корпоративной форме стоит процентов конверсии",
             "размер команды как <select>: это единственное поле, по которому заявку сортируют, и свободный текст здесь бесполезен",
             "прямой адрес почты рядом с формой: часть людей никогда не заполнит форму и просто напишет письмо",
             "отсутствие цены: у корпоративного тарифа она считается под задачу, и подставленная сумма обесценивает разговор",
-            "<label> у каждого поля и подсветку на :focus-visible: форма без подписей недоступна с клавиатуры и со скринридером",
             "локальную палитру --vibeui-pricing-007-* и container-запросы, собирающие пару полей от 34rem и две колонки от 56rem",
             "light-dark() в палитре: компонент обязан следовать color-scheme окружения, а не носить собственную тёмную тему",
             "прозрачную подложку по умолчанию — компонент ложится на фон страницы, а не выкладывает под себя плашку"
@@ -1314,11 +1355,11 @@
             "ai": {
               "summary": "An enterprise section: a headline, a description and four bulleted arguments plus a direct email on the left; a form asking for name, work email, team size and task on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-001, heading-001, input-001, input-034, select-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "four fields and no more: every extra field in an enterprise form costs conversion points",
                 "team size as a <select>: it is the one field the request gets sorted by, and free text is useless there",
                 "the direct email next to the form: some people will never fill a form and simply write a letter",
                 "the absence of a price: an enterprise plan is quoted against the task, and a printed figure cheapens the conversation",
-                "a <label> on every field and the :focus-visible highlight: a form without labels is unusable by keyboard and screen reader",
                 "the local --vibeui-pricing-007-* palette and the container queries that pair the fields from 34rem and split the columns from 56rem",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own",
                 "the transparent background by default — the component sits on the page background instead of laying a panel under itself"
@@ -1408,7 +1449,7 @@
                 }
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-007-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. There are exactly as many fields as a manager needs for a first reply: name, work email, team size and task. Team size is a <select> rather than free text: it is the one field the request gets sorted by. Every field has a <label> and an id, with a :focus-visible highlight. There is no submit handler: the block is a server one, so plug in an action or a server action. From 34rem name and email line up as a pair, and from 56rem the form moves into the right column."
+            "docs": "A composite block: imports button-001, heading-001, input-001, input-034, select-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-007-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. There are exactly as many fields as a manager needs for a first reply: name, work email, team size and task. Team size is a <select> rather than free text: it is the one field the request gets sorted by. Every field has a <label> and an id, with a :focus-visible highlight. There is no submit handler: the block is a server one, so plug in an action or a server action. From 34rem name and email line up as a pair, and from 56rem the form moves into the right column."
           }
         },
         "cardControls": [
@@ -1429,7 +1470,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-008/pricing-008.tsx",
@@ -1437,13 +1481,14 @@
           "target": "@components/vibeui/pricing-008.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-008-* объявлена через light-dark(), поэтому блок следует color-scheme окружения: платная карточка всегда инвертирована относительно бесплатной — тёмная в светлой теме и светлая в тёмной. Подложки у секции по умолчанию нет, она включается пропом background. Платная карточка помечается атрибутом data-paid и переопределяет фон, цвета подписей и стиль кнопки. Список платного разбит на две части заголовком-разделителем: повторять общие пункты во второй колонке значит заставлять сравнивать строки глазами. Кнопки прижаты к низу через margin-top:auto. Раскладка: столбец до 48rem, две колонки от 48rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-008-* объявлена через light-dark(), поэтому блок следует color-scheme окружения: платная карточка всегда инвертирована относительно бесплатной — тёмная в светлой теме и светлая в тёмной. Подложки у секции по умолчанию нет, она включается пропом background. Платная карточка помечается атрибутом data-paid и переопределяет фон, цвета подписей и стиль кнопки. Список платного разбит на две части заголовком-разделителем: повторять общие пункты во второй колонке значит заставлять сравнивать строки глазами. Кнопки прижаты к низу через margin-top:auto. Раскладка: столбец до 48rem, две колонки от 48rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "free",
           "two-plans",
-          "contrast"
+          "contrast",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1453,6 +1498,7 @@
           "usage": "<Pricing008 free={{ name: \"Бесплатно\", price: \"0 ₽\", caption: \"Для одного лендинга.\", features: [\"10 секций\"], action: { label: \"Начать\", href: \"#\" } }} />",
           "summary": "Секция из двух тарифов: слева бесплатный на обычной карточке, справа платный на инвертированной с разделённым списком «всё из бесплатного» и «и сверх того». Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "контраст материала между карточками: инвертированная платная карточка работает быстрее, чем цветная рамка вокруг неё",
             "разделение списка платного на «всё из бесплатного» и «и сверх того»: повтор общих пунктов заставляет сравнивать строки глазами",
             "ровно два тарифа: третий превращает блок в обычную сетку и требует pricing-002",
@@ -1519,6 +1565,7 @@
             "ai": {
               "summary": "A two-plan section: the free plan on a plain card, the paid plan on an inverted one with its list split into «everything in free» and «and beyond that». One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the contrast of material between the cards: an inverted paid card reads faster than a coloured border on it",
                 "splitting the paid list into «everything in free» and «and beyond that»: repeating shared items forces line-by-line comparison",
                 "exactly two plans: a third turns the block into an ordinary grid and calls for pricing-002",
@@ -1608,7 +1655,7 @@
                 }
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-008-* palette is declared through light-dark(), so the block follows the surrounding color-scheme: the paid card is always inverted relative to the free one — dark in the light theme and light in the dark one. The section has no background by default and one is turned on by the background prop. The paid card is marked with the data-paid attribute and overrides the background, the caption colours and the button style. The paid list is split into two parts by a divider heading: repeating the shared items in the second column means forcing a line-by-line comparison by eye. The buttons are pinned to the bottom with margin-top:auto. The layout: a column up to 48rem, two columns from 48rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-008-* palette is declared through light-dark(), so the block follows the surrounding color-scheme: the paid card is always inverted relative to the free one — dark in the light theme and light in the dark one. The section has no background by default and one is turned on by the background prop. The paid card is marked with the data-paid attribute and overrides the background, the caption colours and the button style. The paid list is split into two parts by a divider heading: repeating the shared items in the second column means forcing a line-by-line comparison by eye. The buttons are pinned to the bottom with margin-top:auto. The layout: a column up to 48rem, two columns from 48rem through a container query."
           }
         },
         "cardControls": [
@@ -1629,7 +1676,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-009/pricing-009.tsx",
@@ -1637,13 +1687,14 @@
           "target": "@components/vibeui/pricing-009.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-009-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Три радиокнопки задают валюту, нужная сумма показывается правилом вида [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. Инпуты уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Все три суммы прописаны в данных вручную: локальная цена всегда округлена под рынок, а не получена умножением. Раскладка: столбец, три колонки от 56rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-009-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Три радиокнопки задают валюту, нужная сумма показывается правилом вида [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. Инпуты уводятся с экрана, но остаются в потоке фокуса, кольцо рисуется на подписи. Все три суммы прописаны в данных вручную: локальная цена всегда округлена под рынок, а не получена умножением. Раскладка: столбец, три колонки от 56rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "currency",
           "no-js",
-          "international"
+          "international",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1653,6 +1704,7 @@
           "usage": "<Pricing009 plans={[{ name: \"Команда\", description: \"Для команд.\", amounts: { rub: \"1 490 ₽\", usd: \"$19\", eur: \"€18\" }, features: [\"До пяти участников\"], action: { label: \"Попробовать\", href: \"#\" } }]} />",
           "summary": "Секция тарифов с переключателем валюты: заголовок с описанием, переключатель на три валюты и три карточки, в которых сумма меняется на CSS. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "три суммы в разметке и переключение на :has(): цена не «прыгает» после гидратации и видна при выключенном JavaScript",
             "ручные суммы вместо пересчёта по курсу: локальная цена округляется под рынок, а умножение даёт нечитаемые «1 487 ₽»",
             "радиокнопки в потоке фокуса: display:none у них сломал бы переключение с клавиатуры",
@@ -1719,6 +1771,7 @@
             "ai": {
               "summary": "A pricing section with a currency switch: a headline with a description, a three-currency switch and three cards whose amount swaps in CSS. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the three amounts in the markup and the :has() switching: the price never jumps after hydration and shows with JavaScript off",
                 "hand-written amounts instead of rate conversion: a local price is rounded to its market, while multiplication yields unreadable figures",
                 "the radio buttons staying in the focus order: display:none on them would break keyboard switching",
@@ -1832,7 +1885,7 @@
                 ]
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-009-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. Three radio buttons set the currency, and the right sum is shown by a rule of the form [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. The inputs are moved off screen but stay in the focus order, and the ring is drawn on the label. All three sums are written into the data by hand: a local price is always rounded to its market rather than obtained by multiplication. The layout: a column, three columns from 56rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-009-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. Three radio buttons set the currency, and the right sum is shown by a rule of the form [data-vibeui-block=\"pricing-009\"]:has([data-cur=\"usd\"]:checked) [data-amount=\"usd\"]. The inputs are moved off screen but stay in the focus order, and the ring is drawn on the label. All three sums are written into the data by hand: a local price is always rounded to its market rather than obtained by multiplication. The layout: a column, three columns from 56rem through a container query."
           }
         },
         "cardControls": [
@@ -1853,7 +1906,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-010/pricing-010.tsx",
@@ -1861,13 +1917,14 @@
           "target": "@components/vibeui/pricing-010.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-010-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Лента событий размечена как <ol>: порядок дней важен и должен читаться голосом, а не только цветными точками. Соединительная линия — ::before у события, у последнего скрыта. Главный страх пробного периода — «забуду отменить и спишут», поэтому ответ на него стоит прямо в ленте и продублирован тремя короткими гарантиями под кнопкой. Раскладка: столбец до 56rem, две колонки от 56rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-010-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Лента событий размечена как <ol>: порядок дней важен и должен читаться голосом, а не только цветными точками. Соединительная линия — ::before у события, у последнего скрыта. Главный страх пробного периода — «забуду отменить и спишут», поэтому ответ на него стоит прямо в ленте и продублирован тремя короткими гарантиями под кнопкой. Раскладка: столбец до 56rem, две колонки от 56rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "trial",
           "timeline",
-          "light"
+          "light",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1877,6 +1934,7 @@
           "usage": "<Pricing010 trialDays={14} price=\"1 490 ₽\" timeline={[{ day: \"Сегодня\", title: \"Открывается каталог\", description: \"Карта не нужна.\" }]} />",
           "summary": "Секция пробного периода: слева бейдж с числом дней, цена после окончания, кнопка и три гарантии; справа лента из трёх событий с датами и описаниями. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ленту событий вместо списка возможностей: пробный период продаётся спокойствием, а не набором функций",
             "событие об окончании с явным «списания не будет»: это главный страх пользователя, и прятать ответ в мелкий шрифт нельзя",
             "разметку <ol> для ленты: порядок дней и есть содержание",
@@ -1945,6 +2003,7 @@
             "ai": {
               "summary": "A trial section: a day-count badge, the price after the trial, a button and three reassurances on the left; a three-event timeline with dates and descriptions on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the timeline instead of a feature list: a trial is sold on peace of mind, not on a set of functions",
                 "the closing event stating plainly that nothing will be charged: this is the user's main fear and the answer must not hide in fine print",
                 "the <ol> markup for the timeline: the order of the days is the content",
@@ -2031,7 +2090,7 @@
                 ]
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-010-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The timeline is marked up as an <ol>: the order of the days matters and has to be read out loud, not only shown by coloured dots. The connecting line is a ::before on the event, hidden on the last one. The main fear about a trial is \"I will forget to cancel and get charged\", so the answer to it stands right in the timeline and is echoed by three short reassurances under the button. The layout: a column up to 56rem, two columns from 56rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-010-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The timeline is marked up as an <ol>: the order of the days matters and has to be read out loud, not only shown by coloured dots. The connecting line is a ::before on the event, hidden on the last one. The main fear about a trial is \"I will forget to cancel and get charged\", so the answer to it stands right in the timeline and is echoed by three short reassurances under the button. The layout: a column up to 56rem, two columns from 56rem through a container query."
           }
         },
         "cardControls": [
@@ -2052,7 +2111,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-011/pricing-011.tsx",
@@ -2060,13 +2122,14 @@
           "target": "@components/vibeui/pricing-011.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-011-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Раскрытие построено на <details>/<summary>: без скрипта, с поддержкой браузерного поиска по странице и корректной печатью. Нативный маркер убран через list-style:none и ::-webkit-details-marker, вместо него плюс из двух псевдоэлементов, который превращается в минус по [open]. Первый вопрос открыт: пустая гармошка выглядит как список ссылок. Раскладка: столбец до 54rem, две колонки от 54rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-011-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Раскрытие построено на <details>/<summary>: без скрипта, с поддержкой браузерного поиска по странице и корректной печатью. Нативный маркер убран через list-style:none и ::-webkit-details-marker, вместо него плюс из двух псевдоэлементов, который превращается в минус по [open]. Первый вопрос открыт: пустая гармошка выглядит как список ссылок. Раскладка: столбец до 54rem, две колонки от 54rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "faq",
           "details",
-          "no-js"
+          "no-js",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2076,6 +2139,7 @@
           "usage": "<Pricing011 questions={[{ question: \"Что будет при отмене?\", answer: \"Установленное остаётся у вас.\", open: true }]} />",
           "summary": "Секция вопросов о цене: слева заголовок с описанием и карточка с прямым адресом почты, справа гармошка из пяти вопросов на <details> с собственным маркером-плюсом. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "<details>/<summary> вместо самодельной гармошки: браузерный поиск по странице находит текст в закрытых блоках, а скриптовая гармошка — нет",
             "собственный маркер-плюс: нативный треугольник выглядит по-разному в разных браузерах и ломает ритм списка",
             "первый вопрос открытым: закрытая гармошка читается как список ссылок и не показывает, что внутри ответы",
@@ -2134,6 +2198,7 @@
             "ai": {
               "summary": "A pricing-FAQ section: a headline with a description and a direct-email card on the left; a five-question <details> accordion with its own plus marker on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "<details>/<summary> instead of a hand-rolled accordion: in-page search finds text inside closed blocks, a scripted accordion hides it",
                 "the custom plus marker: the native triangle looks different in every browser and breaks the rhythm of the list",
                 "the first question open: a closed accordion reads as a list of links and never shows that answers live inside",
@@ -2211,7 +2276,7 @@
                 }
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-011-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The disclosure is built on <details>/<summary>: no script, with support for in-page browser search and correct printing. The native marker is removed through list-style:none and ::-webkit-details-marker, and in its place is a plus built from two pseudo-elements that turns into a minus on [open]. The first question is open: an empty accordion looks like a list of links. The layout: a column up to 54rem, two columns from 54rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-011-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The disclosure is built on <details>/<summary>: no script, with support for in-page browser search and correct printing. The native marker is removed through list-style:none and ::-webkit-details-marker, and in its place is a plus built from two pseudo-elements that turns into a minus on [open]. The first question is open: an empty accordion looks like a list of links. The layout: a column up to 54rem, two columns from 54rem through a container query."
           }
         },
         "cardControls": [
@@ -2231,7 +2296,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-012/pricing-012.tsx",
@@ -2239,13 +2307,14 @@
           "target": "@components/vibeui/pricing-012.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-012-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Печать нарисована коническим градиентом с пунктирным внутренним кольцом на ::before — ни картинки, ни шрифтовой иконки. Шаги размечены как <ol> с нумерованными кружками. Условия вынесены отдельным абзацем нормального кегля, а не сноской шестым: спрятанные условия читаются как подвох. Раскладка: столбец до 54rem, печать и текст в две колонки от 54rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-012-* объявлена через light-dark(), поэтому блок следует color-scheme окружения; подложки у секции по умолчанию нет, она включается пропом background. Печать нарисована коническим градиентом с пунктирным внутренним кольцом на ::before — ни картинки, ни шрифтовой иконки. Шаги размечены как <ol> с нумерованными кружками. Условия вынесены отдельным абзацем нормального кегля, а не сноской шестым: спрятанные условия читаются как подвох. Раскладка: столбец до 54rem, печать и текст в две колонки от 54rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "guarantee",
           "refund",
-          "trust"
+          "trust",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2255,6 +2324,7 @@
           "usage": "<Pricing012 days={30} daysLabel=\"дней на возврат\" price=\"1 490 ₽\" />",
           "summary": "Секция гарантии: круглая печать с числом дней, заголовок с описанием, три шага процедуры возврата с точными сроками, цена с кнопкой и абзац условий. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "изложение гарантии как процедуры: обещание «вернём деньги» стоит ровно столько, сколько понятно про сроки и способ",
             "точные сроки в шагах: «за один рабочий день» и «5–10 дней» — это и есть содержание гарантии",
             "условия отдельным абзацем нормального кегля: сноска шестым кеглем читается как попытка спрятать оговорку",
@@ -2321,6 +2391,7 @@
             "ai": {
               "summary": "A guarantee section: a round day-count seal, a headline with a description, three steps of the refund procedure with exact timings, a price with a button and a terms paragraph. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "stating the guarantee as a procedure: «we refund you» is worth exactly as much as the clarity about timings and method",
                 "the exact timings in the steps: «within one working day» and «5–10 days» are the substance of the guarantee",
                 "the terms as their own paragraph at normal size: fine print reads as an attempt to hide a caveat",
@@ -2397,7 +2468,7 @@
                 ]
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-012-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The seal is drawn with a conic gradient and a dashed inner ring on ::before — no image and no icon font. The steps are marked up as an <ol> with numbered circles. The terms are put in a separate paragraph at normal size rather than in a sixth-size footnote: hidden terms read as a catch. The layout: a column up to 54rem, the seal and the text in two columns from 54rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-012-* palette is declared through light-dark(), so the block follows the surrounding color-scheme; the section has no background by default and one is turned on by the background prop. The seal is drawn with a conic gradient and a dashed inner ring on ::before — no image and no icon font. The steps are marked up as an <ol> with numbered circles. The terms are put in a separate paragraph at normal size rather than in a sixth-size footnote: hidden terms read as a catch. The layout: a column up to 54rem, the seal and the text in two columns from 54rem through a container query."
           }
         },
         "cardControls": [
@@ -2418,7 +2489,11 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "button-018",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-013/pricing-013.tsx",
@@ -2426,13 +2501,14 @@
           "target": "@components/vibeui/pricing-013.tsx"
         }
       ],
-      "docs": "Клиентский компонент (\"use client\"): без состояния счётчик мест бессмысленен. Один файл, ноль зависимостей, палитра --vibeui-pricing-013-*, светлая база. Число мест меняется парой кнопок, а не текстовым полем со стрелками: значение нельзя испортить вставкой из буфера, а <output> с aria-live объявляет пересчёт голосом. Кнопки блокируются на границах диапазона, а не молча игнорируют нажатие. Счёт справа показывает включённые места, дополнительные и итог. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, button-018, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nКлиентский компонент (\"use client\"): без состояния счётчик мест бессмысленен. Один файл, ноль зависимостей, палитра --vibeui-pricing-013-*, светлая база. Число мест меняется парой кнопок, а не текстовым полем со стрелками: значение нельзя испортить вставкой из буфера, а <output> с aria-live объявляет пересчёт голосом. Кнопки блокируются на границах диапазона, а не молча игнорируют нажатие. Счёт справа показывает включённые места, дополнительные и итог. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "seats",
           "team",
-          "client"
+          "client",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2442,6 +2518,7 @@
           "usage": "<Pricing013 perSeat={390} includedSeats={3} defaultSeats={8} maxSeats={50} />",
           "summary": "Светлая секция тарифа за место: слева счётчик участников с подсказкой о включённых местах и список возможностей, справа счёт с разбивкой и итогом плюс кнопка. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, button-018, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "\"use client\" в начале файла: счётчик и пересчёт счёта работают только с состоянием",
             "счётчик на кнопках с <output> вместо текстового поля: значение нельзя испортить вставкой, а aria-live объявляет пересчёт",
             "блокировку кнопок на границах диапазона: заблокированная кнопка объясняет предел, а молча проигнорированное нажатие — нет",
@@ -2511,6 +2588,7 @@
             "ai": {
               "summary": "A light per-seat section: a seat stepper with an included-seats hint and a feature list on the left; an itemised bill with a total and a button on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-016, button-018, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "\"use client\" at the top of the file: the stepper and the bill only work with state",
                 "the button stepper with an <output> instead of a text field: the value cannot be broken by pasting, and aria-live announces the recalculation",
                 "the buttons disabling at the range bounds: a disabled button explains the limit, a silently ignored click does not",
@@ -2585,7 +2663,7 @@
                 "includedText": "{count} seats"
               }
             },
-            "docs": "A client component (\"use client\"): without state the seat counter is pointless. One file, zero dependencies, the --vibeui-pricing-013-* palette, a light base. The number of seats is changed with a pair of buttons rather than a text field with arrows: the value cannot be spoiled by a paste from the clipboard, and an <output> with aria-live announces the recalculation out loud. The buttons are disabled at the range bounds rather than silently ignoring the click. The bill on the right shows the included seats, the additional ones and the total. The layout: a column up to 52rem, two columns from 52rem through a container query."
+            "docs": "A composite block: imports button-016, button-018, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA client component (\"use client\"): without state the seat counter is pointless. One file, zero npm dependencies, the --vibeui-pricing-013-* palette, a light base. The number of seats is changed with a pair of buttons rather than a text field with arrows: the value cannot be spoiled by a paste from the clipboard, and an <output> with aria-live announces the recalculation out loud. The buttons are disabled at the range bounds rather than silently ignoring the click. The bill on the right shows the included seats, the additional ones and the total. The layout: a column up to 52rem, two columns from 52rem through a container query."
           }
         },
         "cardControls": [
@@ -2606,7 +2684,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-014/pricing-014.tsx",
@@ -2614,13 +2695,14 @@
           "target": "@components/vibeui/pricing-014.tsx"
         }
       ],
-      "docs": "Клиентский компонент (\"use client\"): сумма считается на месте. Один файл, ноль зависимостей, палитра --vibeui-pricing-014-*, светлая база. Чекбоксы настоящие, а не квадратики на div: пробел, состояние и группировка достаются от браузера, а своя галочка рисуется псевдоэлементом поверх через :has(input:checked). Строки допуслуг — <label>, поэтому кликабельны целиком. Правая панель повторяет выбранное построчно и подводит итог с aria-live. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nКлиентский компонент (\"use client\"): сумма считается на месте. Один файл, ноль зависимостей, палитра --vibeui-pricing-014-*, светлая база. Чекбоксы настоящие, а не квадратики на div: пробел, состояние и группировка достаются от браузера, а своя галочка рисуется псевдоэлементом поверх через :has(input:checked). Строки допуслуг — <label>, поэтому кликабельны целиком. Правая панель повторяет выбранное построчно и подводит итог с aria-live. Раскладка: столбец до 52rem, две колонки от 52rem container-запросом.",
       "meta": {
         "tags": [
           "pricing",
           "addons",
           "checkbox",
-          "client"
+          "client",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2630,6 +2712,7 @@
           "usage": "<Pricing014 basePrice={1490} addons={[{ id: \"seats\", title: \"Дополнительные места\", description: \"Пять мест сверх тарифа.\", price: 990, preselected: true }]} />",
           "summary": "Светлая секция-конструктор: слева базовый тариф и до шести допуслуг чекбоксами с ценой в строке, справа панель со списком выбранного и итогом. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "\"use client\" в начале файла: без состояния чекбоксы не пересчитывают итог",
             "настоящие input type=checkbox: пробел, состояние и объявление скринридером достаются от браузера, а не имитируются",
             "цену допуслуги в той же строке, что и название: цена, спрятанная в подсказку, заставляет включать услугу вслепую",
@@ -2690,6 +2773,7 @@
             "ai": {
               "summary": "A light builder section: the base plan and up to six add-on checkboxes with in-row prices on the left; a summary panel listing the selection and the total on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "\"use client\" at the top of the file: without state the checkboxes never recalculate the total",
                 "real input type=checkbox elements: the spacebar, the state and the screen-reader announcement come from the browser rather than being faked",
                 "the add-on price in the same row as its name: a price hidden in a tooltip forces people to opt in blind",
@@ -2776,7 +2860,7 @@
                 }
               }
             },
-            "docs": "A client component (\"use client\"): the sum is computed in place. One file, zero dependencies, the --vibeui-pricing-014-* palette, a light base. The checkboxes are real ones rather than squares on a div: the spacebar, the state and the grouping come from the browser, and a checkmark of its own is drawn over them with a pseudo-element through :has(input:checked). The add-on rows are <label> elements, so they are clickable as a whole. The right panel echoes the selection line by line and totals it with aria-live. The layout: a column up to 52rem, two columns from 52rem through a container query."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA client component (\"use client\"): the sum is computed in place. One file, zero npm dependencies, the --vibeui-pricing-014-* palette, a light base. The checkboxes are real ones rather than squares on a div: the spacebar, the state and the grouping come from the browser, and a checkmark of its own is drawn over them with a pseudo-element through :has(input:checked). The add-on rows are <label> elements, so they are clickable as a whole. The right panel echoes the selection line by line and totals it with aria-live. The layout: a column up to 52rem, two columns from 52rem through a container query."
           }
         },
         "cardControls": [
@@ -2796,7 +2880,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "pricing-015/pricing-015.tsx",
@@ -2804,13 +2890,14 @@
           "target": "@components/vibeui/pricing-015.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-015-*, бумажная база. Моноширинный шрифт и tabular-nums выстраивают суммы в колонку по разрядам — в чеке это не стилизация, а способ проверить сложение глазами. Позиции размечены как <dl> с парами. Верхний и нижний края вырезаны повторяющимися радиальными градиентами через mask-image с mask-composite: intersect; в браузерах без поддержки composite маска просто не даёт вырезов, и чек остаётся целым. Ширина блока намеренно узкая: чек не должен растягиваться на всю страницу.",
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-015-*, бумажная база. Моноширинный шрифт и tabular-nums выстраивают суммы в колонку по разрядам — в чеке это не стилизация, а способ проверить сложение глазами. Позиции размечены как <dl> с парами. Верхний и нижний края вырезаны повторяющимися радиальными градиентами через mask-image с mask-composite: intersect; в браузерах без поддержки composite маска просто не даёт вырезов, и чек остаётся целым. Ширина блока намеренно узкая: чек не должен растягиваться на всю страницу.",
       "meta": {
         "tags": [
           "pricing",
           "receipt",
           "invoice",
-          "mono"
+          "mono",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2820,6 +2907,7 @@
           "usage": "<Pricing015 documentNumber=\"Счёт № 2026-0418\" total=\"36 525,60 ₽\" taxLabel=\"НДС 20 %\" />",
           "summary": "Секция-чек: шапка с продавцом, номером и датой, список позиций с уточнениями, подытог, скидка и налог отдельными строками, крупный итог и кнопка оплаты. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "моноширинный шрифт и tabular-nums: в чеке это способ проверить сложение глазами, а не декоративный приём",
             "скидку и налог отдельными строками до итога: «включая НДС» мелким шрифтом порождает споры и возвраты",
             "перфорацию краёв маской: она делает форму узнаваемой без единой картинки и деградирует безопасно",
@@ -2878,6 +2966,7 @@
             "ai": {
               "summary": "A receipt section: a header with the merchant, document number and date, a list of line items with details, a subtotal, discount and tax lines, a large total and a pay button. One file, zero dependencies.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the monospace type and tabular-nums: on a receipt that is how the addition gets checked by eye, not a decorative flourish",
                 "the discount and tax on their own lines before the total: «tax included» in fine print breeds disputes and refunds",
                 "the perforated edges from the mask: they make the shape recognisable without a single image and degrade safely",
@@ -2957,7 +3046,7 @@
                 "footer": "Closing documents arrive by email within a day of payment."
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-015-* palette, a paper base. The monospaced type and tabular-nums line the sums up in a column by digit place — on a receipt that is not styling but the way the addition is checked by eye. The line items are marked up as a <dl> of pairs. The top and bottom edges are cut out with repeating radial gradients through mask-image with mask-composite: intersect; in browsers without composite support the mask simply produces no cut-outs and the receipt stays whole. The block width is deliberately narrow: a receipt must not stretch across the whole page."
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-015-* palette, a paper base. The monospaced type and tabular-nums line the sums up in a column by digit place — on a receipt that is not styling but the way the addition is checked by eye. The line items are marked up as a <dl> of pairs. The top and bottom edges are cut out with repeating radial gradients through mask-image with mask-composite: intersect; in browsers without composite support the mask simply produces no cut-outs and the receipt stays whole. The block width is deliberately narrow: a receipt must not stretch across the whole page."
           }
         },
         "cardControls": [
@@ -2977,7 +3066,12 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-001",
+        "button-016",
+        "heading-001",
+        "input-001"
+      ],
       "files": [
         {
           "path": "pricing-016/pricing-016.tsx",
@@ -2985,13 +3079,14 @@
           "target": "@components/vibeui/pricing-016.tsx"
         }
       ],
-      "docs": "Клиентский компонент (\"use client\"): без состояния поле не проверяет код. Один файл, ноль зависимостей, палитра --vibeui-pricing-016-*, светлая база. Результат проверки объявляется через role=\"status\", а не только подкрашивается зелёным и красным: цвет один не доходит до скринридера и до дальтоника. Ошибочный код не стирается — его оставляют, чтобы человек увидел опечатку. Введённый код приводится к верхнему регистру только при сравнении, а поле отображает его через text-transform. Старая цена размечена как <s>.",
+      "docs": "Составной блок: импортирует button-001, button-016, heading-001, input-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nКлиентский компонент (\"use client\"): без состояния поле не проверяет код. Один файл, ноль зависимостей, палитра --vibeui-pricing-016-*, светлая база. Результат проверки объявляется через role=\"status\", а не только подкрашивается зелёным и красным: цвет один не доходит до скринридера и до дальтоника. Ошибочный код не стирается — его оставляют, чтобы человек увидел опечатку. Введённый код приводится к верхнему регистру только при сравнении, а поле отображает его через text-transform. Старая цена размечена как <s>.",
       "meta": {
         "tags": [
           "pricing",
           "promo",
           "discount",
-          "client"
+          "client",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3001,6 +3096,7 @@
           "usage": "<Pricing016 price={14880} promos={[{ code: \"VIBE20\", percent: 20, caption: \"Скидка 20 %\" }]} />",
           "summary": "Светлая секция промокода: карточка тарифа с ценой, поле кода с кнопкой применения, строка результата проверки, примечание об условиях и кнопка перехода к оплате. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-001, button-016, heading-001, input-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "\"use client\" в начале файла: проверка кода и пересчёт цены работают только с состоянием",
             "role=\"status\" у строки результата: цвет один не доходит до скринридера и до дальтоника",
             "сохранение введённого кода после ошибки: стёртое поле не даёт увидеть опечатку и заставляет вводить заново",
@@ -3061,6 +3157,7 @@
             "ai": {
               "summary": "A light promo section: a plan card with a price, a code field with an apply button, a validation status line, a terms note and a button to checkout. One file, zero dependencies.",
               "preserve": [
+                "the button-001, button-016, heading-001, input-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "\"use client\" at the top of the file: checking the code and repricing only work with state",
                 "role=\"status\" on the result line: colour alone reaches neither a screen reader nor a colour-blind reader",
                 "keeping the entered code after an error: a cleared field hides the typo and forces a retype",
@@ -3137,7 +3234,7 @@
                 "appliedText": "{caption} applied"
               }
             },
-            "docs": "A client component (\"use client\"): without state the field does not check the code. One file, zero dependencies, the --vibeui-pricing-016-* palette, a light base. The check result is announced through role=\"status\" rather than only tinted green and red: colour alone reaches neither a screen reader nor a colour-blind reader. A wrong code is not cleared — it is left in place so that the person sees the typo. The entered code is uppercased only for the comparison, while the field displays it through text-transform. The old price is marked up as <s>."
+            "docs": "A composite block: imports button-001, button-016, heading-001, input-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA client component (\"use client\"): without state the field does not check the code. One file, zero npm dependencies, the --vibeui-pricing-016-* palette, a light base. The check result is announced through role=\"status\" rather than only tinted green and red: colour alone reaches neither a screen reader nor a colour-blind reader. A wrong code is not cleared — it is left in place so that the person sees the typo. The entered code is uppercased only for the comparison, while the field displays it through text-transform. The old price is marked up as <s>."
           }
         },
         "cardControls": [
@@ -3157,7 +3254,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "pricing-018/pricing-018.tsx",
@@ -3165,13 +3265,14 @@
           "target": "@components/vibeui/pricing-018.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-018-*, светлая холодная база. Пункты не свалены в один список, а разложены по разделам с подписью, зачем раздел нужен: тридцать строк подряд не читают. У пункта есть уточнение серым — оно снимает вопрос «а это в каком объёме». На широкой ширине левая колонка с ценой и кнопкой становится position:sticky, чтобы длинный перечень не уводил от действия. Раскладка: столбец, пункты в две колонки от 34rem, две колонки секции от 58rem.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-018-*, светлая холодная база. Пункты не свалены в один список, а разложены по разделам с подписью, зачем раздел нужен: тридцать строк подряд не читают. У пункта есть уточнение серым — оно снимает вопрос «а это в каком объёме». На широкой ширине левая колонка с ценой и кнопкой становится position:sticky, чтобы длинный перечень не уводил от действия. Раскладка: столбец, пункты в две колонки от 34rem, две колонки секции от 58rem.",
       "meta": {
         "tags": [
           "pricing",
           "included",
           "list",
-          "sticky"
+          "sticky",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3181,6 +3282,7 @@
           "usage": "<Pricing018 price=\"1 490 ₽\" sections={[{ title: \"Каталог\", caption: \"Ради чего оформляют доступ.\", items: [{ title: \"1 080 секций\", detail: \"Все категории\" }] }]} />",
           "summary": "Светлая секция состава тарифа: слева заголовок, описание и липкая карточка с ценой и кнопкой, справа три раздела по четыре пункта с уточнениями. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "разбиение перечня на разделы с подписью: двенадцать пунктов подряд без группировки не читаются",
             "уточнение под пунктом: оно снимает вопрос «а это в каком объёме», из-за которого пишут в поддержку",
             "липкую левую колонку с ценой на широкой ширине: длинный перечень не должен уводить от действия",
@@ -3239,6 +3341,7 @@
             "ai": {
               "summary": "A light plan-contents section: a headline, a description and a sticky price card with a button on the left; three sections of four items with scope notes on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "splitting the list into captioned sections: twelve items in a row without grouping do not get read",
                 "the note under each item: it answers «in what volume?», the question that otherwise reaches support",
                 "the sticky left column with the price on a wide block: a long list must not carry the reader away from the action",
@@ -3362,7 +3465,7 @@
                 ]
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-018-* palette, a light cool base. The items are not dumped into a single list but laid out in sections captioned with what the section is for: thirty lines in a row do not get read. An item carries a note in grey — it removes the question \"in what volume?\". At a wide width the left column with the price and the button becomes position:sticky, so a long list does not lead the reader away from the action. The layout: a column, the items in two columns from 34rem, two section columns from 58rem."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-018-* palette, a light cool base. The items are not dumped into a single list but laid out in sections captioned with what the section is for: thirty lines in a row do not get read. An item carries a note in grey — it removes the question \"in what volume?\". At a wide width the left column with the price and the button becomes position:sticky, so a long list does not lead the reader away from the action. The layout: a column, the items in two columns from 34rem, two section columns from 58rem."
           }
         },
         "cardControls": [
@@ -3382,7 +3485,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "pricing-019/pricing-019.tsx",
@@ -3390,13 +3495,14 @@
           "target": "@components/vibeui/pricing-019.tsx"
         }
       ],
-      "docs": "Серверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-019-*, светлая база с градиентной панелью апгрейда. Полоски расхода — нативный <progress> с aria-label, а не div с шириной в процентах: браузер сам объявляет значение и максимум, а число рядом дублирует его текстом. Полоса, перевалившая за 80 %, помечается атрибутом data-high и красится в предупреждающий цвет — именно она и есть аргумент за переход, поэтому апгрейд стоит рядом, а не в письме. Раскладка: столбец до 52rem, две колонки от 52rem.",
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nСерверный компонент, один файл, ноль зависимостей. Палитра --vibeui-pricing-019-*, светлая база с градиентной панелью апгрейда. Полоски расхода — нативный <progress> с aria-label, а не div с шириной в процентах: браузер сам объявляет значение и максимум, а число рядом дублирует его текстом. Полоса, перевалившая за 80 %, помечается атрибутом data-high и красится в предупреждающий цвет — именно она и есть аргумент за переход, поэтому апгрейд стоит рядом, а не в письме. Раскладка: столбец до 52rem, две колонки от 52rem.",
       "meta": {
         "tags": [
           "pricing",
           "billing",
           "upgrade",
-          "usage"
+          "usage",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3406,6 +3512,7 @@
           "usage": "<Pricing019 currentName=\"Тариф «Команда»\" usage={[{ label: \"Проекты\", used: 8, limit: 10 }]} upgradeDelta=\"+3 410 ₽ к счёту\" />",
           "summary": "Светлый экран биллинга: слева карточка текущего плана с датой списания и тремя полосами расхода лимитов, справа градиентная панель апгрейда со списком выгод и кнопкой. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "нативный <progress> вместо полоски на div: браузер объявляет значение и максимум, а самодельная полоса недоступна",
             "число рядом с полосой: полоса без цифры не отвечает на вопрос «сколько именно осталось»",
             "предупреждающий цвет с порога 80 %: заполненная полоса и есть аргумент за апгрейд, и её нужно видеть",
@@ -3465,6 +3572,7 @@
             "ai": {
               "summary": "A light billing screen: a current-plan card with the renewal date and three usage bars on the left; a gradient upgrade panel with a gains list and a button on the right. One file, zero dependencies.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the native <progress> instead of a div bar: the browser announces the value and the maximum, while a hand-built bar is inaccessible",
                 "the figure next to the bar: a bar with no number never answers «how much is actually left»",
                 "the warning colour above the 80% threshold: a filling bar is the argument for upgrading and has to be visible",
@@ -3556,7 +3664,7 @@
                 "usageText": "{used} of {limit}"
               }
             },
-            "docs": "A server component, one file, zero dependencies. The --vibeui-pricing-019-* palette, a light base with a gradient upgrade panel. The usage bars are a native <progress> with an aria-label rather than a div with a width in per cent: the browser announces the value and the maximum itself, and the figure beside it duplicates that as text. A bar that has passed 80% is marked with the data-high attribute and painted in the warning colour — it is precisely the argument for upgrading, which is why the upgrade stands next to it and not in an email. The layout: a column up to 52rem, two columns from 52rem."
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nA server component, one file, zero npm dependencies. The --vibeui-pricing-019-* palette, a light base with a gradient upgrade panel. The usage bars are a native <progress> with an aria-label rather than a div with a width in per cent: the browser announces the value and the maximum itself, and the figure beside it duplicates that as text. A bar that has passed 80% is marked with the data-high attribute and painted in the warning colour — it is precisely the argument for upgrading, which is why the upgrade stands next to it and not in an email. The layout: a column up to 52rem, two columns from 52rem."
           }
         },
         "cardControls": [
@@ -3576,7 +3684,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-013",
+        "button-016"
+      ],
       "files": [
         {
           "path": "pricing-020/pricing-020.tsx",
@@ -3584,7 +3695,7 @@
           "target": "@components/vibeui/pricing-020.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради переключателя и блика. Переключатель — role=group с aria-pressed и плашкой ::before на translateX. Цена — span с key=значение: смена значения перемонтирует span с @keyframes въезда снизу (высота фиксирована, overflow:hidden). Рамка — ::before выделенного плана с inset:-2px и conic-gradient(from var(--a)), угол — @property <angle>, @keyframes 5 с; карточка isolation:isolate. Полоска мест — seatsTaken/seatsTotal → --fill, ::before шириной calc(var(--fill)×100 %) с @keyframes от нуля. Блик — ::after с radial-gradient в --mx/--my из pointermove. Числа — Intl.NumberFormat ru-RU. От 56rem (container query) три колонки, выделенный приподнят. Палитра --vibeui-pricing-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-013, button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради переключателя и блика. Переключатель — role=group с aria-pressed и плашкой ::before на translateX. Цена — span с key=значение: смена значения перемонтирует span с @keyframes въезда снизу (высота фиксирована, overflow:hidden). Рамка — ::before выделенного плана с inset:-2px и conic-gradient(from var(--a)), угол — @property <angle>, @keyframes 5 с; карточка isolation:isolate. Полоска мест — seatsTaken/seatsTotal → --fill, ::before шириной calc(var(--fill)×100 %) с @keyframes от нуля. Блик — ::after с radial-gradient в --mx/--my из pointermove. Числа — Intl.NumberFormat ru-RU. От 56rem (container query) три колонки, выделенный приподнят. Палитра --vibeui-pricing-020-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Unbounded и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3597,7 +3708,8 @@
           "installment",
           "toggle",
           "conic",
-          "progress"
+          "progress",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -3614,6 +3726,7 @@
           "usage": "<Pricing020\n  months={6}\n  sticker=\"−20 % до 30 сентября\"\n  plans={[\n    { name: \"Сам\", price: 29000, oldPrice: 36000, features: [\"18 уроков\", \"Чат потока\"], actionLabel: \"Выбрать\", actionHref: \"/pay/solo\" },\n    { name: \"С куратором\", price: 49000, oldPrice: 61000, featured: true, seats: \"Осталось 12 мест\", seatsTaken: 48, seatsTotal: 60, features: [\"Куратор на 12 человек\", \"Защита кейса\"], actionLabel: \"Записаться\", actionHref: \"/pay/mentor\" },\n  ]}\n/>",
           "summary": "Самодостаточные тарифы для курса, подписки или услуги с рассрочкой: перелистывание цен, вращающаяся рамка у главного плана, полоска мест, блик и настоящие ссылки на оплату. Планы — массив пропсом.",
           "preserve": [
+            "импорты button-013, button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "перелистывание цены при смене режима — число не просто меняется",
             "вращающуюся conic-рамку выделенного плана через @property",
             "полоску занятых мест и курсорный блик карточек"
@@ -3679,10 +3792,11 @@
           "en": {
             "title": "Course pricing with instalments, a spinning frame and a seats bar",
             "description": "Course pricing: a “pay now / instalments over N months” switch flips the prices, the featured plan has a spinning conic frame, a seats-taken bar fills on appearance, cards catch a cursor sheen. The old price is struck through, “seats left” as a tag, real payment links.",
-            "docs": "One file, zero dependencies, “use client” for the switch and the sheen. The switch is a role=group with aria-pressed and a ::before pill on translateX. The price is a span keyed by value: a change remounts it with a slide-up @keyframes (fixed height, overflow:hidden). The frame is the featured plan's ::before with inset:-2px and conic-gradient(from var(--a)), the angle an @property <angle> animated over 5 s; the card is isolation:isolate. The seats bar maps seatsTaken/seatsTotal to --fill, a ::before calc(var(--fill)×100 %) wide with a from-zero @keyframes. The sheen is an ::after radial-gradient at --mx/--my from pointermove. Numbers via Intl.NumberFormat ru-RU. From 56rem (container query) three columns, the featured one lifted. Palette --vibeui-pricing-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-013, button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the switch and the sheen. The switch is a role=group with aria-pressed and a ::before pill on translateX. The price is a span keyed by value: a change remounts it with a slide-up @keyframes (fixed height, overflow:hidden). The frame is the featured plan's ::before with inset:-2px and conic-gradient(from var(--a)), the angle an @property <angle> animated over 5 s; the card is isolation:isolate. The seats bar maps seatsTaken/seatsTotal to --fill, a ::before calc(var(--fill)×100 %) wide with a from-zero @keyframes. The sheen is an ::after radial-gradient at --mx/--my from pointermove. Numbers via Intl.NumberFormat ru-RU. From 56rem (container query) three columns, the featured one lifted. Palette --vibeui-pricing-020-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Unbounded and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "Self-contained pricing for a course, subscription or service with instalments: price flipping, a spinning frame on the main plan, a seats bar, a sheen and real payment links. Plans come in as a prop array.",
               "preserve": [
+                "the button-013, button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the price flip on mode change — the number doesn't merely change",
                 "the featured plan's spinning conic frame via @property",
                 "the seats-taken bar and the cards' cursor sheen"
@@ -3791,7 +3905,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "button-018"
+      ],
       "files": [
         {
           "path": "pricing-021/pricing-021.tsx",
@@ -3799,7 +3916,7 @@
           "target": "@components/vibeui/pricing-021.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради счётчика. Счётчик — role=group с кнопками «−»/«+» (disabled на границах 1…maxCount) и aria-live на числе. Карточка — <li> с ticket.color в --color и ink в --ink; data-dark переводит плашку и кнопку в тёмный режим, data-featured — scale(1.03) и чёрная кнопка. Цена — span с key=значение и @keyframes въезда снизу. Галочки — кружок currentColor с уголком цвета карточки через ::after. Формат чисел — Intl.NumberFormat ru-RU. От 56rem три колонки. Палитра --vibeui-pricing-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-016, button-018 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради счётчика. Счётчик — role=group с кнопками «−»/«+» (disabled на границах 1…maxCount) и aria-live на числе. Карточка — <li> с ticket.color в --color и ink в --ink; data-dark переводит плашку и кнопку в тёмный режим, data-featured — scale(1.03) и чёрная кнопка. Цена — span с key=значение и @keyframes въезда снизу. Галочки — кружок currentColor с уголком цвета карточки через ::after. Формат чисел — Intl.NumberFormat ru-RU. От 56rem три колонки. Палитра --vibeui-pricing-021-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -3811,7 +3928,8 @@
           "tickets",
           "pricing",
           "counter",
-          "tiers"
+          "tiers",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -3828,6 +3946,7 @@
           "usage": "<Pricing021\n  tickets={[\n    { name: \"Один день\", price: 1500, oldPrice: 1900, color: \"#ffe2d6\", features: [\"Все сцены дня\", \"Лекторий и кино\"], actionLabel: \"Купить\", actionHref: \"/buy/day\" },\n    { name: \"Все три дня\", price: 3200, oldPrice: 4500, color: \"#c2df37\", featured: true, note: \"Выгоднее на 30 %\", features: [\"Все сцены\", \"Ночная программа\"], actionLabel: \"Купить\", actionHref: \"/buy/all\" },\n  ]}\n  freeNote=\"Детям до 7 лет — бесплатно.\"\n/>",
           "summary": "Самодостаточные билеты для фестиваля, конференции или парка: три цветных тарифа, счётчик количества с перелистыванием цен и строка про бесплатное. Тарифы — массив пропсом с цветом на каждый.",
           "preserve": [
+            "импорты button-016, button-018 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "цвет карточки в данных — тарифы различаются цветом, а не рамкой",
             "счётчик билетов, умножающий все цены с перелистыванием",
             "строку о бесплатном под тарифами — снимает вопрос «а можно без билета»"
@@ -3884,10 +4003,11 @@
           "en": {
             "title": "Tickets as colour cards with a counter",
             "description": "Festival tickets: three cards, each in its own colour, a giant price, a struck-through old one, a list of what’s included, a pill button. A “Tickets” counter multiplies the prices on all cards, the number flips. The featured tier is slightly larger with a black button. A line about free zones at the bottom.",
-            "docs": "One file, zero dependencies, “use client” for the counter. The counter is a role=group with “−”/“+” buttons (disabled at the 1…maxCount bounds) and aria-live on the number. A card is an <li> with ticket.color in --color and ink in --ink; data-dark switches the tag and button to dark mode, data-featured adds scale(1.03) and a black button. The price is a span keyed by value with a slide-up @keyframes. Checkmarks are a currentColor circle with a card-coloured tick via ::after. Numbers via Intl.NumberFormat ru-RU. Three columns from 56rem. Palette --vibeui-pricing-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-016, button-018 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the counter. The counter is a role=group with “−”/“+” buttons (disabled at the 1…maxCount bounds) and aria-live on the number. A card is an <li> with ticket.color in --color and ink in --ink; data-dark switches the tag and button to dark mode, data-featured adds scale(1.03) and a black button. The price is a span keyed by value with a slide-up @keyframes. Checkmarks are a currentColor circle with a card-coloured tick via ::after. Numbers via Intl.NumberFormat ru-RU. Three columns from 56rem. Palette --vibeui-pricing-021-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "Self-contained tickets for a festival, conference or park: three colour tiers, a quantity counter with flipping prices and a line about what’s free. Tiers come in as a prop array with a colour each.",
               "preserve": [
+                "the button-016, button-018 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the card colour in the data — tiers differ by colour, not by a border",
                 "the ticket counter multiplying all prices with a flip",
                 "the free-zones line under the tiers — it answers “can I come without a ticket”"
@@ -3994,7 +4114,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "slider-013"
+      ],
       "files": [
         {
           "path": "pricing-022/pricing-022.tsx",
@@ -4002,7 +4125,7 @@
           "target": "@components/vibeui/pricing-022.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради размера и зоны. Ползунок — input type=range со стилизованным треком: заливка до --fill из значения, бегунок с неоновым box-shadow. Зоны — кнопки с aria-pressed и factor. Формула: max(minPrice, round(size² × ratePerCm × factor / 500) × 500), часы ≈ size²/60; итог — span с key=значение и @keyframes въезда, aria-live. Пакеты — <li> с pack.color в --neon (рамка, имя, точки), featured — ::before с conic-gradient(from var(--a)) через @property и маску-кольцо. От 60rem (container query) калькулятор в три колонки, пакеты в три. Палитра --vibeui-pricing-022-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-016, slider-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради размера и зоны. Ползунок — input type=range со стилизованным треком: заливка до --fill из значения, бегунок с неоновым box-shadow. Зоны — кнопки с aria-pressed и factor. Формула: max(minPrice, round(size² × ratePerCm × factor / 500) × 500), часы ≈ size²/60; итог — span с key=значение и @keyframes въезда, aria-live. Пакеты — <li> с pack.color в --neon (рамка, имя, точки), featured — ::before с conic-gradient(from var(--a)) через @property и маску-кольцо. От 60rem (container query) калькулятор в три колонки, пакеты в три. Палитра --vibeui-pricing-022-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -4015,7 +4138,8 @@
           "calculator",
           "slider",
           "packages",
-          "conic"
+          "conic",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -4034,6 +4158,7 @@
           "usage": "<Pricing022\n  ratePerCm={180}\n  minPrice={5000}\n  zones={[{ key: \"arm\", label: \"Рука\", factor: 1 }, { key: \"ribs\", label: \"Рёбра\", factor: 1.4 }]}\n  packages={[\n    { name: \"Сеанс\", price: \"от 15 000\", hint: \"до 4 часов\", features: [\"Индивидуальный эскиз\", \"Коррекция через месяц\"], featured: true, color: \"#ff2bd6\", actionLabel: \"Записаться\", actionHref: \"#booking\" },\n  ]}\n/>",
           "summary": "Самодостаточная секция стоимости для тату-студии, салона или мастерской с ценой «от»: калькулятор по размеру и зоне с перелистыванием итога и пакеты с неоновыми рамками. Зоны и пакеты — массивы пропсом.",
           "preserve": [
+            "импорты button-016, slider-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "калькулятор по размеру и зоне с перелистыванием итога — человек видит порядок цены до звонка",
             "неоновые рамки пакетов цветом из данных и бегущую conic-рамку выделенного",
             "«примерно N часов» рядом с ценой"
@@ -4093,10 +4218,11 @@
           "en": {
             "title": "Price calculator by size and zone with packages",
             "description": "Tattoo pricing: a calculator — a neon size slider in centimetres and body-zone pills with a multiplier, the total flips on every change, next to it “about N hours”. Below three packages with neon frames in their own colours, the featured one with a spinning conic frame.",
-            "docs": "One file, zero dependencies, “use client” for size and zone. The slider is an input type=range with a styled track: a fill up to --fill from the value, a thumb with a neon box-shadow. Zones are buttons with aria-pressed and a factor. The formula: max(minPrice, round(size² × ratePerCm × factor / 500) × 500), hours ≈ size²/60; the total is a span keyed by value with a slide-in @keyframes, aria-live. Packages are <li> with pack.color in --neon (frame, name, dots); featured gets a ::before with conic-gradient(from var(--a)) via @property and a ring mask. From 60rem (container query) the calculator is three columns, packages three. Palette --vibeui-pricing-022-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-016, slider-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for size and zone. The slider is an input type=range with a styled track: a fill up to --fill from the value, a thumb with a neon box-shadow. Zones are buttons with aria-pressed and a factor. The formula: max(minPrice, round(size² × ratePerCm × factor / 500) × 500), hours ≈ size²/60; the total is a span keyed by value with a slide-in @keyframes, aria-live. Packages are <li> with pack.color in --neon (frame, name, dots); featured gets a ::before with conic-gradient(from var(--a)) via @property and a ring mask. From 60rem (container query) the calculator is three columns, packages three. Palette --vibeui-pricing-022-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained pricing section for a tattoo studio, salon or workshop with “from” prices: a size-and-zone calculator with a flipping total and packages with neon frames. Zones and packages come in as prop arrays.",
               "preserve": [
+                "the button-016, slider-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the size-and-zone calculator with a flipping total — people see the price range before calling",
                 "package neon frames in colours from the data and the featured spinning conic frame",
                 "“about N hours” next to the price"
@@ -4231,7 +4357,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-013",
+        "button-016"
+      ],
       "files": [
         {
           "path": "pricing-023/pricing-023.tsx",
@@ -4249,7 +4378,8 @@
           "tiers",
           "patreon",
           "donate",
-          "subscription"
+          "subscription",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -4262,7 +4392,7 @@
           "usage": "<Pricing023\n  image=\"/photos/studio.webp\"\n  tiers={[\n    { name: \"Слушатель\", monthly: \"0 ₽\", yearly: \"0 ₽\", perks: [\"эпизод каждый четверг\"], action: \"Так и оставить\" },\n    { name: \"Друг студии\", monthly: \"290 ₽\", yearly: \"2 900 ₽\", perks: [\"эпизоды на день раньше\", \"полные версии\"], action: \"Стать другом\", featured: true },\n  ]}\n/>",
           "summary": "Тарифы поддержки для подкаста, канала, сообщества: месяц/год, три уровня, выделенный посередине.",
           "preserve": [
-            "переключатель — два button с aria-pressed; цена перерисовывается с key и keyframes сдвига",
+            "импорты button-013, button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "фото подложки — opacity .35 и градиентная тень сверху и снизу; карточки на backdrop-filter",
             "выделенный уровень — translateY(-1rem) на широком экране и кольцо акцента"
           ],
@@ -4327,7 +4457,7 @@
             "ai": {
               "summary": "Support plans for a podcast, channel or community: monthly/yearly, three tiers, the featured one in the middle.",
               "preserve": [
-                "the switch is two buttons with aria-pressed; the price re-renders with a key and slide keyframes",
+                "the button-013, button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the backdrop photo is opacity .35 with gradient shade top and bottom; cards on backdrop-filter",
                 "the featured tier gets translateY(-1rem) on wide screens and an accent ring"
               ],
@@ -4415,10 +4545,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-013, button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-013, button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "pricing-024",
@@ -4429,7 +4561,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-013",
+        "button-016"
+      ],
       "files": [
         {
           "path": "pricing-024/pricing-024.tsx",
@@ -4447,7 +4582,8 @@
           "free",
           "trial",
           "table",
-          "mobile"
+          "mobile",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4458,7 +4594,7 @@
           "usage": "<Pricing024\n  premiumMonthly=\"299 ₽\"\n  premiumYearly=\"1 990 ₽\"\n  trial=\"7 дней бесплатно\"\n  features={[{ label: \"Сон по фазам\", free: false, premium: true }, { label: \"Серии\", free: \"7 дней\", premium: \"без лимита\" }]}\n/>",
           "summary": "Тарифы для мобильного приложения с бесплатной версией: две карточки и честная таблица, что где.",
           "preserve": [
-            "переключатель — aria-pressed на двух кнопках; цена перерисовывается с key и keyframes сдвига",
+            "импорты button-013, button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "премиум-карточка инвертирована (fg на bg), плашка пробного периода — акцентом над углом",
             "значения таблицы: true — галочка, false — прочерк, строка — как есть"
           ],
@@ -4523,7 +4659,7 @@
             "ai": {
               "summary": "Pricing for a mobile app with a free tier: two cards and an honest table of what's where.",
               "preserve": [
-                "the switch is aria-pressed on two buttons; the price re-renders with a key and slide keyframes",
+                "the button-013, button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the premium card is inverted (fg on bg), the trial tag sits in the accent above the corner",
                 "table values: true — a tick, false — a dash, a string — as is"
               ],
@@ -4605,10 +4741,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-013, button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-013, button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "pricing-025",
@@ -4619,7 +4757,11 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-013",
+        "button-016",
+        "slider-013"
+      ],
       "files": [
         {
           "path": "pricing-025/pricing-025.tsx",
@@ -4639,7 +4781,8 @@
           "saas",
           "plans",
           "calculator",
-          "glass"
+          "glass",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4650,9 +4793,9 @@
           "usage": "<Pricing025\n  currency=\"₽\"\n  defaultSeats={12}\n  yearlyDiscount={20}\n  plans={[\n    { name: \"Старт\", perSeat: 0, seatsIncluded: 3, note: \"До трёх человек.\", features: [\"5 встреч в месяц\"] },\n    { name: \"Команда\", perSeat: 890, note: \"Для команды до 50.\", features: [\"Безлимит встреч\"], featured: true, actionLabel: \"Попробовать\" },\n  ]}\n/>",
           "summary": "Тарифы для SaaS по местам: ползунок команды и переключатель года пересчитывают цену в карточках.",
           "preserve": [
-            "range с заливкой через --fill в градиенте фона, output рядом склоняет «место / места / мест»",
-            "yearly — button role=switch с aria-checked, factor = 1 − yearlyDiscount/100, чип «−20%»",
-            "бесплатный тариф (perSeat 0): при seats выше seatsIncluded цена остаётся «0», подпись меняется на «только до N человек»"
+            "импорты button-013, button-016, slider-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "бесплатный тариф (perSeat 0): при seats выше seatsIncluded цена остаётся «0», подпись меняется на «только до N человек»",
+            "цену за место × число мест: итог пересчитывается на месте, без перезагрузки, коэффициент годовой оплаты = 1 − yearlyDiscount/100"
           ],
           "adapt": [
             "eyebrow, title, lede, currency",
@@ -4731,9 +4874,9 @@
             "ai": {
               "summary": "Per-seat SaaS pricing: a team slider and a yearly switch recalculate the price in the cards.",
               "preserve": [
-                "a range filled through --fill in the background gradient, the output next to it pluralises seats",
-                "yearly is a button role=switch with aria-checked, factor = 1 − yearlyDiscount/100, a “−20%” chip",
-                "the free plan (perSeat 0): when seats exceed seatsIncluded the price stays “0” and the note changes to “only up to N people”"
+                "the button-013, button-016, slider-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "the free plan (perSeat 0): when seats exceed seatsIncluded the price stays “0” and the note changes to “only up to N people”",
+                "price per seat × seat count: the total is recomputed in place, no reload, the yearly factor = 1 − yearlyDiscount/100"
               ],
               "adapt": [
                 "eyebrow, title, lede, currency",
@@ -4819,10 +4962,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-013, button-016, slider-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-013, button-016, slider-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "pricing-027",
@@ -4833,7 +4978,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-013",
+        "button-016"
+      ],
       "files": [
         {
           "path": "pricing-027/pricing-027.tsx",
@@ -4853,7 +5001,8 @@
           "ticket",
           "perforation",
           "spotlight",
-          "custom-event"
+          "custom-event",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -4864,6 +5013,7 @@
           "usage": "<Pricing027\n  title=\"Без «уточняйте у администратора»\"\n  groups={[\n    { key: \"cat\", label: \"Кошки\", items: [{ name: \"Первичный приём\", note: \"Осмотр и план\", price: \"1 200 ₽\", popular: true }] },\n    { key: \"dog\", label: \"Собаки\", items: [{ name: \"Первичный приём\", note: \"Осмотр и план\", price: \"1 400 ₽\" }] },\n  ]}\n/>",
           "summary": "Прайс услуг тикетами с вкладками, которые можно переключать снаружи через событие window.",
           "preserve": [
+            "импорты button-013, button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "перфорация — data-part=tear с пунктиром и двумя полукругами ::before/::after цвета фона секции",
             "spotlight — --x/--y ставятся на currentTarget в pointermove, ::before с radial-gradient и opacity по hover",
             "внешнее переключение — addEventListener(eventName) в useEffect, setActive только если detail.pet есть среди groups"
@@ -4936,6 +5086,7 @@
             "ai": {
               "summary": "Service price list as tickets with tabs that other blocks can switch through a window event.",
               "preserve": [
+                "the button-013, button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the perforation is data-part=tear with a dashed line and two ::before/::after semicircles in the section background colour",
                 "the spotlight sets --x/--y on currentTarget in pointermove, ::before with a radial-gradient and hover opacity",
                 "external switching: addEventListener(eventName) in useEffect, setActive only when detail.pet exists among groups"
@@ -5096,10 +5247,12 @@
                 "actionLabel": "Book",
                 "fine": "The full price list — 140 items — is available at the front desk and by messenger. Night visits from 22:00 to 8:00 cost 30 % more."
               }
-            }
+            },
+            "docs": "A composite block: imports button-013, button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-013, button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "pricing-031",
@@ -5110,7 +5263,11 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-013",
+        "button-016",
+        "slider-013"
+      ],
       "files": [
         {
           "path": "pricing-031/pricing-031.tsx",
@@ -5130,7 +5287,8 @@
           "switch",
           "comparison",
           "table",
-          "receipt"
+          "receipt",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -5141,7 +5299,7 @@
           "usage": "<Pricing031\n  title=\"Платите за занятия, а не за «доступ к платформе»\"\n  formats={[{ key: \"group\", label: \"Группа\", perLesson: 990, size: \"до 6 человек\", features: [\"Носитель раз в неделю\"], sticker: \"выбирают 78%\" }]}\n  compareRows={[{ label: \"Носитель языка\", values: [\"yes\", \"no\", \"part\"] }]}\n/>",
           "summary": "Тарифы для школы или курсов: формат и число занятий в неделю → цена в месяц, плюс сравнение с приложением и репетитором.",
           "preserve": [
-            "сегменты — grid на --n колонок, подложка ::before шириной (100% − .6rem)/--n и translateX(--active × 100%), transition 0.4 с",
+            "импорты button-013, button-016, slider-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "цена = perLesson × perWeek × weeksPerMonth, tabular-nums; стикер с key=format.key перезапускает keyframes pop при смене формата",
             "колонка «мы» — td/th с data-us: подсветка color-mix, рамка 2px по краям, скругления у первой и последней строки"
           ],
@@ -5221,7 +5379,7 @@
             "ai": {
               "summary": "Pricing for a school or courses: format and lessons per week → monthly price, plus a comparison with an app and a tutor.",
               "preserve": [
-                "segments are a grid of --n columns, the pad is a ::before of (100% − .6rem)/--n width with translateX(--active × 100%) and a 0.4 s transition",
+                "the button-013, button-016, slider-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "price = perLesson × perWeek × weeksPerMonth, tabular-nums; the sticker keyed by format.key restarts the pop keyframes on a format change",
                 "the “us” column is td/th with data-us: a color-mix highlight, a 2px frame on the edges, rounded corners on the first and last rows"
               ],
@@ -5364,10 +5522,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-013, button-016, slider-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-013, button-016, slider-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "pricing-032",
@@ -5378,7 +5538,11 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-013",
+        "button-016",
+        "slider-013"
+      ],
       "files": [
         {
           "path": "pricing-032/pricing-032.tsx",
@@ -5398,7 +5562,8 @@
           "slider",
           "employees",
           "calculator",
-          "glass"
+          "glass",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -5409,7 +5574,7 @@
           "usage": "<Pricing032\n  title=\"Платите за размер бизнеса, а не за банк\"\n  plans={[\n    { name: \"Старт\", tagline: \"Для тех, кто только открылся.\", base: 0, included: 1, perEmployee: 0, freeOperations: 20, features: [\"Счёт за 10 минут\"], actionLabel: \"Открыть\" },\n    { name: \"Рост\", tagline: \"Для команды до 20 человек.\", base: 490, included: 3, perEmployee: 150, freeOperations: 200, features: [\"Карты сотрудникам\"], actionLabel: \"Выбрать\" },\n  ]}\n/>",
           "summary": "Тарифы для банка одной карточкой: переключатель старт / рост / масштаб, ползунок сотрудников, цена пересчитывается на лету.",
           "preserve": [
-            "переключатель — grid с --vibeui-pricing-032-n колонок, подложка ::before шириной (100% - .6rem) / n и translateX(i * 100%) с transition .4s; кнопки с aria-pressed",
+            "импорты button-013, button-016, slider-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "цена — total = base + max(0, employees - included) * perEmployee, докручивается 500 мс через requestAnimationFrame из ref; строка breakdown показывает слагаемые",
             "details перемонтируется по key плана — пункты features въезжают каскадом по --vibeui-pricing-032-i; чип «бесплатно до N операций» при freeOperations 0 показывает «без лимита»"
           ],
@@ -5482,7 +5647,7 @@
             "ai": {
               "summary": "Bank pricing in a single card: a start / growth / scale switch, an employee slider, the price recalculates on the fly.",
               "preserve": [
-                "the switch is a grid with --vibeui-pricing-032-n columns, the ::before thumb is (100% - .6rem) / n wide and moves by translateX(i * 100%) with a .4s transition; buttons use aria-pressed",
+                "the button-013, button-016, slider-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "price — total = base + max(0, employees - included) * perEmployee, counted up over 500 ms via requestAnimationFrame from a ref; the breakdown line shows the addends",
                 "details remounts by the plan key — feature items cascade in by --vibeui-pricing-032-i; the “free up to N operations” chip shows “unlimited” when freeOperations is 0"
               ],
@@ -5582,10 +5747,12 @@
                 "freeLabel": "free up to {n} operations / month",
                 "unlimitedLabel": "unlimited operations"
               }
-            }
+            },
+            "docs": "A composite block: imports button-013, button-016, slider-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-013, button-016, slider-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "pricing-034",
@@ -5596,7 +5763,10 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "slider-013"
+      ],
       "files": [
         {
           "path": "pricing-034/pricing-034.tsx",
@@ -5616,7 +5786,8 @@
           "tiers",
           "chart",
           "developer",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -5627,6 +5798,7 @@
           "usage": "<Pricing034\n  title=\"Платите за запросы, не за место\"\n  tiers={[\n    { upTo: 10000, perThousand: 0, label: \"первые 10 000\" },\n    { upTo: 1000000, perThousand: 0.4, label: \"до 1 млн\" },\n    { upTo: Infinity, perThousand: 0.12, label: \"свыше\" },\n  ]}\n  defaultRequests={250000}\n/>",
           "summary": "Цены за запросы: логарифмический ползунок, прогрессивные ступени и SVG-лестница ставок.",
           "preserve": [
+            "импорты button-016, slider-013 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ползунок 0–1000 маппится в 10^(logMin + v/1000·(logMax−logMin)) и округляется до двух значащих цифр",
             "breakdown считает inTier и сумму по каждой ступени; последняя ступень — upTo: Infinity",
             "лестница — path на ступень (data-on для пройденных), area — объединённый path, маркер и точка двигаются transform translateX"
@@ -5700,6 +5872,7 @@
             "ai": {
               "summary": "Usage-based pricing: a log slider, progressive tiers and an SVG rate staircase.",
               "preserve": [
+                "the button-016, slider-013 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the slider 0–1000 maps to 10^(logMin + v/1000·(logMax−logMin)) rounded to two significant digits",
                 "breakdown computes inTier and the sum per tier; the last tier is upTo: Infinity",
                 "the staircase is one path per tier (data-on for passed ones), area is a merged path, the marker and dot move via transform translateX"
@@ -5772,10 +5945,12 @@
                   "Limits and alerts in the dashboard"
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-016, slider-013 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-016, slider-013 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "comparison-001",
@@ -5786,7 +5961,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "comparison-001/comparison-001.tsx",
@@ -5794,14 +5971,15 @@
           "target": "@components/vibeui/comparison-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-001-*. Серверный компонент. Настоящая table с thead/tbody и scope у заголовков. Галочка нарисована бордюрами без иконочного шрифта, отсутствие — приглушённое тире с aria-label. Наша колонка выделена брендовым фоном шапки и лёгкой заливкой ячеек.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-comparison-001-*. Серверный компонент. Настоящая table с thead/tbody и scope у заголовков. Галочка нарисована бордюрами без иконочного шрифта, отсутствие — приглушённое тире с aria-label. Наша колонка выделена брендовым фоном шапки и лёгкой заливкой ячеек.",
       "meta": {
         "tags": [
           "comparison",
           "table",
           "features",
           "versus",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5811,6 +5989,7 @@
           "usage": "<Comparison001\n  usLabel=\"VibeUI\"\n  themLabel=\"Обычная\"\n  rows={[{ feature: \"Ноль зависимостей\", us: true, them: false }]}\n/>",
           "summary": "Сравнительная таблица «мы против них»: строки возможностей и две колонки с галочками, наша выделена брендовым фоном. Галочки нарисованы бордюрами, отсутствие — тире с aria-label. Настоящая table с scope у заголовков. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-comparison-001-* и не подменять её токенами вашей темы",
             "семантику table/thead/tbody и scope у заголовков — это таблица, а не сетка div-ов",
             "галочку из бордюров и aria-label у ячеек да/нет — доступность без иконочного шрифта",
@@ -5868,6 +6047,7 @@
             "ai": {
               "summary": "A us-versus-them comparison table: feature rows and two check columns, ours highlighted with a brand background. Checks are drawn with borders, absence is a dash with an aria-label. A real table with scope on headers. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-comparison-001-* palette — do not swap it for your theme tokens",
                 "the table/thead/tbody semantics and scope on headers — it's a table, not a grid of divs",
                 "the border-drawn check and aria-label on yes/no cells — accessibility without an icon font",
@@ -5903,7 +6083,7 @@
               }
             },
             "title": "Us-vs-Them Table",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-001-* variables. A server component. A real table with thead/tbody and scope on headers. The check is drawn with borders, absence is a dimmed dash with an aria-label. Our column is highlighted with a brand header background and a light cell fill."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-comparison-001-* variables. A server component. A real table with thead/tbody and scope on headers. The check is drawn with borders, absence is a dimmed dash with an aria-label. Our column is highlighted with a brand header background and a light cell fill."
           }
         }
       }
@@ -5917,7 +6097,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "comparison-002/comparison-002.tsx",
@@ -5925,14 +6107,15 @@
           "target": "@components/vibeui/comparison-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-002-*. Серверный компонент. Три колонки целых подходов вместо таблицы галочек: выделенная колонка (data-highlight) получает брендовую рамку, остальные приглушены opacity. Число колонок считает container query.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-comparison-002-*. Серверный компонент. Три колонки целых подходов вместо таблицы галочек: выделенная колонка (data-highlight) получает брендовую рамку, остальные приглушены opacity. Число колонок считает container query.",
       "meta": {
         "tags": [
           "comparison",
           "approaches",
           "columns",
           "versus",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -5942,6 +6125,7 @@
           "usage": "<Comparison002\n  plans={[{ name: \"VibeUI\", tagline: \"Тот же файл\", points: [\"Ноль зависимостей\"], highlight: true }]}\n/>",
           "summary": "Сравнение тремя колонками-подходами: название способа, строчка сути и список пунктов. Выделенная колонка получает брендовую рамку, соседи приглушены. Формат «три пути, один правильный» без таблицы галочек. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-comparison-002-* и не подменять её токенами вашей темы",
             "выделение своей колонки через data-highlight и приглушение соседей — это фокус выбора",
             "container-запрос на число колонок: на узком экране колонки в столбец",
@@ -5999,6 +6183,7 @@
             "ai": {
               "summary": "A three-column comparison of whole approaches: the approach name, a tagline and a list of points. The highlighted column gets a brand border, the neighbours are dimmed. A three-paths, one-right format without a check table. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-comparison-002-* palette — do not swap it for your theme tokens",
                 "highlighting your column via data-highlight and dimming the neighbours — that's the choice focus",
                 "the container query on column count: columns stack when narrow",
@@ -6034,7 +6219,7 @@
               }
             },
             "title": "Three Approaches",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-002-* variables. A server component. Three columns of whole approaches instead of a check table: the highlighted column (data-highlight) gets a brand border, the rest are dimmed with opacity. Column count is driven by a container query."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-comparison-002-* variables. A server component. Three columns of whole approaches instead of a check table: the highlighted column (data-highlight) gets a brand border, the rest are dimmed with opacity. Column count is driven by a container query."
           }
         }
       }
@@ -6048,7 +6233,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "comparison-003/comparison-003.tsx",
@@ -6056,14 +6243,15 @@
           "target": "@components/vibeui/comparison-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-003-*. Серверный компонент. Каждая пара — одна карточка: слева состояние «было», справа «стало». На широком экране подписи сторон уходят в шапку и из строк убираются, на узком возвращаются внутрь пары — пара складывается в столбик, и связка иначе теряется. Отступы и число колонок считает container query.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-comparison-003-*. Серверный компонент. Каждая пара — одна карточка: слева состояние «было», справа «стало». На широком экране подписи сторон уходят в шапку и из строк убираются, на узком возвращаются внутрь пары — пара складывается в столбик, и связка иначе теряется. Отступы и число колонок считает container query.",
       "meta": {
         "tags": [
           "comparison",
           "before-after",
           "transformation",
           "marketing",
-          "service"
+          "service",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -6073,6 +6261,7 @@
           "usage": "<Comparison003\n  title=\"Было и стало\"\n  rows={[{ before: \"Считали в таблице\", after: \"Считает система\" }]}\n/>",
           "summary": "Сравнение «было — стало» парами строк. Прошлое приглушено и помечено прочерком, будущее набрано акцентом со стрелкой. Формат для услуги и продукта, где сравнивают не функции с конкурентом, а жизнь клиента до и после. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-comparison-003-* и не подменять её токенами вашей темы",
             "парность строк: «было» и «стало» обязаны оставаться в одной карточке, иначе на телефоне человек прочитает подряд четыре проблемы без единого решения",
             "приглушение левой стороны и акцент в правой — на этом держится смысл сравнения",
@@ -6144,10 +6333,11 @@
           "en": {
             "title": "Before and after",
             "description": "A before-and-after comparison in paired rows: the past is dimmed, the future is set in the accent colour. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-003-* variables. A server component. Each pair is one card: the before state on the left, the after state on the right. On a wide screen the side captions move into the head and leave the rows; on a narrow one they come back inside the pair, because the pair stacks and the link would otherwise be lost. Padding and column count are driven by a container query.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-comparison-003-* variables. A server component. Each pair is one card: the before state on the left, the after state on the right. On a wide screen the side captions move into the head and leave the rows; on a narrow one they come back inside the pair, because the pair stacks and the link would otherwise be lost. Padding and column count are driven by a container query.",
             "ai": {
               "summary": "A before-and-after comparison in paired rows. The past is dimmed and marked with a dash, the future is set in the accent colour with an arrow. A format for a service or a product where you compare the client's life, not features against a competitor. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-comparison-003-* palette — do not swap it for your theme tokens",
                 "the pairing of rows: before and after must stay in one card, otherwise on a phone people read four problems in a row without a single solution",
                 "the dimmed left side and the accented right one — the meaning of the comparison rests on that",
@@ -6205,7 +6395,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "comparison-004/comparison-004.tsx",
@@ -6213,7 +6405,7 @@
           "target": "@components/vibeui/comparison-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-004-*. Серверный компонент. Настоящая семантическая таблица: caption, scope у заголовков, строки-разделы через colgroup. Значение ячейки — строка или булево; булево рисуется галочкой и прочерком с текстовой подписью для скринридера. Первая колонка и шапка липкие, таблица прокручивается вбок внутри своего контейнера и не растягивает страницу.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-comparison-004-*. Серверный компонент. Настоящая семантическая таблица: caption, scope у заголовков, строки-разделы через colgroup. Значение ячейки — строка или булево; булево рисуется галочкой и прочерком с текстовой подписью для скринридера. Первая колонка и шапка липкие, таблица прокручивается вбок внутри своего контейнера и не растягивает страницу.",
       "meta": {
         "tags": [
           "comparison",
@@ -6221,7 +6413,8 @@
           "matrix",
           "pricing",
           "features",
-          "plans"
+          "plans",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -6231,6 +6424,7 @@
           "usage": "<Comparison004\n  columns={[{ name: \"Старт\" }, { name: \"Команда\", highlight: true }]}\n  groups={[{ title: \"Каталог\", rows: [{ label: \"Блоки\", values: [\"Все\", \"Все\"] }] }]}\n/>",
           "summary": "Матрица возможностей: строки сгруппированы по разделам, колонок три и больше. Значение ячейки — строка или галочка. Выбранная колонка подсвечена, первая колонка и шапка липкие, таблица прокручивается вбок внутри своего контейнера. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-comparison-004-* и не подменять её токенами вашей темы",
             "семантику таблицы: caption, scope=\"row\"/\"col\", строки-разделы — на ней держится доступность",
             "липкую первую колонку: при прокрутке вбок без неё значения теряют строку, к которой относятся",
@@ -6288,10 +6482,11 @@
           "en": {
             "title": "Feature matrix",
             "description": "An edition comparison table: rows grouped into sections, the chosen column tinted, the first column pinned while scrolling sideways. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-004-* variables. A server component. A real semantic table: a caption, scope on the headers, section rows via colgroup. A cell value is a string or a boolean; booleans render as a check and a dash with a text label for screen readers. The first column and the head are sticky, and the table scrolls sideways inside its own container instead of stretching the page.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-comparison-004-* variables. A server component. A real semantic table: a caption, scope on the headers, section rows via colgroup. A cell value is a string or a boolean; booleans render as a check and a dash with a text label for screen readers. The first column and the head are sticky, and the table scrolls sideways inside its own container instead of stretching the page.",
             "ai": {
               "summary": "A feature matrix: rows grouped into sections, three or more columns. A cell value is a string or a check mark. The chosen column is tinted, the first column and the head are sticky, and the table scrolls sideways inside its own container. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-comparison-004-* palette — do not swap it for your theme tokens",
                 "the table semantics: caption, scope=\"row\"/\"col\", section rows — accessibility rests on them",
                 "the sticky first column: while scrolling sideways the values lose the row they belong to without it",
@@ -6341,7 +6536,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "comparison-005/comparison-005.tsx",
@@ -6349,14 +6546,15 @@
           "target": "@components/vibeui/comparison-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-comparison-005-*. Серверный компонент. Таблицы нет намеренно: сравниваются утверждения, а не характеристики, поэтому каждая пара читается сама по себе и в любом порядке. Кавычки у возражения нарисованы псевдоэлементами на самом тексте, а не на абзаце — в абзаце ещё подпись стороны. Галочка ответа тоже рисуется CSS, без иконочного шрифта и SVG.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-comparison-005-*. Серверный компонент. Таблицы нет намеренно: сравниваются утверждения, а не характеристики, поэтому каждая пара читается сама по себе и в любом порядке. Кавычки у возражения нарисованы псевдоэлементами на самом тексте, а не на абзаце — в абзаце ещё подпись стороны. Галочка ответа тоже рисуется CSS, без иконочного шрифта и SVG.",
       "meta": {
         "tags": [
           "comparison",
           "objections",
           "faq",
           "marketing",
-          "pairs"
+          "pairs",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -6366,6 +6564,7 @@
           "usage": "<Comparison005\n  pairs={[{ claim: \"Дорого\", answer: \"Считайте не цену, а часы разработки\" }]}\n/>",
           "summary": "Разбор возражений парами: сверху привычное мнение в кавычках, под ним ответ с галочкой. Каждая пара — отдельная карточка, поэтому порядок свободный, а возражение и ответ не разъезжаются. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-comparison-005-* и не подменять её токенами вашей темы",
             "карточку пары: возражение и ответ обязаны оставаться вместе при любой ширине",
             "подписи сторон над репликами — без них пара читается как два несвязанных абзаца",
@@ -6429,10 +6628,11 @@
           "en": {
             "title": "Objections answered",
             "description": "A paired comparison of what people say and how it really is: the objection and the answer live in one card. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-comparison-005-* variables. A server component. There is deliberately no table: statements are being compared, not specs, so each pair reads on its own and in any order. The quotation marks on the objection are pseudo-elements on the text itself rather than the paragraph — the paragraph also holds the side caption. The answer's check mark is drawn in CSS too, with no icon font and no SVG.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-comparison-005-* variables. A server component. There is deliberately no table: statements are being compared, not specs, so each pair reads on its own and in any order. The quotation marks on the objection are pseudo-elements on the text itself rather than the paragraph — the paragraph also holds the side caption. The answer's check mark is drawn in CSS too, with no icon font and no SVG.",
             "ai": {
               "summary": "Objections answered in pairs: the common belief in quotes on top, the answer with a check mark below it. Each pair is its own card, so the order is free and the objection never gets separated from the answer. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-comparison-005-* palette — do not swap it for your theme tokens",
                 "the pair card: the objection and the answer must stay together at any width",
                 "the side captions above the lines — without them a pair reads as two unrelated paragraphs",
@@ -6485,7 +6685,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-144"
+      ],
       "files": [
         {
           "path": "comparison-006/comparison-006.tsx",
@@ -6503,7 +6705,8 @@
           "open source",
           "benchmark",
           "performance",
-          "developer"
+          "developer",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6514,6 +6717,7 @@
           "usage": "<Comparison006\n  unit=\"КБ\"\n  metric=\"gzip, минимальный импорт\"\n  rows={[\n    { name: \"tabl\", value: 4.1, self: true },\n    { name: \"react-table\", value: 15.6 },\n    { name: \"ag-grid\", value: 238 },\n  ]}\n/>",
           "summary": "Сравнение по одной метрике для библиотеки, сервиса, тарифа: полосы и числа оживают при прокрутке.",
           "preserve": [
+            "импорты card-144 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ширина полосы = value / max через переменную; рост — scaleX от 0 с transition и задержкой по индексу",
             "числа считают вверх rAF с ease-out; дробные — с одним знаком",
             "старт по IntersectionObserver один раз, rootMargin -15%"
@@ -6579,6 +6783,7 @@
             "ai": {
               "summary": "A one-metric comparison for a library, service or plan: bars and numbers come alive on scroll.",
               "preserve": [
+                "the card-144 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "bar width = value / max via a variable; growth is scaleX from 0 with a transition and per-index delay",
                 "numbers count up in rAF with ease-out; decimals with one digit",
                 "starts once via IntersectionObserver, rootMargin -15%"
@@ -6621,10 +6826,12 @@
                 "metric": "gzip, minimal import",
                 "footnote": "Measured with `import { useTable }` and no styles. The full tabl feature set is 6.8 KB."
               }
-            }
+            },
+            "docs": "A composite block: imports card-144 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-144 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "comparison-010",
@@ -6635,7 +6842,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-145"
+      ],
       "files": [
         {
           "path": "comparison-010/comparison-010.tsx",
@@ -6656,7 +6865,8 @@
           "construction",
           "contractor",
           "trust",
-          "why us"
+          "why us",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6667,6 +6877,7 @@
           "usage": "<Comparison010\n  usLabel=\"Ровно\"\n  themLabel=\"Типичная бригада\"\n  stats={[{ value: 312, label: \"объектов сдано\" }, { value: 0, label: \"дней задержки\" }]}\n  rows={[{ criterion: \"Цена фиксируется в договоре\", us: true, them: \"«примерно»\" }]}\n/>",
           "summary": "Секция «почему мы» для подрядчика: счётчики докручиваются, таблица «мы vs они» с галочками, которые рисуются при появлении.",
           "preserve": [
+            "импорты card-145 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "IntersectionObserver с threshold 0.2 ставит data-in один раз; счётчики идут 1,4 с cubic ease-out в requestAnimationFrame",
             "строка tbody — opacity/translateY с transition-delay = --i × 90ms; path галочки/креста с pathLength=1 и stroke-dashoffset 1→0 с той же задержкой + .25s",
             "ячейка: true → галочка, false → крест, строка → моно-текст; th[data-col=us] залит акцентом, td[data-col=us] — акцент 10 %"
@@ -6746,6 +6957,7 @@
             "ai": {
               "summary": "A “why us” section for a contractor: counters count up, an “us vs them” table with check marks that draw on appearance.",
               "preserve": [
+                "the card-145 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "an IntersectionObserver with threshold 0.2 sets data-in once; counters run 1.4 s cubic ease-out in requestAnimationFrame",
                 "a tbody row is opacity/translateY with transition-delay = --i × 90ms; the check/cross path has pathLength=1 and stroke-dashoffset 1→0 with the same delay + .25s",
                 "a cell: true → check, false → cross, string → mono text; th[data-col=us] is filled with the accent, td[data-col=us] with 10 % accent"
@@ -6853,10 +7065,12 @@
                 ],
                 "fine": "Extract from the standard contract, 2026 edition. Full text on request before the survey."
               }
-            }
+            },
+            "docs": "A composite block: imports card-145 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-145 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "comparison-015",
@@ -6867,7 +7081,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "cell-001"
+      ],
       "files": [
         {
           "path": "comparison-015/comparison-015.tsx",
@@ -6887,7 +7103,8 @@
           "json",
           "developer",
           "pricing",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -6898,6 +7115,7 @@
           "usage": "<Comparison015\n  columns={[\"Геокод\", \"AddrPro\", \"MapOne\"]}\n  rows={[{ label: \"Медиана ответа\", values: [\"42 ms\", \"120 ms\", \"85 ms\"], detail: \"Замер из Москвы за 30 дней.\", sample: [\"\\\"took_ms\\\": 42\"] }]}\n/>",
           "summary": "Сравнение продукта с конкурентами по критериям, каждая строка раскрывает пример ответа.",
           "preserve": [
+            "импорты cell-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "раскрытие — [data-part=detail] с grid-template-rows 0fr/1fr и внутренним overflow:hidden, переход .4s cubic-bezier",
             "колонки конкурентов скрыты до 56rem контейнера, число колонок в сетке — через --vibeui-comparison-015-n",
             "пример ответа подсвечивается regex-токенайзером в span с data-t (k, s, n)"
@@ -6962,6 +7180,7 @@
             "ai": {
               "summary": "Product versus competitors by criteria, every row expands into a response sample.",
               "preserve": [
+                "the cell-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "expansion is [data-part=detail] with grid-template-rows 0fr/1fr and an inner overflow:hidden, a .4s cubic-bezier transition",
                 "competitor columns are hidden below a 56rem container, the grid column count comes from --vibeui-comparison-015-n",
                 "the response sample is highlighted by a regex tokenizer into spans with data-t (k, s, n)"
@@ -7101,10 +7320,12 @@
                 ],
                 "note": "* — the competitor's free quota applies only with their map and logo shown."
               }
-            }
+            },
+            "docs": "A composite block: imports cell-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует cell-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "comparison-016",
@@ -7115,7 +7336,9 @@
         "pricing"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-146"
+      ],
       "files": [
         {
           "path": "comparison-016/comparison-016.tsx",
@@ -7135,7 +7358,8 @@
           "bars",
           "upgrade",
           "generation",
-          "product"
+          "product",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -7146,6 +7370,7 @@
           "usage": "<Comparison016\n  currentName=\"Луч 2\"\n  previousName=\"Луч 1\"\n  rows={[{ label: \"Яркость\", current: \"1 200 лм\", previous: \"800 лм\", currentBar: 100, previousBar: 66 }]}\n/>",
           "summary": "Сравнение версий железки: две полоски в строке, чипы «новое», легенда с годами.",
           "preserve": [
+            "импорты card-146 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "полоска — i с transform: scaleX(-w) от left, keyframes grow с задержкой -i × 80ms + .2s",
             "строка — grid 1.2fr 1fr 1fr от 52rem контейнера, до этого одна колонка и подписи small видны",
             "строки появляются каскадом: keyframes in с задержкой -i × 60ms"
@@ -7225,6 +7450,7 @@
             "ai": {
               "summary": "A hardware version comparison: two bars per row, “new” chips, a legend with years.",
               "preserve": [
+                "the card-146 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "a bar is an i with transform: scaleX(-w) from the left, grow keyframes delayed by -i × 80ms + .2s",
                 "a row is a 1.2fr 1fr 1fr grid from a 52rem container; below that a single column with the small captions visible",
                 "rows appear in a cascade: in keyframes delayed by -i × 60ms"
@@ -7336,10 +7562,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports card-146 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-146 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

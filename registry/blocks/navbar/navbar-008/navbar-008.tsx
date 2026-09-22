@@ -1,6 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 type Navbar008Link = {
@@ -74,6 +76,7 @@ font-family:var(--vibeui-navbar-008-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-008"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-008"] [data-part="action"]{margin-left:auto;flex:none}
 
 [data-vibeui-block="navbar-008"] [data-part="stage"]{
 position:relative;height:30rem;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;
@@ -188,21 +191,6 @@ opacity:1;
 transition:transform var(--vibeui-navbar-008-dur-4) var(--vibeui-navbar-008-ease),width var(--vibeui-navbar-008-dur-4) var(--vibeui-navbar-008-ease),opacity var(--vibeui-navbar-008-dur-2) ease;
 }
 
-[data-vibeui-block="navbar-008"] [data-part="action"]{
-display:inline-flex;align-items:center;min-height:2.5rem;padding:0.25rem 1.125rem;border-radius:0.6875rem;
-margin-left:auto;flex:none;
-background:var(--vibeui-navbar-008-accent);color:oklch(from var(--vibeui-navbar-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:0.9375rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
-box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-navbar-008-accent) 46%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-navbar-008-dur-2) var(--vibeui-navbar-008-ease),box-shadow var(--vibeui-navbar-008-dur-3) ease;
-}
-[data-vibeui-block="navbar-008"] [data-part="action"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-navbar-008-accent) 56%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
-}
-
 [data-vibeui-block="navbar-008"] [data-part="menu"]{
 flex:none;display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;
 min-height:2.5rem;padding:0.25rem 0.9375rem 0.25rem 0.8125rem;border-radius:0.6875rem;
@@ -241,7 +229,7 @@ transition:background-color var(--vibeui-navbar-008-dur-1) ease;
 [data-vibeui-block="navbar-008"] [data-part="panel"] a:hover{background:color-mix(in oklab,var(--vibeui-navbar-008-accent) 16%,transparent)}
 [data-vibeui-block="navbar-008"] [data-part="panel"] a[aria-current="page"]{color:var(--vibeui-navbar-008-accent)}
 
-[data-vibeui-block="navbar-008"] a:focus-visible,
+
 [data-vibeui-block="navbar-008"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-008-accent);outline-offset:3px;
 }
@@ -392,9 +380,15 @@ export function Navbar008({
           ))}
         </nav>
 
-        <a data-part="action" href={actionHref}>
-          {actionLabel}
-        </a>
+        <Button016
+          data-part="action"
+          label={actionLabel}
+          href={actionHref}
+          external={false}
+          size="sm"
+          tone="accent"
+          accent={accent}
+        />
 
         <button
           type="button"

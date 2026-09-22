@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card173 } from "@/registry/components/card/card-173/card-173"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid026Row = {
@@ -67,16 +68,6 @@ border:1px solid var(--vibeui-datagrid-026-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-026-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-026"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-026"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-026-border);
-}
-[data-vibeui-block="datagrid-026"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-026"] [data-part="mode"]{
-display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-026-muted);cursor:pointer;
-}
-[data-vibeui-block="datagrid-026"] [data-part="mode"] input{accent-color:var(--vibeui-datagrid-026-accent);margin:0;width:0.9375rem;height:0.9375rem}
-[data-vibeui-block="datagrid-026"] [data-part="mode"] input:focus-visible{outline:2px solid var(--vibeui-datagrid-026-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-026"] [data-part="scroll"]{overflow:auto;max-height:22rem}
 [data-vibeui-block="datagrid-026"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-026-accent);outline-offset:-2px}
 /* Липкие строки требуют separate: со схлопнутыми границами они теряют линию. */
@@ -293,17 +284,7 @@ export function Datagrid026({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <label data-part="mode">
-            <input
-              type="checkbox"
-              checked={deltas}
-              onChange={(event) => setDeltas(event.target.checked)}
-            />
-            {deltaToggleText}
-          </label>
-        </div>
+        <Card173 data-part="bar" heading={heading} deltaToggleText={deltaToggleText} deltas={deltas} setDeltas={setDeltas} accent={accent} />
         <form
           data-part="scroll"
           role="region"

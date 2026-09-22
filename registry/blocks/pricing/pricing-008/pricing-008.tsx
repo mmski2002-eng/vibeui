@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing008Props = {
   title?: string
@@ -86,12 +89,9 @@ box-sizing:border-box;background:var(--vibeui-pricing-008-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-008-sans);
 }
 [data-vibeui-block="pricing-008"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-008"] [data-part="cta"]{margin-top:1.5rem}
 [data-vibeui-block="pricing-008"] [data-part="shell"]{max-width:58rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
 [data-vibeui-block="pricing-008"] [data-part="head"]{max-width:34rem;margin:0 auto 2.25rem;text-align:center}
-[data-vibeui-block="pricing-008"] h2{
-margin:0;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-008"] [data-part="lede"]{margin:0.875rem 0 0;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-008-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-008"] [data-part="pair"]{display:grid;grid-template-columns:1fr;gap:1rem}
 [data-vibeui-block="pricing-008"] [data-part="card"]{
 display:flex;flex-direction:column;padding:1.75rem;border-radius:1.25rem;
@@ -122,7 +122,6 @@ font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercas
 display:inline-flex;align-items:center;justify-content:center;margin-top:auto;height:2.75rem;border-radius:0.75rem;
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-pricing-008-dur-2) ease,border-color var(--vibeui-pricing-008-dur-2) ease;
 }
-[data-vibeui-block="pricing-008"] [data-part="cta"]{margin-top:1.5rem}
 [data-vibeui-block="pricing-008"] [data-part="card"] a{border:1px solid var(--vibeui-pricing-008-line);color:var(--vibeui-pricing-008-fg)}
 [data-vibeui-block="pricing-008"] [data-paid="true"] a{border:0;background:var(--vibeui-pricing-008-accent);color:oklch(from var(--vibeui-pricing-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="pricing-008"] a:hover{opacity:.88}
@@ -220,8 +219,13 @@ export function Pricing008({
       >
         <div data-part="shell">
           <div data-part="head">
-            <h2>{title}</h2>
-            {lede ? <p data-part="lede">{lede}</p> : null}
+            <Heading001
+              data-part="heading"
+              title={title}
+              lede={lede}
+              align="center"
+              accent={accent}
+            />
           </div>
 
           <div data-part="pair">
@@ -237,9 +241,15 @@ export function Pricing008({
                   </li>
                 ))}
               </ul>
-              <a data-part="cta" href={free.action.href}>
-                {free.action.label}
-              </a>
+              <Button016
+                data-part="cta"
+                label={free.action.label}
+                href={free.action.href}
+                external={false}
+                size="lg"
+                tone="neutral"
+                accent={accent}
+              />
             </article>
 
             <article data-part="card" data-paid="true">
@@ -266,9 +276,15 @@ export function Pricing008({
                   </li>
                 ))}
               </ul>
-              <a data-part="cta" href={paid.action.href}>
-                {paid.action.label}
-              </a>
+              <Button016
+                data-part="cta"
+                label={paid.action.label}
+                href={paid.action.href}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
             </article>
           </div>
 

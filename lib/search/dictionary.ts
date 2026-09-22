@@ -481,6 +481,11 @@ export const SYNONYMS: Synonym[] = [
     terms: ["badge"],
   },
   {
+    say: ["заголовок", "типографика", "текст", "надзаголовок", "подводка", "абзац"],
+    categories: ["typography"],
+    terms: ["heading", "typography", "title", "eyebrow", "lede", "text"],
+  },
+  {
     say: ["карточка", "карточки", "плитка"],
     categories: ["card", "stacks", "avatar"],
     terms: ["card"],

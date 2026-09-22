@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+import { Avatar003 } from "@/registry/components/avatar/avatar-003/avatar-003"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Cta012Props = {
   /** Фото. Без него на том же месте остаётся цветная подложка. */
@@ -21,7 +25,8 @@ export type Cta012Props = {
 // «5 000+ команд уже строят». Аватары рисуются из имён, без картинок:
 // фотографии незнакомых людей в таком блоке всё равно никто не разглядывает,
 // а инициалы честнее стоковых лиц и не требуют внешних файлов.
-const STYLES = `
+const STYLES = `[data-vibeui-block="cta-012"] [data-part="heading"]{margin-bottom:1.75rem}
+
 :where([data-vibeui-block="cta-012"]){
 --vibeui-cta-012-bg:transparent;
 --vibeui-cta-012-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -29,7 +34,6 @@ const STYLES = `
 --vibeui-cta-012-accent:light-dark(oklch(0.287 0 0),oklch(0.892 0 0));
 --vibeui-cta-012-button:light-dark(oklch(0.31 0 0),oklch(0.892 0 0));
 --vibeui-cta-012-button-ink:oklch(from var(--vibeui-cta-012-button) clamp(0,(0.62 - l) * 100,1) 0 0);
---vibeui-cta-012-avatar:color-mix(in oklab,var(--vibeui-cta-012-accent) 14%,light-dark(oklch(1 0 0),oklch(0.24 0 0)));
 --vibeui-cta-012-ring:light-dark(oklch(1 0 0),oklch(0.19 0 0));
 --vibeui-cta-012-font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 --vibeui-cta-012-dur-2:180ms;
@@ -46,46 +50,10 @@ font-family:var(--vibeui-cta-012-font);
 [data-vibeui-block="cta-012"] [data-part="shell"]{
 max-width:44rem;margin:0 auto;padding:3rem 1.25rem;text-align:center;
 }
-[data-vibeui-block="cta-012"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;color:var(--vibeui-cta-012-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="cta-012"] [data-part="title"]{
-margin:0 auto 0.875rem;max-width:22ch;
-font-size:clamp(1.625rem,5.5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="cta-012"] [data-part="description"]{
-margin:0 auto 1.75rem;max-width:48ch;
-color:var(--vibeui-cta-012-muted);font-size:1rem;line-height:1.6;
-}
-[data-vibeui-block="cta-012"] [data-part="action"]{
-display:inline-block;padding:0.875rem 1.75rem;border-radius:999px;
-background:var(--vibeui-cta-012-button);color:var(--vibeui-cta-012-button-ink);
-font-size:0.9375rem;font-weight:650;text-decoration:none;
-transition:filter var(--vibeui-cta-012-dur-2) ease,transform var(--vibeui-cta-012-dur-2) ease;
-}
-[data-vibeui-block="cta-012"] [data-part="action"]:hover{filter:brightness(1.05);transform:translateY(-1px)}
-[data-vibeui-block="cta-012"] [data-part="action"]:focus-visible{
-outline:2px solid var(--vibeui-cta-012-accent);outline-offset:2px;
-}
 [data-vibeui-block="cta-012"] [data-part="trust"]{
 margin-top:1.75rem;
 display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:0.375rem 0.875rem;
 }
-[data-vibeui-block="cta-012"] [data-part="stack"]{display:flex}
-[data-vibeui-block="cta-012"] [data-part="avatar"]{
-position:relative;width:2.25rem;height:2.25rem;border-radius:999px;
-display:grid;place-items:center;color:var(--vibeui-cta-012-accent);
-box-shadow:0 0 0 2px var(--vibeui-cta-012-ring);
-font-size:0.6875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="cta-012"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-cta-012-avatar);}
-[data-vibeui-block="cta-012"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="cta-012"] [data-part="avatar"]+[data-part="avatar"]{margin-left:-0.5rem}
 [data-vibeui-block="cta-012"] [data-part="proof"]{
 margin:0;color:var(--vibeui-cta-012-muted);font-size:0.875rem;line-height:1.4;
 }
@@ -117,13 +85,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
-}
 
 const DEFAULT_NAMES = [
   "Анна Ковалёва",
@@ -175,32 +136,33 @@ export function Cta012({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
-          <a data-part="action" href={actionHref}>
-            {actionLabel}
-          </a>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={description}
+            align="center"
+            ledeWidth={48}
+            accent={accent}
+          />
+          <Button016
+            data-part="action"
+            label={actionLabel}
+            href={actionHref}
+            external={false}
+            size="lg"
+            tone="accent"
+            accent={accent}
+          />
           <div data-part="trust">
-            <span data-part="stack" aria-hidden="true">
-              {names.map((name) => (
-                <span
-                  key={name}
-                  data-part="avatar"
-                  data-empty={avatarImage ? undefined : "true"}
-                >
-                  {avatarImage ? (
-                    <img
-                      src={avatarImage}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
-                  {initials(name)}
-                </span>
-              ))}
-            </span>
+            <Avatar003
+              data-part="stack"
+              names={names}
+              photos={avatarImage ? names.map(() => avatarImage) : []}
+              visible={names.length}
+              size="sm"
+              label={proof}
+            />
             <p data-part="proof">{proof}</p>
           </div>
         </div>

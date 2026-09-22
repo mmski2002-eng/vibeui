@@ -13,6 +13,10 @@ export type Slider001Props = Omit<
   step?: number
   defaultValue?: number
   unit?: string
+  /** Как печатать число: разряды, валюта. Пусто — как есть. */
+  format?: (value: number) => string
+  /** Блоку вокруг: значение уходит наружу, чтобы пересчитать цену. */
+  onChange?: (value: number) => void
   /** Пусто — подложки нет, компонент лежит прямо на фоне страницы. */
   background?: string
   accent?: string
@@ -115,6 +119,8 @@ export function Slider001({
   max = 200,
   step = 5,
   defaultValue = 80,
+  format,
+  onChange,
   unit = " тыс. ₽",
   background = "",
   accent,
@@ -153,7 +159,7 @@ export function Slider001({
         <label data-part="head" htmlFor={id}>
           {label}
           <span data-part="value">
-            {value}
+            {format ? format(value) : value}
             {unit}
           </span>
         </label>
@@ -164,15 +170,19 @@ export function Slider001({
           max={max}
           step={step}
           value={value}
-          onChange={(event) => setValue(Number(event.target.value))}
+          onChange={(event) => {
+            const next = Number(event.target.value)
+            setValue(next)
+            onChange?.(next)
+          }}
         />
         <p data-part="scale">
           <span>
-            {min}
+            {format ? format(min) : min}
             {unit}
           </span>
           <span>
-            {max}
+            {format ? format(max) : max}
             {unit}
           </span>
         </p>

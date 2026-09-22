@@ -1,6 +1,9 @@
 "use client"
 
-import { Fragment, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent } from "react"
+import { Fragment, useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react"
+
+import { Button003 } from "@/registry/components/button/button-003/button-003"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Subscribe008Props = {
   eyebrow?: string
@@ -69,20 +72,6 @@ container-type:inline-size;
 [data-vibeui-block="subscribe-008"] [data-part="inside"] li:hover::before{translate:4px 0}
 [data-vibeui-block="subscribe-008"] form{position:relative;display:grid;gap:.8rem;align-self:center;transition:transform .6s var(--vibeui-subscribe-008-ease),opacity .3s;transform-style:preserve-3d;animation:vibeui-subscribe-008-up .9s var(--vibeui-subscribe-008-ease) .5s both paused}
 [data-vibeui-block="subscribe-008"] [data-part="card"][data-sent="true"] form{transform:rotateX(90deg);opacity:0;pointer-events:none}
-[data-vibeui-block="subscribe-008"] [data-part="field"]{position:relative}
-[data-vibeui-block="subscribe-008"] input{width:100%;font:inherit;font-size:1rem;padding:1.35rem 1.1rem .65rem;border-radius:1rem;border:1px solid var(--vibeui-subscribe-008-line);background:var(--vibeui-subscribe-008-bg);color:inherit;transition:border-color .25s,box-shadow .25s}
-[data-vibeui-block="subscribe-008"] input::placeholder{color:transparent}
-[data-vibeui-block="subscribe-008"] input:hover{border-color:color-mix(in oklab,var(--vibeui-subscribe-008-fg) 30%,transparent)}
-[data-vibeui-block="subscribe-008"] input:focus-visible{outline:none;border-color:var(--vibeui-subscribe-008-accent);box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-subscribe-008-accent) 25%,transparent)}
-[data-vibeui-block="subscribe-008"] [data-part="field"] label{position:absolute;left:1.1rem;top:50%;translate:0 -50%;color:var(--vibeui-subscribe-008-muted);pointer-events:none;transition:translate .25s var(--vibeui-subscribe-008-ease),scale .25s var(--vibeui-subscribe-008-ease),color .25s;transform-origin:left center}
-[data-vibeui-block="subscribe-008"] input:focus-visible + label,[data-vibeui-block="subscribe-008"] input:not(:placeholder-shown) + label{translate:0 -1.35rem;scale:.72;color:var(--vibeui-subscribe-008-accent);font-family:var(--vibeui-subscribe-008-mono);letter-spacing:.08em;text-transform:uppercase}
-[data-vibeui-block="subscribe-008"] [data-part="submit"]{display:inline-flex;justify-content:center;align-items:center;gap:.5rem;border:0;border-radius:1rem;padding:1rem 1.4rem;font:inherit;font-weight:600;cursor:pointer;color:var(--vibeui-subscribe-008-on-accent);background:var(--vibeui-subscribe-008-accent);translate:var(--vibeui-subscribe-008-mx,0) var(--vibeui-subscribe-008-my,0);transition:translate .3s var(--vibeui-subscribe-008-ease),scale .3s var(--vibeui-subscribe-008-ease),box-shadow .3s}
-[data-vibeui-block="subscribe-008"] form:focus-within [data-part="submit"]{box-shadow:0 0 0 8px color-mix(in oklab,var(--vibeui-subscribe-008-accent) 18%,transparent),0 16px 40px -16px var(--vibeui-subscribe-008-accent)}
-[data-vibeui-block="subscribe-008"] [data-part="submit"]:hover{scale:1.03;box-shadow:0 16px 40px -16px var(--vibeui-subscribe-008-accent)}
-[data-vibeui-block="subscribe-008"] [data-part="submit"]:active{scale:.98}
-[data-vibeui-block="subscribe-008"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-subscribe-008-accent);outline-offset:3px}
-[data-vibeui-block="subscribe-008"] [data-part="submit"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:translate .3s var(--vibeui-subscribe-008-ease)}
-[data-vibeui-block="subscribe-008"] [data-part="submit"]:hover svg{translate:4px 0}
 [data-vibeui-block="subscribe-008"] [data-part="promise"]{margin:0;font-family:var(--vibeui-subscribe-008-mono);font-size:.72rem;letter-spacing:.08em;color:var(--vibeui-subscribe-008-muted)}
 [data-vibeui-block="subscribe-008"] [data-part="done"]{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:.6rem;text-align:center;padding:2rem;opacity:0;transform:rotateX(-90deg);transition:transform .6s var(--vibeui-subscribe-008-ease) .25s,opacity .3s .25s;pointer-events:none}
 [data-vibeui-block="subscribe-008"] [data-part="card"][data-sent="true"] [data-part="done"]{opacity:1;transform:none;pointer-events:auto}
@@ -123,7 +112,6 @@ export function Subscribe008({
   const [sent, setSent] = useState(false)
   const [shown, setShown] = useState(false)
   const root = useRef<HTMLElement>(null)
-  const fieldId = useId()
   const words = title.split(/\s+/).filter(Boolean)
 
   useEffect(() => {
@@ -142,18 +130,6 @@ export function Subscribe008({
     return () => observer.disconnect()
   }, [])
 
-  const magnet = (event: PointerEvent<HTMLButtonElement>) => {
-    if (event.pointerType === "touch") return
-    const rect = event.currentTarget.getBoundingClientRect()
-    const dx = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1)) * 6
-    const dy = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1)) * 5
-    event.currentTarget.style.setProperty("--vibeui-subscribe-008-mx", `${dx.toFixed(1)}px`)
-    event.currentTarget.style.setProperty("--vibeui-subscribe-008-my", `${dy.toFixed(1)}px`)
-  }
-  const unmagnet = (event: PointerEvent<HTMLButtonElement>) => {
-    event.currentTarget.style.setProperty("--vibeui-subscribe-008-mx", "0px")
-    event.currentTarget.style.setProperty("--vibeui-subscribe-008-my", "0px")
-  }
   const submit = (event: FormEvent) => {
     event.preventDefault()
     setSent(true)
@@ -198,16 +174,11 @@ export function Subscribe008({
               ) : null}
             </div>
             <form onSubmit={submit}>
-              <div data-part="field">
-                <input id={fieldId} type="email" name="email" required placeholder={placeholder} />
-                <label htmlFor={fieldId}>{placeholder}</label>
-              </div>
-              <button type="submit" data-part="submit" onPointerMove={magnet} onPointerLeave={unmagnet}>
+              <Input001 type="email" name="email" required label={placeholder} autoComplete="email" accent={accent} />
+              {/* Магнит и подъём кнопки — button-003, свои обработчики блоку не нужны. */}
+              <Button003 type="submit" accent={accent}>
                 {submitLabel}
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </button>
+              </Button003>
               {promise ? <p data-part="promise">{promise}</p> : null}
             </form>
             <div data-part="done" aria-live="polite">

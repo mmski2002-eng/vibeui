@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card031 } from "@/registry/components/card/card-031/card-031"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 
 type Testimonials009Item = {
   name: string
@@ -24,7 +27,9 @@ export type Testimonials009Props = {
 // Пост выглядит честнее полированной цитаты — его писали не для лендинга.
 // Masonry собрана на CSS columns с break-inside:avoid: посты разной длины
 // ложатся плотно без единой строки JS и без измерения высот.
-const STYLES = `
+const STYLES = `[data-vibeui-block="testimonials-009"] [data-part="heading"]{margin-bottom:2rem}
+[data-vibeui-block="testimonials-009"] [data-part="post"]{margin:0 0 1rem}
+
 :where([data-vibeui-block="testimonials-009"]){
 --vibeui-testimonials-009-bg:transparent;
 --vibeui-testimonials-009-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -44,51 +49,8 @@ font-family:var(--vibeui-testimonials-009-font);
 [data-vibeui-block="testimonials-009"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
 }
-[data-vibeui-block="testimonials-009"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-testimonials-009-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="testimonials-009"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="testimonials-009"] [data-part="wall"]{
 columns:1;column-gap:1rem;
-}
-[data-vibeui-block="testimonials-009"] [data-part="post"]{
-break-inside:avoid;margin:0 0 1rem;
-padding:1.25rem;border:1px solid var(--vibeui-testimonials-009-border);border-radius:1rem;
-background:var(--vibeui-testimonials-009-card);
-}
-[data-vibeui-block="testimonials-009"] [data-part="post-head"]{
-display:flex;align-items:center;gap:0.625rem;margin-bottom:0.75rem;
-}
-[data-vibeui-block="testimonials-009"] [data-part="avatar"]{
-position:relative;width:2.25rem;height:2.25rem;flex:none;border-radius:999px;
-display:grid;place-items:center;
-color:var(--vibeui-testimonials-009-accent);
-font-size:0.75rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="testimonials-009"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-testimonials-009-accent) 14%,var(--vibeui-testimonials-009-card));}
-[data-vibeui-block="testimonials-009"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="testimonials-009"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
-[data-vibeui-block="testimonials-009"] [data-part="name"]{font-size:0.875rem;font-weight:640}
-[data-vibeui-block="testimonials-009"] [data-part="handle"]{color:var(--vibeui-testimonials-009-muted);font-size:0.75rem}
-[data-vibeui-block="testimonials-009"] [data-part="text"]{
-margin:0;font-size:0.9375rem;line-height:1.55;overflow-wrap:break-word;
-}
-[data-vibeui-block="testimonials-009"] [data-part="post-foot"]{
-display:flex;align-items:center;gap:0.375rem;margin-top:0.875rem;
-color:var(--vibeui-testimonials-009-muted);font-size:0.75rem;font-weight:600;
-font-variant-numeric:tabular-nums;
-}
-[data-vibeui-block="testimonials-009"] [data-part="heart"]{
-width:0.875rem;height:0.875rem;flex:none;
-color:var(--vibeui-testimonials-009-accent);
 }
 @container (min-width: 40rem){
 [data-vibeui-block="testimonials-009"] [data-part="shell"]{padding:4.5rem 2rem}
@@ -217,47 +179,15 @@ export function Testimonials009({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="wall">
             {items.map((item) => (
-              <article key={item.handle} data-part="post">
-                <header data-part="post-head">
-                  <span
-                    data-part="avatar"
-                    data-empty={item.image ? undefined : "true"}
-                    aria-hidden="true"
-                  >
-                    {item.image ? (
-                      <img
-                        src={item.image}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : null}
-                    {initials(item.name)}
-                  </span>
-                  <span data-part="who">
-                    <span data-part="name">{item.name}</span>
-                    <span data-part="handle">{item.handle}</span>
-                  </span>
-                </header>
-                <p data-part="text">{item.text}</p>
-                <footer data-part="post-foot">
-                  <svg
-                    data-part="heart"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 21s-6.7-4.3-9.3-8.1C.6 9.9 1.6 5.9 4.9 4.6c2-.8 4.3-.2 5.8 1.4l1.3 1.3 1.3-1.3c1.5-1.6 3.8-2.2 5.8-1.4 3.3 1.3 4.3 5.3 2.2 8.3C18.7 16.7 12 21 12 21Z" />
-                  </svg>
-                  <span aria-label={`Отметок «нравится»: ${item.likes}`}>
-                    {formatLikes(item.likes)}
-                  </span>
-                </footer>
-              </article>
+              <Card031 key={item.handle} data-part="post" handle={item.handle} name={item.name} image={item.image} text={item.text} likes={item.likes} accent={accent} />
             ))}
           </div>
         </div>

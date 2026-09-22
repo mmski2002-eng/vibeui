@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Pricing015Line = {
   title: string
   detail?: string
@@ -51,6 +53,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-015"]{color-scheme:dark}
+[data-vibeui-block="pricing-015"] [data-part="cta-button"]{margin-top:1.5rem;}
 [data-vibeui-block="pricing-015"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -59,6 +62,7 @@ box-sizing:border-box;background:var(--vibeui-pricing-015-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-015-sans);
 }
 [data-vibeui-block="pricing-015"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-015"] [data-part="footer"]{margin:1.25rem 0 0}
 [data-vibeui-block="pricing-015"] [data-part="shell"]{max-width:34rem;width:100%;margin:0 auto;padding:3rem 1.25rem}
 [data-vibeui-block="pricing-015"] [data-part="receipt"]{
 padding:2rem 1.5rem;background:var(--vibeui-pricing-015-paper);
@@ -89,14 +93,6 @@ border-top:2px solid var(--vibeui-pricing-015-fg);
 font-family:var(--vibeui-pricing-015-sans);font-size:0.875rem;font-weight:700;
 }
 [data-vibeui-block="pricing-015"] [data-part="totalsum"]{font-size:1.625rem;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
-[data-vibeui-block="pricing-015"] a{
-display:flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.75rem;border-radius:0.5rem;
-background:var(--vibeui-pricing-015-accent);color:oklch(from var(--vibeui-pricing-015-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-family:var(--vibeui-pricing-015-sans);font-size:0.9375rem;font-weight:650;text-decoration:none;
-transition:background-color var(--vibeui-pricing-015-dur-2) ease;
-}
-[data-vibeui-block="pricing-015"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-015-accent) 86%,black)}
-[data-vibeui-block="pricing-015"] a:focus-visible{outline:2px solid var(--vibeui-pricing-015-accent);outline-offset:3px}
 [data-vibeui-block="pricing-015"] [data-part="footer"]{
 margin:1.25rem 0 0;text-align:center;font-size:0.6875rem;line-height:1.5;color:var(--vibeui-pricing-015-muted);
 }
@@ -231,7 +227,7 @@ export function Pricing015({
               <span data-part="totalsum">{total}</span>
             </p>
 
-            <a href={action.href}>{action.label}</a>
+            <Button016 data-part="cta-button" label={action.label} href={action.href} external={false} size="lg" tone="accent" accent={accent} />
 
             {footer ? <p data-part="footer">{footer}</p> : null}
           </div>

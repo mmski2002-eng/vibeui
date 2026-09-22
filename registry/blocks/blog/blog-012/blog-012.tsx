@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Blog012Topic = {
   name: string
@@ -24,7 +25,8 @@ export type Blog012Props = {
 // том, что внутри. Счётчик показан крупно и оранжевым — это честный ответ
 // на главный вопрос перед кликом: есть ли там что читать. Пустые рубрики
 // с таким дизайном спрятать не получится, и это намеренно.
-const STYLES = `
+const STYLES = `[data-vibeui-block="blog-012"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="blog-012"]){
 --vibeui-blog-012-bg:transparent;
 --vibeui-blog-012-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
@@ -47,14 +49,6 @@ font-family:var(--vibeui-blog-012-font);
 }
 [data-vibeui-block="blog-012"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="blog-012"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-blog-012-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="blog-012"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="blog-012"] [data-part="grid"]{display:grid;gap:1rem}
 [data-vibeui-block="blog-012"] [data-part="tile"]{
@@ -189,8 +183,12 @@ export function Blog012({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="grid">
             {topics.map((topic) => (
               <article key={topic.name} data-part="tile">

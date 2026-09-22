@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Case006Stat = {
   value: string
@@ -27,7 +28,8 @@ export type Case006Props = {
 // доказательство. Агрегат отвечает на «а это вообще работает?», мини-карточки
 // — на «а у таких, как мы?». Большие цифры набраны акцентом и tabular-nums,
 // карточки намеренно мельче полосы: иерархия от общего к частному.
-const STYLES = `
+const STYLES = `[data-vibeui-block="case-006"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="case-006"]){
 --vibeui-case-006-bg:transparent;
 --vibeui-case-006-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -46,14 +48,6 @@ font-family:var(--vibeui-case-006-font);
 }
 [data-vibeui-block="case-006"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="case-006"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-case-006-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="case-006"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="case-006"] [data-part="strip"]{
 display:grid;gap:1.5rem;margin:0 0 1.25rem;
@@ -179,8 +173,12 @@ export function Case006({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <dl data-part="strip">
             {stats.map((stat) => (
               <div key={stat.label} data-part="stat">

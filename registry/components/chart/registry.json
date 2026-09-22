@@ -6636,6 +6636,250 @@
           "width": "auto"
         }
       }
+    },
+    {
+      "name": "chart-030",
+      "type": "registry:component",
+      "title": "Кольцо датчика",
+      "description": "Кольцевой индикатор датчика: дуга на процент, значение в центре и подпись под кольцом.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-030/chart-030.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-030.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока bento-012 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-chart-030-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "ring",
+          "gauge",
+          "sensor",
+          "chart",
+          "bento"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Chart030",
+          "usage": "<Chart030 label=\"CO₂, ppm\" value=\"640\" />",
+          "summary": "Кольцевой индикатор датчика: дуга на процент, значение в центре и подпись под кольцом.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-030-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "label, percent, value — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "label",
+            "type": "text",
+            "default": "CO₂, ppm",
+            "maxLength": 160
+          },
+          {
+            "prop": "value",
+            "label": "value",
+            "type": "text",
+            "default": "640",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "label",
+          "value",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Sensor ring",
+            "description": "Sensor ring gauge: an arc by percent, the value in the centre and a label below.",
+            "docs": "Extracted from the bento-012 block as is: one file, no dependencies, its own palette in the --vibeui-chart-030-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Sensor ring gauge: an arc by percent, the value in the centre and a label below.",
+              "usage": "<Chart030 label=\"CO₂, ppm\" value=\"640\" />",
+              "preserve": [
+                "the local --vibeui-chart-030-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "label, percent, value — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "label": {
+                "label": "label",
+                "default": "CO₂, ppm"
+              },
+              "value": {
+                "label": "value",
+                "default": "640"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "chart-031",
+      "type": "registry:component",
+      "title": "Датчик-дуга",
+      "description": "Показатель-дуга: заполнение по доле, значение с единицей в центре, подпись и дельта к прошлому периоду.",
+      "categories": [
+        "chart"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "chart-031/chart-031.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/chart-031.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока stats-012 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-chart-031-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "gauge",
+          "arc",
+          "stat",
+          "chart",
+          "stats"
+        ],
+        "pro": true,
+        "ai": {
+          "export": "Chart031",
+          "usage": "<Chart031 label=\"Яркость\" unit=\"лм\" previousLabel=\"Луч 1\" />",
+          "summary": "Показатель-дуга: заполнение по доле, значение с единицей в центре, подпись и дельта к прошлому периоду.",
+          "preserve": [
+            "локальную палитру --vibeui-chart-031-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "label, value, unit, previousLabel, previous, wasLabel, t, decimals, fraction, delta — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "label",
+            "type": "text",
+            "default": "Яркость",
+            "maxLength": 160
+          },
+          {
+            "prop": "unit",
+            "label": "unit",
+            "type": "text",
+            "default": "лм",
+            "maxLength": 160
+          },
+          {
+            "prop": "previousLabel",
+            "label": "previousLabel",
+            "type": "text",
+            "default": "Луч 1",
+            "maxLength": 160
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "label",
+          "unit",
+          "previousLabel",
+          "accent"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "unit": "лм",
+            "previousLabel": "Луч 1"
+          }
+        },
+        "i18n": {
+          "en": {
+            "title": "Arc gauge",
+            "description": "Arc gauge: fill by fraction, value with a unit in the centre, label and a delta to the previous period.",
+            "docs": "Extracted from the stats-012 block as is: one file, no dependencies, its own palette in the --vibeui-chart-031-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Arc gauge: fill by fraction, value with a unit in the centre, label and a delta to the previous period.",
+              "usage": "<Chart031 label=\"Яркость\" unit=\"лм\" previousLabel=\"Луч 1\" />",
+              "preserve": [
+                "the local --vibeui-chart-031-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "label, value, unit, previousLabel, previous, wasLabel, t, decimals, fraction, delta — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "label": {
+                "label": "label",
+                "default": "Яркость"
+              },
+              "unit": {
+                "label": "unit",
+                "default": "лм"
+              },
+              "previousLabel": {
+                "label": "previousLabel",
+                "default": "Луч 1"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

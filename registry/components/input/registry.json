@@ -15749,6 +15749,128 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "input-034",
+      "type": "registry:component",
+      "title": "Многострочное поле с подписью",
+      "description": "Textarea с той же плавающей подписью, что у input-001: подпись стоит в пустом поле и уезжает в верхний край при вводе, ошибка красит рамку и подпись. Тянуть можно только по вертикали. Пара к input-001 — форма из полей и сообщения выглядит одним набором.",
+      "categories": [
+        "input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "input-034/input-034.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/input-034.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-input-034-*. Плавающая подпись держится на :placeholder-shown, поэтому placeholder занят пробелом и в пропсах его нет; label — единственная подпись. hint — строка под полем, error её заменяет и включает aria-invalid. rows задаёт высоту в строках. Тема — light-dark() по color-scheme окружения.",
+      "meta": {
+        "tags": [
+          "textarea",
+          "message",
+          "form",
+          "field",
+          "floating-label",
+          "multiline"
+        ],
+        "ai": {
+          "export": "Input034",
+          "usage": "<Input034 name=\"message\" label=\"Сообщение\" hint=\"Коротко: что случилось и когда\" required />",
+          "summary": "Многострочное поле с плавающей подписью, подсказкой и ошибкой — пара к input-001 в формах обратной связи.",
+          "preserve": [
+            "плавающую подпись на :placeholder-shown — placeholder занят пробелом, текст подписи только в label",
+            "resize:vertical — горизонтальное растягивание ломает сетку формы",
+            "палитру --vibeui-input-034-* и light-dark(): компонент следует color-scheme окружения",
+            "aria-invalid и role=alert у ошибки: невалидность объявляется, а не только красится"
+          ],
+          "adapt": [
+            "label — подпись",
+            "hint и error — строки под полем",
+            "rows — высота в строках",
+            "accent — цвет фокуса",
+            "background — подложка"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Сообщение",
+            "maxLength": 30
+          },
+          {
+            "prop": "rows",
+            "label": "Строк",
+            "type": "number",
+            "default": 4,
+            "min": 2,
+            "max": 12
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Multiline field with a label",
+            "description": "A textarea with the same floating label as input-001: the label sits in the empty field and slides to the top edge as you type, an error colours the border and the label. Resizable vertically only. A pair to input-001 — a form of fields and a message reads as one set.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-input-034-*. The floating label rests on :placeholder-shown, so the placeholder is a space and is not in the props; label is the only caption. hint is the line under the field, error replaces it and sets aria-invalid. rows sets the height in lines. Theme via light-dark() from the surrounding color-scheme.",
+            "ai": {
+              "summary": "A multiline field with a floating label, hint and error — a pair to input-001 in contact forms.",
+              "preserve": [
+                "the floating label on :placeholder-shown — the placeholder is a space, the caption text lives only in label",
+                "resize:vertical — horizontal resizing breaks the form grid",
+                "the --vibeui-input-034-* palette and light-dark(): the component follows the surrounding color-scheme",
+                "aria-invalid and role=alert on the error: invalidity is announced, not just coloured"
+              ],
+              "adapt": [
+                "label — the caption",
+                "hint and error — lines under the field",
+                "rows — height in lines",
+                "accent — focus colour",
+                "background — surface"
+              ],
+              "usage": "<Input034 name=\"message\" label=\"Message\" hint=\"Briefly: what happened and when\" required />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Message"
+              },
+              "rows": {
+                "label": "Rows"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "rows",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        }
+      }
     }
   ]
 }

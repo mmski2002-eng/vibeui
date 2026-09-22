@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero017Props = {
   eyebrow?: string
   prefix?: string
@@ -90,17 +92,6 @@ color:var(--vibeui-hero-017-muted);text-wrap:pretty;
 [data-vibeui-block="hero-017"] [data-part="actions"]{
 display:flex;flex-direction:column;align-items:stretch;gap:0.625rem;margin:2rem auto 0;max-width:22rem;
 }
-[data-vibeui-block="hero-017"] a{
-display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
-height:2.875rem;padding:0 1.5rem;border-radius:0.625rem;
-font-size:0.9375rem;font-weight:600;text-decoration:none;
-transition:background-color var(--vibeui-hero-017-dur-2) ease,border-color var(--vibeui-hero-017-dur-2) ease,color var(--vibeui-hero-017-dur-2) ease;
-}
-[data-vibeui-block="hero-017"] [data-part="primary"]{background:var(--vibeui-hero-017-accent);color:oklch(from var(--vibeui-hero-017-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent;box-shadow:0 0.375rem 1.25rem color-mix(in oklab,var(--vibeui-hero-017-accent) 40%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);transition:transform var(--vibeui-hero-017-dur-2) cubic-bezier(.32,.72,0,1),box-shadow var(--vibeui-hero-017-dur-3) ease,background-color var(--vibeui-hero-017-dur-2) ease}
-[data-vibeui-block="hero-017"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 0.625rem 1.75rem color-mix(in oklab,var(--vibeui-hero-017-accent) 50%,transparent),inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent)}
-[data-vibeui-block="hero-017"] [data-part="secondary"]{border:1px solid var(--vibeui-hero-017-line);color:var(--vibeui-hero-017-fg);background:transparent}
-[data-vibeui-block="hero-017"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-017-fg)}
-[data-vibeui-block="hero-017"] a:focus-visible{outline:2px solid var(--vibeui-hero-017-accent);outline-offset:3px}
 @container (min-width: 34rem){
 [data-vibeui-block="hero-017"] [data-part="actions"]{flex-direction:row;justify-content:center;max-width:none}
 [data-vibeui-block="hero-017"] [data-part="shell"]{padding:5rem 2rem}
@@ -202,12 +193,24 @@ export function Hero017({
           </h1>
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="actions">
-            <a data-part="primary" href={primary.href}>
-              {primary.label}
-            </a>
-            <a data-part="secondary" href={secondary.href}>
-              {secondary.label}
-            </a>
+            <Button016
+              data-part="primary"
+              size="lg"
+              label={primary.label}
+              href={primary.href}
+              external={false}
+              tone="accent"
+              accent={accent}
+            />
+            <Button016
+              data-part="secondary"
+              size="lg"
+              label={secondary.label}
+              href={secondary.href}
+              external={false}
+              tone="neutral"
+              accent={accent}
+            />
           </div>
         </div>
       </section>

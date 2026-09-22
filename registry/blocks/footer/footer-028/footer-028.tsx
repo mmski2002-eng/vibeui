@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks027 } from "@/registry/components/navigation/footerlinks-027/footerlinks-027"
 
 export type Footer028Link = {
   label: string
@@ -73,9 +74,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-028"] [data-part="host"] small{display:block;font-family:var(--vibeui-footer-028-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-footer-028-accent);margin:.3rem 0}
 [data-vibeui-block="footer-028"] [data-part="host"] p{margin:0;font-size:.86rem;color:var(--vibeui-footer-028-muted)}
 [data-vibeui-block="footer-028"] [data-part="cols"]{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-[data-vibeui-block="footer-028"] [data-part="cols"] h4{margin:0 0 .6rem;font-family:var(--vibeui-footer-028-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-footer-028-muted)}
-[data-vibeui-block="footer-028"] [data-part="cols"] a{display:block;color:inherit;text-decoration:none;padding:.15rem 0;opacity:.85;transition:opacity .2s,color .2s,translate .3s var(--vibeui-footer-028-ease)}
-[data-vibeui-block="footer-028"] [data-part="cols"] a:hover{opacity:1;color:var(--vibeui-footer-028-accent);translate:.3rem 0}
 [data-vibeui-block="footer-028"] [data-part="rss"]{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;font-family:var(--vibeui-footer-028-mono);font-size:.78rem;color:var(--vibeui-footer-028-accent);text-decoration:none}
 [data-vibeui-block="footer-028"] [data-part="rss"] i{font-style:normal;display:inline-block;animation:vibeui-footer-028-wiggle 2.4s ease-in-out infinite}
 [data-vibeui-block="footer-028"] [data-part="markwrap"]{margin:3.5rem 0 0;overflow:hidden;padding:.1em 0 .08em}
@@ -88,8 +86,7 @@ container-type:inline-size;
 @keyframes vibeui-footer-028-rise{from{translate:0 105%}}
 @keyframes vibeui-footer-028-fill{from{--vibeui-footer-028-x:0%}to{--vibeui-footer-028-x:100%}}
 @supports (animation-timeline: view()){
-[data-vibeui-block="footer-028"] [data-part="host"],[data-vibeui-block="footer-028"] [data-part="cols"] > div{animation:vibeui-footer-028-up linear both;animation-timeline:view();animation-range:entry 0% entry 50%}
-[data-vibeui-block="footer-028"] [data-part="cols"] > div:nth-child(2){animation-range:entry 10% entry 60%}
+[data-vibeui-block="footer-028"] [data-part="host"]{animation:vibeui-footer-028-up linear both;animation-timeline:view();animation-range:entry 0% entry 50%}
 [data-vibeui-block="footer-028"] [data-part="mark"]{animation:vibeui-footer-028-rise linear both,vibeui-footer-028-fill linear both;animation-timeline:view();animation-range:entry 0% entry 70%,entry 40% entry 100%}
 }
 @container (min-width: 56rem){[data-vibeui-block="footer-028"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:3rem}[data-vibeui-block="footer-028"] [data-part="cols"]{grid-template-columns:1fr 1fr}}
@@ -153,27 +150,8 @@ export function Footer028({
               </div>
             </div>
             <div data-part="cols">
-              <div>
-                <h4>{platformsLabel}</h4>
-                {platforms.map((link) => (
-                  <a key={link.label} href={link.href}>
-                    {link.label}
-                  </a>
-                ))}
-                {rssLabel ? (
-                  <a data-part="rss" href={rssHref}>
-                    <i aria-hidden="true">∿</i> {rssLabel}
-                  </a>
-                ) : null}
-              </div>
-              <div>
-                <h4>{linksLabel}</h4>
-                {links.map((link) => (
-                  <a key={link.label} href={link.href}>
-                    {link.label}
-                  </a>
-                ))}
-              </div>
+              <Footerlinks027 data-part="col" title={platformsLabel} links={(rssLabel ? [...platforms, { label: "∿ " + rssLabel, href: rssHref }] : platforms)} accent={accent} />
+              <Footerlinks027 data-part="col" title={linksLabel} links={links} accent={accent} />
             </div>
           </div>
           <div data-part="markwrap" aria-hidden="true">

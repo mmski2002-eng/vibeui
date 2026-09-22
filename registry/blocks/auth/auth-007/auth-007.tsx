@@ -1,6 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
 import type { CSSProperties } from "react"
 
 export type Auth007Props = {
@@ -71,6 +75,9 @@ background:var(--vibeui-auth-007-bg);color:var(--vibeui-auth-007-fg);
 font-family:var(--vibeui-auth-007-sans);
 }
 [data-vibeui-block="auth-007"] *{box-sizing:border-box}
+[data-vibeui-block="auth-007"] [data-part="heading"]{margin-bottom:0.25rem}
+[data-vibeui-block="auth-007"] [data-part="submit"]{width:100%}
+[data-vibeui-block="auth-007"] [data-part="keep"]{margin:0.25rem 0 1rem}
 [data-vibeui-block="auth-007"] [data-part="shell"]{
 width:100%;max-width:24rem;margin:0 auto;padding:1.5rem;
 background:var(--vibeui-auth-007-card);
@@ -79,7 +86,6 @@ border:1px solid var(--vibeui-auth-007-border);border-radius:1rem;
 @container (min-width: 40rem){
 [data-vibeui-block="auth-007"] [data-part="shell"]{padding:2rem;max-width:26rem}
 }
-[data-vibeui-block="auth-007"] h2{margin:0 0 0.25rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.015em}
 [data-vibeui-block="auth-007"] [data-part="lead"]{margin:0 0 1.125rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-auth-007-muted)}
 [data-vibeui-block="auth-007"] [data-part="alert"]{
 display:flex;gap:0.5rem;margin:0 0 1rem;padding:0.625rem 0.75rem;
@@ -87,41 +93,19 @@ border:1px solid var(--vibeui-auth-007-danger-line);border-radius:0.625rem;
 background:var(--vibeui-auth-007-danger-soft);
 color:var(--vibeui-auth-007-danger);font-size:0.8125rem;line-height:1.45;
 }
-[data-vibeui-block="auth-007"] [data-part="field"]{display:flex;flex-direction:column;gap:0.3125rem;margin-bottom:0.875rem}
 [data-vibeui-block="auth-007"] [data-part="row"]{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem}
-[data-vibeui-block="auth-007"] label{font-size:0.8125rem;font-weight:600}
+[data-vibeui-block="auth-007"] label:not([data-slot] *){font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="auth-007"] [data-part="forgot"]{font-size:0.75rem;color:var(--vibeui-auth-007-accent);text-decoration:none}
 [data-vibeui-block="auth-007"] [data-part="forgot"]:hover{text-decoration:underline}
 [data-vibeui-block="auth-007"] [data-part="wrap"]{position:relative;display:flex}
-[data-vibeui-block="auth-007"] input{
-width:100%;height:2.5rem;padding:0 0.75rem;
-border:1px solid var(--vibeui-auth-007-border);border-radius:0.625rem;
-background:var(--vibeui-auth-007-card);color:inherit;font:inherit;font-size:0.875rem;
-}
 [data-vibeui-block="auth-007"] [data-part="wrap"] input{padding-right:4rem}
-[data-vibeui-block="auth-007"] input:focus-visible{outline:2px solid var(--vibeui-auth-007-accent);outline-offset:1px;border-color:var(--vibeui-auth-007-accent)}
-[data-vibeui-block="auth-007"] input[aria-invalid="true"]{border-color:var(--vibeui-auth-007-danger)}
 [data-vibeui-block="auth-007"] [data-part="reveal"]{
 position:absolute;top:0;right:0;height:2.5rem;padding:0 0.75rem;
 appearance:none;border:0;background:none;cursor:pointer;
 color:var(--vibeui-auth-007-accent);font:inherit;font-size:0.75rem;font-weight:650;
 }
 [data-vibeui-block="auth-007"] [data-part="reveal"]:focus-visible{outline:2px solid var(--vibeui-auth-007-accent);outline-offset:-2px;border-radius:0.5rem}
-[data-vibeui-block="auth-007"] [data-part="hint"]{margin:0.3125rem 0 0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-auth-007-danger)}
 [data-vibeui-block="auth-007"] [data-part="caps"]{margin:0.3125rem 0 0;font-size:0.75rem;line-height:1.4;color:var(--vibeui-auth-007-warn)}
-[data-vibeui-block="auth-007"] [data-part="keep"]{display:flex;align-items:center;gap:0.5rem;margin:0.25rem 0 1rem;font-size:0.8125rem}
-[data-vibeui-block="auth-007"] [data-part="keep"] input{width:1rem;height:1rem;accent-color:var(--vibeui-auth-007-accent)}
-[data-vibeui-block="auth-007"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:2.625rem;padding:0.375rem 1rem;
-border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-007-accent);color:oklch(from var(--vibeui-auth-007-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;
-transition:filter var(--vibeui-auth-007-dur-2) ease;
-}
-[data-vibeui-block="auth-007"] [data-part="submit"]:hover{filter:brightness(1.08)}
-[data-vibeui-block="auth-007"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-007-accent);outline-offset:2px}
 [data-vibeui-block="auth-007"] [data-part="switch"]{margin:1rem 0 0;font-size:0.8125rem;color:var(--vibeui-auth-007-muted);text-align:center}
 [data-vibeui-block="auth-007"] [data-part="switch"] a{color:var(--vibeui-auth-007-accent);font-weight:650}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="auth-007"] *{animation:none!important;transition:none!important}}
@@ -209,7 +193,12 @@ export function Auth007({
         aria-label={title}
       >
         <div data-part="shell">
-          <h2>{title}</h2>
+          <Heading001
+            data-part="heading"
+            title={title}
+            size="xs"
+            accent={accent}
+          />
           <p data-part="lead">{lead}</p>
 
           {failed ? (
@@ -291,14 +280,11 @@ export function Auth007({
               ) : null}
             </div>
 
-            <label data-part="keep">
-              <input type="checkbox" name="remember" defaultChecked />
-              {keepLabel}
-            </label>
+            <Checkbox001 description="" data-part="keep" name="remember" defaultChecked label={keepLabel} accent={accent} />
 
-            <button type="submit" data-part="submit">
+            <Button001 type="submit" data-part="submit" size="lg" accent={accent}>
               {submit}
-            </button>
+            </Button001>
           </form>
 
           <p data-part="switch">

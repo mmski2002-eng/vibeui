@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card174 } from "@/registry/components/card/card-174/card-174"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid027Row = {
@@ -78,29 +79,6 @@ font-family:var(--vibeui-datagrid-027-font);overflow:hidden;
 [data-vibeui-block="datagrid-027"][data-density="roomy"]{
 --vibeui-datagrid-027-pad:0.875rem;--vibeui-datagrid-027-size:0.875rem;--vibeui-datagrid-027-lead:1.55;
 }
-[data-vibeui-block="datagrid-027"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-027-border);
-}
-[data-vibeui-block="datagrid-027"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-027"] [data-part="switch-form"]{display:contents}
-[data-vibeui-block="datagrid-027"] [data-part="switch"]{
-border:1px solid var(--vibeui-datagrid-027-border);border-radius:0.5rem;
-margin:0;padding:0.1875rem;display:flex;gap:0.1875rem;
-}
-[data-vibeui-block="datagrid-027"] [data-part="switch"] legend{
-padding:0 0.25rem;font-size:0.625rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
-color:var(--vibeui-datagrid-027-muted);
-}
-[data-vibeui-block="datagrid-027"] [data-part="switch"] label{
-display:inline-flex;align-items:center;gap:0.3125rem;cursor:pointer;
-padding:0.25rem 0.5rem;border-radius:0.375rem;font-size:0.75rem;color:var(--vibeui-datagrid-027-muted);
-}
-[data-vibeui-block="datagrid-027"] [data-part="switch"] label:has(input:checked){
-background:var(--vibeui-datagrid-027-chip);color:var(--vibeui-datagrid-027-accent);font-weight:600;
-}
-[data-vibeui-block="datagrid-027"] [data-part="switch"] input{accent-color:var(--vibeui-datagrid-027-accent);margin:0;width:0.8125rem;height:0.8125rem}
-[data-vibeui-block="datagrid-027"] [data-part="switch"] input:focus-visible{outline:2px solid var(--vibeui-datagrid-027-accent);outline-offset:2px}
 [data-vibeui-block="datagrid-027"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-027"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-027-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-027"] table{
@@ -264,26 +242,7 @@ export function Datagrid027({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <form data-part="switch-form">
-            <fieldset data-part="switch">
-              <legend>{densityLegend}</legend>
-              {MODES.map((item) => (
-                <label key={item.value}>
-                  <input
-                    type="radio"
-                    name="vibeui-datagrid-027-density"
-                    value={item.value}
-                    checked={mode === item.value}
-                    onChange={() => setMode(item.value)}
-                  />
-                  {densityText[item.value] ?? DENSITY_TEXT[item.value]}
-                </label>
-              ))}
-            </fieldset>
-          </form>
-        </div>
+        <Card174 data-part="bar" heading={heading} densityLegend={densityLegend} densityText={densityText} mode={mode} setMode={setMode} accent={accent} />
         <div
           data-part="scroll"
           role="region"

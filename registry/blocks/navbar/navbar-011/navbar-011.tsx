@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { Button106 } from "@/registry/components/button/button-106/button-106"
 import type { CSSProperties } from "react"
 
 type Navbar011Tab = {
@@ -131,25 +132,11 @@ transition:transform var(--vibeui-navbar-011-dur-4) var(--vibeui-navbar-011-ease
 [data-vibeui-block="navbar-011"] [data-part="account"]{
 position:relative;margin-left:auto;flex:none;order:2;
 }
-[data-vibeui-block="navbar-011"] [data-part="login"]{
-cursor:pointer;background:transparent;font:inherit;
-display:inline-flex;align-items:center;gap:0.5rem;
-min-height:2.5rem;padding:0.25rem 0.5rem 0.25rem 0.9375rem;
-border:1px solid var(--vibeui-navbar-011-line);border-radius:999px;
-color:var(--vibeui-navbar-011-ink);text-decoration:none;
-font-size:0.875rem;font-weight:560;
-box-shadow:0 0.125rem 0.5rem color-mix(in oklab,#000000 6%,transparent);
-transition:box-shadow var(--vibeui-navbar-011-dur-3) ease,border-color var(--vibeui-navbar-011-dur-2) ease;
-}
-[data-vibeui-block="navbar-011"] [data-part="login"]:hover{
-border-color:color-mix(in oklab,#000000 18%,transparent);
-box-shadow:0 0.375rem 1rem color-mix(in oklab,#000000 12%,transparent);
-}
-[data-vibeui-block="navbar-011"] [data-part="face"]{
+[data-vibeui-block="navbar-011"] [data-part="login-face"]{
 width:1.75rem;height:1.75rem;flex:none;display:grid;place-items:center;border-radius:999px;
 background:#1a1a1a;color:#ffffff;
 }
-[data-vibeui-block="navbar-011"] [data-part="face"] svg{width:1rem;height:1rem}
+[data-vibeui-block="navbar-011"] [data-part="login-face"] svg{width:1rem;height:1rem}
 [data-vibeui-block="navbar-011"] [data-part="account-menu"]{
 position:absolute;right:0;top:calc(100% + 0.5rem);z-index:60;min-width:14rem;
 background:var(--vibeui-navbar-011-bg);
@@ -424,22 +411,11 @@ export function Navbar011({
 
           <div ref={accountRef} data-part="account">
             {userMenu.length > 0 ? (
-              <button
-                type="button"
-                data-part="login"
-                aria-expanded={accountOpen}
-                aria-controls="vibeui-navbar-011-account"
-                onClick={() => setAccountOpen((open) => !open)}
-              >
-                {loginLabel}
-                <span data-part="face" aria-hidden="true">
-                  <FaceIcon />
-                </span>
-              </button>
+              <Button106 data-part="login" loginLabel={loginLabel} aria-expanded={accountOpen} onClick={() => setAccountOpen((open) => !open)} accent={accent} />
             ) : (
               <a data-part="login" href={loginHref}>
                 {loginLabel}
-                <span data-part="face" aria-hidden="true">
+                <span data-part="login-face" aria-hidden="true">
                   <FaceIcon />
                 </span>
               </a>

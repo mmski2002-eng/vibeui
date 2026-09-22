@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Card126 } from "@/registry/components/card/card-126/card-126"
 
 export type Event014Swatch = { name: string; hex: string }
 
@@ -74,14 +75,6 @@ container-type:inline-size;
 [data-vibeui-block="event-014"] [data-part="swatch"][data-copied="true"] code{opacity:1}
 [data-vibeui-block="event-014"] [data-part="grid"]{display:grid;gap:2rem;margin-top:3rem}
 [data-vibeui-block="event-014"] [data-part="looks"]{display:grid;gap:1.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="event-014"] [data-part="look"]{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.1rem;align-items:center}
-[data-vibeui-block="event-014"] [data-part="look"] figure{position:relative;margin:0;padding:.35rem;border:1px solid var(--vibeui-event-014-line);border-radius:.4rem;background:var(--vibeui-event-014-card);box-shadow:0 20px 40px -28px rgb(0 0 0 / .8),inset 0 0 0 1px rgb(242 238 230 / .05)}
-[data-vibeui-block="event-014"] [data-part="look"] span{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;border-radius:.2rem;background:var(--vibeui-event-014-bg)}
-[data-vibeui-block="event-014"] [data-part="look"] span::after{content:"";position:absolute;inset:0;background:radial-gradient(40% 30% at 0 100%,rgb(242 238 230 / .4),transparent 70%),radial-gradient(35% 25% at 100% 0,rgb(242 238 230 / .3),transparent 70%);mix-blend-mode:screen;pointer-events:none}
-[data-vibeui-block="event-014"] [data-part="look"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="event-014"] [data-part="look"] small{display:block;font-family:var(--vibeui-event-014-script);font-size:1.2rem;color:var(--vibeui-event-014-accent)}
-[data-vibeui-block="event-014"] [data-part="look"] h3{margin:.1rem 0 .3rem;font-family:var(--vibeui-event-014-display);font-size:1.5rem;font-weight:500;line-height:1.1}
-[data-vibeui-block="event-014"] [data-part="look"] p{margin:0;font-size:.92rem;color:var(--vibeui-event-014-muted)}
 [data-vibeui-block="event-014"] [data-part="rules"]{display:grid;gap:.7rem;margin:0;padding:1.4rem;list-style:none;border:1px solid var(--vibeui-event-014-line);border-radius:1rem;background:var(--vibeui-event-014-card);align-self:start}
 [data-vibeui-block="event-014"] [data-part="rules"] li{display:flex;align-items:center;gap:.8rem;font-size:.95rem}
 [data-vibeui-block="event-014"] [data-part="rules"] svg{flex:none;width:2.3rem;height:2.3rem;padding:.5rem;border-radius:50%;border:1px solid var(--vibeui-event-014-line);color:var(--vibeui-event-014-accent);fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;box-shadow:0 0 14px -4px var(--vibeui-event-014-accent)}
@@ -91,7 +84,6 @@ container-type:inline-size;
 [data-vibeui-block="event-014"] [data-part="swatch"]:hover,[data-vibeui-block="event-014"] [data-part="swatch"][data-copied="true"]{min-height:11rem}
 [data-vibeui-block="event-014"] [data-part="grid"]{grid-template-columns:minmax(0,1.5fr) minmax(16rem,.7fr);gap:3rem}
 [data-vibeui-block="event-014"] [data-part="looks"]{grid-template-columns:1fr 1fr}
-[data-vibeui-block="event-014"] [data-part="look"]{grid-template-columns:8rem minmax(0,1fr)}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-014"] *{animation:none!important;transition:none!important}}`
 
@@ -189,16 +181,7 @@ export function Event014({
           <div data-part="grid">
             <ul data-part="looks">
               {looks.map((look) => (
-                <li key={look.who} data-part="look">
-                  <figure>
-                    <span>{look.image ? <img src={look.image} alt={look.imageAlt ?? ""} loading="lazy" /> : null}</span>
-                  </figure>
-                  <div>
-                    <small>{look.who}</small>
-                    <h3>{look.title}</h3>
-                    <p>{look.text}</p>
-                  </div>
-                </li>
+                <Card126 key={look.who} data-part="look" who={look.who} image={look.image} imageAlt={look.imageAlt} title={look.title} text={look.text} accent={accent} />
               ))}
             </ul>
             {rules.length > 0 ? (

@@ -2,6 +2,8 @@
 
 import { useState, type CSSProperties, type ReactNode } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero037Room = {
   name: string
   /** Площадь, м². */
@@ -97,12 +99,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-037"] [data-part="dim"]::after{content:attr(data-dim);position:absolute;left:50%;top:0;transform:translateX(-50%);padding:0 .35em;line-height:1;opacity:0;background:var(--vibeui-hero-037-bg);font-family:var(--vibeui-hero-037-mono);font-weight:500;font-size:.2em;letter-spacing:.04em;color:var(--vibeui-hero-037-accent);animation:vibeui-hero-037-fade .5s ease-out 1.6s both}
 [data-vibeui-block="hero-037"] [data-part="lede"]{margin:1.4rem 0 0;max-width:32rem;font-size:1.08rem;color:var(--vibeui-hero-037-muted)}
 [data-vibeui-block="hero-037"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.8rem 0 0}
-[data-vibeui-block="hero-037"] [data-part="primary"],[data-vibeui-block="hero-037"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.4rem;border-radius:.4rem;font-weight:600;text-decoration:none;font-size:.95rem;transition:transform .18s,box-shadow .2s,background .2s}
-[data-vibeui-block="hero-037"] [data-part="primary"]{background:var(--vibeui-hero-037-accent);color:var(--vibeui-hero-037-on-accent);box-shadow:0 0 0 1px color-mix(in oklab,var(--vibeui-hero-037-fg) 20%,transparent) inset}
-[data-vibeui-block="hero-037"] [data-part="primary"]:hover{transform:translateY(-2px);box-shadow:0 0 0 1px color-mix(in oklab,var(--vibeui-hero-037-fg) 20%,transparent) inset,0 14px 30px -12px var(--vibeui-hero-037-accent)}
-[data-vibeui-block="hero-037"] [data-part="secondary"]{color:var(--vibeui-hero-037-fg);border:1px solid var(--vibeui-hero-037-line)}
-[data-vibeui-block="hero-037"] [data-part="secondary"]:hover{background:color-mix(in oklab,var(--vibeui-hero-037-fg) 7%,transparent)}
-[data-vibeui-block="hero-037"] a:focus-visible,[data-vibeui-block="hero-037"] [data-part="room"]:focus-visible{outline:2px solid var(--vibeui-hero-037-accent);outline-offset:3px}
+[data-vibeui-block="hero-037"] [data-part="room"]:focus-visible{outline:2px solid var(--vibeui-hero-037-accent);outline-offset:3px}
 [data-vibeui-block="hero-037"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:2rem 0 0;padding:0;list-style:none;font-family:var(--vibeui-hero-037-mono);font-size:.74rem;letter-spacing:.02em;color:var(--vibeui-hero-037-muted)}
 [data-vibeui-block="hero-037"] [data-part="facts"] li::before{content:"■ ";color:var(--vibeui-hero-037-accent);font-size:.6em;vertical-align:.2em}
 [data-vibeui-block="hero-037"] [data-part="sheet"]{position:relative;border:1px solid var(--vibeui-hero-037-line);background:color-mix(in oklab,var(--vibeui-hero-037-bg) 60%,transparent);padding:1rem 1rem .8rem;box-shadow:0 30px 60px -40px rgb(0 0 0 / .6)}
@@ -246,14 +243,26 @@ export function Hero037({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
             {facts.length > 0 ? (

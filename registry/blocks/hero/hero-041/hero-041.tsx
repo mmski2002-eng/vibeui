@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero041Card = {
   name: string
   /** Цена строкой, как печатать: «2 490 ₽». */
@@ -68,12 +70,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-041"] [data-part="word"] em{font-style:normal;color:var(--vibeui-hero-041-accent)}
 [data-vibeui-block="hero-041"] [data-part="lede"]{max-width:34rem;margin:1.2rem auto 0;color:var(--vibeui-hero-041-muted);font-size:1.02rem}
 [data-vibeui-block="hero-041"] [data-part="actions"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin:1.5rem 0 0}
-[data-vibeui-block="hero-041"] [data-part="primary"],[data-vibeui-block="hero-041"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;height:3rem;padding:0 1.35rem;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .18s,box-shadow .2s,background .2s}
-[data-vibeui-block="hero-041"] [data-part="primary"]{background:var(--vibeui-hero-041-accent);color:var(--vibeui-hero-041-on-accent)}
-[data-vibeui-block="hero-041"] [data-part="primary"]:hover{transform:translateY(-1px);box-shadow:0 12px 30px -12px var(--vibeui-hero-041-accent)}
-[data-vibeui-block="hero-041"] [data-part="secondary"]{color:var(--vibeui-hero-041-fg);border:1px solid var(--vibeui-hero-041-line)}
-[data-vibeui-block="hero-041"] [data-part="secondary"]:hover{background:color-mix(in oklab,var(--vibeui-hero-041-fg) 5%,transparent)}
-[data-vibeui-block="hero-041"] a:focus-visible{outline:2px solid var(--vibeui-hero-041-accent);outline-offset:2px}
 [data-vibeui-block="hero-041"] [data-part="shelf"]{--vibeui-hero-041-cw:44cqi;--vibeui-hero-041-gap:3cqi;--vibeui-hero-041-cols:2;--vibeui-hero-041-rows:2;--vibeui-hero-041-n:4;--vibeui-hero-041-spread:12cqi;position:relative;width:100%;height:calc(var(--vibeui-hero-041-rows) * (var(--vibeui-hero-041-cw) * .75 + var(--vibeui-hero-041-gap)) - var(--vibeui-hero-041-gap));margin:.5rem auto 0;perspective:1400px;perspective-origin:50% 40%;transform-style:preserve-3d}
 [data-vibeui-block="hero-041"] [data-part="card"]{--vibeui-hero-041-c:var(--vibeui-hero-041-c2);--vibeui-hero-041-r:var(--vibeui-hero-041-r2);--vibeui-hero-041-x0:calc((var(--vibeui-hero-041-i) - (var(--vibeui-hero-041-n) - 1) / 2) * var(--vibeui-hero-041-spread));--vibeui-hero-041-x1:calc((var(--vibeui-hero-041-c) - (var(--vibeui-hero-041-cols) - 1) / 2) * (var(--vibeui-hero-041-cw) + var(--vibeui-hero-041-gap)));--vibeui-hero-041-y1:calc((var(--vibeui-hero-041-r) - (var(--vibeui-hero-041-rows) - 1) / 2) * (var(--vibeui-hero-041-cw) * .75 + var(--vibeui-hero-041-gap)));position:absolute;left:50%;top:50%;width:var(--vibeui-hero-041-cw);aspect-ratio:4/3;margin-left:calc(var(--vibeui-hero-041-cw) / -2);margin-top:calc(var(--vibeui-hero-041-cw) * -.375);border-radius:clamp(.6rem,1.6cqi,1.1rem);overflow:hidden;background:var(--vibeui-hero-041-line);box-shadow:0 30px 60px -30px rgb(0 0 0 / .45);z-index:var(--vibeui-hero-041-i);transform:translate3d(calc(var(--vibeui-hero-041-x0) * (1 - var(--vibeui-hero-041-p)) + var(--vibeui-hero-041-x1) * var(--vibeui-hero-041-p)),calc(var(--vibeui-hero-041-y1) * var(--vibeui-hero-041-p)),calc(var(--vibeui-hero-041-i) * -28px * (1 - var(--vibeui-hero-041-p)))) rotateY(calc(-32deg * (1 - var(--vibeui-hero-041-p)))) rotateX(calc(8deg * (1 - var(--vibeui-hero-041-p)))) scale(calc(.9 + .1 * var(--vibeui-hero-041-p)))}
 [data-vibeui-block="hero-041"] [data-part="card"][data-extra]{display:none}
@@ -183,14 +179,26 @@ export function Hero041({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

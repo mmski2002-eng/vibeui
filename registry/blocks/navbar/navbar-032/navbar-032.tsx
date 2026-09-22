@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar032Link = {
   label: string
   href: string
@@ -69,9 +71,6 @@ container-type:inline-size;
 [data-vibeui-block="navbar-032"] [data-part="rating"]{display:none;align-items:center;gap:.35rem;font-size:.8rem;color:var(--vibeui-navbar-032-muted)}
 [data-vibeui-block="navbar-032"] [data-part="rating"] b{color:var(--vibeui-navbar-032-fg)}
 [data-vibeui-block="navbar-032"] [data-part="rating"] i{color:var(--vibeui-navbar-032-accent);font-style:normal}
-[data-vibeui-block="navbar-032"] [data-part="action"]{display:inline-flex;align-items:center;padding:.6rem 1.1rem;border-radius:999px;background:var(--vibeui-navbar-032-accent);color:var(--vibeui-navbar-032-on-accent);text-decoration:none;font-weight:700;font-size:.88rem;white-space:nowrap;transform:translate(var(--vibeui-navbar-032-mx,0px),var(--vibeui-navbar-032-my,0px));transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .2s,box-shadow .35s}
-[data-vibeui-block="navbar-032"] [data-part="action"]:hover{filter:brightness(1.06);box-shadow:0 12px 24px -12px var(--vibeui-navbar-032-accent)}
-[data-vibeui-block="navbar-032"] a:focus-visible{outline:2px solid var(--vibeui-navbar-032-accent);outline-offset:2px}
 @keyframes vibeui-navbar-032-breath{0%,100%{transform:scale(.8);opacity:.8}50%{transform:scale(1.15);opacity:1}}
 @container (min-width: 40rem){[data-vibeui-block="navbar-032"] [data-part="rating"]{display:inline-flex}}
 @container (min-width: 56rem){[data-vibeui-block="navbar-032"] [data-part="nav"]{display:flex}}
@@ -185,9 +184,17 @@ export function Navbar032({
               </span>
             ) : null}
             {actionLabel ? (
-              <a data-part="action" href={actionHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                {actionLabel}
-              </a>
+              <Button016
+                data-part="action"
+                onPointerMove={magnet}
+                onPointerLeave={unmagnet}
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="sm"
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
           </div>
           <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-032-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>

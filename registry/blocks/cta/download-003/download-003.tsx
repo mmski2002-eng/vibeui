@@ -1,4 +1,7 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Download003Platform = {
   name: string
@@ -25,7 +28,9 @@ export type Download003Props = {
 // выделена брендовой рамкой (задаётся флагом primary). Иконки платформ —
 // простые CSS-глифы, без брендовых логотипов. Формат страницы загрузки
 // десктоп-продукта.
-const STYLES = `
+const STYLES = `[data-vibeui-block="download-003"] [data-part="heading"]{margin-bottom:0.5rem}
+[data-vibeui-block="download-003"] [data-part="btn"]{margin-top:auto}
+
 :where([data-vibeui-block="download-003"]){
 --vibeui-download-003-bg:transparent;
 --vibeui-download-003-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -47,8 +52,6 @@ display:block;background:var(--vibeui-download-003-bg);color:var(--vibeui-downlo
 font-family:var(--vibeui-download-003-font);
 }
 [data-vibeui-block="download-003"] [data-part="shell"]{max-width:60rem;margin:0 auto;padding:3.5rem 1.25rem;text-align:center}
-[data-vibeui-block="download-003"] [data-part="eyebrow"]{margin:0 0 0.625rem;color:var(--vibeui-download-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="download-003"] [data-part="title"]{margin:0 0 0.5rem;font-size:clamp(1.75rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="download-003"] [data-part="version"]{margin:0 0 2rem;color:var(--vibeui-download-003-muted);font-size:0.9375rem}
 [data-vibeui-block="download-003"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr);text-align:left}
 [data-vibeui-block="download-003"] [data-part="card"]{
@@ -68,15 +71,6 @@ color:var(--vibeui-download-003-accent);
 }
 [data-vibeui-block="download-003"] [data-part="name"]{margin:0;font-size:1.0625rem;font-weight:700}
 [data-vibeui-block="download-003"] [data-part="detail"]{margin:0.1875rem 0 0;font-size:0.8125rem;color:var(--vibeui-download-003-muted)}
-[data-vibeui-block="download-003"] [data-part="btn"]{
-margin-top:auto;display:inline-flex;align-items:center;justify-content:center;
-height:2.75rem;border-radius:0.75rem;text-decoration:none;
-border:1px solid var(--vibeui-download-003-border);color:inherit;
-font-size:0.9375rem;font-weight:650;transition:border-color var(--vibeui-download-003-dur-2) ease,background-color var(--vibeui-download-003-dur-2) ease;
-}
-[data-vibeui-block="download-003"] [data-part="btn"]:hover{border-color:var(--vibeui-download-003-accent)}
-[data-vibeui-block="download-003"] [data-part="btn"]:focus-visible{outline:2px solid var(--vibeui-download-003-accent);outline-offset:2px}
-[data-vibeui-block="download-003"] [data-part="card"][data-primary="true"] [data-part="btn"]{border-color:transparent;background:var(--vibeui-download-003-accent);color:oklch(from var(--vibeui-download-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="download-003"] [data-part="other"]{margin:1.75rem 0 0;font-size:0.875rem;color:var(--vibeui-download-003-muted)}
 [data-vibeui-block="download-003"] [data-part="other"] a{color:var(--vibeui-download-003-accent);text-decoration:underline;text-underline-offset:2px}
 @container (min-width: 44rem){
@@ -193,8 +187,13 @@ export function Download003({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            align="center"
+            accent={accent}
+          />
           <p data-part="version">{version}</p>
           <div data-part="grid">
             {platforms.map((platform) => (
@@ -210,9 +209,15 @@ export function Download003({
                   <p data-part="name">{platform.name}</p>
                   <p data-part="detail">{platform.detail}</p>
                 </div>
-                <a href={platform.href} data-part="btn">
-                  Скачать
-                </a>
+                <Button016
+                  data-part="btn"
+                  label="Скачать"
+                  href={platform.href}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               </div>
             ))}
           </div>

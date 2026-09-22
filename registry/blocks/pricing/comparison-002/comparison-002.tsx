@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Comparison002Plan = {
   name: string
@@ -22,7 +23,8 @@ export type Comparison002Props = {
 // и стоит по центру, соседи приглушены. Каждая колонка — название подхода,
 // строчка сути и список пунктов. Формат «три пути, один правильный» без
 // таблицы галочек — когда сравниваются целые подходы, а не поля.
-const STYLES = `
+const STYLES = `[data-vibeui-block="comparison-002"] [data-part="heading"]{margin-bottom:2.25rem}
+
 :where([data-vibeui-block="comparison-002"]){
 --vibeui-comparison-002-bg:transparent;
 --vibeui-comparison-002-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -42,8 +44,6 @@ display:block;background:var(--vibeui-comparison-002-bg);color:var(--vibeui-comp
 font-family:var(--vibeui-comparison-002-font);
 }
 [data-vibeui-block="comparison-002"] [data-part="shell"]{max-width:64rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="comparison-002"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-comparison-002-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-align:center}
-[data-vibeui-block="comparison-002"] [data-part="title"]{margin:0 0 2.25rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;text-align:center}
 [data-vibeui-block="comparison-002"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="comparison-002"] [data-part="plan"]{
 min-inline-size:0;display:flex;flex-direction:column;gap:0.75rem;
@@ -152,8 +152,13 @@ export function Comparison002({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            align="center"
+            accent={accent}
+          />
           <div data-part="grid">
             {plans.map((plan) => (
               <div

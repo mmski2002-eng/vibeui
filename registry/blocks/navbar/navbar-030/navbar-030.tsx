@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar030Link = {
   label: string
   href: string
@@ -79,9 +81,6 @@ container-type:inline-size;
 [data-vibeui-block="navbar-030"] [data-part="stars"]:hover{border-color:var(--vibeui-navbar-030-accent);transform:translateY(-1px)}
 [data-vibeui-block="navbar-030"] [data-part="stars"] svg{width:.9rem;height:.9rem;fill:var(--vibeui-navbar-030-accent)}
 [data-vibeui-block="navbar-030"] [data-part="stars"] span{display:none;color:var(--vibeui-navbar-030-muted)}
-[data-vibeui-block="navbar-030"] [data-part="action"]{display:inline-flex;align-items:center;padding:.5rem .9rem;border-radius:6px;background:var(--vibeui-navbar-030-accent);color:var(--vibeui-navbar-030-on-accent);text-decoration:none;font-weight:600;font-size:.85rem;white-space:nowrap;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
-[data-vibeui-block="navbar-030"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 8px 20px -8px color-mix(in oklab,var(--vibeui-navbar-030-accent) 70%,transparent)}
-[data-vibeui-block="navbar-030"] a:focus-visible{outline:2px solid var(--vibeui-navbar-030-accent);outline-offset:2px}
 @container (min-width: 40rem){[data-vibeui-block="navbar-030"] [data-part="stars"] span{display:inline}}
 @container (min-width: 56rem){[data-vibeui-block="navbar-030"] [data-part="nav"]{display:flex}}
 [data-vibeui-block="navbar-030"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--vibeui-navbar-030-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
@@ -189,9 +188,15 @@ export function Navbar030({
               <span>{starsLabel}</span>
             </a>
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
-                {actionLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="sm"
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
           </div>
           <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-030-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>

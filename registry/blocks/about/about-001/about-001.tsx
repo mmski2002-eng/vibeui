@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Mark001 } from "@/registry/components/typography/mark-001/mark-001"
 
 type About001Segment = {
   text: string
@@ -51,12 +52,6 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase
 margin:0;
 font-size:clamp(1.5rem,5.5cqi,3.25rem);line-height:1.2;letter-spacing:-0.02em;font-weight:650;
 text-wrap:balance;
-}
-[data-vibeui-block="about-001"] [data-part="mark"]{
-color:var(--vibeui-about-001-accent);
-background:var(--vibeui-about-001-mark);
-border-radius:0.25em;padding:0 0.12em;
--webkit-box-decoration-break:clone;box-decoration-break:clone;
 }
 [data-vibeui-block="about-001"] [data-part="footnote"]{
 margin:2rem 0 0;display:flex;align-items:center;gap:0.75rem;
@@ -141,9 +136,7 @@ export function About001({
           <p data-part="statement">
             {segments.map((segment, index) =>
               segment.highlight ? (
-                <mark data-part="mark" key={index}>
-                  {segment.text}
-                </mark>
+                <Mark001 key={index} data-part="mark" text={segment.text} accent={accent} />
               ) : (
                 <span key={index}>{segment.text}</span>
               ),

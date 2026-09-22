@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 export type Video001Props = {
   eyebrow?: string
@@ -24,7 +25,8 @@ export type Video001Props = {
 // остаётся тёплый градиент — блок обязан работать без единого ассета.
 // Кнопка play — круг с треугольником из бордюров. Это заглушка плеера: реальное видео
 // подключает приложение по клику. Слева текст, справа кадр на широком экране.
-const STYLES = `
+const STYLES = `[data-vibeui-block="video-001"] [data-part="heading"]{margin-bottom:0.75rem}
+
 :where([data-vibeui-block="video-001"]){
 --vibeui-video-001-bg:transparent;
 --vibeui-video-001-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -48,8 +50,6 @@ display:block;background:var(--vibeui-video-001-bg);color:var(--vibeui-video-001
 font-family:var(--vibeui-video-001-font);
 }
 [data-vibeui-block="video-001"] [data-part="shell"]{max-width:64rem;margin:0 auto;padding:3rem 1.25rem;display:grid;gap:2rem;align-items:center}
-[data-vibeui-block="video-001"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-video-001-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="video-001"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="video-001"] [data-part="summary"]{margin:0 0 1.5rem;color:var(--vibeui-video-001-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="video-001"] [data-part="cta"]{
 display:inline-flex;align-items:center;gap:0.625rem;height:2.75rem;padding:0 1.375rem;border-radius:999px;
@@ -158,8 +158,12 @@ export function Video001({
       >
         <div data-part="shell">
           <div>
-            <p data-part="eyebrow">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              accent={accent}
+            />
             <p data-part="summary">{summary}</p>
             <a href={ctaHref} data-part="cta">
               <svg viewBox="0 0 28 20" aria-hidden="true">

@@ -1,6 +1,7 @@
 "use client"
 
 import { useSyncExternalStore, type CSSProperties } from "react"
+import { Badge033 } from "@/registry/components/badge/badge-033/badge-033"
 
 export type Logocloud014Item = {
   name: string
@@ -72,9 +73,6 @@ container-type:inline-size;
 [data-vibeui-block="logocloud-014"] [data-part="row"][data-dir="rtl"]{animation-direction:reverse}
 [data-vibeui-block="logocloud-014"] [data-part="rows"]:hover [data-part="row"]{animation-play-state:paused}
 [data-vibeui-block="logocloud-014"] [data-part="lane"]{display:flex;gap:.8rem;padding-right:.8rem;margin:0;list-style:none}
-[data-vibeui-block="logocloud-014"] [data-part="chip"]{display:inline-flex;align-items:center;gap:.6rem;padding:.55rem 1rem .55rem .55rem;border-radius:999px;background:var(--vibeui-logocloud-014-glass);border:1px solid var(--vibeui-logocloud-014-line);white-space:nowrap;font-weight:500;font-size:.92rem;transition:border-color .2s,background .2s}
-[data-vibeui-block="logocloud-014"] [data-part="chip"]:hover{border-color:color-mix(in oklab,var(--vibeui-logocloud-014-accent) 50%,transparent);background:color-mix(in oklab,var(--vibeui-logocloud-014-accent) 10%,transparent)}
-[data-vibeui-block="logocloud-014"] [data-part="chip"] i{display:grid;place-items:center;width:1.8rem;height:1.8rem;border-radius:.55rem;background:color-mix(in oklab,var(--vibeui-logocloud-014-accent) 16%,transparent);color:var(--vibeui-logocloud-014-accent);font-style:normal;font-family:var(--vibeui-logocloud-014-mono);font-size:.64rem;font-weight:600}
 @keyframes vibeui-logocloud-014-run{to{transform:translateX(-50%)}}
 @keyframes vibeui-logocloud-014-blink{50%{opacity:.2}}
 @container (min-width: 40rem){[data-vibeui-block="logocloud-014"] [data-part="counters"]{grid-template-columns:1fr 1fr}}
@@ -112,9 +110,6 @@ function formatNumber(value: number) {
   return String(Math.floor(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
-function markOf(item: Logocloud014Item) {
-  return item.mark ?? item.name.slice(0, 2).toUpperCase()
-}
 
 /** Интеграции бегущими строками и счётчики от текущего времени. */
 export function Logocloud014({
@@ -172,10 +167,7 @@ export function Logocloud014({
               {[0, 1].map((copy) => (
                 <ul key={copy} data-part="lane" aria-hidden={copy === 1 ? true : undefined}>
                   {row.map((item) => (
-                    <li key={item.name} data-part="chip">
-                      <i aria-hidden="true">{markOf(item)}</i>
-                      {item.name}
-                    </li>
+                    <Badge033 key={item.name} data-part="chip" mark={item.mark} name={item.name} accent={accent} />
                   ))}
                 </ul>
               ))}

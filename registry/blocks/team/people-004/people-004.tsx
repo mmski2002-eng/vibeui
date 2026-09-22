@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card052 } from "@/registry/components/card/card-052/card-052"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 
 type People004Member = {
   name: string
@@ -52,59 +55,14 @@ font-family:var(--vibeui-people-004-font);
 display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;
 margin:0 0 1.5rem;
 }
-[data-vibeui-block="people-004"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-people-004-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="people-004"] [data-part="title"]{
-margin:0;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="people-004"] [data-part="count"]{
 flex:none;padding:0.25rem 0.625rem;border-radius:999px;
 border:1px solid var(--vibeui-people-004-border);
 color:var(--vibeui-people-004-muted);font-size:0.75rem;font-weight:650;white-space:nowrap;
 }
 [data-vibeui-block="people-004"] [data-part="list"]{margin:0;padding:0;list-style:none}
-[data-vibeui-block="people-004"] [data-part="row"]{
-min-inline-size:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;
-align-items:center;gap:0.875rem;
-padding:0.75rem 0.5rem;border-top:1px solid var(--vibeui-people-004-border);
-border-radius:0.5rem;
-transition:background var(--vibeui-people-004-dur-2) ease;
-}
-[data-vibeui-block="people-004"] [data-part="row"]:last-child{border-bottom:1px solid var(--vibeui-people-004-border)}
-[data-vibeui-block="people-004"] [data-part="row"]:hover{
-background:color-mix(in oklab,var(--vibeui-people-004-accent) 7%,transparent);
-}
-[data-vibeui-block="people-004"] [data-part="avatar"]{
-position:relative;width:2.5rem;height:2.5rem;flex:none;border-radius:999px;display:grid;place-items:center;
-color:var(--vibeui-people-004-accent);
-font-size:0.8125rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="people-004"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-004-accent) 12%,var(--vibeui-people-004-card));}
-[data-vibeui-block="people-004"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="people-004"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
-[data-vibeui-block="people-004"] [data-part="name"]{
-margin:0;font-size:0.9375rem;font-weight:650;
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-[data-vibeui-block="people-004"] [data-part="role"]{
-margin:0;color:var(--vibeui-people-004-muted);font-size:0.8125rem;line-height:1.35;
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-[data-vibeui-block="people-004"] [data-part="meta"]{
-display:grid;gap:0.0625rem;text-align:right;
-}
-[data-vibeui-block="people-004"] [data-part="city"]{font-size:0.8125rem;white-space:nowrap}
-[data-vibeui-block="people-004"] [data-part="since"]{color:var(--vibeui-people-004-muted);font-size:0.75rem;white-space:nowrap}
 @container (min-width: 48rem){
 [data-vibeui-block="people-004"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="people-004"] [data-part="row"]{gap:1.125rem;padding:0.875rem 0.75rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="people-004"] *{animation:none!important;transition:none!important}}
 `
@@ -247,40 +205,20 @@ export function People004({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
           <div data-part="head">
-            <h2 data-part="title">{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              accent={accent}
+            />
             <span data-part="count">
               {countLabel || `${members.length} человек`}
             </span>
           </div>
           <ul data-part="list">
             {members.map((member) => (
-              <li key={member.name} data-part="row">
-                <span
-                  data-part="avatar"
-                  data-empty={member.image ? undefined : "true"}
-                  aria-hidden="true"
-                >
-                  {member.image ? (
-                    <img
-                      src={member.image}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
-                  {initials(member.name)}
-                </span>
-                <span data-part="who">
-                  <p data-part="name">{member.name}</p>
-                  <p data-part="role">{member.role}</p>
-                </span>
-                <span data-part="meta">
-                  <span data-part="city">{member.city}</span>
-                  <span data-part="since">{member.since}</span>
-                </span>
-              </li>
+              <Card052 key={member.name} data-part="row" name={member.name} image={member.image} role={member.role} city={member.city} since={member.since} accent={accent} />
             ))}
           </ul>
         </div>

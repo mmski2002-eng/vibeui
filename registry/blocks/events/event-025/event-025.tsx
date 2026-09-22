@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Event025Item = {
   /** День и месяц: «27», «сен». */
   day: string
@@ -62,6 +64,7 @@ container-type:inline-size;
 :where([data-vibeui-block="event-025"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="event-025"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-event-025-bg);color:var(--vibeui-event-025-fg);font-family:var(--vibeui-event-025-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="event-025"] *{box-sizing:border-box}
+[data-vibeui-block="event-025"] [data-part="action"]{justify-self:start;margin-top:.4rem}
 [data-vibeui-block="event-025"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="event-025"] [data-part="head"]{max-width:40rem}
 [data-vibeui-block="event-025"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-event-025-accent)}
@@ -86,11 +89,10 @@ container-type:inline-size;
 [data-vibeui-block="event-025"] [data-part="track"]{grid-column:1/-1;height:.4rem;border-radius:999px;background:var(--vibeui-event-025-soft);overflow:hidden}
 [data-vibeui-block="event-025"] [data-part="track"] i{display:block;height:100%;width:var(--vibeui-event-025-w);background:var(--vibeui-event-025-accent);border-radius:999px}
 [data-vibeui-block="event-025"] [data-part="note"]{padding:.1rem .55rem;font-family:var(--vibeui-event-025-hand);font-size:1.2rem;line-height:1.1;color:var(--vibeui-event-025-accent);border:1px dashed var(--vibeui-event-025-accent);border-radius:.3rem;transform:rotate(-2deg)}
-[data-vibeui-block="event-025"] [data-part="action"]{justify-self:start;display:inline-flex;align-items:center;margin-top:.4rem;padding:.65rem 1.1rem;border-radius:999px;border:1px solid var(--vibeui-event-025-fg);color:var(--vibeui-event-025-fg);text-decoration:none;font-weight:600;font-size:.9rem;transition:background .2s,color .2s,transform .18s}
-[data-vibeui-block="event-025"] [data-part="action"]:hover{background:var(--vibeui-event-025-fg);color:var(--vibeui-event-025-bg);transform:translateY(-1px)}
-[data-vibeui-block="event-025"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-event-025-accent);outline-offset:2px}
-@container (min-width: 48rem){[data-vibeui-block="event-025"] [data-part="ticket"]{grid-template-columns:8rem minmax(0,1fr);-webkit-mask:radial-gradient(circle .7rem at 8rem 0,transparent 98%,#000) top/100% 51% no-repeat,radial-gradient(circle .7rem at 8rem 100%,transparent 98%,#000) bottom/100% 51% no-repeat;mask:radial-gradient(circle .7rem at 8rem 0,transparent 98%,#000) top/100% 51% no-repeat,radial-gradient(circle .7rem at 8rem 100%,transparent 98%,#000) bottom/100% 51% no-repeat}[data-vibeui-block="event-025"] [data-part="stub"] b{font-size:3rem}[data-vibeui-block="event-025"] [data-part="body"]{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title action" "text action" "meta action" "hands action";padding:1.4rem 1.8rem}[data-vibeui-block="event-025"] [data-part="body"] h3{grid-area:title}[data-vibeui-block="event-025"] [data-part="text"]{grid-area:text}[data-vibeui-block="event-025"] [data-part="meta"]{grid-area:meta}[data-vibeui-block="event-025"] [data-part="hands"]{grid-area:hands;max-width:22rem}[data-vibeui-block="event-025"] [data-part="action"]{grid-area:action;align-self:center;margin:0 0 0 1.5rem}}
-@container (min-width: 64rem){[data-vibeui-block="event-025"] [data-part="list"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="event-025"] [data-part="body"]{grid-template-columns:minmax(0,1fr);grid-template-areas:"title" "text" "meta" "hands" "action"}[data-vibeui-block="event-025"] [data-part="action"]{margin:.4rem 0 0;justify-self:start}}
+@container (min-width: 48rem){
+[data-vibeui-block="event-025"] [data-part="action"]{grid-area:action;align-self:center;margin:0 0 0 1.5rem}[data-vibeui-block="event-025"] [data-part="ticket"]{grid-template-columns:8rem minmax(0,1fr);-webkit-mask:radial-gradient(circle .7rem at 8rem 0,transparent 98%,#000) top/100% 51% no-repeat,radial-gradient(circle .7rem at 8rem 100%,transparent 98%,#000) bottom/100% 51% no-repeat;mask:radial-gradient(circle .7rem at 8rem 0,transparent 98%,#000) top/100% 51% no-repeat,radial-gradient(circle .7rem at 8rem 100%,transparent 98%,#000) bottom/100% 51% no-repeat}[data-vibeui-block="event-025"] [data-part="stub"] b{font-size:3rem}[data-vibeui-block="event-025"] [data-part="body"]{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title action" "text action" "meta action" "hands action";padding:1.4rem 1.8rem}[data-vibeui-block="event-025"] [data-part="body"] h3{grid-area:title}[data-vibeui-block="event-025"] [data-part="text"]{grid-area:text}[data-vibeui-block="event-025"] [data-part="meta"]{grid-area:meta}[data-vibeui-block="event-025"] [data-part="hands"]{grid-area:hands;max-width:22rem}}
+@container (min-width: 64rem){
+[data-vibeui-block="event-025"] [data-part="action"]{margin:.4rem 0 0;justify-self:start}[data-vibeui-block="event-025"] [data-part="list"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="event-025"] [data-part="body"]{grid-template-columns:minmax(0,1fr);grid-template-areas:"title" "text" "meta" "hands" "action"}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-025"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_EVENTS: Event025Item[] = [
@@ -181,9 +183,15 @@ export function Event025({
                       </div>
                     ) : null}
                     {event.actionLabel ? (
-                      <a data-part="action" href={event.actionHref ?? "#"}>
-                        {event.actionLabel}
-                      </a>
+                      <Button016
+                        data-part="action"
+                        label={event.actionLabel}
+                        href={event.actionHref ?? "#"}
+                        external={false}
+                        size="md"
+                        tone="neutral"
+                        accent={accent}
+                      />
                     ) : null}
                   </div>
                 </li>

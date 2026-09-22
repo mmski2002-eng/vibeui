@@ -1,6 +1,9 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Button018 } from "@/registry/components/button/button-018/button-018"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing021Ticket = {
   name: string
@@ -65,17 +68,12 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-021"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-021"]{box-sizing:border-box;display:block;background:var(--vibeui-pricing-021-bg);color:var(--vibeui-pricing-021-fg);font-family:var(--vibeui-pricing-021-font);font-size:1rem;line-height:1.4}
 [data-vibeui-block="pricing-021"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-021"] [data-part="action"]{margin-top:auto}
 [data-vibeui-block="pricing-021"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:2rem 1.25rem 3rem}
 [data-vibeui-block="pricing-021"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.25rem;border-top:1px solid var(--vibeui-pricing-021-line)}
 [data-vibeui-block="pricing-021"] [data-part="eyebrow"]{margin:0;font-size:1.05rem}
 [data-vibeui-block="pricing-021"] [data-part="title"]{margin:.5rem 0 0;font-family:var(--vibeui-pricing-021-display);font-size:clamp(1.6rem,3.4cqi,2.4rem);font-weight:600;letter-spacing:-.03em;line-height:1.1}
 [data-vibeui-block="pricing-021"] [data-part="lede"]{margin:.5rem 0 1.5rem;max-width:36rem;color:var(--vibeui-pricing-021-muted)}
-[data-vibeui-block="pricing-021"] [data-part="counter"]{display:inline-flex;align-items:center;gap:.75rem;padding:.35rem .35rem .35rem 1rem;border-radius:999px;background:var(--vibeui-pricing-021-chip);font-size:.95rem;font-weight:500}
-[data-vibeui-block="pricing-021"] [data-part="counter"] button{width:2.2rem;height:2.2rem;border-radius:50%;border:0;background:var(--vibeui-pricing-021-bg);color:inherit;font:inherit;font-size:1.2rem;line-height:1;cursor:pointer;transition:transform .2s}
-[data-vibeui-block="pricing-021"] [data-part="counter"] button:hover{transform:scale(1.08)}
-[data-vibeui-block="pricing-021"] [data-part="counter"] button:disabled{opacity:.35;cursor:default;transform:none}
-[data-vibeui-block="pricing-021"] [data-part="counter"] button:focus-visible,[data-vibeui-block="pricing-021"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-pricing-021-fg);outline-offset:3px}
-[data-vibeui-block="pricing-021"] [data-part="count"]{min-width:1.5rem;text-align:center;font-family:var(--vibeui-pricing-021-display);font-size:1.15rem;font-weight:600;font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-021"] [data-part="grid"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="pricing-021"] [data-part="ticket"]{display:flex;flex-direction:column;gap:1.25rem;padding:1.5rem;border-radius:1.5rem;background:var(--vibeui-pricing-021-color);color:var(--vibeui-pricing-021-ink,#111);transition:transform .35s cubic-bezier(.2,.9,.3,1.3),box-shadow .35s}
 [data-vibeui-block="pricing-021"] [data-part="ticket"]:hover{transform:translateY(-5px) rotate(-.5deg);box-shadow:0 30px 50px -30px rgb(0 0 0 / .45)}
@@ -93,10 +91,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-021"] [data-part="features"] li{position:relative;display:flex;gap:.6rem;align-items:flex-start}
 [data-vibeui-block="pricing-021"] [data-part="features"] li::after{content:"";position:absolute;left:.3rem;top:.5rem;width:.5rem;height:.28rem;border-left:2px solid var(--vibeui-pricing-021-color);border-bottom:2px solid var(--vibeui-pricing-021-color);transform:rotate(-45deg)}
 [data-vibeui-block="pricing-021"] [data-part="features"] li::before{content:"";flex:none;width:1.15rem;height:1.15rem;margin-top:.15rem;border-radius:50%;background:currentColor;opacity:.9}
-[data-vibeui-block="pricing-021"] [data-part="action"]{display:inline-flex;align-items:center;justify-content:center;height:3.2rem;margin-top:auto;border-radius:999px;background:rgb(255 255 255 / .7);color:#111;font-size:1.05rem;font-weight:600;text-decoration:none;transition:transform .2s,filter .2s}
-[data-vibeui-block="pricing-021"] [data-part="ticket"][data-dark="true"] [data-part="action"]{background:rgb(255 255 255 / .92)}
-[data-vibeui-block="pricing-021"] [data-part="ticket"][data-featured="true"] [data-part="action"]{background:#111;color:#fff}
-[data-vibeui-block="pricing-021"] [data-part="action"]:hover{transform:translateY(-2px);filter:brightness(.95)}
 [data-vibeui-block="pricing-021"] [data-part="free"]{display:flex;align-items:center;gap:.6rem;margin:1.25rem 0 0;font-size:.95rem;color:var(--vibeui-pricing-021-muted)}
 [data-vibeui-block="pricing-021"] [data-part="free"]::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--vibeui-pricing-021-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-pricing-021-accent) 30%,transparent)}
 @container (min-width: 56rem){
@@ -152,18 +146,18 @@ export function Pricing021({
           <div data-part="head">
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
             {counter ? (
-              <div data-part="counter" role="group" aria-label={counterLabel}>
-                <span>{counterLabel}</span>
-                <button type="button" aria-label={lessLabel} disabled={count <= 1} onClick={() => setCount((value) => Math.max(1, value - 1))}>
-                  −
-                </button>
-                <span data-part="count" aria-live="polite">
-                  {count}
-                </span>
-                <button type="button" aria-label={moreLabel} disabled={count >= maxCount} onClick={() => setCount((value) => Math.min(maxCount, value + 1))}>
-                  +
-                </button>
-              </div>
+              <Button018
+                data-part="counter"
+                defaultValue={count}
+                min={1}
+                max={maxCount}
+                label={counterLabel}
+                unit=""
+                decreaseLabel={lessLabel}
+                increaseLabel={moreLabel}
+                onChange={setCount}
+                accent={accent}
+              />
             ) : null}
           </div>
           <h2 data-part="title">{title}</h2>
@@ -198,9 +192,15 @@ export function Pricing021({
                     ))}
                   </ul>
                   {ticket.actionLabel ? (
-                    <a data-part="action" href={ticket.actionHref ?? "#"}>
-                      {ticket.actionLabel}
-                    </a>
+                    <Button016
+                      data-part="action"
+                      size="lg"
+                      label={ticket.actionLabel}
+                      href={ticket.actionHref ?? "#"}
+                      external={false}
+                      tone="accent"
+                      accent={accent}
+                    />
                   ) : null}
                 </li>
               )

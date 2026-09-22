@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
+import { Card097 } from "@/registry/components/card/card-097/card-097"
 
 export type Writer004Note = {
   text: string
@@ -80,13 +81,8 @@ container-type:inline-size;
 [data-vibeui-block="writer-004"] [data-part="page"] p:first-of-type::first-letter{float:left;font-family:var(--vibeui-writer-004-display);font-size:3.6em;line-height:.8;padding:.08em .14em 0 0;color:var(--vibeui-writer-004-accent)}
 [data-vibeui-block="writer-004"] [data-part="folio"]{position:absolute;left:0;right:0;bottom:1.1rem;text-align:center;font-family:var(--vibeui-writer-004-display);font-size:.9rem;color:var(--vibeui-writer-004-muted)}
 [data-vibeui-block="writer-004"] [data-part="margin"]{display:grid;gap:1.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="writer-004"] [data-part="note"]{position:relative;padding:.4rem .6rem .4rem 1.4rem;font-family:var(--vibeui-writer-004-hand);font-size:1.45rem;line-height:1.2;color:var(--vibeui-writer-004-accent);transform:rotate(var(--vibeui-writer-004-r,0deg));animation:vibeui-writer-004-in .7s cubic-bezier(.2,.8,.2,1) both;transition:opacity .4s,transform .4s}
-[data-vibeui-block="writer-004"] [data-part="note"][data-leaving="true"]{opacity:0;transform:rotate(var(--vibeui-writer-004-r,0deg)) translateY(-.4rem)}
-[data-vibeui-block="writer-004"] [data-part="note"]::before{content:"";position:absolute;left:.2rem;top:.6rem;bottom:.6rem;width:2px;background:var(--vibeui-writer-004-accent);opacity:.5;border-radius:2px}
-[data-vibeui-block="writer-004"] [data-part="note"] q{quotes:none}
-[data-vibeui-block="writer-004"] [data-part="note"] small{display:block;margin-top:.3rem;font-family:var(--vibeui-writer-004-font);font-size:.75rem;font-style:italic;color:var(--vibeui-writer-004-muted)}
 @keyframes vibeui-writer-004-in{from{opacity:0;transform:rotate(var(--vibeui-writer-004-r,0deg)) translateY(.6rem)}}
-@container (min-width: 60rem){[data-vibeui-block="writer-004"] [data-part="spread"]{grid-template-columns:minmax(0,1fr) minmax(0,38rem) minmax(0,1fr);gap:2.5rem}[data-vibeui-block="writer-004"] [data-part="page"]{order:0}[data-vibeui-block="writer-004"] [data-part="margin"]{align-content:space-around;height:100%;gap:2.5rem}[data-vibeui-block="writer-004"] [data-part="margin"][data-side="left"]{text-align:right}[data-vibeui-block="writer-004"] [data-part="margin"][data-side="left"] [data-part="note"]{padding:.4rem 1.4rem .4rem .6rem}[data-vibeui-block="writer-004"] [data-part="margin"][data-side="left"] [data-part="note"]::before{left:auto;right:.2rem}}
+@container (min-width: 60rem){[data-vibeui-block="writer-004"] [data-part="spread"]{grid-template-columns:minmax(0,1fr) minmax(0,38rem) minmax(0,1fr);gap:2.5rem}[data-vibeui-block="writer-004"] [data-part="page"]{order:0}[data-vibeui-block="writer-004"] [data-part="margin"]{align-content:space-around;height:100%;gap:2.5rem}[data-vibeui-block="writer-004"] [data-part="margin"][data-side="left"]{text-align:right}[data-vibeui-block="writer-004"] [data-part="margin"][data-side="left"] [data-vibeui-block="card-097"]{padding:.4rem 1.4rem .4rem .6rem}[data-vibeui-block="writer-004"] [data-part="margin"][data-side="left"] [data-vibeui-block="card-097"]::before{left:auto;right:.2rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="writer-004"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_NOTES: Writer004Note[] = [
@@ -99,7 +95,6 @@ const DEFAULT_NOTES: Writer004Note[] = [
   { text: "Читаю по одному эссе в воскресенье, растягиваю.", name: "Дмитрий", from: "Минск" },
 ]
 
-const ANGLES = [-2, 1.5, 2, -1.2]
 
 /** Отзывы как заметки на полях страницы, сменяются по кругу. */
 export function Writer004({
@@ -171,13 +166,7 @@ export function Writer004({
     const note = notes[slots[slotIndex] ?? 0]
     if (!note) return null
     return (
-      <li key={`${slotIndex}-${slots[slotIndex]}`} data-part="note" data-leaving={leaving === slotIndex} style={{ ["--vibeui-writer-004-r" as string]: `${ANGLES[slotIndex % ANGLES.length]}deg` }}>
-        <q>{note.text}</q>
-        <small>
-          — {note.name}
-          {note.from ? `, ${note.from}` : ""}
-        </small>
-      </li>
+      <Card097 key={`${slotIndex}-${slots[slotIndex]}`} data-part="note" text={note.text} name={note.name} from={note.from} slotIndex={slotIndex} data-leaving={leaving === slotIndex} accent={accent} />
     )
   }
 

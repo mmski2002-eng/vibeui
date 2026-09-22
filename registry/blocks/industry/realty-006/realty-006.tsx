@@ -2,6 +2,10 @@
 
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react"
 
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Slider013 } from "@/registry/components/slider/slider-013/slider-013"
+
 export type Realty006Props = {
   eyebrow?: string
   title?: string
@@ -107,29 +111,17 @@ container-type:inline-size;
 :where([data-vibeui-block="realty-006"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="realty-006"]{box-sizing:border-box;display:block;background:var(--vibeui-realty-006-bg);color:var(--vibeui-realty-006-fg);font-family:var(--vibeui-realty-006-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="realty-006"] *{box-sizing:border-box}
+[data-vibeui-block="realty-006"] [data-part="action"]{margin-top:.5rem}
 [data-vibeui-block="realty-006"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem;display:grid;gap:2rem}
 [data-vibeui-block="realty-006"] [data-part="eyebrow"]{margin:0 0 .5rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-realty-006-accent);font-weight:600}
 [data-vibeui-block="realty-006"] [data-part="title"]{margin:0;font-family:var(--vibeui-realty-006-display);font-weight:500;font-size:clamp(2rem,4.5cqi,3.25rem);line-height:1.05}
 [data-vibeui-block="realty-006"] [data-part="lede"]{margin:.75rem 0 0;max-width:34rem;color:var(--vibeui-realty-006-muted)}
 [data-vibeui-block="realty-006"] [data-part="panel"]{display:grid;gap:1.5rem;padding:1.5rem;border-radius:1rem;background:var(--vibeui-realty-006-card);border:1px solid var(--vibeui-realty-006-line)}
-[data-vibeui-block="realty-006"] [data-part="field"]{display:grid;gap:.5rem}
-[data-vibeui-block="realty-006"] [data-part="field"] label{display:flex;justify-content:space-between;gap:1rem;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-realty-006-muted)}
-[data-vibeui-block="realty-006"] [data-part="field"] output{font-family:var(--vibeui-realty-006-display);font-size:1.25rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--vibeui-realty-006-fg)}
-[data-vibeui-block="realty-006"] input[type="range"]{width:100%;height:1.5rem;margin:0;appearance:none;background:transparent;cursor:pointer}
-[data-vibeui-block="realty-006"] input[type="range"]::-webkit-slider-runnable-track{height:3px;border-radius:2px;background:linear-gradient(to right,var(--vibeui-realty-006-accent) var(--vibeui-realty-006-p,50%),var(--vibeui-realty-006-line) var(--vibeui-realty-006-p,50%))}
-[data-vibeui-block="realty-006"] input[type="range"]::-moz-range-track{height:3px;border-radius:2px;background:var(--vibeui-realty-006-line)}
-[data-vibeui-block="realty-006"] input[type="range"]::-moz-range-progress{height:3px;border-radius:2px;background:var(--vibeui-realty-006-accent)}
-[data-vibeui-block="realty-006"] input[type="range"]::-webkit-slider-thumb{appearance:none;width:1.1rem;height:1.1rem;margin-top:-.4rem;border-radius:50%;background:var(--vibeui-realty-006-card);border:2px solid var(--vibeui-realty-006-accent);box-shadow:0 2px 6px rgb(0 0 0 / .2)}
-[data-vibeui-block="realty-006"] input[type="range"]::-moz-range-thumb{width:1.1rem;height:1.1rem;border-radius:50%;background:var(--vibeui-realty-006-card);border:2px solid var(--vibeui-realty-006-accent)}
-[data-vibeui-block="realty-006"] input[type="range"]:focus-visible{outline:2px solid var(--vibeui-realty-006-accent);outline-offset:4px;border-radius:2px}
 [data-vibeui-block="realty-006"] [data-part="result"]{display:grid;gap:1.25rem;align-content:space-between;padding:1.75rem;border-radius:1rem;background:var(--vibeui-realty-006-fg);color:var(--vibeui-realty-006-bg)}
 [data-vibeui-block="realty-006"] [data-part="result"] small{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
 [data-vibeui-block="realty-006"] [data-part="payment"]{font-family:var(--vibeui-realty-006-display);font-size:clamp(2.5rem,6cqi,4rem);font-weight:600;line-height:1;font-variant-numeric:tabular-nums;color:var(--vibeui-realty-006-plate-accent)}
 [data-vibeui-block="realty-006"] [data-part="row"]{display:flex;justify-content:space-between;gap:1rem;padding-top:.75rem;border-top:1px solid color-mix(in oklab,currentColor 18%,transparent);font-variant-numeric:tabular-nums}
 [data-vibeui-block="realty-006"] [data-part="row"] b{font-weight:600}
-[data-vibeui-block="realty-006"] [data-part="action"]{display:inline-flex;justify-content:center;align-items:center;margin-top:.5rem;padding:.85rem 1.5rem;border-radius:999px;background:var(--vibeui-realty-006-plate-accent);color:var(--vibeui-realty-006-plate-on-accent);font-weight:700;text-decoration:none;transition:transform .2s}
-[data-vibeui-block="realty-006"] [data-part="action"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="realty-006"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-realty-006-bg);outline-offset:2px}
 [data-vibeui-block="realty-006"] [data-part="note"]{margin:0;font-size:.78rem;opacity:.7}
 @container (min-width: 56rem){
 [data-vibeui-block="realty-006"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"head head" "panel result";gap:2.5rem 3rem;padding:5.5rem 2rem;align-items:stretch}
@@ -179,7 +171,6 @@ export function Realty006({
   const payment = annuity(principal, percent, term)
   const total = payment * term * 12
   const rolling = useRolling(payment)
-  const progress = (value: number, [min, max]: readonly [number, number]) => `${((value - min) / (max - min)) * 100}%`
   const palette = {
     ...(accent ? { "--vibeui-realty-006-accent": accent } : null),
     ...(ink ? { "--vibeui-realty-006-fg": ink } : null),
@@ -205,25 +196,25 @@ export function Realty006({
               <label htmlFor={`${id}-price`}>
                 {costLabel} <output>{money(cost, currency)}</output>
               </label>
-              <input id={`${id}-price`} type="range" min={priceRange[0]} max={priceRange[1]} step={100_000} value={cost} onChange={(event) => setCost(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(cost, priceRange) }} />
+              <Slider013 id={`${id}-price`} value={cost} min={priceRange[0]} max={priceRange[1]} step={100_000} onChange={setCost} surface="var(--vibeui-realty-006-card)" accent={accent} />
             </div>
             <div data-part="field">
               <label htmlFor={`${id}-down`}>
                 {downLabel} <output>{down} % · {money(cost * (down / 100), currency)}</output>
               </label>
-              <input id={`${id}-down`} type="range" min={10} max={80} step={5} value={down} onChange={(event) => setDown(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(down, [10, 80]) }} />
+              <Slider013 id={`${id}-down`} value={down} min={10} max={80} step={5} onChange={setDown} surface="var(--vibeui-realty-006-card)" accent={accent} />
             </div>
             <div data-part="field">
               <label htmlFor={`${id}-term`}>
                 {termLabel} <output>{term} {yearsUnit}</output>
               </label>
-              <input id={`${id}-term`} type="range" min={yearsRange[0]} max={yearsRange[1]} step={1} value={term} onChange={(event) => setTerm(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(term, yearsRange) }} />
+              <Slider013 id={`${id}-term`} value={term} min={yearsRange[0]} max={yearsRange[1]} step={1} onChange={setTerm} surface="var(--vibeui-realty-006-card)" accent={accent} />
             </div>
             <div data-part="field">
               <label htmlFor={`${id}-rate`}>
                 {rateLabel} <output>{percent.toFixed(1)} %</output>
               </label>
-              <input id={`${id}-rate`} type="range" min={rateRange[0]} max={rateRange[1]} step={0.1} value={percent} onChange={(event) => setPercent(Number(event.target.value))} style={{ ["--vibeui-realty-006-p" as string]: progress(percent, rateRange) }} />
+              <Slider013 id={`${id}-rate`} value={percent} min={rateRange[0]} max={rateRange[1]} step={0.1} onChange={setPercent} surface="var(--vibeui-realty-006-card)" accent={accent} />
             </div>
           </div>
           <div data-part="result" aria-live="polite">
@@ -240,9 +231,15 @@ export function Realty006({
               <b>{money(total - principal, currency)}</b>
             </div>
             {actionLabel ? (
-              <a href={actionHref} data-part="action">
-                {actionLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
             {note ? <p data-part="note">{note}</p> : null}
           </div>

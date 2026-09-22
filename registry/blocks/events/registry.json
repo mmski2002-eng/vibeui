@@ -10,7 +10,10 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "event-001/event-001.tsx",
@@ -18,14 +21,15 @@
           "target": "@components/vibeui/event-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-001-*. Серверный компонент. Строка события — grid: плашка даты (число крупно, месяц под ним на тёплом фоне), информация и кнопка. На узком экране кнопка переносится под содержимое через grid-column, на широком встаёт справа.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-event-001-*. Серверный компонент. Строка события — grid: плашка даты (число крупно, месяц под ним на тёплом фоне), информация и кнопка. На узком экране кнопка переносится под содержимое через grid-column, на широком встаёт справа.",
       "meta": {
         "tags": [
           "events",
           "schedule",
           "listing",
           "agenda",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -35,6 +39,7 @@
           "usage": "<Event001\n  events={[{ day: \"18\", month: \"сен\", title: \"Вебинар\", meta: \"19:00\", format: \"Онлайн\" }]}\n/>",
           "summary": "Афиша списком: строки событий с плашкой даты слева, названием и метаданными в центре, кнопкой записи справа. Плашка даты — число крупно и месяц под ним на тёплом фоне. На узком экране кнопка переносится вниз. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-event-001-* и не подменять её токенами вашей темы",
             "плашку даты как отдельный блок с числом и месяцем — это якорь строки",
             "перенос кнопки под содержимое на узком экране через grid-column",
@@ -92,6 +97,7 @@
             "ai": {
               "summary": "An events list: rows with a date plate on the left, title and metadata in the middle, a register button on the right. The date plate has the day large and the month below on a warm background. On a narrow screen the button wraps below. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-event-001-* palette — do not swap it for your theme tokens",
                 "the date plate as a distinct block with day and month — it anchors the row",
                 "wrapping the button below the content on a narrow screen via grid-column",
@@ -127,7 +133,7 @@
               }
             },
             "title": "Event List",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-001-* variables. A server component. An event row is a grid: a date plate (day large, month below on a warm background), the info and a button. On a narrow screen the button wraps below the content via grid-column; on a wide screen it sits on the right."
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-event-001-* variables. A server component. An event row is a grid: a date plate (day large, month below on a warm background), the info and a button. On a narrow screen the button wraps below the content via grid-column; on a wide screen it sits on the right."
           }
         }
       }
@@ -141,7 +147,11 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "card-025",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "event-002/event-002.tsx",
@@ -149,14 +159,15 @@
           "target": "@components/vibeui/event-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-002-*. Серверный компонент. Обложка — тёплый градиент с полупрозрачным бейджем. Детали сеткой 2×2, спикеры — стопка аватаров из инициалов с обводкой цветом карточки. Инициалы вместо фото: стоковое лицо вредит доверию.",
+      "docs": "Составной блок: импортирует button-016, card-025, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-event-002-*. Серверный компонент. Обложка — тёплый градиент с полупрозрачным бейджем. Детали сеткой 2×2, спикеры — стопка аватаров из инициалов с обводкой цветом карточки. Инициалы вместо фото: стоковое лицо вредит доверию.",
       "meta": {
         "tags": [
           "events",
           "conference",
           "detail",
           "registration",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -169,6 +180,7 @@
           "usage": "<Event002\n  title=\"VibeConf\"\n  dateLabel=\"12 октября\"\n  speakers={[\"Анна Ковалёва\"]}\n/>",
           "summary": "Карточка одного события: тёплая обложка-градиент с бейджем, заголовок, описание, детали сеткой (дата, время, место, цена), спикеры инициалами и кнопка регистрации. Формат страницы отдельного мероприятия. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-016, card-025, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-event-002-* и не подменять её токенами вашей темы",
             "обложку-градиент с бейджем вместо стокового фото",
             "инициалы спикеров вместо фотографий: стоковое лицо бьёт по доверию",
@@ -226,6 +238,7 @@
             "ai": {
               "summary": "A single event card: a warm gradient cover with a badge, a title, a summary, details in a grid (date, time, place, price), speakers by initials and a register button. A single-event page format. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-016, card-025, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-event-002-* palette — do not swap it for your theme tokens",
                 "the gradient cover with a badge instead of a stock photo",
                 "speaker initials instead of photos: a stock face hurts trust",
@@ -261,7 +274,7 @@
               }
             },
             "title": "Event Card",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-002-* variables. A server component. The cover is a warm gradient with a semi-transparent badge. Details are a 2×2 grid, speakers are a stack of initial avatars ringed in the card colour. Initials instead of photos: a stock face hurts trust.",
+            "docs": "A composite block: imports button-016, card-025, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-event-002-* variables. A server component. The cover is a warm gradient with a semi-transparent badge. Details are a 2×2 grid, speakers are a stack of initial avatars ringed in the card colour. Initials instead of photos: a stock face hurts trust.",
             "preview": {
               "props": {
                 "image": "/demo/scenes/scene-08.webp"
@@ -280,7 +293,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "event-003/event-003.tsx",
@@ -288,14 +303,15 @@
           "target": "@components/vibeui/event-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-event-003-*. Серверный компонент. Карточки-ссылки с тёплой полосой-градиентом сверху, датой акцентом, названием и футером «формат — остаток мест». Число колонок считает container query. Название flex:1 держит футер прижатым вниз при разной длине.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-event-003-*. Серверный компонент. Карточки-ссылки с тёплой полосой-градиентом сверху, датой акцентом, названием и футером «формат — остаток мест». Число колонок считает container query. Название flex:1 держит футер прижатым вниз при разной длине.",
       "meta": {
         "tags": [
           "events",
           "schedule",
           "grid",
           "agenda",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -305,6 +321,7 @@
           "usage": "<Event003\n  events={[{ title: \"Вебинар\", date: \"18 сентября\", format: \"Онлайн\", spots: \"40 мест\" }]}\n/>",
           "summary": "Сетка предстоящих событий карточками: тёплая полоса сверху, дата акцентом, название, формат и остаток мест. Три колонки на широком экране, один столбец на узком. Формат компактной афиши, где важны дата и наличие мест. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-event-003-* и не подменять её токенами вашей темы",
             "название flex:1, чтобы футер прижимался вниз при разной длине",
             "остаток мест акцентом в футере — это триггер записи",
@@ -362,6 +379,7 @@
             "ai": {
               "summary": "A grid of upcoming events as cards: a warm top bar, date in the accent, title, format and remaining spots. Three columns when wide, one column when narrow. A compact agenda format where date and availability matter. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-event-003-* palette — do not swap it for your theme tokens",
                 "the title flex:1 so the footer stays pinned down across varying lengths",
                 "remaining spots in the accent in the footer — that's the signup trigger",
@@ -397,7 +415,7 @@
               }
             },
             "title": "Schedule Grid",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-event-003-* variables. A server component. Link cards with a warm gradient bar on top, the date in the accent, a title and a format—remaining-spots footer. Column count is driven by a container query. The title flex:1 keeps the footer pinned down across varying lengths."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-event-003-* variables. A server component. Link cards with a warm gradient bar on top, the date in the accent, a title and a format—remaining-spots footer. Column count is driven by a container query. The title flex:1 keeps the footer pinned down across varying lengths."
           }
         }
       }
@@ -411,7 +429,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077"
+      ],
       "files": [
         {
           "path": "event-004/event-004.tsx",
@@ -419,7 +439,7 @@
           "target": "@components/vibeui/event-004.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. <ul> с границами между строками; строка — grid 4.5rem/1fr, от 56rem (container query) 7rem/1fr/11rem с фото в третьей колонке. По hover подложка строки (::before с inset 0 −1rem) проявляется opacity и лёгким scale без изменения раскладки, фото opacity 0→1 с лёгким scale. День — серифом в нижнем регистре, время — tabular-nums. Палитра --vibeui-event-004-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. <ul> с границами между строками; строка — grid 4.5rem/1fr, от 56rem (container query) 7rem/1fr/11rem с фото в третьей колонке. По hover подложка строки (::before с inset 0 −1rem) проявляется opacity и лёгким scale без изменения раскладки, фото opacity 0→1 с лёгким scale. День — серифом в нижнем регистре, время — tabular-nums. Палитра --vibeui-event-004-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; шрифты Playfair Display и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -432,7 +452,8 @@
           "events",
           "schedule",
           "agenda",
-          "jazz"
+          "jazz",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -490,6 +511,7 @@
           "usage": "<Event004\n  title=\"Что бывает по вечерам\"\n  events={[\n    { day: \"ср\", when: \"каждую неделю\", time: \"18:00–23:00\", title: \"Устричные среды\", text: \"Устрицы по цене закупки, к ним — бокал мюскаде.\", price: \"650 ₽ / 6 шт.\", actionLabel: \"Занять стол\", actionHref: \"#book\", image: \"/photos/event.webp\" },\n  ]}\n/>",
           "summary": "Самодостаточная лента событий для ресторана, бара или клуба: день недели крупно, время, цена, ссылка и фото по наведению. События — массив пропсом.",
           "preserve": [
+            "импорты button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "день недели крупным серифом слева — лента читается как афиша",
             "подсветку строки подложкой ::before без прыжков раскладки и фото, выезжающее по наведению",
             "цену серифом и ссылку с акцентным подчёркиванием в подвале строки"
@@ -540,10 +562,11 @@
           "en": {
             "title": "Restaurant events as a feed",
             "description": "Restaurant events: a feed of rows with a large accent serif weekday on the left, recurrence in small caps, title, time, text, price and a link. On hover the row highlights and a photo slides in on the right.",
-            "docs": "One file, zero dependencies, a server component. A <ul> with borders between rows; a row is a 4.5rem/1fr grid, from 56rem (container query) 7rem/1fr/11rem with the photo in the third column. On hover the row backdrop (::before with inset 0 −1rem) fades in with a slight scale without changing layout, the photo goes opacity 0→1 with a slight scale. The day is lowercase serif, the time tabular-nums. Palette --vibeui-event-004-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A <ul> with borders between rows; a row is a 4.5rem/1fr grid, from 56rem (container query) 7rem/1fr/11rem with the photo in the third column. On hover the row backdrop (::before with inset 0 −1rem) fades in with a slight scale without changing layout, the photo goes opacity 0→1 with a slight scale. The day is lowercase serif, the time tabular-nums. Palette --vibeui-event-004-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; Playfair Display and Manrope via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained events feed for a restaurant, bar or club: a large weekday, time, price, link and a hover photo. Events come in as a prop array.",
               "preserve": [
+                "the button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the large serif weekday on the left — the feed reads like a poster",
                 "the row highlight via a ::before backdrop without layout jumps and the photo sliding in on hover",
                 "the serif price and the accent-underlined link in the row footer"
@@ -647,7 +670,10 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "button-077"
+      ],
       "files": [
         {
           "path": "event-005/event-005.tsx",
@@ -655,7 +681,7 @@
           "target": "@components/vibeui/event-005.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Сетка 2/3/4 колонки (container query 48rem и 68rem), от 68rem справа колонка 19rem с position:sticky. Карточка: фото в <a tabIndex=-1 aria-hidden> (ссылка дублирует заголовок), scale 1.05 по наведению, плашка с backdrop-filter. Капсула направления — tagColor в --tag, tagInk в --ink. Карточка «Выбор дня» — фото на всю высоту с z-index:-1 и медленным scale по наведению, градиент-затемнение, плашка и заголовок на стекле (backdrop-filter blur 14px). Появление карточек — @keyframes с задержкой --n×60ms. Палитра --vibeui-event-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует button-016, button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Сетка 2/3/4 колонки (container query 48rem и 68rem), от 68rem справа колонка 19rem с position:sticky. Карточка: фото в <a tabIndex=-1 aria-hidden> (ссылка дублирует заголовок), scale 1.05 по наведению, плашка с backdrop-filter. Капсула направления — tagColor в --tag, tagInk в --ink. Карточка «Выбор дня» — фото на всю высоту с z-index:-1 и медленным scale по наведению, градиент-затемнение, плашка и заголовок на стекле (backdrop-filter blur 14px). Появление карточек — @keyframes с задержкой --n×60ms. Палитра --vibeui-event-005-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -668,7 +694,8 @@
           "events",
           "grid",
           "sticky",
-          "editorial"
+          "editorial",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -685,6 +712,7 @@
           "usage": "<Event005\n  title=\"Что происходит на площадках\"\n  items={[\n    { title: \"Оркестр на воде\", image: \"/photos/event-01.webp\", tag: \"#Музыка\", tagColor: \"#ffe2d6\", stage: \"Главная сцена\", time: \"пт, 20:00\", href: \"/events/orchestra\" },\n  ]}\n  pick={{ label: \"Выбор дня\", image: \"/photos/pick.webp\", title: \"Ночной концерт на воде\", date: \"суббота, 22:00\", actionLabel: \"К событию →\", href: \"/events/night\" }}\n/>",
           "summary": "Самодостаточная программа для фестиваля, медиа или афиши: сетка карточек с фото и цветными капсулами плюс липкая карточка-рекомендация справа. События и «выбор дня» — пропсами.",
           "preserve": [
+            "импорты button-016, button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "липкую карточку «Выбор дня» справа — редакторская рекомендация, которая едет вместе с лентой",
             "цветную капсулу направления на каждой карточке с цветом в данных",
             "плашку на фото для «Бесплатно» и возраста"
@@ -735,10 +763,11 @@
           "en": {
             "title": "Programme grid with a sticky “pick of the day” card",
             "description": "A festival programme as a magazine grid: event cards in four columns — a 4:3 photo, a title, the strand as a colour pill, stage and time, a “Free” or “18+” tag on the photo. On the right a tall sticky “pick of the day” card with a photo, a frosted label, a title on glass and an accent button.",
-            "docs": "One file, zero dependencies, a server component. A 2/3/4-column grid (container queries 48rem and 68rem), from 68rem a 19rem right column with position:sticky. A card: the photo in an <a tabIndex=-1 aria-hidden> (the title link duplicates it), scale 1.05 on hover, a tag with backdrop-filter. The strand pill maps tagColor to --tag and tagInk to --ink. The pick card: a full-height photo at z-index:-1 with a slow hover scale, a darkening gradient, a label and a title on glass (backdrop-filter blur 14px). Cards appear via @keyframes with a --n×60ms delay. Palette --vibeui-event-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports button-016, button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. A 2/3/4-column grid (container queries 48rem and 68rem), from 68rem a 19rem right column with position:sticky. A card: the photo in an <a tabIndex=-1 aria-hidden> (the title link duplicates it), scale 1.05 on hover, a tag with backdrop-filter. The strand pill maps tagColor to --tag and tagInk to --ink. The pick card: a full-height photo at z-index:-1 with a slow hover scale, a darkening gradient, a label and a title on glass (backdrop-filter blur 14px). Cards appear via @keyframes with a --n×60ms delay. Palette --vibeui-event-005-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained programme for a festival, media or listings site: a card grid with photos and colour pills plus a sticky recommendation card on the right. Events and the pick come in as props.",
               "preserve": [
+                "the button-016, button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the sticky “pick of the day” card on the right — an editorial recommendation riding along the feed",
                 "the colour strand pill on every card with the colour in the data",
                 "the photo tag for “Free” and age rating"
@@ -880,7 +909,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-119"
+      ],
       "files": [
         {
           "path": "event-006/event-006.tsx",
@@ -888,7 +919,7 @@
           "target": "@components/vibeui/event-006.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради дня и фильтра. Дни — <ul role=tablist> с кнопками role=tab и aria-selected; day.color в --day, ink в --day-ink, активная — заливка, остальные — контур 2px. Фильтры собираются из slots автоматически (уникальные tag), кнопки с aria-pressed. Список — <ol key={day+tag}>, пересоздаётся и въезжает @keyframes с задержкой --n×40ms; полоска у времени — ::before цвета дня; от 56rem строка в три колонки 6rem/1fr/auto и подсветка строки градиентом цвета дня по наведению. Пустой фильтр — плашка emptyText. Палитра --vibeui-event-006-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-119 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради дня и фильтра. Дни — <ul role=tablist> с кнопками role=tab и aria-selected; day.color в --day, ink в --day-ink, активная — заливка, остальные — контур 2px. Фильтры собираются из slots автоматически (уникальные tag), кнопки с aria-pressed. Список — <ol key={day+tag}>, пересоздаётся и въезжает @keyframes с задержкой --n×40ms; полоска у времени — ::before цвета дня; от 56rem строка в три колонки 6rem/1fr/auto и подсветка строки градиентом цвета дня по наведению. Пустой фильтр — плашка emptyText. Палитра --vibeui-event-006-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -901,7 +932,8 @@
           "timetable",
           "tabs",
           "filter",
-          "days"
+          "days",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -918,6 +950,7 @@
           "usage": "<Event006\n  days={[\n    { key: \"fri\", label: \"Пятница\", date: \"22 авг\", color: \"#ffa5b1\" },\n    { key: \"sat\", label: \"Суббота\", date: \"23 авг\", color: \"#c2df37\" },\n  ]}\n  slots={[\n    { day: \"fri\", time: \"20:00\", title: \"Оркестр на воде\", stage: \"Главная сцена\", tag: \"#Музыка\", tagColor: \"#ffe2d6\" },\n    { day: \"sat\", time: \"08:00\", title: \"Йога\", stage: \"Набережная\", tag: \"#Утро\", tagColor: \"#98f5af\", note: \"Бесплатно\" },\n  ]}\n/>",
           "summary": "Самодостаточное расписание для фестиваля, конференции или марафона: дни цветными капсулами, фильтр по направлению и список слотов по времени. Дни и слоты — массивы пропсом.",
           "preserve": [
+            "импорты card-119 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "дни как цветные капсулы с заливкой активного своим цветом — не серые табы",
             "фильтр направлений, собранный из данных, и перерисовку списка с каскадом",
             "цветную полоску дня у времени и подсветку строки по наведению"
@@ -968,10 +1001,11 @@
           "en": {
             "title": "Day-by-day schedule with colour pills",
             "description": "A festival schedule: days as large colour pills (the active one filled with its colour), a strand filter as small pills, a list of slots: time large, a day-coloured bar, title, stage, strand and a “Free” or “18+” tag. Switching the day re-renders the list with a cascade.",
-            "docs": "One file, zero dependencies, “use client” for the day and the filter. Days are a <ul role=tablist> with role=tab buttons and aria-selected; day.color goes to --day, ink to --day-ink, the active one is filled, the rest outlined 2px. Filters are built from slots automatically (unique tag), buttons with aria-pressed. The list is an <ol key={day+tag}>, remounted and sliding in via @keyframes with a --n×40ms delay; the bar next to the time is a ::before in the day colour; from 56rem a three-column row 6rem/1fr/auto and a day-coloured gradient highlight on hover. An empty filter shows the emptyText plate. Palette --vibeui-event-006-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-119 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the day and the filter. Days are a <ul role=tablist> with role=tab buttons and aria-selected; day.color goes to --day, ink to --day-ink, the active one is filled, the rest outlined 2px. Filters are built from slots automatically (unique tag), buttons with aria-pressed. The list is an <ol key={day+tag}>, remounted and sliding in via @keyframes with a --n×40ms delay; the bar next to the time is a ::before in the day colour; from 56rem a three-column row 6rem/1fr/auto and a day-coloured gradient highlight on hover. An empty filter shows the emptyText plate. Palette --vibeui-event-006-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained schedule for a festival, conference or marathon: days as colour pills, a strand filter and a time-ordered slot list. Days and slots come in as prop arrays.",
               "preserve": [
+                "the card-119 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "days as colour pills with the active one filled in its own colour — not grey tabs",
                 "the strand filter built from data and the list re-render with a cascade",
                 "the day-coloured bar next to the time and the row highlight on hover"
@@ -1147,7 +1181,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-120"
+      ],
       "files": [
         {
           "path": "event-007/event-007.tsx",
@@ -1155,7 +1191,7 @@
           "target": "@components/vibeui/event-007.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный компонент. Рамка — <li> с padding .5rem и background venue.color (--color), по наведению padding .75rem; внутри карточка с background card. Факты — капсулы color-mix(var(--color) 45 %, card). До 68rem фото — квадрат 5.5rem справа от текста; от 68rem (container query) карточка в колонку, фото 3:2 сверху. Сетка 1/2/4 колонки. Появление — @keyframes с задержкой --n×70ms. Палитра --vibeui-event-007-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
+      "docs": "Составной блок: импортирует card-120 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный компонент. Рамка — <li> с padding .5rem и background venue.color (--color), по наведению padding .75rem; внутри карточка с background card. Факты — капсулы color-mix(var(--color) 45 %, card). До 68rem фото — квадрат 5.5rem справа от текста; от 68rem (container query) карточка в колонку, фото 3:2 сверху. Сетка 1/2/4 колонки. Появление — @keyframes с задержкой --n×70ms. Палитра --vibeui-event-007-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; цвета капсул задаются в данных (color и ink на каждый элемент), поэтому одна секция может нести все двенадцать цветов фестиваля. Шрифты Inter Tight и Inter подключаются <link precedence> с Google Fonts, с fallback на системные. tone фиксирует схему, accent, ink и background переопределяют цвета.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1167,7 +1203,8 @@
           "venues",
           "places",
           "stages",
-          "frames"
+          "frames",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1184,6 +1221,7 @@
           "usage": "<Event007\n  title=\"Шесть точек на карте парка\"\n  venues={[\n    { name: \"Главная сцена\", text: \"Сцена на понтонах посреди пруда.\", image: \"/photos/venue-01.webp\", color: \"#c2df37\", facts: [\"4 000 мест\", \"навес от дождя\"], tags: [\"#Музыка\", \"#Ночь\"], href: \"/venues/main\" },\n  ]}\n/>",
           "summary": "Самодостаточная секция площадок для фестиваля, кампуса или выставки: карточки в цветной рамке с фото, фактами и направлениями. Площадки — массив пропсом с цветом на каждую.",
           "preserve": [
+            "импорты card-120 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "цветную рамку вокруг белой карточки — цвет в данных, а не фон секции",
             "фото-вкладку, которая приподнимается и поворачивается по наведению",
             "факты капсулами в тоне рамки"
@@ -1234,10 +1272,11 @@
           "en": {
             "title": "Venues in colour frames with a photo tab",
             "description": "Festival venues: cards in a colour frame — the venue colour outside, a white card inside with the name, description, facts as pills and strands, a rounded photo tab. On hover the frame grows and the photo lifts and tilts.",
-            "docs": "One file, zero dependencies, a server component. The frame is an <li> with padding .5rem and background venue.color (--color), padding .75rem on hover; inside a card with the card background. Facts are color-mix(var(--color) 45 %, card) pills. Below 68rem the photo is a 5.5rem square right of the text; from 68rem (container query) the card stacks, the 3:2 photo on top. A 1/2/4-column grid. Appearance via @keyframes with a --n×70ms delay. Palette --vibeui-event-007-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
+            "docs": "A composite block: imports card-120 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, a server component. The frame is an <li> with padding .5rem and background venue.color (--color), padding .75rem on hover; inside a card with the card background. Facts are color-mix(var(--color) 45 %, card) pills. Below 68rem the photo is a 5.5rem square right of the text; from 68rem (container query) the card stacks, the 3:2 photo on top. A 1/2/4-column grid. Appearance via @keyframes with a --n×70ms delay. Palette --vibeui-event-007-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; pill colours live in the data (color and ink per item), so one section can carry all twelve festival colours. Inter Tight and Inter via <link precedence> from Google Fonts with system fallbacks. tone pins the scheme, accent, ink and background override colours.",
             "ai": {
               "summary": "A self-contained venues section for a festival, campus or exhibition: cards in a colour frame with a photo, facts and strands. Venues come in as a prop array with a colour each.",
               "preserve": [
+                "the card-120 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the colour frame around a white card — colour in the data, not the section background",
                 "the photo tab that lifts and tilts on hover",
                 "facts as pills in the frame’s tone"
@@ -1355,7 +1394,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-121"
+      ],
       "files": [
         {
           "path": "event-008/event-008.tsx",
@@ -1363,7 +1404,7 @@
           "target": "@components/vibeui/event-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, серверный. Сетка шага 3.6rem/3rem/1fr: время, кружок на линии (::before у списка — градиент от акцента к линии и обратно), тело. Иконки — inline SVG по step.icon: glass, rings, dinner, music, sparkles, cake, bus, camera. current — индекс подсвеченного шага (data-current, aria-current=step): кружок заливается акцентом с box-shadow-ореолом, тело получает фон 8 % акцента. От 56rem две колонки 1.5fr/.7fr, карточка «что взять» sticky top:5rem. Палитра --vibeui-event-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-121 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Сетка шага 3.6rem/3rem/1fr: время, кружок на линии (::before у списка — градиент от акцента к линии и обратно), тело. Иконки — inline SVG по step.icon: glass, rings, dinner, music, sparkles, cake, bus, camera. current — индекс подсвеченного шага (data-current, aria-current=step): кружок заливается акцентом с box-shadow-ореолом, тело получает фон 8 % акцента. От 56rem две колонки 1.5fr/.7fr, карточка «что взять» sticky top:5rem. Палитра --vibeui-event-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1378,7 +1419,8 @@
           "serif",
           "cream",
           "events",
-          "sticky"
+          "sticky",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1398,6 +1440,7 @@
           "usage": "<Event008\n  title=\"Как пройдёт 5 сентября\"\n  steps={[\n    { time: \"15:00\", title: \"Сбор гостей\", place: \"терраса\", text: \"Лимонад и первые объятия.\", icon: \"glass\" },\n    { time: \"16:00\", title: \"Церемония\", place: \"павильон\", icon: \"rings\" },\n    { time: \"17:00\", title: \"Ужин\", place: \"терраса\", icon: \"dinner\" },\n    { time: \"20:00\", title: \"Танцы\", place: \"лужайка\", icon: \"music\" },\n  ]}\n  current={-1}\n  asideItems={[\"Тёплую кофту\", \"Удобную обувь\"]}\n/>",
           "summary": "Самодостаточная программа свадебного дня: вертикальная лента с временем, иконками, местом и подсветкой текущего шага, сбоку «что взять». Шаги — массив пропсом.",
           "preserve": [
+            "импорты card-121 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "время serif'ом слева и линию с кружками-иконками по центру",
             "подсветку текущего шага: залитый кружок с ореолом и мягкий фон",
             "липкую карточку «что взять» справа от 56rem"
@@ -1456,10 +1499,11 @@
           "en": {
             "title": "Wedding day schedule as a vertical timeline",
             "description": "The day's schedule as a vertical timeline: the time in serif on the left, a line with icon circles in the middle (glass, rings, dinner, notes, sparkles), the title, place and a few words on the right. The highlighted “now” step gets an accent circle with a halo and a soft fill. A sticky “what to bring” card on the right.",
-            "docs": "One file, zero dependencies, server-rendered. The step grid is 3.6rem/3rem/1fr: time, a circle on the line (the list's ::before is a gradient from accent to line and back), body. Icons are inline SVGs by step.icon: glass, rings, dinner, music, sparkles, cake, bus, camera. current is the index of the highlighted step (data-current, aria-current=step): the circle fills with the accent and a box-shadow halo, the body gets an 8 % accent background. From 56rem two columns 1.5fr/.7fr, the “what to bring” card is sticky top:5rem. Palette --vibeui-event-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-121 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The step grid is 3.6rem/3rem/1fr: time, a circle on the line (the list's ::before is a gradient from accent to line and back), body. Icons are inline SVGs by step.icon: glass, rings, dinner, music, sparkles, cake, bus, camera. current is the index of the highlighted step (data-current, aria-current=step): the circle fills with the accent and a box-shadow halo, the body gets an 8 % accent background. From 56rem two columns 1.5fr/.7fr, the “what to bring” card is sticky top:5rem. Palette --vibeui-event-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained wedding day schedule: a vertical timeline with times, icons, places and a highlighted current step, plus a “what to bring” aside. Steps come as a prop array.",
               "preserve": [
+                "the card-121 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the serif time on the left and the line with icon circles in the middle",
                 "the current step highlight: a filled circle with a halo and a soft background",
                 "the sticky “what to bring” card on the right from 56rem"
@@ -1558,7 +1602,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-100"
+      ],
       "files": [
         {
           "path": "event-009/event-009.tsx",
@@ -1566,7 +1612,7 @@
           "target": "@components/vibeui/event-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, состояние на 1.6 с). Круги — кнопки с --vibeui-event-009-chip из swatch.hex, диаметр clamp(4.5rem,14cqi,7.5rem), нахлёст через margin-right и кольцо box-shadow цвета фона; hover поднимает, data-copied запускает keyframes подскока. Подпись — имя и HEX моноширинными цифрами. От 56rem палитра и «избегать» стоят в два столбца (1.5fr/.8fr), образы — в две колонки под ними. Палитра --vibeui-event-009-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-100 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, состояние на 1.6 с). Круги — кнопки с --vibeui-event-009-chip из swatch.hex, диаметр clamp(4.5rem,14cqi,7.5rem), нахлёст через margin-right и кольцо box-shadow цвета фона; hover поднимает, data-copied запускает keyframes подскока. Подпись — имя и HEX моноширинными цифрами. От 56rem палитра и «избегать» стоят в два столбца (1.5fr/.8fr), образы — в две колонки под ними. Палитра --vibeui-event-009-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1580,7 +1626,8 @@
           "outfit",
           "guests",
           "serif",
-          "cream"
+          "cream",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -1596,6 +1643,7 @@
           "usage": "<Event009\n  title=\"Тёплые нейтральные — и что-нибудь своё\"\n  swatches={[\n    { name: \"Крем\", hex: \"#f1e8d8\" },\n    { name: \"Шалфей\", hex: \"#8a9a7b\" },\n    { name: \"Терракота\", hex: \"#b8552f\" },\n    { name: \"Слива\", hex: \"#4a1f36\" },\n  ]}\n  looks={[\n    { who: \"Ей\", title: \"Платье, лён или шёлк\", text: \"Любая длина из палитры.\" },\n    { who: \"Ему\", title: \"Рубашка и брюки\", text: \"Без галстука, кеды — можно.\" },\n  ]}\n  avoidItems={[\"Белого — это оставим невесте\"]}\n/>",
           "summary": "Самодостаточный дресс-код палитрой: круги цвета с копированием HEX по клику, образы «ей» и «ему», список «чего избегать». Цвета и тексты пропсами.",
           "preserve": [
+            "импорты button-100 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "круги цвета внахлёст с кольцом цвета фона — пробник, а не таблица",
             "копирование HEX по клику с подскоком и подписью «скопировано»",
             "акцентную плашку «чего избегать» рядом с образами"
@@ -1646,10 +1694,11 @@
           "en": {
             "title": "Dress code as a palette with colour copying",
             "description": "A guest dress code as a palette: five large overlapping colour circles like dabs on a swatch card; a click copies the HEX, the circle hops and the caption turns to “copied”. To the right of the palette a short “better avoid” list on an accent panel, below it two looks: “her” and “him”.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Circles are buttons with --vibeui-event-009-chip from swatch.hex, diameter clamp(4.5rem,14cqi,7.5rem), overlap via margin-right and a box-shadow ring in the background colour; hover lifts, data-copied runs the hop keyframes. The caption is the name and the HEX in tabular figures. From 56rem the palette and “avoid” sit in two columns (1.5fr/.8fr), the looks in two columns beneath. Palette --vibeui-event-009-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-100 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Circles are buttons with --vibeui-event-009-chip from swatch.hex, diameter clamp(4.5rem,14cqi,7.5rem), overlap via margin-right and a box-shadow ring in the background colour; hover lifts, data-copied runs the hop keyframes. The caption is the name and the HEX in tabular figures. From 56rem the palette and “avoid” sit in two columns (1.5fr/.8fr), the looks in two columns beneath. Palette --vibeui-event-009-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained dress code palette: colour circles that copy their HEX on click, “her” and “him” looks, a “what to avoid” list. Colours and copy via props.",
               "preserve": [
+                "the button-100 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the overlapping colour circles with a background-colour ring — a swatch card, not a table",
                 "HEX copying on click with the hop and the “copied” caption",
                 "the accent “what to avoid” panel next to the looks"
@@ -1743,7 +1792,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-122"
+      ],
       "files": [
         {
           "path": "event-010/event-010.tsx",
@@ -1751,7 +1802,7 @@
           "target": "@components/vibeui/event-010.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради табов (useState, старт на дне с main). Табы — <button role=tab aria-selected> сеткой 3 в ряд, с «дырочкой» слева ::before под цвет фона; data-main + aria-selected заливают акцентным. Панель — role=tabpanel с key по индексу, чтобы keyframes проступания срабатывали при каждой смене; расписание — <ol> с <time> и заголовками, место мелким капсом в акценте; фото дня на белом картоне и плашка «что надеть» — солнечная заливка с рукописной строкой, от 56rem справа колонкой .6fr. Палитра --vibeui-event-010-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-122 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради табов (useState, старт на дне с main). Табы — <button role=tab aria-selected> сеткой 3 в ряд, с «дырочкой» слева ::before под цвет фона; data-main + aria-selected заливают акцентным. Панель — role=tabpanel с key по индексу, чтобы keyframes проступания срабатывали при каждой смене; расписание — <ol> с <time> и заголовками, место мелким капсом в акценте; фото дня на белом картоне и плашка «что надеть» — солнечная заливка с рукописной строкой, от 56rem справа колонкой .6fr. Палитра --vibeui-event-010-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1765,7 +1816,8 @@
           "ticket",
           "cuba",
           "beach",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1873,6 +1925,7 @@
           "usage": "<Event010\n  title=\"Гавана, пляж, отдых\"\n  days={[\n    { day: \"12\", label: \"Гавана\", note: \"прилёт и мохито\", wear: \"Лён и кеды\", slots: [{ time: \"14:30\", title: \"Прилёт\", place: \"аэропорт\", text: \"Трансфер ждёт.\" }] },\n    { day: \"13\", label: \"Пляж\", note: \"тот самый день\", wear: \"Beach formal\", main: true, slots: [{ time: \"16:30\", title: \"Церемония\", place: \"Playa Paraíso\" }] },\n    { day: \"14\", label: \"Отдых\", note: \"медленное утро\", slots: [{ time: \"10:30\", title: \"Завтрак\", place: \"терраса\" }] },\n  ]}\n/>",
           "summary": "Самодостаточная программа многодневной свадьбы: табы-билеты по дням с главным днём в акценте, расписание с временем и местом, «что надеть». Дни и слоты — пропсами.",
           "preserve": [
+            "импорты card-122 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "табы-билеты с числом крупно и «дырочкой» слева, главный день акцентный",
             "расписание с временем узким капсом и местом мелким акцентом",
             "плашку «что надеть» рукописным на солнечной заливке"
@@ -1923,10 +1976,11 @@
           "en": {
             "title": "Three-day schedule as ticket tabs",
             "description": "A three-day destination-wedding schedule: tabs like tickets with a big day number, a day label and a handwritten line, the main day (ceremony) in accent. Under the tabs the day's timetable: time in narrow caps, place, a few words and a “what to wear” panel. Switching fades in.",
-            "docs": "One file, zero dependencies, “use client” for the tabs (useState, starting on the main day). Tabs are <button role=tab aria-selected> in a 3-per-row grid with a background-coloured ::before punch hole on the left; data-main + aria-selected fill accent. The panel is role=tabpanel keyed by index so the fade-in keyframes replay on each switch; the timetable is an <ol> with <time> and headings, the place in small accent caps; the day photo on white card and the “what to wear” panel is a sun fill with a handwritten line, a .6fr column on the right from 56rem. Palette --vibeui-event-010-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-122 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the tabs (useState, starting on the main day). Tabs are <button role=tab aria-selected> in a 3-per-row grid with a background-coloured ::before punch hole on the left; data-main + aria-selected fill accent. The panel is role=tabpanel keyed by index so the fade-in keyframes replay on each switch; the timetable is an <ol> with <time> and headings, the place in small accent caps; the day photo on white card and the “what to wear” panel is a sun fill with a handwritten line, a .6fr column on the right from 56rem. Palette --vibeui-event-010-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained multi-day wedding schedule: ticket tabs per day with the main day accented, a timetable with time and place, “what to wear”. Days and slots via props.",
               "preserve": [
+                "the card-122 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the ticket tabs with the big number and the punch hole, the main day in accent",
                 "the timetable with narrow-caps time and the small accent place",
                 "the handwritten “what to wear” panel on a sun fill"
@@ -2069,7 +2123,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-123"
+      ],
       "files": [
         {
           "path": "event-011/event-011.tsx",
@@ -2077,7 +2133,7 @@
           "target": "@components/vibeui/event-011.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради чек-листа. Карточки — <ul> 2 в ряд от 56rem, перфорация слева ::before radial-gradient, иконки inline SVG по card.icon: plane, passport, cash, sim, shield, phone. Организатор — тёмная плашка с рукописным именем и акцентной кнопкой. Чек-лист — кнопки role=checkbox aria-checked, отметки читаются useSyncExternalStore из localStorage по storageKey (на сервере пусто, без расхождений гидрации), запись рассылает событие; отмеченные зачёркиваются акцентной линией, прогресс — полоска из --vibeui-event-011-done. От 56rem сетка 1.5fr/.8fr, чек-лист sticky top:5rem. Палитра --vibeui-event-011-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-123 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради чек-листа. Карточки — <ul> 2 в ряд от 56rem, перфорация слева ::before radial-gradient, иконки inline SVG по card.icon: plane, passport, cash, sim, shield, phone. Организатор — тёмная плашка с рукописным именем и акцентной кнопкой. Чек-лист — кнопки role=checkbox aria-checked, отметки читаются useSyncExternalStore из localStorage по storageKey (на сервере пусто, без расхождений гидрации), запись рассылает событие; отмеченные зачёркиваются акцентной линией, прогресс — полоска из --vibeui-event-011-done. От 56rem сетка 1.5fr/.8fr, чек-лист sticky top:5rem. Палитра --vibeui-event-011-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2092,7 +2148,8 @@
           "localstorage",
           "ticket",
           "cuba",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2111,6 +2168,7 @@
           "usage": "<Event011\n  title=\"Что знать до вылета\"\n  cards={[\n    { icon: \"plane\", title: \"Перелёт\", value: \"13 ч 20 мин\", text: \"Прямой рейс, багаж включён.\" },\n    { icon: \"passport\", title: \"Виза\", value: \"Не нужна\", text: \"До 90 дней без визы.\" },\n    { icon: \"cash\", title: \"Деньги\", value: \"Наличные\", text: \"Карты не работают.\" },\n  ]}\n  contactName=\"Мариэла\"\n  contactRole=\"организатор в Гаване\"\n  contactHref=\"https://wa.me/…\"\n  checklist={[\"Загранпаспорт\", \"Наличные\", \"Страховка\", \"Шляпа и крем\"]}\n  storageKey=\"my-wedding-packing\"\n/>",
           "summary": "Самодостаточная дорожная информация для свадьбы за границей: карточки-билеты с фактами, организатор на месте и чек-лист «что взять» с галочками в localStorage. Всё пропсами.",
           "preserve": [
+            "импорты card-123 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "карточки-билеты с перфорацией слева и крупной цифрой",
             "чек-лист с галочками, зачёркиванием и полоской прогресса, который помнит отметки",
             "тёмную плашку организатора с рукописным именем"
@@ -2161,10 +2219,11 @@
           "en": {
             "title": "Travel info with a “what to pack” checklist",
             "description": "Everything for flying to a wedding abroad: perforated ticket cards — flight, visa, money, connectivity, insurance, sockets — with a big figure and a couple of lines; a local planner card with a “message” button. On the right a sticky “what to pack” checklist with ticks and progress: ticks live in localStorage, so the suitcase gets packed over several sittings.",
-            "docs": "One file, zero dependencies, “use client” for the checklist. Cards are a <ul>, 2 per row from 56rem, a ::before radial-gradient perforation on the left, inline SVG icons by card.icon: plane, passport, cash, sim, shield, phone. The planner is a dark panel with a handwritten name and an accent button. The checklist is role=checkbox aria-checked buttons; ticks are read via useSyncExternalStore from localStorage by storageKey (empty on the server, no hydration mismatch), writes dispatch an event; ticked items are struck through in accent, progress is a bar from --vibeui-event-011-done. From 56rem a 1.5fr/.8fr grid, the checklist sticky top:5rem. Palette --vibeui-event-011-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-123 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the checklist. Cards are a <ul>, 2 per row from 56rem, a ::before radial-gradient perforation on the left, inline SVG icons by card.icon: plane, passport, cash, sim, shield, phone. The planner is a dark panel with a handwritten name and an accent button. The checklist is role=checkbox aria-checked buttons; ticks are read via useSyncExternalStore from localStorage by storageKey (empty on the server, no hydration mismatch), writes dispatch an event; ticked items are struck through in accent, progress is a bar from --vibeui-event-011-done. From 56rem a 1.5fr/.8fr grid, the checklist sticky top:5rem. Palette --vibeui-event-011-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "Self-contained travel info for a wedding abroad: ticket cards with facts, a local planner and a “what to pack” checklist with ticks in localStorage. All via props.",
               "preserve": [
+                "the card-123 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the ticket cards with the left perforation and the big figure",
                 "the checklist with ticks, strike-through and a progress bar that remembers",
                 "the dark planner panel with the handwritten name"
@@ -2271,7 +2330,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-124"
+      ],
       "files": [
         {
           "path": "event-012/event-012.tsx",
@@ -2279,7 +2340,7 @@
           "target": "@components/vibeui/event-012.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.6 с состояния). Образцы — <ul> с li display:contents и кнопками flex:1, цвет из swatch.hex через --vibeui-event-012-chip, цвет подписи считается по яркости (ink); hover и data-copied расширяют полоску до flex:1.6. Образы — фото 4:5 на белом картоне со скотчем ::before, повёрнуты вразнобой; правила — плашка на песке с inline SVG по rule.icon: sun, sand, wind. От 56rem образы в две колонки, правила справа .7fr. Палитра --vibeui-event-012-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-124 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.6 с состояния). Образцы — <ul> с li display:contents и кнопками flex:1, цвет из swatch.hex через --vibeui-event-012-chip, цвет подписи считается по яркости (ink); hover и data-copied расширяют полоску до flex:1.6. Образы — фото 4:5 на белом картоне со скотчем ::before, повёрнуты вразнобой; правила — плашка на песке с inline SVG по rule.icon: sun, sand, wind. От 56rem образы в две колонки, правила справа .7fr. Палитра --vibeui-event-012-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -2293,7 +2354,8 @@
           "hex",
           "outfit",
           "cuba",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2325,6 +2387,7 @@
           "usage": "<Event012\n  title=\"Beach formal — то есть «красиво, но босиком»\"\n  swatches={[\n    { name: \"Песок\", hex: \"#f3e9d2\" },\n    { name: \"Море\", hex: \"#2aa7a0\" },\n    { name: \"Коралл\", hex: \"#ff6b57\" },\n  ]}\n  looks={[\n    { who: \"Ей\", title: \"Лён, миди, плоская подошва\", text: \"Любой цвет из палитры.\", image: \"/photos/look-her.webp\" },\n    { who: \"Ему\", title: \"Рубашка навыпуск\", text: \"Пиджак не нужен.\", image: \"/photos/look-him.webp\" },\n  ]}\n  rules={[{ icon: \"sun\", text: \"Шляпа, очки, крем.\" }]}\n/>",
           "summary": "Самодостаточный дресс-код пляжной свадьбы: полоса образцов ткани с копированием HEX, образы «ей» и «ему» с фото, три правила пляжа. Цвета, образы и правила пропсами.",
           "preserve": [
+            "импорты card-124 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "полосу образцов ткани, где полоска расширяется по наведению и копирует цвет",
             "образы с фото на картоне со скотчем, повёрнутые вразнобой",
             "три правила пляжа с круглыми иконками на плашке"
@@ -2375,10 +2438,11 @@
           "en": {
             "title": "“Beach formal” dress code with fabric swatches",
             "description": "A beach-wedding dress code: a strip of sun-bleached colours like fabric swatches — hover widens a strip, a click copies the HEX; two looks, “her” and “him”, with taped photos; three beach rules with icons — sun, sand, wind. No heels.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Swatches are a <ul> with display:contents li and flex:1 buttons, the colour from swatch.hex via --vibeui-event-012-chip, the caption colour computed from luminance (ink); hover and data-copied widen the strip to flex:1.6. Looks are 4:5 photos on white card with a ::before tape, tilted unevenly; rules are a panel with inline SVGs by rule.icon: sun, sand, wind. From 56rem looks in two columns, rules on the right at .7fr. Palette --vibeui-event-012-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-124 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). Swatches are a <ul> with display:contents li and flex:1 buttons, the colour from swatch.hex via --vibeui-event-012-chip, the caption colour computed from luminance (ink); hover and data-copied widen the strip to flex:1.6. Looks are 4:5 photos on white card with a ::before tape, tilted unevenly; rules are a panel with inline SVGs by rule.icon: sun, sand, wind. From 56rem looks in two columns, rules on the right at .7fr. Palette --vibeui-event-012-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained beach-wedding dress code: a fabric-swatch strip with HEX copying, “her” and “him” looks with photos, three beach rules. Colours, looks and rules via props.",
               "preserve": [
+                "the card-124 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the fabric-swatch strip where a strip widens on hover and copies its colour",
                 "the looks with taped photos on card, tilted unevenly",
                 "the three beach rules with round icons on the panel"
@@ -2485,7 +2549,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-125"
+      ],
       "files": [
         {
           "path": "event-013/event-013.tsx",
@@ -2493,7 +2559,7 @@
           "target": "@components/vibeui/event-013.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради прогресса. Небо — блок с закатным градиентом, поверх ::before ночной градиент с opacity из --vibeui-event-013-k, звёзды — radial-gradient-точки с той же opacity, силуэт елей — SVG path. Луна — точка в центре, повёрнутая на calc(-100deg + k·160deg), сама колба контрповорачивается, чтобы кратеры не крутились. Прогресс считает rAF-обработчик scroll по положению секции (0 при входе, 1 когда прошла), в CSS уходит переменная k, в state — только номер активного пункта. Линия слева от списка красится в свечу до k, пункты — data-active и data-done. От 56rem сетка .8fr/1.2fr, небо sticky top:6rem высотой 24rem. Палитра --vibeui-event-013-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-125 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради прогресса. Небо — блок с закатным градиентом, поверх ::before ночной градиент с opacity из --vibeui-event-013-k, звёзды — radial-gradient-точки с той же opacity, силуэт елей — SVG path. Луна — точка в центре, повёрнутая на calc(-100deg + k·160deg), сама колба контрповорачивается, чтобы кратеры не крутились. Прогресс считает rAF-обработчик scroll по положению секции (0 при входе, 1 когда прошла), в CSS уходит переменная k, в state — только номер активного пункта. Линия слева от списка красится в свечу до k, пункты — data-active и data-done. От 56rem сетка .8fr/1.2fr, небо sticky top:6rem высотой 24rem. Палитра --vibeui-event-013-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -2506,7 +2572,8 @@
           "scroll",
           "night",
           "program",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2522,6 +2589,7 @@
           "usage": "<Event013\n  title=\"От заката до полуночи\"\n  skyNote=\"закат в 16:04\"\n  slots={[\n    { time: \"15:30\", title: \"Сбор гостей\", place: \"у камина\", text: \"Чай, глинтвейн, пледы.\" },\n    { time: \"16:00\", title: \"Церемония\", place: \"большая гостиная\", text: \"На закате, при свечах.\" },\n    { time: \"21:00\", title: \"Танцы\", place: \"гостиная\" },\n    { time: \"00:00\", title: \"Полночь\", place: \"терраса\", text: \"Трансфер в 00:30.\" },\n  ]}\n/>",
           "summary": "Самодостаточная программа вечера: луна ползёт по небу и небо темнеет при прокрутке, пункты с временем и местом подсвечиваются по ходу. Пункты — массив пропсом.",
           "preserve": [
+            "импорты card-125 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "липкое небо с луной по дуге и темнеющим закатом, привязанное к прокрутке",
             "подсветку текущего пункта свечой и зажжённые точки пройденных",
             "время антиквой лайнинг-цифрами и место курсивом"
@@ -2572,10 +2640,11 @@
           "en": {
             "title": "Evening schedule with a moon crawling across the sky on scroll",
             "description": "A winter evening schedule from sunset to midnight: a sticky sky on the left — the moon crawls along an arc as the list scrolls, the sunset band fades, the sky deepens to midnight and stars appear; on the right the evening's items with serif times, italic places and a few words, the current one lit by a candle, passed ones as lit dots on the line.",
-            "docs": "One file, zero dependencies, “use client” for the progress. The sky is a block with a sunset gradient, a night gradient ::before on top with opacity from --vibeui-event-013-k, stars as radial-gradient dots with the same opacity, a fir silhouette as an SVG path. The moon is a point at the centre rotated by calc(-100deg + k·160deg), the disc counter-rotates so the craters stay put. An rAF scroll handler computes progress from the section's position (0 entering, 1 once passed); the k variable goes to CSS, only the active index enters state. The line left of the list paints candle-accent up to k, items get data-active and data-done. From 56rem a .8fr/1.2fr grid, the sky sticky top:6rem at 24rem tall. Palette --vibeui-event-013-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-125 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the progress. The sky is a block with a sunset gradient, a night gradient ::before on top with opacity from --vibeui-event-013-k, stars as radial-gradient dots with the same opacity, a fir silhouette as an SVG path. The moon is a point at the centre rotated by calc(-100deg + k·160deg), the disc counter-rotates so the craters stay put. An rAF scroll handler computes progress from the section's position (0 entering, 1 once passed); the k variable goes to CSS, only the active index enters state. The line left of the list paints candle-accent up to k, items get data-active and data-done. From 56rem a .8fr/1.2fr grid, the sky sticky top:6rem at 24rem tall. Palette --vibeui-event-013-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained evening schedule: the moon crawls across the sky and the sky darkens on scroll, items with time and place light up as you go. Items come as a prop array.",
               "preserve": [
+                "the card-125 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the sticky sky with the moon on an arc and the fading sunset, tied to scroll",
                 "the candle highlight of the current item and the lit dots of passed ones",
                 "serif lining-numeral times and italic places"
@@ -2672,7 +2741,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-126"
+      ],
       "files": [
         {
           "path": "event-014/event-014.tsx",
@@ -2680,7 +2751,7 @@
           "target": "@components/vibeui/event-014.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.6 с состояния). Планка — ::before с металлическим градиентом; ленты — кнопки flex:1 1 6rem с крючком ::before, цвет из swatch.hex через --vibeui-event-014-chip, лёгкий градиент ткани поверх, цвет подписи по яркости (ink); hover и data-copied удлиняют ленту через min-height. Образы — фото 4:5 в рамке с инеем по углам (radial-gradient, screen); правила — карточка с inline SVG по rule.icon: snow, flame, boot. От 56rem образы в две колонки, правила справа .7fr. Палитра --vibeui-event-014-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует card-126 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради копирования (navigator.clipboard, 1.6 с состояния). Планка — ::before с металлическим градиентом; ленты — кнопки flex:1 1 6rem с крючком ::before, цвет из swatch.hex через --vibeui-event-014-chip, лёгкий градиент ткани поверх, цвет подписи по яркости (ink); hover и data-copied удлиняют ленту через min-height. Образы — фото 4:5 в рамке с инеем по углам (radial-gradient, screen); правила — карточка с inline SVG по rule.icon: snow, flame, boot. От 56rem образы в две колонки, правила справа .7fr. Палитра --vibeui-event-014-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -2693,7 +2764,8 @@
           "copy",
           "hex",
           "outfit",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -2725,6 +2797,7 @@
           "usage": "<Event014\n  title=\"Бархат и шерсть — тепло и нарядно\"\n  swatches={[\n    { name: \"Ночь\", hex: \"#0b1220\" },\n    { name: \"Бордо\", hex: \"#7a2b35\" },\n    { name: \"Хвоя\", hex: \"#2f5d50\" },\n  ]}\n  looks={[\n    { who: \"Ей\", title: \"Длинное и тёплое\", text: \"Бархат или шерсть.\", image: \"/photos/look-her.webp\" },\n    { who: \"Ему\", title: \"Тёмный костюм\", text: \"Шарф приветствуется.\", image: \"/photos/look-him.webp\" },\n  ]}\n  rules={[{ icon: \"snow\", text: \"Сменная обувь для террасы.\" }]}\n/>",
           "summary": "Самодостаточный дресс-код зимней свадьбы: ленты образцов ткани на планке с копированием HEX, образы «ей» и «ему» в морозных рамах, правила вечера. Цвета, образы и правила пропсами.",
           "preserve": [
+            "импорты card-126 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ленты ткани на серебряной планке, которые опускаются по наведению и копируют цвет",
             "морозные рамы фото с инеем по углам",
             "правила с иконками в светящихся кольцах"
@@ -2775,10 +2848,11 @@
           "en": {
             "title": "“Velvet and wool” dress code with fabric swatch ribbons",
             "description": "A winter-wedding dress code: fabric swatches hang as ribbons from a silver rail — hover lowers a ribbon, a click copies the HEX; two looks, “her” and “him”, with photos in frosted frames; evening rules with icons in glowing rings — snow, candle, spare shoes.",
-            "docs": "One file, zero dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). The rail is a ::before with a metallic gradient; ribbons are flex:1 1 6rem buttons with a ::before hook, colour from swatch.hex via --vibeui-event-014-chip, a light fabric gradient on top, caption colour from luminance (ink); hover and data-copied lengthen the ribbon via min-height. Looks are 4:5 photos in a frame with corner frost (radial-gradient, screen); rules are a card with inline SVGs by rule.icon: snow, flame, boot. From 56rem looks in two columns, rules on the right at .7fr. Palette --vibeui-event-014-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports card-126 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for copying (navigator.clipboard, 1.6 s state). The rail is a ::before with a metallic gradient; ribbons are flex:1 1 6rem buttons with a ::before hook, colour from swatch.hex via --vibeui-event-014-chip, a light fabric gradient on top, caption colour from luminance (ink); hover and data-copied lengthen the ribbon via min-height. Looks are 4:5 photos in a frame with corner frost (radial-gradient, screen); rules are a card with inline SVGs by rule.icon: snow, flame, boot. From 56rem looks in two columns, rules on the right at .7fr. Palette --vibeui-event-014-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained winter-wedding dress code: fabric swatch ribbons on a rail with HEX copying, “her” and “him” looks in frosted frames, evening rules. Colours, looks and rules via props.",
               "preserve": [
+                "the card-126 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the fabric ribbons on the silver rail that lower on hover and copy their colour",
                 "the frosted photo frames with corner frost",
                 "the rules with icons in glowing rings"
@@ -2885,7 +2959,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
       "files": [
         {
           "path": "event-025/event-025.tsx",
@@ -2904,7 +2980,8 @@
           "calendar",
           "perforation",
           "handwritten",
-          "nonprofit"
+          "nonprofit",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -2915,6 +2992,7 @@
           "usage": "<Event025\n  title=\"Ближайшие выезды и встречи\"\n  events={[{ day: \"27\", month: \"сен\", weekday: \"суббота\", title: \"Осенний развоз\", place: \"Тверь\", time: \"9:00 – 18:00\", need: 12, joined: 7, note: \"нужны водители\", actionLabel: \"Поехать\" }]}\n/>",
           "summary": "Афиша выездов как билеты: дата на корешке, перфорация, шкала «нужны руки», рукописная пометка.",
           "preserve": [
+            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "перфорация — mask из двух radial-gradient по границе корешка (6rem, от 48rem — 8rem), внутри корешка dashed border-right",
             "шкала — width по joined/need через --w, при need 0 не рендерится; «мест нет», когда joined ≥ need",
             "тело — grid с областями title/text/meta/hands/action, от 48rem кнопка справа, от 64rem снова столбиком в двух колонках"
@@ -2987,6 +3065,7 @@
             "ai": {
               "summary": "An outing schedule as tickets: date on the stub, perforation, a “hands needed” scale, a handwritten note.",
               "preserve": [
+                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the perforation is a mask of two radial-gradients at the stub edge (6rem, 8rem from 48rem), a dashed border-right inside the stub",
                 "the scale width is joined/need via --w, not rendered when need is 0; “no seats” when joined ≥ need",
                 "the body is a grid with title/text/meta/hands/action areas, the button on the right from 48rem, stacked again in two columns from 64rem"
@@ -3088,10 +3167,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "event-026",
@@ -3102,7 +3183,9 @@
         "events"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077"
+      ],
       "files": [
         {
           "path": "event-026/event-026.tsx",
@@ -3122,7 +3205,8 @@
           "readings",
           "timeline",
           "agenda",
-          "serif"
+          "serif",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -3133,6 +3217,7 @@
           "usage": "<Event026\n  events={[\n    { date: \"2026-10-03\", time: \"19:00\", kind: \"презентация\", title: \"Первая презентация книги\", place: \"Дом книги\", city: \"Петербург\", actionLabel: \"Записаться\", href: \"#rsvp\" },\n  ]}\n/>",
           "summary": "Афиша для автора, лектора или клуба: лента дат от сегодняшнего дня, счётчик дней до ближайшей, прошедшие вычеркнуты.",
           "preserve": [
+            "импорты button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "время — useSyncExternalStore(subscribe, getMinute, () => null): подписка на общий setInterval раз в минуту, снимок — номер минуты; до гидрации даты inDays и счётчик показывают «—» и «…»",
             "события сортируются по дате в useMemo; upcoming — days ≥ 0, past — последние pastLimit прошедших; next — первое upcoming с известной датой",
             "строка — li[data-part=row] с ::before-линией scaleY(0→1) на hover и у data-next; от 44rem третья колонка под ссылку, от 60rem левая часть sticky"
@@ -3201,6 +3286,7 @@
             "ai": {
               "summary": "A poster for an author, lecturer or club: a date feed from today, a countdown to the next one, past ones struck through.",
               "preserve": [
+                "the button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "time is useSyncExternalStore(subscribe, getMinute, () => null): a shared setInterval once a minute, the snapshot is the minute number; before hydration inDays dates and the countdown show “—” and “…”",
                 "events are sorted by date in useMemo; upcoming are days ≥ 0, past are the last pastLimit gone by; next is the first upcoming with a known date",
                 "a row is li[data-part=row] with a ::before line scaleY(0→1) on hover and on data-next; from 44rem a third column for the link, from 60rem the left part is sticky"
@@ -3290,10 +3376,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     }
   ]
 }

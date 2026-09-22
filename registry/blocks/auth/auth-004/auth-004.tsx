@@ -1,6 +1,10 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+
 import type { ClipboardEvent, KeyboardEvent, CSSProperties } from "react"
 
 export type Auth004Props = {
@@ -58,7 +62,9 @@ font-family:var(--vibeui-auth-004-sans);color:var(--vibeui-auth-004-fg);
 text-align:center;
 }
 [data-vibeui-block="auth-004"] *{box-sizing:border-box}
-[data-vibeui-block="auth-004"] h2{margin:0 0 0.25rem;font-size:1.1875rem;font-weight:700;letter-spacing:-0.01em}
+[data-vibeui-block="auth-004"] [data-part="heading"]{margin-bottom:0.25rem}
+[data-vibeui-block="auth-004"] [data-part="submit"]{width:100%}
+[data-vibeui-block="auth-004"] [data-part="resend"]{margin-top:0.75rem}
 [data-vibeui-block="auth-004"] [data-part="lead"]{
 margin:0 auto 1rem;max-width:20rem;
 font-size:0.8125rem;line-height:1.55;color:var(--vibeui-auth-004-muted);
@@ -67,32 +73,6 @@ font-size:0.8125rem;line-height:1.55;color:var(--vibeui-auth-004-muted);
 [data-vibeui-block="auth-004"] [data-part="cells"]{
 display:flex;justify-content:center;gap:0.375rem;margin-bottom:0.875rem;
 }
-/* Клетки моноширинные: цифры одной ширины не пляшут при вводе. */
-[data-vibeui-block="auth-004"] input{
-width:2.5rem;height:3rem;padding:0;text-align:center;
-border:1px solid var(--vibeui-auth-004-border);border-radius:0.625rem;
-background:var(--vibeui-auth-004-bg);color:inherit;
-font-family:var(--vibeui-auth-004-mono);font-size:1.125rem;font-weight:650;
-}
-[data-vibeui-block="auth-004"] input:focus-visible{
-outline:2px solid var(--vibeui-auth-004-accent);outline-offset:1px;
-border-color:var(--vibeui-auth-004-accent);
-}
-[data-vibeui-block="auth-004"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:2.625rem;padding:0.375rem 1rem;
-border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-004-accent);color:oklch(from var(--vibeui-auth-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="auth-004"] [data-part="submit"]:disabled{opacity:.5;cursor:default}
-[data-vibeui-block="auth-004"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-004-accent);outline-offset:2px}
-[data-vibeui-block="auth-004"] [data-part="resend"]{
-margin-top:0.75rem;appearance:none;border:0;background:none;cursor:pointer;
-color:var(--vibeui-auth-004-accent);font:inherit;font-size:0.8125rem;font-weight:650;
-}
-[data-vibeui-block="auth-004"] [data-part="resend"]:focus-visible{outline:2px solid var(--vibeui-auth-004-accent);outline-offset:2px;border-radius:0.25rem}
 [data-vibeui-block="auth-004"] [data-part="help"]{
 margin:0.75rem 0 0;font-size:0.6875rem;line-height:1.45;color:var(--vibeui-auth-004-muted);
 }
@@ -202,7 +182,12 @@ export function Auth004({
         style={palette}
         aria-label={title}
       >
-        <h2>{title}</h2>
+        <Heading001
+          data-part="heading"
+          title={title}
+          size="xs"
+          accent={accent}
+        />
         <p data-part="lead">
           {lead} <span data-part="mail">{email}</span>
         </p>
@@ -229,12 +214,12 @@ export function Auth004({
           ))}
         </div>
 
-        <button type="button" data-part="submit" disabled={!filled}>
+        <Button001 data-part="submit" type="button" disabled={!filled} size="lg" tone="solid" accent={accent}>
           {submit}
-        </button>
-        <button type="button" data-part="resend">
+        </Button001>
+        <Button001 data-part="resend" type="button" tone="outline" accent={accent}>
           {resend}
-        </button>
+        </Button001>
         <p data-part="help">{help}</p>
       </section>
     </>

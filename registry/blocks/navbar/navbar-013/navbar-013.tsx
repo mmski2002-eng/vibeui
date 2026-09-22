@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Contact001 } from "@/registry/components/typography/contact-001/contact-001"
 
 type Navbar013Link = {
   label: string
@@ -74,6 +75,7 @@ font-family:var(--vibeui-navbar-013-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-013"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-013"] [data-part="contact"]{align-self:flex-start;margin-bottom:1rem}
 [data-vibeui-block="navbar-013"] [data-part="shell"]{
 display:flex;align-items:center;justify-content:space-between;gap:1rem;
 max-width:82rem;margin:0 auto;padding:1.125rem 1rem;
@@ -203,14 +205,6 @@ transition:transform var(--vibeui-navbar-013-dur-4) var(--vibeui-navbar-013-ease
 margin-left:auto;font-size:0.875rem;color:var(--vibeui-navbar-013-menu-muted);
 white-space:nowrap;
 }
-[data-vibeui-block="navbar-013"] [data-part="contact"]{
-align-self:flex-start;color:inherit;text-decoration:none;
-font-size:1.0625rem;font-weight:620;
-border-bottom:2px solid currentColor;padding-bottom:0.125rem;
-margin-bottom:1rem;
-transition:opacity var(--vibeui-navbar-013-dur-2) ease;
-}
-[data-vibeui-block="navbar-013"] [data-part="contact"]:hover{opacity:.66}
 
 [data-vibeui-block="navbar-013"] a:focus-visible,
 [data-vibeui-block="navbar-013"] button:focus-visible{
@@ -294,7 +288,7 @@ export function Navbar013({
                   </span>
                 ))}
               </div>
-              <span data-part="contact">{contactLabel}</span>
+              <Contact001 data-part="contact" contactLabel={contactLabel} accent={accent} />
             </div>
           </div>
         ) : null}

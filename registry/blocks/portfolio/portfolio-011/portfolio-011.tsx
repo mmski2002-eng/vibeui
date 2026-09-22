@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card127 } from "@/registry/components/card/card-127/card-127"
 
 export type Portfolio011Shot = {
   src: string
@@ -59,28 +60,15 @@ container-type:inline-size;
 [data-vibeui-block="portfolio-011"] [data-part="word"] i{display:inline-block;font-style:normal}
 [data-vibeui-block="portfolio-011"] [data-part="lede"]{font-size:1.06rem;color:var(--vibeui-portfolio-011-muted);max-width:34rem;margin:1rem 0 0}
 [data-vibeui-block="portfolio-011"] [data-part="bento"]{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:10rem;grid-auto-flow:dense;gap:.8rem;margin-top:2.5rem}
-[data-vibeui-block="portfolio-011"] figure{position:relative;margin:0;border-radius:1.2rem;overflow:clip;background:var(--vibeui-portfolio-011-panel);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s;z-index:0}
-[data-vibeui-block="portfolio-011"] figure img{position:absolute;left:0;right:0;top:-7%;width:100%;height:114%;object-fit:cover;display:block;transition:scale .8s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="portfolio-011"] figure:hover{transform:scale(1.04);z-index:2;box-shadow:0 30px 60px -30px color-mix(in oklab,var(--vibeui-portfolio-011-accent) 40%,rgb(0 0 0 / .7))}
-[data-vibeui-block="portfolio-011"] figure:hover img{scale:1.08}
-[data-vibeui-block="portfolio-011"] figure::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 60% at 30% 20%,rgb(255 255 255 / .18),transparent 70%);opacity:0;transition:opacity .45s}
-[data-vibeui-block="portfolio-011"] figure:hover::after{opacity:1}
-[data-vibeui-block="portfolio-011"] figcaption{position:absolute;left:.8rem;bottom:.7rem;font-family:var(--vibeui-portfolio-011-hand);font-size:1.3rem;color:#fff;text-shadow:0 1px 10px rgb(0 0 0 / .55);transform:rotate(-3deg) translateY(.4rem);opacity:0;transition:opacity .3s,transform .3s}
-[data-vibeui-block="portfolio-011"] figure:hover figcaption{opacity:1;transform:rotate(-3deg)}
-[data-vibeui-block="portfolio-011"] figure[data-span="big"]{grid-column:span 2;grid-row:span 2}
-[data-vibeui-block="portfolio-011"] figure[data-span="wide"]{grid-column:span 2}
-[data-vibeui-block="portfolio-011"] figure[data-span="tall"]{grid-row:span 2}
 @keyframes vibeui-portfolio-011-rise{from{transform:translateY(112%)}to{transform:none}}
 @keyframes vibeui-portfolio-011-in{from{opacity:0;translate:0 2.5rem;scale:.94}to{opacity:1;translate:0 0;scale:1}}
 @keyframes vibeui-portfolio-011-drift{from{translate:0 -5%}to{translate:0 5%}}
 @supports (animation-timeline: view()){
 [data-vibeui-block="portfolio-011"] [data-part="word"] i{animation:vibeui-portfolio-011-rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
 [data-vibeui-block="portfolio-011"] [data-part="lede"]{animation:vibeui-portfolio-011-in linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
-[data-vibeui-block="portfolio-011"] figure{animation:vibeui-portfolio-011-in linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
-[data-vibeui-block="portfolio-011"] figure img{animation:vibeui-portfolio-011-drift linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
 }
 @container (min-width: 56rem){[data-vibeui-block="portfolio-011"] [data-part="bento"]{grid-template-columns:repeat(4,1fr);grid-auto-rows:12rem}}
-@media (hover:none){[data-vibeui-block="portfolio-011"] figcaption{opacity:1;transform:rotate(-3deg)}}
+
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="portfolio-011"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_SHOTS: Portfolio011Shot[] = [
@@ -138,10 +126,7 @@ export function Portfolio011({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="bento">
             {shots.map((shot) => (
-              <figure key={shot.src} data-span={shot.span}>
-                <img src={shot.src} alt={shot.alt ?? ""} loading="lazy" />
-                {shot.note ? <figcaption>{shot.note}</figcaption> : null}
-              </figure>
+              <Card127 key={shot.src} data-part="shot" src={shot.src} span={shot.span} alt={shot.alt} note={shot.note} accent={accent} />
             ))}
           </div>
         </div>

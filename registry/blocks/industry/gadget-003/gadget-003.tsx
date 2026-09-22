@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState, useSyncExternalStore, type CSSProperties, type FormEvent, type PointerEvent } from "react"
+import { Button090 } from "@/registry/components/button/button-090/button-090"
 
 export type Gadget003Swatch = {
   name: string
@@ -94,12 +95,6 @@ container-type:inline-size;
 [data-vibeui-block="gadget-003"] [data-part="body"]::after{content:"";position:absolute;left:50%;top:6rem;width:2.4rem;height:2.4rem;margin-left:-1.2rem;border-radius:50%;background:radial-gradient(circle at 40% 35%,color-mix(in oklab,var(--vibeui-gadget-003-shell) 70%,#fff),color-mix(in oklab,var(--vibeui-gadget-003-shell) 50%,#000));box-shadow:inset 0 0 0 2px color-mix(in oklab,var(--vibeui-gadget-003-shell) 60%,#fff)}
 [data-vibeui-block="gadget-003"] [data-part="dome"]{position:absolute;left:50%;top:2.8rem;width:10rem;height:3.2rem;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#fff 0%,var(--vibeui-gadget-003-light) 42%,color-mix(in oklab,var(--vibeui-gadget-003-light) 55%,#000) 100%);box-shadow:0 0 40px color-mix(in oklab,var(--vibeui-gadget-003-light) 80%,transparent),0 0 110px color-mix(in oklab,var(--vibeui-gadget-003-light) 45%,transparent)}
 [data-vibeui-block="gadget-003"] [data-part="swatches"]{display:flex;gap:.8rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="gadget-003"] [data-part="swatch"]{display:grid;justify-items:center;gap:.4rem;padding:0;border:0;background:transparent;color:inherit;font:inherit;font-size:.72rem;cursor:pointer}
-[data-vibeui-block="gadget-003"] [data-part="swatch"] i{display:block;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--vibeui-gadget-003-sw);box-shadow:inset 0 -6px 10px rgb(0 0 0/.25),0 0 0 2px var(--vibeui-gadget-003-bg),0 0 0 3px var(--vibeui-gadget-003-line);transition:transform .2s,box-shadow .2s}
-[data-vibeui-block="gadget-003"] [data-part="swatch"][aria-pressed="true"] i{transform:scale(1.1);box-shadow:inset 0 -6px 10px rgb(0 0 0/.25),0 0 0 2px var(--vibeui-gadget-003-bg),0 0 0 4px var(--vibeui-gadget-003-accent)}
-[data-vibeui-block="gadget-003"] [data-part="swatch"]:focus-visible{outline:2px solid var(--vibeui-gadget-003-accent);outline-offset:3px;border-radius:.6rem}
-[data-vibeui-block="gadget-003"] [data-part="swatch"] span{color:var(--vibeui-gadget-003-muted)}
-[data-vibeui-block="gadget-003"] [data-part="swatch"][aria-pressed="true"] span{color:var(--vibeui-gadget-003-fg);font-weight:600}
 [data-vibeui-block="gadget-003"] [data-part="form"]{display:grid;gap:1.4rem;align-content:start}
 [data-vibeui-block="gadget-003"] [data-part="kits"]{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="gadget-003"] [data-part="kit"]{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.9rem;padding:1rem 1.1rem;border-radius:1.1rem;border:1px solid var(--vibeui-gadget-003-line);background:var(--vibeui-gadget-003-glass);cursor:pointer;transition:border-color .2s,transform .2s}
@@ -302,10 +297,7 @@ export function Gadget003({
               <ul data-part="swatches" aria-label={swatchesLabel}>
                 {swatches.map((item, index) => (
                   <li key={item.name}>
-                    <button data-part="swatch" type="button" aria-pressed={swatch === index} onClick={() => setSwatch(index)} style={{ ["--vibeui-gadget-003-sw" as string]: item.color }}>
-                      <i aria-hidden="true" />
-                      <span>{item.name}</span>
-                    </button>
+                    <Button090 data-part="swatch" color={item.color} name={item.name} aria-pressed={swatch === index} onClick={() => setSwatch(index)} accent={accent} />
                   </li>
                 ))}
               </ul>

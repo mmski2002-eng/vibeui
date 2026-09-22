@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks016 } from "@/registry/components/navigation/footerlinks-016/footerlinks-016"
 
 type Footer008Link = {
   label: string
@@ -73,16 +74,6 @@ font-size:0.8125rem;line-height:1.45;
 }
 [data-vibeui-block="footer-008"] [data-part="details"] dt{color:var(--vibeui-footer-008-muted)}
 [data-vibeui-block="footer-008"] [data-part="details"] dd{margin:0;font-variant-numeric:tabular-nums}
-[data-vibeui-block="footer-008"] [data-part="links"]{
-display:grid;gap:0.5rem;align-content:start;
-}
-[data-vibeui-block="footer-008"] [data-part="links"] a{
-color:var(--vibeui-footer-008-ink);text-decoration:none;font-size:0.875rem;
-border-bottom:1px solid var(--vibeui-footer-008-border);
-padding-bottom:0.4375rem;
-transition:color var(--vibeui-footer-008-dur-2) ease,border-color var(--vibeui-footer-008-dur-2) ease;
-}
-[data-vibeui-block="footer-008"] [data-part="links"] a:hover{color:var(--vibeui-footer-008-accent);border-color:var(--vibeui-footer-008-accent)}
 [data-vibeui-block="footer-008"] [data-part="disclaimer"]{
 margin:0;color:var(--vibeui-footer-008-muted);font-size:0.75rem;line-height:1.6;
 }
@@ -192,13 +183,7 @@ export function Footer008({
               ))}
             </dl>
           </div>
-          <nav data-part="links" aria-label={legalLinksLabel}>
-            {legalLinks.map((link) => (
-              <a key={link.href} href={link.href}>
-                {link.label}
-              </a>
-            ))}
-          </nav>
+          <Footerlinks016 data-part="links" legalLinksLabel={legalLinksLabel} legalLinks={legalLinks} accent={accent} />
           <p data-part="disclaimer">{disclaimer}</p>
           <div data-part="bottom">
             <span>{copyright}</span>

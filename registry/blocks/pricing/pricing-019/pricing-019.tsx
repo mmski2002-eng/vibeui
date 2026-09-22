@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Pricing019Usage = {
   label: string
   used: number
@@ -63,6 +65,8 @@ box-sizing:border-box;background:var(--vibeui-pricing-019-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-019-sans);
 }
 [data-vibeui-block="pricing-019"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-019"] [data-part="manage"]{margin-top:1.5rem}
+[data-vibeui-block="pricing-019"] [data-part="cta"]{margin-top:1.5rem}
 [data-vibeui-block="pricing-019"] [data-part="shell"]{
 max-width:60rem;width:100%;margin:0 auto;padding:3rem 1.25rem;
 display:grid;grid-template-columns:1fr;gap:1.25rem;align-items:start;
@@ -94,12 +98,6 @@ background:var(--vibeui-pricing-019-track);overflow:hidden;display:block;
 [data-vibeui-block="pricing-019"] [data-high="true"] progress::-webkit-progress-value{background:var(--vibeui-pricing-019-warn)}
 [data-vibeui-block="pricing-019"] [data-high="true"] progress::-moz-progress-bar{background:var(--vibeui-pricing-019-warn)}
 [data-vibeui-block="pricing-019"] [data-high="true"] [data-part="value"]{color:var(--vibeui-pricing-019-warn);font-weight:650}
-[data-vibeui-block="pricing-019"] [data-part="manage"]{
-display:inline-flex;align-items:center;margin-top:1.5rem;height:2.5rem;padding:0 1.125rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-pricing-019-line);color:var(--vibeui-pricing-019-fg);
-font-size:0.875rem;font-weight:650;text-decoration:none;transition:border-color var(--vibeui-pricing-019-dur-2) ease;
-}
-[data-vibeui-block="pricing-019"] [data-part="manage"]:hover{border-color:var(--vibeui-pricing-019-fg)}
 [data-vibeui-block="pricing-019"] [data-upgrade="true"]{
 border:0;background:linear-gradient(160deg,var(--vibeui-pricing-019-accent),color-mix(in oklab,var(--vibeui-pricing-019-accent) 70%,black));
 color:var(--vibeui-pricing-019-accent-fg);
@@ -111,14 +109,7 @@ color:var(--vibeui-pricing-019-accent-fg);
 [data-vibeui-block="pricing-019"] [data-part="gains"]{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="pricing-019"] [data-part="gains"] li{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;line-height:1.5}
 [data-vibeui-block="pricing-019"] [data-part="plus"]{flex:0 0 auto;font-weight:700}
-[data-vibeui-block="pricing-019"] [data-part="cta"]{
-display:flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.75rem;border-radius:0.625rem;
-background:var(--vibeui-pricing-019-card);color:var(--vibeui-pricing-019-accent);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-pricing-019-dur-2) ease;
-}
-[data-vibeui-block="pricing-019"] [data-part="cta"]:hover{opacity:.9}
 [data-vibeui-block="pricing-019"] a:focus-visible{outline:2px solid var(--vibeui-pricing-019-accent);outline-offset:3px}
-[data-vibeui-block="pricing-019"] [data-upgrade="true"] [data-part="cta"]:focus-visible{outline-color:var(--vibeui-pricing-019-card)}
 @container (min-width: 34rem){
 [data-vibeui-block="pricing-019"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="pricing-019"] [data-part="panel"]{padding:1.875rem}
@@ -257,9 +248,15 @@ export function Pricing019({
               })}
             </ul>
 
-            <a data-part="manage" href={manageAction.href}>
-              {manageAction.label}
-            </a>
+            <Button016
+              data-part="manage"
+              label={manageAction.label}
+              href={manageAction.href}
+              external={false}
+              size="lg"
+              tone="neutral"
+              accent={accent}
+            />
           </div>
 
           <div data-part="panel" data-upgrade="true">
@@ -281,9 +278,15 @@ export function Pricing019({
               ))}
             </ul>
 
-            <a data-part="cta" href={upgradeAction.href}>
-              {upgradeAction.label}
-            </a>
+            <Button016
+              data-part="cta"
+              label={upgradeAction.label}
+              href={upgradeAction.href}
+              external={false}
+              size="lg"
+              tone="accent"
+              accent={accent}
+            />
           </div>
         </div>
       </section>

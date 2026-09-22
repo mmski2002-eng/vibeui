@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Avatar001 } from "@/registry/components/avatar/avatar-001/avatar-001"
+
 type Blog009Link = {
   label: string
   href?: string
@@ -33,7 +35,8 @@ export type Blog009Props = {
 // оранжевой заливке, роль, биография и соцссылки слева, три последних
 // статьи справа. Список статей нужен здесь же: доверие к автору проверяют
 // его текстами, а не фотографией.
-const STYLES = `
+const STYLES = `[data-vibeui-block="blog-009"] [data-part="avatar"]{width:4rem;flex:none}
+
 :where([data-vibeui-block="blog-009"]){
 --vibeui-blog-009-bg:transparent;
 --vibeui-blog-009-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
@@ -68,19 +71,7 @@ margin:0;color:var(--vibeui-blog-009-accent);
 font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
 }
 [data-vibeui-block="blog-009"] [data-part="head"]{display:flex;align-items:center;gap:1rem}
-[data-vibeui-block="blog-009"] [data-part="avatar"]{
-position:relative;width:4rem;height:4rem;flex:none;border-radius:999px;
-display:grid;place-items:center;
-color:var(--vibeui-blog-009-accent);
-font-size:1.25rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="blog-009"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-blog-009-tint);}
-[data-vibeui-block="blog-009"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="blog-009"] [data-part="name"]{
+[data-vibeui-block="blog-009"] [data-part="author-name"]{
 margin:0;font-size:clamp(1.25rem,3.5cqi,1.625rem);line-height:1.15;letter-spacing:-0.02em;font-weight:750;
 }
 [data-vibeui-block="blog-009"] [data-part="role"]{
@@ -187,14 +178,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
-}
-
 /** Карточка автора: инициалы-аватар, биография, соцссылки и три последних статьи. */
 export function Blog009({
   eyebrow = "Автор",
@@ -236,23 +219,9 @@ export function Blog009({
             <div data-part="person">
               <p data-part="eyebrow">{eyebrow}</p>
               <div data-part="head">
-                <span
-                  data-part="avatar"
-                  data-empty={avatarImage ? undefined : "true"}
-                  aria-hidden="true"
-                >
-                  {avatarImage ? (
-                    <img
-                      src={avatarImage}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
-                  {initials(name)}
-                </span>
+                <Avatar001 data-part="avatar" name={name} src={avatarImage} status="none" aria-hidden="true" />
                 <div>
-                  <h2 data-part="name">{name}</h2>
+                  <h2 data-part="author-name">{name}</h2>
                   <p data-part="role">{role}</p>
                 </div>
               </div>

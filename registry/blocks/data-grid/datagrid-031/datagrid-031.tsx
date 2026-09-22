@@ -1,4 +1,5 @@
 import type { ComponentProps, CSSProperties } from "react"
+import { Card178 } from "@/registry/components/card/card-178/card-178"
 
 export type Datagrid031Row = {
   sku: string
@@ -56,14 +57,6 @@ border:1px solid var(--vibeui-datagrid-031-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-031-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-031"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-031"] [data-part="head"]{
-display:flex;flex-wrap:wrap;align-items:baseline;gap:0.5rem;
-padding:0.875rem;border-bottom:1px solid var(--vibeui-datagrid-031-border);
-}
-[data-vibeui-block="datagrid-031"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650}
-[data-vibeui-block="datagrid-031"] [data-part="hint"]{
-margin:0 0 0 auto;font-size:0.75rem;color:var(--vibeui-datagrid-031-muted);
-}
 /* overflow:auto по обеим осям разом: вертикальная прокрутка держит шапку,
    горизонтальная — первую колонку. */
 [data-vibeui-block="datagrid-031"] [data-part="scroll"]{
@@ -185,10 +178,7 @@ export function Datagrid031({
         className={className}
         style={palette}
       >
-        <div data-part="head">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="hint">{scrollHint}</p>
-        </div>
+        <Card178 data-part="head" heading={heading} scrollHint={scrollHint} accent={accent} />
         <div
           data-part="scroll"
           role="region"

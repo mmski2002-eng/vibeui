@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
+import { Button112 } from "@/registry/components/button/button-112/button-112"
 
 export type Navbar038Link = {
   label: string
@@ -79,12 +80,6 @@ container-type:inline-size;
 [data-vibeui-block="navbar-038"] [data-part="nav"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-038"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.6rem}
 [data-vibeui-block="navbar-038"] [data-part="nav"] + [data-part="right"]{margin-left:0}
-[data-vibeui-block="navbar-038"] [data-part="cart"]{position:relative;display:inline-flex;align-items:center;gap:.5rem;height:2.6rem;padding:0 1rem;border-radius:999px;background:var(--vibeui-navbar-038-accent);color:var(--vibeui-navbar-038-on-accent);text-decoration:none;font-weight:700;font-size:.88rem;white-space:nowrap;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="navbar-038"] [data-part="cart"]:hover{transform:translateY(-1px);box-shadow:0 10px 26px -10px var(--vibeui-navbar-038-accent)}
-[data-vibeui-block="navbar-038"] [data-part="cart"] svg{width:1.1rem;height:1.1rem}
-[data-vibeui-block="navbar-038"] [data-part="cart"] span{display:none}
-[data-vibeui-block="navbar-038"] [data-part="count"]{display:grid;place-items:center;min-width:1.35rem;height:1.35rem;padding:0 .3rem;border-radius:999px;background:var(--vibeui-navbar-038-bg);color:var(--vibeui-navbar-038-fg);font-size:.72rem;font-weight:800;font-variant-numeric:tabular-nums}
-[data-vibeui-block="navbar-038"] [data-part="count"][data-bump="true"]{animation:vibeui-navbar-038-bump .4s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="navbar-038"] a:focus-visible,[data-vibeui-block="navbar-038"] button:focus-visible{outline:2px solid var(--vibeui-navbar-038-accent);outline-offset:2px}
 [data-vibeui-block="navbar-038"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.6rem;height:2.6rem;padding:0;border:1px solid var(--vibeui-navbar-038-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-038"] [data-part="burger"] i{display:block;width:1rem;height:2px;margin:0 auto;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
@@ -99,7 +94,7 @@ container-type:inline-size;
 @keyframes vibeui-navbar-038-flame{0%,100%{transform:scaleY(1) rotate(-3deg)}50%{transform:scaleY(1.12) rotate(3deg)}}
 @keyframes vibeui-navbar-038-bump{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}
 @keyframes vibeui-navbar-038-menu{from{opacity:0;transform:translateY(-6px)}}
-@container (min-width: 40rem){[data-vibeui-block="navbar-038"] [data-part="row"] [data-part="where"]{display:inline-flex}[data-vibeui-block="navbar-038"] [data-part="cart"] span{display:inline}}
+@container (min-width: 40rem){[data-vibeui-block="navbar-038"] [data-part="row"] [data-part="where"]{display:inline-flex}}
 @container (min-width: 60rem){[data-vibeui-block="navbar-038"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-038"] [data-part="burger"],[data-vibeui-block="navbar-038"] [data-part="menu"]{display:none}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-038"] *{animation:none!important;transition:none!important}}`
 
@@ -212,17 +207,7 @@ export function Navbar038({
             ))}
           </nav>
           <div data-part="right">
-            <a data-part="cart" href={cartHref}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21 8H7" />
-                <circle cx="9.5" cy="20" r="1.2" />
-                <circle cx="17.5" cy="20" r="1.2" />
-              </svg>
-              <span>{cartLabel}</span>
-              <output data-part="count" data-bump={bump} aria-label={countLabel.replace("{n}", String(count))}>
-                {count}
-              </output>
-            </a>
+            <Button112 data-part="cart" cartHref={cartHref} cartLabel={cartLabel} countLabel={countLabel} count={count} bump={bump} accent={accent} />
             <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-038-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />
               <i aria-hidden="true" />

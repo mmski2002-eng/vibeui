@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 type Event001Item = {
   day: string
@@ -24,7 +27,9 @@ export type Event001Props = {
 // в центре, кнопкой записи справа. Плашка даты — число крупно и месяц под ним
 // на тёплом фоне. Формат списка ближайших мероприятий; строка кликается
 // целиком, кнопка дублирует действие визуально.
-const STYLES = `
+const STYLES = `[data-vibeui-block="event-001"] [data-part="heading"]{margin-bottom:2rem}
+[data-vibeui-block="event-001"] [data-part="cta"]{grid-column:1 / -1;justify-self:start}
+
 :where([data-vibeui-block="event-001"]){
 --vibeui-event-001-bg:transparent;
 --vibeui-event-001-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -46,8 +51,6 @@ display:block;background:var(--vibeui-event-001-bg);color:var(--vibeui-event-001
 font-family:var(--vibeui-event-001-font);
 }
 [data-vibeui-block="event-001"] [data-part="shell"]{max-width:52rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="event-001"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-event-001-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="event-001"] [data-part="title"]{margin:0 0 2rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="event-001"] [data-part="list"]{list-style:none;margin:0;padding:0;display:grid;gap:0.75rem}
 [data-vibeui-block="event-001"] [data-part="row"]{
 display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;
@@ -64,18 +67,10 @@ background:color-mix(in oklab,var(--vibeui-event-001-accent) 14%,transparent);co
 [data-vibeui-block="event-001"] [data-part="ev-title"]{margin:0;font-size:1.0625rem;font-weight:640;line-height:1.3}
 [data-vibeui-block="event-001"] [data-part="ev-meta"]{margin:0.25rem 0 0;display:flex;flex-wrap:wrap;gap:0.5rem 0.875rem;font-size:0.8125rem;color:var(--vibeui-event-001-muted)}
 [data-vibeui-block="event-001"] [data-part="format"]{color:var(--vibeui-event-001-accent);font-weight:600}
-[data-vibeui-block="event-001"] [data-part="cta"]{
-grid-column:1 / -1;justify-self:start;
-display:inline-flex;align-items:center;height:2.5rem;padding:0 1.125rem;border-radius:0.75rem;
-background:var(--vibeui-event-001-accent);color:oklch(from var(--vibeui-event-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.875rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-event-001-dur-2) ease;
-}
-[data-vibeui-block="event-001"] [data-part="cta"]:hover{opacity:.9}
-[data-vibeui-block="event-001"] [data-part="cta"]:focus-visible{outline:2px solid var(--vibeui-event-001-accent);outline-offset:2px}
 @container (min-width: 40rem){
+[data-vibeui-block="event-001"] [data-part="cta"]{grid-column:auto;justify-self:end}
 [data-vibeui-block="event-001"] [data-part="shell"]{padding:4rem 2rem}
 [data-vibeui-block="event-001"] [data-part="row"]{grid-template-columns:auto 1fr auto}
-[data-vibeui-block="event-001"] [data-part="cta"]{grid-column:auto;justify-self:end}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-001"] *{animation:none!important;transition:none!important}}
 `
@@ -159,8 +154,12 @@ export function Event001({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ul data-part="list">
             {events.map((event) => (
               <li key={event.title} data-part="row">
@@ -175,9 +174,15 @@ export function Event001({
                     <span>{event.meta}</span>
                   </p>
                 </div>
-                <a href="#" data-part="cta">
-                  {ctaLabel}
-                </a>
+                <Button016
+                  data-part="cta"
+                  label={ctaLabel}
+                  href="#"
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               </li>
             ))}
           </ul>

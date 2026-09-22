@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card025 } from "@/registry/components/card/card-025/card-025"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 export type Contact002Hours = {
   days: string
@@ -70,14 +73,10 @@ background:var(--vibeui-contact-002-bg);color:var(--vibeui-contact-002-fg);
 font-family:var(--vibeui-contact-002-sans);
 }
 [data-vibeui-block="contact-002"] *{box-sizing:border-box}
-[data-vibeui-block="contact-002"] [data-part="figure"]{
-position:relative;overflow:hidden;aspect-ratio:3 / 2;
-margin-top:1.5rem;border-radius:0.875rem;
-}
-[data-vibeui-block="contact-002"] [data-part="figure"] img{
-display:block;width:100%;height:100%;object-fit:cover;
-}
-[data-vibeui-block="contact-002"] [data-part="frame"]{
+[data-vibeui-block="contact-002"] [data-part="map-link"]{flex:none}
+/* Фото офиса — card-025. */
+[data-vibeui-block="contact-002"] [data-part="figure"]{margin-top:1.5rem}
+[data-vibeui-block="contact-002"] [data-part="shell"]{
 max-width:72rem;margin:0 auto;padding:3rem 1.25rem;display:grid;gap:1.75rem;align-items:start;
 }
 [data-vibeui-block="contact-002"] [data-part="eyebrow"]{
@@ -165,15 +164,8 @@ font-size:0.6875rem;font-weight:650;
 [data-vibeui-block="contact-002"] [data-part="map-caption"]{
 font-size:0.75rem;line-height:1.5;color:var(--vibeui-contact-002-muted);
 }
-[data-vibeui-block="contact-002"] [data-part="map-link"]{
-display:inline-flex;align-items:center;gap:0.4375rem;flex:none;
-height:2.375rem;padding:0 1rem;border-radius:0.6875rem;text-decoration:none;
-background:var(--vibeui-contact-002-accent);color:oklch(from var(--vibeui-contact-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="contact-002"] a:focus-visible{outline:2px solid var(--vibeui-contact-002-accent);outline-offset:2px;border-radius:0.25rem}
 @container (min-width: 48rem){
-[data-vibeui-block="contact-002"] [data-part="frame"]{padding:4rem 2rem;grid-template-columns:1fr 1fr;column-gap:3.5rem}
+[data-vibeui-block="contact-002"] [data-part="shell"]{padding:4rem 2rem;grid-template-columns:1fr 1fr;column-gap:3.5rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-002"] *{animation:none!important;transition:none!important}}
 `
@@ -266,7 +258,7 @@ export function Contact002({
         style={palette}
         aria-label={title}
       >
-        <div data-part="frame">
+        <div data-part="shell">
           <div>
             <span data-part="eyebrow">{eyebrow}</span>
             <h2>{title}</h2>
@@ -314,17 +306,18 @@ export function Contact002({
               </span>
             </div>
             <figcaption>
-              <a href={mapHref} data-part="map-link">
-                {mapLabel}
-              </a>
+              <Button077
+                data-part="map-link"
+                label={mapLabel}
+                href={mapHref}
+                accent={accent}
+              />
               <span data-part="map-caption">{mapCaption}</span>
             </figcaption>
           </figure>
 
           {image ? (
-            <figure data-part="figure">
-              <img src={image} alt="" loading="lazy" decoding="async" />
-            </figure>
+            <Card025 data-part="figure" src={image} alt="" ratio="3/2" />
           ) : null}
         </div>
       </section>

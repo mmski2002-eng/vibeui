@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks003 } from "@/registry/components/navigation/footerlinks-003/footerlinks-003"
 
 export type Footer022Link = {
   label: string
@@ -70,10 +71,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-022"] [data-part="social"]:hover{transform:translateY(-3px) rotate(-6deg);background:var(--vibeui-footer-022-fg);color:var(--vibeui-footer-022-bg)}
 [data-vibeui-block="footer-022"] [data-part="social"] svg{width:1.15rem;height:1.15rem;fill:currentColor}
 [data-vibeui-block="footer-022"] [data-part="columns"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 1.5rem;padding-top:2rem;border-top:1px solid var(--vibeui-footer-022-line)}
-[data-vibeui-block="footer-022"] [data-part="col-title"]{margin:0 0 .75rem;font-family:var(--vibeui-footer-022-display);font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
-[data-vibeui-block="footer-022"] [data-part="links"]{display:grid;gap:.5rem;margin:0;padding:0;list-style:none;font-size:1rem}
-[data-vibeui-block="footer-022"] [data-part="links"] a{transition:opacity .2s}
-[data-vibeui-block="footer-022"] [data-part="links"] a:hover{opacity:.6}
 [data-vibeui-block="footer-022"] [data-part="legal"]{margin:2.5rem 0 0;padding-top:1.25rem;border-top:1px solid var(--vibeui-footer-022-line);font-size:.85rem;color:var(--vibeui-footer-022-muted)}
 @container (min-width: 60rem){
 [data-vibeui-block="footer-022"] [data-part="shell"]{padding:2.5rem 2rem 2rem}
@@ -159,16 +156,7 @@ export function Footer022({
           </div>
           <div data-part="columns">
             {columns.map((column) => (
-              <div key={column.title}>
-                <p data-part="col-title">{column.title}</p>
-                <ul data-part="links">
-                  {column.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Footerlinks003 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </div>
           {legal ? <p data-part="legal">{legal}</p> : null}

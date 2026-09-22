@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Errorpage006Link = {
   label: string
@@ -69,15 +70,6 @@ font-size:clamp(1.375rem,5cqi,2rem);line-height:1.2;font-weight:700;letter-spaci
 }
 [data-vibeui-block="errorpage-006"] [data-part="query"]::before{content:"«";color:var(--vibeui-errorpage-006-accent)}
 [data-vibeui-block="errorpage-006"] [data-part="query"]::after{content:"»";color:var(--vibeui-errorpage-006-accent)}
-[data-vibeui-block="errorpage-006"] [data-part="title"]{
-margin:0.625rem 0 0;
-font-size:clamp(1.125rem,3.5cqi,1.375rem);line-height:1.25;font-weight:650;
-color:var(--vibeui-errorpage-006-muted);
-}
-[data-vibeui-block="errorpage-006"] [data-part="description"]{
-margin:0.75rem 0 0;max-width:46ch;
-color:var(--vibeui-errorpage-006-muted);font-size:0.9375rem;line-height:1.6;
-}
 [data-vibeui-block="errorpage-006"] [data-part="tips"]{
 margin:2rem 0 0;width:100%;max-width:28rem;text-align:left;
 padding:1.25rem 1.5rem;
@@ -203,8 +195,14 @@ export function Errorpage006({
         <div data-part="frame">
           <div data-part="lens" aria-hidden="true" />
           <p data-part="query">{query}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={description}
+            size="sm"
+            ledeWidth={46}
+            accent={accent}
+          />
           <div data-part="tips">
             <p data-part="tips-label">{tipsLabel}</p>
             <ul data-part="tips-list">

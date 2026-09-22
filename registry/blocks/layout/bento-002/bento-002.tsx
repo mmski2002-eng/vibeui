@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Badge026 } from "@/registry/components/badge/badge-026/badge-026"
 
 export type Bento002Item = {
   name: string
@@ -61,6 +62,7 @@ container-type:inline-size;
 :where([data-vibeui-block="bento-002"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="bento-002"]{box-sizing:border-box;position:relative;overflow:hidden;padding:5rem 0;background:var(--vibeui-bento-002-bg);color:var(--vibeui-bento-002-fg);font-family:var(--vibeui-bento-002-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="bento-002"] *{box-sizing:border-box}
+[data-vibeui-block="bento-002"] [data-part="sat"]{width:100%}
 [data-vibeui-block="bento-002"] [data-part="glow"]{position:absolute;left:-10%;top:10%;width:55%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bento-002-accent) 26%,transparent),transparent);filter:blur(60px);pointer-events:none;animation:vibeui-bento-002-breathe 9s ease-in-out infinite alternate}
 [data-vibeui-block="bento-002"] [data-part="glow"]:nth-child(2){left:auto;right:-15%;top:40%;width:45%;background:radial-gradient(closest-side,color-mix(in oklab,var(--vibeui-bento-002-a2) 24%,transparent),transparent);animation-delay:-4s}
 [data-vibeui-block="bento-002"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:center}
@@ -74,21 +76,17 @@ container-type:inline-size;
 [data-vibeui-block="bento-002"] [data-part="facts"] li:hover{transform:translateX(6px);border-color:color-mix(in oklab,var(--vibeui-bento-002-accent) 40%,transparent);background:color-mix(in oklab,var(--vibeui-bento-002-accent) 8%,transparent)}
 [data-vibeui-block="bento-002"] [data-part="facts"] li::before{content:"→";font-family:var(--vibeui-bento-002-mono);color:var(--vibeui-bento-002-accent)}
 [data-vibeui-block="bento-002"] [data-part="space"]{position:relative;width:min(100%,26rem);aspect-ratio:1;margin:0 auto;display:grid;place-items:center;container-type:inline-size}
-[data-vibeui-block="bento-002"] [data-part="space"]:hover [data-part="ring"],[data-vibeui-block="bento-002"] [data-part="space"]:hover [data-part="sat"]{animation-play-state:paused}
+[data-vibeui-block="bento-002"] [data-part="space"]:hover [data-part="ring"],[data-vibeui-block="bento-002"] [data-part="space"]:hover [data-vibeui-block="badge-026"]{animation-play-state:paused}
 [data-vibeui-block="bento-002"] [data-part="core"]{position:relative;z-index:2;width:25cqi;height:25cqi;border-radius:50%;display:grid;place-items:center;font-family:var(--vibeui-bento-002-display);font-weight:800;font-size:1.05rem;background:var(--vibeui-bento-002-accent);color:var(--vibeui-bento-002-on-accent);box-shadow:0 0 0 10px color-mix(in oklab,var(--vibeui-bento-002-accent) 15%,transparent),0 0 60px -10px var(--vibeui-bento-002-accent);animation:vibeui-bento-002-heart 2.4s ease-in-out infinite}
 [data-vibeui-block="bento-002"] [data-part="core"]::before,[data-vibeui-block="bento-002"] [data-part="core"]::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid var(--vibeui-bento-002-accent);opacity:0;animation:vibeui-bento-002-ping 2.4s var(--vibeui-bento-002-ease) infinite;pointer-events:none}
 [data-vibeui-block="bento-002"] [data-part="core"]::after{animation-delay:1.2s}
 [data-vibeui-block="bento-002"] [data-part="ring"]{position:absolute;left:50%;top:50%;width:calc(var(--vibeui-bento-002-r) * 2);height:calc(var(--vibeui-bento-002-r) * 2);margin:calc(var(--vibeui-bento-002-r) * -1) 0 0 calc(var(--vibeui-bento-002-r) * -1);border-radius:50%;border:1px dashed var(--vibeui-bento-002-line);animation:vibeui-bento-002-spin var(--vibeui-bento-002-t) linear infinite}
 [data-vibeui-block="bento-002"] [data-part="ring"][data-dir="ccw"]{animation-direction:reverse}
 [data-vibeui-block="bento-002"] [data-part="hold"]{position:absolute;left:50%;top:0;width:2.8rem;height:2.8rem;margin:-1.4rem 0 0 -1.4rem;transform:rotate(calc(var(--vibeui-bento-002-a) * -1deg))}
-[data-vibeui-block="bento-002"] [data-part="sat"]{position:relative;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:var(--vibeui-bento-002-bg);border:1px solid var(--vibeui-bento-002-line);box-shadow:0 10px 24px -12px rgb(0 0 0 / .5);font-family:var(--vibeui-bento-002-mono);font-weight:500;font-size:.75rem;animation:vibeui-bento-002-spin var(--vibeui-bento-002-t) linear infinite reverse;transition:background .2s,color .2s,border-color .2s}
-[data-vibeui-block="bento-002"] [data-part="ring"][data-dir="ccw"] [data-part="sat"]{animation-direction:normal}
+[data-vibeui-block="bento-002"] [data-part="ring"][data-dir="ccw"] [data-vibeui-block="badge-026"]{animation-direction:normal}
 [data-vibeui-block="bento-002"] [data-part="slot"]{position:absolute;inset:0;transform:rotate(calc(var(--vibeui-bento-002-a) * 1deg))}
 [data-vibeui-block="bento-002"] [data-part="slot"]::before{content:"";position:absolute;inset:-1px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg 290deg,color-mix(in oklab,var(--vibeui-bento-002-accent) 0%,transparent) 290deg,var(--vibeui-bento-002-accent) 360deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px));opacity:.85;pointer-events:none}
 [data-vibeui-block="bento-002"] [data-part="ring"][data-dir="ccw"] [data-part="slot"]::before{background:conic-gradient(from 0deg,var(--vibeui-bento-002-accent) 0deg,color-mix(in oklab,var(--vibeui-bento-002-accent) 0%,transparent) 70deg,transparent 70deg 360deg)}
-[data-vibeui-block="bento-002"] [data-part="sat"]:hover{background:var(--vibeui-bento-002-accent);color:var(--vibeui-bento-002-on-accent);border-color:transparent;box-shadow:0 0 24px -4px var(--vibeui-bento-002-accent)}
-[data-vibeui-block="bento-002"] [data-part="sat"] span{position:absolute;top:calc(100% + .35rem);left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--vibeui-bento-002-font);font-size:.68rem;color:var(--vibeui-bento-002-muted);opacity:0;transition:opacity .2s}
-[data-vibeui-block="bento-002"] [data-part="sat"]:hover span{opacity:1}
 @keyframes vibeui-bento-002-spin{to{transform:rotate(360deg)}}
 @keyframes vibeui-bento-002-heart{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 @keyframes vibeui-bento-002-ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.6);opacity:0}}
@@ -105,7 +103,7 @@ container-type:inline-size;
 @container (min-width: 60rem){[data-vibeui-block="bento-002"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="bento-002"] *{animation:none!important;transition:none!important}[data-vibeui-block="bento-002"] [data-part="slot"]::before{display:none}}`
 
-function Ring({ items, radius, seconds, dir }: { items: readonly Bento002Item[]; radius: string; seconds: number; dir: "cw" | "ccw" }) {
+function Ring({ items, radius, seconds, dir, accent }: { items: readonly Bento002Item[]; radius: string; seconds: number; dir: "cw" | "ccw"; accent?: string }) {
   return (
     <div data-part="ring" data-dir={dir} style={{ ["--vibeui-bento-002-r" as string]: radius, ["--vibeui-bento-002-t" as string]: `${seconds}s` }}>
       {items.map((item, index) => {
@@ -113,10 +111,7 @@ function Ring({ items, radius, seconds, dir }: { items: readonly Bento002Item[];
         return (
           <div key={item.name} data-part="slot" style={{ ["--vibeui-bento-002-a" as string]: angle }}>
             <div data-part="hold">
-              <div data-part="sat" aria-label={item.name}>
-                {item.mark ?? item.name.charAt(0)}
-                <span aria-hidden="true">{item.name}</span>
-              </div>
+              <Badge026 data-part="sat" name={item.name} mark={item.mark} accent={accent} />
             </div>
           </div>
         )
@@ -162,8 +157,8 @@ export function Bento002({
         <div data-part="shell">
           <div data-part="space" aria-label={spaceLabel.replace("{core}", core)}>
             <div data-part="core">{core}</div>
-            <Ring items={inner} radius="27cqi" seconds={speed} dir="cw" />
-            <Ring items={outer} radius="44cqi" seconds={speed * 1.5} dir="ccw" />
+            <Ring items={inner} radius="27cqi" seconds={speed} dir="cw" accent={accent} />
+            <Ring items={outer} radius="44cqi" seconds={speed * 1.5} dir="ccw" accent={accent} />
           </div>
           <div>
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}

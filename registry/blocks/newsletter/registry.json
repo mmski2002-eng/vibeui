@@ -10,7 +10,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "subscribe-001/subscribe-001.tsx",
@@ -18,14 +22,15 @@
           "target": "@components/vibeui/subscribe-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-001-*. Клиентский компонент: бэкенда нет, submit гасится заглушкой, и aria-live-обёртка показывает строку успеха вместо формы. Поле подписано скрытым <label>, а не одним placeholder. Форма складывается в колонку и разворачивается в строку по собственной ширине блока (container queries), тема берётся из color-scheme окружения через light-dark(). Единственное поле e-mail — осознанно: каждый лишний инпут снижает конверсию подписки.",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-subscribe-001-*. Клиентский компонент: бэкенда нет, submit гасится заглушкой, и aria-live-обёртка показывает строку успеха вместо формы. Поле подписано скрытым <label>, а не одним placeholder. Форма складывается в колонку и разворачивается в строку по собственной ширине блока (container queries), тема берётся из color-scheme окружения через light-dark(). Единственное поле e-mail — осознанно: каждый лишний инпут снижает конверсию подписки.",
       "meta": {
         "tags": [
           "newsletter",
           "signup",
           "email",
           "form",
-          "cta"
+          "cta",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -35,6 +40,7 @@
           "usage": "<Subscribe001\n  title=\"Дайджест VibeUI — раз в неделю\"\n  note=\"Раз в неделю, без спама. Отписка в один клик.\"\n/>",
           "summary": "Классическая центрированная секция подписки: заголовок, подводка, поле e-mail с акцентной кнопкой и строка доверия «без спама». Бэкенда нет — submit гасится заглушкой и показывает строку успеха. Один файл, своя палитра, ноль зависимостей.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-subscribe-001-* — не заменять её токенами темы сайта (bg-card, border-border и подобными)",
             "строку «раз в неделю, без спама» под формой: она отвечает на главный страх подписчика, без неё поле оставляют пустым",
             "единственное поле e-mail — каждый дополнительный инпут снижает конверсию формы подписки",
@@ -46,7 +52,6 @@
           "adapt": [
             "title и lead — заголовок и подводка секции",
             "note и success — строка доверия и сообщение об успехе",
-            "buttonLabel и placeholder — подпись кнопки и образец адреса",
             "акцент через проп accent — перекрасит кнопку и фокусные кольца",
             "background — подложка блока; пусто — блок лежит прямо на фоне страницы"
           ],
@@ -82,10 +87,11 @@
           "en": {
             "title": "Classic Signup",
             "description": "A centered newsletter signup: a heading, an email field, an accent button and the «once a week, no spam» line. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-001-* variables. A client component: there is no backend, submit is stubbed out and an aria-live wrapper swaps the form for a success line. The field is labelled by a visually hidden <label>, not just a placeholder. The form folds into a column and unfolds into a row based on the block's own width (container queries); the theme comes from the surrounding color-scheme via light-dark(). The single email field is deliberate: every extra input lowers signup conversion.",
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-subscribe-001-* variables. A client component: there is no backend, submit is stubbed out and an aria-live wrapper swaps the form for a success line. The field is labelled by a visually hidden <label>, not just a placeholder. The form folds into a column and unfolds into a row based on the block's own width (container queries); the theme comes from the surrounding color-scheme via light-dark(). The single email field is deliberate: every extra input lowers signup conversion.",
             "ai": {
               "summary": "A classic centered signup section: a heading, a lead, an email field with an accent button and the «no spam» trust line. No backend — submit is stubbed and shows a success line. One file, its own palette, zero dependencies.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-subscribe-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the «once a week, no spam» line under the form: it answers the subscriber's main fear, without it the field stays empty",
                 "the single email field — every extra input lowers the signup form's conversion",
@@ -97,7 +103,6 @@
               "adapt": [
                 "title and lead — the section heading and its lead",
                 "note and success — the trust line and the success message",
-                "buttonLabel and placeholder — the button caption and the sample address",
                 "the accent through the accent prop — it recolours the button and the focus rings",
                 "background — the block surface; empty means the block sits on the page background"
               ],
@@ -150,7 +155,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "subscribe-002/subscribe-002.tsx",
@@ -158,14 +167,15 @@
           "target": "@components/vibeui/subscribe-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-002-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка — грид из одной колонки, который разворачивается в две по собственной ширине блока (container queries). Макет письма собран чистым CSS из настоящих заголовков выпуска, а не серых полос: конкретика убеждает сильнее абстракции. Макет помечен aria-hidden — для скринридера это иллюстрация, дублирующая подводку. Тема — через light-dark() от color-scheme окружения.",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-subscribe-002-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка — грид из одной колонки, который разворачивается в две по собственной ширине блока (container queries). Макет письма собран чистым CSS из настоящих заголовков выпуска, а не серых полос: конкретика убеждает сильнее абстракции. Макет помечен aria-hidden — для скринридера это иллюстрация, дублирующая подводку. Тема — через light-dark() от color-scheme окружения.",
       "meta": {
         "tags": [
           "newsletter",
           "email preview",
           "signup",
           "two column",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -175,6 +185,7 @@
           "usage": "<Subscribe002\n  title=\"Видно, на что подписываетесь\"\n  letterSubject=\"Три новых блока и приём с container queries\"\n  letterItems={[\"Полоса подписки для середины лендинга\", \"Тёмная карточка с градиент-свечением\"]}\n/>",
           "summary": "Секция подписки в две колонки: слева надзаголовок, заголовок и форма e-mail, справа CSS-макет письма-дайджеста с темой выпуска и списком материалов. Показывает товар лицом: человек видит письмо до подписки. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-subscribe-002-* — не заменять её токенами темы сайта",
             "макет письма с настоящими заголовками выпуска: конкретные темы убеждают сильнее серых полос-заглушек",
             "aria-hidden на макете письма — для скринридера это украшение, содержание дублирует подводка",
@@ -186,7 +197,6 @@
           "adapt": [
             "eyebrow, title и lead — надзаголовок, заголовок и подводка",
             "letterFrom, letterSubject, letterItems и letterCta — содержимое макета письма; впишите темы своего дайджеста",
-            "note, success, buttonLabel и placeholder — строка доверия, сообщение успеха и подписи формы",
             "акцент через проп accent — перекрасит кнопку, миниатюры письма и надзаголовок",
             "background — подложка блока; пусто — блок лежит на фоне страницы",
             "внешние отступы через className: секция занимает ширину родителя"
@@ -230,10 +240,11 @@
           "en": {
             "title": "Signup with Email Preview",
             "description": "A signup form on the left, a CSS mock of the digest email on the right: you see what lands in your inbox before typing an address. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-002-* variables. A client component: submit is stubbed out, aria-live shows a success line. The layout is a one-column grid that unfolds into two based on the block's own width (container queries). The email mock is built in pure CSS from real issue headlines rather than grey placeholder bars: specifics persuade better than abstraction. The mock is aria-hidden — to a screen reader it is an illustration duplicated by the lead. The theme comes from the surrounding color-scheme via light-dark().",
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-subscribe-002-* variables. A client component: submit is stubbed out, aria-live shows a success line. The layout is a one-column grid that unfolds into two based on the block's own width (container queries). The email mock is built in pure CSS from real issue headlines rather than grey placeholder bars: specifics persuade better than abstraction. The mock is aria-hidden — to a screen reader it is an illustration duplicated by the lead. The theme comes from the surrounding color-scheme via light-dark().",
             "ai": {
               "summary": "A two-column signup section: an eyebrow, a heading and an email form on the left, a CSS mock of the digest email with the issue subject and story list on the right. It shows the product up front: people see the email before subscribing. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-subscribe-002-* palette — do not swap it for your theme tokens",
                 "the email mock with real issue headlines: concrete topics persuade better than grey placeholder bars",
                 "aria-hidden on the email mock — to a screen reader it is decoration, its content is duplicated by the lead",
@@ -245,7 +256,6 @@
               "adapt": [
                 "eyebrow, title and lead — the eyebrow, heading and lead",
                 "letterFrom, letterSubject, letterItems and letterCta — the email mock content; put your own digest topics in",
-                "note, success, buttonLabel and placeholder — the trust line, success message and form captions",
                 "the accent through the accent prop — it recolours the button, the email thumbnails and the eyebrow",
                 "background — the block surface; empty means the block sits on the page background",
                 "outer spacing through className: the section fills its parent's width"
@@ -313,7 +323,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "subscribe-003/subscribe-003.tsx",
@@ -321,14 +335,15 @@
           "target": "@components/vibeui/subscribe-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-003-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Лента подкрашена тёплым тинтом из акцента через color-mix — фон пересчитывается сам при смене accent. Раскладка от собственной ширины: на узкой колонке всё складывается в столбик, с 30rem форма встаёт в строку, с 46rem вся лента вытягивается в горизонталь. Полоса рассчитана на постановку между контентными секциями, поэтому вертикальные отступы малые.",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-subscribe-003-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Лента подкрашена тёплым тинтом из акцента через color-mix — фон пересчитывается сам при смене accent. Раскладка от собственной ширины: на узкой колонке всё складывается в столбик, с 30rem форма встаёт в строку, с 46rem вся лента вытягивается в горизонталь. Полоса рассчитана на постановку между контентными секциями, поэтому вертикальные отступы малые.",
       "meta": {
         "tags": [
           "newsletter",
           "strip",
           "inline form",
           "cta",
-          "banner"
+          "banner",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -338,6 +353,7 @@
           "usage": "<Subscribe003\n  title=\"Не пропустите новые блоки\"\n  hint=\"Дайджест приходит по пятницам.\"\n/>",
           "summary": "Узкая полоса подписки для середины лендинга: заголовок с подсказкой слева, инлайн-форма e-mail справа, тёплая подложка из акцента. Ставится между секциями, где читатель уже разогрет. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-subscribe-003-* — не заменять её токенами темы сайта",
             "тёплый тинт полосы из акцента через color-mix: при смене accent фон и рамка пересчитаются сами, не фиксируйте их hex-кодом",
             "низкий рост полосы — это пауза между секциями, а не отдельная сцена; не раздувайте её до полноценного хиро",
@@ -347,7 +363,6 @@
           ],
           "adapt": [
             "title и hint — заголовок ленты и строка-подсказка под ним",
-            "buttonLabel, placeholder и success — подписи формы и сообщение успеха",
             "акцент через проп accent — перекрасит тинт ленты, кнопку и фокусные кольца",
             "background — фон вокруг ленты; пусто — лента лежит прямо на странице",
             "внешние отступы через className: блок занимает ширину родителя"
@@ -383,10 +398,11 @@
           "en": {
             "title": "Signup Strip",
             "description": "A narrow horizontal strip for mid-landing placement: copy on the left, an inline form on the right, a warm tint mixed from the accent. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-003-* variables. A client component: submit is stubbed out, aria-live shows a success line. The strip is tinted warm via color-mix from the accent — the background recomputes itself when accent changes. The layout follows the block's own width: everything stacks in a narrow column, the form becomes a row at 30rem, and the whole strip goes horizontal at 46rem. The strip is meant to sit between content sections, hence the small vertical padding.",
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-subscribe-003-* variables. A client component: submit is stubbed out, aria-live shows a success line. The strip is tinted warm via color-mix from the accent — the background recomputes itself when accent changes. The layout follows the block's own width: everything stacks in a narrow column, the form becomes a row at 30rem, and the whole strip goes horizontal at 46rem. The strip is meant to sit between content sections, hence the small vertical padding.",
             "ai": {
               "summary": "A narrow signup strip for the middle of a landing page: a heading with a hint on the left, an inline email form on the right, a warm accent-tinted surface. It sits between sections where the reader is already warmed up. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-subscribe-003-* palette — do not swap it for your theme tokens",
                 "the strip's warm tint mixed from the accent via color-mix: the background and border recompute when accent changes, do not freeze them as hex codes",
                 "the strip's low height — it is a pause between sections, not a scene of its own; do not inflate it into a full hero",
@@ -396,7 +412,6 @@
               ],
               "adapt": [
                 "title and hint — the strip heading and the hint line under it",
-                "buttonLabel, placeholder and success — the form captions and the success message",
                 "the accent through the accent prop — it recolours the strip tint, the button and the focus rings",
                 "background — the background around the strip; empty means the strip sits right on the page",
                 "outer spacing through className: the block fills its parent's width"
@@ -448,7 +463,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "subscribe-004/subscribe-004.tsx",
@@ -456,14 +475,15 @@
           "target": "@components/vibeui/subscribe-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-004-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Темы — настоящие <input type=\"checkbox\"> внутри чипов-«лейблов», сгруппированные в <fieldset> с <legend>: клавиатура и скринридер работают как с обычной формой. Выбранное состояние рисует CSS-селектор :has() без единой строки JS; галочка занимает место всегда, поэтому чипы не прыгают по ширине. Раскладка от собственной ширины блока, тема — через light-dark().",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-subscribe-004-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Темы — настоящие <input type=\"checkbox\"> внутри чипов-«лейблов», сгруппированные в <fieldset> с <legend>: клавиатура и скринридер работают как с обычной формой. Выбранное состояние рисует CSS-селектор :has() без единой строки JS; галочка занимает место всегда, поэтому чипы не прыгают по ширине. Раскладка от собственной ширины блока, тема — через light-dark().",
       "meta": {
         "tags": [
           "newsletter",
           "topics",
           "checkbox",
           "preferences",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -473,6 +493,7 @@
           "usage": "<Subscribe004\n  title=\"Соберите свой дайджест\"\n  topics={[{ label: \"Продукт\", on: true }, { label: \"Дизайн\" }, { label: \"Релизы\" }]}\n/>",
           "summary": "Секция подписки с выбором тем: чипы-чекбоксы (продукт, дизайн, релизы) над полем e-mail и акцентной кнопкой. Выбор тем обещает присылать только нужное и снимает страх «завалят письмами». Чекбоксы настоящие, состояние рисует :has() без JS. Бэкенда нет — submit-заглушка. Один файл, ноль зависимостей.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-subscribe-004-* — не заменять её токенами темы сайта",
             "настоящие <input type=\"checkbox\"> внутри чипов: клавиатура и скринридер работают без единой строки JS",
             ":has() для состояния чипа — не переписывать на useState, состояние уже живёт в самом чекбоксе",
@@ -484,7 +505,6 @@
           "adapt": [
             "title и lead — заголовок и подводка",
             "topics — список тем: label и стартовое состояние on у каждой",
-            "topicsLabel, note, success, buttonLabel и placeholder — подписи формы",
             "акцент через проп accent — перекрасит чипы, кнопку и фокусные кольца",
             "background — подложка блока; пусто — блок лежит на фоне страницы"
           ],
@@ -520,10 +540,11 @@
           "en": {
             "title": "Signup with Topic Picker",
             "description": "A signup form with checkbox chips for topics — product, design, releases: a promise to send only what was chosen. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-004-* variables. A client component: submit is stubbed out, aria-live shows a success line. The topics are real <input type=\"checkbox\"> elements inside chip labels, grouped in a <fieldset> with a <legend>: keyboard and screen reader work as with a plain form. The checked state is painted by the CSS :has() selector without a single line of JS; the tick always occupies its slot, so chips never jump in width. The layout follows the block's own width, the theme comes via light-dark().",
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-subscribe-004-* variables. A client component: submit is stubbed out, aria-live shows a success line. The topics are real <input type=\"checkbox\"> elements inside chip labels, grouped in a <fieldset> with a <legend>: keyboard and screen reader work as with a plain form. The checked state is painted by the CSS :has() selector without a single line of JS; the tick always occupies its slot, so chips never jump in width. The layout follows the block's own width, the theme comes via light-dark().",
             "ai": {
               "summary": "A signup section with a topic picker: checkbox chips (product, design, releases) above an email field and an accent button. Choosing topics promises to send only what matters and removes the «they will flood me» fear. The checkboxes are real, the state is painted by :has() without JS. No backend — the submit is stubbed. One file, zero dependencies.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-subscribe-004-* palette — do not swap it for your theme tokens",
                 "the real <input type=\"checkbox\"> elements inside the chips: keyboard and screen reader work without a single line of JS",
                 ":has() for the chip state — do not rewrite it with useState, the state already lives in the checkbox itself",
@@ -535,7 +556,6 @@
               "adapt": [
                 "title and lead — the heading and the lead",
                 "topics — the topic list: each item's label and initial on state",
-                "topicsLabel, note, success, buttonLabel and placeholder — the form captions",
                 "the accent through the accent prop — it recolours the chips, the button and the focus rings",
                 "background — the block surface; empty means the block sits on the page background"
               ],
@@ -602,7 +622,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "subscribe-005/subscribe-005.tsx",
@@ -610,14 +634,15 @@
           "target": "@components/vibeui/subscribe-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-005-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Стопка аватаров собрана из инициалов имён (readers): фото не нужны, стоковые лица рушат доверие. Каждый аватар получает свой тинт из одного акцента через color-mix и кольцо в цвет подложки, которое разрезает стопку на отдельные головы. Число набрано tabular-nums и подкрашено акцент-цветом. Раскладка от собственной ширины блока, тема — через light-dark().",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-subscribe-005-*. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Стопка аватаров собрана из инициалов имён (readers): фото не нужны, стоковые лица рушат доверие. Каждый аватар получает свой тинт из одного акцента через color-mix и кольцо в цвет подложки, которое разрезает стопку на отдельные головы. Число набрано tabular-nums и подкрашено акцент-цветом. Раскладка от собственной ширины блока, тема — через light-dark().",
       "meta": {
         "tags": [
           "newsletter",
           "social proof",
           "avatars",
           "signup",
-          "form"
+          "form",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -627,6 +652,7 @@
           "usage": "<Subscribe005\n  count=\"12 400\"\n  proof=\"подписчиков уже получают письмо о новых блоках\"\n/>",
           "summary": "Секция подписки с социальным доказательством: стопка аватаров-инициалов, строка «12 400 подписчиков», заголовок и форма e-mail с акцентной кнопкой. Число отвечает на вопрос «а читает ли это кто-то» до ввода адреса. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-subscribe-005-* — не заменять её токенами темы сайта",
             "инициалы вместо фотографий: стоковые лица рушат доверие, которое число только что построило",
             "число подписчиков рядом с формой — оно и есть аргумент блока; без него это обычная центрированная подписка",
@@ -639,7 +665,6 @@
             "count и proof — число и подпись; пишите настоящее число: выдуманное социальное доказательство хуже его отсутствия",
             "title — заголовок секции",
             "readers — имена для инициалов в стопке; достаточно четырёх-шести",
-            "buttonLabel, placeholder, note и success — подписи формы",
             "акцент через accent, подложка через background"
           ],
           "notes": [
@@ -674,10 +699,11 @@
           "en": {
             "title": "Signup with Social Count",
             "description": "A signup form with social proof: a stack of initials avatars and «12,400 subscribers» above the heading. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-005-* variables. A client component: submit is stubbed out, aria-live shows a success line. The avatar stack is built from the initials of names (readers): no photos needed — stock faces destroy trust. Each avatar gets its own tint from the single accent via color-mix and a ring in the surface colour that cuts the stack into separate heads. The count is set in tabular-nums and coloured with the accent. The layout follows the block's own width, the theme comes via light-dark().",
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-subscribe-005-* variables. A client component: submit is stubbed out, aria-live shows a success line. The avatar stack is built from the initials of names (readers): no photos needed — stock faces destroy trust. Each avatar gets its own tint from the single accent via color-mix and a ring in the surface colour that cuts the stack into separate heads. The count is set in tabular-nums and coloured with the accent. The layout follows the block's own width, the theme comes via light-dark().",
             "ai": {
               "summary": "A signup section with social proof: a stack of initials avatars, a «12,400 subscribers» line, a heading and an email form with an accent button. The number answers «does anyone actually read this» before an address is typed. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-subscribe-005-* palette — do not swap it for your theme tokens",
                 "initials instead of photographs: stock faces destroy the trust the number has just built",
                 "the subscriber count next to the form — it is the block's argument; without it this is a plain centered signup",
@@ -690,7 +716,6 @@
                 "count and proof — the number and its caption; use a real number: invented social proof is worse than none",
                 "title — the section heading",
                 "readers — the names behind the stacked initials; four to six is enough",
-                "buttonLabel, placeholder, note and success — the form captions",
                 "the accent through accent, the surface through background"
               ],
               "notes": [
@@ -750,7 +775,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "subscribe-006/subscribe-006.tsx",
@@ -758,14 +787,15 @@
           "target": "@components/vibeui/subscribe-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, палитра в локальных переменных --vibeui-subscribe-006-*. Карточка осознанно не следует теме страницы: у неё собственная почти чёрная подложка без light-dark(), а акцентное свечение собрано из двух radial-gradient через color-mix от акцента — при смене accent оно пересчитывается само. Внутри карточки принудительный color-scheme: dark, чтобы нативные поля темнели вместе с ней на светлой странице. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка от собственной ширины блока.",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, палитра в локальных переменных --vibeui-subscribe-006-*. Карточка осознанно не следует теме страницы: у неё собственная почти чёрная подложка без light-dark(), а акцентное свечение собрано из двух radial-gradient через color-mix от акцента — при смене accent оно пересчитывается само. Внутри карточки принудительный color-scheme: dark, чтобы нативные поля темнели вместе с ней на светлой странице. Клиентский компонент: submit гасится заглушкой, aria-live показывает строку успеха. Раскладка от собственной ширины блока.",
       "meta": {
         "tags": [
           "newsletter",
           "dark",
           "card",
           "glow",
-          "signup"
+          "signup",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -775,6 +805,7 @@
           "usage": "<Subscribe006\n  title=\"Письма, после которых открывают редактор\"\n  note=\"Без спама. Отписка в один клик.\"\n/>",
           "summary": "Компактная тёмная карточка подписки: бейдж, заголовок, форма e-mail и акцентное градиент-свечение из угла. Карточка несёт собственную тёмную подложку и потому одинаково выделяется на светлой и тёмной странице. Бэкенда нет — submit-заглушка. Один файл, своя палитра, ноль зависимостей.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-subscribe-006-* — не заменять её токенами темы сайта",
             "осознанно собственную тёмную подложку карточки: она не следует теме страницы, в этом идея блока — не переводить её на light-dark()",
             "color-scheme: dark на карточке — без него нативные поля на светлой странице остались бы светлыми и разорвали картинку",
@@ -785,7 +816,6 @@
           ],
           "adapt": [
             "eyebrow, title и lead — бейдж, заголовок и подводка карточки",
-            "buttonLabel, placeholder, note и success — подписи формы и сообщение успеха",
             "акцент через проп accent — перекрасит кнопку, бейдж и свечение разом",
             "background — фон вокруг карточки; пусто — карточка лежит прямо на странице",
             "внешние отступы через className: блок занимает ширину родителя"
@@ -829,10 +859,11 @@
           "en": {
             "title": "Dark Signup Card",
             "description": "A compact dark panel with an accent gradient glow from the corner: its own surface makes the signup stand out on any page background. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its palette in local --vibeui-subscribe-006-* variables. The card deliberately does not follow the page theme: it carries its own near-black surface without light-dark(), and the accent glow is built from two radial-gradients via color-mix from the accent — it recomputes itself when accent changes. Inside the card color-scheme: dark is forced so native fields darken with it on a light page. A client component: submit is stubbed out, aria-live shows a success line. The layout follows the block's own width.",
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its palette in local --vibeui-subscribe-006-* variables. The card deliberately does not follow the page theme: it carries its own near-black surface without light-dark(), and the accent glow is built from two radial-gradients via color-mix from the accent — it recomputes itself when accent changes. Inside the card color-scheme: dark is forced so native fields darken with it on a light page. A client component: submit is stubbed out, aria-live shows a success line. The layout follows the block's own width.",
             "ai": {
               "summary": "A compact dark signup card: a badge, a heading, an email form and an accent gradient glow from the corner. The card carries its own dark surface and therefore stands out equally on light and dark pages. No backend — the submit is stubbed. One file, its own palette, zero dependencies.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-subscribe-006-* palette — do not swap it for your theme tokens",
                 "the card's deliberately own dark surface: it does not follow the page theme, that is the block's idea — do not port it to light-dark()",
                 "color-scheme: dark on the card — without it native fields on a light page would stay light and break the picture",
@@ -843,7 +874,6 @@
               ],
               "adapt": [
                 "eyebrow, title and lead — the card's badge, heading and lead",
-                "buttonLabel, placeholder, note and success — the form captions and the success message",
                 "the accent through the accent prop — it recolours the button, the badge and the glow at once",
                 "background — the background around the card; empty means the card sits right on the page",
                 "outer spacing through className: the block fills its parent's width"
@@ -903,7 +933,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "select-001",
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "subscribe-007/subscribe-007.tsx",
@@ -922,7 +956,8 @@
           "cafe",
           "notification",
           "kraft",
-          "signup"
+          "signup",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -935,6 +970,7 @@
           "usage": "<Subscribe007\n  title=\"Напишем, когда выйдет ваш хлеб\"\n  texture=\"/photos/bag.webp\"\n  options={[\n    { id: \"tartine\", label: \"Тартин\", time: \"08:25\", note: \"36 часов, как положено\" },\n    { id: \"croissant\", label: \"Круассан\", time: \"06:55\", note: \"первая партия\" },\n  ]}\n/>",
           "summary": "Подписка с конкретной пользой — «напишем, когда выйдет ваш хлеб»: выбор позиции, контакт, живая строка со временем. Для пекарни, кофейни, лавки.",
           "preserve": [
+            "импорты select-001, input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "строка whenLine подставляет {time} и {note} выбранного варианта без отправки формы",
             "пакет — фон крафт-цвета с необязательной фактурой texture, линия отрыва ::before и полосы ::after",
             "после отправки форма заменяется подтверждением с кнопкой «добавить ещё»"
@@ -1000,6 +1036,7 @@
             "ai": {
               "summary": "A signup with a concrete benefit — “we'll text when your bread is out”: an item pick, a contact, a live time line. For a bakery, café or deli.",
               "preserve": [
+                "the select-001, input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the whenLine string substitutes {time} and {note} of the chosen option without submitting",
                 "the bag is a kraft-coloured background with an optional texture image, a ::before tear line and ::after stripes",
                 "after submit the form is replaced with a confirmation and an “add another” button"
@@ -1088,10 +1125,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports select-001, input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует select-001, input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "subscribe-008",
@@ -1102,7 +1141,10 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-003"
+      ],
       "files": [
         {
           "path": "subscribe-008/subscribe-008.tsx",
@@ -1120,7 +1162,8 @@
           "form",
           "signup",
           "letter",
-          "flip"
+          "flip",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -1131,6 +1174,7 @@
           "usage": "<Subscribe008\n  title=\"После каждого выпуска — письмо\"\n  inside={[\"три цитаты, которые не вошли в эфир\", \"ссылка на полную версию\"]}\n  promise=\"раз в неделю · после выпуска\"\n/>",
           "summary": "Подписка на письмо для подкаста, автора, медиа: одно поле, честное «что внутри» и переворот в «записали».",
           "preserve": [
+            "импорты input-001, button-003 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "переворот — форма rotateX(90deg) и подтверждение из rotateX(-90deg) с задержкой .25s, perspective на карточке",
             "кнопка подсвечивается box-shadow при form:focus-within",
             "мягкое пятно акцента в углу карточки — radial-gradient с blur"
@@ -1196,6 +1240,7 @@
             "ai": {
               "summary": "A letter signup for a podcast, author or media: one field, an honest “what's inside” and a flip into “noted”.",
               "preserve": [
+                "the input-001, button-003 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the flip is the form at rotateX(90deg) and the confirmation from rotateX(-90deg) with a .25s delay, perspective on the card",
                 "the button glows with box-shadow on form:focus-within",
                 "a soft accent blob in the card corner — radial-gradient with blur"
@@ -1245,10 +1290,12 @@
                 "doneTitle": "Noted",
                 "doneText": "The first letter arrives next Thursday, right after the release."
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-003 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-003 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "subscribe-011",
@@ -1259,7 +1306,10 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "subscribe-011/subscribe-011.tsx",
@@ -1278,7 +1328,8 @@
           "receipt",
           "chips",
           "form",
-          "recurring"
+          "recurring",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -1289,6 +1340,7 @@
           "usage": "<Subscribe011\n  title=\"Цветы по подписке — сезонные, без повторов\"\n  frequencies={[{ label: \"Каждую неделю\", perMonth: 4, discount: 20 }, { label: \"Раз в месяц\", perMonth: 1, discount: 5 }]}\n  sizes={[{ label: \"Средний\", price: 2900, stems: \"9–12 стеблей\" }]}\n/>",
           "summary": "Подписка с выбором частоты и размера и живым расчётом — для цветов, кофе, еды, любой регулярной доставки.",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "чипы — label[data-part=chip] с невидимым input type=radio, выбранный — data-on=true с заливкой цветом текста; фокус через :has(input:focus-visible)",
             "цена за доставку = price × (100 − discount) / 100, округлённая до 10; сумма в месяц = perDelivery × perMonth, tabular-nums",
             "зубчатый край — ::before с radial-gradient цвета фона поверх верхней кромки; после submit — done с галочкой stroke-dashoffset"
@@ -1370,6 +1422,7 @@
             "ai": {
               "summary": "A subscription with frequency and size choice and a live calculation — for flowers, coffee, food, any recurring delivery.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "chips are label[data-part=chip] with a hidden input type=radio, the chosen one is data-on=true filled with the text colour; focus via :has(input:focus-visible)",
                 "price per delivery = price × (100 − discount) / 100 rounded to 10; monthly = perDelivery × perMonth, tabular-nums",
                 "the scalloped edge is a ::before with a background-coloured radial-gradient over the top edge; after submit — done with a stroke-dashoffset tick"
@@ -1460,10 +1513,12 @@
                 "doneTitle": "Noted",
                 "doneText": "We'll call today to confirm the address and the day. The first bouquet is on us."
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "subscribe-020",
@@ -1474,7 +1529,10 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001"
+      ],
       "files": [
         {
           "path": "subscribe-020/subscribe-020.tsx",
@@ -1494,7 +1552,8 @@
           "frequency",
           "form",
           "floating label",
-          "serif"
+          "serif",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -1505,13 +1564,13 @@
           "usage": "<Subscribe020\n  title=\"Письма читателям\"\n  frequencies={[{ name: \"Раз в неделю\", promise: \"Каждое воскресенье, короткое.\" }, { name: \"Раз в месяц\", promise: \"Первого числа, длинное.\" }]}\n  letterSubject=\"Про окно, которое не мыли с весны\"\n/>",
           "summary": "Подписка на письма для писателя, редакции или подкаста: выбор частоты, одно поле, конверт, который открывается.",
           "preserve": [
+            "импорты input-001, button-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "конверт — button[data-part=envelope] с perspective; слои: back, letter (z1), pocket (z2, clip-path треугольного кармана), flap (z3, rotateX 0 → −170deg от верхнего края), seal; на :hover и [aria-pressed=true] letter уезжает translateY(−46%), у scene padding-top под выезжающий лист",
             "плавающий ярлык — input с placeholder=\" \" и label после него: :focus-visible + label и :not(:placeholder-shown) + label поднимают его",
             "успех — svg с circle и path через stroke-dasharray/dashoffset, вторая линия с задержкой .6s; частота подставляется в текст «письмо уже в пути»"
           ],
           "adapt": [
             "eyebrow, title, lede, frequencies: name, promise",
-            "placeholder, actionLabel, fine, doneTitle, doneText",
             "letterDate, letterSubject, letterText, letterHref, letterHrefLabel",
             "tone — тема",
             "invert — идти против темы сайта: ночью бумага, днём графит",
@@ -1578,13 +1637,13 @@
             "ai": {
               "summary": "A letter subscription for a writer, editorial team or podcast: a frequency choice, one field, an envelope that opens.",
               "preserve": [
+                "the input-001, button-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the envelope is button[data-part=envelope] with perspective; layers: back, letter (z1), pocket (z2, a triangular clip-path pocket), flap (z3, rotateX 0 → −170deg from the top edge), seal; on :hover and [aria-pressed=true] the letter moves translateY(−46%), scene has padding-top for the emerging sheet",
                 "the floating label is an input with placeholder=\" \" and a label after it: :focus-visible + label and :not(:placeholder-shown) + label lift it",
                 "success is an svg circle and path via stroke-dasharray/dashoffset, the second line delayed .6s; the frequency is inserted into the “on its way” text"
               ],
               "adapt": [
                 "eyebrow, title, lede, frequencies: name, promise",
-                "placeholder, actionLabel, fine, doneTitle, doneText",
                 "letterDate, letterSubject, letterText, letterHref, letterHrefLabel",
                 "tone — theme",
                 "invert — go against the site theme: paper at night, graphite by day",
@@ -1644,10 +1703,12 @@
                 ],
                 "letterHrefLabel": "Letter archive →"
               }
-            }
+            },
+            "docs": "A composite block: imports input-001, button-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует input-001, button-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "waitlist-001",
@@ -1658,7 +1719,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "waitlist-001/waitlist-001.tsx",
@@ -1666,14 +1731,15 @@
           "target": "@components/vibeui/waitlist-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-001-*. Клиентский компонент: отправка формы — заглушка, по submit поле сменяется сообщением об успехе через состояние. Счётчик под формой подтверждает живость списка. Сообщение выводится с role=\"status\".",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-001-*. Клиентский компонент: отправка формы — заглушка, по submit поле сменяется сообщением об успехе через состояние. Счётчик под формой подтверждает живость списка. Сообщение выводится с role=\"status\".",
       "meta": {
         "tags": [
           "waitlist",
           "signup",
           "early-access",
           "email",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1684,6 +1750,7 @@
           "usage": "<Waitlist001\n  title=\"Список ожидания\"\n  count={2400}\n  countNote=\"уже в очереди\"\n/>",
           "summary": "Форма раннего доступа со счётчиком записавшихся: почта, кнопка и подпись о числе уже в очереди. Отправка — заглушка без бэкенда, по submit поле сменяется сообщением об успехе с role=status. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-waitlist-001-* и не подменять её токенами вашей темы",
             "смену формы на сообщение об успехе через состояние — это подтверждение записи",
             "role=\"status\" у сообщения — успех объявляется скринридеру",
@@ -1691,7 +1758,6 @@
           ],
           "adapt": [
             "eyebrow, title и summary — надзаголовок, заголовок и подводку",
-            "placeholder, ctaLabel, successNote — тексты поля, кнопки и успеха",
             "count и countNote — число записавшихся и подпись",
             "акцент через проп accent — кнопка, счётчик и надзаголовок"
           ],
@@ -1741,6 +1807,7 @@
             "ai": {
               "summary": "An early-access form with a signup counter: email, button and a note about how many are already in line. Submission is a backend-less stub; on submit the field turns into a success message with role=status. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-waitlist-001-* palette — do not swap it for your theme tokens",
                 "swapping the form for a success message via state — that's the signup confirmation",
                 "role=\"status\" on the message — success is announced to screen readers",
@@ -1748,7 +1815,6 @@
               ],
               "adapt": [
                 "eyebrow, title and summary — the eyebrow, heading and lead-in",
-                "placeholder, ctaLabel, successNote — the field, button and success texts",
                 "count and countNote — the signup number and its note",
                 "the accent via the accent prop — button, counter and eyebrow"
               ],
@@ -1776,7 +1842,7 @@
               }
             },
             "title": "Early Access",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-waitlist-001-* variables. A client component: form submission is a stub, on submit the field turns into a success message via state. The counter below confirms the list is live. The message uses role=\"status\"."
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-waitlist-001-* variables. A client component: form submission is a stub, on submit the field turns into a success message via state. The counter below confirms the list is live. The message uses role=\"status\"."
           }
         }
       }
@@ -1790,7 +1856,11 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "input-001",
+        "button-001",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "waitlist-002/waitlist-002.tsx",
@@ -1798,14 +1868,15 @@
           "target": "@components/vibeui/waitlist-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-002-*. Клиентский компонент (форма гасит submit). Отсчёт — статичные плитки из пропса units, без JS-тикания: реальный таймер подключает приложение. Цифры моноширинные, единицы подписаны.",
+      "docs": "Составной блок: импортирует input-001, button-001, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-002-*. Клиентский компонент (форма гасит submit). Отсчёт — статичные плитки из пропса units, без JS-тикания: реальный таймер подключает приложение. Цифры моноширинные, единицы подписаны.",
       "meta": {
         "tags": [
           "waitlist",
           "countdown",
           "coming-soon",
           "launch",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1816,6 +1887,7 @@
           "usage": "<Waitlist002\n  title=\"Мы почти готовы\"\n  units={[{ value: \"12\", label: \"дней\" }]}\n/>",
           "summary": "Экран «скоро запуск» с отсчётом до даты на плитках дни-часы-минуты и формой записи ниже. Цифры отсчёта — статичные пропсы, без JS-тикания. Формат первого экрана продукта до релиза. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты input-001, button-001, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-waitlist-002-* и не подменять её токенами вашей темы",
             "статичность отсчёта: цифры приходят пропсом, тиканье подключает приложение",
             "моноширинные цифры и подписи единиц на плитках",
@@ -1824,7 +1896,6 @@
           "adapt": [
             "eyebrow, title и summary — надзаголовок, заголовок и подводку",
             "массив units — значение и подпись каждой плитки отсчёта",
-            "placeholder и ctaLabel — тексты поля и кнопки",
             "акцент через проп accent — цифры отсчёта и кнопка"
           ],
           "notes": [
@@ -1873,6 +1944,7 @@
             "ai": {
               "summary": "A coming-soon screen with a countdown to the date on day-hour-minute tiles and a signup form below. Countdown digits are static props, no JS ticking. A pre-launch first-screen format. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the input-001, button-001, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-waitlist-002-* palette — do not swap it for your theme tokens",
                 "the static countdown: digits arrive as props, ticking is wired by the app",
                 "the monospace digits and unit labels on the tiles",
@@ -1881,7 +1953,6 @@
               "adapt": [
                 "eyebrow, title and summary — the eyebrow, heading and lead-in",
                 "the units array — value and label of each countdown tile",
-                "placeholder and ctaLabel — the field and button texts",
                 "the accent via the accent prop — the countdown digits and the button"
               ],
               "notes": [
@@ -1908,7 +1979,7 @@
               }
             },
             "title": "Coming Soon Countdown",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-waitlist-002-* variables. A client component (the form suppresses submit). The countdown is static tiles from the units prop, no JS ticking: a real timer is wired by the app. Digits are monospace, units are labelled."
+            "docs": "A composite block: imports input-001, button-001, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-waitlist-002-* variables. A client component (the form suppresses submit). The countdown is static tiles from the units prop, no JS ticking: a real timer is wired by the app. Digits are monospace, units are labelled."
           }
         }
       }
@@ -1922,7 +1993,10 @@
         "newsletter"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-015",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "waitlist-003/waitlist-003.tsx",
@@ -1930,14 +2004,15 @@
           "target": "@components/vibeui/waitlist-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-003-*. Серверный компонент. Прогресс считается от (total - position) / total и выражается шириной заливки, у полосы role=\"progressbar\" с aria-valuenow. Ниже — реферальный код в пунктирной рамке с кнопкой копирования.",
+      "docs": "Составной блок: импортирует button-015, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-waitlist-003-*. Серверный компонент. Прогресс считается от (total - position) / total и выражается шириной заливки, у полосы role=\"progressbar\" с aria-valuenow. Ниже — реферальный код в пунктирной рамке с кнопкой копирования.",
       "meta": {
         "tags": [
           "waitlist",
           "queue",
           "referral",
           "position",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1948,6 +2023,7 @@
           "usage": "<Waitlist003\n  position={1284}\n  total={5000}\n  referralCode=\"VIBE-1284\"\n/>",
           "summary": "Экран после записи в лист ожидания: позиция в очереди крупной цифрой, полоса прогресса до начала списка и реферальный код с кнопкой копирования. Прогресс считается от position и total. Мотивирует делиться ссылкой. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-015, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-waitlist-003-* и не подменять её токенами вашей темы",
             "расчёт прогресса от (total - position) / total и role=\"progressbar\" с aria-valuenow",
             "реферальный код в пунктирной рамке с кнопкой — это мотив делиться",
@@ -2006,6 +2082,7 @@
             "ai": {
               "summary": "A post-signup waitlist screen: queue position in a large number, a progress bar to the front of the list and a referral code with a copy button. Progress is computed from position and total. It nudges sharing. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-015, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-waitlist-003-* palette — do not swap it for your theme tokens",
                 "computing progress from (total - position) / total and role=\"progressbar\" with aria-valuenow",
                 "the referral code in a dashed frame with a button — that's the share nudge",
@@ -2042,7 +2119,7 @@
               }
             },
             "title": "Queue Position",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-waitlist-003-* variables. A server component. Progress is computed from (total - position) / total and expressed as fill width, the bar has role=\"progressbar\" with aria-valuenow. Below is a referral code in a dashed frame with a copy button."
+            "docs": "A composite block: imports button-015, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-waitlist-003-* variables. A server component. Progress is computed from (total - position) / total and expressed as fill width, the bar has role=\"progressbar\" with aria-valuenow. Below is a referral code in a dashed frame with a copy button."
           }
         }
       }

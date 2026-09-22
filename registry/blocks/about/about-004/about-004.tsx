@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react"
 
+import { Card025 } from "@/registry/components/card/card-025/card-025"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 type About004Stat = {
   value: string
   label: string
@@ -23,7 +26,9 @@ export type About004Props = {
 // справа. Цифры оранжевые и табличные — колонка читается как сводка, а не как
 // декор. Метрики свёрстаны списком определений <dl>: пара «значение — что это»
 // остаётся парой и для скринридера.
-const STYLES = `
+const STYLES = `[data-vibeui-block="about-004"] [data-part="heading"]{margin-bottom:1.25rem}
+
+[data-vibeui-block="about-004"] [data-part="figure"]{margin-top:1.5rem}
 :where([data-vibeui-block="about-004"]){
 --vibeui-about-004-bg:transparent;
 --vibeui-about-004-ink:light-dark(oklch(0.17 0 0),oklch(0.97 0 0));
@@ -43,23 +48,8 @@ min-width:min(100%,16rem);
 display:block;background:var(--vibeui-about-004-bg);color:var(--vibeui-about-004-ink);
 font-family:var(--vibeui-about-004-font);
 }
-[data-vibeui-block="about-004"] [data-part="figure"]{
-position:relative;overflow:hidden;aspect-ratio:16 / 9;
-margin-top:1.5rem;border-radius:0.875rem;
-}
-[data-vibeui-block="about-004"] [data-part="figure"] img{
-display:block;width:100%;height:100%;object-fit:cover;
-}
 [data-vibeui-block="about-004"] [data-part="shell"]{
 max-width:72rem;margin:0 auto;padding:3.5rem 1.25rem;
-}
-[data-vibeui-block="about-004"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-about-004-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="about-004"] [data-part="title"]{
-margin:0 0 1.25rem;max-width:20ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="about-004"] [data-part="paragraph"]{
 margin:0 0 1rem;max-width:56ch;color:var(--vibeui-about-004-muted);
@@ -164,8 +154,12 @@ export function About004({
       >
         <div data-part="shell">
           <div data-part="story">
-            <p data-part="eyebrow">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              accent={accent}
+            />
             {paragraphs.map((paragraph, index) => (
               <p key={index} data-part="paragraph">
                 {paragraph}
@@ -182,9 +176,7 @@ export function About004({
           </dl>
 
           {image ? (
-            <figure data-part="figure">
-              <img src={image} alt="" loading="lazy" decoding="async" />
-            </figure>
+            <Card025 data-part="figure" src={image} alt="" ratio="16/9" accent={accent} />
           ) : null}
         </div>
       </section>

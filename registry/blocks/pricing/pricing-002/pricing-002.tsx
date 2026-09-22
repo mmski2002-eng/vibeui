@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing002Plan = {
   name: string
@@ -76,19 +79,9 @@ box-sizing:border-box;background:var(--vibeui-pricing-002-bg);color:var(--vibeui
 font-family:var(--vibeui-pricing-002-sans);
 }
 [data-vibeui-block="pricing-002"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-002"] [data-part="cta"]{margin-top:1.5rem}
 [data-vibeui-block="pricing-002"] [data-part="shell"]{max-width:70rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem}
 [data-vibeui-block="pricing-002"] [data-part="head"]{max-width:36rem;margin:0 auto 2.25rem;text-align:center}
-[data-vibeui-block="pricing-002"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-002-accent);
-}
-[data-vibeui-block="pricing-002"] h2{
-margin:0;font-size:clamp(1.5rem,4.2cqi,2.375rem);line-height:1.12;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-002"] [data-part="lede"]{
-margin:0.875rem 0 0;font-size:clamp(0.9375rem,1.3cqi,1.0625rem);line-height:1.6;
-color:var(--vibeui-pricing-002-muted);text-wrap:pretty;
-}
 [data-vibeui-block="pricing-002"] [data-part="plans"]{
 list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:1rem;align-items:stretch;
 }
@@ -121,7 +114,6 @@ height:2.75rem;border-radius:0.625rem;font-size:0.9375rem;font-weight:650;text-d
 border:1px solid var(--vibeui-pricing-002-line);color:var(--vibeui-pricing-002-fg);
 transition:background-color var(--vibeui-pricing-002-dur-2) ease,border-color var(--vibeui-pricing-002-dur-2) ease,color var(--vibeui-pricing-002-dur-2) ease;
 }
-[data-vibeui-block="pricing-002"] [data-part="cta"]{margin-top:1.5rem}
 [data-vibeui-block="pricing-002"] a:hover{border-color:var(--vibeui-pricing-002-fg)}
 [data-vibeui-block="pricing-002"] [data-featured="true"] a{
 background:var(--vibeui-pricing-002-accent);color:oklch(from var(--vibeui-pricing-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent;
@@ -219,9 +211,14 @@ export function Pricing002({
       >
         <div data-part="shell">
           <div data-part="head">
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2>{title}</h2>
-            {lede ? <p data-part="lede">{lede}</p> : null}
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={lede}
+              align="center"
+              accent={accent}
+            />
           </div>
 
           <ul data-part="plans">
@@ -259,9 +256,15 @@ export function Pricing002({
                     </li>
                   ))}
                 </ul>
-                <a data-part="cta" href={plan.action.href}>
-                  {plan.action.label}
-                </a>
+                <Button016
+                  data-part="cta"
+                  label={plan.action.label}
+                  href={plan.action.href}
+                  external={false}
+                  size="lg"
+                  tone={plan.featured ? "accent" : "neutral"}
+                  accent={accent}
+                />
               </li>
             ))}
           </ul>

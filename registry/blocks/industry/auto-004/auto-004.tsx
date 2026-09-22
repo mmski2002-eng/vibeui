@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react"
+import { Button084 } from "@/registry/components/button/button-084/button-084"
 
 export type Auto004Order = {
   services: string[]
@@ -94,14 +95,6 @@ container-type:inline-size;
 [data-vibeui-block="auto-004"] [data-part="day"] b{font-family:var(--vibeui-auto-004-display);font-weight:700;font-size:1.1rem;letter-spacing:-.02em;color:var(--vibeui-auto-004-fg)}
 [data-vibeui-block="auto-004"] [data-part="day"][data-today="true"] b{color:var(--vibeui-auto-004-accent)}
 [data-vibeui-block="auto-004"] [data-part="hour"]{display:flex;align-items:center;font-family:var(--vibeui-auto-004-mono);font-size:.75rem;color:var(--vibeui-auto-004-muted)}
-[data-vibeui-block="auto-004"] [data-part="slot"]{position:relative;height:2.6rem;border-radius:.6rem;border:1px solid var(--vibeui-auto-004-line);background:transparent;color:var(--vibeui-auto-004-fg);font:inherit;font-size:.78rem;font-weight:500;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
-[data-vibeui-block="auto-004"] [data-part="slot"]:hover{border-color:var(--vibeui-auto-004-accent);transform:translateY(-1px)}
-[data-vibeui-block="auto-004"] [data-part="slot"][data-state="busy"],[data-vibeui-block="auto-004"] [data-part="slot"][data-state="past"],[data-vibeui-block="auto-004"] [data-part="slot"][data-state="closed"]{cursor:not-allowed;color:var(--vibeui-auto-004-muted);border-style:dashed;transform:none}
-[data-vibeui-block="auto-004"] [data-part="slot"][data-state="busy"]::after{content:"";position:absolute;left:.6rem;right:.6rem;top:50%;height:1px;background:currentColor;transform:rotate(-12deg)}
-[data-vibeui-block="auto-004"] [data-part="slot"][data-state="past"],[data-vibeui-block="auto-004"] [data-part="slot"][data-state="closed"]{opacity:.35;border-color:transparent;background:var(--vibeui-auto-004-glass)}
-[data-vibeui-block="auto-004"] [data-part="slot"][data-state="skeleton"]{background:var(--vibeui-auto-004-glass);border-color:transparent;cursor:default;animation:vibeui-auto-004-pulse 1.4s ease-in-out infinite}
-[data-vibeui-block="auto-004"] [data-part="slot"][aria-pressed="true"]{background:var(--vibeui-auto-004-accent);border-color:var(--vibeui-auto-004-accent);color:var(--vibeui-auto-004-on-accent);font-weight:700;box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-auto-004-accent) 25%,transparent)}
-[data-vibeui-block="auto-004"] [data-part="slot"]:focus-visible{outline:2px solid var(--vibeui-auto-004-accent);outline-offset:2px}
 [data-vibeui-block="auto-004"] [data-part="legend"]{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;margin:.9rem 0 0;padding:0;list-style:none;font-family:var(--vibeui-auto-004-mono);font-size:.7rem;color:var(--vibeui-auto-004-muted)}
 [data-vibeui-block="auto-004"] [data-part="legend"] li{display:inline-flex;align-items:center;gap:.4rem}
 [data-vibeui-block="auto-004"] [data-part="legend"] i{width:.9rem;height:.9rem;border-radius:.25rem;border:1px solid var(--vibeui-auto-004-line)}
@@ -266,7 +259,7 @@ export function Auto004({
                     </span>
                   ))}
                   {hours.map((hour) => (
-                    <FragmentRow key={hour} hour={hour} columns={columns} stateOf={stateOf} picked={picked} onPick={setPicked} months={months} states={{ free: freeLabel, busy: busyLabel, past: pastLabel, closed: closedLabel }} />
+                    <FragmentRow key={hour} hour={hour} columns={columns} stateOf={stateOf} picked={picked} onPick={setPicked} months={months} states={{ free: freeLabel, busy: busyLabel, past: pastLabel, closed: closedLabel }} accent={accent} />
                   ))}
                 </div>
               </div>
@@ -339,7 +332,7 @@ export function Auto004({
 
 type Column = { date: Date; key: string; weekday: number; today: boolean } | null
 
-function FragmentRow({ hour, columns, stateOf, picked, onPick, months, states }: { hour: number; columns: Column[]; stateOf: (column: Column, hour: number) => string; picked: string | null; onPick: (value: string) => void; months: readonly string[]; states: Record<"free" | "busy" | "past" | "closed", string> }) {
+function FragmentRow({ hour, columns, stateOf, picked, onPick, months, states, accent }: { hour: number; columns: Column[]; stateOf: (column: Column, hour: number) => string; picked: string | null; onPick: (value: string) => void; months: readonly string[]; states: Record<"free" | "busy" | "past" | "closed", string>; accent?: string }) {
   return (
     <>
       <span data-part="hour">
@@ -350,9 +343,7 @@ function FragmentRow({ hour, columns, stateOf, picked, onPick, months, states }:
         const id = column ? `${column.key}@${hour}` : ""
         const free = state === "free"
         return (
-          <button key={index} data-part="slot" type="button" data-state={state} aria-pressed={free ? picked === id : undefined} aria-disabled={!free} disabled={state === "skeleton"} aria-label={column ? `${column.date.getDate()} ${months[column.date.getMonth()]}, ${hour}:00 — ${state === "busy" ? states.busy : state === "past" ? states.past : state === "closed" ? states.closed : states.free}` : undefined} onClick={() => (free ? onPick(id) : undefined)}>
-            {state === "closed" ? "—" : state === "skeleton" ? "" : `${hour}:00`}
-          </button>
+          <Button084 key={index} data-part="slot" state={state} hour={hour} aria-pressed={free ? picked === id : undefined} aria-disabled={!free} aria-label={column ? `${column.date.getDate()} ${months[column.date.getMonth()]}, ${hour}:00 — ${state === "busy" ? states.busy : state === "past" ? states.past : state === "closed" ? states.closed : states.free}` : undefined} onClick={() => (free ? onPick(id) : undefined)} accent={accent} />
         )
       })}
     </>

@@ -1,6 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Button013 } from "@/registry/components/button/button-013/button-013"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing024Feature = {
   label: string
@@ -64,6 +67,7 @@ container-type:inline-size;
 :where([data-vibeui-block="pricing-024"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="pricing-024"]{box-sizing:border-box;position:relative;overflow:hidden;padding:5rem 0;background:var(--vibeui-pricing-024-panel);color:var(--vibeui-pricing-024-fg);font-family:var(--vibeui-pricing-024-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="pricing-024"] *{box-sizing:border-box}
+[data-vibeui-block="pricing-024"] [data-part="action"]{margin-top:.6rem}
 [data-vibeui-block="pricing-024"] [data-part="mesh"]{position:absolute;inset:0;pointer-events:none}
 [data-vibeui-block="pricing-024"] [data-part="mesh"] i{position:absolute;border-radius:50%;filter:blur(50px);opacity:.45;animation:vibeui-pricing-024-float 22s ease-in-out infinite alternate}
 [data-vibeui-block="pricing-024"] [data-part="mesh"] i:nth-child(1){left:50%;top:-10%;width:40%;aspect-ratio:1;transform:translateX(-50%);background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-pricing-024-accent) 30%,transparent),transparent 65%)}
@@ -75,12 +79,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-024"] [data-part="w"] span{display:inline-block;transition:transform 1s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--vibeui-pricing-024-i) * .06s)}
 [data-vibeui-block="pricing-024"][data-motion="true"] [data-reveal]:not([data-in="true"]) [data-part="w"] span{transform:translateY(112%)}
 [data-vibeui-block="pricing-024"] [data-part="lede"]{margin:1rem auto 0;max-width:30rem;color:var(--vibeui-pricing-024-muted)}
-[data-vibeui-block="pricing-024"] [data-part="switch"]{position:relative;display:inline-flex;align-items:center;margin-top:1.8rem;padding:.3rem;border-radius:999px;background:var(--vibeui-pricing-024-card);box-shadow:0 0 0 1px var(--vibeui-pricing-024-line)}
-[data-vibeui-block="pricing-024"] [data-part="switch"]::before{content:"";position:absolute;top:.3rem;bottom:.3rem;left:.3rem;width:6.5rem;border-radius:999px;background:var(--vibeui-pricing-024-fg);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="pricing-024"] [data-part="switch"][data-yearly="true"]::before{transform:translateX(6.5rem)}
-[data-vibeui-block="pricing-024"] [data-part="switch"] button{position:relative;z-index:1;width:6.5rem;border:0;border-radius:999px;padding:.55rem 0;font:inherit;font-weight:600;font-size:.9rem;background:none;color:inherit;cursor:pointer;transition:color .3s}
-[data-vibeui-block="pricing-024"] [data-part="switch"] button[aria-pressed="true"]{color:var(--vibeui-pricing-024-bg)}
-[data-vibeui-block="pricing-024"] [data-part="switch"] small{position:relative;z-index:1;font-size:.72rem;color:var(--vibeui-pricing-024-accent);padding:0 .7rem 0 .5rem;font-weight:600}
 [data-vibeui-block="pricing-024"] [data-part="cards"]{display:grid;gap:1rem;margin-top:2rem;text-align:left}
 [data-vibeui-block="pricing-024"] [data-part="card"]{position:relative;display:grid;gap:.6rem;padding:1.7rem;border-radius:1.5rem;background:var(--vibeui-pricing-024-card);box-shadow:0 0 0 1px var(--vibeui-pricing-024-line);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
 [data-vibeui-block="pricing-024"] [data-part="card"]::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(18rem circle at var(--vibeui-pricing-024-x,50%) var(--vibeui-pricing-024-y,50%),color-mix(in oklab,var(--vibeui-pricing-024-accent) 16%,transparent),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none}
@@ -98,9 +96,6 @@ container-type:inline-size;
 [data-vibeui-block="pricing-024"] [data-part="price"] b span i{display:inline-block;font-style:normal;min-width:.28em;animation:vibeui-pricing-024-roll .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-pricing-024-i) * .05s)}
 [data-vibeui-block="pricing-024"] [data-part="price"] span[data-part="unit"]{font-size:.85rem;opacity:.7;transition:opacity .3s}
 [data-vibeui-block="pricing-024"] [data-part="trial"]{position:absolute;right:1.2rem;top:-.8rem;padding:.3rem .7rem;border-radius:999px;background:var(--vibeui-pricing-024-accent);color:var(--vibeui-pricing-024-on-accent);font-size:.72rem;font-weight:700;box-shadow:0 10px 20px -10px var(--vibeui-pricing-024-accent)}
-[data-vibeui-block="pricing-024"] [data-part="action"]{position:relative;display:inline-flex;justify-content:center;align-items:center;margin-top:.6rem;padding:.9rem 1.2rem;border-radius:999px;font-weight:700;text-decoration:none;color:inherit;box-shadow:0 0 0 1px var(--vibeui-pricing-024-line) inset;transition:transform .3s cubic-bezier(.2,.8,.2,1),filter .3s,box-shadow .3s}
-[data-vibeui-block="pricing-024"] [data-part="card"][data-premium="true"] [data-part="action"]{background:var(--vibeui-pricing-024-accent);color:var(--vibeui-pricing-024-on-accent);box-shadow:none}
-[data-vibeui-block="pricing-024"] [data-part="action"]:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 14px 30px -14px color-mix(in oklab,var(--vibeui-pricing-024-accent) 80%,transparent)}
 [data-vibeui-block="pricing-024"] [data-part="table"]{margin-top:1.5rem;border-radius:1.2rem;overflow:hidden;box-shadow:0 0 0 1px var(--vibeui-pricing-024-line);background:var(--vibeui-pricing-024-card);text-align:left}
 [data-vibeui-block="pricing-024"] [data-part="row"]{display:grid;grid-template-columns:1fr 5rem 5rem;align-items:center;gap:.5rem;padding:.8rem 1.2rem;border-top:1px solid var(--vibeui-pricing-024-line);font-size:.92rem;transition:background .3s}
 [data-vibeui-block="pricing-024"] [data-part="row"]:not(:first-child):hover{background:color-mix(in oklab,var(--vibeui-pricing-024-accent) 6%,transparent)}
@@ -229,12 +224,15 @@ export function Pricing024({
           </h2>
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="switch" data-yearly={yearly} role="group" aria-label={periodLabel}>
-            <button type="button" aria-pressed={!yearly} onClick={() => setYearly(false)}>
-              {monthlyLabel}
-            </button>
-            <button type="button" aria-pressed={yearly} onClick={() => setYearly(true)}>
-              {yearlyLabel}
-            </button>
+            {/* Переключатель — button-013; блок держит только флаг. */}
+            <Button013
+              data-part="toggle"
+              options={[monthlyLabel, yearlyLabel]}
+              defaultValue={yearly ? yearlyLabel : monthlyLabel}
+              label=""
+              onChange={(value) => setYearly(value === yearlyLabel)}
+              accent={accent}
+            />
             {yearlyNote ? <small>{yearlyNote}</small> : null}
           </div>
           <div data-part="cards">
@@ -243,9 +241,15 @@ export function Pricing024({
               <div data-part="price">
                 <Price value={freePrice} />
               </div>
-              <a data-part="action" href="#">
-                {freeAction}
-              </a>
+              <Button016
+                data-part="action"
+                size="lg"
+                label={freeAction}
+                href="#"
+                external={false}
+                tone="accent"
+                accent={accent}
+              />
             </div>
             <div data-part="card" data-premium="true" data-reveal="" style={{ ["--vibeui-pricing-024-i" as string]: 1 }} onPointerMove={spotlight}>
               {trial ? <span data-part="trial">{trial}</span> : null}
@@ -254,9 +258,15 @@ export function Pricing024({
                 <Price value={yearly ? premiumYearly : premiumMonthly} />
                 <span data-part="unit">{yearly ? yearlyLabel : monthlyLabel}</span>
               </div>
-              <a data-part="action" href={premiumHref}>
-                {premiumAction}
-              </a>
+              <Button016
+                data-part="action"
+                size="lg"
+                label={premiumAction}
+                href={premiumHref}
+                external={false}
+                tone="accent"
+                accent={accent}
+              />
             </div>
           </div>
           <div data-part="table">

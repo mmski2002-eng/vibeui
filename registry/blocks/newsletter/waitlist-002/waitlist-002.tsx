@@ -1,6 +1,10 @@
 "use client"
 
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 type Waitlist002Unit = {
   value: string
@@ -25,7 +29,8 @@ export type Waitlist002Props = {
 // (дни/часы/минуты в плитках), без JS-тикания: реальное тиканье подключает
 // приложение. Ниже — поле почты для листа ожидания. Формат первого экрана
 // продукта до релиза с датой на плитках.
-const STYLES = `
+const STYLES = `[data-vibeui-block="waitlist-002"] [data-part="heading"]{margin-bottom:0.75rem}
+
 :where([data-vibeui-block="waitlist-002"]){
 --vibeui-waitlist-002-bg:transparent;
 --vibeui-waitlist-002-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -49,9 +54,6 @@ display:block;background:var(--vibeui-waitlist-002-bg);color:var(--vibeui-waitli
 font-family:var(--vibeui-waitlist-002-font);
 }
 [data-vibeui-block="waitlist-002"] [data-part="shell"]{max-width:38rem;margin:0 auto;padding:3.5rem 1.25rem;text-align:center}
-[data-vibeui-block="waitlist-002"] [data-part="eyebrow"]{margin:0 0 0.625rem;color:var(--vibeui-waitlist-002-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="waitlist-002"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.75rem,6cqi,2.75rem);line-height:1.08;letter-spacing:-0.025em;font-weight:700}
-[data-vibeui-block="waitlist-002"] [data-part="summary"]{margin:0 0 2rem;color:var(--vibeui-waitlist-002-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="waitlist-002"] [data-part="clock"]{display:flex;justify-content:center;gap:0.625rem;margin-bottom:2rem;list-style:none;padding:0}
 [data-vibeui-block="waitlist-002"] [data-part="unit"]{
 display:flex;flex-direction:column;gap:0.25rem;align-items:center;
@@ -62,19 +64,9 @@ background:var(--vibeui-waitlist-002-tile);
 [data-vibeui-block="waitlist-002"] [data-part="num"]{font-family:var(--vibeui-waitlist-002-mono);font-size:clamp(1.5rem,5cqi,2rem);font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--vibeui-waitlist-002-accent)}
 [data-vibeui-block="waitlist-002"] [data-part="unit-label"]{font-size:0.6875rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--vibeui-waitlist-002-muted)}
 [data-vibeui-block="waitlist-002"] [data-part="form"]{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center}
-[data-vibeui-block="waitlist-002"] [data-part="input"]{
-flex:1 1 14rem;min-width:0;height:2.875rem;padding:0 1rem;
-border:1px solid var(--vibeui-waitlist-002-border);border-radius:0.75rem;
-background:var(--vibeui-waitlist-002-field);color:inherit;font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="waitlist-002"] [data-part="input"]:focus-visible{outline:2px solid var(--vibeui-waitlist-002-accent);outline-offset:1px;border-color:transparent}
-[data-vibeui-block="waitlist-002"] [data-part="submit"]{
-height:2.875rem;padding:0 1.5rem;border:0;border-radius:0.75rem;cursor:pointer;
-background:var(--vibeui-waitlist-002-accent);color:oklch(from var(--vibeui-waitlist-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.9375rem;font-weight:650;transition:opacity var(--vibeui-waitlist-002-dur-2) ease;
-}
-[data-vibeui-block="waitlist-002"] [data-part="submit"]:hover{opacity:.9}
-[data-vibeui-block="waitlist-002"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-waitlist-002-accent);outline-offset:2px}
+/* Поле input-001 растягивается на остаток строки, кнопка — button-001. */
+[data-vibeui-block="waitlist-002"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="waitlist-002"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
 @container (min-width: 36rem){[data-vibeui-block="waitlist-002"] [data-part="shell"]{padding:4.5rem 2rem}[data-vibeui-block="waitlist-002"] [data-part="form"]{flex-wrap:nowrap}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="waitlist-002"] *{animation:none!important;transition:none!important}}
 `
@@ -142,9 +134,14 @@ export function Waitlist002({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="summary">{summary}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            align="center"
+            accent={accent}
+            lede={summary}
+          />
           <ul data-part="clock">
             {units.map((unit) => (
               <li key={unit.label} data-part="unit">
@@ -154,16 +151,17 @@ export function Waitlist002({
             ))}
           </ul>
           <form data-part="form" onSubmit={(event) => event.preventDefault()}>
-            <input
-              data-part="input"
+            <Input001
               type="email"
+              name="email"
               required
-              placeholder={placeholder}
-              aria-label="Электронная почта"
+              label={placeholder}
+              autoComplete="email"
+              accent={accent}
             />
-            <button data-part="submit" type="submit">
+            <Button001 type="submit" size="lg" accent={accent}>
               {ctaLabel}
-            </button>
+            </Button001>
           </form>
         </div>
       </section>

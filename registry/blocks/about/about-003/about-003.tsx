@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type About003Icon = "stack" | "spark" | "bolt" | "ring"
 
@@ -23,7 +24,8 @@ export type About003Props = {
 // (псевдоэлементы, повороты, рамки) — блок не тянет иконочную библиотеку и
 // не ломается без сети. Четыре простых знака: стопка, искра, молния, кольцо —
 // абстрактные, чтобы не спорить с любым брендом.
-const STYLES = `
+const STYLES = `[data-vibeui-block="about-003"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="about-003"]){
 --vibeui-about-003-bg:transparent;
 --vibeui-about-003-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
@@ -48,14 +50,6 @@ font-family:var(--vibeui-about-003-font);
 }
 [data-vibeui-block="about-003"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3.5rem 1.25rem;
-}
-[data-vibeui-block="about-003"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-about-003-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="about-003"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="about-003"] [data-part="grid"]{display:grid;gap:1rem}
 [data-vibeui-block="about-003"] [data-part="card"]{
@@ -195,8 +189,12 @@ export function About003({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="grid">
             {items.map((item) => (
               <article key={item.title} data-part="card">

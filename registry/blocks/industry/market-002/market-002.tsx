@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Market002Item = {
   name: string
   /** Подпись типа: «Figma», «Notion», «иконки». */
@@ -127,9 +129,6 @@ container-type:inline-size;
 [data-vibeui-block="market-002"] [data-part="totals"] [data-part="save"] span:last-child{color:var(--vibeui-market-002-accent)}
 [data-vibeui-block="market-002"] [data-part="total"]{align-items:baseline;margin-top:.4rem}
 [data-vibeui-block="market-002"] [data-part="total"] span:last-child{font-family:var(--vibeui-market-002-display);font-weight:800;font-size:1.9rem;letter-spacing:-.03em;line-height:1;animation:vibeui-market-002-pop .4s cubic-bezier(.2,1.2,.4,1)}
-[data-vibeui-block="market-002"] [data-part="checkout"]{display:inline-flex;justify-content:center;align-items:center;height:3rem;border-radius:999px;background:var(--vibeui-market-002-fg);color:var(--vibeui-market-002-bg);font-weight:600;text-decoration:none;transition:transform .18s,opacity .2s}
-[data-vibeui-block="market-002"] [data-part="checkout"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="market-002"] [data-part="checkout"][aria-disabled="true"]{opacity:.4;pointer-events:none}
 [data-vibeui-block="market-002"] [data-part="mini"]{position:fixed;left:50%;bottom:1rem;z-index:60;display:flex;align-items:center;gap:.8rem;width:max-content;max-width:calc(100vw - 2rem);padding:.5rem .5rem .5rem .7rem;border-radius:999px;background:var(--vibeui-market-002-fg);color:var(--vibeui-market-002-bg);box-shadow:0 20px 50px -20px rgb(0 0 0 / .6);transform:translate(-50%,0);transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s}
 [data-vibeui-block="market-002"] [data-part="mini"][data-hidden="true"]{transform:translate(-50%,140%);opacity:0;pointer-events:none}
 [data-vibeui-block="market-002"] [data-part="mini-thumbs"]{display:flex}
@@ -344,9 +343,16 @@ export function Market002({
                   <span key={total}>{formatMoney(total, currency)}</span>
                 </div>
               </div>
-              <a data-part="checkout" href={checkoutHref} aria-disabled={count === 0}>
-                {checkoutLabel}
-              </a>
+              <Button016
+                data-part="checkout"
+                aria-disabled={count === 0}
+                label={checkoutLabel}
+                href={checkoutHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
             </aside>
           </div>
         </div>

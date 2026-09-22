@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Card160 } from "@/registry/components/card/card-160/card-160"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid010Row = {
@@ -68,21 +69,10 @@ border:1px solid var(--vibeui-datagrid-010-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-010-font);overflow:hidden;
 }
 [data-vibeui-block="datagrid-010"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-010"] [data-part="head"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;
-padding:0.75rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-010-border);
-}
-[data-vibeui-block="datagrid-010"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
 [data-vibeui-block="datagrid-010"] label{
 display:inline-flex;align-items:center;gap:0.375rem;
 font-size:0.75rem;color:var(--vibeui-datagrid-010-muted);
 }
-[data-vibeui-block="datagrid-010"] select{
-font:inherit;font-size:0.75rem;color:var(--vibeui-datagrid-010-fg);
-padding:0.25rem 0.5rem;border-radius:0.375rem;
-border:1px solid var(--vibeui-datagrid-010-border);background:var(--vibeui-datagrid-010-field);
-}
-[data-vibeui-block="datagrid-010"] select:focus-visible{outline:2px solid var(--vibeui-datagrid-010-accent);outline-offset:1px}
 [data-vibeui-block="datagrid-010"] [data-part="scroll"]{overflow-x:auto}
 [data-vibeui-block="datagrid-010"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-010-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-010"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -162,7 +152,6 @@ const DEFAULT_ROWS: Datagrid010Row[] = NAMES.map((person, index) => ({
   score: 60 + ((index * 7) % 40),
 }))
 
-const SIZES = [5, 10, 20]
 
 const COLUMN_LABEL: Record<string, string> = {
   person: "Участник",
@@ -249,25 +238,7 @@ export function Datagrid010({
         className={className}
         style={palette}
       >
-        <div data-part="head">
-          <h3 data-part="title">{heading}</h3>
-          <label>
-            {pageSizeLabel}
-            <select
-              value={size}
-              onChange={(event) => {
-                setSize(Number(event.target.value))
-                setPage(1)
-              }}
-            >
-              {SIZES.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+        <Card160 data-part="head" heading={heading} pageSizeLabel={pageSizeLabel} setPage={setPage} setSize={setSize} size={size} accent={accent} />
         <div
           data-part="scroll"
           role="region"

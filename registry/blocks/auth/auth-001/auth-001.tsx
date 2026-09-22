@@ -1,4 +1,11 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Auth001Props = {
   title?: string
@@ -57,45 +64,11 @@ border:1px solid var(--vibeui-auth-001-border);border-radius:1rem;
 font-family:var(--vibeui-auth-001-sans);color:var(--vibeui-auth-001-fg);
 }
 [data-vibeui-block="auth-001"] *{box-sizing:border-box}
-[data-vibeui-block="auth-001"] h2{margin:0 0 0.25rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.01em}
+[data-vibeui-block="auth-001"] [data-part="heading"]{margin-bottom:0.25rem}
+[data-vibeui-block="auth-001"] form{display:grid;gap:0.75rem}
+[data-vibeui-block="auth-001"] [data-part="submit"]{width:100%}
 [data-vibeui-block="auth-001"] [data-part="lead"]{margin:0 0 1rem;font-size:0.8125rem;line-height:1.5;color:var(--vibeui-auth-001-muted)}
-[data-vibeui-block="auth-001"] [data-part="field"]{display:flex;flex-direction:column;gap:0.3125rem;margin-bottom:0.75rem}
-[data-vibeui-block="auth-001"] [data-part="row"]{display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem}
-[data-vibeui-block="auth-001"] label{font-size:0.8125rem;font-weight:600}
-/* «Забыли пароль» рядом с полем: её ищут именно в момент неудачи. */
-[data-vibeui-block="auth-001"] [data-part="forgot"]{font-size:0.75rem;color:var(--vibeui-auth-001-accent)}
-[data-vibeui-block="auth-001"] input{
-width:100%;height:2.5rem;padding:0 0.75rem;
-border:1px solid var(--vibeui-auth-001-border);border-radius:0.625rem;
-background:var(--vibeui-auth-001-bg);color:inherit;font:inherit;font-size:0.875rem;
-}
-[data-vibeui-block="auth-001"] input:focus-visible{outline:2px solid var(--vibeui-auth-001-accent);outline-offset:1px;border-color:var(--vibeui-auth-001-accent)}
-[data-vibeui-block="auth-001"] [data-part="keep"]{
-display:flex;align-items:center;gap:0.5rem;margin:0 0 0.875rem;
-font-size:0.8125rem;
-}
-[data-vibeui-block="auth-001"] input[type="checkbox"]{
-appearance:none;position:relative;flex:none;cursor:pointer;
-width:1.0625rem;height:1.0625rem;padding:0;border-radius:0.3125rem;
-border:1.5px solid var(--vibeui-auth-001-muted);
-}
-[data-vibeui-block="auth-001"] input[type="checkbox"]:checked{
-background:var(--vibeui-auth-001-accent);border-color:var(--vibeui-auth-001-accent);color:oklch(from var(--vibeui-auth-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="auth-001"] input[type="checkbox"]:checked::after{
-content:"";position:absolute;left:0.3rem;top:0.1rem;
-width:0.2rem;height:0.45rem;
-border:solid var(--vibeui-auth-001-on-accent);border-width:0 2px 2px 0;transform:rotate(45deg);
-}
-/* Главное действие занимает всю ширину: на этом экране оно одно. */
-[data-vibeui-block="auth-001"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:2.625rem;padding:0.375rem 1rem;
-border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-001-accent);color:oklch(from var(--vibeui-auth-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="auth-001"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-001-accent);outline-offset:2px}
+[data-vibeui-block="auth-001"] [data-part="row"]{display:flex;justify-content:flex-end}
 /* Вход через сервисы ниже формы: сверху он перехватывает внимание. */
 [data-vibeui-block="auth-001"] [data-part="or"]{
 display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0.625rem;
@@ -233,46 +206,48 @@ export function Auth001({
         style={palette}
         aria-label={title}
       >
-        <h2>{title}</h2>
+        <Heading001
+          data-part="heading"
+          title={title}
+          size="xs"
+          accent={accent}
+        />
         <p data-part="lead">{lead}</p>
 
         <form>
-          <div data-part="field">
-            <label htmlFor="vibeui-auth-001-email">{emailLabel}</label>
-            <input
-              id="vibeui-auth-001-email"
-              name="email"
-              type="email"
-              autoComplete="username"
-              placeholder={emailPlaceholder}
-              required
-            />
-          </div>
+          <Input001
+            name="email"
+            type="email"
+            autoComplete="username"
+            required
+            label={emailLabel}
+            accent={accent}
+          />
 
-          <div data-part="field">
-            <span data-part="row">
-              <label htmlFor="vibeui-auth-001-password">{passwordLabel}</label>
-              <a data-part="forgot" href="#">
-                {forgot}
-              </a>
-            </span>
-            <input
-              id="vibeui-auth-001-password"
+          <div data-part="form-field">
+            <Input001
               name="password"
               type="password"
               autoComplete="current-password"
               required
+              label={passwordLabel}
+              accent={accent}
             />
+            <span data-part="row">
+              <Button077
+                data-part="forgot"
+                label={forgot}
+                href="#"
+                accent={accent}
+              />
+            </span>
           </div>
 
-          <label data-part="keep">
-            <input type="checkbox" defaultChecked />
-            {keepLabel}
-          </label>
+          <Checkbox001 description="" name="remember" defaultChecked label={keepLabel} accent={accent} />
 
-          <button type="submit" data-part="submit">
+          <Button001 type="submit" data-part="submit" size="lg" accent={accent}>
             {submit}
-          </button>
+          </Button001>
         </form>
 
         <p data-part="or">{orLabel}</p>

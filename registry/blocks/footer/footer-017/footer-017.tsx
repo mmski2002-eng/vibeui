@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card147 } from "@/registry/components/card/card-147/card-147"
 
 export type Footer017Props = {
   /** Подпись перехода. */
@@ -46,48 +47,6 @@ font-family:var(--vibeui-footer-017-font);
 [data-vibeui-block="footer-017"] [data-part="shell"]{
 max-width:80rem;margin:0 auto;padding:3rem 1rem 1.5rem;
 display:flex;flex-direction:column;gap:1.5rem;
-}
-[data-vibeui-block="footer-017"] [data-part="next"]{
-display:flex;flex-direction:column;gap:0.875rem;
-color:inherit;text-decoration:none;
-}
-[data-vibeui-block="footer-017"] [data-part="kicker"]{
-display:inline-flex;align-items:center;gap:0.625rem;
-font-size:0.8125rem;font-weight:640;letter-spacing:0.1em;text-transform:uppercase;
-color:var(--vibeui-footer-017-accent);
-}
-[data-vibeui-block="footer-017"] [data-part="frame"]{
-aspect-ratio:21/9;overflow:hidden;position:relative;
-background:linear-gradient(150deg,#3b3129 0%,#14100d 76%);
-}
-[data-vibeui-block="footer-017"] [data-part="frame"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
-}
-[data-vibeui-block="footer-017"] [data-part="frame"]::after{
-content:"";position:absolute;inset:0;
-background:radial-gradient(24rem 13rem at 70% 26%,rgb(255 165 95 / 30%),transparent 64%);
-}
-[data-vibeui-block="footer-017"] [data-part="frame"][data-look="paper"]{
-background:linear-gradient(150deg,#ececea 0%,#d2cfc8 100%);
-}
-[data-vibeui-block="footer-017"] [data-part="frame"][data-look="paper"]::after{content:none}
-[data-vibeui-block="footer-017"] [data-part="frame"][data-look="dark"]{
-background:linear-gradient(150deg,#1a1a1a 0%,#000000 88%);
-}
-[data-vibeui-block="footer-017"] [data-part="frame"][data-look="dark"]::after{content:none}
-[data-vibeui-block="footer-017"] [data-part="next"]:hover [data-part="frame"]{
-outline:3px solid var(--vibeui-footer-017-accent);outline-offset:-3px;
-}
-[data-vibeui-block="footer-017"] [data-part="caption"]{
-display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
-}
-[data-vibeui-block="footer-017"] [data-part="caption"] strong{
-font-size:clamp(1.5rem,3.6cqi,2.375rem);letter-spacing:-0.02em;font-weight:690;
-transition:color var(--vibeui-footer-017-dur-2) ease;
-}
-[data-vibeui-block="footer-017"] [data-part="next"]:hover strong{color:var(--vibeui-footer-017-accent)}
-[data-vibeui-block="footer-017"] [data-part="caption"] span{
-font-size:0.9375rem;color:var(--vibeui-footer-017-muted);
 }
 [data-vibeui-block="footer-017"] [data-part="studio"]{
 display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
@@ -142,20 +101,7 @@ export function Footer017({
       </style>
       <footer data-vibeui-block="footer-017" className={className} style={palette}>
         <div data-part="shell">
-          <a data-part="next" href={href}>
-            <span data-part="kicker">{kicker}</span>
-            <span
-              data-part="frame"
-              data-look={look === "warm" ? undefined : look}
-              aria-hidden={src ? undefined : "true"}
-            >
-              {src ? <img src={src} alt={title} /> : null}
-            </span>
-            <span data-part="caption">
-              <strong>{title}</strong>
-              <span>{note}</span>
-            </span>
-          </a>
+          <Card147 data-part="next" href={href} kicker={kicker} look={look} src={src} title={title} note={note} accent={accent} />
           <div data-part="studio">
             <strong>{studioName}</strong>
             <a data-part="contact" href={contactHref}>

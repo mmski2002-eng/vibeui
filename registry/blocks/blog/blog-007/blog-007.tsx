@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Blog007Post = {
   issue: string
@@ -28,7 +29,8 @@ export type Blog007Props = {
 // Вместо иллюстраций — крупный номер выпуска: сериальность видна сразу,
 // а к публикации не нужен дизайнер. Номер вдавлен в заливку полупрозрачной
 // тёмной краской, поэтому обложки различаются, оставаясь одной системой.
-const STYLES = `
+const STYLES = `[data-vibeui-block="blog-007"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="blog-007"]){
 --vibeui-blog-007-bg:transparent;
 --vibeui-blog-007-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
@@ -52,14 +54,6 @@ font-family:var(--vibeui-blog-007-font);
 }
 [data-vibeui-block="blog-007"] [data-part="shell"]{
 max-width:76rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="blog-007"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-blog-007-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="blog-007"] [data-part="title"]{
-margin:0 0 2rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 /* Сетка сама набирает максимум колонок под ширину: чем уже карточка, тем
    больше выпусков в ряд. */
@@ -215,8 +209,12 @@ export function Blog007({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="grid">
             {posts.map((post) => (
               <article key={post.issue} data-part="card">

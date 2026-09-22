@@ -56,6 +56,7 @@
     "registry/components/navigation/registry.json",
     "registry/components/toast/registry.json",
     "registry/components/tree/registry.json",
+    "registry/components/typography/registry.json",
     "registry/animations/stacks/registry.json",
     "registry/animations/cursor/registry.json",
     "registry/animations/sketch/registry.json",

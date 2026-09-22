@@ -1,4 +1,8 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Footerlinks001 } from "@/registry/components/navigation/footerlinks-001/footerlinks-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 type Footer009Link = {
   label: string
@@ -71,6 +75,8 @@ margin:0.375rem 0 0;color:var(--vibeui-footer-009-muted);font-size:0.875rem;line
 [data-vibeui-block="footer-009"] [data-part="form"]{
 display:flex;flex-wrap:wrap;gap:0.5rem;
 }
+[data-vibeui-block="footer-009"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="footer-009"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="footer-009"] [data-part="email"]{
 flex:1 1 12rem;min-width:0;
 padding:0.625rem 0.875rem;border-radius:0.625rem;
@@ -79,28 +85,10 @@ background:var(--vibeui-footer-009-field);color:inherit;
 font:inherit;font-size:0.9375rem;
 }
 [data-vibeui-block="footer-009"] [data-part="email"]::placeholder{color:var(--vibeui-footer-009-muted)}
-[data-vibeui-block="footer-009"] [data-part="submit"]{
-flex:none;cursor:pointer;
-padding:0.625rem 1.125rem;border:0;border-radius:0.625rem;
-background:var(--vibeui-footer-009-accent-fill);color:var(--vibeui-footer-009-accent-fg);
-font:inherit;font-size:0.9375rem;font-weight:650;
-transition:filter var(--vibeui-footer-009-dur-2) ease;
-}
-[data-vibeui-block="footer-009"] [data-part="submit"]:hover{filter:brightness(1.06)}
 [data-vibeui-block="footer-009"] [data-part="columns"]{
 display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.75rem 1.25rem;
 padding-bottom:2.25rem;
 }
-[data-vibeui-block="footer-009"] [data-part="column-title"]{
-margin:0 0 0.75rem;
-font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-}
-[data-vibeui-block="footer-009"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:0.5rem}
-[data-vibeui-block="footer-009"] [data-part="column"] a{
-color:var(--vibeui-footer-009-muted);text-decoration:none;font-size:0.875rem;
-transition:color var(--vibeui-footer-009-dur-2) ease;
-}
-[data-vibeui-block="footer-009"] [data-part="column"] a:hover{color:var(--vibeui-footer-009-accent)}
 [data-vibeui-block="footer-009"] [data-part="bottom"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem 1.25rem;
 padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-009-border);
@@ -125,9 +113,7 @@ transition:color var(--vibeui-footer-009-dur-2) ease,border-color var(--vibeui-f
 color:var(--vibeui-footer-009-accent);
 border-color:color-mix(in oklab,var(--vibeui-footer-009-accent) 45%,var(--vibeui-footer-009-border));
 }
-[data-vibeui-block="footer-009"] :is(a,button,input):focus-visible{
-outline:2px solid var(--vibeui-footer-009-accent);outline-offset:2px;
-}
+[data-vibeui-block="footer-009"] [data-part="social"] a:focus-visible{outline:2px solid var(--vibeui-footer-009-accent);outline-offset:2px}
 @container (min-width: 40rem){
 [data-vibeui-block="footer-009"] [data-part="shell"]{padding:3.5rem 2rem 1.75rem}
 [data-vibeui-block="footer-009"] [data-part="columns"]{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -348,39 +334,15 @@ export function Footer009({
               <p data-part="subscribe-note">{subscribeNote}</p>
             </div>
             <form data-part="form">
-              <input
-                data-part="email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                placeholder={emailPlaceholder}
-                aria-label={emailPlaceholder}
-                required
-              />
-              <button data-part="submit" type="submit">
+              <Input001 type="email" name="email" required label={emailPlaceholder} autoComplete="email" accent={accent} />
+              <Button001 type="submit" size="lg" accent={accent}>
                 {buttonLabel}
-              </button>
+              </Button001>
             </form>
           </div>
           <div data-part="columns">
             {columns.map((column) => (
-              <nav
-                key={column.title}
-                data-part="column"
-                aria-label={column.title}
-              >
-                <p data-part="column-title">{column.title}</p>
-                <ul>
-                  {column.links.map((link) => (
-                    <li key={link.href}>
-                      <a href={link.href}>
-                        {socialIcon(link.label)}
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <Footerlinks001 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </div>
           <div data-part="bottom">

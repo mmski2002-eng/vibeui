@@ -2,6 +2,8 @@
 
 import { useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Hero028Batch = {
   /** Время выхода из печи «07:00». */
   time: string
@@ -78,6 +80,7 @@ container-type:inline-size;
 :where([data-vibeui-block="hero-028"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-028"]{box-sizing:border-box;display:block;position:relative;overflow:clip;background:var(--vibeui-hero-028-bg);color:var(--vibeui-hero-028-fg);font-family:var(--vibeui-hero-028-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="hero-028"] *{box-sizing:border-box}
+[data-vibeui-block="hero-028"] [data-part="primary"],[data-vibeui-block="hero-028"] [data-part="secondary"]{transform:translate(var(--vibeui-hero-028-mx,0px),var(--vibeui-hero-028-my,0px));transition:transform .25s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="hero-028"] [data-part="grain"]{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.07;mix-blend-mode:multiply;background-image:${GRAIN}}
 [data-vibeui-block="hero-028"] [data-part="grid"]{display:grid;grid-template-columns:1fr;min-height:calc(100svh - 4.25rem)}
 [data-vibeui-block="hero-028"] [data-part="photo"]{position:relative;min-height:26rem;overflow:hidden;border-radius:0 0 1.4rem 1.4rem;background:var(--vibeui-hero-028-soft);animation:vibeui-hero-028-reveal 1.3s cubic-bezier(.7,0,.2,1) both}
@@ -114,13 +117,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-028"] [data-part="batches"] li[data-state="now"]{background:var(--vibeui-hero-028-fg);color:var(--vibeui-hero-028-bg);box-shadow:0 8px 18px -10px rgb(0 0 0 / .8)}
 [data-vibeui-block="hero-028"] [data-part="batches"] li[data-state="now"]::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-hero-028-accent);animation:vibeui-hero-028-pulse 2s ease-out infinite}
 [data-vibeui-block="hero-028"] [data-part="actions"]{display:flex;gap:.75rem;flex-wrap:wrap;animation:vibeui-hero-028-up .9s var(--vibeui-hero-028-ease) 1.05s both}
-[data-vibeui-block="hero-028"] [data-part="primary"],[data-vibeui-block="hero-028"] [data-part="secondary"]{display:inline-flex;align-items:center;border-radius:999px;padding:1rem 1.6rem;font-weight:600;font-size:.98rem;text-decoration:none;transform:translate(var(--vibeui-hero-028-mx,0px),var(--vibeui-hero-028-my,0px));transition:transform .35s var(--vibeui-hero-028-ease),filter .2s,box-shadow .35s}
-[data-vibeui-block="hero-028"] [data-part="primary"]{color:var(--vibeui-hero-028-on-accent);background:var(--vibeui-hero-028-accent);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 12px 28px -12px color-mix(in oklab,var(--vibeui-hero-028-accent) 80%,transparent),0 2px 4px rgb(0 0 0 / .12)}
-[data-vibeui-block="hero-028"] [data-part="secondary"]{color:var(--vibeui-hero-028-fg);background:var(--vibeui-hero-028-soft);box-shadow:0 1px 0 rgb(255 255 255 / .6) inset,0 2px 4px rgb(0 0 0 / .08)}
-[data-vibeui-block="hero-028"] [data-part="primary"]:hover{filter:brightness(1.05);box-shadow:0 1px 0 rgb(255 255 255 / .35) inset,0 18px 36px -14px color-mix(in oklab,var(--vibeui-hero-028-accent) 90%,transparent),0 2px 4px rgb(0 0 0 / .12)}
-[data-vibeui-block="hero-028"] [data-part="secondary"]:hover{transform:translate(var(--vibeui-hero-028-mx,0px),calc(var(--vibeui-hero-028-my,0px) - 2px));filter:brightness(1.03)}
-[data-vibeui-block="hero-028"] [data-part="primary"]:active,[data-vibeui-block="hero-028"] [data-part="secondary"]:active{transform:translate(var(--vibeui-hero-028-mx,0px),var(--vibeui-hero-028-my,0px)) scale(.97)}
-[data-vibeui-block="hero-028"] a:focus-visible{outline:2px solid var(--vibeui-hero-028-accent);outline-offset:3px}
 @keyframes vibeui-hero-028-rise{0%{transform:translateY(112%) scaleY(.7)}65%{transform:translateY(-3%) scaleY(1.04)}100%{transform:none}}
 @keyframes vibeui-hero-028-up{from{opacity:0;transform:translateY(1.2rem)}to{opacity:1;transform:none}}
 @keyframes vibeui-hero-028-pop{from{opacity:0;transform:rotate(-14deg) scale(.6)}to{opacity:1;transform:rotate(-6deg)}}
@@ -344,14 +340,30 @@ export function Hero028({
             </ol>
             <div data-part="actions">
               {primaryLabel ? (
-                <a data-part="primary" href={primaryHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                  {primaryLabel}
-                </a>
+                <Button016
+                  data-part="primary"
+                  size="lg"
+                  onPointerMove={magnet}
+                  onPointerLeave={unmagnet}
+                  label={primaryLabel}
+                  href={primaryHref}
+                  external={false}
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref} onPointerMove={magnet} onPointerLeave={unmagnet}>
-                  {secondaryLabel}
-                </a>
+                <Button016
+                  data-part="secondary"
+                  size="lg"
+                  onPointerMove={magnet}
+                  onPointerLeave={unmagnet}
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  external={false}
+                  tone="neutral"
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Mockup011 } from "@/registry/components/mockup/mockup-011/mockup-011"
 
 export type Surface001Props = {
   /** Контент поверх фотографии. Без него блок показывает демонстрационный пример. */
@@ -51,6 +52,7 @@ background:#1a1a1a;color:var(--vibeui-surface-001-ink);
 font-family:var(--vibeui-surface-001-font);
 }
 [data-vibeui-block="surface-001"] *{box-sizing:border-box}
+[data-vibeui-block="surface-001"] [data-part="ghost"]{flex:1}
 [data-vibeui-block="surface-001"] [data-part="media"]{
 position:absolute;inset:0;
 }
@@ -75,28 +77,6 @@ position:relative;max-width:80rem;margin:0 auto;min-height:30rem;
 padding:2.5rem clamp(1.5rem,6cqi,4rem);display:flex;flex-direction:column;
 }
 [data-vibeui-block="surface-001"][data-align="start"] [data-part="ghost"]{justify-content:flex-start}
-/* Призрак кадра: шапка сверху, подпись и действия у нижнего края — так
-   строится страница отеля, ресторана или личного бренда поверх фотографии.
-   Плашки здесь светлые: они лягут на вуаль, а не на бумагу. */
-[data-vibeui-block="surface-001"] [data-part="ghost"]{
-display:flex;flex-direction:column;flex:1;
-}
-[data-vibeui-block="surface-001"] [data-part="topbar"]{display:flex;align-items:center;gap:0.875rem}
-[data-vibeui-block="surface-001"] [data-part="mark"]{width:1.75rem;height:1.75rem;flex:none;background:var(--vibeui-surface-001-accent);color:oklch(from var(--vibeui-surface-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
-[data-vibeui-block="surface-001"] [data-part="topbar"] span:not([data-part]){
-width:3.5rem;height:0.5rem;background:var(--vibeui-surface-001-ghost-soft);
-}
-[data-vibeui-block="surface-001"] [data-part="caption"]{
-display:flex;flex-direction:column;gap:0.875rem;margin-top:auto;max-width:34rem;
-}
-[data-vibeui-block="surface-001"] [data-part="caption"] span{height:2rem;background:var(--vibeui-surface-001-ghost)}
-[data-vibeui-block="surface-001"] [data-part="caption"] span:nth-child(2){width:68%}
-[data-vibeui-block="surface-001"] [data-part="caption"] span:nth-child(3){
-height:0.625rem;width:52%;margin-top:0.25rem;background:var(--vibeui-surface-001-ghost-soft);
-}
-[data-vibeui-block="surface-001"] [data-part="buttons"]{display:flex;gap:0.75rem;margin-top:1.25rem}
-[data-vibeui-block="surface-001"] [data-part="buttons"] span{width:8.5rem;height:2.75rem;background:var(--vibeui-surface-001-ghost-soft)}
-[data-vibeui-block="surface-001"] [data-part="buttons"] span:first-child{background:var(--vibeui-surface-001-accent);color:oklch(from var(--vibeui-surface-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 @container (min-width: 48rem){
 [data-vibeui-block="surface-001"] [data-part="frame"]{padding:6rem 3rem 4rem;min-height:36rem}
 }
@@ -144,23 +124,7 @@ export function Surface001({
         <div data-part="scrim" aria-hidden="true" />
         <div data-part="frame">
           {children ?? (
-            <div data-part="ghost" aria-hidden="true">
-              <div data-part="topbar">
-                <span data-part="mark" />
-                <span />
-                <span />
-                <span />
-              </div>
-              <div data-part="caption">
-                <span />
-                <span />
-                <span />
-              </div>
-              <div data-part="buttons">
-                <span />
-                <span />
-              </div>
-            </div>
+            <Mockup011 data-part="ghost"  accent={accent} />
           )}
         </div>
       </section>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card095 } from "@/registry/components/card/card-095/card-095"
 
 export type Renovation002Stage = {
   name: string
@@ -80,16 +81,6 @@ container-type:inline-size;
 [data-vibeui-block="renovation-002"] [data-part="axis"] span:nth-child(even){color:transparent}
 [data-vibeui-block="renovation-002"] [data-part="corner"]{grid-column:1;grid-row:1;display:flex;align-items:end;padding:.35rem .6rem .3rem;border-right:1px solid var(--vibeui-renovation-002-line);border-bottom:1px solid var(--vibeui-renovation-002-line);font-family:var(--vibeui-renovation-002-mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-renovation-002-muted)}
 [data-vibeui-block="renovation-002"] [data-part="rows"]{display:contents}
-[data-vibeui-block="renovation-002"] [data-part="row"]{display:contents}
-[data-vibeui-block="renovation-002"] [data-part="name"]{display:flex;align-items:center;gap:.4rem;min-height:2.4rem;padding:.35rem .6rem;border-right:1px solid var(--vibeui-renovation-002-line);border-bottom:1px solid var(--vibeui-renovation-002-line);font-size:.8rem;font-weight:500;line-height:1.2;transition:color .2s}
-[data-vibeui-block="renovation-002"] [data-part="name"] svg{flex-shrink:0;width:.85rem;height:.85rem;color:var(--vibeui-renovation-002-accent);opacity:0;transform:scale(.5);transition:opacity .25s,transform .25s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="renovation-002"] [data-part="row"][data-state="done"] [data-part="name"] svg{opacity:1;transform:scale(1)}
-[data-vibeui-block="renovation-002"] [data-part="row"][data-state="todo"] [data-part="name"]{color:var(--vibeui-renovation-002-muted)}
-[data-vibeui-block="renovation-002"] [data-part="row"][data-state="now"] [data-part="name"]{font-weight:700}
-[data-vibeui-block="renovation-002"] [data-part="lane"]{position:relative;border-bottom:1px solid var(--vibeui-renovation-002-line);background-image:repeating-linear-gradient(90deg,transparent 0 calc(100% / var(--vibeui-renovation-002-total) - 1px),var(--vibeui-renovation-002-line) calc(100% / var(--vibeui-renovation-002-total) - 1px) calc(100% / var(--vibeui-renovation-002-total)))}
-[data-vibeui-block="renovation-002"] [data-part="bar"]{position:absolute;top:.55rem;bottom:.55rem;left:calc(var(--vibeui-renovation-002-start) / var(--vibeui-renovation-002-total) * 100%);width:calc(var(--vibeui-renovation-002-len) / var(--vibeui-renovation-002-total) * 100%);border:1px solid color-mix(in oklab,var(--vibeui-renovation-002-fg) 40%,transparent);background:color-mix(in oklab,var(--vibeui-renovation-002-fg) 6%,transparent);overflow:hidden;transition:border-color .3s}
-[data-vibeui-block="renovation-002"] [data-part="bar"]::after{content:"";position:absolute;inset:0;background:var(--vibeui-renovation-002-accent);transform:scaleX(var(--vibeui-renovation-002-p));transform-origin:left;transition:transform .15s linear}
-[data-vibeui-block="renovation-002"] [data-part="row"][data-state="now"] [data-part="bar"]{border-color:var(--vibeui-renovation-002-fg)}
 [data-vibeui-block="renovation-002"] [data-part="here"]{position:absolute;grid-column:2;top:0;bottom:0;left:calc(var(--vibeui-renovation-002-here) * 100%);width:0;border-left:2px solid var(--vibeui-renovation-002-fg);pointer-events:none;transition:left .15s linear;z-index:2}
 [data-vibeui-block="renovation-002"] [data-part="here"] span{position:absolute;top:-.1rem;left:-.35rem;padding:.25rem .5rem;background:var(--vibeui-renovation-002-fg);color:var(--vibeui-renovation-002-bg);font-family:var(--vibeui-renovation-002-mono);font-size:.62rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
 [data-vibeui-block="renovation-002"] [data-part="here"][data-end="true"] span{left:auto;right:-.35rem}
@@ -99,7 +90,7 @@ container-type:inline-size;
 [data-vibeui-block="renovation-002"] [data-part="now"] p{margin:0;font-size:.92rem;color:var(--vibeui-renovation-002-muted)}
 [data-vibeui-block="renovation-002"] [data-part="now"] b{font-family:var(--vibeui-renovation-002-mono);font-weight:500;font-size:.78rem;color:var(--vibeui-renovation-002-fg)}
 [data-vibeui-block="renovation-002"] [data-part="fine"]{margin:0;font-family:var(--vibeui-renovation-002-mono);font-size:.7rem;color:var(--vibeui-renovation-002-muted)}
-@container (min-width: 60rem){[data-vibeui-block="renovation-002"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) 20rem;grid-template-areas:"head head" "chart now" "fine fine";align-items:start;gap:1.5rem 2rem}[data-vibeui-block="renovation-002"] [data-part="head"]{grid-area:head}[data-vibeui-block="renovation-002"] [data-part="chart"]{grid-area:chart;grid-template-columns:minmax(9rem,13rem) minmax(0,1fr)}[data-vibeui-block="renovation-002"] [data-part="now"]{grid-area:now;position:sticky;top:0}[data-vibeui-block="renovation-002"] [data-part="fine"]{grid-area:fine}[data-vibeui-block="renovation-002"] [data-part="name"]{font-size:.9rem;min-height:3rem}[data-vibeui-block="renovation-002"] [data-part="axis"] span:nth-child(even){color:inherit}}
+@container (min-width: 60rem){[data-vibeui-block="renovation-002"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) 20rem;grid-template-areas:"head head" "chart now" "fine fine";align-items:start;gap:1.5rem 2rem}[data-vibeui-block="renovation-002"] [data-part="head"]{grid-area:head}[data-vibeui-block="renovation-002"] [data-part="chart"]{grid-area:chart;grid-template-columns:minmax(9rem,13rem) minmax(0,1fr)}[data-vibeui-block="renovation-002"] [data-part="now"]{grid-area:now;position:sticky;top:0}[data-vibeui-block="renovation-002"] [data-part="fine"]{grid-area:fine}[data-vibeui-block="renovation-002"] [data-part="axis"] span:nth-child(even){color:inherit}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="renovation-002"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_STAGES: Renovation002Stage[] = [
@@ -209,22 +200,7 @@ export function Renovation002({
                     const done = week >= stage.start + stage.weeks
                     const state = done ? "done" : index === nowIndex ? "now" : "todo"
                     return (
-                      <div key={stage.name} data-part="row" data-state={state} role="row">
-                        <div data-part="name" role="rowheader">
-                          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            <path d="M3 8.5l3.5 3.5L13 5" />
-                          </svg>
-                          {stage.name}
-                        </div>
-                        <div
-                          data-part="lane"
-                          role="cell"
-                          aria-label={weeksLabel.replace("{from}", String(stage.start + 1)).replace("{to}", String(Math.ceil(stage.start + stage.weeks)))}
-                          style={{ ["--vibeui-renovation-002-start" as string]: stage.start, ["--vibeui-renovation-002-len" as string]: stage.weeks }}
-                        >
-                          <div data-part="bar" style={{ ["--vibeui-renovation-002-p" as string]: Math.min(1, Math.max(0, (week - stage.start) / stage.weeks)).toFixed(3) }} />
-                        </div>
-                      </div>
+                      <Card095 key={stage.name} data-part="row" name={stage.name} start={stage.start} weeks={stage.weeks} weeksLabel={weeksLabel} week={week} data-state={state} accent={accent} />
                     )
                   })}
                 </div>

@@ -115,6 +115,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/component/toast")).PREVIEWS
     case "component/tree":
       return (await import("@/registry/previews/component/tree")).PREVIEWS
+    case "component/typography":
+      return (await import("@/registry/previews/component/typography")).PREVIEWS
     case "animation/stacks":
       return (await import("@/registry/previews/animation/stacks")).PREVIEWS
     case "animation/cursor":

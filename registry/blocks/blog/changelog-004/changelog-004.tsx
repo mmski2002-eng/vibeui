@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Changelog004Release = {
   version: string
   date: string
@@ -57,6 +59,7 @@ container-type:inline-size;
 :where([data-vibeui-block="changelog-004"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="changelog-004"]{box-sizing:border-box;padding:5.5rem 0;background:var(--vibeui-changelog-004-bg);color:var(--vibeui-changelog-004-fg);font-family:var(--vibeui-changelog-004-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="changelog-004"] *{box-sizing:border-box}
+[data-vibeui-block="changelog-004"] [data-part="all"]{margin-top:1.2rem}
 [data-vibeui-block="changelog-004"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem}
 [data-vibeui-block="changelog-004"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-changelog-004-mono);font-size:.75rem;color:var(--vibeui-changelog-004-accent)}
 [data-vibeui-block="changelog-004"] [data-part="title"]{margin:0;font-weight:800;font-size:clamp(2.2rem,5.2cqi,3.8rem);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
@@ -66,8 +69,6 @@ container-type:inline-size;
 [data-vibeui-block="changelog-004"] [data-reveal]{opacity:0}
 [data-vibeui-block="changelog-004"][data-shown="true"] [data-reveal]{opacity:1;animation:vibeui-changelog-004-up .8s var(--vibeui-changelog-004-ease) backwards;animation-delay:calc(.15s + var(--vibeui-changelog-004-i,0) * .1s)}
 [data-vibeui-block="changelog-004"] [data-part="lede"]{margin:1rem 0 0;max-width:28rem;color:var(--vibeui-changelog-004-muted);font-size:1.05rem}
-[data-vibeui-block="changelog-004"] [data-part="all"]{display:inline-block;margin-top:1.2rem;font-family:var(--vibeui-changelog-004-mono);font-size:.8rem;color:var(--vibeui-changelog-004-accent);text-decoration:none;transition:transform .3s var(--vibeui-changelog-004-ease)}
-[data-vibeui-block="changelog-004"] [data-part="all"]:hover{transform:translateX(4px)}
 [data-vibeui-block="changelog-004"] [data-part="list"]{position:relative;margin:0;padding:0 0 0 1.6rem;list-style:none}
 [data-vibeui-block="changelog-004"] [data-part="list"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(var(--vibeui-changelog-004-accent),var(--vibeui-changelog-004-line) 40%);transform:scaleY(0);transform-origin:top;transition:transform 1.6s var(--vibeui-changelog-004-ease) .2s}
 [data-vibeui-block="changelog-004"][data-shown="true"] [data-part="list"]::before{transform:none}
@@ -93,7 +94,7 @@ container-type:inline-size;
 [data-vibeui-block="changelog-004"] [data-part="items"] li::before{content:"–";font-family:var(--vibeui-changelog-004-mono);color:var(--vibeui-changelog-004-accent)}
 [data-vibeui-block="changelog-004"] [data-part="items"] li[data-breaking="true"]{color:var(--vibeui-changelog-004-fg)}
 [data-vibeui-block="changelog-004"] [data-part="items"] li[data-breaking="true"]::before{content:"!";color:var(--vibeui-changelog-004-danger);font-weight:700}
-[data-vibeui-block="changelog-004"] [data-part="head"]:focus-visible,[data-vibeui-block="changelog-004"] a:focus-visible{outline:2px solid var(--vibeui-changelog-004-accent);outline-offset:2px}
+[data-vibeui-block="changelog-004"] [data-part="head"]:focus-visible{outline:2px solid var(--vibeui-changelog-004-accent);outline-offset:2px}
 @keyframes vibeui-changelog-004-rise{to{transform:none}}
 @keyframes vibeui-changelog-004-up{from{opacity:0;transform:translateY(22px)}}
 @keyframes vibeui-changelog-004-slide{from{opacity:0;transform:translateX(-18px)}}
@@ -184,9 +185,14 @@ export function Changelog004({
               </p>
             ) : null}
             {allLabel ? (
-              <a data-part="all" href={allHref} data-reveal="" style={at(2)}>
-                {allLabel}
-              </a>
+              <Button077
+                data-part="all"
+                data-reveal=""
+                style={at(2)}
+                label={allLabel}
+                href={allHref}
+                accent={accent}
+              />
             ) : null}
           </div>
           <ol data-part="list">

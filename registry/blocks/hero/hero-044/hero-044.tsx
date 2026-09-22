@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Hero044Milestone = {
   /** Сумма, на которой стоит веха. */
   at: number
@@ -107,9 +109,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-044"] [data-part="primary"]{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 1.8rem;border-radius:999px;background:var(--vibeui-hero-044-accent);color:var(--vibeui-hero-044-on-accent);text-decoration:none;font-weight:600;font-size:1.05rem;will-change:transform;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
 [data-vibeui-block="hero-044"] [data-part="primary"]:hover{box-shadow:0 16px 36px -14px var(--vibeui-hero-044-accent)}
 [data-vibeui-block="hero-044"] [data-part="primary"] svg{width:1.1rem;height:1.1rem}
-[data-vibeui-block="hero-044"] [data-part="secondary"]{color:var(--vibeui-hero-044-fg);text-decoration:none;font-weight:500;border-bottom:1px solid var(--vibeui-hero-044-line);transition:border-color .2s}
-[data-vibeui-block="hero-044"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-044-accent)}
-[data-vibeui-block="hero-044"] a:focus-visible{outline:2px solid var(--vibeui-hero-044-accent);outline-offset:3px}
 [data-vibeui-block="hero-044"] [data-part="figure"]{position:relative;margin:0 auto;width:min(100%,30rem);padding:.75rem .75rem 3rem;background:var(--vibeui-hero-044-bg);border:1px solid var(--vibeui-hero-044-line);box-shadow:0 30px 60px -30px rgb(0 0 0 / .45);transform:rotate(1.5deg);animation:vibeui-hero-044-photo 1s cubic-bezier(.2,.8,.2,1) .3s both}
 [data-vibeui-block="hero-044"] [data-part="figure"]::before{content:"";position:absolute;top:-.8rem;left:50%;width:6rem;height:1.6rem;transform:translateX(-50%) rotate(-3deg);background:color-mix(in oklab,var(--vibeui-hero-044-second) 55%,transparent);opacity:.8}
 [data-vibeui-block="hero-044"] [data-part="photo"]{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(135deg,var(--vibeui-hero-044-soft),color-mix(in oklab,var(--vibeui-hero-044-accent) 25%,var(--vibeui-hero-044-bg)))}
@@ -311,9 +310,12 @@ export function Hero044({
                 </a>
               </span>
               {secondaryLabel ? (
-                <a data-part="secondary" href={secondaryHref}>
-                  {secondaryLabel}
-                </a>
+                <Button077
+                  data-part="secondary"
+                  label={secondaryLabel}
+                  href={secondaryHref}
+                  accent={accent}
+                />
               ) : null}
             </div>
           </div>

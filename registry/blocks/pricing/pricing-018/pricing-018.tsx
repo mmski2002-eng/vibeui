@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing018Section = {
   title: string
@@ -43,6 +46,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-018"]{color-scheme:dark}
+[data-vibeui-block="pricing-018"] [data-part="cta-button"]{margin-top:1rem;}
 [data-vibeui-block="pricing-018"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -55,14 +59,6 @@ font-family:var(--vibeui-pricing-018-sans);
 max-width:66rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;
 display:grid;grid-template-columns:1fr;gap:2rem;align-items:start;
 }
-[data-vibeui-block="pricing-018"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-018-accent);
-}
-[data-vibeui-block="pricing-018"] h2{
-margin:0;max-width:18ch;font-size:clamp(1.5rem,4.2cqi,2.25rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-018"] [data-part="lede"]{margin:0.875rem 0 0;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-018-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-018"] [data-part="buy"]{
 margin-top:1.5rem;padding:1.25rem;border-radius:1rem;
 border:1px solid var(--vibeui-pricing-018-line);background:var(--vibeui-pricing-018-card);
@@ -72,13 +68,6 @@ display:flex;align-items:baseline;gap:0.375rem;margin:0;
 font-size:1.75rem;font-weight:700;letter-spacing:-0.035em;font-variant-numeric:tabular-nums;
 }
 [data-vibeui-block="pricing-018"] [data-part="period"]{font-size:0.8125rem;font-weight:500;letter-spacing:0;color:var(--vibeui-pricing-018-muted)}
-[data-vibeui-block="pricing-018"] a{
-display:flex;align-items:center;justify-content:center;margin-top:1rem;height:2.75rem;border-radius:0.625rem;
-background:var(--vibeui-pricing-018-accent);color:oklch(from var(--vibeui-pricing-018-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-018-dur-2) ease;
-}
-[data-vibeui-block="pricing-018"] a:hover{background:color-mix(in oklab,var(--vibeui-pricing-018-accent) 86%,black)}
-[data-vibeui-block="pricing-018"] a:focus-visible{outline:2px solid var(--vibeui-pricing-018-accent);outline-offset:3px}
 [data-vibeui-block="pricing-018"] [data-part="sections"]{display:grid;gap:1.75rem}
 [data-vibeui-block="pricing-018"] h3{margin:0;font-size:0.9375rem;font-weight:700}
 [data-vibeui-block="pricing-018"] [data-part="caption"]{
@@ -200,16 +189,20 @@ export function Pricing018({
       >
         <div data-part="shell">
           <div data-part="aside">
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2>{title}</h2>
-            {lede ? <p data-part="lede">{lede}</p> : null}
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              lede={lede}
+              accent={accent}
+            />
 
             <div data-part="buy">
               <p data-part="price">
                 {price}
                 <span data-part="period">{period}</span>
               </p>
-              <a href={action.href}>{action.label}</a>
+              <Button016 data-part="cta-button" label={action.label} href={action.href} external={false} size="lg" tone="accent" accent={accent} />
             </div>
           </div>
 

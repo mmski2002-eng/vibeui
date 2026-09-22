@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks004 } from "@/registry/components/navigation/footerlinks-004/footerlinks-004"
 
 export type Footer023Link = {
   label: string
@@ -69,10 +70,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-023"] [data-part="hours"]{margin:.4rem 0 0;font-family:var(--vibeui-footer-023-mono);font-size:.8rem;letter-spacing:.06em;color:var(--vibeui-footer-023-muted)}
 [data-vibeui-block="footer-023"] [data-part="phone"]{display:inline-block;margin-top:.75rem;font-family:var(--vibeui-footer-023-mono);font-size:1.1rem;font-weight:700;color:var(--vibeui-footer-023-cyan);text-shadow:0 0 10px color-mix(in oklab,var(--vibeui-footer-023-cyan) 60%,transparent)}
 [data-vibeui-block="footer-023"] [data-part="map"]{display:inline-block;margin:.75rem 0 0 1rem;font-size:.85rem;color:var(--vibeui-footer-023-muted);border-bottom:1px solid color-mix(in oklab,var(--vibeui-footer-023-accent) 60%,transparent)}
-[data-vibeui-block="footer-023"] [data-part="col-title"]{margin:0 0 .75rem;font-family:var(--vibeui-footer-023-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-footer-023-cyan)}
-[data-vibeui-block="footer-023"] [data-part="links"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem;font-size:.92rem}
-[data-vibeui-block="footer-023"] [data-part="links"] a{color:var(--vibeui-footer-023-muted);transition:color .2s,text-shadow .3s}
-[data-vibeui-block="footer-023"] [data-part="links"] a:hover{color:var(--vibeui-footer-023-fg);text-shadow:0 0 10px color-mix(in oklab,var(--vibeui-footer-023-accent) 70%,transparent)}
 [data-vibeui-block="footer-023"] [data-part="socials"]{display:flex;gap:.5rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="footer-023"] [data-part="social"]{display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;border:1px solid var(--vibeui-footer-023-line);font-weight:700;transition:border-color .25s,box-shadow .3s,transform .25s}
 [data-vibeui-block="footer-023"] [data-part="social"]:hover{transform:translateY(-3px);border-color:var(--vibeui-footer-023-accent);box-shadow:0 0 16px color-mix(in oklab,var(--vibeui-footer-023-accent) 60%,transparent)}
@@ -153,16 +150,7 @@ export function Footer023({
               ) : null}
             </div>
             {columns.map((column) => (
-              <div key={column.title}>
-                <p data-part="col-title">{column.title}</p>
-                <ul data-part="links">
-                  {column.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Footerlinks004 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
             <ul data-part="socials">
               {socials.map((social) => (

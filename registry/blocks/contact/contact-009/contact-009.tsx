@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Contact009Office = {
   city: string
@@ -46,18 +47,6 @@ display:block;background:var(--vibeui-contact-009-bg);color:var(--vibeui-contact
 font-family:var(--vibeui-contact-009-font);
 }
 [data-vibeui-block="contact-009"] [data-part="shell"]{max-width:70rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="contact-009"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-contact-009-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="contact-009"] [data-part="title"]{
-margin:0;max-width:24ch;
-font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
-[data-vibeui-block="contact-009"] [data-part="description"]{
-margin:0.875rem 0 0;max-width:52ch;color:var(--vibeui-contact-009-muted);
-font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="contact-009"] [data-part="grid"]{
 display:grid;gap:1rem;margin:2rem 0 0;padding:0;list-style:none;
 }
@@ -189,9 +178,14 @@ export function Contact009({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            lede={description}
+            ledeWidth={52}
+            accent={accent}
+          />
           <ul data-part="grid">
             {offices.map((office) => (
               <li key={office.city} data-part="card">

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { Card091 } from "@/registry/components/card/card-091/card-091"
 
 export type Course003Case = {
   name: string
@@ -73,6 +74,7 @@ container-type:inline-size;
 :where([data-vibeui-block="course-003"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="course-003"]{box-sizing:border-box;display:block;overflow:hidden;background:var(--vibeui-course-003-bg);color:var(--vibeui-course-003-fg);font-family:var(--vibeui-course-003-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="course-003"] *{box-sizing:border-box}
+[data-vibeui-block="course-003"] [data-part="card"]{flex:0 0 min(82%,34rem)}
 [data-vibeui-block="course-003"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem}
 [data-vibeui-block="course-003"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem 3rem;margin-bottom:2rem}
 [data-vibeui-block="course-003"] [data-part="eyebrow"]{margin:0 0 .75rem;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-course-003-accent);font-weight:700}
@@ -89,34 +91,12 @@ container-type:inline-size;
 [data-vibeui-block="course-003"] [data-part="lane"]{display:flex;gap:1.25rem;margin:0 -1.25rem;padding:.5rem 1.25rem 1.5rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:1.25rem;scrollbar-width:none;cursor:grab;overscroll-behavior-x:contain}
 [data-vibeui-block="course-003"] [data-part="lane"]::-webkit-scrollbar{display:none}
 [data-vibeui-block="course-003"] [data-part="lane"][data-drag="true"]{cursor:grabbing;scroll-snap-type:none;user-select:none}
-[data-vibeui-block="course-003"] [data-part="card"]{position:relative;flex:0 0 min(82%,34rem);scroll-snap-align:start;display:flex;flex-direction:column;overflow:hidden;border-radius:1.4rem;background:var(--vibeui-course-003-card);border:1px solid var(--vibeui-course-003-line);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
-[data-vibeui-block="course-003"] [data-part="card"]:hover{transform:translateY(-4px);box-shadow:0 30px 50px -30px rgb(17 24 39 / .35)}
-[data-vibeui-block="course-003"] [data-part="card"]::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(22rem circle at var(--vibeui-course-003-mx,50%) var(--vibeui-course-003-my,50%),color-mix(in oklab,var(--vibeui-course-003-accent) 18%,transparent),transparent 60%);opacity:0;transition:opacity .4s}
-[data-vibeui-block="course-003"] [data-part="card"]:hover::after{opacity:1}
-[data-vibeui-block="course-003"] [data-part="work"]{position:relative;aspect-ratio:16/10;overflow:hidden;background:light-dark(#e5e7eb,#1f2430)}
-[data-vibeui-block="course-003"] [data-part="work"] img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.8,.2,1);-webkit-user-drag:none;user-select:none}
-[data-vibeui-block="course-003"] [data-part="card"]:hover [data-part="work"] img{transform:scale(1.04)}
-[data-vibeui-block="course-003"] [data-part="gain"]{position:absolute;left:1rem;top:1rem;padding:.4rem .75rem;border-radius:.6rem;background:var(--vibeui-course-003-marker);color:#1a2e05;font-family:var(--vibeui-course-003-display);font-size:.78rem;font-weight:600;box-shadow:0 10px 20px -12px rgb(0 0 0 / .4)}
-[data-vibeui-block="course-003"] [data-part="body"]{display:grid;gap:1rem;padding:1.25rem}
-[data-vibeui-block="course-003"] [data-part="who"]{display:flex;align-items:center;gap:.75rem}
-[data-vibeui-block="course-003"] [data-part="avatar"]{width:2.75rem;height:2.75rem;border-radius:50%;object-fit:cover;flex:none;background:light-dark(#e5e7eb,#1f2430);-webkit-user-drag:none}
-[data-vibeui-block="course-003"] [data-part="name"]{font-weight:600}
-[data-vibeui-block="course-003"] [data-part="path"]{display:grid;grid-template-columns:1fr auto 1fr;gap:.75rem;align-items:center;padding:.9rem 1rem;border-radius:.9rem;background:var(--vibeui-course-003-bg);font-size:.85rem}
-[data-vibeui-block="course-003"] [data-part="path"] small{display:block;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-course-003-muted);margin-bottom:.2rem}
-[data-vibeui-block="course-003"] [data-part="after"]{font-weight:600;color:var(--vibeui-course-003-accent)}
-[data-vibeui-block="course-003"] [data-part="arrow"]{width:2.75rem;height:1.5rem;color:var(--vibeui-course-003-accent)}
-[data-vibeui-block="course-003"] [data-part="arrow"] path{stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1) .2s}
-[data-vibeui-block="course-003"] [data-part="card"][data-seen="true"] [data-part="arrow"] path{stroke-dashoffset:0}
-[data-vibeui-block="course-003"] [data-part="quote"]{margin:0;font-size:.95rem;color:var(--vibeui-course-003-muted);font-style:italic}
-[data-vibeui-block="course-003"] [data-part="link"]{margin-top:auto;justify-self:start;color:inherit;font-size:.85rem;font-weight:600;text-decoration:none;border-bottom:1px solid var(--vibeui-course-003-accent);padding-bottom:.1rem}
-[data-vibeui-block="course-003"] [data-part="link"]:focus-visible{outline:2px solid var(--vibeui-course-003-accent);outline-offset:3px}
 @container (min-width: 64rem){
+[data-vibeui-block="course-003"] [data-part="card"]{flex-basis:min(56%,38rem)}
 [data-vibeui-block="course-003"] [data-part="shell"]{padding:5.5rem 2rem 4.5rem}
 [data-vibeui-block="course-003"] [data-part="lane"]{margin:0 -2rem;padding:.5rem 2rem 1.5rem;scroll-padding-inline:2rem;gap:1.5rem}
-[data-vibeui-block="course-003"] [data-part="card"]{flex-basis:min(56%,38rem)}
-[data-vibeui-block="course-003"] [data-part="body"]{padding:1.5rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="course-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="course-003"] [data-part="arrow"] path{stroke-dashoffset:0}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="course-003"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_CASES: Course003Case[] = [
   { name: "Артём Гусев", before: "маркетолог, 4 года", after: "продуктовый дизайнер, Ozon", gain: "оффер через 2 месяца", quote: "Кейс с защиты показал на собеседовании — взяли без тестового." },
@@ -288,37 +268,7 @@ export function Course003({
           ) : null}
           <ul ref={lane} data-part="lane" data-drag={dragging} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
             {cases.map((item, index) => (
-              <li key={item.name} data-part="card" data-index={index} data-seen={visible[index] ? "true" : undefined} onPointerMove={glow} onClickCapture={(event) => dragging && event.preventDefault()}>
-                <div data-part="work">
-                  {item.work ? <img src={item.work} alt={item.workAlt ?? ""} loading="lazy" draggable={false} /> : null}
-                  {item.gain ? <span data-part="gain">{item.gain}</span> : null}
-                </div>
-                <div data-part="body">
-                  <div data-part="who">
-                    {item.image ? <img data-part="avatar" src={item.image} alt="" loading="lazy" draggable={false} /> : <span data-part="avatar" />}
-                    <span data-part="name">{item.name}</span>
-                  </div>
-                  <div data-part="path">
-                    <span>
-                      <small>{beforeLabel}</small>
-                      {item.before}
-                    </span>
-                    <svg data-part="arrow" viewBox="0 0 44 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M3 12h36M31 5l8 7-8 7" />
-                    </svg>
-                    <span data-part="after">
-                      <small>{afterLabel}</small>
-                      {item.after}
-                    </span>
-                  </div>
-                  {item.quote ? <p data-part="quote">«{item.quote}»</p> : null}
-                  {item.href && linkLabel ? (
-                    <a data-part="link" href={item.href} draggable={false}>
-                      {linkLabel} →
-                    </a>
-                  ) : null}
-                </div>
-              </li>
+              <Card091 key={item.name} data-part="card" name={item.name} work={item.work} workAlt={item.workAlt} gain={item.gain} image={item.image} before={item.before} after={item.after} quote={item.quote} href={item.href} beforeLabel={beforeLabel} afterLabel={afterLabel} linkLabel={linkLabel} data-index={index} data-seen={visible[index] ? "true" : undefined} onPointerMove={glow} onClickCapture={(event) => dragging && event.preventDefault()} accent={accent} />
             ))}
           </ul>
         </div>

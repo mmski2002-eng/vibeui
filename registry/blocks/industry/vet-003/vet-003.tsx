@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState, type CSSProperties } from "react"
+import { Button087 } from "@/registry/components/button/button-087/button-087"
 
 export type Vet003Symptom = {
   label: string
@@ -75,15 +76,6 @@ container-type:inline-size;
 [data-vibeui-block="vet-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-vet-003-display);font-weight:900;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1;letter-spacing:-.03em}
 [data-vibeui-block="vet-003"] [data-part="lede"]{margin:.9rem 0 0;color:var(--vibeui-vet-003-muted)}
 [data-vibeui-block="vet-003"] [data-part="chips"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:2rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="vet-003"] [data-part="chip"]{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .95rem;border:1px solid var(--vibeui-vet-003-line);border-radius:999px;background:var(--vibeui-vet-003-card);color:var(--vibeui-vet-003-fg);font:inherit;font-size:.92rem;font-weight:500;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .2s cubic-bezier(.34,1.56,.64,1)}
-[data-vibeui-block="vet-003"] [data-part="chip"]::before{content:"";width:.55rem;height:.55rem;border-radius:50%;background:var(--vibeui-vet-003-dot);flex-shrink:0;transition:transform .2s}
-[data-vibeui-block="vet-003"] [data-part="chip"][data-level="1"]{--vibeui-vet-003-dot:var(--vibeui-vet-003-ok)}
-[data-vibeui-block="vet-003"] [data-part="chip"][data-level="2"]{--vibeui-vet-003-dot:var(--vibeui-vet-003-warn)}
-[data-vibeui-block="vet-003"] [data-part="chip"][data-level="3"]{--vibeui-vet-003-dot:var(--vibeui-vet-003-bad)}
-[data-vibeui-block="vet-003"] [data-part="chip"]:hover{border-color:var(--vibeui-vet-003-fg)}
-[data-vibeui-block="vet-003"] [data-part="chip"][aria-pressed="true"]{background:var(--vibeui-vet-003-fg);color:var(--vibeui-vet-003-bg);border-color:transparent;transform:scale(1.04)}
-[data-vibeui-block="vet-003"] [data-part="chip"][aria-pressed="true"]::before{transform:scale(1.3)}
-[data-vibeui-block="vet-003"] [data-part="chip"]:focus-visible{outline:2px solid var(--vibeui-vet-003-accent);outline-offset:2px}
 [data-vibeui-block="vet-003"] [data-part="result"]{display:grid;gap:1.2rem;margin:2rem 0 0;align-items:start}
 [data-vibeui-block="vet-003"] [data-part="gauge"]{padding:1.4rem;border-radius:1.5rem;background:var(--vibeui-vet-003-card);border:1px solid var(--vibeui-vet-003-line)}
 [data-vibeui-block="vet-003"] [data-part="gauge"] h3{margin:0;font-family:var(--vibeui-vet-003-display);font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:-.02em}
@@ -207,9 +199,7 @@ export function Vet003({
           <ul data-part="chips" aria-label={chipsLabel}>
             {symptoms.map((symptom) => (
               <li key={symptom.label}>
-                <button data-part="chip" type="button" data-level={symptom.urgency} aria-pressed={picked.includes(symptom.label)} onClick={() => toggle(symptom.label)}>
-                  {symptom.label}
-                </button>
+                <Button087 data-part="chip" urgency={symptom.urgency} label={symptom.label} aria-pressed={picked.includes(symptom.label)} onClick={() => toggle(symptom.label)} accent={accent} />
               </li>
             ))}
           </ul>

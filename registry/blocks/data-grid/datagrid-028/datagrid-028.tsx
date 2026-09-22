@@ -1,6 +1,7 @@
 "use client"
 
 import { useId, useRef, useState } from "react"
+import { Card175 } from "@/registry/components/card/card-175/card-175"
 import type { ComponentProps, CSSProperties } from "react"
 
 export type Datagrid028Row = {
@@ -69,12 +70,6 @@ border:1px solid var(--vibeui-datagrid-028-border);border-radius:0.875rem;
 font-family:var(--vibeui-datagrid-028-font);
 }
 [data-vibeui-block="datagrid-028"] *{box-sizing:border-box}
-[data-vibeui-block="datagrid-028"] [data-part="bar"]{
-display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;min-height:3rem;
-padding:0.625rem 0.875rem;border-bottom:1px solid var(--vibeui-datagrid-028-border);
-}
-[data-vibeui-block="datagrid-028"] [data-part="title"]{margin:0;font-size:0.875rem;font-weight:650;margin-inline-end:auto}
-[data-vibeui-block="datagrid-028"] [data-part="log"]{margin:0;font-size:0.75rem;color:var(--vibeui-datagrid-028-muted)}
 [data-vibeui-block="datagrid-028"] [data-part="scroll"]{overflow-x:auto;overflow-y:visible}
 [data-vibeui-block="datagrid-028"] [data-part="scroll"]:focus-visible{outline:2px solid var(--vibeui-datagrid-028-accent);outline-offset:-2px}
 [data-vibeui-block="datagrid-028"] table{width:100%;border-collapse:collapse;font-size:0.8125rem}
@@ -264,12 +259,7 @@ export function Datagrid028({
         className={className}
         style={palette}
       >
-        <div data-part="bar">
-          <h3 data-part="title">{heading}</h3>
-          <p data-part="log" role="status" aria-live="polite">
-            {log || emptyLogText}
-          </p>
-        </div>
+        <Card175 data-part="bar" heading={heading} emptyLogText={emptyLogText} log={log} accent={accent} />
         <div
           data-part="scroll"
           role="region"

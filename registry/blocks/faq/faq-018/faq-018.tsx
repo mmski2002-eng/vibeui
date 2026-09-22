@@ -1,11 +1,11 @@
 import { useId, type CSSProperties } from "react"
 
-export type Faq018Item = {
-  question: string
-  answer: string
-  /** Цвет кружка-маркера у вопроса. */
-  color?: string
-}
+import {
+  Accordion018,
+  type Accordion018Item,
+} from "@/registry/components/accordion/accordion-018/accordion-018"
+
+export type Faq018Item = Accordion018Item
 
 export type Faq018Props = {
   eyebrow?: string
@@ -17,6 +17,7 @@ export type Faq018Props = {
   askHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
+  openFirst?: boolean
   background?: string
   className?: string
   style?: CSSProperties
@@ -46,29 +47,17 @@ container-type:inline-size;
 [data-vibeui-block="faq-018"]{box-sizing:border-box;display:block;background:var(--vibeui-faq-018-bg);color:var(--vibeui-faq-018-fg);font-family:var(--vibeui-faq-018-font);font-size:1rem;line-height:1.45}
 [data-vibeui-block="faq-018"] *{box-sizing:border-box}
 [data-vibeui-block="faq-018"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:2rem 1.25rem 3rem}
+/* Список вопросов — accordion-018, ему отдаётся вся колонка. */
+[data-vibeui-block="faq-018"] [data-part="grid"]{width:100%;max-width:none}
 [data-vibeui-block="faq-018"] [data-part="head"]{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.25rem;border-top:1px solid var(--vibeui-faq-018-line)}
 [data-vibeui-block="faq-018"] [data-part="eyebrow"]{margin:0;font-size:1.05rem}
 [data-vibeui-block="faq-018"] [data-part="ask"]{display:inline-flex;align-items:center;gap:.6rem;font-size:.95rem;color:var(--vibeui-faq-018-muted)}
 [data-vibeui-block="faq-018"] [data-part="ask"] a{display:inline-flex;align-items:center;height:2.4rem;padding:0 1rem;border-radius:999px;background:var(--vibeui-faq-018-accent);color:var(--vibeui-faq-018-on-accent);font-weight:600;text-decoration:none;transition:transform .2s}
 [data-vibeui-block="faq-018"] [data-part="ask"] a:hover{transform:translateY(-2px)}
-[data-vibeui-block="faq-018"] [data-part="ask"] a:focus-visible,[data-vibeui-block="faq-018"] summary:focus-visible{outline:2px solid var(--vibeui-faq-018-fg);outline-offset:3px;border-radius:1rem}
 [data-vibeui-block="faq-018"] [data-part="title"]{margin:.5rem 0 1.5rem;font-family:var(--vibeui-faq-018-display);font-size:clamp(1.6rem,3.4cqi,2.4rem);font-weight:600;letter-spacing:-.03em;line-height:1.1}
-[data-vibeui-block="faq-018"] [data-part="grid"]{display:grid;gap:.5rem}
-[data-vibeui-block="faq-018"] details{border-radius:1.1rem;background:transparent;transition:background .3s}
-[data-vibeui-block="faq-018"] details[open]{background:var(--vibeui-faq-018-chip)}
-[data-vibeui-block="faq-018"] summary{display:grid;grid-template-columns:1.5rem minmax(0,1fr) 1.5rem;align-items:center;gap:.9rem;padding:1rem 1.1rem;cursor:pointer;list-style:none;font-family:var(--vibeui-faq-018-display);font-size:1.15rem;font-weight:600;letter-spacing:-.01em;line-height:1.25}
-[data-vibeui-block="faq-018"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-018"] [data-part="dot"]{width:.9rem;height:.9rem;margin:0 auto;border-radius:50%;background:var(--vibeui-faq-018-dot);transition:transform .35s cubic-bezier(.2,.9,.3,1.4)}
-[data-vibeui-block="faq-018"] details[open] [data-part="dot"]{transform:scale(1.6)}
-[data-vibeui-block="faq-018"] [data-part="plus"]{position:relative;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--vibeui-faq-018-chip);transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s}
-[data-vibeui-block="faq-018"] details[open] [data-part="plus"]{transform:rotate(45deg);background:var(--vibeui-faq-018-bg)}
-[data-vibeui-block="faq-018"] [data-part="plus"]::before,[data-vibeui-block="faq-018"] [data-part="plus"]::after{content:"";position:absolute;left:50%;top:50%;width:.7rem;height:2px;background:currentColor;transform:translate(-50%,-50%)}
-[data-vibeui-block="faq-018"] [data-part="plus"]::after{transform:translate(-50%,-50%) rotate(90deg)}
-[data-vibeui-block="faq-018"] [data-part="answer"]{margin:0;padding:0 1.1rem 1.1rem 3.5rem;color:var(--vibeui-faq-018-muted);animation:vibeui-faq-018-in .35s cubic-bezier(.2,.8,.2,1)}
-@keyframes vibeui-faq-018-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+to{opacity:1;transform:none}}
 @container (min-width: 56rem){
 [data-vibeui-block="faq-018"] [data-part="shell"]{padding:2.5rem 2rem 4rem}
-[data-vibeui-block="faq-018"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem 2rem;align-items:start}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-018"] *{animation:none!important;transition:none!important}}`
 
@@ -93,6 +82,7 @@ export function Faq018({
   askHref = "https://t.me/",
   tone = "auto",
   accent,
+  openFirst = false,
   background,
   className,
   style,
@@ -122,18 +112,14 @@ export function Faq018({
             ) : null}
           </div>
           <h2 data-part="title">{title}</h2>
-          <div data-part="grid">
-            {items.map((item) => (
-              <details key={item.question} name={group} style={{ ["--vibeui-faq-018-dot" as string]: item.color ?? "var(--vibeui-faq-018-accent)" }}>
-                <summary>
-                  <span data-part="dot" aria-hidden="true" />
-                  <span>{item.question}</span>
-                  <span data-part="plus" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
+          <Accordion018
+            defaultOpen={openFirst ? 0 : -1}
+            data-part="grid"
+            items={items}
+            group={group}
+            accent={accent}
+            background={background}
+          />
         </div>
       </section>
     </>

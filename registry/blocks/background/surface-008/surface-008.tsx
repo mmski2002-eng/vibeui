@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react"
+import { Mockup010 } from "@/registry/components/mockup/mockup-010/mockup-010"
 
 export type Surface008Props = {
   /** Контент поверх фона. Без него блок показывает демонстрационный пример. */
@@ -53,6 +54,7 @@ background:var(--vibeui-surface-008-c1);color:var(--vibeui-surface-008-ink);
 font-family:var(--vibeui-surface-008-font);
 }
 [data-vibeui-block="surface-008"] *{box-sizing:border-box}
+[data-vibeui-block="surface-008"] [data-part="ghost"]{flex:1}
 /* Заглушка того же характера: пока холст не ожил — и навсегда там, где
    нет WebGL 2, — те же цвета лежат мягкими пятнами. */
 [data-vibeui-block="surface-008"] [data-part="still"]{
@@ -79,24 +81,8 @@ opacity:0;transition:opacity 0.8s ease;
 position:relative;max-width:80rem;margin:0 auto;min-height:28rem;
 padding:2rem clamp(1.5rem,6cqi,4rem);display:flex;flex-direction:column;
 }
-/* Призрак страницы: шапка, заголовок и ряд стеклянных карточек — на живом
-   фоне стекло показывает, что он действительно течёт под контентом. */
-[data-vibeui-block="surface-008"] [data-part="ghost"]{display:flex;flex-direction:column;flex:1;gap:3rem}
-[data-vibeui-block="surface-008"] [data-part="nav"]{display:flex;align-items:center;gap:0.75rem}
-[data-vibeui-block="surface-008"] [data-part="mark"]{width:1.5rem;height:1.5rem;flex:none;border-radius:0.375rem;background:var(--vibeui-surface-008-ink)}
-[data-vibeui-block="surface-008"] [data-part="nav"] span:not([data-part]){width:3rem;height:0.5rem;border-radius:999px;background:var(--vibeui-surface-008-ghost-soft)}
-[data-vibeui-block="surface-008"] [data-part="nav"] span:last-child{margin-inline-start:auto;width:4.5rem;height:1.75rem;border-radius:0.5rem;background:var(--vibeui-surface-008-ink)}
-[data-vibeui-block="surface-008"] [data-part="title"]{display:flex;flex-direction:column;gap:0.875rem;max-width:36rem}
-[data-vibeui-block="surface-008"] [data-part="title"] span{height:1.25rem;border-radius:999px;background:var(--vibeui-surface-008-ghost);width:90%}
-[data-vibeui-block="surface-008"] [data-part="title"] span:nth-child(2){width:62%}
-[data-vibeui-block="surface-008"] [data-part="title"] span:nth-child(3){height:0.625rem;width:48%;background:var(--vibeui-surface-008-ghost-soft);margin-top:0.5rem}
-[data-vibeui-block="surface-008"] [data-part="cards"]{margin-top:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-[data-vibeui-block="surface-008"] [data-part="cards"] span{height:6.5rem;border-radius:1rem;background:var(--vibeui-surface-008-glass);border:1px solid var(--vibeui-surface-008-edge);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2)}
-[data-vibeui-block="surface-008"] [data-part="cards"] span:last-child{display:none}
 @container (min-width: 48rem){
 [data-vibeui-block="surface-008"] [data-part="frame"]{min-height:34rem;padding-block:2.5rem 3rem}
-[data-vibeui-block="surface-008"] [data-part="cards"]{grid-template-columns:repeat(3,minmax(0,1fr))}
-[data-vibeui-block="surface-008"] [data-part="cards"] span:last-child{display:block}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="surface-008"] *{animation:none!important;transition:none!important}}
 `
@@ -425,25 +411,7 @@ export function Surface008({
         <canvas ref={canvasRef} aria-hidden="true" />
         <div data-part="frame">
           {children ?? (
-            <div data-part="ghost" aria-hidden="true">
-              <div data-part="nav">
-                <span data-part="mark" />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <div data-part="title">
-                <span />
-                <span />
-                <span />
-              </div>
-              <div data-part="cards">
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
+            <Mockup010 data-part="ghost"  accent={accent} />
           )}
         </div>
       </section>

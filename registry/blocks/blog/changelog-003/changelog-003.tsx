@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, type CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Changelog003Entry = {
   version: string
@@ -24,7 +25,8 @@ export type Changelog003Props = {
 // Улучшения» скрывают ненужные записи. Фильтр клиентский и работает на
 // data-атрибуте типа, без перерисовки списка — состояние держит только
 // активный чип, а видимость строк решает CSS по совпадению атрибутов.
-const STYLES = `
+const STYLES = `[data-vibeui-block="changelog-003"] [data-part="heading"]{margin-bottom:1.5rem}
+
 :where([data-vibeui-block="changelog-003"]){
 --vibeui-changelog-003-bg:transparent;
 --vibeui-changelog-003-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -47,11 +49,6 @@ display:block;background:var(--vibeui-changelog-003-bg);color:var(--vibeui-chang
 font-family:var(--vibeui-changelog-003-font);
 }
 [data-vibeui-block="changelog-003"] [data-part="shell"]{max-width:48rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="changelog-003"] [data-part="eyebrow"]{
-margin:0 0 0.5rem;color:var(--vibeui-changelog-003-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="changelog-003"] [data-part="title"]{margin:0 0 1.5rem;font-size:clamp(1.5rem,4.5cqi,2.25rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="changelog-003"] [data-part="filters"]{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.75rem}
 [data-vibeui-block="changelog-003"] [data-part="chip"]{
 appearance:none;cursor:pointer;border:1px solid var(--vibeui-changelog-003-border);
@@ -176,8 +173,12 @@ export function Changelog003({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <div data-part="filters" role="group" aria-label="Фильтр по типу">
             <button
               type="button"

@@ -1,6 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 type Navbar004Link = {
@@ -89,6 +91,7 @@ font-family:var(--vibeui-navbar-004-font);
 font-feature-settings:"cv11","ss01";
 }
 [data-vibeui-block="navbar-004"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-004"] [data-part="action"]{margin-left:auto;flex:none;order:2}
 [data-vibeui-block="navbar-004"] [data-part="shell"]{
 display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem 1rem;
 max-width:82rem;margin:0 auto;padding:0.75rem 1rem;min-height:4rem;
@@ -107,21 +110,6 @@ inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
 transition:transform var(--vibeui-navbar-004-dur-3) var(--vibeui-navbar-004-ease);
 }
 [data-vibeui-block="navbar-004"] [data-part="brand"]:hover [data-part="mark"]{transform:rotate(-6deg) scale(1.06)}
-
-[data-vibeui-block="navbar-004"] [data-part="action"]{
-display:inline-flex;align-items:center;min-height:2.5rem;padding:0.25rem 1.125rem;border-radius:0.6875rem;
-margin-left:auto;flex:none;order:2;
-background:var(--vibeui-navbar-004-accent);color:oklch(from var(--vibeui-navbar-004-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;font-size:0.9375rem;font-weight:650;white-space:nowrap;letter-spacing:-0.01em;
-box-shadow:0 0.3125rem 1rem color-mix(in oklab,var(--vibeui-navbar-004-accent) 38%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 42%,transparent);
-transition:transform var(--vibeui-navbar-004-dur-2) var(--vibeui-navbar-004-ease),box-shadow var(--vibeui-navbar-004-dur-3) ease;
-}
-[data-vibeui-block="navbar-004"] [data-part="action"]:hover{
-transform:translateY(-1px);
-box-shadow:0 0.5rem 1.5rem color-mix(in oklab,var(--vibeui-navbar-004-accent) 48%,transparent),
-inset 0 1px 0 color-mix(in oklab,#ffffff 52%,transparent);
-}
 
 [data-vibeui-block="navbar-004"] [data-part="nav"]{
 order:3;flex:1 1 100%;display:flex;flex-direction:column;
@@ -201,7 +189,7 @@ transition:color var(--vibeui-navbar-004-dur-1) ease;
 }
 [data-vibeui-block="navbar-004"] [data-part="plain"]:hover{color:var(--vibeui-navbar-004-accent)}
 
-[data-vibeui-block="navbar-004"] a:focus-visible,
+
 [data-vibeui-block="navbar-004"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-004-accent);outline-offset:3px;
 }
@@ -484,9 +472,15 @@ export function Navbar004({
             ))}
           </nav>
 
-          <a data-part="action" href={actionHref}>
-            {actionLabel}
-          </a>
+          <Button016
+            data-part="action"
+            label={actionLabel}
+            href={actionHref}
+            external={false}
+            size="sm"
+            tone="accent"
+            accent={accent}
+          />
         </div>
       </header>
     </>

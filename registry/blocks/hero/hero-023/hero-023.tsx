@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Badge034 } from "@/registry/components/badge/badge-034/badge-034"
 
 export type Hero023Tag = {
   label: string
@@ -59,17 +60,8 @@ container-type:inline-size;
 [data-vibeui-block="hero-023"] [data-part="tags"]{display:flex;flex-wrap:wrap;gap:.75rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="hero-023"] [data-part="tags"] li{animation:vibeui-hero-023-pop .55s cubic-bezier(.2,.9,.3,1.3) both;animation-delay:calc(.25s + var(--vibeui-hero-023-n) * 45ms)}
 @keyframes vibeui-hero-023-pop{from{opacity:0;transform:scale(.7) translateY(10px)}to{opacity:1;transform:none}}
-[data-vibeui-block="hero-023"] [data-part="tag"]{display:inline-flex;align-items:center;gap:0;height:4.75rem;padding:0 1.5rem 0 0;border-radius:1.1rem;background:var(--vibeui-hero-023-tag);color:var(--vibeui-hero-023-ink,#111);font-family:var(--vibeui-hero-023-display);font-size:1.3rem;font-weight:500;letter-spacing:-.01em;text-decoration:none;overflow:hidden;transition:transform .35s cubic-bezier(.2,.9,.3,1.3),box-shadow .35s}
-[data-vibeui-block="hero-023"] [data-part="tag"][data-plain="true"]{padding-left:1.5rem}
-[data-vibeui-block="hero-023"] [data-part="tag"]:hover{transform:translateY(-4px) rotate(-1.5deg);box-shadow:0 18px 30px -18px rgb(0 0 0 / .35)}
-[data-vibeui-block="hero-023"] [data-part="tag"]:focus-visible{outline:2px solid var(--vibeui-hero-023-fg);outline-offset:3px}
-[data-vibeui-block="hero-023"] [data-part="sticker"]{display:grid;place-items:center;width:4.75rem;height:4.75rem;margin-right:1rem;background:color-mix(in oklab,var(--vibeui-hero-023-tag) 82%,#000);font-size:2.4rem;line-height:1;filter:drop-shadow(0 6px 6px rgb(0 0 0 / .25));transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}
-[data-vibeui-block="hero-023"] [data-part="tag"]:hover [data-part="sticker"]{transform:rotate(8deg) scale(1.12)}
 @container (max-width: 40rem){
 [data-vibeui-block="hero-023"] [data-part="tags"]{gap:.5rem}
-[data-vibeui-block="hero-023"] [data-part="tag"]{height:3.4rem;padding-right:1rem;border-radius:.85rem;font-size:1.05rem}
-[data-vibeui-block="hero-023"] [data-part="tag"][data-plain="true"]{padding-left:1rem}
-[data-vibeui-block="hero-023"] [data-part="sticker"]{width:3.4rem;height:3.4rem;margin-right:.7rem;font-size:1.7rem}
 }
 @container (min-width: 60rem){
 [data-vibeui-block="hero-023"] [data-part="shell"]{padding:3.5rem 2rem 4rem}
@@ -130,27 +122,9 @@ export function Hero023({
               <ul data-part="tags">
                 {tags.map((tag, index) => {
                   const tagStyle = { ["--vibeui-hero-023-tag" as string]: tag.color, ["--vibeui-hero-023-ink" as string]: tag.ink ?? "#111", ["--vibeui-hero-023-n" as string]: index } as CSSProperties
-                  const body = (
-                    <>
-                      {tag.emoji ? (
-                        <span data-part="sticker" aria-hidden="true">
-                          {tag.emoji}
-                        </span>
-                      ) : null}
-                      {tag.label}
-                    </>
-                  )
                   return (
                     <li key={tag.label} style={tagStyle}>
-                      {tag.href ? (
-                        <a data-part="tag" data-plain={tag.emoji ? undefined : "true"} href={tag.href}>
-                          {body}
-                        </a>
-                      ) : (
-                        <span data-part="tag" data-plain={tag.emoji ? undefined : "true"}>
-                          {body}
-                        </span>
-                      )}
+                      <Badge034 data-part="tag" emoji={tag.emoji} href={tag.href} label={tag.label} accent={accent} />
                     </li>
                   )
                 })}

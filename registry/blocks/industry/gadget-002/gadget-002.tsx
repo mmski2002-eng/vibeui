@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card101 } from "@/registry/components/card/card-101/card-101"
+
 
 export type Gadget002Part = {
   name: string
@@ -100,11 +102,6 @@ container-type:inline-size;
 [data-vibeui-block="gadget-002"] [data-part="toggle"]:hover{background:var(--vibeui-gadget-002-glass)}
 [data-vibeui-block="gadget-002"] [data-part="toggle"]:focus-visible{outline:2px solid var(--vibeui-gadget-002-accent);outline-offset:2px}
 [data-vibeui-block="gadget-002"] [data-part="list"]{margin:0;padding:0;list-style:none;display:grid;gap:.4rem;counter-reset:vibeui-gadget-002}
-[data-vibeui-block="gadget-002"] [data-part="item"]{display:grid;grid-template-columns:2rem 1fr;gap:.2rem .8rem;padding:.9rem 1rem;border-radius:1rem;border:1px solid transparent;cursor:default;transition:background .2s,border-color .2s}
-[data-vibeui-block="gadget-002"] [data-part="item"]:hover,[data-vibeui-block="gadget-002"] [data-part="item"][data-hot="true"]{background:var(--vibeui-gadget-002-glass);border-color:var(--vibeui-gadget-002-line)}
-[data-vibeui-block="gadget-002"] [data-part="item"]::before{counter-increment:vibeui-gadget-002;content:"0" counter(vibeui-gadget-002);grid-row:span 2;font-family:var(--vibeui-gadget-002-mono);font-size:.8rem;color:var(--vibeui-gadget-002-accent);padding-top:.2rem}
-[data-vibeui-block="gadget-002"] [data-part="item"] h3{margin:0;font-family:var(--vibeui-gadget-002-display);font-weight:700;font-size:1rem;letter-spacing:-.01em}
-[data-vibeui-block="gadget-002"] [data-part="item"] p{margin:0;font-size:.9rem;color:var(--vibeui-gadget-002-muted)}
 [data-vibeui-block="gadget-002"] [data-part="renders"]{position:absolute;left:8%;top:1.5rem;bottom:1.5rem;width:56%}
 [data-vibeui-block="gadget-002"] [data-part="renders"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 50%;display:block;filter:drop-shadow(0 20px 24px rgb(0 0 0 / .45))}
 [data-vibeui-block="gadget-002"] [data-part="assembled"]{opacity:calc(1 - var(--vibeui-gadget-002-e));transform:scale(calc(.82 + (1 - var(--vibeui-gadget-002-e)) * .06))}
@@ -250,10 +247,7 @@ export function Gadget002({
             </div>
             <ol data-part="list">
               {parts.map((part, index) => (
-                <li key={part.name} data-part="item" data-hot={hot === index ? "true" : undefined} onMouseEnter={() => setHot(index)} onMouseLeave={() => setHot(null)}>
-                  <h3>{part.name}</h3>
-                  <p>{part.text}</p>
-                </li>
+                <Card101 key={part.name} data-part="item" name={part.name} text={part.text} data-hot={hot === index ? "true" : undefined} onMouseEnter={() => setHot(index)} onMouseLeave={() => setHot(null)} accent={accent} />
               ))}
             </ol>
           </div>

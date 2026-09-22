@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState, type CSSProperties } from "react"
+import { Card086 } from "@/registry/components/card/card-086/card-086"
 
 export type Flowers002Flower = {
   name: string
@@ -100,17 +101,6 @@ container-type:inline-size;
 [data-vibeui-block="flowers-002"] [data-part="empty"]{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%) rotate(-4deg);max-width:14rem;text-align:center;font-family:var(--vibeui-flowers-002-hand);font-size:1.5rem;line-height:1.05;color:var(--vibeui-flowers-002-accent);pointer-events:none}
 [data-vibeui-block="flowers-002"] [data-part="life"]{position:absolute;right:1rem;bottom:1rem;font-family:var(--vibeui-flowers-002-hand);font-size:1.45rem;line-height:1;color:var(--vibeui-flowers-002-accent);transform:rotate(-3deg)}
 [data-vibeui-block="flowers-002"] [data-part="chips"]{margin:0;padding:0;list-style:none;display:grid;gap:.6rem}
-[data-vibeui-block="flowers-002"] [data-part="chip"]{display:grid;grid-template-columns:1.4rem minmax(0,1fr) auto;align-items:center;gap:.9rem;padding:.75rem .9rem;border-radius:.9rem;border:1px solid var(--vibeui-flowers-002-line);transition:border-color .25s,background .25s}
-[data-vibeui-block="flowers-002"] [data-part="chip"][data-on="true"]{border-color:var(--vibeui-flowers-002-fg);background:var(--vibeui-flowers-002-paper)}
-[data-vibeui-block="flowers-002"] [data-part="swatch"]{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--vibeui-flowers-002-c);box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--vibeui-flowers-002-fg) 25%,transparent)}
-[data-vibeui-block="flowers-002"] [data-part="chip"] h3{margin:0;font-family:var(--vibeui-flowers-002-display);font-size:1.35rem;font-weight:600;line-height:1.1}
-[data-vibeui-block="flowers-002"] [data-part="chip"] p{margin:.1rem 0 0;font-size:.8rem;color:var(--vibeui-flowers-002-muted)}
-[data-vibeui-block="flowers-002"] [data-part="count"]{display:inline-flex;align-items:center;gap:.2rem}
-[data-vibeui-block="flowers-002"] [data-part="count"] button{width:2.1rem;height:2.1rem;border-radius:50%;border:1px solid var(--vibeui-flowers-002-fg);background:transparent;color:var(--vibeui-flowers-002-fg);font:inherit;font-size:1.1rem;line-height:1;cursor:pointer;transition:background .2s,color .2s,transform .15s}
-[data-vibeui-block="flowers-002"] [data-part="count"] button:hover{background:var(--vibeui-flowers-002-accent);border-color:var(--vibeui-flowers-002-accent);color:var(--vibeui-flowers-002-on-accent)}
-[data-vibeui-block="flowers-002"] [data-part="count"] button:active{transform:scale(.92)}
-[data-vibeui-block="flowers-002"] [data-part="count"] button:disabled{opacity:.3;cursor:default;background:transparent;color:var(--vibeui-flowers-002-fg);border-color:var(--vibeui-flowers-002-fg)}
-[data-vibeui-block="flowers-002"] [data-part="count"] output{min-width:1.6rem;text-align:center;font-variant-numeric:tabular-nums;font-weight:500}
 [data-vibeui-block="flowers-002"] [data-part="sum"]{margin:1.4rem 0 0;padding:1.4rem;border-radius:1.2rem;background:var(--vibeui-flowers-002-fg);color:var(--vibeui-flowers-002-bg);display:grid;gap:1rem}
 [data-vibeui-block="flowers-002"] [data-part="sum"] dl{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
 [data-vibeui-block="flowers-002"] [data-part="sum"] dt{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;opacity:.65}
@@ -339,24 +329,7 @@ export function Flowers002({
                 {flowers.map((flower) => {
                   const count = counts[flower.name] ?? 0
                   return (
-                    <li key={flower.name} data-part="chip" data-on={count > 0} style={{ ["--vibeui-flowers-002-c" as string]: flower.color ?? "var(--vibeui-flowers-002-accent)" }}>
-                      <i data-part="swatch" aria-hidden="true" />
-                      <div>
-                        <h3>{flower.name}</h3>
-                        <p>
-                          {stemLine.replace("{price}", `${flower.price} ${currency}`).replace("{n}", String(flower.days)).replace("{days}", daysWord(flower.days, dayUnits))}
-                        </p>
-                      </div>
-                      <div data-part="count">
-                        <button type="button" onClick={() => change(flower.name, -1)} disabled={count === 0} aria-label={removeLabel.replace("{name}", flower.name)}>
-                          −
-                        </button>
-                        <output aria-label={`${flower.name}: ${count}`}>{count}</output>
-                        <button type="button" onClick={() => change(flower.name, 1)} disabled={total >= maxStems} aria-label={addLabel.replace("{name}", flower.name)}>
-                          +
-                        </button>
-                      </div>
-                    </li>
+                    <Card086 key={flower.name} data-part="chip" name={flower.name} color={flower.color} price={flower.price} days={flower.days} stemLine={stemLine} currency={currency} dayUnits={dayUnits} removeLabel={removeLabel} maxStems={maxStems} addLabel={addLabel} count={count} total={total} change={change} accent={accent} />
                   )
                 })}
               </ul>

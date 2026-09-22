@@ -2,6 +2,8 @@
 
 import { useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Vet002Spot = {
   key: string
   /** Часть тела: «Уши», «Зубы». */
@@ -62,6 +64,7 @@ container-type:inline-size;
 :where([data-vibeui-block="vet-002"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="vet-002"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-vet-002-bg);color:var(--vibeui-vet-002-fg);font-family:var(--vibeui-vet-002-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="vet-002"] *{box-sizing:border-box}
+[data-vibeui-block="vet-002"] [data-part="action"]{margin:1.3rem 0 0}
 [data-vibeui-block="vet-002"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="vet-002"] [data-part="head"]{max-width:40rem}
 [data-vibeui-block="vet-002"] [data-part="eyebrow"]{margin:0 0 .7rem;font-weight:600;font-size:.85rem;letter-spacing:.02em;color:var(--vibeui-vet-002-accent)}
@@ -87,9 +90,6 @@ container-type:inline-size;
 [data-vibeui-block="vet-002"] [data-part="meta"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.2rem;margin:1.2rem 0 0}
 [data-vibeui-block="vet-002"] [data-part="price"]{font-family:var(--vibeui-vet-002-display);font-weight:900;font-size:2rem;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="vet-002"] [data-part="meta"] small{font-size:.85rem;color:var(--vibeui-vet-002-muted)}
-[data-vibeui-block="vet-002"] [data-part="action"]{display:inline-flex;align-items:center;margin:1.3rem 0 0;padding:.75rem 1.2rem;border-radius:999px;background:var(--vibeui-vet-002-accent);color:var(--vibeui-vet-002-on-accent);text-decoration:none;font-family:var(--vibeui-vet-002-display);font-weight:800;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
-[data-vibeui-block="vet-002"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px var(--vibeui-vet-002-accent)}
-[data-vibeui-block="vet-002"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-vet-002-fg);outline-offset:2px}
 [data-vibeui-block="vet-002"] [data-part="legend"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="vet-002"] [data-part="legend"] button{padding:.35rem .7rem;border:1px solid var(--vibeui-vet-002-line);border-radius:999px;background:transparent;color:var(--vibeui-vet-002-muted);font:inherit;font-size:.8rem;font-weight:500;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
 [data-vibeui-block="vet-002"] [data-part="legend"] button[aria-pressed="true"]{background:var(--vibeui-vet-002-fg);color:var(--vibeui-vet-002-bg);border-color:transparent}
@@ -207,9 +207,15 @@ export function Vet002({
                 {spot.duration ? <small>{spot.duration}</small> : null}
               </div>
               {actionLabel ? (
-                <a data-part="action" href={actionHref}>
-                  {actionLabel}
-                </a>
+                <Button016
+                  data-part="action"
+                  label={actionLabel}
+                  href={actionHref}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
               ) : null}
             </article>
           </div>

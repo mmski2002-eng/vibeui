@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Avatar001 } from "@/registry/components/avatar/avatar-001/avatar-001"
 
 export type Blog013Props = {
   topic?: string
@@ -23,7 +26,9 @@ export type Blog013Props = {
 // и временем чтения. Сверху — тонкая оранжевая полоса прогресса чтения.
 // Полоса декоративная и статичная: живой прогресс требует скролл-слушателя,
 // а шапка обязана оставаться серверной. Ширину задаёт проп progress.
-const STYLES = `
+const STYLES = `[data-vibeui-block="blog-013"] [data-part="heading"]{margin-bottom:1.75rem}
+[data-vibeui-block="blog-013"] [data-part="avatar"]{width:2.75rem;flex:none}
+
 :where([data-vibeui-block="blog-013"]){
 --vibeui-blog-013-bg:transparent;
 --vibeui-blog-013-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
@@ -61,30 +66,9 @@ background:var(--vibeui-blog-013-tint);
 color:var(--vibeui-blog-013-accent);
 font-size:0.6875rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
 }
-[data-vibeui-block="blog-013"] [data-part="title"]{
-margin:0 0 1rem;max-width:24ch;
-font-size:clamp(1.75rem,6cqi,3rem);line-height:1.08;letter-spacing:-0.03em;font-weight:800;
-}
-[data-vibeui-block="blog-013"] [data-part="lede"]{
-margin:0 0 1.75rem;max-width:56ch;
-color:var(--vibeui-blog-013-muted);
-font-size:clamp(1rem,2.4cqi,1.1875rem);line-height:1.6;
-}
 [data-vibeui-block="blog-013"] [data-part="byline"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem 1rem;
 padding-top:1.25rem;border-top:1px solid var(--vibeui-blog-013-border);
-}
-[data-vibeui-block="blog-013"] [data-part="avatar"]{
-position:relative;width:2.75rem;height:2.75rem;flex:none;border-radius:999px;
-display:grid;place-items:center;
-color:var(--vibeui-blog-013-accent);
-font-size:0.875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="blog-013"] [data-part="avatar"][data-empty="true"]{background:var(--vibeui-blog-013-tint);}
-[data-vibeui-block="blog-013"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
 }
 [data-vibeui-block="blog-013"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
 [data-vibeui-block="blog-013"] [data-part="author"]{font-size:0.9375rem;font-weight:650}
@@ -119,14 +103,6 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   )
 
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
-}
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
 }
 
 /** Шапка поста: тег, заголовок, автор и декоративная полоса прогресса чтения. */
@@ -171,19 +147,17 @@ export function Blog013({
         <div data-part="bar" aria-hidden="true" />
         <div data-part="shell">
           <p data-part="topic">{topic}</p>
-          <h1 data-part="title">{title}</h1>
-          <p data-part="lede">{lede}</p>
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={lede}
+            level="h1"
+            size="lg"
+            ledeWidth={56}
+            accent={accent}
+          />
           <div data-part="byline">
-            <span
-              data-part="avatar"
-              data-empty={avatarImage ? undefined : "true"}
-              aria-hidden="true"
-            >
-              {avatarImage ? (
-                <img src={avatarImage} alt="" loading="lazy" decoding="async" />
-              ) : null}
-              {initials(author)}
-            </span>
+            <Avatar001 data-part="avatar" name={author} src={avatarImage} status="none" aria-hidden="true" />
             <span data-part="who">
               <span data-part="author">{author}</span>
               <span data-part="role">{role}</span>

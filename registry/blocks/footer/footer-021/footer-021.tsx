@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks002 } from "@/registry/components/navigation/footerlinks-002/footerlinks-002"
 
 export type Footer021Link = {
   label: string
@@ -60,10 +61,7 @@ container-type:inline-size;
 [data-vibeui-block="footer-021"] [data-part="caption"]{margin:.35rem 0 0;font-size:.85rem;color:var(--vibeui-footer-021-muted)}
 [data-vibeui-block="footer-021"] [data-part="author"]{margin:1.25rem 0 0;font-size:.9rem}
 [data-vibeui-block="footer-021"] [data-part="email"]{display:inline-block;margin-top:.25rem;font-weight:600;border-bottom:1px solid var(--vibeui-footer-021-accent);padding-bottom:.05rem}
-[data-vibeui-block="footer-021"] [data-part="col-title"]{margin:0 0 .75rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-footer-021-muted);font-weight:700}
-[data-vibeui-block="footer-021"] [data-part="links"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem;font-size:.9rem}
-[data-vibeui-block="footer-021"] [data-part="links"] a{color:var(--vibeui-footer-021-muted);transition:color .2s}
-[data-vibeui-block="footer-021"] [data-part="links"] a:hover{color:var(--vibeui-footer-021-fg)}
+[data-vibeui-block="footer-021"] [data-part="column-col-title"]{margin:0 0 .75rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-footer-021-muted);font-weight:700}
 [data-vibeui-block="footer-021"] [data-part="socials"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="footer-021"] [data-part="social"]{display:inline-flex;align-items:center;height:2.4rem;padding:0 .9rem;border-radius:999px;background:var(--vibeui-footer-021-chip);border:1px solid var(--vibeui-footer-021-line);font-size:.82rem;font-weight:600;transition:border-color .2s,transform .2s}
 [data-vibeui-block="footer-021"] [data-part="social"]:hover{border-color:var(--vibeui-footer-021-accent);transform:translateY(-1px)}
@@ -131,19 +129,10 @@ export function Footer021({
               ) : null}
             </div>
             {columns.map((column) => (
-              <div key={column.title}>
-                <p data-part="col-title">{column.title}</p>
-                <ul data-part="links">
-                  {column.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Footerlinks002 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
             <div>
-              {socialsLabel ? <p data-part="col-title">{socialsLabel}</p> : null}
+              {socialsLabel ? <p data-part="column-col-title">{socialsLabel}</p> : null}
               <ul data-part="socials">
                 {socials.map((social) => (
                   <li key={social.label}>

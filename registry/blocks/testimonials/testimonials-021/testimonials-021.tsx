@@ -2,6 +2,11 @@
 
 import { useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+import { Input034 } from "@/registry/components/input/input-034/input-034"
+
 export type Testimonials021Card = {
   name: string
   text: string
@@ -65,18 +70,9 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-021"] [data-part="eyebrow"]{margin:0 0 .6rem;font-family:var(--vibeui-testimonials-021-display);font-size:.8rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--vibeui-testimonials-021-accent)}
 [data-vibeui-block="testimonials-021"] [data-part="title"]{margin:0;font-family:var(--vibeui-testimonials-021-display);font-size:clamp(2.2rem,6cqi,4.2rem);font-weight:700;line-height:.98;text-transform:uppercase}
 [data-vibeui-block="testimonials-021"] [data-part="lede"]{margin:.8rem 0 0;color:var(--vibeui-testimonials-021-muted)}
-[data-vibeui-block="testimonials-021"] [data-part="form"]{margin-top:1.5rem;padding:1.4rem;border-radius:.9rem;background:var(--vibeui-testimonials-021-paper);color:var(--vibeui-testimonials-021-ink);box-shadow:0 24px 50px -36px rgb(18 58 75 / .5)}
+[data-vibeui-block="testimonials-021"] [data-part="form"]{display:grid;gap:.9rem;margin-top:1.5rem;padding:1.4rem;border-radius:.9rem;background:var(--vibeui-testimonials-021-paper);color:var(--vibeui-testimonials-021-ink);box-shadow:0 24px 50px -36px rgb(18 58 75 / .5)}
 [data-vibeui-block="testimonials-021"] [data-part="form"] h3{margin:0 0 .9rem;font-family:var(--vibeui-testimonials-021-display);font-size:1.3rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
 [data-vibeui-block="testimonials-021"] [data-part="row"]{display:grid;gap:0 .8rem;grid-template-columns:1fr 1fr}
-[data-vibeui-block="testimonials-021"] label{display:block;margin-bottom:.9rem}
-[data-vibeui-block="testimonials-021"] label span{display:block;margin-bottom:.3rem;font-family:var(--vibeui-testimonials-021-display);font-size:.66rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-testimonials-021-muted)}
-[data-vibeui-block="testimonials-021"] input,[data-vibeui-block="testimonials-021"] textarea{width:100%;padding:.7rem .9rem;border:1px solid var(--vibeui-testimonials-021-line);border-radius:.5rem;background:var(--vibeui-testimonials-021-field);color:var(--vibeui-testimonials-021-fg);font:inherit;transition:border-color .25s,box-shadow .25s}
-[data-vibeui-block="testimonials-021"] textarea{min-height:6rem;resize:vertical;font-family:var(--vibeui-testimonials-021-script);font-size:1.15rem}
-[data-vibeui-block="testimonials-021"] input:focus,[data-vibeui-block="testimonials-021"] textarea:focus{outline:none;border-color:var(--vibeui-testimonials-021-sea);box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-testimonials-021-sea) 20%,transparent)}
-[data-vibeui-block="testimonials-021"] [data-part="submit"]{display:inline-flex;align-items:center;gap:.5rem;height:2.8rem;padding:0 1.3rem;border:0;border-radius:.6rem;background:var(--vibeui-testimonials-021-accent);color:var(--vibeui-testimonials-021-on-accent);font-family:var(--vibeui-testimonials-021-display);font-size:.9rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .2s}
-[data-vibeui-block="testimonials-021"] [data-part="submit"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="testimonials-021"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-testimonials-021-fg);outline-offset:3px}
-[data-vibeui-block="testimonials-021"] [data-part="submit"] svg{width:1rem;height:1rem;fill:currentColor}
 [data-vibeui-block="testimonials-021"] [data-part="wall"]{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:1.4rem;margin:0;padding:0;list-style:none;align-content:start}
 [data-vibeui-block="testimonials-021"] [data-part="card"]{position:relative;display:grid;grid-template-columns:1.5fr 1fr;min-height:11rem;padding:1rem 1rem .9rem 1.1rem;border-radius:.3rem;background:var(--vibeui-testimonials-021-paper);color:var(--vibeui-testimonials-021-ink);box-shadow:0 18px 30px -24px rgb(18 58 75 / .6);transform:rotate(var(--vibeui-testimonials-021-tilt,0deg));transition:transform .35s cubic-bezier(.2,.9,.3,1.3),box-shadow .35s}
 [data-vibeui-block="testimonials-021"] [data-part="wall"] li:nth-child(4n+1) [data-part="card"]{--vibeui-testimonials-021-tilt:-1.6deg}
@@ -172,25 +168,36 @@ export function Testimonials021({
               <form data-part="form" method="post" action={action} onSubmit={submit}>
                 <h3>{formTitle}</h3>
                 <div data-part="row">
-                  <label>
-                    <span>{nameLabel}</span>
-                    <input type="text" name="name" value={name} onChange={(event) => setName(event.target.value)} autoComplete="name" required />
-                  </label>
-                  <label>
-                    <span>{fromLabel}</span>
-                    <input type="text" name="from" value={from} onChange={(event) => setFrom(event.target.value)} placeholder={fromPlaceholder} />
-                  </label>
+                  <Input001
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    autoComplete="name"
+                    required
+                    label={nameLabel}
+                    accent={accent}
+                  />
+                  <Input001
+                    type="text"
+                    name="from"
+                    value={from}
+                    onChange={(event) => setFrom(event.target.value)}
+                    label={fromLabel}
+                    accent={accent}
+                  />
                 </div>
-                <label>
-                  <span>{textLabel}</span>
-                  <textarea name="text" value={text} onChange={(event) => setText(event.target.value)} required />
-                </label>
-                <button type="submit" data-part="submit">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M21 12.5c0 .6-.5 1-1.1 1L13 12.9 9.5 20H7.6l1.7-7.4-4.6-.6-1.7 2H1.6l1.2-3.5L1.6 7.1H3l1.7 2 4.6-.6L7.6 1h1.9L13 8.1l6.9-.6c.6 0 1.1.4 1.1 1v4z" />
-                  </svg>
+                <Input034
+                  name="text"
+                  value={text}
+                  onChange={(event) => setText(event.target.value)}
+                  required
+                  label={textLabel}
+                  accent={accent}
+                />
+                <Button001 data-part="submit" type="submit" size="lg" tone="solid" accent={accent}>
                   {submitLabel}
-                </button>
+                </Button001>
               </form>
             </div>
             <ul data-part="wall" aria-live="polite">

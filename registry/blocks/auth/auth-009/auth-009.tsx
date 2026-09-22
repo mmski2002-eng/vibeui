@@ -1,6 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Checkbox001 } from "@/registry/components/checkbox/checkbox-001/checkbox-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 import type { CSSProperties } from "react"
 
 export type Auth009Props = {
@@ -69,6 +74,9 @@ background:var(--vibeui-auth-009-bg);color:var(--vibeui-auth-009-fg);
 font-family:var(--vibeui-auth-009-sans);
 }
 [data-vibeui-block="auth-009"] *{box-sizing:border-box}
+[data-vibeui-block="auth-009"] [data-part="heading"]{margin-bottom:0.25rem}
+[data-vibeui-block="auth-009"] form{display:grid;gap:0.75rem}
+[data-vibeui-block="auth-009"] [data-part="submit"]{width:100%}
 [data-vibeui-block="auth-009"] [data-part="shell"]{
 width:100%;max-width:24rem;margin:0 auto;padding:1.5rem;
 background:var(--vibeui-auth-009-card);
@@ -78,43 +86,18 @@ border:1px solid var(--vibeui-auth-009-border);border-radius:1rem;
 [data-vibeui-block="auth-009"] [data-part="shell"]{max-width:26rem;padding:2rem}
 [data-vibeui-block="auth-009"] [data-part="pair"]{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
 }
-[data-vibeui-block="auth-009"] h2{margin:0 0 0.25rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.015em}
 [data-vibeui-block="auth-009"] [data-part="lead"]{margin:0 0 1.125rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-auth-009-muted)}
-[data-vibeui-block="auth-009"] [data-part="field"]{display:flex;flex-direction:column;gap:0.3125rem;margin-bottom:0.75rem}
-[data-vibeui-block="auth-009"] label{font-size:0.8125rem;font-weight:600}
-[data-vibeui-block="auth-009"] input[type="text"],
-[data-vibeui-block="auth-009"] input[type="email"],
-[data-vibeui-block="auth-009"] input[type="password"]{
-width:100%;height:2.5rem;padding:0 0.75rem;
-border:1px solid var(--vibeui-auth-009-border);border-radius:0.625rem;
-background:var(--vibeui-auth-009-card);color:inherit;font:inherit;font-size:0.875rem;
-}
-[data-vibeui-block="auth-009"] input:focus-visible{outline:2px solid var(--vibeui-auth-009-accent);outline-offset:1px;border-color:var(--vibeui-auth-009-accent)}
+[data-vibeui-block="auth-009"] label:not([data-slot] *){font-size:0.8125rem;font-weight:600}
 [data-vibeui-block="auth-009"] [data-part="consents"]{
 display:flex;flex-direction:column;gap:0.625rem;
 margin:1rem 0;padding:0.875rem;
 border:1px solid var(--vibeui-auth-009-border);border-radius:0.75rem;
 background:var(--vibeui-auth-009-well);
 }
-[data-vibeui-block="auth-009"] [data-part="consent"]{display:flex;gap:0.5rem;font-size:0.8125rem;line-height:1.45}
-[data-vibeui-block="auth-009"] [data-part="consent"] input{flex:none;width:1.0625rem;height:1.0625rem;margin-top:0.0625rem;accent-color:var(--vibeui-auth-009-accent)}
-[data-vibeui-block="auth-009"] [data-part="consent"] a{color:var(--vibeui-auth-009-accent);font-weight:600}
-[data-vibeui-block="auth-009"] [data-part="req"]{color:var(--vibeui-auth-009-accent);font-weight:700}
 [data-vibeui-block="auth-009"] details{border-top:1px dashed var(--vibeui-auth-009-border);padding-top:0.625rem}
 [data-vibeui-block="auth-009"] summary{cursor:pointer;font-size:0.75rem;font-weight:650;color:var(--vibeui-auth-009-accent)}
 [data-vibeui-block="auth-009"] summary:focus-visible{outline:2px solid var(--vibeui-auth-009-accent);outline-offset:2px;border-radius:0.25rem}
 [data-vibeui-block="auth-009"] details p{margin:0.5rem 0 0;font-size:0.75rem;line-height:1.55;color:var(--vibeui-auth-009-muted)}
-[data-vibeui-block="auth-009"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:2.625rem;padding:0.375rem 1rem;
-border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-009-accent);color:oklch(from var(--vibeui-auth-009-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;
-transition:opacity var(--vibeui-auth-009-dur-2) ease;
-}
-[data-vibeui-block="auth-009"] [data-part="submit"]:disabled{cursor:not-allowed;opacity:.45}
-[data-vibeui-block="auth-009"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-009-accent);outline-offset:2px}
 [data-vibeui-block="auth-009"] [data-part="why"]{margin:0.625rem 0 0;font-size:0.75rem;line-height:1.45;color:var(--vibeui-auth-009-muted);text-align:center;min-height:1.0625rem}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="auth-009"] *{animation:none!important;transition:none!important}}
 `
@@ -191,7 +174,12 @@ export function Auth009({
         aria-label={title}
       >
         <div data-part="shell">
-          <h2>{title}</h2>
+          <Heading001
+            data-part="heading"
+            title={title}
+            size="xs"
+            accent={accent}
+          />
           <p data-part="lead">{lead}</p>
 
           <form
@@ -200,76 +188,60 @@ export function Auth009({
             }}
           >
             <div data-part="pair">
-              <div data-part="field">
-                <label htmlFor="vibeui-auth-009-name">{nameLabel}</label>
-                <input
-                  id="vibeui-auth-009-name"
-                  name="name"
-                  type="text"
-                  autoComplete="given-name"
-                  placeholder={namePlaceholder}
-                />
-              </div>
-              <div data-part="field">
-                <label htmlFor="vibeui-auth-009-company">{companyLabel}</label>
-                <input
-                  id="vibeui-auth-009-company"
-                  name="organization"
-                  type="text"
-                  autoComplete="organization"
-                  placeholder={companyPlaceholder}
-                />
-              </div>
-            </div>
-
-            <div data-part="field">
-              <label htmlFor="vibeui-auth-009-email">{emailLabel}</label>
-              <input
-                id="vibeui-auth-009-email"
-                name="email"
-                type="email"
-                autoComplete="username"
-                placeholder={emailPlaceholder}
-                required
+              <Input001
+                name="name"
+                type="text"
+                autoComplete="given-name"
+                label={nameLabel}
+                accent={accent}
+              />
+              <Input001
+                name="organization"
+                type="text"
+                autoComplete="organization"
+                label={companyLabel}
+                accent={accent}
               />
             </div>
 
-            <div data-part="field">
-              <label htmlFor="vibeui-auth-009-password">{passwordLabel}</label>
-              <input
-                id="vibeui-auth-009-password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-              />
-            </div>
+            <Input001
+              name="email"
+              type="email"
+              autoComplete="username"
+              required
+              label={emailLabel}
+              accent={accent}
+            />
+
+            <Input001
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              label={passwordLabel}
+              accent={accent}
+            />
 
             <fieldset data-part="consents">
-              <label data-part="consent">
-                <input
-                  type="checkbox"
-                  name="terms"
-                  checked={agreed}
-                  onChange={(event) => setAgreed(event.target.checked)}
-                />
-                <span>
-                  {terms} <span data-part="req">*</span>
-                </span>
-              </label>
-              <label data-part="consent">
-                <input type="checkbox" name="marketing" />
-                <span>{marketing}</span>
-              </label>
+              <Checkbox001
+                name="terms"
+                required
+                checked={agreed}
+                onChange={(event) => setAgreed(event.target.checked)}
+                label={`${terms} *`}
+                description=""
+                accent={accent}
+              />
+              <Checkbox001 name="marketing" label={marketing} description="" accent={accent} />
               <details>
                 <summary>{detailsSummary}</summary>
                 <p>{detailsText}</p>
               </details>
             </fieldset>
 
-            <button type="submit" data-part="submit" disabled={!agreed}>
+            <Button001 type="submit" data-part="submit" size="lg" accent={accent}>
               {submit}
-            </button>
+            </Button001>
             <p data-part="why" role="status">
               {agreed ? "" : requiredHint}
             </p>

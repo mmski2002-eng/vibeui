@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 
 export type Pricing005Props = {
   eyebrow?: string
@@ -52,12 +55,6 @@ font-family:var(--vibeui-pricing-005-sans);
 display:grid;grid-template-columns:1fr;gap:2rem;padding:1.75rem;border-radius:1.25rem;
 border:1px solid var(--vibeui-pricing-005-line);background:var(--vibeui-pricing-005-panel);
 }
-[data-vibeui-block="pricing-005"] [data-part="eyebrow"]{
-margin:0 0 0.75rem;font-size:0.75rem;font-weight:650;letter-spacing:0.14em;text-transform:uppercase;
-color:var(--vibeui-pricing-005-accent);
-}
-[data-vibeui-block="pricing-005"] h2{margin:0;font-size:clamp(1.375rem,3.6cqi,2rem);line-height:1.14;letter-spacing:-0.025em;font-weight:700;text-wrap:balance}
-[data-vibeui-block="pricing-005"] [data-part="lede"]{margin:0.75rem 0 0;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-005-muted);text-wrap:pretty}
 [data-vibeui-block="pricing-005"] [data-part="prices"]{
 display:flex;align-items:baseline;flex-wrap:wrap;gap:0.5rem;margin:1.5rem 0 0;
 }
@@ -71,8 +68,6 @@ font-size:clamp(2.5rem,7cqi,3.5rem);line-height:1;font-weight:700;letter-spacing
 display:inline-flex;align-items:center;justify-content:center;height:2.875rem;padding:0 1.5rem;border-radius:0.75rem;
 font-size:0.9375rem;font-weight:650;text-decoration:none;transition:opacity var(--vibeui-pricing-005-dur-2) ease,border-color var(--vibeui-pricing-005-dur-2) ease;
 }
-[data-vibeui-block="pricing-005"] [data-part="primary"]{background:var(--vibeui-pricing-005-accent);color:oklch(from var(--vibeui-pricing-005-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border:1px solid transparent}
-[data-vibeui-block="pricing-005"] [data-part="secondary"]{border:1px solid var(--vibeui-pricing-005-line);color:var(--vibeui-pricing-005-fg)}
 [data-vibeui-block="pricing-005"] a:hover{opacity:.88}
 [data-vibeui-block="pricing-005"] a:focus-visible{outline:2px solid var(--vibeui-pricing-005-accent);outline-offset:3px}
 [data-vibeui-block="pricing-005"] [data-part="guarantee"]{margin:1rem 0 0;font-size:0.8125rem;color:var(--vibeui-pricing-005-muted)}
@@ -142,9 +137,14 @@ export function Pricing005({
         <div data-part="shell">
           <div data-part="card">
             <div>
-              {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-              <h2>{title}</h2>
-              {lede ? <p data-part="lede">{lede}</p> : null}
+              <Heading001
+                data-part="heading"
+                eyebrow={eyebrow}
+                title={title}
+                lede={lede}
+                size="sm"
+                accent={accent}
+              />
 
               <p data-part="prices">
                 <span data-part="price">{price}</span>
@@ -153,12 +153,24 @@ export function Pricing005({
               </p>
 
               <div data-part="actions">
-                <a data-part="primary" href={action.href}>
-                  {action.label}
-                </a>
-                <a data-part="secondary" href={secondary.href}>
-                  {secondary.label}
-                </a>
+                <Button016
+                  data-part="primary"
+                  label={action.label}
+                  href={action.href}
+                  external={false}
+                  size="lg"
+                  tone="accent"
+                  accent={accent}
+                />
+                <Button016
+                  data-part="secondary"
+                  label={secondary.label}
+                  href={secondary.href}
+                  external={false}
+                  size="lg"
+                  tone="neutral"
+                  accent={accent}
+                />
               </div>
 
               {guarantee ? <p data-part="guarantee">{guarantee}</p> : null}

@@ -22,6 +22,7 @@ type PromptCopy = {
     export: string
     npmDeps: string
     npmNone: string
+    registryDeps: string
     usage: string
     configured: string
     preserve: string
@@ -77,6 +78,8 @@ const RU: PromptCopy = {
     export: "Экспорт:",
     npmDeps: "npm-зависимости:",
     npmNone: "npm-зависимости: нет",
+    registryDeps:
+      "Вместе с ним команда ставит компоненты, из которых он собран (их файлы тоже сохрани как есть):",
     usage: "Использование:",
     configured:
       "Пропсы в сниппете выбрал пользователь — вставляй компонент именно с ними.",
@@ -188,6 +191,8 @@ const EN: PromptCopy = {
     export: "Export:",
     npmDeps: "npm dependencies:",
     npmNone: "npm dependencies: none",
+    registryDeps:
+      "The command also installs the components it is built from (keep their files as installed too):",
     usage: "Usage:",
     configured:
       "The props in the snippet were chosen by the user — render the component with exactly those.",

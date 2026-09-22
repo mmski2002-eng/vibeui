@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useSyncExternalStore, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar035Link = {
   label: string
   href: string
@@ -89,9 +91,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-035"] [data-part="phone"]{display:none;align-items:center;gap:.4rem;color:var(--vibeui-navbar-035-fg);text-decoration:none;font-family:var(--vibeui-navbar-035-display);font-weight:800;font-size:.95rem;white-space:nowrap;transition:color .2s}
 [data-vibeui-block="navbar-035"] [data-part="phone"] svg{width:1rem;height:1rem;color:var(--vibeui-navbar-035-accent)}
 [data-vibeui-block="navbar-035"] [data-part="phone"]:hover{color:var(--vibeui-navbar-035-accent)}
-[data-vibeui-block="navbar-035"] [data-part="action"]{display:inline-flex;align-items:center;padding:.65rem 1.1rem;border-radius:999px;background:var(--vibeui-navbar-035-accent);color:var(--vibeui-navbar-035-on-accent);text-decoration:none;font-family:var(--vibeui-navbar-035-display);font-weight:800;font-size:.9rem;white-space:nowrap;transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
-[data-vibeui-block="navbar-035"] [data-part="action"]:hover{transform:translateY(-2px) rotate(-1.5deg);box-shadow:0 10px 24px -10px var(--vibeui-navbar-035-accent)}
-[data-vibeui-block="navbar-035"] a:focus-visible,[data-vibeui-block="navbar-035"] button:focus-visible{outline:2px solid var(--vibeui-navbar-035-accent);outline-offset:2px}
+[data-vibeui-block="navbar-035"] button:focus-visible{outline:2px solid var(--vibeui-navbar-035-accent);outline-offset:2px}
 [data-vibeui-block="navbar-035"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.6rem;height:2.6rem;padding:0;border:1px solid var(--vibeui-navbar-035-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-035"] [data-part="burger"] i{display:block;width:1rem;height:2px;margin:0 auto;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
 [data-vibeui-block="navbar-035"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -243,9 +243,15 @@ export function Navbar035({
               </a>
             ) : null}
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
-                {actionLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="sm"
+                tone="accent"
+                accent={accent}
+              />
             ) : null}
             <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-035-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Pres002Asset = {
   title: string
@@ -25,7 +26,8 @@ export type Pres002Props = {
 // плиткой, описанием и кнопкой скачивания формата. Превью — тёплая плитка с
 // монограммой или образцом цвета. Формат раздела «для прессы», где скачивают
 // официальные ассеты бренда одним файлом.
-const STYLES = `
+const STYLES = `[data-vibeui-block="pres-002"] [data-part="heading"]{margin-bottom:0.625rem}
+
 :where([data-vibeui-block="pres-002"]){
 --vibeui-pres-002-bg:transparent;
 --vibeui-pres-002-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -47,8 +49,6 @@ display:block;background:var(--vibeui-pres-002-bg);color:var(--vibeui-pres-002-i
 font-family:var(--vibeui-pres-002-font);
 }
 [data-vibeui-block="pres-002"] [data-part="shell"]{max-width:64rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="pres-002"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-pres-002-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="pres-002"] [data-part="title"]{margin:0 0 0.625rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="pres-002"] [data-part="summary"]{margin:0 0 2rem;max-width:40rem;color:var(--vibeui-pres-002-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="pres-002"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:minmax(0,1fr)}
 [data-vibeui-block="pres-002"] [data-part="asset"]{
@@ -157,8 +157,12 @@ export function Pres002({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <p data-part="summary">{summary}</p>
           <div data-part="grid">
             {assets.map((asset) => (

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Card132 } from "@/registry/components/card/card-132/card-132"
 
 export type About013Frame = {
   date: string
@@ -57,24 +58,11 @@ container-type:inline-size;
 [data-vibeui-block="about-013"] [data-part="lede"]{max-width:36rem;margin:1rem 0 0;color:var(--vibeui-about-013-muted)}
 [data-vibeui-block="about-013"] [data-part="frames"]{position:relative;display:grid;grid-template-columns:1fr;gap:2.75rem;margin:3.5rem 0 0;padding:.3rem 0 .3rem 1.6rem;list-style:none}
 [data-vibeui-block="about-013"] [data-part="frames"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--vibeui-about-013-silver) 10%,var(--vibeui-about-013-silver) 90%,transparent);opacity:.4}
-[data-vibeui-block="about-013"] [data-part="frame"]{position:relative;opacity:.45;transform:translateY(.6rem);transition:opacity .7s,transform .7s cubic-bezier(.2,.9,.3,1)}
-[data-vibeui-block="about-013"] [data-part="frame"][data-lit="true"]{opacity:1;transform:none}
-[data-vibeui-block="about-013"] [data-part="dot"]{position:absolute;left:-1.6rem;top:.45rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--vibeui-about-013-bg);border:1px solid var(--vibeui-about-013-silver);transition:background .6s,border-color .6s,box-shadow .6s}
-[data-vibeui-block="about-013"] [data-part="frame"][data-lit="true"] [data-part="dot"]{background:var(--vibeui-about-013-accent);border-color:var(--vibeui-about-013-accent)}
-[data-vibeui-block="about-013"] [data-part="frame"][data-now="true"] [data-part="dot"]{box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-about-013-accent) 25%,transparent)}
-[data-vibeui-block="about-013"] [data-part="date"]{display:block;margin:0 0 .5rem;font-family:var(--vibeui-about-013-display);font-style:italic;font-size:1rem;font-weight:500;letter-spacing:.02em;color:var(--vibeui-about-013-accent)}
-[data-vibeui-block="about-013"] [data-part="frame"] figure{position:relative;margin:0 0 .8rem;aspect-ratio:3/2;overflow:hidden;border-radius:.5rem;background:var(--vibeui-about-013-card);border:1px solid var(--vibeui-about-013-line)}
-[data-vibeui-block="about-013"] [data-part="frame"] img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.9);transition:filter .7s}
-[data-vibeui-block="about-013"] [data-part="frame"][data-lit="true"] img{filter:none}
-[data-vibeui-block="about-013"] [data-part="frame"] figure::after{content:"";position:absolute;inset:0;background:radial-gradient(35% 30% at 0 100%,rgb(242 238 230 / .3),transparent 70%),radial-gradient(30% 25% at 100% 0,rgb(242 238 230 / .2),transparent 70%);mix-blend-mode:screen;pointer-events:none}
-[data-vibeui-block="about-013"] [data-part="frame"] h3{margin:0;font-family:var(--vibeui-about-013-display);font-size:1.5rem;font-weight:500;line-height:1.15}
-[data-vibeui-block="about-013"] [data-part="frame"] p{margin:.4rem 0 0;font-size:.92rem;color:var(--vibeui-about-013-muted)}
 @container (min-width:56rem){
 [data-vibeui-block="about-013"] [data-part="frames"]{grid-template-columns:repeat(4,minmax(0,1fr));gap:0 1.75rem;margin-top:4rem;padding:2.4rem 0 0}
 [data-vibeui-block="about-013"] [data-part="frames"]::before{left:0;right:0;top:0;bottom:auto;width:auto;height:1px;background:linear-gradient(to right,transparent,var(--vibeui-about-013-silver) 6%,var(--vibeui-about-013-silver) 94%,transparent)}
-[data-vibeui-block="about-013"] [data-part="dot"]{left:0;top:-2.68rem}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-013"] *{animation:none!important;transition:none!important}[data-vibeui-block="about-013"] [data-part="frame"]{opacity:1;transform:none}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="about-013"] *{animation:none!important;transition:none!important}}`
 
 /** История пары таймлайном: кадры проявляются при прокрутке, метка на линии подсвечивает текущий. */
 export function About013({
@@ -150,13 +138,7 @@ export function About013({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <ol data-part="frames">
             {shown.map((item, index) => (
-              <li key={item.title} data-part="frame" data-lit={index < lit ? "true" : undefined} data-now={index === lit - 1 ? "true" : undefined}>
-                <span data-part="dot" aria-hidden="true" />
-                <span data-part="date">{item.date}</span>
-                <figure>{item.image ? <img src={item.image} alt={item.imageAlt ?? ""} loading="lazy" /> : null}</figure>
-                <h3>{item.title}</h3>
-                {item.text ? <p>{item.text}</p> : null}
-              </li>
+              <Card132 key={item.title} data-part="frame" title={item.title} date={item.date} image={item.image} imageAlt={item.imageAlt} text={item.text} data-lit={index < lit ? "true" : undefined} data-now={index === lit - 1 ? "true" : undefined} accent={accent} />
             ))}
           </ol>
         </div>

@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Cta013Props = {
   message?: string
   detail?: string
@@ -16,7 +18,8 @@ export type Cta013Props = {
 // намеренно статическое — где полосе липнуть (верх, низ, над подвалом),
 // решает страница, а не компонент. Прибей его сам: position:sticky и
 // top:0 через className, z-index — по вкусу проекта.
-const STYLES = `
+const STYLES = `[data-vibeui-block="cta-013"] [data-part="action"]{flex:none}
+
 :where([data-vibeui-block="cta-013"]){
 --vibeui-cta-013-bg:transparent;
 --vibeui-cta-013-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -54,17 +57,6 @@ font-size:0.875rem;line-height:1.45;
 }
 [data-vibeui-block="cta-013"] [data-part="message"]{font-weight:650}
 [data-vibeui-block="cta-013"] [data-part="detail"]{color:var(--vibeui-cta-013-muted)}
-[data-vibeui-block="cta-013"] [data-part="action"]{
-flex:none;display:inline-block;
-padding:0.4375rem 1rem;border-radius:999px;
-background:var(--vibeui-cta-013-button);color:var(--vibeui-cta-013-button-ink);
-font-size:0.8125rem;font-weight:650;text-decoration:none;white-space:nowrap;
-transition:filter var(--vibeui-cta-013-dur-2) ease;
-}
-[data-vibeui-block="cta-013"] [data-part="action"]:hover{filter:brightness(1.05)}
-[data-vibeui-block="cta-013"] [data-part="action"]:focus-visible{
-outline:2px solid var(--vibeui-cta-013-accent);outline-offset:2px;
-}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-013"] *{animation:none!important;transition:none!important}}
 `
 
@@ -129,9 +121,15 @@ export function Cta013({
               <strong data-part="message">{message}</strong>
               <span data-part="detail">{detail}</span>
             </p>
-            <a data-part="action" href={actionHref}>
-              {actionLabel}
-            </a>
+            <Button016
+              data-part="action"
+              label={actionLabel}
+              href={actionHref}
+              external={false}
+              size="lg"
+              tone="accent"
+              accent={accent}
+            />
           </div>
         </div>
       </aside>

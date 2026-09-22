@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Button118 } from "@/registry/components/button/button-118/button-118"
 
 export type Cta025Props = {
   title?: string
@@ -68,10 +69,6 @@ container-type:inline-size;
 [data-vibeui-block="cta-025"] [data-part="w"] span{display:inline-block}
 [data-vibeui-block="cta-025"] [data-part="text"]{margin:.8rem 0 0;max-width:28rem;opacity:.8}
 [data-vibeui-block="cta-025"] [data-part="stores"]{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem}
-[data-vibeui-block="cta-025"] [data-part="store"]{display:inline-flex;flex-direction:column;padding:.65rem 1.25rem .7rem;border-radius:1rem;background:#f4f2fb;color:#151428;text-decoration:none;line-height:1.1;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,box-shadow .35s}
-[data-vibeui-block="cta-025"] [data-part="store"]:hover{transform:translateY(-3px) scale(1.03);background:var(--vibeui-cta-025-accent);color:var(--vibeui-cta-025-on-accent);box-shadow:0 18px 40px -16px var(--vibeui-cta-025-accent)}
-[data-vibeui-block="cta-025"] [data-part="store"] small{font-size:.62rem;opacity:.75;letter-spacing:.04em;text-transform:uppercase}
-[data-vibeui-block="cta-025"] [data-part="store"] b{font-size:1rem;font-weight:700}
 [data-vibeui-block="cta-025"] [data-part="qr"]{position:relative;justify-self:center;display:grid;justify-items:center;gap:1rem;perspective:900px}
 [data-vibeui-block="cta-025"] [data-part="frame"]{position:relative;isolation:isolate;padding:.6rem;border-radius:1.4rem;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="cta-025"] [data-part="frame"]::before{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--vibeui-cta-025-accent);opacity:.7;animation:vibeui-cta-025-pulse 2.6s ease-in-out infinite}
@@ -189,16 +186,10 @@ export function Cta025({
               {text ? <p data-part="text">{text}</p> : null}
               <div data-part="stores">
                 {appStoreLabel ? (
-                  <a data-part="store" href={appStoreHref}>
-                    <small>{appStoreCaption}</small>
-                    <b>{appStoreLabel}</b>
-                  </a>
+                  <Button118 data-part="store" href={appStoreHref} caption={appStoreCaption} label={appStoreLabel} accent={accent} />
                 ) : null}
                 {playLabel ? (
-                  <a data-part="store" href={playHref}>
-                    <small>{playCaption}</small>
-                    <b>{playLabel}</b>
-                  </a>
+                  <Button118 data-part="store" href={playHref} caption={playCaption} label={playLabel} accent={accent} />
                 ) : null}
               </div>
             </div>

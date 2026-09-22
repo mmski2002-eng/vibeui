@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Button077 } from "@/registry/components/button/button-077/button-077"
 
 export type Cta004Props = {
   kicker?: string
@@ -24,6 +28,7 @@ export type Cta004Props = {
 // странице заливка уходит глубже, а кнопка перестаёт быть чисто белой,
 // иначе блок бьёт по глазам ярче всего остального на экране.
 const STYLES = `
+
 :where([data-vibeui-block="cta-004"]){
 --vibeui-cta-004-accent:light-dark(oklch(0.28 0 0),oklch(0.45 0 0));
 --vibeui-cta-004-ink:light-dark(oklch(0.99 0 268),oklch(0.96 0 268));
@@ -59,14 +64,6 @@ max-width:74rem;margin:0 auto;padding:3.25rem 1.25rem;
 margin:0 0 0.75rem;color:var(--vibeui-cta-004-muted);
 font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
 }
-[data-vibeui-block="cta-004"] [data-part="title"]{
-margin:0;max-width:20ch;
-font-size:clamp(1.875rem,6cqi,3.25rem);line-height:1.04;letter-spacing:-0.03em;font-weight:730;
-}
-[data-vibeui-block="cta-004"] [data-part="text"]{
-margin:1rem 0 0;max-width:48ch;
-color:var(--vibeui-cta-004-muted);font-size:clamp(0.9375rem,1.7cqi,1.125rem);line-height:1.55;
-}
 [data-vibeui-block="cta-004"] [data-part="side"]{
 display:flex;flex-direction:column;gap:1.25rem;align-items:flex-start;
 }
@@ -82,18 +79,6 @@ display:block;font-size:2rem;line-height:1;letter-spacing:-0.03em;font-weight:75
 display:block;margin-top:0.375rem;color:var(--vibeui-cta-004-muted);font-size:0.8125rem;line-height:1.4;max-width:22ch;
 }
 [data-vibeui-block="cta-004"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
-[data-vibeui-block="cta-004"] [data-part="action"]{
-display:inline-flex;align-items:center;justify-content:center;
-min-height:3rem;padding:0.25rem 1.5rem;border-radius:999px;
-background:var(--vibeui-cta-004-button);color:var(--vibeui-cta-004-button-fg);
-text-decoration:none;font-size:1rem;font-weight:660;
-transition:transform var(--vibeui-cta-004-dur-2) ease,box-shadow var(--vibeui-cta-004-dur-2) ease;
-}
-[data-vibeui-block="cta-004"] [data-part="action"]:hover{transform:translateY(-2px);box-shadow:0 16px 30px -18px oklch(0.15 0.05 268 / 80%)}
-[data-vibeui-block="cta-004"] [data-part="link"]{
-color:var(--vibeui-cta-004-ink);font-size:0.9375rem;font-weight:560;text-underline-offset:4px;
-}
-[data-vibeui-block="cta-004"] a:focus-visible{outline:2px solid var(--vibeui-cta-004-ink);outline-offset:3px}
 @container (min-width: 46rem){
 [data-vibeui-block="cta-004"] [data-part="shell"]{grid-template-columns:1.35fr 1fr;align-items:center;gap:3.5rem;padding:5rem 2.5rem}
 [data-vibeui-block="cta-004"] [data-part="side"]{align-items:flex-end;text-align:right}
@@ -136,8 +121,14 @@ export function Cta004({
         <div data-part="shell">
           <div data-part="main">
             <p data-part="kicker">{kicker}</p>
-            <h2 data-part="title">{title}</h2>
-            <p data-part="text">{description}</p>
+            <Heading001
+              data-part="heading"
+              title={title}
+              lede={description}
+              size="lg"
+              ledeWidth={48}
+              accent={accent}
+            />
           </div>
           <div data-part="side">
             <p data-part="stat">
@@ -145,12 +136,21 @@ export function Cta004({
               <span>{statCaption}</span>
             </p>
             <div data-part="actions">
-              <a data-part="action" href={actionHref}>
-                {actionLabel}
-              </a>
-              <a data-part="link" href={linkHref}>
-                {linkLabel}
-              </a>
+              <Button016
+                data-part="action"
+                label={actionLabel}
+                href={actionHref}
+                external={false}
+                size="lg"
+                tone="accent"
+                accent={accent}
+              />
+              <Button077
+                data-part="link"
+                label={linkLabel}
+                href={linkHref}
+                accent={accent}
+              />
             </div>
           </div>
         </div>

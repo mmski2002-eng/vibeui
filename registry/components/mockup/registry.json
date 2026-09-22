@@ -1321,6 +1321,355 @@
           }
         }
       }
+    },
+    {
+      "name": "mockup-010",
+      "type": "registry:component",
+      "title": "Скелет страницы на подложке",
+      "description": "Призрачный макет страницы: полоска навигации со знаком, три строки заголовка и три карточки — показывает, как фон работает под контентом.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-010/mockup-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-010.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока surface-005 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-mockup-010-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "mockup",
+          "skeleton",
+          "surface"
+        ],
+        "ai": {
+          "export": "Mockup010",
+          "usage": "<Mockup010  />",
+          "summary": "Призрачный макет страницы: полоска навигации со знаком, три строки заголовка и три карточки — показывает, как фон работает под контентом.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-010-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            " — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Page skeleton for a surface",
+            "description": "A ghost page layout: a nav strip with a mark, three title lines and three cards — shows how the background behaves under content.",
+            "docs": "Extracted from the surface-005 block as is: one file, no dependencies, its own palette in the --vibeui-mockup-010-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A ghost page layout: a nav strip with a mark, three title lines and three cards — shows how the background behaves under content.",
+              "usage": "<Mockup010  />",
+              "preserve": [
+                "the local --vibeui-mockup-010-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                " — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-011",
+      "type": "registry:component",
+      "title": "Скелет страницы с топбаром",
+      "description": "Призрачный макет для фото-подложки: топбар со знаком и подпись внизу кадра.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-011/mockup-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-011.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока surface-001 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-mockup-011-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "mockup",
+          "skeleton",
+          "surface"
+        ],
+        "ai": {
+          "export": "Mockup011",
+          "usage": "<Mockup011  />",
+          "summary": "Призрачный макет для фото-подложки: топбар со знаком и подпись внизу кадра.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-011-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            " — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Page skeleton with a top bar",
+            "description": "A ghost layout for a photo surface: a top bar with a mark and a caption at the bottom.",
+            "docs": "Extracted from the surface-001 block as is: one file, no dependencies, its own palette in the --vibeui-mockup-011-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A ghost layout for a photo surface: a top bar with a mark and a caption at the bottom.",
+              "usage": "<Mockup011  />",
+              "preserve": [
+                "the local --vibeui-mockup-011-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                " — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-012",
+      "type": "registry:component",
+      "title": "Скелет страницы с сеткой",
+      "description": "Призрачный макет: навигация, заголовок и сетка карточек для градиентной подложки.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-012/mockup-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-012.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока surface-002 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-mockup-012-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "mockup",
+          "skeleton",
+          "surface"
+        ],
+        "ai": {
+          "export": "Mockup012",
+          "usage": "<Mockup012  />",
+          "summary": "Призрачный макет: навигация, заголовок и сетка карточек для градиентной подложки.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-012-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            " — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Page skeleton with a grid",
+            "description": "A ghost layout: nav, title and a card grid for a gradient surface.",
+            "docs": "Extracted from the surface-002 block as is: one file, no dependencies, its own palette in the --vibeui-mockup-012-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "A ghost layout: nav, title and a card grid for a gradient surface.",
+              "usage": "<Mockup012  />",
+              "preserve": [
+                "the local --vibeui-mockup-012-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                " — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "mockup-013",
+      "type": "registry:component",
+      "title": "Скелет страницы для подложки",
+      "description": "Призрачный макет страницы: полоска навигации с меткой и плита с четырьмя строками; используется как содержимое-заглушка.",
+      "categories": [
+        "mockup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "mockup-013/mockup-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/mockup-013.tsx"
+        }
+      ],
+      "docs": "Компонент вынесен из блока surface-009 как есть: один файл, без зависимостей, собственная палитра в переменных --vibeui-mockup-013-*. Раскладку и данные держит блок, компонент получает их пропсами.",
+      "meta": {
+        "tags": [
+          "skeleton",
+          "ghost",
+          "mockup",
+          "surface"
+        ],
+        "ai": {
+          "export": "Mockup013",
+          "usage": "<Mockup013  />",
+          "summary": "Призрачный макет страницы: полоска навигации с меткой и плита с четырьмя строками; используется как содержимое-заглушка.",
+          "preserve": [
+            "локальную палитру --vibeui-mockup-013-* и не подменять её токенами вашей темы",
+            "разметку и порядок частей карточки: это рисунок блока, из которого она вынесена",
+            "прозрачную подложку по умолчанию — компонент ложится на фон блока"
+          ],
+          "adapt": [
+            "slabRef — содержимое",
+            "акцент через проп accent",
+            "ширину — её задаёт контейнер"
+          ],
+          "notes": [
+            "Компонент — часть составного блока; ставится вместе с ним, но работает и сам по себе."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "i18n": {
+          "en": {
+            "title": "Page skeleton for a surface",
+            "description": "Ghost page mock-up: a nav strip with a mark and a slab with four lines; used as placeholder content.",
+            "docs": "Extracted from the surface-009 block as is: one file, no dependencies, its own palette in the --vibeui-mockup-013-* variables. The block owns the layout and data and passes them as props.",
+            "ai": {
+              "summary": "Ghost page mock-up: a nav strip with a mark and a slab with four lines; used as placeholder content.",
+              "usage": "<Mockup013  />",
+              "preserve": [
+                "the local --vibeui-mockup-013-* palette — do not swap it for your theme tokens",
+                "the markup and order of the card parts: this is the drawing of the block it came from",
+                "the transparent surface by default — the component sits on the block background"
+              ],
+              "adapt": [
+                "slabRef — the content",
+                "the accent through the accent prop",
+                "the width — the container sets it"
+              ],
+              "notes": [
+                "The component is a part of a composite block; it installs with it but works on its own too."
+              ]
+            },
+            "controls": {
+              "accent": {
+                "label": "Accent"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

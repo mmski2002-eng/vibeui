@@ -1,9 +1,11 @@
 import { useId, type CSSProperties } from "react"
 
-export type Faq016Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion016,
+  type Accordion016Item,
+} from "@/registry/components/accordion/accordion-016/accordion-016"
+
+export type Faq016Item = Accordion016Item
 
 export type Faq016Props = {
   eyebrow?: string
@@ -17,6 +19,7 @@ export type Faq016Props = {
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
+  openFirst?: boolean
   background?: string
   className?: string
   style?: CSSProperties
@@ -46,22 +49,13 @@ container-type:inline-size;
 [data-vibeui-block="faq-016"]{box-sizing:border-box;display:block;background:var(--vibeui-faq-016-bg);color:var(--vibeui-faq-016-fg);font-family:var(--vibeui-faq-016-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="faq-016"] *{box-sizing:border-box}
 [data-vibeui-block="faq-016"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:4rem 1.25rem;display:grid;gap:2rem}
+/* Список вопросов — accordion-016, ему отдаётся вся колонка. */
+[data-vibeui-block="faq-016"] [data-part="list"]{width:100%;max-width:none}
 [data-vibeui-block="faq-016"] [data-part="eyebrow"]{margin:0 0 .5rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-faq-016-accent);font-weight:600}
 [data-vibeui-block="faq-016"] [data-part="title"]{margin:0;font-family:var(--vibeui-faq-016-display);font-weight:500;font-size:clamp(2rem,4.5cqi,3.25rem);line-height:1.05;letter-spacing:-.01em}
 [data-vibeui-block="faq-016"] [data-part="lede"]{margin:.75rem 0 0;max-width:26rem;color:var(--vibeui-faq-016-muted)}
 [data-vibeui-block="faq-016"] [data-part="note"]{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;color:inherit;font-weight:600;text-decoration:none;border-bottom:1px solid var(--vibeui-faq-016-accent);padding-bottom:.15rem}
 [data-vibeui-block="faq-016"] [data-part="note"]:focus-visible{outline:2px solid var(--vibeui-faq-016-accent);outline-offset:3px}
-[data-vibeui-block="faq-016"] [data-part="list"]{border-top:1px solid var(--vibeui-faq-016-line)}
-[data-vibeui-block="faq-016"] details{border-bottom:1px solid var(--vibeui-faq-016-line)}
-[data-vibeui-block="faq-016"] summary{display:grid;grid-template-columns:2rem minmax(0,1fr) 1.5rem;align-items:baseline;gap:1rem;padding:1.15rem 0;cursor:pointer;list-style:none;font-family:var(--vibeui-faq-016-display);font-size:1.35rem;font-weight:600;line-height:1.2}
-[data-vibeui-block="faq-016"] summary::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-016"] summary:focus-visible{outline:2px solid var(--vibeui-faq-016-accent);outline-offset:2px;border-radius:.25rem}
-[data-vibeui-block="faq-016"] [data-part="num"]{font-family:var(--vibeui-faq-016-font);font-size:.72rem;letter-spacing:.1em;color:var(--vibeui-faq-016-accent);font-weight:600}
-[data-vibeui-block="faq-016"] [data-part="plus"]{position:relative;width:1.5rem;height:1.5rem;align-self:center;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="faq-016"] [data-part="plus"]::before,[data-vibeui-block="faq-016"] [data-part="plus"]::after{content:"";position:absolute;left:50%;top:50%;width:1rem;height:1.5px;background:currentColor;transform:translate(-50%,-50%)}
-[data-vibeui-block="faq-016"] [data-part="plus"]::after{transform:translate(-50%,-50%) rotate(90deg)}
-[data-vibeui-block="faq-016"] details[open] [data-part="plus"]{transform:rotate(45deg)}
-[data-vibeui-block="faq-016"] [data-part="answer"]{margin:0;padding:0 2.5rem 1.35rem 3rem;color:var(--vibeui-faq-016-muted);max-width:40rem}
 @container (min-width: 56rem){
 [data-vibeui-block="faq-016"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:4rem;padding:5.5rem 2rem;align-items:start}
 [data-vibeui-block="faq-016"] [data-part="head"]{position:sticky;top:6rem}
@@ -87,6 +81,7 @@ export function Faq016({
   tone = "auto",
   accent,
   ink,
+  openFirst = false,
   background,
   className,
   style,
@@ -117,18 +112,15 @@ export function Faq016({
               </a>
             ) : null}
           </div>
-          <div data-part="list">
-            {items.map((item, index) => (
-              <details key={item.question} name={group}>
-                <summary>
-                  <span data-part="num">{String(index + 1).padStart(2, "0")}</span>
-                  <span>{item.question}</span>
-                  <span data-part="plus" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
+          <Accordion016
+            defaultOpen={openFirst ? 0 : -1}
+            data-part="list"
+            items={items}
+            group={group}
+            accent={accent}
+            ink={ink}
+            background={background}
+          />
         </div>
       </section>
     </>

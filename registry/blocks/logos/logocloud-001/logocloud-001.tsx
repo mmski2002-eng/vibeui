@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Badge029 } from "@/registry/components/badge/badge-029/badge-029"
 
 type Logocloud001Item = {
   name: string
@@ -51,25 +52,7 @@ font-size:0.8125rem;font-weight:600;letter-spacing:0.14em;text-transform:upperca
 list-style:none;margin:0;padding:0;min-width:0;
 display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.25rem 2.5rem;
 }
-[data-vibeui-block="logocloud-001"] [data-part="logo"]{
-color:var(--vibeui-logocloud-001-logo);
-font-size:1.25rem;line-height:1;white-space:nowrap;
-transition:color var(--vibeui-logocloud-001-dur-2) ease;
-font-weight:750;letter-spacing:-0.035em;
-}
-[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="serif"]{
-font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:650;letter-spacing:0;
-}
-[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="mono"]{
-font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-weight:600;letter-spacing:-0.02em;
-}
-[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="wide"]{
-font-size:1rem;font-weight:650;letter-spacing:0.28em;text-transform:uppercase;
-}
-[data-vibeui-block="logocloud-001"] [data-part="logo"][data-style="slab"]{
-font-weight:850;letter-spacing:-0.01em;text-transform:uppercase;
-}
-[data-vibeui-block="logocloud-001"] [data-part="row"] li:hover [data-part="logo"]{
+[data-vibeui-block="logocloud-001"] [data-part="row"] li:hover [data-vibeui-block="badge-029"]{
 color:var(--vibeui-logocloud-001-accent);
 }
 @container (min-width: 52rem){
@@ -149,9 +132,7 @@ export function Logocloud001({
           <ul data-part="row">
             {items.map((item) => (
               <li key={item.name}>
-                <span data-part="logo" data-style={item.style ?? "sans"}>
-                  {item.name}
-                </span>
+                <Badge029 data-part="logo" styleKey={item.style} name={item.name} accent={accent} />
               </li>
             ))}
           </ul>

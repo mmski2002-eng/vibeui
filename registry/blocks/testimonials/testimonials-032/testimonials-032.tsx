@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card047 } from "@/registry/components/card/card-047/card-047"
 
 export type Testimonials032Review = {
   quote: string
@@ -67,23 +68,10 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-032"] [data-part="stars"]{display:flex;gap:.15rem;margin:0 0 .3rem;color:var(--vibeui-testimonials-032-accent)}
 [data-vibeui-block="testimonials-032"] [data-part="stars"] svg{width:.85rem;height:.85rem}
 [data-vibeui-block="testimonials-032"] [data-part="grid"]{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="testimonials-032"] [data-part="card"]{position:relative;height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:1.1rem;margin:0;padding:1.5rem;border-radius:1.5rem;background:var(--vibeui-testimonials-032-glass);border:1px solid var(--vibeui-testimonials-032-line);transition:border-color .3s,background .3s}
-[data-vibeui-block="testimonials-032"] [data-part="card"]:hover{border-color:color-mix(in oklab,var(--vibeui-testimonials-032-accent) 40%,transparent);background:color-mix(in oklab,var(--vibeui-testimonials-032-accent) 7%,transparent)}
-[data-vibeui-block="testimonials-032"] [data-part="metric"]{display:flex;align-items:baseline;gap:.6rem;font-family:var(--vibeui-testimonials-032-mono)}
-[data-vibeui-block="testimonials-032"] [data-part="metric"] strong{font-weight:600;font-size:1.6rem;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,var(--vibeui-testimonials-032-accent),var(--vibeui-testimonials-032-mint));-webkit-background-clip:text;background-clip:text;color:transparent}
-[data-vibeui-block="testimonials-032"] [data-part="metric"] span{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--vibeui-testimonials-032-muted)}
-[data-vibeui-block="testimonials-032"] [data-part="quote"]{margin:0;font-size:1rem;line-height:1.55;text-wrap:pretty}
-[data-vibeui-block="testimonials-032"] [data-part="quote"]::before{content:"«"}
-[data-vibeui-block="testimonials-032"] [data-part="quote"]::after{content:"»"}
-[data-vibeui-block="testimonials-032"] [data-part="card"][data-featured="true"] [data-part="quote"]{font-family:var(--vibeui-testimonials-032-display);font-weight:600;font-size:clamp(1.2rem,2.4cqi,1.6rem);line-height:1.3;letter-spacing:-.02em}
-[data-vibeui-block="testimonials-032"] [data-part="author"]{display:flex;align-items:center;gap:.8rem;font-size:.86rem}
-[data-vibeui-block="testimonials-032"] [data-part="avatar"]{display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;background:linear-gradient(135deg,color-mix(in oklab,var(--vibeui-testimonials-032-accent) 40%,transparent),color-mix(in oklab,var(--vibeui-testimonials-032-mint) 30%,transparent));border:1px solid var(--vibeui-testimonials-032-line);font-family:var(--vibeui-testimonials-032-mono);font-weight:600;font-size:.8rem}
-[data-vibeui-block="testimonials-032"] [data-part="author"] b{display:block;font-weight:600;color:var(--vibeui-testimonials-032-fg)}
-[data-vibeui-block="testimonials-032"] [data-part="author"] span{color:var(--vibeui-testimonials-032-muted)}
-@supports (animation-timeline: view()){[data-vibeui-block="testimonials-032"] [data-part="card"]{animation:vibeui-testimonials-032-rise linear both;animation-timeline:view();animation-range:entry 0% entry 45%}}
+@supports (animation-timeline: view()){}
 @keyframes vibeui-testimonials-032-rise{from{opacity:0;transform:translateY(2.5rem)}to{opacity:1;transform:translateY(0)}}
-@container (min-width: 44rem){[data-vibeui-block="testimonials-032"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}[data-vibeui-block="testimonials-032"] [data-part="item"][data-featured="true"]{grid-column:span 2}}
-@container (min-width: 60rem){[data-vibeui-block="testimonials-032"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto;align-items:end}[data-vibeui-block="testimonials-032"] [data-part="rating"]{justify-self:end}[data-vibeui-block="testimonials-032"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}[data-vibeui-block="testimonials-032"] [data-part="item"][data-featured="true"]{grid-column:span 2}}
+@container (min-width: 44rem){[data-vibeui-block="testimonials-032"] [data-part="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container (min-width: 60rem){[data-vibeui-block="testimonials-032"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto;align-items:end}[data-vibeui-block="testimonials-032"] [data-part="rating"]{justify-self:end}[data-vibeui-block="testimonials-032"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-032"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_REVIEWS: Testimonials032Review[] = [
@@ -148,26 +136,7 @@ export function Testimonials032({
           </div>
           <ul data-part="grid">
             {reviews.map((review) => (
-              <li key={review.name} data-part="item" data-featured={review.featured ? "true" : undefined}>
-                <figure data-part="card" data-featured={review.featured ? "true" : undefined}>
-                  {review.metric ? (
-                    <div data-part="metric">
-                      <strong>{review.metric}</strong>
-                      {review.metricLabel ? <span>{review.metricLabel}</span> : null}
-                    </div>
-                  ) : null}
-                  <blockquote data-part="quote">{review.quote}</blockquote>
-                  <figcaption data-part="author">
-                    <span data-part="avatar" aria-hidden="true">
-                      {review.initials ?? review.name.charAt(0)}
-                    </span>
-                    <span>
-                      <b>{review.name}</b>
-                      <span>{review.role}</span>
-                    </span>
-                  </figcaption>
-                </figure>
-              </li>
+              <Card047 key={review.name} data-part="item" name={review.name} featured={review.featured} metric={review.metric} metricLabel={review.metricLabel} quote={review.quote} initials={review.initials} role={review.role} accent={accent} />
             ))}
           </ul>
         </div>

@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
 export type Navbar041Link = {
   label: string
   href: string
@@ -64,6 +66,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-041"][data-scrolled="true"]::after{opacity:1}
 [data-vibeui-block="navbar-041"][data-scrolled="true"]{background:color-mix(in oklab,var(--vibeui-navbar-041-bg) 86%,transparent);backdrop-filter:blur(14px)}
 [data-vibeui-block="navbar-041"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-041"] [data-part="sell"]{display:none}
 [data-vibeui-block="navbar-041"] [data-part="row"]{display:flex;align-items:center;gap:.6rem;height:4rem;max-width:86rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="navbar-041"] [data-part="brand"]{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--vibeui-navbar-041-display);font-weight:800;font-size:1.25rem;letter-spacing:-.04em;text-decoration:none;color:inherit;flex-shrink:0}
 [data-vibeui-block="navbar-041"] [data-part="mark"]{width:1.25rem;height:1.25rem;color:var(--vibeui-navbar-041-accent)}
@@ -82,14 +85,12 @@ container-type:inline-size;
 [data-vibeui-block="navbar-041"] [data-part="nav"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-041"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.5rem}
 [data-vibeui-block="navbar-041"] [data-part="nav"] + [data-part="right"]{margin-left:1.25rem}
-[data-vibeui-block="navbar-041"] [data-part="sell"]{display:none;padding:.55rem .95rem;border-radius:999px;border:1px solid var(--vibeui-navbar-041-line);color:var(--vibeui-navbar-041-fg);text-decoration:none;font-weight:600;white-space:nowrap;transition:background .2s,border-color .2s}
-[data-vibeui-block="navbar-041"] [data-part="sell"]:hover{background:var(--vibeui-navbar-041-soft);border-color:var(--vibeui-navbar-041-fg)}
 [data-vibeui-block="navbar-041"] [data-part="cart"]{position:relative;display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border-radius:999px;background:var(--vibeui-navbar-041-accent);color:var(--vibeui-navbar-041-on-accent);text-decoration:none;flex-shrink:0;transition:transform .18s}
 [data-vibeui-block="navbar-041"] [data-part="cart"]:hover{transform:translateY(-1px)}
 [data-vibeui-block="navbar-041"] [data-part="cart"] svg{width:1.1rem;height:1.1rem}
 [data-vibeui-block="navbar-041"] [data-part="badge"]{position:absolute;top:-.35rem;right:-.35rem;min-width:1.25rem;height:1.25rem;padding:0 .35rem;border-radius:999px;background:var(--vibeui-navbar-041-fg);color:var(--vibeui-navbar-041-bg);font-family:var(--vibeui-navbar-041-mono);font-size:.66rem;font-weight:500;line-height:1.25rem;text-align:center;border:2px solid var(--vibeui-navbar-041-bg);animation:vibeui-navbar-041-pop .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes vibeui-navbar-041-pop{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
-[data-vibeui-block="navbar-041"] a:focus-visible,[data-vibeui-block="navbar-041"] button:focus-visible{outline:2px solid var(--vibeui-navbar-041-accent);outline-offset:2px}
+[data-vibeui-block="navbar-041"] button:focus-visible{outline:2px solid var(--vibeui-navbar-041-accent);outline-offset:2px}
 [data-vibeui-block="navbar-041"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--vibeui-navbar-041-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-041"] [data-part="burger"] i{display:block;width:1rem;height:2px;margin:0 auto;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
 [data-vibeui-block="navbar-041"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -103,7 +104,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-041"] [data-part="menu"] [data-part="search"]{display:flex;max-width:none;margin:0 0 .6rem}
 @keyframes vibeui-navbar-041-menu{from{opacity:0;transform:translateY(-6px)}}
 @container (min-width: 40rem){[data-vibeui-block="navbar-041"] [data-part="row"] [data-part="search"]{display:flex}}
-@container (min-width: 60rem){[data-vibeui-block="navbar-041"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-041"] [data-part="sell"]{display:inline-flex}[data-vibeui-block="navbar-041"] [data-part="burger"],[data-vibeui-block="navbar-041"] [data-part="menu"]{display:none}}
+@container (min-width: 60rem){[data-vibeui-block="navbar-041"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-041"] [data-part="burger"],[data-vibeui-block="navbar-041"] [data-part="menu"]{display:none}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-041"] *{animation:none!important;transition:none!important}}`
 
 function SearchField({ placeholder }: { placeholder: string }) {
@@ -204,9 +205,15 @@ export function Navbar041({
           </nav>
           <div data-part="right">
             {sellLabel ? (
-              <a data-part="sell" href={sellHref}>
-                {sellLabel}
-              </a>
+              <Button016
+                data-part="sell"
+                label={sellLabel}
+                href={sellHref}
+                external={false}
+                size="sm"
+                tone="neutral"
+                accent={accent}
+              />
             ) : null}
             <a data-part="cart" href={cartHref} aria-label={count > 0 ? `${cartLabel}: ${count}` : cartLabel}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

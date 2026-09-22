@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Blog011Post = {
   title: string
@@ -27,7 +28,8 @@ export type Blog011Props = {
 // у каждого месяца оранжевая точка. Ось даёт то, чего нет у плоского
 // списка, — ощущение регулярности: паузы и плотные месяцы видны без
 // чтения дат.
-const STYLES = `
+const STYLES = `[data-vibeui-block="blog-011"] [data-part="heading"]{margin-bottom:2.25rem}
+
 :where([data-vibeui-block="blog-011"]){
 --vibeui-blog-011-bg:transparent;
 --vibeui-blog-011-ink:light-dark(oklch(0.17 0 0),oklch(0.95 0 0));
@@ -49,14 +51,6 @@ font-family:var(--vibeui-blog-011-font);
 }
 [data-vibeui-block="blog-011"] [data-part="shell"]{
 max-width:46rem;margin:0 auto;padding:3rem 1.25rem;
-}
-[data-vibeui-block="blog-011"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-blog-011-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="blog-011"] [data-part="title"]{
-margin:0 0 2.25rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
 [data-vibeui-block="blog-011"] [data-part="timeline"]{
 margin:0;padding:0 0 0 1.25rem;list-style:none;
@@ -216,8 +210,12 @@ export function Blog011({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <ol data-part="timeline">
             {groups.map((group) => (
               <li key={group.month} data-part="group">

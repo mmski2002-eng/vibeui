@@ -2,6 +2,9 @@
 
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Cta030Channel = {
   id: string
   label: string
@@ -90,12 +93,8 @@ container-type:inline-size;
 [data-vibeui-block="cta-030"] [data-part="estimate"] button{margin-left:auto;width:1.6rem;height:1.6rem;border:1px solid var(--vibeui-cta-030-plate-line);border-radius:50%;background:transparent;color:inherit;font:inherit;font-size:1rem;line-height:1;cursor:pointer}
 [data-vibeui-block="cta-030"] [data-part="fields"]{display:grid;gap:.9rem}
 [data-vibeui-block="cta-030"] [data-part="form"]{display:grid;gap:.7rem}
-[data-vibeui-block="cta-030"] [data-part="form"] input{width:100%;height:3.4rem;padding:0 1.1rem;border:1px solid var(--vibeui-cta-030-on-accent);border-radius:.4rem;background:color-mix(in oklab,var(--vibeui-cta-030-bg) 92%,transparent);color:var(--vibeui-cta-030-fg);font:inherit;font-family:var(--vibeui-cta-030-mono);font-size:1rem;outline:none;transition:box-shadow .2s}
-[data-vibeui-block="cta-030"] [data-part="form"] input::placeholder{color:var(--vibeui-cta-030-muted)}
-[data-vibeui-block="cta-030"] [data-part="form"] input:focus-visible{box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-cta-030-on-accent) 35%,transparent)}
-[data-vibeui-block="cta-030"] [data-part="submit"]{height:3.4rem;padding:0 1.5rem;border:0;border-radius:.4rem;background:var(--vibeui-cta-030-on-accent);color:var(--vibeui-cta-030-accent);font:inherit;font-weight:700;font-size:1rem;cursor:pointer;white-space:nowrap;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="cta-030"] [data-part="submit"]:hover{transform:translateY(-1px);box-shadow:0 14px 30px -14px var(--vibeui-cta-030-on-accent)}
-[data-vibeui-block="cta-030"] [data-part="submit"]:focus-visible,[data-vibeui-block="cta-030"] [data-part="estimate"] button:focus-visible{outline:2px solid var(--vibeui-cta-030-on-accent);outline-offset:2px}
+[data-vibeui-block="cta-030"] [data-part="form"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="cta-030"] [data-part="form"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="cta-030"] [data-part="channels"]{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="cta-030"] [data-part="channel"]{padding:.5rem .9rem;border:1px solid var(--vibeui-cta-030-on-accent);border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
 [data-vibeui-block="cta-030"] [data-part="channel"][aria-checked="true"]{background:var(--vibeui-cta-030-on-accent);color:var(--vibeui-cta-030-accent)}
@@ -242,10 +241,10 @@ export function Cta030({
                       </div>
                     ) : null}
                     <form data-part="form" onSubmit={submit}>
-                      <input type="tel" name="phone" required placeholder={placeholder} aria-label={phoneLabel} autoComplete="tel" inputMode="tel" />
-                      <button data-part="submit" type="submit">
+                      <Input001 type="tel" name="phone" required label={placeholder} autoComplete="tel" accent={accent} />
+                      <Button001 type="submit" size="lg" accent={accent}>
                         {actionLabel}
-                      </button>
+                      </Button001>
                     </form>
                     <ul data-part="channels" role="radiogroup" aria-label={channelsLabel}>
                       {channels.map((item) => (

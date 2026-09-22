@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties } from "react"
+import { Button113 } from "@/registry/components/button/button-113/button-113"
 
 export type Navbar044Link = {
   label: string
@@ -69,10 +70,6 @@ container-type:inline-size;
 [data-vibeui-block="navbar-044"] [data-part="nav"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-044"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.7rem}
 [data-vibeui-block="navbar-044"] [data-part="nav"] + [data-part="right"]{margin-left:1.4rem}
-[data-vibeui-block="navbar-044"] [data-part="action"]{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1.15rem;border-radius:999px;background:var(--vibeui-navbar-044-accent);color:var(--vibeui-navbar-044-on-accent);text-decoration:none;font-weight:600;font-size:.9rem;white-space:nowrap;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="navbar-044"] [data-part="action"] svg{width:1rem;height:1rem;transition:transform .2s}
-[data-vibeui-block="navbar-044"] [data-part="action"]:hover{transform:translateY(-1px);box-shadow:0 10px 24px -10px var(--vibeui-navbar-044-accent)}
-[data-vibeui-block="navbar-044"] [data-part="action"]:hover svg{animation:vibeui-navbar-044-beat .9s ease-in-out infinite}
 [data-vibeui-block="navbar-044"] a:focus-visible,[data-vibeui-block="navbar-044"] button:focus-visible{outline:2px solid var(--vibeui-navbar-044-accent);outline-offset:2px}
 @keyframes vibeui-navbar-044-beat{0%,100%{transform:scale(1)}30%{transform:scale(1.25)}60%{transform:scale(1.05)}}
 [data-vibeui-block="navbar-044"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.6rem;height:2.6rem;padding:0;border:1px solid var(--vibeui-navbar-044-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
@@ -162,12 +159,7 @@ export function Navbar044({
           </nav>
           <div data-part="right">
             {actionLabel ? (
-              <a data-part="action" href={actionHref}>
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.4 5 7 5c2 0 3.4 1.1 5 2.8C13.6 6.1 15 5 17 5c3.6 0 5.8 3.6 4.5 6.8C19.5 16.4 12 21 12 21Z" />
-                </svg>
-                {actionLabel}
-              </a>
+              <Button113 data-part="action" actionHref={actionHref} actionLabel={actionLabel} accent={accent} />
             ) : null}
             <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-044-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
               <i aria-hidden="true" />

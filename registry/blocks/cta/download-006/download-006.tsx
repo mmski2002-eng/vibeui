@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Button122 } from "@/registry/components/button/button-122/button-122"
 
 type Download006Alternative = {
   name: string
@@ -59,20 +60,6 @@ font-family:var(--vibeui-download-006-font);
 [data-vibeui-block="download-006"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-download-006-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
 [data-vibeui-block="download-006"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="download-006"] [data-part="lead"]{margin:0 auto 2rem;max-width:44ch;color:var(--vibeui-download-006-muted);font-size:1rem;line-height:1.6}
-[data-vibeui-block="download-006"] [data-part="primary"]{
-display:inline-grid;grid-template-columns:auto auto;align-items:center;
-justify-content:center;column-gap:0.75rem;row-gap:0.125rem;
-padding:0.9375rem 2rem;border-radius:1rem;
-background:var(--vibeui-download-006-accent);color:oklch(from var(--vibeui-download-006-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-text-decoration:none;transition:opacity var(--vibeui-download-006-dur-2) ease,transform var(--vibeui-download-006-dur-2) ease;
-}
-[data-vibeui-block="download-006"] [data-part="primary"]:hover{opacity:.92;transform:translateY(-1px)}
-[data-vibeui-block="download-006"] [data-part="primary"]:focus-visible{outline:2px solid var(--vibeui-download-006-accent);outline-offset:3px}
-/* Значок занимает обе строки кнопки слева, подпись и приписка идут
-   столбиком справа — иначе приписка уезжает под знак. */
-[data-vibeui-block="download-006"] [data-part="primary"] svg{grid-row:span 2;width:1.5rem;height:1.5rem;flex:none}
-[data-vibeui-block="download-006"] [data-part="primary-label"]{font-size:1.0625rem;font-weight:700;text-align:left}
-[data-vibeui-block="download-006"] [data-part="primary-note"]{font-size:0.8125rem;opacity:.85;text-align:left}
 [data-vibeui-block="download-006"] [data-part="alternative"] svg{width:1rem;height:1rem;flex:none;opacity:.75}
 [data-vibeui-block="download-006"] [data-part="alternatives"]{
 list-style:none;margin:1.25rem 0 0;padding:0;
@@ -219,15 +206,7 @@ export function Download006({
           <h2 data-part="title">{title}</h2>
           {lead ? <p data-part="lead">{lead}</p> : null}
 
-          <a data-part="primary" href={primaryHref}>
-            {platformIcon(platform)}
-            <span data-part="primary-label">
-              {primaryLabel} {platform}
-            </span>
-            {buildNote ? (
-              <span data-part="primary-note">{buildNote}</span>
-            ) : null}
-          </a>
+          <Button122 data-part="primary" primaryHref={primaryHref} platform={platform} primaryLabel={primaryLabel} buildNote={buildNote} accent={accent} />
 
           {alternatives.length > 0 ? (
             <ul data-part="alternatives">

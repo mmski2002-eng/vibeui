@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card134 } from "@/registry/components/card/card-134/card-134"
 
 export type About017Photo = {
   src: string
@@ -80,23 +81,12 @@ container-type:inline-size;
 [data-vibeui-block="about-017"] [data-part="people"]{margin:4rem 0 0}
 [data-vibeui-block="about-017"] [data-part="people"] h3{margin:0 0 1.4rem;font-family:var(--vibeui-about-017-display);font-weight:500;font-size:1.9rem;line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="about-017"] [data-part="cards"]{display:grid;gap:1.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="about-017"] [data-part="card"]{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.2rem;align-items:start}
-[data-vibeui-block="about-017"] [data-part="polaroid"]{margin:0;padding:.4rem .4rem 1.8rem;background:var(--vibeui-about-017-bg);box-shadow:0 14px 30px -18px rgb(0 0 0 / .5);border:1px solid var(--vibeui-about-017-line);transform:rotate(var(--vibeui-about-017-r));transition:transform .4s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="about-017"] [data-part="card"]:hover [data-part="polaroid"]{transform:rotate(0) scale(1.03)}
-[data-vibeui-block="about-017"] [data-part="polaroid"] div{aspect-ratio:4/5;overflow:hidden;background:var(--vibeui-about-017-paper)}
-[data-vibeui-block="about-017"] [data-part="polaroid"] img{display:block;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="about-017"] [data-part="polaroid"] figcaption{margin:.4rem 0 -1.4rem;font-family:var(--vibeui-about-017-hand);font-size:1.15rem;line-height:1;text-align:center}
-[data-vibeui-block="about-017"] [data-part="who"]{margin:0;font-family:var(--vibeui-about-017-display);font-weight:600;font-size:1.4rem;line-height:1.1}
-[data-vibeui-block="about-017"] [data-part="role"]{margin:.2rem 0 .6rem;font-size:.82rem;color:var(--vibeui-about-017-muted)}
-[data-vibeui-block="about-017"] [data-part="quote"]{margin:0;font-family:var(--vibeui-about-017-display);font-style:italic;font-size:1.2rem;line-height:1.3}
-[data-vibeui-block="about-017"] [data-part="quote"]::before{content:"«"}
-[data-vibeui-block="about-017"] [data-part="quote"]::after{content:"»"}
 @supports (animation-timeline: view()){
-[data-vibeui-block="about-017"] [data-part="collage"],[data-vibeui-block="about-017"] [data-part="text"],[data-vibeui-block="about-017"] [data-part="card"]{animation:vibeui-about-017-in linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
+[data-vibeui-block="about-017"] [data-part="collage"],[data-vibeui-block="about-017"] [data-part="text"]{animation:vibeui-about-017-in linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
 }
 @keyframes vibeui-about-017-in{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 @container (min-width: 40rem){[data-vibeui-block="about-017"] [data-part="cards"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@container (min-width: 60rem){[data-vibeui-block="about-017"] [data-part="spread"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}[data-vibeui-block="about-017"] [data-part="collage"]{position:sticky;top:5.5rem}[data-vibeui-block="about-017"] [data-part="people"]{margin-top:5rem}[data-vibeui-block="about-017"] [data-part="cards"]{grid-template-columns:repeat(3,minmax(0,1fr))}[data-vibeui-block="about-017"] [data-part="card"]{grid-template-columns:8rem minmax(0,1fr)}}
+@container (min-width: 60rem){[data-vibeui-block="about-017"] [data-part="spread"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}[data-vibeui-block="about-017"] [data-part="collage"]{position:sticky;top:5.5rem}[data-vibeui-block="about-017"] [data-part="people"]{margin-top:5rem}[data-vibeui-block="about-017"] [data-part="cards"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="about-017"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_PHOTOS: About017Photo[] = [
@@ -195,19 +185,7 @@ export function About017({
               <h3>{peopleTitle}</h3>
               <ul data-part="cards">
                 {people.map((person, index) => (
-                  <li key={person.name} data-part="card">
-                    <figure data-part="polaroid" style={{ ["--vibeui-about-017-r" as string]: `${index % 2 ? 2.5 : -2.5}deg` }}>
-                      <div>
-                        <img src={person.image} alt={person.alt ?? person.name} loading="lazy" />
-                      </div>
-                      <figcaption>{person.name.split(" ")[0]}</figcaption>
-                    </figure>
-                    <div>
-                      <p data-part="who">{person.name}</p>
-                      <p data-part="role">{person.role}</p>
-                      <p data-part="quote">{person.quote}</p>
-                    </div>
-                  </li>
+                  <Card134 key={person.name} data-part="card" name={person.name} image={person.image} alt={person.alt} role={person.role} quote={person.quote} index={index} accent={accent} />
                 ))}
               </ul>
             </div>

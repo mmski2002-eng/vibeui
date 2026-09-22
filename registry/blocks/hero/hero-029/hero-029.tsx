@@ -2,6 +2,8 @@
 
 import { Fragment, useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent, type PointerEvent } from "react"
 
+import { Button077 } from "@/registry/components/button/button-077/button-077"
+
 export type Hero029Chapter = {
   /** Секунда начала главы. */
   at: number
@@ -69,6 +71,8 @@ container-type:inline-size;
 :where([data-vibeui-block="hero-029"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-029"]{box-sizing:border-box;position:relative;overflow:hidden;background:var(--vibeui-hero-029-bg);color:var(--vibeui-hero-029-fg);font-family:var(--vibeui-hero-029-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-029"] *{box-sizing:border-box}
+[data-vibeui-block="hero-029"] [data-part="all"]{margin-top:1.6rem}
+[data-vibeui-block="hero-029"] [data-part="all"]{margin-top:1.6rem}
 [data-vibeui-block="hero-029"]::before{content:"";position:absolute;left:-10%;top:-30%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-hero-029-accent) 22%,transparent),transparent 60%);filter:blur(40px);pointer-events:none;animation:vibeui-hero-029-drift 14s ease-in-out infinite alternate}
 [data-vibeui-block="hero-029"]::after{content:"";position:absolute;right:-20%;bottom:-40%;width:55%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--vibeui-hero-029-accent) 12%,transparent),transparent 62%);filter:blur(50px);pointer-events:none;animation:vibeui-hero-029-drift 18s ease-in-out infinite alternate-reverse}
 [data-vibeui-block="hero-029"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:4rem 1.25rem 3.5rem;display:grid;gap:2.5rem;align-items:center}
@@ -101,7 +105,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-029"][data-playing="true"] [data-part="play"]{box-shadow:0 0 0 12px color-mix(in oklab,var(--vibeui-hero-029-accent) 18%,transparent),0 20px 50px -16px var(--vibeui-hero-029-accent)}
 [data-vibeui-block="hero-029"][data-playing="true"] [data-part="play"]::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--vibeui-hero-029-accent);animation:vibeui-hero-029-ring 1.8s ease-out infinite}
 [data-vibeui-block="hero-029"] [data-part="play"] svg{width:1.6rem;height:1.6rem;fill:currentColor}
-[data-vibeui-block="hero-029"] [data-part="play"]:focus-visible,[data-vibeui-block="hero-029"] a:focus-visible,[data-vibeui-block="hero-029"] [data-part="chapter"]:focus-visible{outline:2px solid var(--vibeui-hero-029-accent);outline-offset:3px}
+[data-vibeui-block="hero-029"] [data-part="play"]:focus-visible,[data-vibeui-block="hero-029"] [data-part="chapter"]:focus-visible{outline:2px solid var(--vibeui-hero-029-accent);outline-offset:3px}
 [data-vibeui-block="hero-029"] [data-part="wave"]{display:flex;align-items:center;gap:2px;height:3.5rem;cursor:pointer;border:0;background:none;padding:0;width:100%}
 [data-vibeui-block="hero-029"] [data-part="wave"] i{flex:1;height:calc(var(--vibeui-hero-029-h) * 100%);min-height:3px;border-radius:2px;background:color-mix(in oklab,var(--vibeui-hero-029-fg) 22%,transparent);transition:background .2s,transform .5s var(--vibeui-hero-029-ease);animation:vibeui-hero-029-rise .8s var(--vibeui-hero-029-ease) both;animation-delay:calc(.5s + var(--vibeui-hero-029-i) * 12ms)}
 [data-vibeui-block="hero-029"] [data-part="wave"]:hover i{background:color-mix(in oklab,var(--vibeui-hero-029-fg) 34%,transparent)}
@@ -116,10 +120,6 @@ container-type:inline-size;
 [data-vibeui-block="hero-029"] [data-part="chapter"]:hover{translate:0 -2px}
 [data-vibeui-block="hero-029"] [data-part="chapter"]:hover,[data-vibeui-block="hero-029"] [data-part="chapter"][data-active="true"]{border-color:var(--vibeui-hero-029-accent);background:color-mix(in oklab,var(--vibeui-hero-029-accent) 14%,transparent)}
 [data-vibeui-block="hero-029"] [data-part="chapter"] span{font-family:var(--vibeui-hero-029-mono);font-size:.72rem;color:var(--vibeui-hero-029-accent)}
-[data-vibeui-block="hero-029"] [data-part="all"]{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.6rem;color:inherit;text-decoration:none;font-weight:500;padding-bottom:.1rem;background:linear-gradient(var(--vibeui-hero-029-accent),var(--vibeui-hero-029-accent)) no-repeat 0 100% / 100% 1px;transition:background-size .35s var(--vibeui-hero-029-ease);animation:vibeui-hero-029-up .7s var(--vibeui-hero-029-ease) 1.1s both}
-[data-vibeui-block="hero-029"] [data-part="all"]:hover{background-size:100% 2px}
-[data-vibeui-block="hero-029"] [data-part="all"] i{font-style:normal;display:inline-block;transition:translate .3s var(--vibeui-hero-029-ease)}
-[data-vibeui-block="hero-029"] [data-part="all"]:hover i{translate:4px 0}
 @keyframes vibeui-hero-029-wave{from{transform:scaleY(.5)}to{transform:scaleY(1.15)}}
 @keyframes vibeui-hero-029-rise{from{transform:scaleY(0)}}
 @keyframes vibeui-hero-029-blink{50%{opacity:.2}}
@@ -365,9 +365,7 @@ export function Hero029({
               </ul>
             ) : null}
             {allLabel ? (
-              <a data-part="all" href={allHref}>
-                {allLabel} <i aria-hidden="true">→</i>
-              </a>
+              <Button077 data-part="all" label={allLabel} href={allHref} accent={accent} />
             ) : null}
           </div>
         </div>

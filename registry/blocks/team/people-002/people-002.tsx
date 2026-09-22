@@ -1,4 +1,7 @@
 import type { CSSProperties } from "react"
+import { Card050 } from "@/registry/components/card/card-050/card-050"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 
 type People002Member = {
   name: string
@@ -26,7 +29,8 @@ export type People002Props = {
 // Ни строчки клиентского JS — фильтр работает в серверном компоненте.
 // Отделы получают слоты d1…d6 по порядку появления в списке людей, поэтому
 // CSS-правила остаются статичными при любых названиях отделов.
-const STYLES = `
+const STYLES = `[data-vibeui-block="people-002"] [data-part="heading"]{margin-bottom:1.5rem}
+
 :where([data-vibeui-block="people-002"]){
 --vibeui-people-002-bg:transparent;
 --vibeui-people-002-card:light-dark(oklch(1 0 0),oklch(0.235 0 0));
@@ -49,14 +53,6 @@ display:block;background:var(--vibeui-people-002-bg);color:var(--vibeui-people-0
 font-family:var(--vibeui-people-002-font);
 }
 [data-vibeui-block="people-002"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="people-002"] [data-part="eyebrow"]{
-margin:0 0 0.625rem;color:var(--vibeui-people-002-accent);
-font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
-}
-[data-vibeui-block="people-002"] [data-part="title"]{
-margin:0 0 1.5rem;max-width:22ch;
-font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
-}
 [data-vibeui-block="people-002"] [data-part="filters"]{
 display:flex;flex-wrap:wrap;gap:0.5rem;margin:0 0 1.75rem;padding:0;border:0;min-inline-size:0;
 }
@@ -88,39 +84,6 @@ color:var(--vibeui-people-002-on-accent);
 outline:2px solid var(--vibeui-people-002-accent);outline-offset:2px;
 }
 [data-vibeui-block="people-002"] [data-part="grid"]{display:grid;gap:0.875rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="people-002"] [data-part="card"]{
-min-inline-size:0;display:flex;align-items:center;gap:0.875rem;
-padding:1rem 1.125rem;border:1px solid var(--vibeui-people-002-border);border-radius:1rem;
-background:var(--vibeui-people-002-card);
-transition:border-color var(--vibeui-people-002-dur-2) ease;
-}
-[data-vibeui-block="people-002"] [data-part="card"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-people-002-accent) 40%,var(--vibeui-people-002-border));
-}
-[data-vibeui-block="people-002"] [data-part="avatar"]{
-position:relative;width:2.75rem;height:2.75rem;flex:none;border-radius:999px;display:grid;place-items:center;
-color:var(--vibeui-people-002-accent);
-font-size:0.875rem;font-weight:750;letter-spacing:0.02em;overflow:hidden;
-}
-/* Подложка — только когда фотографии нет: компонент обязан
-   оставаться полноценным без единого внешнего файла. */
-[data-vibeui-block="people-002"] [data-part="avatar"][data-empty="true"]{background:color-mix(in oklab,var(--vibeui-people-002-accent) 12%,var(--vibeui-people-002-card));}
-[data-vibeui-block="people-002"] [data-part="avatar"] img{
-position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;
-}
-[data-vibeui-block="people-002"] [data-part="who"]{display:grid;gap:0.0625rem;min-width:0}
-[data-vibeui-block="people-002"] [data-part="name"]{margin:0;font-size:0.9375rem;font-weight:650}
-[data-vibeui-block="people-002"] [data-part="role"]{margin:0;color:var(--vibeui-people-002-muted);font-size:0.8125rem;line-height:1.35}
-[data-vibeui-block="people-002"] [data-part="dept"]{
-margin-left:auto;flex:none;align-self:flex-start;
-display:inline-flex;align-items:center;gap:0.375rem;
-padding:0.1875rem 0.5rem;border-radius:0.375rem;
-border:1px solid var(--vibeui-people-002-border);
-color:var(--vibeui-people-002-muted);font-size:0.6875rem;font-weight:600;white-space:nowrap;
-}
-[data-vibeui-block="people-002"] [data-part="dept"]::before{
-content:"";width:0.375rem;height:0.375rem;border-radius:999px;
-background:var(--vibeui-people-002-accent);color:oklch(from var(--vibeui-people-002-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
 [data-vibeui-block="people-002"]:has([data-part="chip"] input[value="d1"]:checked) [data-part="card"]:not([data-dep="d1"]),
 [data-vibeui-block="people-002"]:has([data-part="chip"] input[value="d2"]:checked) [data-part="card"]:not([data-dep="d2"]),
 [data-vibeui-block="people-002"]:has([data-part="chip"] input[value="d3"]:checked) [data-part="card"]:not([data-dep="d3"]),
@@ -246,8 +209,12 @@ export function People002({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
           <fieldset data-part="filters">
             <legend data-part="legend">Фильтр по отделу</legend>
             <label data-part="chip">
@@ -272,32 +239,7 @@ export function People002({
           </fieldset>
           <ul data-part="grid">
             {members.map((member) => (
-              <li
-                key={member.name}
-                data-part="card"
-                data-dep={`d${departments.indexOf(member.department) + 1}`}
-              >
-                <span
-                  data-part="avatar"
-                  data-empty={member.image ? undefined : "true"}
-                  aria-hidden="true"
-                >
-                  {member.image ? (
-                    <img
-                      src={member.image}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : null}
-                  {initials(member.name)}
-                </span>
-                <span data-part="who">
-                  <p data-part="name">{member.name}</p>
-                  <p data-part="role">{member.role}</p>
-                </span>
-                <span data-part="dept">{member.department}</span>
-              </li>
+              <Card050 key={member.name} data-part="card" name={member.name} department={member.department} image={member.image} role={member.role} data-dep={`d${departments.indexOf(member.department) + 1}`} accent={accent} />
             ))}
           </ul>
         </div>

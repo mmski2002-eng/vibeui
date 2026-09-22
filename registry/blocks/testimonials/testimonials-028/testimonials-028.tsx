@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card037 } from "@/registry/components/card/card-037/card-037"
 
 export type Testimonials028Review = {
   text: string
@@ -61,6 +62,7 @@ container-type:inline-size;
 :where([data-vibeui-block="testimonials-028"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="testimonials-028"]{box-sizing:border-box;padding:5rem 0;overflow:hidden;background:var(--vibeui-testimonials-028-bg);color:var(--vibeui-testimonials-028-fg);font-family:var(--vibeui-testimonials-028-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="testimonials-028"] *{box-sizing:border-box}
+[data-vibeui-block="testimonials-028"] [data-part="card"]{flex:0 0 min(88%,34rem)}
 [data-vibeui-block="testimonials-028"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="testimonials-028"] [data-part="head"]{max-width:40rem;margin:0 0 2.2rem}
 [data-vibeui-block="testimonials-028"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-testimonials-028-muted)}
@@ -68,27 +70,11 @@ container-type:inline-size;
 [data-vibeui-block="testimonials-028"] [data-part="lede"]{margin:.8rem 0 0;color:var(--vibeui-testimonials-028-muted)}
 [data-vibeui-block="testimonials-028"] [data-part="strip"]{display:flex;gap:1.5rem;margin:0 -1.25rem;padding:1.5rem 1.25rem 2rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 1.25rem;scrollbar-width:none}
 [data-vibeui-block="testimonials-028"] [data-part="strip"]::-webkit-scrollbar{display:none}
-[data-vibeui-block="testimonials-028"] [data-part="card"]{flex:0 0 min(88%,34rem);scroll-snap-align:start;display:grid;min-height:15rem;background:var(--vibeui-testimonials-028-card);border:1px solid var(--vibeui-testimonials-028-line);box-shadow:0 24px 40px -28px rgb(0 0 0 / .5);transform:rotate(var(--vibeui-testimonials-028-r));transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
-[data-vibeui-block="testimonials-028"] [data-part="card"]:hover{transform:rotate(0) translateY(-6px);box-shadow:0 34px 50px -30px rgb(0 0 0 / .55)}
-[data-vibeui-block="testimonials-028"] [data-part="card"]:nth-child(even){--vibeui-testimonials-028-r:1.4deg}
-[data-vibeui-block="testimonials-028"] [data-part="card"]:nth-child(odd){--vibeui-testimonials-028-r:-1.2deg}
-[data-vibeui-block="testimonials-028"] [data-part="message"]{position:relative;padding:1.3rem 1.2rem 1.4rem;border-bottom:1px solid var(--vibeui-testimonials-028-line);font-family:var(--vibeui-testimonials-028-hand);font-size:1.35rem;line-height:1.2}
-[data-vibeui-block="testimonials-028"] [data-part="message"] p{margin:0}
-[data-vibeui-block="testimonials-028"] [data-part="occasion"]{display:block;margin:0 0 .6rem;font-family:var(--vibeui-testimonials-028-font);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--vibeui-testimonials-028-muted)}
-[data-vibeui-block="testimonials-028"] [data-part="side"]{position:relative;padding:1.1rem 1.1rem 1.3rem;display:grid;align-content:space-between;gap:1rem}
-[data-vibeui-block="testimonials-028"] [data-part="stamp"]{justify-self:end;width:3.4rem;height:4.1rem;padding:.3rem;background:var(--vibeui-testimonials-028-bg);outline:.3rem dotted var(--vibeui-testimonials-028-bg);outline-offset:-.15rem;box-shadow:0 0 0 1px var(--vibeui-testimonials-028-line)}
-[data-vibeui-block="testimonials-028"] [data-part="stamp"] div{width:100%;height:100%;display:grid;place-items:center;background:var(--vibeui-testimonials-028-accent);color:var(--vibeui-testimonials-028-on-accent)}
-[data-vibeui-block="testimonials-028"] [data-part="stamp"] svg{width:70%;height:70%}
-[data-vibeui-block="testimonials-028"] [data-part="mark"]{position:absolute;right:3.6rem;top:1rem;width:4.2rem;height:4.2rem;border-radius:50%;border:1.5px solid color-mix(in oklab,var(--vibeui-testimonials-028-fg) 55%,transparent);display:grid;place-items:center;text-align:center;font-size:.58rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in oklab,var(--vibeui-testimonials-028-fg) 70%,transparent);transform:rotate(-12deg);pointer-events:none}
-[data-vibeui-block="testimonials-028"] [data-part="mark"] b{display:block;font-family:var(--vibeui-testimonials-028-display);font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none}
-[data-vibeui-block="testimonials-028"] [data-part="lines"]{display:grid;gap:.55rem;margin:0;padding:0;list-style:none;font-size:.8rem;color:var(--vibeui-testimonials-028-muted)}
-[data-vibeui-block="testimonials-028"] [data-part="lines"] li{padding-bottom:.25rem;border-bottom:1px solid color-mix(in oklab,var(--vibeui-testimonials-028-fg) 30%,transparent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-[data-vibeui-block="testimonials-028"] [data-part="lines"] li b{font-family:var(--vibeui-testimonials-028-hand);font-weight:500;font-size:1.1rem;color:var(--vibeui-testimonials-028-fg)}
-[data-vibeui-block="testimonials-028"] [data-part="signature"]{margin:0;font-family:var(--vibeui-testimonials-028-hand);font-size:1.25rem;line-height:1;color:var(--vibeui-testimonials-028-accent);text-align:right}
 [data-vibeui-block="testimonials-028"] [data-part="hint"]{margin:0;font-family:var(--vibeui-testimonials-028-hand);font-size:1.3rem;color:var(--vibeui-testimonials-028-muted)}
-@container (min-width: 34rem){[data-vibeui-block="testimonials-028"] [data-part="card"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}[data-vibeui-block="testimonials-028"] [data-part="message"]{border-bottom:0;border-right:1px solid var(--vibeui-testimonials-028-line)}}
-@container (min-width: 60rem){[data-vibeui-block="testimonials-028"] [data-part="card"]{flex-basis:36rem}[data-vibeui-block="testimonials-028"] [data-part="message"]{padding:1.6rem 1.5rem;font-size:1.5rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-028"] *{animation:none!important;transition:none!important}}`
+
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="testimonials-028"] *{animation:none!important;transition:none!important}}
+@container (min-width: 60rem){[data-vibeui-block="testimonials-028"] [data-part="card"]{flex-basis:36rem}}
+`
 
 const DEFAULT_REVIEWS: Testimonials028Review[] = [
   { text: "Заказала маме на юбилей «Утро на даче». Курьер приехал ровно к 11, как обещали, мама три дня всем показывала открытку с именем флориста.", name: "Ксения", place: "Петроградская", date: "12 июня", occasion: "маме, 60 лет" },
@@ -141,37 +127,7 @@ export function Testimonials028({
           </div>
           <ul data-part="strip" aria-label={stripLabel}>
             {reviews.map((review) => (
-              <li key={review.name + review.text.slice(0, 12)} data-part="card">
-                <blockquote data-part="message">
-                  {review.occasion ? <span data-part="occasion">{review.occasion}</span> : null}
-                  <p>{review.text}</p>
-                </blockquote>
-                <div data-part="side">
-                  <div data-part="stamp" aria-hidden="true">
-                    <div>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 22V12M12 12c-4 0-6-3-6-6 4 0 6 2 6 6ZM12 12c4 0 6-3 6-6-4 0-6 2-6 6ZM12 12c0-4 2-7 0-10-2 3 0 6 0 10Z" />
-                      </svg>
-                    </div>
-                  </div>
-                  {review.date ? (
-                    <span data-part="mark" aria-hidden="true">
-                      <span>
-                        <b>{review.date}</b>
-                        {postLabel}
-                      </span>
-                    </span>
-                  ) : null}
-                  <ul data-part="lines" aria-label={linesLabel}>
-                    <li>
-                      {toLabel} <b>{addressee}</b>
-                    </li>
-                    <li>{whereLabel} {address}</li>
-                    <li>{fromLabel} {review.place ?? "—"}</li>
-                  </ul>
-                  <p data-part="signature">— {review.name}</p>
-                </div>
-              </li>
+              <Card037 key={review.name + review.text.slice(0, 12)} data-part="card" name={review.name} text={review.text} occasion={review.occasion} date={review.date} place={review.place} postLabel={postLabel} linesLabel={linesLabel} toLabel={toLabel} addressee={addressee} whereLabel={whereLabel} address={address} fromLabel={fromLabel} accent={accent} />
             ))}
           </ul>
           <p data-part="hint">{hint}</p>

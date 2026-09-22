@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react"
 
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
 export type Pricing003Plan = {
   name: string
   monthly: string
@@ -77,6 +80,7 @@ container-type:inline-size;
 /* Тёмная тема классом: light-dark() смотрит только на color-scheme, а
    next-themes и shadcn ставят класс .dark и его не объявляют. */
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="pricing-003"]{color-scheme:dark}
+[data-vibeui-block="pricing-003"] [data-part="cta-button"]{margin-top:1.5rem;}
 [data-vibeui-block="pricing-003"]{
 /* container-type отрывает ширину от содержимого: без нижней границы
    блок схлопывается внутри flex-контейнера. */
@@ -86,12 +90,6 @@ font-family:var(--vibeui-pricing-003-sans);
 }
 [data-vibeui-block="pricing-003"] *{box-sizing:border-box}
 [data-vibeui-block="pricing-003"] [data-part="shell"]{max-width:64rem;width:100%;margin:0 auto;padding:3.5rem 1.25rem;text-align:center}
-[data-vibeui-block="pricing-003"] h2{
-margin:0;font-size:clamp(1.5rem,4.2cqi,2.375rem);line-height:1.12;letter-spacing:-0.025em;font-weight:700;text-wrap:balance;
-}
-[data-vibeui-block="pricing-003"] [data-part="lede"]{
-margin:0.875rem auto 0;max-width:34rem;font-size:0.9375rem;line-height:1.6;color:var(--vibeui-pricing-003-muted);text-wrap:pretty;
-}
 [data-vibeui-block="pricing-003"] input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 [data-vibeui-block="pricing-003"] [data-part="switch"]{
 display:inline-flex;align-items:center;gap:0.25rem;margin:1.75rem 0 0;padding:0.25rem;border-radius:9999px;
@@ -124,13 +122,6 @@ font-size:2.125rem;font-weight:700;letter-spacing:-0.04em;font-variant-numeric:t
 [data-vibeui-block="pricing-003"] [data-part="feats"]{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:0.5rem}
 [data-vibeui-block="pricing-003"] [data-part="feats"] li{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.875rem;line-height:1.5}
 [data-vibeui-block="pricing-003"] [data-part="tick"]{flex:0 0 auto;margin-top:0.25rem;color:var(--vibeui-pricing-003-accent)}
-[data-vibeui-block="pricing-003"] a{
-display:inline-flex;align-items:center;justify-content:center;margin-top:1.5rem;height:2.75rem;border-radius:0.625rem;
-border:1px solid var(--vibeui-pricing-003-line);color:var(--vibeui-pricing-003-fg);
-font-size:0.9375rem;font-weight:650;text-decoration:none;transition:background-color var(--vibeui-pricing-003-dur-2) ease,border-color var(--vibeui-pricing-003-dur-2) ease;
-}
-[data-vibeui-block="pricing-003"] [data-featured="true"] a{background:var(--vibeui-pricing-003-accent);color:oklch(from var(--vibeui-pricing-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);border-color:transparent}
-[data-vibeui-block="pricing-003"] a:focus-visible{outline:2px solid var(--vibeui-pricing-003-accent);outline-offset:3px}
 [data-vibeui-block="pricing-003"] [data-part="year"]{display:none}
 [data-vibeui-block="pricing-003"]:has([data-part="periodyear"]:checked) [data-part="month"]{display:none}
 [data-vibeui-block="pricing-003"]:has([data-part="periodyear"]:checked) [data-part="year"]{display:inline}
@@ -227,8 +218,13 @@ export function Pricing003({
         style={palette}
       >
         <div data-part="shell">
-          <h2>{title}</h2>
-          {lede ? <p data-part="lede">{lede}</p> : null}
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={lede}
+            align="center"
+            accent={accent}
+          />
 
           <form>
             <input
@@ -299,7 +295,7 @@ export function Pricing003({
                     </li>
                   ))}
                 </ul>
-                <a href={plan.action.href}>{plan.action.label}</a>
+                <Button016 data-part="cta-button" label={plan.action.label} href={plan.action.href} external={false} size="lg" tone={plan.featured ? "accent" : "neutral"} accent={accent} />
               </li>
             ))}
           </ul>

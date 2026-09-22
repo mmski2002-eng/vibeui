@@ -1,4 +1,9 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
 
 type Errorpage001Link = {
   label: string
@@ -25,7 +30,8 @@ export type Errorpage001Props = {
 // типографический плакат. Штрих вместо заливки, потому что залитые цифры
 // такого размера давят на текст. Ниже — поиск и ссылки на главные разделы:
 // человек попал не туда, и страница обязана предложить выход, а не тупик.
-const STYLES = `
+const STYLES = `[data-vibeui-block="errorpage-001"] [data-part="submit"]{flex:none}
+
 :where([data-vibeui-block="errorpage-001"]){
 --vibeui-errorpage-001-bg:transparent;
 --vibeui-errorpage-001-ink:light-dark(oklch(0.2 0 0),oklch(0.95 0 0));
@@ -65,14 +71,6 @@ color:transparent;
 -webkit-text-stroke:clamp(2px,0.6cqi,4px) var(--vibeui-errorpage-001-accent);
 }
 }
-[data-vibeui-block="errorpage-001"] [data-part="title"]{
-margin:1.5rem 0 0;
-font-size:clamp(1.5rem,5cqi,2.125rem);line-height:1.15;letter-spacing:-0.02em;font-weight:700;
-}
-[data-vibeui-block="errorpage-001"] [data-part="description"]{
-margin:0.75rem 0 0;max-width:38ch;
-color:var(--vibeui-errorpage-001-muted);font-size:1rem;line-height:1.6;
-}
 [data-vibeui-block="errorpage-001"] [data-part="search"]{
 margin-top:2rem;width:100%;max-width:26rem;
 display:flex;gap:0.5rem;
@@ -82,21 +80,6 @@ background:var(--vibeui-errorpage-001-card);
 [data-vibeui-block="errorpage-001"] [data-part="search"]:focus-within{
 border-color:color-mix(in oklab,var(--vibeui-errorpage-001-accent) 55%,var(--vibeui-errorpage-001-border));
 }
-[data-vibeui-block="errorpage-001"] [data-part="input"]{
-flex:1 1 auto;min-width:0;
-border:0;background:none;padding:0.5rem 0.625rem;
-color:inherit;font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="errorpage-001"] [data-part="input"]::placeholder{color:var(--vibeui-errorpage-001-muted)}
-[data-vibeui-block="errorpage-001"] [data-part="input"]:focus{outline:none}
-[data-vibeui-block="errorpage-001"] [data-part="submit"]{
-flex:none;cursor:pointer;
-border:0;border-radius:0.625rem;padding:0.5rem 1.125rem;
-background:var(--vibeui-errorpage-001-accent-fill);color:var(--vibeui-errorpage-001-accent-ink);
-font:inherit;font-size:0.875rem;font-weight:650;
-transition:filter var(--vibeui-errorpage-001-dur-2) ease;
-}
-[data-vibeui-block="errorpage-001"] [data-part="submit"]:hover{filter:brightness(1.06)}
 [data-vibeui-block="errorpage-001"] [data-part="links-label"]{
 margin:2.25rem 0 0;
 color:var(--vibeui-errorpage-001-muted);
@@ -106,18 +89,7 @@ font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase
 margin-top:0.875rem;
 display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;
 }
-[data-vibeui-block="errorpage-001"] [data-part="link"]{
-display:inline-block;
-padding:0.4375rem 0.875rem;border:1px solid var(--vibeui-errorpage-001-border);border-radius:999px;
-color:inherit;text-decoration:none;font-size:0.875rem;font-weight:550;
-background:var(--vibeui-errorpage-001-card);
-transition:border-color var(--vibeui-errorpage-001-dur-2) ease,color var(--vibeui-errorpage-001-dur-2) ease;
-}
-[data-vibeui-block="errorpage-001"] [data-part="link"]:hover{
-border-color:color-mix(in oklab,var(--vibeui-errorpage-001-accent) 50%,var(--vibeui-errorpage-001-border));
-color:var(--vibeui-errorpage-001-accent);
-}
-[data-vibeui-block="errorpage-001"] :is(a,button,input):focus-visible{
+[data-vibeui-block="errorpage-001"] :is(a,input):focus-visible{
 outline:2px solid var(--vibeui-errorpage-001-accent);outline-offset:2px;border-radius:0.625rem;
 }
 @container (min-width: 48rem){
@@ -195,8 +167,13 @@ export function Errorpage001({
           <p data-part="code" aria-hidden="true">
             {code}
           </p>
-          <h2 data-part="title">{title}</h2>
-          <p data-part="description">{description}</p>
+          <Heading001
+            data-part="heading"
+            title={title}
+            lede={description}
+            ledeWidth={38}
+            accent={accent}
+          />
           <form data-part="search" role="search" action={searchAction}>
             <input
               data-part="input"
@@ -205,16 +182,22 @@ export function Errorpage001({
               placeholder={searchPlaceholder}
               aria-label={searchButton}
             />
-            <button data-part="submit" type="submit">
+            <Button001 type="submit" data-part="submit" size="lg" accent={accent}>
               {searchButton}
-            </button>
+            </Button001>
           </form>
           <p data-part="links-label">{linksLabel}</p>
           <nav data-part="links" aria-label={linksLabel}>
             {links.map((link) => (
-              <a key={link.label} data-part="link" href={link.href}>
-                {link.label}
-              </a>
+              <Button016
+                data-part="link"
+                key={link.label}
+                label={link.label}
+                href={link.href}
+                external={false}
+                tone="neutral"
+                accent={accent}
+              />
             ))}
           </nav>
         </div>

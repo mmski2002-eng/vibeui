@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { Chart031 } from "@/registry/components/chart/chart-031/chart-031"
 
 export type Stats012Gauge = {
   label: string
@@ -40,7 +41,6 @@ export type Stats012Props = {
 // точкой.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 
-const ARC = 2 * Math.PI * 42 * 0.75
 
 const STYLES = `
 :where([data-vibeui-block="stats-012"]){
@@ -71,21 +71,10 @@ container-type:inline-size;
 [data-vibeui-block="stats-012"] [data-part="status"]{display:flex;align-items:center;gap:.6rem;margin:0 0 1.4rem;padding:0 .4rem .9rem;border-bottom:1px solid var(--vibeui-stats-012-panel-line);font-family:var(--vibeui-stats-012-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-stats-012-panel-muted)}
 [data-vibeui-block="stats-012"] [data-part="status"]::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-stats-012-accent);box-shadow:0 0 10px var(--vibeui-stats-012-accent);animation:vibeui-stats-012-blink 2s ease-in-out infinite}
 [data-vibeui-block="stats-012"] [data-part="grid"]{display:grid;gap:1rem;grid-template-columns:repeat(2,minmax(0,1fr))}
-[data-vibeui-block="stats-012"] [data-part="gauge"]{display:grid;justify-items:center;gap:.4rem;padding:1rem .6rem;border-radius:1.2rem;border:1px solid var(--vibeui-stats-012-panel-line);text-align:center}
-[data-vibeui-block="stats-012"] [data-part="dial"]{width:min(100%,9rem);aspect-ratio:1;position:relative}
-[data-vibeui-block="stats-012"] [data-part="dial"] svg{width:100%;height:100%;transform:rotate(135deg)}
-[data-vibeui-block="stats-012"] [data-part="dial"] circle{fill:none;stroke-width:7;stroke-linecap:round}
-[data-vibeui-block="stats-012"] [data-part="track"]{stroke:var(--vibeui-stats-012-panel-line)}
-[data-vibeui-block="stats-012"] [data-part="fill"]{stroke:var(--vibeui-stats-012-accent);stroke-dashoffset:var(--vibeui-stats-012-full);transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="stats-012"] [data-in="true"] [data-part="fill"]{stroke-dashoffset:var(--vibeui-stats-012-off)}
-[data-vibeui-block="stats-012"] [data-part="value"]{position:absolute;inset:0;display:grid;place-content:center;font-family:var(--vibeui-stats-012-display);font-weight:900;font-size:clamp(1.3rem,2.6cqi,1.9rem);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
-[data-vibeui-block="stats-012"] [data-part="value"] small{display:block;margin-top:.3rem;font-family:var(--vibeui-stats-012-mono);font-weight:400;font-size:.62rem;letter-spacing:.06em;color:var(--vibeui-stats-012-panel-muted)}
-[data-vibeui-block="stats-012"] [data-part="label"]{margin:0;font-weight:600;font-size:.92rem}
-[data-vibeui-block="stats-012"] [data-part="delta"]{margin:0;font-family:var(--vibeui-stats-012-mono);font-size:.68rem;letter-spacing:.04em;color:var(--vibeui-stats-012-panel-muted)}
-[data-vibeui-block="stats-012"] [data-part="delta"] b{font-weight:500;color:var(--vibeui-stats-012-accent)}
+[data-vibeui-block="stats-012"] [data-in="true"] [data-vibeui-block="chart-031"] [data-part="fill"]{stroke-dashoffset:var(--vibeui-stats-012-off)}
 @keyframes vibeui-stats-012-blink{0%,100%{opacity:1}50%{opacity:.35}}
 @container (min-width: 44rem){[data-vibeui-block="stats-012"] [data-part="panel"]{padding:2rem}}
-@container (min-width: 64rem){[data-vibeui-block="stats-012"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}[data-vibeui-block="stats-012"] [data-part="gauge"]{padding:1.4rem 1rem}}
+@container (min-width: 64rem){[data-vibeui-block="stats-012"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="stats-012"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_GAUGES: Stats012Gauge[] = [
@@ -95,9 +84,6 @@ const DEFAULT_GAUGES: Stats012Gauge[] = [
   { label: "Датчиков", value: 4, unit: "шт", max: 4, previous: 1, previousLabel: "Луч 1" },
 ]
 
-function format(value: number, decimals: number) {
-  return value.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-}
 
 /** Панель приборов: дуги SVG и цифры, которые докручиваются в viewport. */
 export function Stats012({
@@ -174,24 +160,7 @@ export function Stats012({
                 const fraction = Math.min(1, Math.max(0, gauge.value / Math.max(1, gauge.max)))
                 const delta = gauge.previous ? Math.round(((gauge.value - gauge.previous) / gauge.previous) * 100) : null
                 return (
-                  <div key={gauge.label} data-part="gauge">
-                    <div data-part="dial" style={{ ["--vibeui-stats-012-full" as string]: ARC, ["--vibeui-stats-012-off" as string]: ARC * (1 - fraction) }}>
-                      <svg viewBox="0 0 100 100" aria-hidden="true">
-                        <circle data-part="track" cx="50" cy="50" r="42" strokeDasharray={`${ARC} 999`} />
-                        <circle data-part="fill" cx="50" cy="50" r="42" strokeDasharray={`${ARC} 999`} />
-                      </svg>
-                      <div data-part="value">
-                        {format(gauge.value * t, decimals)}
-                        {gauge.unit ? <small>{gauge.unit}</small> : null}
-                      </div>
-                    </div>
-                    <p data-part="label">{gauge.label}</p>
-                    {delta !== null ? (
-                      <p data-part="delta">
-                        {gauge.previousLabel ?? wasLabel} {format(gauge.previous ?? 0, decimals)} · <b>{delta >= 0 ? "+" : ""}{delta} %</b>
-                      </p>
-                    ) : null}
-                  </div>
+                  <Chart031 key={gauge.label} data-part="gauge" label={gauge.label} value={gauge.value} unit={gauge.unit} previousLabel={gauge.previousLabel} previous={gauge.previous} wasLabel={wasLabel} t={t} decimals={decimals} fraction={fraction} delta={delta} accent={accent} />
                 )
               })}
             </div>

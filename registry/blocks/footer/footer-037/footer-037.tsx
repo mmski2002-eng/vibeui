@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks010 } from "@/registry/components/navigation/footerlinks-010/footerlinks-010"
 
 export type Footer037Link = {
   label: string
@@ -66,10 +67,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-037"] [data-part="phone"]{display:block;margin:1rem 0 0;font-family:var(--vibeui-footer-037-display);font-weight:700;font-size:1.3rem;letter-spacing:-.02em;color:inherit;text-decoration:none;font-variant-numeric:tabular-nums}
 [data-vibeui-block="footer-037"] [data-part="phone"]:hover{color:var(--vibeui-footer-037-accent)}
 [data-vibeui-block="footer-037"] [data-part="columns"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem 1.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="footer-037"] [data-part="columns"] h3{margin:0 0 .8rem;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-037-muted)}
-[data-vibeui-block="footer-037"] [data-part="columns"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
-[data-vibeui-block="footer-037"] [data-part="columns"] a{color:var(--vibeui-footer-037-fg);text-decoration:none;font-weight:500;transition:color .2s}
-[data-vibeui-block="footer-037"] [data-part="columns"] a:hover{color:var(--vibeui-footer-037-accent)}
 [data-vibeui-block="footer-037"] [data-part="socials"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.4rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="footer-037"] [data-part="socials"] a{display:inline-flex;align-items:center;height:2.3rem;padding:0 .9rem;border-radius:999px;border:1px solid var(--vibeui-footer-037-line);color:var(--vibeui-footer-037-fg);text-decoration:none;font-size:.84rem;font-weight:600;transition:background .2s,color .2s,border-color .2s}
 [data-vibeui-block="footer-037"] [data-part="socials"] a:hover{background:var(--vibeui-footer-037-accent);color:var(--vibeui-footer-037-on-accent);border-color:transparent}
@@ -157,16 +154,7 @@ export function Footer037({
           </div>
           <ul data-part="columns">
             {columns.map((column) => (
-              <li key={column.title}>
-                <h3>{column.title}</h3>
-                <ul>
-                  {column.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href}>{link.label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
+              <Footerlinks010 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
             ))}
           </ul>
         </div>

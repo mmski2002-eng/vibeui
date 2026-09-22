@@ -2,6 +2,9 @@
 
 import { useId, useState, type CSSProperties, type FormEvent } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Subscribe011Frequency = {
   label: string
   /** Доставок в месяц — для расчёта. */
@@ -104,12 +107,6 @@ container-type:inline-size;
 [data-vibeui-block="subscribe-011"] [data-part="total"] span{font-size:.9rem;color:var(--vibeui-subscribe-011-muted)}
 [data-vibeui-block="subscribe-011"] [data-part="total"] b{font-family:var(--vibeui-subscribe-011-display);font-weight:600;font-size:2.4rem;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="subscribe-011"] [data-part="form"]{display:grid;gap:.6rem;margin:1.4rem 0 0}
-[data-vibeui-block="subscribe-011"] [data-part="form"] input{width:100%;height:3.1rem;padding:0 1.1rem;border-radius:999px;border:1px solid var(--vibeui-subscribe-011-line);background:var(--vibeui-subscribe-011-bg);color:var(--vibeui-subscribe-011-fg);font:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
-[data-vibeui-block="subscribe-011"] [data-part="form"] input::placeholder{color:var(--vibeui-subscribe-011-muted)}
-[data-vibeui-block="subscribe-011"] [data-part="form"] input:focus-visible{border-color:var(--vibeui-subscribe-011-fg);box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-subscribe-011-accent) 25%,transparent)}
-[data-vibeui-block="subscribe-011"] [data-part="form"] button{height:3.1rem;padding:0 1.4rem;border-radius:999px;border:0;background:var(--vibeui-subscribe-011-accent);color:var(--vibeui-subscribe-011-on-accent);font:inherit;font-weight:500;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .25s}
-[data-vibeui-block="subscribe-011"] [data-part="form"] button:hover{transform:translateY(-1px);box-shadow:0 12px 30px -12px var(--vibeui-subscribe-011-accent)}
-[data-vibeui-block="subscribe-011"] [data-part="form"] button:focus-visible{outline:2px solid var(--vibeui-subscribe-011-fg);outline-offset:3px}
 [data-vibeui-block="subscribe-011"] [data-part="fine"]{margin:.8rem 0 0;font-size:.78rem;color:var(--vibeui-subscribe-011-muted)}
 [data-vibeui-block="subscribe-011"] [data-part="done"]{display:grid;justify-items:start;gap:.8rem}
 [data-vibeui-block="subscribe-011"] [data-part="done"] svg{width:4rem;height:4rem;color:var(--vibeui-subscribe-011-accent)}
@@ -275,8 +272,10 @@ export function Subscribe011({
                   <b>{formatMoney(perMonth, currency)}</b>
                 </div>
                 <form data-part="form" onSubmit={submit}>
-                  <input type="tel" name="phone" required placeholder={placeholder} aria-label={placeholder} autoComplete="tel" />
-                  <button type="submit">{actionLabel}</button>
+                  <Input001 type="tel" name="phone" required label={placeholder} autoComplete="tel" accent={accent} />
+                  <Button001 type="submit" size="lg" accent={accent}>
+                    {actionLabel}
+                  </Button001>
                 </form>
                 <p data-part="fine">{fine}</p>
               </>

@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Podcast003Episode = {
   number: string
@@ -24,7 +25,8 @@ export type Podcast003Props = {
 // компактная сетка последних выпусков карточками с номером и длительностью.
 // Формат вводной секции подкаста, зовущей подписаться и показывающей, о чём
 // последние эпизоды.
-const STYLES = `
+const STYLES = `[data-vibeui-block="podcast-003"] [data-part="heading"]{margin-bottom:0.75rem}
+
 :where([data-vibeui-block="podcast-003"]){
 --vibeui-podcast-003-bg:transparent;
 --vibeui-podcast-003-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -46,8 +48,6 @@ display:block;background:var(--vibeui-podcast-003-bg);color:var(--vibeui-podcast
 font-family:var(--vibeui-podcast-003-font);
 }
 [data-vibeui-block="podcast-003"] [data-part="shell"]{max-width:64rem;margin:0 auto;padding:3rem 1.25rem;display:grid;gap:2rem;align-items:start}
-[data-vibeui-block="podcast-003"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-podcast-003-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="podcast-003"] [data-part="title"]{margin:0 0 0.75rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700}
 [data-vibeui-block="podcast-003"] [data-part="summary"]{margin:0 0 1.5rem;color:var(--vibeui-podcast-003-muted);font-size:1.0625rem;line-height:1.6}
 [data-vibeui-block="podcast-003"] [data-part="platforms"]{display:flex;flex-wrap:wrap;gap:0.5rem}
 [data-vibeui-block="podcast-003"] [data-part="platform"] svg{width:1rem;height:1rem;flex:none}
@@ -219,8 +219,12 @@ export function Podcast003({
       >
         <div data-part="shell">
           <div>
-            <p data-part="eyebrow">{eyebrow}</p>
-            <h2 data-part="title">{title}</h2>
+            <Heading001
+              data-part="heading"
+              eyebrow={eyebrow}
+              title={title}
+              accent={accent}
+            />
             <p data-part="summary">{summary}</p>
             <div data-part="platforms" aria-label={subscribeLabel}>
               {platforms.map((platform) => (

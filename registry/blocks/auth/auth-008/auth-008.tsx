@@ -1,4 +1,8 @@
 import type { CSSProperties, ReactNode } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
+
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
 
 export type Auth008Provider = {
   name: string
@@ -68,6 +72,9 @@ background:var(--vibeui-auth-008-bg);color:var(--vibeui-auth-008-fg);
 font-family:var(--vibeui-auth-008-sans);
 }
 [data-vibeui-block="auth-008"] *{box-sizing:border-box}
+[data-vibeui-block="auth-008"] [data-part="heading"]{margin-bottom:0.25rem}
+[data-vibeui-block="auth-008"] form{display:grid;gap:0.75rem}
+[data-vibeui-block="auth-008"] [data-part="submit"]{width:100%}
 [data-vibeui-block="auth-008"] [data-part="shell"]{
 width:100%;max-width:23rem;margin:0 auto;padding:1.5rem;
 background:var(--vibeui-auth-008-card);
@@ -77,7 +84,6 @@ border:1px solid var(--vibeui-auth-008-border);border-radius:1rem;
 [data-vibeui-block="auth-008"] [data-part="shell"]{max-width:25rem;padding:2rem}
 [data-vibeui-block="auth-008"] [data-part="providers"]{gap:0.625rem}
 }
-[data-vibeui-block="auth-008"] h2{margin:0 0 0.25rem;font-size:1.25rem;font-weight:700;letter-spacing:-0.015em;text-align:center}
 [data-vibeui-block="auth-008"] [data-part="lead"]{margin:0 0 1.25rem;font-size:0.8125rem;line-height:1.55;color:var(--vibeui-auth-008-muted);text-align:center}
 [data-vibeui-block="auth-008"] [data-part="providers"]{display:flex;flex-direction:column;gap:0.5rem}
 [data-vibeui-block="auth-008"] [data-part="provider"]{
@@ -91,13 +97,6 @@ transition:border-color var(--vibeui-auth-008-dur-2) ease,background-color var(-
 }
 [data-vibeui-block="auth-008"] [data-part="provider"]:hover{border-color:var(--vibeui-auth-008-accent);background:var(--vibeui-auth-008-accent-wash)}
 [data-vibeui-block="auth-008"] [data-part="provider"]:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:2px}
-[data-vibeui-block="auth-008"] [data-part="mark"]{
-flex:none;
-display:inline-flex;align-items:center;justify-content:center;
-width:1.5rem;height:1.5rem;border-radius:0.5rem;
-background:var(--vibeui-auth-008-chip);font-size:0.75rem;font-weight:700;
-}
-[data-vibeui-block="auth-008"] [data-part="mark"] svg{width:1rem;height:1rem}
 [data-vibeui-block="auth-008"] [data-part="last"]{
 margin-left:auto;padding:0.125rem 0.4375rem;border-radius:9999px;
 background:var(--vibeui-auth-008-accent-chip);color:var(--vibeui-auth-008-accent);
@@ -111,23 +110,6 @@ margin:1.125rem 0;font-size:0.75rem;color:var(--vibeui-auth-008-muted);
 [data-vibeui-block="auth-008"] [data-part="divider"]::after{
 content:"";height:1px;background:var(--vibeui-auth-008-border);
 }
-[data-vibeui-block="auth-008"] [data-part="field"]{display:flex;flex-direction:column;gap:0.3125rem;margin-bottom:0.75rem}
-[data-vibeui-block="auth-008"] label{font-size:0.8125rem;font-weight:600}
-[data-vibeui-block="auth-008"] input{
-width:100%;height:2.5rem;padding:0 0.75rem;
-border:1px solid var(--vibeui-auth-008-border);border-radius:0.625rem;
-background:var(--vibeui-auth-008-card);color:inherit;font:inherit;font-size:0.875rem;
-}
-[data-vibeui-block="auth-008"] input:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:1px;border-color:var(--vibeui-auth-008-accent)}
-[data-vibeui-block="auth-008"] [data-part="submit"]{
-width:100%;appearance:none;cursor:pointer;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:2.625rem;padding:0.375rem 1rem;
-border:0;border-radius:0.625rem;
-background:var(--vibeui-auth-008-accent);color:oklch(from var(--vibeui-auth-008-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:0.875rem;font-weight:650;
-}
-[data-vibeui-block="auth-008"] [data-part="submit"]:focus-visible{outline:2px solid var(--vibeui-auth-008-accent);outline-offset:2px}
 [data-vibeui-block="auth-008"] [data-part="legal"]{
 margin:1rem 0 0;font-size:0.6875rem;line-height:1.5;color:var(--vibeui-auth-008-muted);text-align:center;
 }
@@ -254,7 +236,13 @@ export function Auth008({
         aria-label={title}
       >
         <div data-part="shell">
-          <h2>{title}</h2>
+          <Heading001
+            data-part="heading"
+            title={title}
+            size="xs"
+            align="center"
+            accent={accent}
+          />
           <p data-part="lead">{lead}</p>
 
           <div data-part="providers">
@@ -285,20 +273,17 @@ export function Auth008({
           </p>
 
           <form>
-            <div data-part="field">
-              <label htmlFor="vibeui-auth-008-email">{emailLabel}</label>
-              <input
-                id="vibeui-auth-008-email"
-                name="email"
-                type="email"
-                autoComplete="username"
-                placeholder={emailPlaceholder}
-                required
-              />
-            </div>
-            <button type="submit" data-part="submit">
+            <Input001
+              name="email"
+              type="email"
+              autoComplete="username"
+              required
+              label={emailLabel}
+              accent={accent}
+            />
+            <Button001 type="submit" data-part="submit" size="lg" accent={accent}>
               {submit}
-            </button>
+            </Button001>
           </form>
 
           <p data-part="legal">

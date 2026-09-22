@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
 type Comparison004Group = {
   title: string
@@ -34,7 +35,8 @@ export type Comparison004Props = {
 //
 // Первая колонка липкая: на узкой ширине таблица прокручивается вбок, и без
 // закреплённого названия строки значения перестают что-либо значить.
-const STYLES = `
+const STYLES = `[data-vibeui-block="comparison-004"] [data-part="heading"]{margin-bottom:2rem}
+
 :where([data-vibeui-block="comparison-004"]){
 --vibeui-comparison-004-bg:transparent;
 --vibeui-comparison-004-ink:light-dark(oklch(0.22 0 0),oklch(0.95 0 0));
@@ -56,8 +58,6 @@ background:var(--vibeui-comparison-004-bg);color:var(--vibeui-comparison-004-ink
 font-family:var(--vibeui-comparison-004-font);
 }
 [data-vibeui-block="comparison-004"] [data-part="shell"]{max-width:68rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="comparison-004"] [data-part="eyebrow"]{margin:0 0 0.5rem;color:var(--vibeui-comparison-004-accent);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
-[data-vibeui-block="comparison-004"] [data-part="title"]{margin:0 0 2rem;font-size:clamp(1.625rem,5cqi,2.5rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;max-width:24ch}
 [data-vibeui-block="comparison-004"] [data-part="scroller"]{
 overflow-x:auto;border:1px solid var(--vibeui-comparison-004-border);border-radius:1rem;
 background:var(--vibeui-comparison-004-card);
@@ -192,8 +192,12 @@ export function Comparison004({
         style={palette}
       >
         <div data-part="shell">
-          <p data-part="eyebrow">{eyebrow}</p>
-          <h2 data-part="title">{title}</h2>
+          <Heading001
+            data-part="heading"
+            eyebrow={eyebrow}
+            title={title}
+            accent={accent}
+          />
 
           <div data-part="scroller">
             <table>

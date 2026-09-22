@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
+
+import { Button016 } from "@/registry/components/button/button-016/button-016"
 import type { CSSProperties } from "react"
 
 type Navbar006Link = {
@@ -80,6 +82,7 @@ font-feature-settings:"cv11","ss01";
 transition:background-color var(--vibeui-navbar-006-dur-4) ease,color var(--vibeui-navbar-006-dur-4) ease;
 }
 [data-vibeui-block="navbar-006"] *{box-sizing:border-box}
+[data-vibeui-block="navbar-006"] [data-part="product"]{flex:none}
 [data-vibeui-block="navbar-006"] [data-part="shell"]{
 display:flex;align-items:center;flex-wrap:wrap;gap:0.625rem 0.875rem;
 max-width:90rem;margin:0 auto;padding:0.6875rem 1rem;
@@ -207,20 +210,7 @@ color:var(--vibeui-navbar-006-ink);background:var(--vibeui-navbar-006-hover);
 }
 [data-vibeui-block="navbar-006"] [data-part="theme"] svg{width:1.0625rem;height:1.0625rem}
 
-[data-vibeui-block="navbar-006"] [data-part="product"]{
-flex:none;display:inline-flex;align-items:center;gap:0.375rem;
-min-height:2.25rem;padding:0.25rem 0.875rem;border-radius:0.625rem;
-background:var(--vibeui-navbar-006-ink);color:var(--vibeui-navbar-006-bg);
-text-decoration:none;font-size:0.875rem;font-weight:580;white-space:nowrap;
-transition:transform var(--vibeui-navbar-006-dur-2) var(--vibeui-navbar-006-ease),box-shadow var(--vibeui-navbar-006-dur-3) ease;
-}
-[data-vibeui-block="navbar-006"] [data-part="product"] svg{
-width:0.8125rem;height:0.8125rem;transition:transform var(--vibeui-navbar-006-dur-3) var(--vibeui-navbar-006-ease);
-}
-[data-vibeui-block="navbar-006"] [data-part="product"]:hover{transform:translateY(-1px)}
-[data-vibeui-block="navbar-006"] [data-part="product"]:hover svg{transform:translateX(0.1875rem)}
 
-[data-vibeui-block="navbar-006"] a:focus-visible,
 [data-vibeui-block="navbar-006"] button:focus-visible{
 outline:2px solid var(--vibeui-navbar-006-accent);outline-offset:3px;
 }
@@ -467,18 +457,15 @@ export function Navbar006({
             </button>
           ) : null}
 
-          <a data-part="product" href={productHref}>
-            {productLabel}
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M2.5 8h11M9 3.5 13.5 8 9 12.5"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
+          <Button016
+            data-part="product"
+            label={productLabel}
+            href={productHref}
+            external={false}
+            size="sm"
+            tone="neutral"
+            accent={accent}
+          />
         </div>
       </header>
     </>

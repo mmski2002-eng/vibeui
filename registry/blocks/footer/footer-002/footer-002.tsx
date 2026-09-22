@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks001 } from "@/registry/components/navigation/footerlinks-001/footerlinks-001"
 
 type Footer002Link = {
   label: string
@@ -73,16 +74,6 @@ color:var(--vibeui-footer-002-muted);font-size:0.9375rem;line-height:1.55;
 [data-vibeui-block="footer-002"] [data-part="columns"]{
 display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.75rem 1.25rem;
 }
-[data-vibeui-block="footer-002"] [data-part="column-title"]{
-margin:0 0 0.75rem;color:var(--vibeui-footer-002-ink);
-font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-}
-[data-vibeui-block="footer-002"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:0.5rem}
-[data-vibeui-block="footer-002"] [data-part="column"] a{
-color:var(--vibeui-footer-002-muted);text-decoration:none;font-size:0.875rem;
-transition:color var(--vibeui-footer-002-dur-2) ease;
-}
-[data-vibeui-block="footer-002"] [data-part="column"] a:hover{color:var(--vibeui-footer-002-accent)}
 [data-vibeui-block="footer-002"] [data-part="bottom"]{
 display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem 1.25rem;
 padding-top:1.5rem;border-top:1px solid var(--vibeui-footer-002-border);
@@ -193,20 +184,7 @@ export function Footer002({
             </div>
             <div data-part="columns">
               {columns.map((column) => (
-                <nav
-                  key={column.title}
-                  data-part="column"
-                  aria-label={column.title}
-                >
-                  <p data-part="column-title">{column.title}</p>
-                  <ul>
-                    {column.links.map((link) => (
-                      <li key={link.href}>
-                        <a href={link.href}>{link.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                <Footerlinks001 key={column.title} data-part="column" title={column.title} links={column.links} accent={accent} />
               ))}
             </div>
           </div>

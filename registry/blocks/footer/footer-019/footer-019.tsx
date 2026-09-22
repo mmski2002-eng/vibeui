@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Footerlinks015 } from "@/registry/components/navigation/footerlinks-015/footerlinks-015"
 
 export type Footer019Messenger = {
   /** Значок: telegram, whatsapp, vk, max — или свой short-текст. */
@@ -58,6 +59,7 @@ container-type:inline-size;
 :where([data-vibeui-block="footer-019"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="footer-019"]{box-sizing:border-box;display:block;background:var(--vibeui-footer-019-bg);color:var(--vibeui-footer-019-fg);font-family:var(--vibeui-footer-019-font);font-size:.9375rem;line-height:1.5}
 [data-vibeui-block="footer-019"] *{box-sizing:border-box}
+[data-vibeui-block="footer-019"] [data-part="links"]{margin:0}
 [data-vibeui-block="footer-019"] a{color:inherit;text-decoration:none}
 [data-vibeui-block="footer-019"] a:focus-visible{outline:2px solid var(--vibeui-footer-019-accent);outline-offset:3px;border-radius:.25rem}
 [data-vibeui-block="footer-019"] [data-part="shell"]{max-width:76rem;margin:0 auto;padding:3.5rem 1.25rem 2rem}
@@ -76,9 +78,6 @@ container-type:inline-size;
 [data-vibeui-block="footer-019"] [data-part="icon"]{display:grid;place-items:center;width:1.85rem;height:1.85rem;border-radius:50%;background:var(--vibeui-footer-019-accent);color:#14211b;font-size:.75rem;font-weight:700}
 [data-vibeui-block="footer-019"] [data-part="icon"] svg{width:1.05rem;height:1.05rem;fill:currentColor}
 [data-vibeui-block="footer-019"] [data-part="bottom"]{display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:center;justify-content:space-between;padding-top:1.5rem;font-size:.78rem;color:var(--vibeui-footer-019-muted)}
-[data-vibeui-block="footer-019"] [data-part="links"]{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="footer-019"] [data-part="links"] a{color:var(--vibeui-footer-019-fg);opacity:.85}
-[data-vibeui-block="footer-019"] [data-part="links"] a:hover{opacity:1;color:var(--vibeui-footer-019-accent)}
 @container (min-width: 56rem){
 [data-vibeui-block="footer-019"] [data-part="shell"]{padding:4.5rem 2rem 2rem}
 [data-vibeui-block="footer-019"] [data-part="top"]{grid-template-columns:1.3fr 1fr 1.2fr;gap:3rem}
@@ -194,13 +193,7 @@ export function Footer019({
           <div data-part="bottom">
             {legal ? <p style={{ margin: 0 }}>{legal}</p> : null}
             {links.length > 0 ? (
-              <ul data-part="links">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
-                  </li>
-                ))}
-              </ul>
+              <Footerlinks015 data-part="links" links={links} accent={accent} />
             ) : null}
           </div>
         </div>

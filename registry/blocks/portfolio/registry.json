@@ -10,7 +10,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "portfolio-001/portfolio-001.tsx",
@@ -18,14 +20,15 @@
           "target": "@components/vibeui/portfolio-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-001-*. Серверный компонент. Masonry через grid-auto-rows и span tall/wide (grid-row/column span 2), включается по container query. Обложки — тёплые градиенты, оттенок сдвигается по nth-child; поверх затемняющий градиент для читаемости подписи.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-001-*. Серверный компонент. Masonry через grid-auto-rows и span tall/wide (grid-row/column span 2), включается по container query. Обложки — тёплые градиенты, оттенок сдвигается по nth-child; поверх затемняющий градиент для читаемости подписи.",
       "meta": {
         "tags": [
           "portfolio",
           "gallery",
           "masonry",
           "works",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -71,6 +74,7 @@
           "usage": "<Portfolio001\n  title=\"Избранные работы\"\n  works={[{ title: \"Лендинг\", category: \"Веб\", span: \"tall\" }]}\n/>",
           "summary": "Портфолио masonry-сеткой: плитки работ разной высоты и ширины с градиентными обложками. Категория и название поверх затемнения. Плитки tall/wide растягиваются на две ячейки. Обложки брендовыми градиентами вместо стоковых фото. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-portfolio-001-* и не подменять её токенами вашей темы",
             "градиентные обложки вместо стоковых фото — своя вёрстка без ассетов",
             "span tall/wide на grid-row/column и masonry через grid-auto-rows",
@@ -128,6 +132,7 @@
             "ai": {
               "summary": "A masonry portfolio: work tiles of varying height and width with gradient covers. Category and title over a darkening overlay. Tall/wide tiles span two cells. Covers use brand gradients instead of stock photos. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-portfolio-001-* palette — do not swap it for your theme tokens",
                 "gradient covers instead of stock photos — a custom layout with no assets",
                 "the tall/wide span on grid-row/column and masonry via grid-auto-rows",
@@ -163,7 +168,7 @@
               }
             },
             "title": "Masonry Gallery",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-001-* variables. A server component. Masonry via grid-auto-rows and tall/wide span (grid-row/column span 2), enabled by a container query. Covers are warm gradients whose hue shifts by nth-child; a darkening gradient on top keeps the caption readable."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-portfolio-001-* variables. A server component. Masonry via grid-auto-rows and tall/wide span (grid-row/column span 2), enabled by a container query. Covers are warm gradients whose hue shifts by nth-child; a darkening gradient on top keeps the caption readable."
           }
         }
       }
@@ -177,7 +182,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "portfolio-002/portfolio-002.tsx",
@@ -185,14 +192,15 @@
           "target": "@components/vibeui/portfolio-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-002-*. Клиентский компонент: чипы фильтруют сетку по тегу через состояние и hidden на карточках. Набор чипов выводится из данных, активный объявлен через aria-pressed. Обложки — градиенты по nth-child.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-002-*. Клиентский компонент: чипы фильтруют сетку по тегу через состояние и hidden на карточках. Набор чипов выводится из данных, активный объявлен через aria-pressed. Обложки — градиенты по nth-child.",
       "meta": {
         "tags": [
           "portfolio",
           "gallery",
           "filter",
           "works",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -242,6 +250,7 @@
           "usage": "<Portfolio002\n  works={[{ title: \"Лендинг\", client: \"Финпилот\", tag: \"Веб\" }]}\n/>",
           "summary": "Портфолио с клиентским фильтром по тегу: чипы направлений над сеткой карточек. Набор чипов из данных, активный через aria-pressed, фильтрация через hidden. Карточка — градиентная обложка, клиент и название работы. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-portfolio-002-* и не подменять её токенами вашей темы",
             "вывод набора чипов из данных и aria-pressed на активном",
             "фильтрацию через hidden на карточках, а не удаление из DOM",
@@ -299,6 +308,7 @@
             "ai": {
               "summary": "A portfolio with a client-side tag filter: direction chips above a card grid. Chip set from data, active via aria-pressed, filtering via hidden. A card has a gradient cover, the client and the work title. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-portfolio-002-* palette — do not swap it for your theme tokens",
                 "deriving the chip set from data and aria-pressed on the active one",
                 "filtering via hidden on cards rather than removing them from the DOM",
@@ -334,7 +344,7 @@
               }
             },
             "title": "Filtered Gallery",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-002-* variables. A client component: chips filter the grid by tag via state and hidden on cards. The chip set is derived from the data, the active one announced via aria-pressed. Covers are gradients by nth-child."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-portfolio-002-* variables. A client component: chips filter the grid by tag via state and hidden on cards. The chip set is derived from the data, the active one announced via aria-pressed. Covers are gradients by nth-child."
           }
         }
       }
@@ -348,7 +358,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "portfolio-003/portfolio-003.tsx",
@@ -356,14 +368,15 @@
           "target": "@components/vibeui/portfolio-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-003-*. Серверный компонент. Кейс-плитки с упором на результат: клиент, крупная метрика акцентом, название и ссылка «читать кейс», которая проявляется на наведении/фокусе (opacity+translate). Сверху тёплая полоса-градиент. reduced-motion показывает ссылку сразу.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-003-*. Серверный компонент. Кейс-плитки с упором на результат: клиент, крупная метрика акцентом, название и ссылка «читать кейс», которая проявляется на наведении/фокусе (opacity+translate). Сверху тёплая полоса-градиент. reduced-motion показывает ссылку сразу.",
       "meta": {
         "tags": [
           "portfolio",
           "cases",
           "results",
           "works",
-          "marketing"
+          "marketing",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -373,6 +386,7 @@
           "usage": "<Portfolio003\n  cases={[{ client: \"Финпилот\", title: \"Лендинг за спринт\", result: \"−60% времени\" }]}\n/>",
           "summary": "Портфолио кейс-плитками с упором на результат: клиент, крупная метрика акцентом, название и ссылка «читать кейс», проявляющаяся на наведении. Плитки в две колонки, сверху тёплая полоса. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-portfolio-003-* и не подменять её токенами вашей темы",
             "крупную метрику результата акцентом — смысловой центр кейс-плитки",
             "проявление ссылки по наведению/фокусу и её показ сразу при reduced-motion",
@@ -430,6 +444,7 @@
             "ai": {
               "summary": "A portfolio in result-first case tiles: the client, a large accent metric, the title and a read-the-case link revealed on hover. Tiles in two columns with a warm top bar. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-portfolio-003-* palette — do not swap it for your theme tokens",
                 "the large result metric in the accent — the semantic centre of the case tile",
                 "revealing the link on hover/focus and showing it immediately under reduced-motion",
@@ -465,7 +480,7 @@
               }
             },
             "title": "Case Tiles",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-003-* variables. A server component. Result-first case tiles: the client, a large accent metric, the title and a read-the-case link revealed on hover/focus (opacity+translate). A warm gradient bar on top. reduced-motion shows the link immediately."
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-portfolio-003-* variables. A server component. Result-first case tiles: the client, a large accent metric, the title and a read-the-case link revealed on hover/focus (opacity+translate). A warm gradient bar on top. reduced-motion shows the link immediately."
           }
         }
       }
@@ -479,7 +494,10 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "portfolio-004/portfolio-004.tsx",
@@ -487,14 +505,15 @@
           "target": "@components/vibeui/portfolio-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-004-*. Серверный компонент. Чередование сторон сделано порядком в гриде, а не направлением флекса: на узкой ширине пары складываются в столбик, и обложка всегда остаётся над своим текстом. Без картинки обложка показывает градиентную заглушку из акцента — блок обязан выглядеть законченным на пустом проекте. Результаты работы выводятся парами «значение — показатель» и набраны акцентом.",
+      "docs": "Составной блок: импортирует button-077, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-004-*. Серверный компонент. Чередование сторон сделано порядком в гриде, а не направлением флекса: на узкой ширине пары складываются в столбик, и обложка всегда остаётся над своим текстом. Без картинки обложка показывает градиентную заглушку из акцента — блок обязан выглядеть законченным на пустом проекте. Результаты работы выводятся парами «значение — показатель» и набраны акцентом.",
       "meta": {
         "tags": [
           "portfolio",
           "case-study",
           "works",
           "agency",
-          "freelance"
+          "freelance",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -559,6 +578,7 @@
           "usage": "<Portfolio004\n  works={[{ client: \"Банк\", title: \"Кабинет\", summary: \"Что сделали\", results: [{ value: \"×2\", label: \"быстрее\" }] }]}\n/>",
           "summary": "Крупные кейсы лентой: обложка и текст идут парой, чередуя стороны. Год лежит плашкой на обложке, результат — парами «значение — показатель» под описанием. Формат для трёх-четырёх главных работ, когда сетка плиток мельчит. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-077, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-portfolio-004-* и не подменять её токенами вашей темы",
             "чередование сторон через order в гриде: на телефоне обложка обязана стоять над своим текстом, а не над соседним",
             "градиентную заглушку обложки: работа без картинки не должна оставлять дыру",
@@ -623,10 +643,11 @@
           "en": {
             "title": "Case studies feed",
             "description": "Large case studies in a feed: cover and text in pairs, sides alternating, each work backed by numbers. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-004-* variables. A server component. The sides alternate through grid order rather than flex direction: when narrow, the pairs stack and the cover always stays above its own text. Without an image the cover shows an accent gradient placeholder — the block has to look finished on an empty project. Results are printed as value/label pairs in the accent colour.",
+            "docs": "A composite block: imports button-077, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-portfolio-004-* variables. A server component. The sides alternate through grid order rather than flex direction: when narrow, the pairs stack and the cover always stays above its own text. Without an image the cover shows an accent gradient placeholder — the block has to look finished on an empty project. Results are printed as value/label pairs in the accent colour.",
             "ai": {
               "summary": "Large case studies in a feed: the cover and the text go in pairs, alternating sides. The year sits as a pill on the cover, results as value/label pairs under the description. A format for three or four flagship works, when a tile grid makes them too small. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-077, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-portfolio-004-* palette — do not swap it for your theme tokens",
                 "the alternating sides via grid order: on a phone the cover must sit above its own text, not the neighbour's",
                 "the gradient cover placeholder: a work without an image must not leave a hole",
@@ -680,7 +701,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "portfolio-005/portfolio-005.tsx",
@@ -688,14 +711,15 @@
           "target": "@components/vibeui/portfolio-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-005-*. Серверный компонент. Формат редакторского портфолио: тридцать строк читаются быстрее тридцати плиток. Ссылкой сделана вся строка, поэтому цель нажатия во всю ширину, а не в размер названия. На широкой ширине метаданные встают в отдельную колонку рядом с названием, на узкой уходят под него — раскладку считает container query.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-005-*. Серверный компонент. Формат редакторского портфолио: тридцать строк читаются быстрее тридцати плиток. Ссылкой сделана вся строка, поэтому цель нажатия во всю ширину, а не в размер названия. На широкой ширине метаданные встают в отдельную колонку рядом с названием, на узкой уходят под него — раскладку считает container query.",
       "meta": {
         "tags": [
           "portfolio",
           "list",
           "index",
           "editorial",
-          "works"
+          "works",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -705,6 +729,7 @@
           "usage": "<Portfolio005\n  rows={[{ title: \"Кабинет банка\", kind: \"Продукт\", client: \"Северный\", year: \"2025\" }]}\n/>",
           "summary": "Портфолио строками: название работы, тип, клиент и год. Вся строка — ссылка с подсветкой при наведении и видимым фокусом. Формат для тех, у кого работ много и важнее охват, а не картинки. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-portfolio-005-* и не подменять её токенами вашей темы",
             "ссылку на всю строку: цель нажатия должна быть во всю ширину, особенно на телефоне",
             "видимый фокус на строке — по списку ходят с клавиатуры",
@@ -767,10 +792,11 @@
           "en": {
             "title": "Work list",
             "description": "A portfolio as rows: title, kind, client and year. The whole row is the link. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-005-* variables. A server component. An editorial portfolio format: thirty rows read faster than thirty tiles. The whole row is the link, so the tap target spans the full width instead of the title's length. When wide, the metadata moves into its own column beside the title; when narrow it drops below — a container query decides.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-portfolio-005-* variables. A server component. An editorial portfolio format: thirty rows read faster than thirty tiles. The whole row is the link, so the tap target spans the full width instead of the title's length. When wide, the metadata moves into its own column beside the title; when narrow it drops below — a container query decides.",
             "ai": {
               "summary": "A portfolio as rows: work title, kind, client and year. The whole row is a link with a hover tint and a visible focus ring. A format for people with many works, where breadth matters more than pictures. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-portfolio-005-* palette — do not swap it for your theme tokens",
                 "the full-row link: the tap target has to span the width, especially on a phone",
                 "the visible focus ring on the row — the list is walked with a keyboard",
@@ -822,7 +848,10 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "portfolio-006/portfolio-006.tsx",
@@ -830,14 +859,15 @@
           "target": "@components/vibeui/portfolio-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-006-*. Серверный компонент. Главная работа занимает две колонки и две строки грида, остальные выстраиваются справа; на узкой ширине всё складывается в один столбец. Пропорции плиток фиксированы, поэтому сетка не рассыпается от разной высоты картинок, а плитка без картинки показывает градиентную заглушку.",
+      "docs": "Составной блок: импортирует button-077, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-portfolio-006-*. Серверный компонент. Главная работа занимает две колонки и две строки грида, остальные выстраиваются справа; на узкой ширине всё складывается в один столбец. Пропорции плиток фиксированы, поэтому сетка не рассыпается от разной высоты картинок, а плитка без картинки показывает градиентную заглушку.",
       "meta": {
         "tags": [
           "portfolio",
           "bento",
           "grid",
           "featured",
-          "works"
+          "works",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -855,6 +885,7 @@
           "usage": "<Portfolio006\n  feature={{ title: \"Кабинет банка\", kind: \"Продукт · 2025\" }}\n  works={[{ title: \"Сайт кофеен\", kind: \"Сайт · 2025\" }]}\n/>",
           "summary": "Одна главная работа крупной плиткой и три мелких рядом. Иерархия задана размером плитки: равная сетка уравняла бы флагман с проходными работами. Пропорции фиксированы, обложка без картинки показывает градиентную заглушку. Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты button-077, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-portfolio-006-* и не подменять её токенами вашей темы",
             "размер главной плитки: на нём держится вся иерархия блока",
             "фиксированные пропорции плиток — иначе сетка рассыпается от картинок разной высоты",
@@ -919,10 +950,11 @@
           "en": {
             "title": "Featured work and tiles",
             "description": "One flagship work as a large tile with three smaller ones beside it: hierarchy comes from size, not order. Self-contained — one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in the local --vibeui-portfolio-006-* variables. A server component. The featured work spans two grid columns and two rows, the rest line up on the right; when narrow everything stacks into a single column. Tile aspect ratios are fixed so the grid does not fall apart on images of different heights, and a tile without an image shows a gradient placeholder.",
+            "docs": "A composite block: imports button-077, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-portfolio-006-* variables. A server component. The featured work spans two grid columns and two rows, the rest line up on the right; when narrow everything stacks into a single column. Tile aspect ratios are fixed so the grid does not fall apart on images of different heights, and a tile without an image shows a gradient placeholder.",
             "ai": {
               "summary": "One flagship work as a large tile with three smaller ones beside it. Hierarchy comes from tile size: an even grid would put the flagship on par with filler work. Aspect ratios are fixed and a cover without an image shows a gradient placeholder. Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the button-077, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-portfolio-006-* palette — do not swap it for your theme tokens",
                 "the size of the featured tile: the whole hierarchy of the block rests on it",
                 "the fixed tile aspect ratios — otherwise the grid falls apart on images of different heights",
@@ -976,7 +1008,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-101"
+      ],
       "files": [
         {
           "path": "portfolio-007/portfolio-007.tsx",
@@ -984,7 +1018,7 @@
           "target": "@components/vibeui/portfolio-007.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради фильтра и лайтбокса. Плитки — <button> с img в filter:grayscale(1) → 0 и scale 1.05 по :hover/:focus-visible, рамка — ::before с inset box-shadow акцента, подпись — translateY по наведению. Сетка 2/3/4 колонки (container query 44rem и 64rem), <ul key={filter}> пересоздаётся с @keyframes --n×45ms. Лайтбокс — <dialog> с showModal(): слева фото object-fit:contain, справа история (от 64rem колонка 22rem), стрелки листают по кругу, ArrowLeft/ArrowRight на dialog, клик по фону закрывает, onClose сбрасывает текущую. Палитра --vibeui-portfolio-007-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-101 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради фильтра и лайтбокса. Плитки — <button> с img в filter:grayscale(1) → 0 и scale 1.05 по :hover/:focus-visible, рамка — ::before с inset box-shadow акцента, подпись — translateY по наведению. Сетка 2/3/4 колонки (container query 44rem и 64rem), <ul key={filter}> пересоздаётся с @keyframes --n×45ms. Лайтбокс — <dialog> с showModal(): слева фото object-fit:contain, справа история (от 64rem колонка 22rem), стрелки листают по кругу, ArrowLeft/ArrowRight на dialog, клик по фону закрывает, onClose сбрасывает текущую. Палитра --vibeui-portfolio-007-*: почти чёрный фон, светлый текст, неон фуксия #ff2bd6 как акцент, фиолет #8b5cff и циан #22f3ff для подписей, лайм #c8ff3a для статусов; свечения через text-shadow и box-shadow. Блок всегда тёмный внутри (color-scheme:dark), фон страницы задаётся background. Шрифты Unbounded, Manrope и JetBrains Mono подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -997,7 +1031,8 @@
           "gallery",
           "filter",
           "lightbox",
-          "grayscale"
+          "grayscale",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1016,6 +1051,7 @@
           "usage": "<Portfolio007\n  styles={[{ key: \"realism\", label: \"Реализм\" }, { key: \"minimal\", label: \"Минимализм\" }]}\n  works={[\n    { title: \"Лев\", style: \"realism\", image: \"/photos/work-01.webp\", meta: \"Марк · плечо\", hours: \"6 ч\", story: \"Референс — фото из заповедника.\" },\n  ]}\n/>",
           "summary": "Самодостаточное портфолио для тату-студии, фотографа или иллюстратора: фильтр по стилю, плитки ч/б → цвет, лайтбокс с историей. Стили и работы — массивы пропсом.",
           "preserve": [
+            "импорты button-101 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "проявление из чёрно-белого в цвет по наведению с неоновой рамкой",
             "фильтр по стилю с перерисовкой сетки каскадом",
             "лайтбокс на <dialog> с историей эскиза и листанием"
@@ -1066,10 +1102,11 @@
           "en": {
             "title": "Works with a filter, colour reveal and a lightbox",
             "description": "A tattoo portfolio: a style filter as neon pills, 4:5 tiles lie black-and-white and reveal colour on hover with a neon frame, the caption slides up. Changing the filter re-renders the grid with a cascade. A click opens a lightbox: the photo, the sketch story, hours, the artist, arrows and keyboard.",
-            "docs": "One file, zero dependencies, “use client” for the filter and the lightbox. Tiles are <button>s with the img in filter:grayscale(1) → 0 and scale 1.05 on :hover/:focus-visible, the frame an ::before with an inset accent box-shadow, the caption translateY on hover. A 2/3/4-column grid (container queries 44rem and 64rem); <ul key={filter}> remounts with a --n×45ms @keyframes. The lightbox is a <dialog> with showModal(): the photo object-fit:contain on the left, the story on the right (a 22rem column from 64rem), arrows cycle, ArrowLeft/ArrowRight on the dialog, a backdrop click closes, onClose resets the current item. Palette --vibeui-portfolio-007-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-101 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the filter and the lightbox. Tiles are <button>s with the img in filter:grayscale(1) → 0 and scale 1.05 on :hover/:focus-visible, the frame an ::before with an inset accent box-shadow, the caption translateY on hover. A 2/3/4-column grid (container queries 44rem and 64rem); <ul key={filter}> remounts with a --n×45ms @keyframes. The lightbox is a <dialog> with showModal(): the photo object-fit:contain on the left, the story on the right (a 22rem column from 64rem), arrows cycle, ArrowLeft/ArrowRight on the dialog, a backdrop click closes, onClose resets the current item. Palette --vibeui-portfolio-007-*: a near-black background, light text, neon magenta #ff2bd6 as the accent, violet #8b5cff and cyan #22f3ff for captions, lime #c8ff3a for statuses; glows via text-shadow and box-shadow. The block is always dark inside (color-scheme:dark), the page background comes via background. Unbounded, Manrope and JetBrains Mono via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained portfolio for a tattoo studio, photographer or illustrator: a style filter, b/w → colour tiles, a lightbox with a story. Styles and works come in as prop arrays.",
               "preserve": [
+                "the button-101 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the black-and-white to colour reveal on hover with a neon frame",
                 "the style filter re-rendering the grid with a cascade",
                 "the <dialog> lightbox with the sketch story and paging"
@@ -1211,7 +1248,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-102"
+      ],
       "files": [
         {
           "path": "portfolio-008/portfolio-008.tsx",
@@ -1219,7 +1258,7 @@
           "target": "@components/vibeui/portfolio-008.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Сетка — CSS columns: 2 до 40rem, 3 до 64rem, 4 выше; кадры — кнопки с break-inside:avoid и data-shape: rect 4:3, arch 4:5 с border-radius 50%/36%, tall 3:4. Фото filter grayscale(.55) saturate(.8), hover снимает фильтр и масштабирует 1.04. Лайтбокс — <dialog> showModal/close из эффекта по current, стрелки и ArrowLeft/ArrowRight листают по кругу, клик по backdrop закрывает; окно шириной до 52rem, фото object-fit:contain не выше 32rem в тёмной рамке; окно всплывает снизу с масштабом .94, подложка проявляется, каждое новое фото (key по src) мягко проступает с лёгким наездом. Зерно — SVG feTurbulence в ::after оболочки с multiply. Палитра --vibeui-portfolio-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-102 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради лайтбокса. Сетка — CSS columns: 2 до 40rem, 3 до 64rem, 4 выше; кадры — кнопки с break-inside:avoid и data-shape: rect 4:3, arch 4:5 с border-radius 50%/36%, tall 3:4. Фото filter grayscale(.55) saturate(.8), hover снимает фильтр и масштабирует 1.04. Лайтбокс — <dialog> showModal/close из эффекта по current, стрелки и ArrowLeft/ArrowRight листают по кругу, клик по backdrop закрывает; окно шириной до 52rem, фото object-fit:contain не выше 32rem в тёмной рамке; окно всплывает снизу с масштабом .94, подложка проявляется, каждое новое фото (key по src) мягко проступает с лёгким наездом. Зерно — SVG feTurbulence в ::after оболочки с multiply. Палитра --vibeui-portfolio-008-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond и Manrope подключаются <link precedence> с Google Fonts, с fallback на Georgia и системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1234,7 +1273,8 @@
           "grain",
           "couple",
           "serif",
-          "cream"
+          "cream",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1290,6 +1330,7 @@
           "usage": "<Portfolio008\n  title=\"Мы до свадьбы\"\n  photos={[\n    { src: \"/photos/gallery-01.webp\", caption: \"Воскресное утро\", shape: \"arch\" },\n    { src: \"/photos/gallery-02.webp\", caption: \"Парк, май\" },\n    { src: \"/photos/gallery-03.webp\", caption: \"Под одним зонтом\", shape: \"tall\" },\n  ]}\n/>",
           "summary": "Самодостаточная галерея пары: masonry-колонки с арками и вытянутыми кадрами, полу-ч/б → цвет по наведению, лайтбокс на dialog с клавиатурой. Фото — массив пропсом с формой.",
           "preserve": [
+            "импорты button-102 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "masonry-колонки с тремя формами кадров — прямой, арка, вытянутый",
             "приглушённые полу-ч/б фото, оживающие цветом по наведению, и зерно плёнки",
             "лайтбокс на dialog с подписью, стрелками и клавиатурой"
@@ -1340,10 +1381,11 @@
           "en": {
             "title": "Couple's masonry gallery with arches and a lightbox",
             "description": "A photo gallery of the couple: masonry columns, some frames arched, some tall; photos muted and half black-and-white, colour and a shadowed lift on hover. A click opens a dialog lightbox: the photo on dark, an italic caption, arrows, keyboard and backdrop close. Film grain over the grid.",
-            "docs": "One file, zero dependencies, “use client” for the lightbox. The grid is CSS columns: 2 below 40rem, 3 below 64rem, 4 above; frames are buttons with break-inside:avoid and data-shape: rect 4:3, arch 4:5 with border-radius 50%/36%, tall 3:4. Photos get filter grayscale(.55) saturate(.8), hover removes the filter and scales 1.04. The lightbox is a <dialog> with showModal/close from an effect on current, arrows and ArrowLeft/ArrowRight cycle, a backdrop click closes; the window is up to 52rem wide, the photo object-fit:contain no taller than 32rem in a dark frame; the window rises from below with scale .94, the backdrop fades in, each new photo (keyed by src) fades in with a slight zoom. Grain is an SVG feTurbulence in the shell's ::after with multiply. Palette --vibeui-portfolio-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-102 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the lightbox. The grid is CSS columns: 2 below 40rem, 3 below 64rem, 4 above; frames are buttons with break-inside:avoid and data-shape: rect 4:3, arch 4:5 with border-radius 50%/36%, tall 3:4. Photos get filter grayscale(.55) saturate(.8), hover removes the filter and scales 1.04. The lightbox is a <dialog> with showModal/close from an effect on current, arrows and ArrowLeft/ArrowRight cycle, a backdrop click closes; the window is up to 52rem wide, the photo object-fit:contain no taller than 32rem in a dark frame; the window rises from below with scale .94, the backdrop fades in, each new photo (keyed by src) fades in with a slight zoom. Grain is an SVG feTurbulence in the shell's ::after with multiply. Palette --vibeui-portfolio-008-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond and Manrope come via <link precedence> from Google Fonts with Georgia and system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained couple's gallery: masonry columns with arched and tall frames, half b/w → colour on hover, a dialog lightbox with keyboard. Photos come as a prop array with a shape.",
               "preserve": [
+                "the button-102 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "masonry columns with three frame shapes — rect, arch, tall",
                 "the muted half-b/w photos coming alive in colour on hover, and the film grain",
                 "the dialog lightbox with a caption, arrows and keyboard"
@@ -1436,7 +1478,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-103"
+      ],
       "files": [
         {
           "path": "portfolio-009/portfolio-009.tsx",
@@ -1444,7 +1488,7 @@
           "target": "@components/vibeui/portfolio-009.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради переворота (Set перевёрнутых индексов в state). Карточка — <button aria-pressed> с perspective, внутри [data-part=inner] с transform-style:preserve-3d и rotateY(180deg) по data-flipped; лицо и оборот — backface-visibility:hidden. Оборот — сетка 1.2fr/1fr с вертикальной линией ::before, текст рукописным, справа марка (рамка с пунктиром), SVG-штемпель с городом и датой и три линии адреса. Формы: wide 3:2, tall 4:5, square 1:1. Колонки CSS columns: 2 до 40rem, 3 до 64rem, 4 выше. Палитра --vibeui-portfolio-009-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-103 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради переворота (Set перевёрнутых индексов в state). Карточка — <button aria-pressed> с perspective, внутри [data-part=inner] с transform-style:preserve-3d и rotateY(180deg) по data-flipped; лицо и оборот — backface-visibility:hidden. Оборот — сетка 1.2fr/1fr с вертикальной линией ::before, текст рукописным, справа марка (рамка с пунктиром), SVG-штемпель с городом и датой и три линии адреса. Формы: wide 3:2, tall 4:5, square 1:1. Колонки CSS columns: 2 до 40rem, 3 до 64rem, 4 выше. Палитра --vibeui-portfolio-009-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Oswald, Lobster и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "pro": true,
         "tags": [
@@ -1459,7 +1503,8 @@
           "postmark",
           "photos",
           "cuba",
-          "retro"
+          "retro",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1543,6 +1588,7 @@
           "usage": "<Portfolio009\n  title=\"Что мы вам писали\"\n  addressee=\"Дорогим гостям\"\n  cards={[\n    { src: \"/photos/postcard-01.webp\", caption: \"Велосипед на двоих\", back: \"Соня едет на раме и командует.\", from: \"Trinidad\", date: \"03.2026\", shape: \"wide\" },\n    { src: \"/photos/postcard-02.webp\", caption: \"Дверь в Гаване\", back: \"Синяя, облупленная, идеальная.\", from: \"La Habana\", date: \"10.2025\", shape: \"tall\" },\n  ]}\n/>",
           "summary": "Самодостаточная галерея-открытки: фото на картоне со скотчем, переворот на оборот с маркой, штемпелем и текстом, masonry с тремя формами. Открытки — массив пропсом.",
           "preserve": [
+            "импорты button-103 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "переворот карточки по клику и оборот открытки с маркой, штемпелем и разлиновкой",
             "полоску скотча и рукописную подпись на лицевой стороне",
             "masonry с тремя формами кадров — wide, tall, square"
@@ -1593,10 +1639,11 @@
           "en": {
             "title": "Postcard gallery that flips to the back",
             "description": "Couple photos as postcards: on cream card with a tape strip and a handwritten caption; a click flips the card — on the back, ruled lines, a stamp, a round postmark with the city and date, the postcard text and an address. A masonry layout with three card shapes.",
-            "docs": "One file, zero dependencies, “use client” for the flip (a Set of flipped indices in state). A card is a <button aria-pressed> with perspective, inside [data-part=inner] with transform-style:preserve-3d and rotateY(180deg) on data-flipped; front and back are backface-visibility:hidden. The back is a 1.2fr/1fr grid with a ::before vertical line, handwritten text, a stamp (dashed frame) on the right, an SVG postmark with city and date and three address lines. Shapes: wide 3:2, tall 4:5, square 1:1. CSS columns: 2 below 40rem, 3 below 64rem, 4 above. Palette --vibeui-portfolio-009-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-103 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the flip (a Set of flipped indices in state). A card is a <button aria-pressed> with perspective, inside [data-part=inner] with transform-style:preserve-3d and rotateY(180deg) on data-flipped; front and back are backface-visibility:hidden. The back is a 1.2fr/1fr grid with a ::before vertical line, handwritten text, a stamp (dashed frame) on the right, an SVG postmark with city and date and three address lines. Shapes: wide 3:2, tall 4:5, square 1:1. CSS columns: 2 below 40rem, 3 below 64rem, 4 above. Palette --vibeui-portfolio-009-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Oswald, Lobster and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained postcard gallery: taped photos on card, flipping to a back with a stamp, postmark and text, masonry with three shapes. Postcards come as a prop array.",
               "preserve": [
+                "the button-103 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the click flip and the postcard back with the stamp, postmark and ruled lines",
                 "the tape strip and handwritten caption on the front",
                 "masonry with three frame shapes — wide, tall, square"
@@ -1715,7 +1762,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-104"
+      ],
       "files": [
         {
           "path": "portfolio-010/portfolio-010.tsx",
@@ -1723,7 +1772,7 @@
           "target": "@components/vibeui/portfolio-010.tsx"
         }
       ],
-      "docs": "Один файл, ноль зависимостей, «use client» ради лайтбокса. Кадр — <button aria-label> с рамкой, внутри [data-part=pic] с aspect-ratio по shape (rect 3:2, tall 4:5, square 1:1, wide 2:1 на две колонки), поверх [data-part=bars] — крест переплёта из ::before/::after и [data-part=frost] — radial-gradient по углам с mix-blend-mode:screen; hover гасит оба, снимает saturate(.8) и масштабирует фото. Лайтбокс — <dialog> с showModal/close по state, Escape и клик по фону закрывают, стрелки клавиатуры листают. Сетка 2 колонки, 3 от 40rem, 4 от 64rem, align-items:start. Палитра --vibeui-portfolio-010-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует button-104 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, «use client» ради лайтбокса. Кадр — <button aria-label> с рамкой, внутри [data-part=pic] с aspect-ratio по shape (rect 3:2, tall 4:5, square 1:1, wide 2:1 на две колонки), поверх [data-part=bars] — крест переплёта из ::before/::after и [data-part=frost] — radial-gradient по углам с mix-blend-mode:screen; hover гасит оба, снимает saturate(.8) и масштабирует фото. Лайтбокс — <dialog> с showModal/close по state, Escape и клик по фону закрывают, стрелки клавиатуры листают. Сетка 2 колонки, 3 от 40rem, 4 от 64rem, align-items:start. Палитра --vibeui-portfolio-010-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
       "meta": {
         "tags": [
           "wedding",
@@ -1735,7 +1784,8 @@
           "lightbox",
           "dialog",
           "grid",
-          "dark"
+          "dark",
+          "composite"
         ],
         "preview": {
           "width": "fit",
@@ -1792,6 +1842,7 @@
           "usage": "<Portfolio010\n  title=\"Четыре зимы в окнах\"\n  photos={[\n    { src: \"/photos/g-01.webp\", caption: \"Дорога в лес\", shape: \"wide\" },\n    { src: \"/photos/g-02.webp\", caption: \"Снег на ресницах\", shape: \"tall\" },\n    { src: \"/photos/g-03.webp\", caption: \"Глинтвейн\", shape: \"square\" },\n    { src: \"/photos/g-04.webp\", caption: \"Снежные ангелы\" },\n  ]}\n/>",
           "summary": "Самодостаточная зимняя галерея: фото в оконных рамах с переплётом и инеем, наведение отогревает окно, клик открывает лайтбокс на <dialog>. Кадры — массив пропсом.",
           "preserve": [
+            "импорты button-104 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "переплёт и иней по краям каждого окна, тающие по наведению",
             "лайтбокс на <dialog> с рукописной подписью и стрелками",
             "четыре формы кадра — rect, tall, square и wide на две колонки"
@@ -1842,10 +1893,11 @@
           "en": {
             "title": "Gallery in window frames: frost melts on hover, lightbox",
             "description": "Winter shots in “windows”: each photo in a frame with a cross mullion and frost along the edges; hover warms the window — the frost melts, the mullion fades, the shot warms and zooms in. A click opens a <dialog> lightbox: the photo on a night backdrop, a handwritten caption, arrows and Esc. A dense grid, the wide shot spans two columns.",
-            "docs": "One file, zero dependencies, “use client” for the lightbox. A shot is a <button aria-label> with a frame, inside [data-part=pic] with aspect-ratio by shape (rect 3:2, tall 4:5, square 1:1, wide 2:1 over two columns), on top [data-part=bars] — the mullion cross from ::before/::after and [data-part=frost] — corner radial-gradients with mix-blend-mode:screen; hover fades both, drops saturate(.8) and scales the photo. The lightbox is a <dialog> with showModal/close by state, Escape and a backdrop click close it, arrow keys navigate. The grid is 2 columns, 3 from 40rem, 4 from 64rem, align-items:start. Palette --vibeui-portfolio-010-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "docs": "A composite block: imports button-104 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, “use client” for the lightbox. A shot is a <button aria-label> with a frame, inside [data-part=pic] with aspect-ratio by shape (rect 3:2, tall 4:5, square 1:1, wide 2:1 over two columns), on top [data-part=bars] — the mullion cross from ::before/::after and [data-part=frost] — corner radial-gradients with mix-blend-mode:screen; hover fades both, drops saturate(.8) and scales the photo. The lightbox is a <dialog> with showModal/close by state, Escape and a backdrop click close it, arrow keys navigate. The grid is 2 columns, 3 from 40rem, 4 from 64rem, align-items:start. Palette --vibeui-portfolio-010-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
             "ai": {
               "summary": "A self-contained winter gallery: photos in window frames with mullions and frost, hover warms the window, a click opens a <dialog> lightbox. Shots come as a prop array.",
               "preserve": [
+                "the button-104 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the mullion and edge frost on every window, melting on hover",
                 "the <dialog> lightbox with a handwritten caption and arrows",
                 "the four shot shapes — rect, tall, square and wide over two columns"
@@ -1939,7 +1991,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "card-127"
+      ],
       "files": [
         {
           "path": "portfolio-011/portfolio-011.tsx",
@@ -1958,7 +2012,8 @@
           "hover",
           "masonry",
           "cafe",
-          "instagram"
+          "instagram",
+          "composite"
         ],
         "preview": {
           "props": {},
@@ -1969,6 +2024,7 @@
           "usage": "<Portfolio011\n  title=\"Как это выглядит\"\n  shots={[\n    { src: \"/photos/hands.webp\", note: \"5:40, формовка\", span: \"big\" },\n    { src: \"/photos/bread.webp\", note: \"7:12, первый тартин\" },\n    { src: \"/photos/coffee.webp\", note: \"7:30, первый флэт\" },\n    { src: \"/photos/queue.webp\", note: \"7:55, очередь\", span: \"wide\" },\n  ]}\n/>",
           "summary": "Фотогалерея bento для кафе, студии, мастерской: 8–12 кадров, три размера плиток, подписи по наведению.",
           "preserve": [
+            "импорты card-127 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "сетка 2 колонки, от 56rem — 4; big = 2×2, wide = 2×1, tall = 1×2, dense заполняет дырки",
             "по наведению плитка scale(1.04), z-index 2 и тень — она всплывает над соседями",
             "подпись — figcaption рукописным шрифтом с поворотом -3deg, @media (hover:none) показывает всегда"
@@ -2034,6 +2090,7 @@
             "ai": {
               "summary": "A bento photo gallery for a café, studio or workshop: 8–12 shots, three tile sizes, hover captions.",
               "preserve": [
+                "the card-127 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "2 columns, 4 from 56rem; big = 2×2, wide = 2×1, tall = 1×2, dense fills the holes",
                 "on hover the tile gets scale(1.04), z-index 2 and a shadow — it floats above its neighbours",
                 "the caption is a handwritten figcaption rotated -3deg; @media (hover:none) shows it always"
@@ -2073,10 +2130,12 @@
                 "title": "What it looks like",
                 "lede": "One ordinary Tuesday, shot by the clock. Hover — we'll tell you when."
               }
-            }
+            },
+            "docs": "A composite block: imports card-127 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует card-127 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "portfolio-012",
@@ -2087,7 +2146,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-077"
+      ],
       "files": [
         {
           "path": "portfolio-012/portfolio-012.tsx",
@@ -2105,7 +2166,8 @@
           "stack",
           "scroll",
           "cards",
-          "work"
+          "work",
+          "composite"
         ],
         "preview": {
           "props": {
@@ -2145,6 +2207,7 @@
           "usage": "<Portfolio012\n  title=\"Проекты, за которые не стыдно\"\n  projects={[\n    { title: \"Панель для сервиса доставки\", role: \"дизайн и фронтенд\", year: \"2026\", tags: [\"React\"], image: \"/photos/project-01.webp\", href: \"#\" },\n    { title: \"Приложение прогулок\", role: \"продуктовый дизайн\", year: \"2025\", tags: [\"iOS\"], image: \"/photos/project-02.webp\", href: \"#\" },\n  ]}\n/>",
           "summary": "Список работ, который листается как колода: для портфолио, кейсов агентства, продуктовых релизов.",
           "preserve": [
+            "импорты button-077 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "sticky top = 5rem + индекс × 1.2rem через переменную; масштаб и яркость — переменные, которые пишет rAF на scroll",
             "перекрытие считается по разнице top текущей и следующей карточки относительно высоты",
             "reduced-motion возвращает карточки в обычный поток без масштаба"
@@ -2210,6 +2273,7 @@
             "ai": {
               "summary": "A list of works that scrolls like a deck: for a portfolio, agency cases or product releases.",
               "preserve": [
+                "the button-077 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "sticky top = 5rem + index × 1.2rem via a variable; scale and brightness are variables written by rAF on scroll",
                 "overlap is the top difference between the current and next card relative to height",
                 "reduced-motion returns the cards to normal flow with no scaling"
@@ -2277,10 +2341,12 @@
                   }
                 ]
               }
-            }
+            },
+            "docs": "A composite block: imports button-077 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
           }
         }
-      }
+      },
+      "docs": "Составной блок: импортирует button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
     },
     {
       "name": "case-001",
@@ -2291,7 +2357,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "case-001/case-001.tsx",
@@ -2299,14 +2367,15 @@
           "target": "@components/vibeui/case-001.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три. Карточка — flex-колонка: бейдж клиента сверху, задача растягивается, метрика прижата к низу над разделителем, поэтому карточки в ряду выглядят ровно при разной длине текста. Метрика набрана крупно акцентным цветом и tabular-nums — кейс читают ради цифры. Сетка — семантический список ul/li с article внутри.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-case-001-*. Серверный компонент. Число колонок считается от собственной ширины блока: одна, две, три. Карточка — flex-колонка: бейдж клиента сверху, задача растягивается, метрика прижата к низу над разделителем, поэтому карточки в ряду выглядят ровно при разной длине текста. Метрика набрана крупно акцентным цветом и tabular-nums — кейс читают ради цифры. Сетка — семантический список ul/li с article внутри.",
       "meta": {
         "tags": [
           "cases",
           "grid",
           "metrics",
           "social proof",
-          "results"
+          "results",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2316,6 +2385,7 @@
           "usage": "<Case001\n  title=\"Что команды собрали на VibeUI\"\n  items={[{ client: \"Кедр Маркет\", task: \"Переехали с конструктора на свой сайт.\", metric: \"−82%\", metricLabel: \"времени на вёрстку\" }]}\n/>",
           "summary": "Секция кейсов ровной сеткой: надзаголовок, заголовок и карточки одинакового веса. В каждой — бейдж клиента, задача одной строкой и крупная акцентная метрика результата с подписью. Число колонок следует за собственной шириной блока. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-case-001-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "иерархию карточки: клиент → задача → метрика; кейс читают ради цифры, поэтому метрика самая крупная",
             "одну строку задачи вместо пересказа проекта — длинная история живёт на странице кейса, не в сетке",
@@ -2371,10 +2441,11 @@
           "en": {
             "title": "Case Study Grid",
             "description": "An even grid of case studies: the client, the task in one line and a large accent result metric. Self-contained: one file, no dependencies, its own palette.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-001-* variables. A server component. The number of columns is computed from the block's own width: one, two, three. The card is a flex column: the client badge on top, the task stretches, the metric is pinned to the bottom above a divider, so cards in a row stay even with texts of different length. The metric is set large in the accent colour with tabular-nums — a case study is read for the number. The grid is a semantic ul/li list with an article inside.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-case-001-* variables. A server component. The number of columns is computed from the block's own width: one, two, three. The card is a flex column: the client badge on top, the task stretches, the metric is pinned to the bottom above a divider, so cards in a row stay even with texts of different length. The metric is set large in the accent colour with tabular-nums — a case study is read for the number. The grid is a semantic ul/li list with an article inside.",
             "ai": {
               "summary": "A case study section in an even grid: an eyebrow, a heading and cards of equal weight. Each holds a client badge, the task in one line and a large accent result metric with a caption. The number of columns follows the block's own width. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-case-001-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the card hierarchy: client → task → metric; a case study is read for the number, so the metric is the largest element",
                 "the single task line instead of a project recap — the long story lives on the case page, not in the grid",
@@ -2478,7 +2549,10 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button-016",
+        "heading-001"
+      ],
       "files": [
         {
           "path": "case-002/case-002.tsx",
@@ -2486,14 +2560,15 @@
           "target": "@components/vibeui/case-002.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-002-*. Серверный компонент. Панель на широкой ширине делится на две колонки: слева figure с blockquote, автором и кнопкой, справа — dl с тремя метриками за вертикальным разделителем. На узкой ширине метрики уходят под цитату и выстраиваются рядом. Кнопка — ссылка с акцентной заливкой и почти чёрным текстом, focus-visible с видимым кольцом. Кавычки цитаты добавлены псевдоэлементами.",
+      "docs": "Составной блок: импортирует button-016, heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-case-002-*. Серверный компонент. Панель на широкой ширине делится на две колонки: слева figure с blockquote, автором и кнопкой, справа — dl с тремя метриками за вертикальным разделителем. На узкой ширине метрики уходят под цитату и выстраиваются рядом. Кнопка — ссылка с акцентной заливкой и почти чёрным текстом, focus-visible с видимым кольцом. Кавычки цитаты добавлены псевдоэлементами.",
       "meta": {
         "tags": [
           "cases",
           "hero",
           "quote",
           "metrics",
-          "cta"
+          "cta",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2503,6 +2578,7 @@
           "usage": "<Case002\n  title=\"«Полярис»: сайт к раунду за неделю\"\n  quote=\"Мы отдали ИИ три блока и получили сайт за вечер.\"\n  metrics={[{ value: \"6 дней\", label: \"от идеи до релиза\" }]}\n  buttonHref=\"/cases/polaris\"\n/>",
           "summary": "Один большой кейс вместо сетки: развёрнутая цитата клиента с автором, колонка из трёх метрик и кнопка «Читать историю». Так подают один по-настоящему сильный проект: цитата даёт контекст, метрики — доказательство, кнопка ведёт на полную историю. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты button-016, heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-case-002-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "тройку «цитата — метрики — кнопка»: цитата даёт контекст, метрики доказывают, кнопка честно признаёт, что вся история сюда не влезла",
             "семантику figure / blockquote / figcaption — это цитата с автором, а не карточка с текстом",
@@ -2560,10 +2636,11 @@
           "en": {
             "title": "Hero Case Study",
             "description": "One big case study: an extended client quote, three metrics and a \"Read the story\" button. Self-contained: one file, no dependencies, its own palette.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-002-* variables. A server component. On wide widths the panel splits into two columns: a figure with the blockquote, author and button on the left, a dl with three metrics behind a vertical divider on the right. On narrow widths the metrics drop below the quote and line up in a row. The button is a link with the accent fill and near-black text, focus-visible with a visible ring. The quotation marks are added with pseudo-elements.",
+            "docs": "A composite block: imports button-016, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-case-002-* variables. A server component. On wide widths the panel splits into two columns: a figure with the blockquote, author and button on the left, a dl with three metrics behind a vertical divider on the right. On narrow widths the metrics drop below the quote and line up in a row. The button is a link with the accent fill and near-black text, focus-visible with a visible ring. The quotation marks are added with pseudo-elements.",
             "ai": {
               "summary": "One big case study instead of a grid: an extended client quote with the author, a column of three metrics and a \"Read the story\" button. This is how you present one truly strong project: the quote gives context, the metrics prove it, the button leads to the full story. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the button-016, heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-case-002-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the quote — metrics — button trio: the quote gives context, the metrics prove it, the button honestly admits the full story does not fit here",
                 "the figure / blockquote / figcaption semantics — this is a quote with an author, not a card with text",
@@ -2650,7 +2727,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "case-003/case-003.tsx",
@@ -2658,14 +2737,15 @@
           "target": "@components/vibeui/case-003.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-003-*. Серверный компонент. Карточка: клиент и название метрики сверху, ниже за пунктирным разделителем пара «было → стало» — «было» приглушено и зачёркнуто, «стало» крупно акцентом, между ними инлайновая SVG-стрелка. Под парой бейдж роста со стрелкой вверх-вправо. Сетка складывается в три колонки от собственной ширины блока. Иконки — инлайновый SVG с aria-hidden, внешних файлов нет.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-case-003-*. Серверный компонент. Карточка: клиент и название метрики сверху, ниже за пунктирным разделителем пара «было → стало» — «было» приглушено и зачёркнуто, «стало» крупно акцентом, между ними инлайновая SVG-стрелка. Под парой бейдж роста со стрелкой вверх-вправо. Сетка складывается в три колонки от собственной ширины блока. Иконки — инлайновый SVG с aria-hidden, внешних файлов нет.",
       "meta": {
         "tags": [
           "cases",
           "before after",
           "comparison",
           "metrics",
-          "growth"
+          "growth",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2675,6 +2755,7 @@
           "usage": "<Case003\n  title=\"Что меняется после перехода\"\n  items={[{ client: \"Кедр Маркет\", metric: \"Запуск посадочной\", before: \"2 недели\", after: \"1 вечер\", delta: \"в 14 раз быстрее\" }]}\n/>",
           "summary": "Кейсы в формате «до и после»: у каждой карточки клиент, название метрики, пара значений «было → стало» со стрелкой и бейдж роста. «Было» приглушено и зачёркнуто, «стало» набрано крупно акцентом — взгляд идёт по стрелке. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-case-003-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "пару «было → стало» целиком: одиночная цифра без базы сравнения не убеждает — в этом идея блока",
             "контраст пары: «было» приглушено и зачёркнуто, «стало» крупно акцентом — взгляд ведёт стрелка",
@@ -2731,10 +2812,11 @@
           "en": {
             "title": "Before and After",
             "description": "Case studies as \"was → became\" value pairs: a muted \"before\", an accent \"after\" and a growth badge with an arrow. Self-contained: one file, no dependencies, its own palette.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-003-* variables. A server component. The card: the client and the metric name on top, below a dashed divider the \"was → became\" pair — \"was\" is muted and struck through, \"became\" is large in the accent colour, with an inline SVG arrow between them. Under the pair sits a growth badge with an up-right arrow. The grid folds into three columns based on the block's own width. Icons are inline SVG with aria-hidden, no external files.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-case-003-* variables. A server component. The card: the client and the metric name on top, below a dashed divider the \"was → became\" pair — \"was\" is muted and struck through, \"became\" is large in the accent colour, with an inline SVG arrow between them. Under the pair sits a growth badge with an up-right arrow. The grid folds into three columns based on the block's own width. Icons are inline SVG with aria-hidden, no external files.",
             "ai": {
               "summary": "Case studies in a before-and-after format: each card holds the client, the metric name, a \"was → became\" value pair with an arrow and a growth badge. \"Was\" is muted and struck through, \"became\" is set large in the accent colour — the eye follows the arrow. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-case-003-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the complete \"was → became\" pair: a lone number without a baseline does not convince — that is the point of the block",
                 "the contrast of the pair: \"was\" muted and struck through, \"became\" large in the accent — the arrow leads the eye",
@@ -2824,7 +2906,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "case-004/case-004.tsx",
@@ -2832,14 +2916,15 @@
           "target": "@components/vibeui/case-004.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-004-*. Серверный компонент: карусель работает на CSS scroll-snap, без единой строки JS. Лента — ul с overflow-x:auto и scroll-snap-type:x mandatory; карточки фиксированной ширины min(82cqi,20rem), снап по левому краю. Справа у шапки подсказка «Листайте» со стрелкой (aria-hidden — для читалки лента и так прокручиваема). Скроллер фокусируется с клавиатуры (tabIndex, role=region, aria-label) и показывает кольцо focus-visible. Правый паддинг ленты оставляет последнюю карточку недорезанной — это тоже подсказка, что справа есть ещё.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-case-004-*. Серверный компонент: карусель работает на CSS scroll-snap, без единой строки JS. Лента — ul с overflow-x:auto и scroll-snap-type:x mandatory; карточки фиксированной ширины min(82cqi,20rem), снап по левому краю. Справа у шапки подсказка «Листайте» со стрелкой (aria-hidden — для читалки лента и так прокручиваема). Скроллер фокусируется с клавиатуры (tabIndex, role=region, aria-label) и показывает кольцо focus-visible. Правый паддинг ленты оставляет последнюю карточку недорезанной — это тоже подсказка, что справа есть ещё.",
       "meta": {
         "tags": [
           "cases",
           "carousel",
           "scroll snap",
           "horizontal",
-          "cards"
+          "cards",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -2849,6 +2934,7 @@
           "usage": "<Case004\n  title=\"Проекты, собранные на VibeUI\"\n  items={[{ client: \"Полярис\", task: \"Сайт к раунду силами двух человек.\", metric: \"6 дней\", metricLabel: \"от идеи до релиза\" }]}\n/>",
           "summary": "Кейсы горизонтальной лентой: карточки фиксированной ширины на CSS scroll-snap, прокрутка колесом, пальцем и клавиатурой. В шапке подсказка «Листайте», обрезанная последняя карточка тоже намекает, что справа есть ещё. Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-case-004-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "карусель на чистом scroll-snap — не заменять её JS-слайдером: нативная прокрутка работает жестами, колесом и клавиатурой сама",
             "фокусируемость ленты: tabIndex, role=region и aria-label позволяют листать с клавиатуры, кольцо focus-visible показывает фокус",
@@ -2905,10 +2991,11 @@
           "en": {
             "title": "Case Study Carousel",
             "description": "Case studies as a horizontal scroll-snap strip: cards with the client, task and metric, plus a scroll hint. Self-contained: one file, no dependencies and no JS.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-004-* variables. A server component: the carousel runs on CSS scroll-snap without a single line of JS. The strip is a ul with overflow-x:auto and scroll-snap-type:x mandatory; the cards have a fixed width of min(82cqi,20rem) and snap to the left edge. The header carries a \"Scroll\" hint with an arrow (aria-hidden — for screen readers the strip is scrollable anyway). The scroller is keyboard-focusable (tabIndex, role=region, aria-label) and shows a focus-visible ring. The strip's right padding leaves the last card cut off — another hint that there is more to the right.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-case-004-* variables. A server component: the carousel runs on CSS scroll-snap without a single line of JS. The strip is a ul with overflow-x:auto and scroll-snap-type:x mandatory; the cards have a fixed width of min(82cqi,20rem) and snap to the left edge. The header carries a \"Scroll\" hint with an arrow (aria-hidden — for screen readers the strip is scrollable anyway). The scroller is keyboard-focusable (tabIndex, role=region, aria-label) and shows a focus-visible ring. The strip's right padding leaves the last card cut off — another hint that there is more to the right.",
             "ai": {
               "summary": "Case studies as a horizontal strip: fixed-width cards on CSS scroll-snap, scrollable by wheel, touch and keyboard. The header carries a \"Scroll\" hint, and the cut-off last card also signals there is more to the right. Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-case-004-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the pure scroll-snap carousel — do not replace it with a JS slider: native scrolling handles gestures, wheel and keyboard by itself",
                 "the focusable strip: tabIndex, role=region and aria-label allow keyboard scrolling, the focus-visible ring shows focus",
@@ -3014,7 +3101,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "case-005/case-005.tsx",
@@ -3022,7 +3111,7 @@
           "target": "@components/vibeui/case-005.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-005-*. Серверный компонент: фильтр — скрытые radio-инпуты в fieldset, чипы — их label, строки прячет селектор :has() по выбранной группе. Слотов отрасли четыре (g1–g4) плюс «все»: CSS не сравнивает произвольные значения, поэтому набор групп перечислен в стилях явно. Чипы получают акцентную заливку по :checked и кольцо по :focus-visible соседнего инпута. Строка кейса — грид: на широкой ширине метрика уходит в правую колонку. Имя radio-группы задаётся пропом filterName — менять при двух блоках на странице.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-case-005-*. Серверный компонент: фильтр — скрытые radio-инпуты в fieldset, чипы — их label, строки прячет селектор :has() по выбранной группе. Слотов отрасли четыре (g1–g4) плюс «все»: CSS не сравнивает произвольные значения, поэтому набор групп перечислен в стилях явно. Чипы получают акцентную заливку по :checked и кольцо по :focus-visible соседнего инпута. Строка кейса — грид: на широкой ширине метрика уходит в правую колонку. Имя radio-группы задаётся пропом filterName — менять при двух блоках на странице.",
       "meta": {
         "tags": [
           "cases",
@@ -3030,7 +3119,8 @@
           "industries",
           "chips",
           "css only",
-          "list"
+          "list",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3040,6 +3130,7 @@
           "usage": "<Case005\n  title=\"Кому VibeUI уже сэкономил недели\"\n  items={[{ client: \"Кедр Маркет\", industry: \"Ритейл\", group: \"g1\", task: \"Переезд с конструктора.\", metric: \"−82% времени\" }]}\n/>",
           "summary": "Список кейсов с бейджами отрасли и фильтром-чипами. Фильтр собран на скрытых radio-инпутах и селекторе :has() — работает без JS, ещё до гидратации. Чипы строятся из групп в данных, отраслевых слотов четыре (g1–g4) плюс «все». Ноль зависимостей, один файл, своя палитра.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-case-005-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "фильтр на radio и :has() — не переписывать его на useState: CSS-версия работает без гидратации и не тянет «use client»",
             "скрытие инпутов клип-паттерном, а не display:none — иначе фильтр выпадет из фокуса и перестанет работать с клавиатуры",
@@ -3096,10 +3187,11 @@
           "en": {
             "title": "Cases by Industry",
             "description": "A case study list with industry badges and radio-chip filtering in pure CSS: the filter works without a single line of JS. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-005-* variables. A server component: the filter is a set of hidden radio inputs in a fieldset, the chips are their labels, and rows are hidden by a :has() selector keyed to the chosen group. There are four industry slots (g1–g4) plus \"all\": CSS cannot compare arbitrary values, so the group set is enumerated in the styles explicitly. Chips get the accent fill on :checked and a ring on :focus-visible of the neighbouring input. A case row is a grid: on wide widths the metric moves into the right column. The radio group name comes from the filterName prop — change it when the block appears twice on a page.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-case-005-* variables. A server component: the filter is a set of hidden radio inputs in a fieldset, the chips are their labels, and rows are hidden by a :has() selector keyed to the chosen group. There are four industry slots (g1–g4) plus \"all\": CSS cannot compare arbitrary values, so the group set is enumerated in the styles explicitly. Chips get the accent fill on :checked and a ring on :focus-visible of the neighbouring input. A case row is a grid: on wide widths the metric moves into the right column. The radio group name comes from the filterName prop — change it when the block appears twice on a page.",
             "ai": {
               "summary": "A case study list with industry badges and chip filters. The filter is built on hidden radio inputs and the :has() selector — it works without JS, even before hydration. Chips are derived from the groups in the data, with four industry slots (g1–g4) plus \"all\". Zero dependencies, one file, its own palette.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-case-005-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the radio-and-:has() filter — do not rewrite it with useState: the CSS version works before hydration and does not need \"use client\"",
                 "hiding the inputs with the clip pattern rather than display:none — otherwise the filter drops out of the focus order and stops working from the keyboard",
@@ -3225,7 +3317,9 @@
         "portfolio"
       ],
       "dependencies": [],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "heading-001"
+      ],
       "files": [
         {
           "path": "case-006/case-006.tsx",
@@ -3233,14 +3327,15 @@
           "target": "@components/vibeui/case-006.tsx"
         }
       ],
-      "docs": "Блок самодостаточен: один файл, без зависимостей, собственная палитра в локальных переменных --vibeui-case-006-*. Серверный компонент. Сверху полоса-агрегат: dl с тремя большими цифрами на тёплой подложке color-mix из акцента, на широкой ширине цифры разделены вертикальными линейками. Ниже три мини-карточки кейсов: клиент, задача и метрика — намеренно мельче полосы, иерархия идёт от общего к частному. Большие цифры набраны акцентом с tabular-nums. Обе сетки складываются от собственной ширины блока.",
+      "docs": "Составной блок: импортирует heading-001 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nБлок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-case-006-*. Серверный компонент. Сверху полоса-агрегат: dl с тремя большими цифрами на тёплой подложке color-mix из акцента, на широкой ширине цифры разделены вертикальными линейками. Ниже три мини-карточки кейсов: клиент, задача и метрика — намеренно мельче полосы, иерархия идёт от общего к частному. Большие цифры набраны акцентом с tabular-nums. Обе сетки складываются от собственной ширины блока.",
       "meta": {
         "tags": [
           "cases",
           "stats",
           "summary",
           "metrics",
-          "numbers"
+          "numbers",
+          "composite"
         ],
         "preview": {
           "width": "fit"
@@ -3250,6 +3345,7 @@
           "usage": "<Case006\n  title=\"Что кейсы дают в сумме\"\n  stats={[{ value: \"124\", label: \"сайта собрано за год\" }]}\n  items={[{ client: \"Полярис\", task: \"Сайт к раунду за неделю.\", metric: \"+38% заявок\" }]}\n/>",
           "summary": "Сводка по всем внедрениям: полоса с тремя большими агрегатными цифрами на тёплой акцентной подложке и три мини-карточки конкретных кейсов под ней. Агрегат отвечает «это работает в целом», карточки — «и у таких, как вы». Ноль зависимостей, один файл, своя палитра, клиентского JS нет.",
           "preserve": [
+            "импорты heading-001 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "локальную палитру --vibeui-case-006-* — не подменять её токенами темы сайта (bg-card, border-border и подобными)",
             "иерархию «агрегат над частными»: полоса крупнее и теплее карточек — сначала общий итог, потом доказательства",
             "тёплую подложку полосы через color-mix из акцента — она выделяет агрегат, не переходя на сплошную заливку",
@@ -3305,10 +3401,11 @@
           "en": {
             "title": "Adoption Numbers",
             "description": "A summary strip of metrics across all case studies on a warm accent backdrop, plus three mini-cards as proof. Self-contained: one file, no dependencies.",
-            "docs": "The block is self-contained: one file, no dependencies, its own palette in local --vibeui-case-006-* variables. A server component. On top sits the aggregate strip: a dl with three large numbers on a warm color-mix backdrop derived from the accent; on wide widths the numbers are separated by vertical rules. Below are three case mini-cards: client, task and metric — deliberately smaller than the strip, the hierarchy runs from the general to the particular. The large numbers are set in the accent colour with tabular-nums. Both grids fold based on the block's own width.",
+            "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-case-006-* variables. A server component. On top sits the aggregate strip: a dl with three large numbers on a warm color-mix backdrop derived from the accent; on wide widths the numbers are separated by vertical rules. Below are three case mini-cards: client, task and metric — deliberately smaller than the strip, the hierarchy runs from the general to the particular. The large numbers are set in the accent colour with tabular-nums. Both grids fold based on the block's own width.",
             "ai": {
               "summary": "A summary of all adoptions: a strip with three large aggregate numbers on a warm accent backdrop and three mini-cards of specific cases below it. The aggregate answers \"does this work at all\", the cards answer \"and for teams like yours\". Zero dependencies, one file, its own palette, no client JS.",
               "preserve": [
+                "the heading-001 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the local --vibeui-case-006-* palette — do not swap it for your theme tokens (bg-card, border-border and the like)",
                 "the aggregate-over-particulars hierarchy: the strip is larger and warmer than the cards — the overall result first, the proof after",
                 "the strip's warm backdrop via color-mix from the accent — it highlights the aggregate without going to a solid fill",

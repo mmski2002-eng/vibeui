@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card056 } from "@/registry/components/card/card-056/card-056"
 
 export type People009Artist = {
   name: string
@@ -64,27 +65,7 @@ container-type:inline-size;
 [data-vibeui-block="people-009"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-009-display);font-size:clamp(1.8rem,3.8cqi,2.8rem);font-weight:700;line-height:1.05;letter-spacing:-.02em;text-transform:uppercase}
 [data-vibeui-block="people-009"] [data-part="lede"]{margin:.75rem 0 2rem;max-width:36rem;color:var(--vibeui-people-009-muted)}
 [data-vibeui-block="people-009"] [data-part="grid"]{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1.25rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="people-009"] [data-part="scene"]{perspective:1400px;animation:vibeui-people-009-in .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-people-009-n) * 90ms)}
 @keyframes vibeui-people-009-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-[data-vibeui-block="people-009"] [data-part="card"]{position:relative;display:grid;aspect-ratio:4/5.4;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-[data-vibeui-block="people-009"] [data-part="scene"]:hover [data-part="card"],[data-vibeui-block="people-009"] [data-part="scene"]:focus-within [data-part="card"]{transform:rotateY(180deg)}
-[data-vibeui-block="people-009"] [data-part="face"],[data-vibeui-block="people-009"] [data-part="back"]{grid-area:1/1;display:flex;flex-direction:column;padding:.75rem;border-radius:1rem;background:var(--vibeui-people-009-card);border:1px solid color-mix(in oklab,var(--vibeui-people-009-neon) 55%,transparent);box-shadow:0 0 0 1px rgb(0 0 0 / .4),0 0 18px color-mix(in oklab,var(--vibeui-people-009-neon) 35%,transparent),inset 0 0 20px color-mix(in oklab,var(--vibeui-people-009-neon) 8%,transparent);backface-visibility:hidden;-webkit-backface-visibility:hidden}
-[data-vibeui-block="people-009"] [data-part="back"]{transform:rotateY(180deg);justify-content:space-between;padding:1rem}
-[data-vibeui-block="people-009"] [data-part="portrait"]{width:100%;aspect-ratio:1;border-radius:.6rem;object-fit:cover;display:block;background:#1a1526;filter:contrast(1.05)}
-[data-vibeui-block="people-009"] [data-part="name"]{margin:.9rem 0 0;font-family:var(--vibeui-people-009-display);font-size:1.2rem;font-weight:600;line-height:1.15;color:var(--vibeui-people-009-neon);text-shadow:0 0 12px color-mix(in oklab,var(--vibeui-people-009-neon) 60%,transparent)}
-[data-vibeui-block="people-009"] [data-part="styles"]{display:flex;flex-wrap:wrap;gap:.35rem;margin:.6rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="people-009"] [data-part="styles"] li{padding:.2rem .55rem;border-radius:.35rem;border:1px solid var(--vibeui-people-009-line);font-size:.75rem;color:var(--vibeui-people-009-muted)}
-[data-vibeui-block="people-009"] [data-part="exp"]{margin:auto 0 0;padding-top:.75rem;display:flex;justify-content:space-between;gap:.5rem;font-family:var(--vibeui-people-009-mono);font-size:.75rem;color:var(--vibeui-people-009-muted)}
-[data-vibeui-block="people-009"] [data-part="slot"]{color:var(--vibeui-people-009-ok);text-shadow:0 0 8px color-mix(in oklab,var(--vibeui-people-009-ok) 60%,transparent)}
-[data-vibeui-block="people-009"] [data-part="works"]{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="people-009"] [data-part="works"] img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:.4rem;display:block}
-[data-vibeui-block="people-009"] [data-part="back-name"]{margin:.75rem 0 0;font-family:var(--vibeui-people-009-display);font-size:1rem;font-weight:600}
-[data-vibeui-block="people-009"] [data-part="back-text"]{margin:.25rem 0 0;font-size:.85rem;color:var(--vibeui-people-009-muted)}
-[data-vibeui-block="people-009"] [data-part="book"]{display:inline-flex;align-items:center;justify-content:center;height:2.8rem;margin-top:auto;border-radius:.6rem;background:var(--vibeui-people-009-neon);color:var(--vibeui-people-009-on-accent);font-weight:700;box-shadow:0 0 18px color-mix(in oklab,var(--vibeui-people-009-neon) 55%,transparent);transition:transform .2s}
-[data-vibeui-block="people-009"] [data-part="book"]:hover{transform:translateY(-2px)}
-[data-vibeui-block="people-009"] [data-part="book"]:focus-visible{outline:2px solid var(--vibeui-people-009-cyan);outline-offset:3px}
-[data-vibeui-block="people-009"] [data-part="sr"]{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-[data-vibeui-block="people-009"] [data-part="scene"]{position:relative}
 @container (min-width: 64rem){[data-vibeui-block="people-009"] [data-part="shell"]{padding:5.5rem 2rem}[data-vibeui-block="people-009"] [data-part="grid"]{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="people-009"] *{animation:none!important;transition:none!important}}`
 
@@ -129,48 +110,7 @@ export function People009({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <ul data-part="grid">
             {artists.map((artist, index) => (
-              <li key={artist.name} data-part="scene" style={{ ["--vibeui-people-009-neon" as string]: artist.color ?? "#ff2bd6", ["--vibeui-people-009-n" as string]: index }}>
-                <div data-part="card">
-                  <div data-part="face">
-                    {artist.image ? <img data-part="portrait" src={artist.image} alt={artist.name} loading="lazy" /> : <span data-part="portrait" />}
-                    <h3 data-part="name">{artist.name}</h3>
-                    <ul data-part="styles">
-                      {artist.styles.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                    <p data-part="exp">
-                      {artist.experience ? <span>{artist.experience}</span> : null}
-                      {artist.slot ? <span data-part="slot">{artist.slot}</span> : null}
-                    </p>
-                  </div>
-                  <div data-part="back" aria-hidden="true">
-                    <div>
-                      {artist.works && artist.works.length > 0 ? (
-                        <ul data-part="works">
-                          {artist.works.map((work) => (
-                            <li key={work}>
-                              <img src={work} alt="" loading="lazy" />
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                      <p data-part="back-name">{artist.name}</p>
-                      <p data-part="back-text">{artist.styles.join(" · ")}</p>
-                    </div>
-                    {bookLabel ? (
-                      <a data-part="book" href={artist.href ?? "#"} tabIndex={-1}>
-                        {bookLabel}
-                      </a>
-                    ) : null}
-                  </div>
-                </div>
-                {bookLabel ? (
-                  <a data-part="sr" href={artist.href ?? "#"}>
-                    {bookLabel}: {artist.name}
-                  </a>
-                ) : null}
-              </li>
+              <Card056 key={artist.name} data-part="scene" name={artist.name} color={artist.color} image={artist.image} styles={artist.styles} experience={artist.experience} slot={artist.slot} works={artist.works} href={artist.href} bookLabel={bookLabel} index={index} accent={accent} />
             ))}
           </ul>
         </div>

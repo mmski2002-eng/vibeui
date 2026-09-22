@@ -1,5 +1,8 @@
 import type { CSSProperties } from "react"
 
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
 export type Cta003Props = {
   title?: string
   description?: string
@@ -65,31 +68,9 @@ color:var(--vibeui-cta-003-muted);font-size:1rem;line-height:1.6;
 [data-vibeui-block="cta-003"] [data-part="form"]{
 display:grid;gap:0.625rem;margin-top:1.75rem;
 }
-[data-vibeui-block="cta-003"] [data-part="label"]{
-font-size:0.8125rem;font-weight:620;letter-spacing:0.01em;
-}
 [data-vibeui-block="cta-003"] [data-part="row"]{display:grid;gap:0.5rem}
-[data-vibeui-block="cta-003"] [data-part="input"]{
-height:3rem;padding:0 1rem;min-width:0;
-border:1px solid var(--vibeui-cta-003-border);border-radius:0.75rem;
-background:var(--vibeui-cta-003-field);color:inherit;
-font:inherit;font-size:1rem;
-transition:border-color var(--vibeui-cta-003-dur-2) ease,box-shadow var(--vibeui-cta-003-dur-2) ease;
-}
-[data-vibeui-block="cta-003"] [data-part="input"]::placeholder{color:color-mix(in oklab,var(--vibeui-cta-003-muted) 70%,transparent)}
-[data-vibeui-block="cta-003"] [data-part="input"]:focus{
-outline:none;border-color:var(--vibeui-cta-003-accent);
-box-shadow:0 0 0 3px color-mix(in oklab,var(--vibeui-cta-003-accent) 20%,transparent);
-}
-[data-vibeui-block="cta-003"] [data-part="submit"]{
-appearance:none;cursor:pointer;border:0;
-display:inline-flex;align-items:center;justify-content:center;
-min-height:3rem;padding:0.25rem 1.5rem;border-radius:0.75rem;
-background:var(--vibeui-cta-003-accent);color:oklch(from var(--vibeui-cta-003-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
-font:inherit;font-size:1rem;font-weight:640;white-space:nowrap;
-transition:background-color var(--vibeui-cta-003-dur-2) ease;
-}
-[data-vibeui-block="cta-003"] [data-part="submit"]:hover{background:color-mix(in oklab,var(--vibeui-cta-003-accent) 86%,black)}
+[data-vibeui-block="cta-003"] [data-part="row"] > [data-vibeui-block="input-001"]{flex:1 1 auto;min-width:0}
+[data-vibeui-block="cta-003"] [data-part="row"] > [data-vibeui-block="button-001"]{align-self:center}
 [data-vibeui-block="cta-003"] [data-part="consent"]{
 margin:0;color:var(--vibeui-cta-003-muted);font-size:0.75rem;line-height:1.5;max-width:52ch;
 }
@@ -99,8 +80,6 @@ border-top:1px solid var(--vibeui-cta-003-border);
 color:var(--vibeui-cta-003-muted);font-size:0.8125rem;
 }
 [data-vibeui-block="cta-003"] [data-part="meta"] strong{color:var(--vibeui-cta-003-ink);font-weight:640}
-[data-vibeui-block="cta-003"] input:focus-visible,
-[data-vibeui-block="cta-003"] button:focus-visible{outline:2px solid var(--vibeui-cta-003-accent);outline-offset:2px}
 @container (min-width: 38rem){
 [data-vibeui-block="cta-003"] [data-part="shell"]{padding:4.5rem 2rem}
 [data-vibeui-block="cta-003"] [data-part="row"]{grid-template-columns:1fr auto}
@@ -170,22 +149,11 @@ export function Cta003({
           <h2 data-part="title">{title}</h2>
           <p data-part="text">{description}</p>
           <form data-part="form" action="#subscribe" method="post">
-            <label data-part="label" htmlFor="vibeui-cta-003-email">
-              {emailLabel}
-            </label>
             <div data-part="row">
-              <input
-                data-part="input"
-                id="vibeui-cta-003-email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                required
-                placeholder={placeholder}
-              />
-              <button data-part="submit" type="submit">
+              <Input001 type="email" name="email" required label={emailLabel} autoComplete="email" accent={accent} />
+              <Button001 type="submit" size="lg" accent={accent}>
                 {submitLabel}
-              </button>
+              </Button001>
             </div>
             <p data-part="consent">{consent}</p>
           </form>

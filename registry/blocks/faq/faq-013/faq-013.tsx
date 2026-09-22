@@ -1,9 +1,15 @@
 import type { CSSProperties } from "react"
+import { Heading001 } from "@/registry/components/typography/heading-001/heading-001"
 
-type Faq013Item = {
-  question: string
-  answer: string
-}
+import {
+  Accordion001,
+  type Accordion001Item,
+} from "@/registry/components/accordion/accordion-001/accordion-001"
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Card024 } from "@/registry/components/card/card-024/card-024"
+import { Input001 } from "@/registry/components/input/input-001/input-001"
+
+type Faq013Item = Accordion001Item
 
 export type Faq013Props = {
   title?: string
@@ -16,6 +22,7 @@ export type Faq013Props = {
   /** Адрес обработчика формы. По умолчанию «#» — подставьте свой. */
   formAction?: string
   /** Пусто — подложки нет, секция лежит прямо на фоне страницы. */
+  tint?: "neutral" | "accent"
   background?: string
   accent?: string
   className?: string
@@ -26,7 +33,10 @@ export type Faq013Props = {
 // до конца и не нашёл ответ, получает выход прямо здесь, а не ссылку на
 // другую страницу. Форма — чистая разметка без обработчика: адрес приёма
 // подставляется пропом formAction. Раскладка считается от ширины блока.
-const STYLES = `
+// Составной блок: список — accordion-001, плашка формы — card-024, в её
+// слоте поле input-001 и кнопка button-001; сама <form> остаётся у блока.
+const STYLES = `[data-vibeui-block="faq-013"] [data-part="list"]{margin:0 0 2rem}
+
 :where([data-vibeui-block="faq-013"]){
 --vibeui-faq-013-bg:transparent;
 --vibeui-faq-013-card:light-dark(oklch(1 0 0),oklch(0.22 0 0));
@@ -47,76 +57,18 @@ display:block;background:var(--vibeui-faq-013-bg);color:var(--vibeui-faq-013-ink
 font-family:var(--vibeui-faq-013-font);
 }
 [data-vibeui-block="faq-013"] [data-part="shell"]{max-width:48rem;margin:0 auto;padding:3rem 1.25rem}
-[data-vibeui-block="faq-013"] [data-part="title"]{
+[data-vibeui-block="faq-013"] [data-part="heading"]{
 margin:0 0 1.75rem;max-width:24ch;
 font-size:clamp(1.625rem,5cqi,2.375rem);line-height:1.1;letter-spacing:-0.025em;font-weight:700;
 }
-[data-vibeui-block="faq-013"] [data-part="list"]{
-display:grid;margin:0 0 2rem;border-top:1px solid var(--vibeui-faq-013-border);
-}
-[data-vibeui-block="faq-013"] [data-part="item"]{border-bottom:1px solid var(--vibeui-faq-013-border)}
-[data-vibeui-block="faq-013"] [data-part="question"]{
-display:flex;align-items:baseline;gap:0.75rem;
-padding:1.125rem 0.25rem;cursor:pointer;list-style:none;
-font-size:0.9375rem;font-weight:640;line-height:1.4;
-}
-[data-vibeui-block="faq-013"] [data-part="question"]::-webkit-details-marker{display:none}
-[data-vibeui-block="faq-013"] [data-part="question"]:focus-visible{
-outline:2px solid var(--vibeui-faq-013-accent);outline-offset:2px;border-radius:0.375rem;
-}
-[data-vibeui-block="faq-013"] [data-part="sign"]{
-margin-left:auto;flex:none;align-self:center;width:0.875rem;height:0.875rem;position:relative;
-color:var(--vibeui-faq-013-accent);
-transition:transform var(--vibeui-faq-013-dur-2) ease;
-}
-[data-vibeui-block="faq-013"] [data-part="sign"]::before,
-[data-vibeui-block="faq-013"] [data-part="sign"]::after{
-content:"";position:absolute;inset:0;margin:auto;background:currentColor;border-radius:1px;
-}
-[data-vibeui-block="faq-013"] [data-part="sign"]::before{width:100%;height:2px}
-[data-vibeui-block="faq-013"] [data-part="sign"]::after{width:2px;height:100%}
-[data-vibeui-block="faq-013"] [data-part="item"][open] [data-part="sign"]{transform:rotate(45deg)}
-[data-vibeui-block="faq-013"] [data-part="answer"]{
-margin:0;padding:0 0.25rem 1.25rem;max-width:60ch;
-color:var(--vibeui-faq-013-muted);font-size:0.9375rem;line-height:1.6;
-}
-[data-vibeui-block="faq-013"] [data-part="ask"]{
-padding:1.5rem;border-radius:1rem;
-border:1px solid color-mix(in oklab,var(--vibeui-faq-013-accent) 25%,var(--vibeui-faq-013-border));
-background:color-mix(in oklab,var(--vibeui-faq-013-accent) 8%,var(--vibeui-faq-013-card));
-}
-[data-vibeui-block="faq-013"] [data-part="ask-title"]{
-margin:0 0 0.875rem;font-size:1.0625rem;font-weight:700;letter-spacing:-0.01em;
-}
-[data-vibeui-block="faq-013"] [data-part="row"]{display:flex;flex-wrap:wrap;gap:0.625rem}
-[data-vibeui-block="faq-013"] [data-part="input"]{
-flex:1 1 14rem;min-width:0;
-padding:0.6875rem 0.875rem;border:1px solid var(--vibeui-faq-013-border);border-radius:0.625rem;
-background:var(--vibeui-faq-013-card);color:var(--vibeui-faq-013-ink);
-font:inherit;font-size:0.9375rem;
-}
-[data-vibeui-block="faq-013"] [data-part="input"]::placeholder{color:var(--vibeui-faq-013-muted)}
-[data-vibeui-block="faq-013"] [data-part="input"]:focus-visible{
-outline:2px solid var(--vibeui-faq-013-accent);outline-offset:1px;
-}
-[data-vibeui-block="faq-013"] [data-part="submit"]{
-flex:none;cursor:pointer;border:none;
-padding:0.6875rem 1.375rem;border-radius:0.625rem;
-background:var(--vibeui-faq-013-accent-fill);color:var(--vibeui-faq-013-on-accent);
-font:inherit;font-size:0.9375rem;font-weight:700;
-transition:filter var(--vibeui-faq-013-dur-2) ease;
-}
-[data-vibeui-block="faq-013"] [data-part="submit"]:hover{filter:brightness(1.06)}
-[data-vibeui-block="faq-013"] [data-part="submit"]:focus-visible{
-outline:2px solid var(--vibeui-faq-013-accent);outline-offset:3px;
-}
-[data-vibeui-block="faq-013"] [data-part="hint"]{
-margin:0.75rem 0 0;color:var(--vibeui-faq-013-muted);font-size:0.8125rem;line-height:1.5;
-}
+[data-vibeui-block="faq-013"] [data-part="list"]{width:100%;max-width:none}
+/* Форма в слоте карточки card-024 занимает всю её ширину. */
+[data-vibeui-block="faq-013"] [data-part="ask"]{margin-top:2rem}
+[data-vibeui-block="faq-013"] [data-part="row"]{display:flex;flex-wrap:wrap;align-items:flex-start;gap:0.625rem;width:100%}
+/* Поле растягивается на остаток строки: у input-001 нет своей ширины. */
+[data-vibeui-block="faq-013"] [data-part="row"] > [data-vibeui-block="input-001"]{flex:1 1 14rem;min-width:0}
 @container (min-width: 40rem){
 [data-vibeui-block="faq-013"] [data-part="shell"]{padding:4.5rem 2rem}
-[data-vibeui-block="faq-013"] [data-part="question"]{font-size:1rem}
-[data-vibeui-block="faq-013"] [data-part="ask"]{padding:1.75rem 2rem}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-013"] *{animation:none!important;transition:none!important}}
 `
@@ -167,7 +119,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
   return 0.2126 * red + 0.7152 * green + 0.0722 * blue > 0.55 ? "light" : "dark"
 }
 
-/** Аккордеон вопросов с формой «задать свой вопрос» внизу. */
+/** accordion-001 с формой «задать свой вопрос» из input-001 и button-001. */
 export function Faq013({
   title = "Спрашивают перед стартом",
   items = DEFAULT_ITEMS,
@@ -176,6 +128,7 @@ export function Faq013({
   buttonLabel = "Отправить",
   formHint = "Вопрос попадёт команде каталога. Отвечаем на почту в течение рабочего дня.",
   formAction = "#",
+  tint = "accent",
   background = "",
   accent,
   className,
@@ -208,35 +161,42 @@ export function Faq013({
         style={palette}
       >
         <div data-part="shell">
-          <h2 data-part="title">{title}</h2>
-          <div data-part="list">
-            {items.map((item) => (
-              <details key={item.question} data-part="item">
-                <summary data-part="question">
-                  <span>{item.question}</span>
-                  <span data-part="sign" aria-hidden="true" />
-                </summary>
-                <p data-part="answer">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-          <form data-part="ask" action={formAction} method="get">
-            <h3 data-part="ask-title">{formTitle}</h3>
-            <div data-part="row">
-              <input
-                data-part="input"
-                type="text"
+          <Heading001
+            data-part="heading"
+            title={title}
+            accent={accent}
+          />
+          <Accordion001
+            data-part="list"
+            items={items}
+            exclusive={false}
+            marker="plus"
+            divider="line"
+            accent={accent}
+          />
+          <Card024
+            tint={tint}
+            data-part="ask"
+            title={formTitle}
+            text=""
+            note={formHint}
+            accent={accent}
+            background={background || undefined}
+          >
+            <form data-part="row" action={formAction} method="get">
+              {/* Плавающая подпись поля и есть подсказка-пример: placeholder
+                  у input-001 нет намеренно, он пропадает вместе с контекстом. */}
+              <Input001
                 name="question"
                 required
-                placeholder={placeholder}
-                aria-label={formTitle}
+                label={placeholder}
+                accent={accent}
               />
-              <button data-part="submit" type="submit">
+              <Button001 type="submit" accent={accent}>
                 {buttonLabel}
-              </button>
-            </div>
-            <p data-part="hint">{formHint}</p>
-          </form>
+              </Button001>
+            </form>
+          </Card024>
         </div>
       </section>
     </>

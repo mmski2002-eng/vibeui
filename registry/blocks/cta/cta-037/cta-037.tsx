@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react"
+import { Button001 } from "@/registry/components/button/button-001/button-001"
+import { Card025 } from "@/registry/components/card/card-025/card-025"
 
 export type Cta037Props = {
   eyebrow?: string
@@ -69,9 +71,7 @@ container-type:inline-size;
 [data-vibeui-block="cta-037"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:center}
 [data-vibeui-block="cta-037"] [data-part="figure"]{position:relative;margin:0 auto;width:min(100%,32rem);padding:.75rem .75rem 2.8rem;background:var(--vibeui-cta-037-paper);border:1px solid var(--vibeui-cta-037-line);box-shadow:0 30px 60px -30px rgb(0 0 0 / .45);transform:rotate(-1.5deg)}
 [data-vibeui-block="cta-037"] [data-part="figure"]::before{content:"";position:absolute;top:-.8rem;right:2rem;width:5.5rem;height:1.5rem;transform:rotate(5deg);background:color-mix(in oklab,var(--vibeui-cta-037-second) 55%,transparent);opacity:.85}
-[data-vibeui-block="cta-037"] [data-part="photo"]{position:relative;aspect-ratio:3/2;overflow:hidden;background:linear-gradient(135deg,var(--vibeui-cta-037-soft),color-mix(in oklab,var(--vibeui-cta-037-accent) 25%,var(--vibeui-cta-037-bg)))}
-[data-vibeui-block="cta-037"] [data-part="photo"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-[data-vibeui-block="cta-037"] [data-part="caption"]{position:absolute;left:1rem;right:1rem;bottom:.5rem;margin:0;font-family:var(--vibeui-cta-037-hand);font-size:1.35rem;line-height:1.1;transform:rotate(-1deg)}
+[data-vibeui-block="cta-037"] [data-part="handwriting"]{position:absolute;left:1rem;right:1rem;bottom:.5rem;margin:0;font-family:var(--vibeui-cta-037-hand);font-size:1.35rem;line-height:1.1;transform:rotate(-1deg)}
 [data-vibeui-block="cta-037"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-cta-037-accent)}
 [data-vibeui-block="cta-037"] [data-part="title"]{margin:0;font-family:var(--vibeui-cta-037-display);font-weight:500;font-size:clamp(2rem,4.6cqi,3.2rem);line-height:1.08;letter-spacing:-.02em}
 [data-vibeui-block="cta-037"] [data-part="lede"]{margin:1rem 0 0;color:var(--vibeui-cta-037-muted)}
@@ -93,10 +93,6 @@ container-type:inline-size;
 [data-vibeui-block="cta-037"] [data-part="year"] strong{font-family:var(--vibeui-cta-037-display);font-weight:700;font-size:1.6rem;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="cta-037"] [data-part="year"] strong small{font-family:var(--vibeui-cta-037-font);font-weight:500;font-size:.8rem;color:var(--vibeui-cta-037-muted);margin-left:.4rem;letter-spacing:0}
 [data-vibeui-block="cta-037"] [data-part="year"] em{font-family:var(--vibeui-cta-037-hand);font-style:normal;font-size:1.3rem;line-height:1.1;color:var(--vibeui-cta-037-accent)}
-[data-vibeui-block="cta-037"] [data-part="submit"]{display:inline-flex;justify-content:center;align-items:center;gap:.5rem;height:3.4rem;padding:0 1.6rem;border-radius:999px;border:0;background:var(--vibeui-cta-037-accent);color:var(--vibeui-cta-037-on-accent);font:inherit;font-weight:600;font-size:1.05rem;cursor:pointer;transition:transform .18s,box-shadow .2s}
-[data-vibeui-block="cta-037"] [data-part="submit"]:hover{transform:translateY(-1px);box-shadow:0 14px 34px -14px var(--vibeui-cta-037-accent)}
-[data-vibeui-block="cta-037"] [data-part="submit"] svg{width:1.1rem;height:1.1rem}
-[data-vibeui-block="cta-037"] button:focus-visible{outline:2px solid var(--vibeui-cta-037-fg);outline-offset:2px}
 [data-vibeui-block="cta-037"] [data-part="fine"]{display:flex;flex-wrap:wrap;gap:.3rem 1.1rem;margin:0;padding:0;list-style:none;font-size:.78rem;color:var(--vibeui-cta-037-muted)}
 [data-vibeui-block="cta-037"] [data-part="fine"] li::before{content:"✓ ";color:var(--vibeui-cta-037-accent)}
 [data-vibeui-block="cta-037"] [data-part="done"]{display:grid;justify-items:center;gap:.8rem;padding:1.5rem 0;text-align:center}
@@ -209,8 +205,8 @@ export function Cta037({
       <section data-vibeui-block="cta-037" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
         <div data-part="shell">
           <figure data-part="figure">
-            <div data-part="photo">{image ? <img src={image} alt={imageAlt} /> : null}</div>
-            {caption ? <figcaption data-part="caption">{caption}</figcaption> : null}
+            <Card025 data-part="photo" src={image} alt={imageAlt} ratio="3/2" radius="none" />
+            {caption ? <figcaption data-part="handwriting">{caption}</figcaption> : null}
           </figure>
           <div>
             {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
@@ -268,13 +264,10 @@ export function Cta037({
                       <em>{monthlyNote.replace("{year}", `${formatMoney(yearShown)} ${currency}`)}</em>
                     </div>
                   ) : null}
-                  <button data-part="submit" type="submit">
-                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.4 5 7 5c2 0 3.4 1.1 5 2.8C13.6 6.1 15 5 17 5c3.6 0 5.8 3.6 4.5 6.8C19.5 16.4 12 21 12 21Z" />
-                    </svg>
+                  <Button001 data-part="submit-button" type="submit" size="lg" accent={accent}>
                     {actionLabel} {value > 0 ? `${formatMoney(value)} ${currency}` : ""}
                     {monthly ? perMonthSuffix : ""}
-                  </button>
+                  </Button001>
                   {fine.length > 0 ? (
                     <ul data-part="fine">
                       {fine.map((item) => (

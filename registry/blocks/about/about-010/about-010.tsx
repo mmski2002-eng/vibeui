@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react"
+import { Card129 } from "@/registry/components/card/card-129/card-129"
 
 export type About010Point = {
   title: string
@@ -58,11 +59,6 @@ container-type:inline-size;
 [data-vibeui-block="about-010"] [data-part="text"]{margin:1.25rem 0 0;font-size:clamp(1.1rem,2cqi,1.4rem);line-height:1.45;max-width:30rem}
 [data-vibeui-block="about-010"] [data-part="text"] mark{background:none;color:var(--vibeui-about-010-accent);text-shadow:0 0 8px var(--vibeui-about-010-accent),0 0 24px color-mix(in oklab,var(--vibeui-about-010-accent) 60%,transparent)}
 [data-vibeui-block="about-010"] [data-part="points"]{display:grid;gap:.75rem;margin:1.75rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="about-010"] [data-part="point"]{display:grid;grid-template-columns:1.6rem minmax(0,1fr);gap:.75rem;padding:.9rem 1rem;border-radius:.8rem;border:1px solid var(--vibeui-about-010-line);background:var(--vibeui-about-010-card);transition:border-color .3s,box-shadow .3s}
-[data-vibeui-block="about-010"] [data-part="point"]:hover{border-color:color-mix(in oklab,var(--vibeui-about-010-cyan) 50%,transparent);box-shadow:0 0 18px color-mix(in oklab,var(--vibeui-about-010-cyan) 20%,transparent)}
-[data-vibeui-block="about-010"] [data-part="point"]::before{content:"";width:1.6rem;height:1.6rem;border-radius:.4rem;background:color-mix(in oklab,var(--vibeui-about-010-cyan) 18%,transparent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322f3ff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4 4 10-10'/%3E%3C/svg%3E") center/1rem no-repeat;box-shadow:0 0 10px color-mix(in oklab,var(--vibeui-about-010-cyan) 40%,transparent)}
-[data-vibeui-block="about-010"] [data-part="point"] b{display:block;font-weight:700}
-[data-vibeui-block="about-010"] [data-part="point"] span{display:block;margin-top:.15rem;font-size:.88rem;color:var(--vibeui-about-010-muted)}
 [data-vibeui-block="about-010"] [data-part="docs"]{display:flex;flex-wrap:wrap;gap:.4rem;margin:1.25rem 0 0;padding:0;list-style:none}
 [data-vibeui-block="about-010"] [data-part="docs"] li{padding:.3rem .65rem;border-radius:.4rem;border:1px solid color-mix(in oklab,var(--vibeui-about-010-accent-2) 60%,transparent);font-family:var(--vibeui-about-010-mono);font-size:.72rem;letter-spacing:.06em;color:var(--vibeui-about-010-muted)}
 [data-vibeui-block="about-010"] [data-part="media"]{position:relative;min-height:26rem}
@@ -129,12 +125,7 @@ export function About010({
             {points.length > 0 ? (
               <ul data-part="points">
                 {points.map((point) => (
-                  <li key={point.title} data-part="point">
-                    <span>
-                      <b>{point.title}</b>
-                      <span>{point.text}</span>
-                    </span>
-                  </li>
+                  <Card129 key={point.title} data-part="point" title={point.title} text={point.text} accent={accent} />
                 ))}
               </ul>
             ) : null}
