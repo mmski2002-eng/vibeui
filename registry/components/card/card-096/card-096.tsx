@@ -55,10 +55,10 @@ const STYLES = `
 export function Card096({
   day = 1,
   title = "Отчёт со стройки",
-  time = "Отчёт со стройки",
+  time = "10:00",
   text = "Отчёт со стройки",
   photo = "/demo/realty/object-01.webp",
-  by = "Отчёт со стройки",
+  by = "Игорь, прораб",
   dayLabel = "день {n}",
   months = ["янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"],
   plannedLabel = "запланировано",

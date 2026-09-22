@@ -37,7 +37,7 @@ const STYLES = `
 
 /** Кнопка слота записи в сетке: свободен, занят, выбран или закрыт по data-state. */
 export function Button084({
-  state = "Слот записи",
+  state = "свободно",
   hour,
   accent,
   className,

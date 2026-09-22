@@ -43,7 +43,7 @@ const STYLES = `
 
 /** Кнопка-радио слота доставки: индикатор, время и «сегодня/завтра». */
 export function Button081({
-  day = "Слот времени доставки",
+  day = "today",
   start = 0,
   todayLabel = "сегодня",
   tomorrowLabel = "завтра",

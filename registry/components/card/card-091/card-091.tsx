@@ -67,8 +67,8 @@ const STYLES = `
 export function Card091({
   name = "Артём Гусев",
   work = "/demo/realty/object-04.webp",
-  workAlt = "Карточка кейса выпускника",
-  gain = "Карточка кейса выпускника",
+  workAlt = "работа выпускника",
+  gain = "оффер через 2 месяца",
   image = "/demo/realty/object-01.webp",
   before = "маркетолог, 4 года",
   after = "продуктовый дизайнер, Ozon",

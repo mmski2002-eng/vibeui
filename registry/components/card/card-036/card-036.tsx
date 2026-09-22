@@ -49,7 +49,7 @@ const STYLES = `
 export function Card036({
   pet = "Марсель",
   date = "8 июня",
-  sticker = "Полароид из дневника питомца",
+  sticker = "не боялся",
   photo = "/demo/realty/object-01.webp",
   text = "Дерматолог нашёл, на что аллергия, за один приём. Три года чесался, месяц — нет.",
   owner = "Ира, хозяйка",

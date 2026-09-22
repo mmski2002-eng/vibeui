@@ -43,7 +43,7 @@ const STYLES = `
 export function Button085({
   name = "Косметический",
   rate = 8900,
-  note = "Тип ремонта",
+  note = "обои, покраска, полы",
   fromLabel = "от",
   currency = "₽",
   areaUnit = "м²",

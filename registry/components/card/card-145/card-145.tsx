@@ -45,7 +45,7 @@ const STYLES = `
 /** Показатель: число с суффиксом, набегающее при появлении, и подпись. */
 export function Card145({
   label = "объектов сдано",
-  suffix = "Показатель со счётчиком",
+  suffix = "",
   shown = [42],
   index = 0,
   accent,

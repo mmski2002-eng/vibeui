@@ -40,7 +40,7 @@ const STYLES = `
 export function Card093({
   name = "Петроградская",
   image = "/demo/realty/object-01.webp",
-  note = "Строка района",
+  note = "модерн, тихие дворы, 10 минут до центра",
   count = "164 объекта",
   price = "285 тыс ₽",
   accent,

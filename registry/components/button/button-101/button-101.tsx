@@ -49,7 +49,7 @@ export function Button101({
   styleText = "",
   image = "/demo/realty/object-01.webp",
   imageAlt = "/demo/realty/object-02.webp",
-  meta = "Плитка работы с тегом стиля",
+  meta = "Марк · плечо",
   styleLabel = (key) => key,
   accent,
   className,

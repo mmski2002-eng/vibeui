@@ -14727,7 +14727,7 @@
             "prop": "day",
             "label": "day",
             "type": "text",
-            "default": "Слот времени доставки",
+            "default": "today",
             "maxLength": 160
           },
           {
@@ -14965,7 +14965,7 @@
             "prop": "state",
             "label": "state",
             "type": "text",
-            "default": "Слот записи",
+            "default": "свободно",
             "maxLength": 160
           },
           {
@@ -16367,7 +16367,7 @@
             "prop": "meta",
             "label": "meta",
             "type": "text",
-            "default": "Плитка работы с тегом стиля",
+            "default": "Марк · плечо",
             "maxLength": 160
           },
           {
@@ -16765,21 +16765,21 @@
             "prop": "from",
             "label": "from",
             "type": "text",
-            "default": "Переворачивающаяся карточка",
+            "default": "Cayo Largo",
             "maxLength": 160
           },
           {
             "prop": "date",
             "label": "date",
             "type": "text",
-            "default": "Переворачивающаяся карточка",
+            "default": "10.2025",
             "maxLength": 160
           },
           {
             "prop": "back",
             "label": "back",
             "type": "text",
-            "default": "Переворачивающаяся карточка",
+            "default": "Соня едет на раме и командует. Я кручу. Всё как всегда.",
             "maxLength": 160
           },
           {

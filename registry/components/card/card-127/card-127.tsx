@@ -51,7 +51,7 @@ export function Card127({
   src = "/demo/bakery/hands-flour.webp",
   span = "big",
   alt = "Кадр bento-портфолио",
-  note = "Кадр bento-портфолио",
+  note = "5:40, формовка",
   accent,
   className,
   style,

@@ -52,7 +52,7 @@ const STYLES = `
 export function Card104({
   title = "Дыхание, которое ведёт",
   text = "Круг растёт и сжимается, а вы просто следуете. Три практики: 4-7-8, коробочное, «вечер».",
-  screenTitle = "Пункт возможности",
+  screenTitle = "Будильник",
   screen = "breath",
   screenPrefix = "экран",
   accent,

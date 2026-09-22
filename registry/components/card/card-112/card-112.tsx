@@ -48,7 +48,7 @@ const STYLES = `
 export function Card112({
   text = "Отзыв со звёздами",
   name = "Отзыв со звёздами",
-  car = "Отзыв со звёздами",
+  car = "Porsche Macan, 2022",
   stars,
   starsLabel = "{n} из 5",
   accent,

@@ -44,14 +44,14 @@ const STYLES = `
 
 /** Строка слота программы: время, заголовок со ссылкой, сцена и цветной тег. */
 export function Card119({
-  time = "Слот программы",
+  time = "20:00",
   title = "Слот программы",
   href = "#",
-  stage = "Слот программы",
-  tag = "Слот программы",
-  tagColor = "Слот программы",
-  tagInk = "Слот программы",
-  note = "Слот программы",
+  stage = "Набережная",
+  tag = "#Музыка",
+  tagColor = "#ffe2d6",
+  tagInk = "#fff",
+  note = "Бесплатно",
   accent,
   className,
   style,

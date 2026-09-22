@@ -57,8 +57,8 @@ const STYLES = `
 export function Chart031({
   label = "Яркость",
   value = 1200,
-  unit = "Датчик-дуга",
-  previousLabel = "Датчик-дуга",
+  unit = "лм",
+  previousLabel = "Луч 1",
   previous,
   wasLabel = "было",
   t = 1,

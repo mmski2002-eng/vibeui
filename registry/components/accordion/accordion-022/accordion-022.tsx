@@ -80,8 +80,8 @@ export function Accordion022({
   group = "vibeui-accordion-022",
   defaultOpen = -1,
   accent,
-  ink = "Аккордеон на инее",
-  background = "Аккордеон на инее",
+  ink = "",
+  background = "",
   className,
   style,
   ...props

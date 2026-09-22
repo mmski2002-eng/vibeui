@@ -49,7 +49,7 @@ const STYLES = `
 /** Строка урока программы: иконка типа (видео, текст, практика), название и длительность. */
 export function Card090({
   title = "Разбор домашек потока",
-  length = "Строка урока",
+  length = "40 мин",
   kind = "video",
   accent,
   className,

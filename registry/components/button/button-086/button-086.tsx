@@ -39,8 +39,8 @@ const STYLES = `
 /** Кнопка-вкладка объекта до/после: название и подпись; активна через aria-selected. */
 export function Button086({
   name = "Двушка на Ленинском",
-  area = "Вкладка объекта",
-  kindText = "Вкладка объекта",
+  area = "62 м²",
+  kindText = "Капитальный",
   weeks,
   weekShort = "нед",
   accent,

@@ -42,11 +42,11 @@ const STYLES = `
 
 /** Карточка остановки: фото, название, код и описание; активна по data-active. */
 export function Card131({
-  code = "Остановка маршрута",
+  code = "MOW",
   image = "/demo/realty/object-01.webp",
   imageAlt = "/demo/realty/object-02.webp",
-  city = "Остановка маршрута",
-  date = "Остановка маршрута",
+  city = "Москва",
+  date = "Январь 2022",
   title = "Остановка маршрута",
   text = "Остановка маршрута",
   accent,

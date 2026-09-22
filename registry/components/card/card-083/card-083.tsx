@@ -36,7 +36,7 @@ const STYLES = `
 export function Card083({
   image = "/demo/realty/object-01.webp",
   name = "Фото блюда",
-  badge = "Фото блюда",
+  badge = "острое",
   accent,
   className,
   style,

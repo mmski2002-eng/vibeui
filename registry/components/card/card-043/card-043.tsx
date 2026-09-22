@@ -42,7 +42,7 @@ export function Card043({
   name = "Отзыв в панели сегмента",
   quote = "Отзыв в панели сегмента",
   image = "/demo/realty/object-01.webp",
-  role = "Отзыв в панели сегмента",
+  role = "Сооснователь, Remark",
   accent,
   className,
   style,

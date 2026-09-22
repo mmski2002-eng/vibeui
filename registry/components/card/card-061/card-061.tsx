@@ -172,7 +172,7 @@ transition:color var(--vibeui-card-061-dur-4),border-color var(--vibeui-card-061
 /** Плитка bento-раскладки: номер слота, значение, заголовок, текст или медиа; без содержимого — скелет-заглушка по типу слота, свет за курсором и подсветка рамки при наведении. */
 export function Card061({
   media,
-  value = "Плитка bento-витрины",
+  value = "12",
   title = "Плитка bento-витрины",
   text = "Плитка bento-витрины",
   numbers = true,

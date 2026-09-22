@@ -57,9 +57,9 @@ font-variant-numeric:tabular-nums;}
 
 /** Ссылка-карточка работы: кадр по data-look, название и год. */
 export function Card143({
-  look = "Карточка работы галереи",
+  look = "чёрно-белая печать",
   title = "Карточка работы галереи",
-  year = "Карточка работы галереи",
+  year = "2024",
   accent,
   className,
   style,

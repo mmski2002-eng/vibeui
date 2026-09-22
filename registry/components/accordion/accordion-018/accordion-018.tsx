@@ -83,8 +83,8 @@ export function Accordion018({
   group = "vibeui-accordion-018",
   defaultOpen = -1,
   accent,
-  ink = "Аккордеон с цветными точками",
-  background = "Аккордеон с цветными точками",
+  ink = "",
+  background = "",
   className,
   style,
   ...props

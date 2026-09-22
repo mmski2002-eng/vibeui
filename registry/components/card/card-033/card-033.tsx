@@ -49,7 +49,7 @@ export function Card033({
   rating,
   quote = "Квартира была с долгом по капремонту и прописанным родственником. Андрей всё вычистил до сделки, мы ничего не заметили.",
   image = "/demo/realty/object-01.webp",
-  source = "Отзыв после сделки",
+  source = "Яндекс Карты",
   ratingLabel = "Оценка {n} из 5",
   index = 0,
   accent,

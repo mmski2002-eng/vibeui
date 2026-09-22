@@ -35,9 +35,9 @@ const STYLES = `
 
 /** Строка расписания дня: время, заголовок и подпись. */
 export function Card122({
-  time = "Слот дня",
+  time = "18:00",
   title = "Слот дня",
-  place = "Слот дня",
+  place = "аэропорт Хосе Марти",
   text = "Слот дня",
   accent,
   className,

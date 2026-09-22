@@ -47,7 +47,7 @@ const STYLES = `
 export function Card106({
   text = "Цитата бегущей строки",
   href = "#",
-  who = "Цитата бегущей строки",
+  who = "Сергей Волков · № 112",
   accent,
   className,
   style,

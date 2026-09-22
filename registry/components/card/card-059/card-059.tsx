@@ -74,7 +74,7 @@ export function Card059({
   years,
   objects,
   text = "Карточка штатного расписания",
-  now = "Карточка штатного расписания",
+  now = "на Полежаевской",
   yearsLine = "стаж {n} лет",
   objectsLine = "сдано {n}",
   nowLabel = "сейчас",

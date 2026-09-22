@@ -75,7 +75,7 @@ const STYLES = `
 export function Card144({
   name = "tabl",
   self,
-  note = "Строка сравнения с полосой",
+  note = "2.4.1",
   value = 4.1,
   selfTag = "это мы",
   unit = "КБ",

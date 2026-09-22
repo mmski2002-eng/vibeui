@@ -48,7 +48,7 @@ background:var(--vibeui-card-107-accent);color:oklch(from var(--vibeui-card-107-
 export function Card107({
   quote = "Крупная цитата с автором",
   name = "Анна Ковалёва",
-  role = "Крупная цитата с автором",
+  role = "основатель студии",
   accent,
   className,
   style,

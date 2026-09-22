@@ -51,7 +51,7 @@ const STYLES = `
 /** Событие таймлайна: точка, дата, заголовок и текст; подсвечено по data-lit и data-now. */
 export function Card132({
   title = "Кадр таймлайна",
-  date = "Кадр таймлайна",
+  date = "Декабрь 2023",
   image = "/demo/realty/object-01.webp",
   imageAlt = "/demo/realty/object-02.webp",
   text = "Кадр таймлайна",

@@ -74,8 +74,8 @@ export function Accordion017({
   group = "vibeui-accordion-017",
   defaultOpen = -1,
   accent,
-  ink = "Аккордеон-плитки с кромкой",
-  background = "Аккордеон-плитки с кромкой",
+  ink = "",
+  background = "",
   className,
   style,
   ...props

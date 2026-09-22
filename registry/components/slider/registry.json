@@ -3244,7 +3244,7 @@
             "prop": "surface",
             "label": "surface",
             "type": "text",
-            "default": "Голый ползунок",
+            "default": "",
             "maxLength": 160
           },
           {

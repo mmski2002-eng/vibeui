@@ -39,7 +39,7 @@ const STYLES = `
 export function Card097({
   text = "Заметка на полях",
   name = "Заметка на полях",
-  from = "Заметка на полях",
+  from = "Казань",
   slotIndex = 0,
   accent,
   className,

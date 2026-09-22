@@ -39,7 +39,7 @@ const STYLES = `
 export function Card039({
   text = "Записка на пробковой доске",
   name = "Записка на пробковой доске",
-  note = "Записка на пробковой доске",
+  note = "свидетельница",
   accent,
   className,
   style,

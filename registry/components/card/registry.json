@@ -7019,7 +7019,7 @@
             "prop": "badge",
             "label": "Плашка",
             "type": "text",
-            "default": "Кадр с наложением",
+            "default": "",
             "maxLength": 24
           },
           {
@@ -7905,14 +7905,14 @@
             "prop": "phone",
             "label": "phone",
             "type": "text",
-            "default": "Агент с портретом",
+            "default": "+7 812 240-00-41",
             "maxLength": 160
           },
           {
             "prop": "chatLabel",
             "label": "chatLabel",
             "type": "text",
-            "default": "Агент с портретом",
+            "default": "Написать",
             "maxLength": 160
           },
           {
@@ -8232,14 +8232,14 @@
             "prop": "experience",
             "label": "experience",
             "type": "text",
-            "default": "Мастер-полароид с неоном",
+            "default": "9 лет",
             "maxLength": 160
           },
           {
             "prop": "slot",
             "label": "slot",
             "type": "text",
-            "default": "Мастер-полароид с неоном",
+            "default": "окно 21 сен",
             "maxLength": 160
           },
           {
@@ -8405,7 +8405,7 @@
             "prop": "role",
             "label": "role",
             "type": "text",
-            "default": "Бенто-плитка участника",
+            "default": "Пекарь, закваске шесть лет",
             "maxLength": 160
           },
           {
@@ -8564,14 +8564,14 @@
             "prop": "years",
             "label": "years",
             "type": "text",
-            "default": "Мастер автосервиса",
+            "default": "11 лет",
             "maxLength": 160
           },
           {
             "prop": "cars",
             "label": "cars",
             "type": "text",
-            "default": "Мастер автосервиса",
+            "default": "2 400",
             "maxLength": 160
           },
           {
@@ -8736,7 +8736,7 @@
             "prop": "now",
             "label": "now",
             "type": "text",
-            "default": "Карточка штатного расписания",
+            "default": "на Полежаевской",
             "maxLength": 160
           },
           {
@@ -9885,7 +9885,7 @@
             "prop": "source",
             "label": "source",
             "type": "text",
-            "default": "Отзыв после сделки",
+            "default": "Яндекс Карты",
             "maxLength": 160
           },
           {
@@ -10041,7 +10041,7 @@
             "prop": "source",
             "label": "source",
             "type": "text",
-            "default": "Отзыв поверх фото",
+            "default": "Яндекс Карты",
             "maxLength": 160
           },
           {
@@ -10193,14 +10193,14 @@
             "prop": "date",
             "label": "date",
             "type": "text",
-            "default": "Отзыв из магазина приложений",
+            "default": "авг 2026",
             "maxLength": 160
           },
           {
             "prop": "store",
             "label": "store",
             "type": "text",
-            "default": "Отзыв из магазина приложений",
+            "default": "App Store",
             "maxLength": 160
           },
           {
@@ -10521,14 +10521,14 @@
             "prop": "date",
             "label": "date",
             "type": "text",
-            "default": "Отзыв-открытка",
+            "default": "12 июня",
             "maxLength": 160
           },
           {
             "prop": "place",
             "label": "place",
             "type": "text",
-            "default": "Отзыв-открытка",
+            "default": "Петроградская",
             "maxLength": 160
           },
           {
@@ -11249,7 +11249,7 @@
             "prop": "role",
             "label": "role",
             "type": "text",
-            "default": "Отзыв в панели сегмента",
+            "default": "Сооснователь, Remark",
             "maxLength": 160
           },
           {
@@ -11369,7 +11369,7 @@
             "prop": "point",
             "label": "point",
             "type": "text",
-            "default": "Пункт «до / после»",
+            "default": "до",
             "maxLength": 160
           },
           {
@@ -11777,7 +11777,7 @@
             "prop": "note",
             "label": "note",
             "type": "text",
-            "default": "Записка на пробковой доске",
+            "default": "свидетельница",
             "maxLength": 160
           },
           {
@@ -11889,7 +11889,7 @@
             "prop": "value",
             "label": "value",
             "type": "text",
-            "default": "Плитка bento-витрины",
+            "default": "12",
             "maxLength": 160
           },
           {
@@ -12174,7 +12174,7 @@
             "prop": "meta",
             "label": "meta",
             "type": "text",
-            "default": "Плитка API-маршрута",
+            "default": "p50 · 42 ms",
             "maxLength": 160
           },
           {
@@ -13400,7 +13400,7 @@
             "prop": "result",
             "label": "result",
             "type": "text",
-            "default": "Шаг автосервиса",
+            "default": "смета в мессенджер",
             "maxLength": 160
           },
           {
@@ -13650,14 +13650,14 @@
             "prop": "workAlt",
             "label": "workAlt",
             "type": "text",
-            "default": "Карточка кейса выпускника",
+            "default": "работа выпускника",
             "maxLength": 160
           },
           {
             "prop": "gain",
             "label": "gain",
             "type": "text",
-            "default": "Карточка кейса выпускника",
+            "default": "оффер через 2 месяца",
             "maxLength": 160
           },
           {
@@ -14370,7 +14370,7 @@
             "prop": "by",
             "label": "by",
             "type": "text",
-            "default": "Отчёт со стройки",
+            "default": "Игорь, прораб",
             "maxLength": 160
           },
           {
@@ -15703,7 +15703,7 @@
             "prop": "role",
             "label": "role",
             "type": "text",
-            "default": "Крупная цитата с автором",
+            "default": "основатель студии",
             "maxLength": 160
           },
           {
@@ -15999,7 +15999,7 @@
             "prop": "after",
             "label": "after",
             "type": "text",
-            "default": "Карточка карусели отзывов",
+            "default": "спустя год",
             "maxLength": 160
           },
           {
@@ -16013,7 +16013,7 @@
             "prop": "meta",
             "label": "meta",
             "type": "text",
-            "default": "Карточка карусели отзывов",
+            "default": "реализм · предплечье · 2023",
             "maxLength": 160
           },
           {
@@ -16171,7 +16171,7 @@
             "prop": "remark",
             "label": "remark",
             "type": "text",
-            "default": "Отзыв-акт",
+            "default": "царапина на подоконнике — заменили за два дня, до подписания акта",
             "maxLength": 160
           },
           {
@@ -16489,7 +16489,7 @@
             "prop": "sum",
             "label": "sum",
             "type": "text",
-            "default": "Чек-отзыв",
+            "default": "420 ₽",
             "maxLength": 160
           },
           {
@@ -16646,7 +16646,7 @@
             "prop": "car",
             "label": "car",
             "type": "text",
-            "default": "Отзыв со звёздами",
+            "default": "Porsche Macan, 2022",
             "maxLength": 160
           },
           {
@@ -16804,7 +16804,7 @@
             "prop": "contactLabel",
             "label": "contactLabel",
             "type": "text",
-            "default": "Карточка человека с фото",
+            "default": "Написать в Telegram",
             "maxLength": 160
           },
           {
@@ -16970,7 +16970,7 @@
             "prop": "contactLabel",
             "label": "contactLabel",
             "type": "text",
-            "default": "Карточка при свече",
+            "default": "Написать в Telegram",
             "maxLength": 160
           },
           {
@@ -17121,14 +17121,14 @@
             "prop": "role",
             "label": "role",
             "type": "text",
-            "default": "Карточка гостя ленты",
+            "default": "смотритель маяка",
             "maxLength": 160
           },
           {
             "prop": "episode",
             "label": "episode",
             "type": "text",
-            "default": "Карточка гостя ленты",
+            "default": "№ 112",
             "maxLength": 160
           },
           {
@@ -17256,7 +17256,7 @@
             "prop": "time",
             "label": "time",
             "type": "text",
-            "default": "Слот программы",
+            "default": "20:00",
             "maxLength": 160
           },
           {
@@ -17277,21 +17277,21 @@
             "prop": "stage",
             "label": "stage",
             "type": "text",
-            "default": "Слот программы",
+            "default": "Набережная",
             "maxLength": 160
           },
           {
             "prop": "tag",
             "label": "tag",
             "type": "text",
-            "default": "Слот программы",
+            "default": "#Музыка",
             "maxLength": 160
           },
           {
             "prop": "tagColor",
             "label": "tagColor",
             "type": "text",
-            "default": "Слот программы",
+            "default": "#ffe2d6",
             "maxLength": 160
           },
           {
@@ -17590,7 +17590,7 @@
             "prop": "place",
             "label": "place",
             "type": "text",
-            "default": "Шаг таймлайна дня",
+            "default": "терраса",
             "maxLength": 160
           },
           {
@@ -17723,7 +17723,7 @@
             "prop": "time",
             "label": "time",
             "type": "text",
-            "default": "Слот дня",
+            "default": "18:00",
             "maxLength": 160
           },
           {
@@ -17737,7 +17737,7 @@
             "prop": "place",
             "label": "place",
             "type": "text",
-            "default": "Слот дня",
+            "default": "аэропорт Хосе Марти",
             "maxLength": 160
           },
           {
@@ -18833,7 +18833,7 @@
             "prop": "code",
             "label": "code",
             "type": "text",
-            "default": "Остановка маршрута",
+            "default": "MOW",
             "maxLength": 160
           },
           {
@@ -18854,14 +18854,14 @@
             "prop": "city",
             "label": "city",
             "type": "text",
-            "default": "Остановка маршрута",
+            "default": "Москва",
             "maxLength": 160
           },
           {
             "prop": "date",
             "label": "date",
             "type": "text",
-            "default": "Остановка маршрута",
+            "default": "Январь 2022",
             "maxLength": 160
           },
           {
@@ -19001,7 +19001,7 @@
             "prop": "date",
             "label": "date",
             "type": "text",
-            "default": "Кадр таймлайна",
+            "default": "Декабрь 2023",
             "maxLength": 160
           },
           {
@@ -19299,7 +19299,7 @@
             "prop": "suffix",
             "label": "suffix",
             "type": "text",
-            "default": "Неоновое кольцо-показатель",
+            "default": "",
             "maxLength": 160
           },
           {
@@ -19424,7 +19424,7 @@
             "prop": "note",
             "label": "note",
             "type": "text",
-            "default": "Карточка объекта на карте",
+            "default": "модерн, тихие дворы, 10 минут до центра",
             "maxLength": 160
           },
           {
@@ -19438,7 +19438,7 @@
             "prop": "count",
             "label": "count",
             "type": "text",
-            "default": "Карточка объекта на карте",
+            "default": "164 объекта",
             "maxLength": 160
           },
           {
@@ -19947,7 +19947,7 @@
             "prop": "look",
             "label": "look",
             "type": "text",
-            "default": "Карточка работы галереи",
+            "default": "чёрно-белая печать",
             "maxLength": 160
           },
           {
@@ -19961,7 +19961,7 @@
             "prop": "year",
             "label": "year",
             "type": "text",
-            "default": "Карточка работы галереи",
+            "default": "2024",
             "maxLength": 160
           },
           {
@@ -20218,7 +20218,7 @@
             "prop": "suffix",
             "label": "suffix",
             "type": "text",
-            "default": "Показатель со счётчиком",
+            "default": "",
             "maxLength": 160
           },
           {

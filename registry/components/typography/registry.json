@@ -117,21 +117,21 @@
             "prop": "titleAccent",
             "label": "titleAccent",
             "type": "text",
-            "default": "Заголовок секции",
+            "default": "",
             "maxLength": 160
           },
           {
             "prop": "lede",
             "label": "lede",
             "type": "text",
-            "default": "Заголовок секции",
+            "default": "",
             "maxLength": 160
           },
           {
             "prop": "display",
             "label": "display",
             "type": "text",
-            "default": "Заголовок секции",
+            "default": "",
             "maxLength": 160
           }
         ],
