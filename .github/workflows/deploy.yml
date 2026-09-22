@@ -29,6 +29,9 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Потолок на весь job: заливка по узкому каналу до РФ-хостинга должна
+    # падать с ошибкой, а не висеть часами, занимая очередь concurrency.
+    timeout-minutes: 60
     steps:
       # Вся история: sitemap берёт lastmod из даты последнего коммита файла
       # (scripts/build-lastmod.mjs). Shallow-checkout дал бы всем одну дату.
@@ -69,7 +72,6 @@ jobs:
           mkdir -p release/scripts
           cp -a drizzle release/drizzle
           cp scripts/migrate.sh release/scripts/migrate.sh
-          tar -czf release.tar.gz -C release .
 
       - name: Ключ и known_hosts
         run: |
@@ -78,10 +80,24 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
+      # Релиз весит 427 МБ, из них public 156 МБ и node_modules 50 МБ не
+      # меняются между сборками, а в .next/server (127 МБ) от правки одной
+      # страницы меняются единицы файлов. Архивом это ехало целиком: на узком
+      # канале до РФ-хостинга (видели 26 КБ/с) — часы, и шаг выглядел
+      # зависшим. rsync сверяет содержимое с прошлым релизом (--checksum, а не
+      # mtime: у собранных на runner-е файлов он всегда новый), передаёт
+      # только отличия, остальное сервер берёт из предыдущего каталога
+      # жёсткими ссылками — заодно три релиза на диске занимают как один.
+      # --timeout: оборвавшийся канал должен ронять шаг, а не висеть.
       - name: Залить и переключить релиз
         run: |
-          scp release.tar.gz "$DEPLOY_USER@$DEPLOY_HOST:/tmp/vibeui-release.tar.gz"
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'bash -s' < scripts/deploy-remote.sh
+          REL="/srv/vibeui-releases/$(date -u +%Y%m%d-%H%M%S)"
+          PREV=$(ssh "$DEPLOY_USER@$DEPLOY_HOST" 'ls -1dt /srv/vibeui-releases/* 2>/dev/null | head -1')
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$REL'"
+          rsync -az --checksum --delete --timeout=600 --info=stats2 \
+            ${PREV:+--link-dest="$PREV"} \
+            release/ "$DEPLOY_USER@$DEPLOY_HOST:$REL/"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" "REL='$REL' bash -s" < scripts/deploy-remote.sh
 
       - name: Проверить живой сайт
         run: |
@@ -106,7 +122,12 @@ jobs:
       - name: Залить .club на латвийский VPS
         run: |
           ssh-keyscan -H "$CLUB_HOST" >> ~/.ssh/known_hosts
-          scp release.tar.gz "root@$CLUB_HOST:/tmp/vibeui-club-release.tar.gz"
-          ssh "root@$CLUB_HOST" 'bash -s' < scripts/deploy-remote-club.sh
+          REL="/srv/vibeui-club-releases/$(date -u +%Y%m%d-%H%M%S)"
+          PREV=$(ssh "root@$CLUB_HOST" 'ls -1dt /srv/vibeui-club-releases/* 2>/dev/null | head -1')
+          ssh "root@$CLUB_HOST" "mkdir -p '$REL'"
+          rsync -az --checksum --delete --timeout=600 --info=stats2 \
+            ${PREV:+--link-dest="$PREV"} \
+            release/ "root@$CLUB_HOST:$REL/"
+          ssh "root@$CLUB_HOST" "REL='$REL' bash -s" < scripts/deploy-remote-club.sh
         env:
           CLUB_HOST: 216.173.70.241

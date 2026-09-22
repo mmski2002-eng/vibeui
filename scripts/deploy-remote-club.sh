@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # Серверная половина деплоя vibeui.club на латвийском VPS. Отдельные пути и
 # сервис от .ru: /srv/vibeui-club-*, /etc/vibeui-club.env, vibeui-club.service.
+# Файлы релиза уже залиты rsync-ом в $REL (см. scripts/deploy-remote.sh).
 set -euo pipefail
 
-TARBALL=/tmp/vibeui-club-release.tar.gz
-REL="/srv/vibeui-club-releases/$(date +%Y%m%d-%H%M%S)"
+: "${REL:?путь релиза не передан (REL)}"
 
-mkdir -p "$REL"
-tar -xzf "$TARBALL" -C "$REL"
-rm -f "$TARBALL"
+if [ ! -d "$REL" ]; then
+  echo "каталог релиза $REL не найден — деплой остановлен" >&2
+  exit 1
+fi
 
 # Миграции club-базы — до переключения симлинка.
 if [ -f /etc/vibeui-club.env ]; then
@@ -28,6 +29,6 @@ mv -Tf /srv/vibeui-club-live.tmp /srv/vibeui-club-live
 
 systemctl restart vibeui-club
 
-ls -1dt /srv/vibeui-club-releases/* | tail -n +3 | xargs -r rm -rf
+ls -1dt /srv/vibeui-club-releases/* | tail -n +4 | xargs -r rm -rf
 
 echo "released club $REL"
