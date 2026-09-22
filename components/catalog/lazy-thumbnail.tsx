@@ -32,6 +32,15 @@ const NATURAL_MAX_HEIGHT = 620
  */
 const MAX_FRAME_HEIGHT = 0.62
 
+/**
+ * Та же граница, но от ширины кадра. Одной привязки к окну мало: на невысоком
+ * экране потолок выходил в треть тысячи пикселей, и высокая секция ужималась
+ * до нечитаемого — при том что ширины карточки хватало на вдвое более крупный
+ * кадр. Ширина карточки одна на всех экранах, поэтому и масштаб от неё
+ * одинаковый везде.
+ */
+const MAX_FRAME_HEIGHT_BY_WIDTH = 0.75
+
 /** «8 / 3» → 2.67. Пропорция кадра приходит из metadata строкой. */
 function parseAspect(value: string) {
   const [width, height] = value.split("/").map((part) => Number(part.trim()))
@@ -176,7 +185,10 @@ export function LazyThumbnail({
         }
 
         const height = (naturalHeight * width) / SECTION_WIDTH
-        const limit = window.innerHeight * MAX_FRAME_HEIGHT
+        const limit = Math.max(
+          window.innerHeight * MAX_FRAME_HEIGHT,
+          width * MAX_FRAME_HEIGHT_BY_WIDTH,
+        )
 
         if (height > limit) {
           // Масштаб задан как ширина кадра / --thumbnail-width, поэтому

@@ -15,6 +15,13 @@ const AUTHOR_WIDTH = 1280
 // но остаётся целым и без скролла.
 const MAX_HEIGHT_RATIO = 0.62
 
+// Та же граница, но от ширины кадра. Одной привязки к окну мало: на
+// невысоком экране потолок выходил в треть тысячи пикселей, и блок в
+// полторы тысячи ужимался до нечитаемого — при том что ширины карточки
+// хватало на вдвое более крупный кадр. Ширина у карточки одна на всех
+// экранах, поэтому и масштаб от неё одинаковый везде.
+const MAX_HEIGHT_BY_WIDTH = 0.75
+
 // Нижняя граница кадра: совсем низкий блок (строка логотипов) иначе
 // схлопнулся бы в полоску.
 const MIN_HEIGHT = 120
@@ -89,7 +96,10 @@ export function FitFrame({ children }: { children: ReactNode }) {
       // offsetHeight не учитывает transform: scale, поэтому это высота блока
       // в его натуральных 1280px.
       const naturalHeight = content.offsetHeight
-      const capHeight = window.innerHeight * MAX_HEIGHT_RATIO
+      const capHeight = Math.max(
+        window.innerHeight * MAX_HEIGHT_RATIO,
+        frameWidth * MAX_HEIGHT_BY_WIDTH,
+      )
       const nextScale = Math.min(byWidth, capHeight / naturalHeight)
       const nextHeight = Math.max(MIN_HEIGHT, naturalHeight * nextScale)
 

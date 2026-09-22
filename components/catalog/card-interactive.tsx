@@ -211,6 +211,11 @@ export function CardInteractive({
   const router = useRouter()
 
   const [floor, setFloor] = useState<number>()
+  // Планка считается только после того, как карточку тронули. До этого кадр
+  // ещё меряется: пока масштаб превью не посчитан, на его месте стоит
+  // заглушка 16:9, и планка запоминала именно её — низкий блок потом висел
+  // в пустом кадре вдвое выше себя.
+  const touchedCard = useRef(false)
 
   useEffect(() => {
     const frame = frameRef.current
@@ -231,6 +236,10 @@ export function CardInteractive({
         width = box.width
         setFloor(undefined)
 
+        return
+      }
+
+      if (!touchedCard.current) {
         return
       }
 
@@ -287,6 +296,15 @@ export function CardInteractive({
         // смонтируются только по подходу к экрану, а порядок нужен сразу.
         data-favourite={pinned?.has(name) ? "true" : undefined}
         style={floor ? { minHeight: floor } : undefined}
+        // Раскрытый внутри превью аккордеон или выехавшая панель поднимают
+        // карточку; чтобы после закрытия сетка не прыгала под курсором,
+        // с этого момента высота запоминается планкой.
+        onPointerDown={() => {
+          touchedCard.current = true
+        }}
+        onKeyDownCapture={() => {
+          touchedCard.current = true
+        }}
         className={`catalog-card-body bg-shell-panel flex min-w-0 flex-1 flex-col rounded-xl border ${pro ? "border-shell-accent/50 ring-shell-accent/20 ring-1" : "border-shell-border"}`}
       >
         {/* Отдельная полоса, а не наложение поверх кадра: у компонентов
