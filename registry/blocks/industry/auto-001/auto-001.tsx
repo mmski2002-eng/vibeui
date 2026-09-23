@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState, type CSSProperties, type PointerEvent } from "react"
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
 import { Button016 } from "@/registry/components/button/button-016/button-016"
 
@@ -87,18 +87,23 @@ container-type:inline-size;
 [data-vibeui-block="auto-001"] [data-part="eyebrow"]::before{content:"";width:2rem;height:1px;background:var(--vibeui-auto-001-accent)}
 [data-vibeui-block="auto-001"] [data-part="title"]{margin:0;font-family:var(--vibeui-auto-001-display);font-weight:900;font-size:clamp(1.8rem,4.4cqi,3.2rem);line-height:1.02;letter-spacing:-.03em;text-transform:uppercase}
 [data-vibeui-block="auto-001"] [data-part="lede"]{margin:0;max-width:30rem;color:var(--vibeui-auto-001-muted)}
-[data-vibeui-block="auto-001"] [data-part="classes"]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem;padding:.4rem;border-radius:1rem;border:1px solid var(--vibeui-auto-001-line);background:var(--vibeui-auto-001-glass);margin-bottom:1.2rem}
-[data-vibeui-block="auto-001"] [data-part="class"]{display:grid;gap:.1rem;padding:.7rem .9rem;border-radius:.7rem;border:0;background:transparent;color:var(--vibeui-auto-001-muted);font:inherit;text-align:left;cursor:pointer;transition:background .25s,color .25s}
+[data-vibeui-block="auto-001"] [data-part="classes"]{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem;padding:.4rem;border-radius:1rem;border:1px solid var(--vibeui-auto-001-line);background:var(--vibeui-auto-001-glass);margin-bottom:1.2rem}
+[data-vibeui-block="auto-001"] [data-part="class"]{position:relative;z-index:1;display:grid;gap:.1rem;padding:.7rem .9rem;border-radius:.7rem;border:0;background:transparent;color:var(--vibeui-auto-001-muted);font:inherit;text-align:left;cursor:pointer;transition:background .25s,color .35s}
 [data-vibeui-block="auto-001"] [data-part="class"] b{font-weight:600;font-size:.95rem;color:var(--vibeui-auto-001-fg)}
 [data-vibeui-block="auto-001"] [data-part="class"] small{font-size:.75rem;font-family:var(--vibeui-auto-001-mono)}
 [data-vibeui-block="auto-001"] [data-part="class"][aria-checked="true"]{background:var(--vibeui-auto-001-accent);color:color-mix(in oklab,var(--vibeui-auto-001-on-accent) 75%,transparent)}
 [data-vibeui-block="auto-001"] [data-part="class"][aria-checked="true"] b{color:var(--vibeui-auto-001-on-accent)}
+[data-vibeui-block="auto-001"] [data-part="class"] b{transition:color .35s}
+[data-vibeui-block="auto-001"] [data-part="pill"]{position:absolute;left:0;top:0;z-index:0;border-radius:.7rem;background:var(--vibeui-auto-001-accent);box-shadow:0 8px 22px -10px var(--vibeui-auto-001-accent);pointer-events:none;opacity:0;transition:translate .5s cubic-bezier(.3,.8,.25,1),width .5s cubic-bezier(.3,.8,.25,1),height .5s cubic-bezier(.3,.8,.25,1)}
+[data-vibeui-block="auto-001"] [data-part="classes"][data-ready="true"] [data-part="pill"]{opacity:1}
+[data-vibeui-block="auto-001"] [data-part="classes"][data-ready="true"] [data-part="class"][aria-checked="true"]{background:transparent}
 [data-vibeui-block="auto-001"] [data-part="grid"]{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="auto-001"] [data-part="card"]{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:1fr auto;gap:.3rem .8rem;width:100%;min-height:8.5rem;padding:1.1rem 1.2rem;border-radius:1rem;border:1px solid var(--vibeui-auto-001-line);background:var(--vibeui-auto-001-glass);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .25s,transform .25s;--vibeui-auto-001-x:50%;--vibeui-auto-001-y:50%}
+[data-vibeui-block="auto-001"] [data-part="card"]{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:1fr auto;gap:.3rem .8rem;width:100%;min-height:8.5rem;padding:1.1rem 1.2rem;border-radius:1rem;border:1px solid var(--vibeui-auto-001-line);background:var(--vibeui-auto-001-glass);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:border-color .25s,transform .25s,scale .35s cubic-bezier(.3,.8,.25,1);--vibeui-auto-001-x:50%;--vibeui-auto-001-y:50%}
 [data-vibeui-block="auto-001"] [data-part="card"]::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(18rem circle at var(--vibeui-auto-001-x) var(--vibeui-auto-001-y),color-mix(in oklab,var(--vibeui-auto-001-accent) 22%,transparent),transparent 60%);opacity:0;transition:opacity .35s}
 [data-vibeui-block="auto-001"] [data-part="card"]:hover::before,[data-vibeui-block="auto-001"] [data-part="card"][aria-pressed="true"]::before{opacity:1}
 [data-vibeui-block="auto-001"] [data-part="card"]:hover{transform:translateY(-2px)}
-[data-vibeui-block="auto-001"] [data-part="card"][aria-pressed="true"]{border-color:var(--vibeui-auto-001-accent);box-shadow:0 0 0 1px var(--vibeui-auto-001-accent) inset}
+[data-vibeui-block="auto-001"] [data-part="card"][aria-pressed="true"]{z-index:1;scale:1.025;border-color:var(--vibeui-auto-001-accent);box-shadow:0 0 0 1px var(--vibeui-auto-001-accent) inset,0 16px 36px -20px var(--vibeui-auto-001-accent);animation:vibeui-auto-001-pop .45s cubic-bezier(.3,1.5,.5,1)}
+@keyframes vibeui-auto-001-pop{0%{scale:1}45%{scale:1.05}100%{scale:1.025}}
 [data-vibeui-block="auto-001"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-auto-001-accent);outline-offset:2px}
 [data-vibeui-block="auto-001"] [data-part="name"]{margin:0;font-weight:600;font-size:1rem;line-height:1.25}
 [data-vibeui-block="auto-001"] [data-part="check"]{width:1.5rem;height:1.5rem;border-radius:50%;border:1px solid var(--vibeui-auto-001-line);display:grid;place-items:center;color:var(--vibeui-auto-001-on-accent);transition:background .2s,border-color .2s}
@@ -153,8 +158,10 @@ function formatTime(minutes: number, dayUnits: readonly [string, string, string]
     const days = Math.ceil(minutes / 540)
     return `${days} ${plural(days, dayUnits)}`
   }
-  const hours = Math.floor(minutes / 60)
-  const rest = Math.round((minutes % 60) / 30) * 30
+  // Округляем всё время сразу, иначе 117 минут дают «1 ч 60 мин».
+  const rounded = Math.max(30, Math.round(minutes / 30) * 30)
+  const hours = Math.floor(rounded / 60)
+  const rest = rounded % 60
   if (hours === 0) return `${rest} ${minutesUnit}`
   return rest ? `${hours} ${hoursUnit} ${rest} ${minutesUnit}` : `${hours} ${hoursUnit}`
 }
@@ -189,6 +196,29 @@ export function Auto001({
 }: Auto001Props) {
   const [selected, setSelected] = useState<ReadonlySet<number>>(() => new Set(defaultSelected))
   const [carClass, setCarClass] = useState(0)
+  const classesRef = useRef<HTMLDivElement>(null)
+  const pillRef = useRef<HTMLSpanElement>(null)
+
+  // Подложка выбранного класса переезжает к кнопке, а не гаснет и вспыхивает:
+  // меряем кнопку и двигаем одну плашку (translate + размер). До первого
+  // замера подсвечена сама кнопка — так без скрипта выбор тоже виден.
+  useEffect(() => {
+    const group = classesRef.current
+    const pill = pillRef.current
+    if (!group || !pill) return
+    const place = () => {
+      const button = group.querySelectorAll<HTMLElement>('[data-part="class"]')[carClass]
+      if (!button) return
+      pill.style.translate = `${button.offsetLeft}px ${button.offsetTop}px`
+      pill.style.width = `${button.offsetWidth}px`
+      pill.style.height = `${button.offsetHeight}px`
+      group.dataset.ready = "true"
+    }
+    place()
+    const observer = new ResizeObserver(place)
+    observer.observe(group)
+    return () => observer.disconnect()
+  }, [carClass])
   const factor = classes[carClass]?.factor ?? 1
 
   const totals = useMemo(() => {
@@ -247,7 +277,8 @@ export function Auto001({
             </div>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
-          <div data-part="classes" role="radiogroup" aria-label={classLabel}>
+          <div data-part="classes" role="radiogroup" aria-label={classLabel} ref={classesRef}>
+            <span data-part="pill" ref={pillRef} aria-hidden="true" />
             {classes.map((item, index) => (
               <button key={item.label} data-part="class" type="button" role="radio" aria-checked={carClass === index} onClick={() => setCarClass(index)}>
                 <b>{item.label}</b>
