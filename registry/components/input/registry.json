@@ -15825,16 +15825,16 @@
           },
           {
             "prop": "hint",
-            "label": "hint",
+            "label": "Подсказка",
             "type": "text",
-            "default": "Многострочное поле с подпи…",
+            "default": "",
             "maxLength": 160
           },
           {
             "prop": "error",
-            "label": "error",
+            "label": "Ошибка",
             "type": "text",
-            "default": "Многострочное поле с подпи…",
+            "default": "",
             "maxLength": 160
           }
         ],
@@ -15875,12 +15875,12 @@
                 "label": "Background"
               },
               "hint": {
-                "label": "hint",
-                "default": "Многострочное поле с подпи…"
+                "label": "Hint",
+                "default": ""
               },
               "error": {
-                "label": "error",
-                "default": "Многострочное поле с подпи…"
+                "label": "Error",
+                "default": ""
               }
             }
           }

@@ -217,6 +217,9 @@ color-scheme:dark;
 // Последние секунды ролика замедляются до SLOW_RATE — машина «оседает»,
 // и стоп-кадр наступает без рывка.
 const SWITCH_GAP = 1000
+// Время смены зоны: обработчики событий, не рендер, — но линтер чистоты
+// React ругается на performance.now() в теле компонента.
+const now = () => performance.now()
 const SLOW_RAMP = 1.4
 const SLOW_RATE = 0.3
 
@@ -519,7 +522,7 @@ export function Hero046({
     window.clearTimeout(switchTimer.current)
     hoverId.current = id
     visibleId.current = id
-    switchedAt.current = performance.now()
+    switchedAt.current = now()
     setFollow(true)
     setActive(id)
     if (id !== lastId) setPrevId(lastId)
@@ -532,7 +535,7 @@ export function Hero046({
     window.clearTimeout(leaveTimer.current)
     window.clearTimeout(switchTimer.current)
     if (id === visibleId.current) return
-    const wait = SWITCH_GAP - (performance.now() - switchedAt.current)
+    const wait = SWITCH_GAP - (now() - switchedAt.current)
     if (!visibleId.current || wait <= 0) enterZone(id)
     else switchTimer.current = window.setTimeout(() => hoverId.current && enterZone(hoverId.current), wait)
   }
@@ -579,7 +582,7 @@ export function Hero046({
     window.clearTimeout(leaveTimer.current)
     window.clearTimeout(switchTimer.current)
     visibleId.current = id
-    switchedAt.current = performance.now()
+    switchedAt.current = now()
     setFollow(false)
     setActive(id)
     if (id !== lastId) setPrevId(lastId)
