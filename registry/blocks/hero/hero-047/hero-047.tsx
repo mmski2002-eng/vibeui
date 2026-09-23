@@ -1,6 +1,6 @@
 "use client"
 
-import { memo, useEffect, useRef, useState, type CSSProperties } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 
 export type Hero047Stat = {
   value: number
@@ -9,10 +9,12 @@ export type Hero047Stat = {
 }
 
 export type Hero047Props = {
-  /** Ролик-интро (mp4/H.264): стартует, как только браузер уверен, что доиграет без остановок. */
+  /** Фоновый ролик (mp4/H.264): стартует, как только браузер уверен, что доиграет без остановок. */
   videoSrc?: string
   /** Тот же ролик в webm (VP9) — для браузеров без H.264. */
   videoWebmSrc?: string
+  /** Первый кадр ролика: фон, пока ролик грузится. */
+  posterSrc?: string
   /** Последний кадр ролика: для reduced-motion и если видео не успело. */
   stillSrc?: string
   /** Герой последнего кадра без фона, того же размера, что кадр: ложится поверх надписи. */
@@ -30,7 +32,6 @@ export type Hero047Props = {
   stats?: readonly Hero047Stat[]
   /** Разделитель дробной части в показателях: «,» или «.». */
   decimalSeparator?: string
-  loadingLabel?: string
   skipLabel?: string
   replayLabel?: string
   accent?: string
@@ -40,14 +41,12 @@ export type Hero047Props = {
   style?: CSSProperties
 }
 
-// Хиро-интро: экран открывается пустым, по центру прорисовывается линия ЭКГ —
-// она растёт вместе с буфером ролика, на готовности бьётся пульс, и только
-// потом стартует видео. Ролик замедляется к концу и замирает на последнем
-// кадре; тогда проявляются надпись за героем кадра, заголовок, кнопка
-// с бьющимся сердцем и показатели. Стоп-кадр вписан в «рамку» с пропорцией
-// ролика, которая повторяет object-fit:cover, — надпись и вырезанный герой
-// в процентах рамки ложатся точно на кадр при любой ширине. Фаза дублируется
-// атрибутом data-vibeui-hero-047 на <html>, чтобы страница прятала шапку.
+// Хиро с фоновым роликом: сайт и текст видны сразу, пока ролик грузится,
+// фоном стоит его первый кадр. Как только браузер уверен, что доиграет без
+// остановок, ролик плавно проявляется и играет один раз, к концу замедляясь;
+// на последнем кадре за героем встаёт название. Стоп-кадр вписан в «рамку»
+// с пропорцией ролика, которая повторяет object-fit:cover, — надпись
+// и вырезанный герой в процентах рамки ложатся точно на кадр при любой ширине.
 const FONTS = "https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 
 const STYLES = `
@@ -74,6 +73,7 @@ color-scheme:light;
 [data-vibeui-block="hero-047"] [data-part="video"]{opacity:0;transition:opacity .8s ease-out}
 [data-vibeui-block="hero-047"]:not([data-phase="loading"]) [data-part="video"]{opacity:1}
 [data-vibeui-block="hero-047"] [data-part="still"]{display:none}
+[data-vibeui-block="hero-047"]:not([data-phase="loading"]) [data-part="poster"]{opacity:0;transition:opacity .8s ease-out .3s}
 [data-vibeui-block="hero-047"][data-failed="true"] [data-part="video"]{display:none}
 [data-vibeui-block="hero-047"][data-failed="true"] [data-part="still"]{display:block}
 [data-vibeui-block="hero-047"] [data-part="subject"]{z-index:2;opacity:0;pointer-events:none;transition:opacity .6s ease-out}
@@ -82,26 +82,15 @@ color-scheme:light;
 [data-vibeui-block="hero-047"][data-phase="parked"] [data-part="wordmark"]{opacity:1;translate:0 0}
 [data-vibeui-block="hero-047"] [data-part="shade"]{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity 1.2s ease-out;background:linear-gradient(0deg,var(--vibeui-hero-047-bg) 4%,transparent 36%)}
 [data-vibeui-block="hero-047"][data-phase="parked"] [data-part="shade"]{opacity:1}
-[data-vibeui-block="hero-047"] [data-part="loader"]{position:absolute;inset:0;z-index:6;display:grid;place-content:center;justify-items:center;gap:1rem;pointer-events:none;transition:opacity .6s ease-out,visibility 0s linear .6s}
-[data-vibeui-block="hero-047"]:not([data-phase="loading"]) [data-part="loader"]{opacity:0;visibility:hidden}
-[data-vibeui-block="hero-047"] [data-part="ecg"]{width:clamp(14rem,36cqi,22rem);height:auto;overflow:visible}
-[data-vibeui-block="hero-047"] [data-part="ecg-track"]{fill:none;stroke:var(--vibeui-hero-047-line);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-[data-vibeui-block="hero-047"] [data-part="ecg-line"]{fill:none;stroke:var(--vibeui-hero-047-accent);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;transition:stroke-dashoffset .35s cubic-bezier(.3,.7,.3,1);filter:drop-shadow(0 0 3px color-mix(in oklab,var(--vibeui-hero-047-accent) 60%,transparent))}
-[data-vibeui-block="hero-047"] [data-part="ecg"][data-idle="true"] [data-part="ecg-line"]{stroke-dashoffset:.7;animation:vibeui-hero-047-idle 1.4s ease-in-out infinite}
-[data-vibeui-block="hero-047"] [data-part="ecg"][data-beat="true"]{animation:vibeui-hero-047-beat .5s ease-out 2}
-[data-vibeui-block="hero-047"] [data-part="pulse"]{display:flex;align-items:baseline;gap:.5rem;margin:0;font-family:var(--vibeui-hero-047-mono);font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--vibeui-hero-047-muted)}
-[data-vibeui-block="hero-047"] [data-part="pulse"] b{font-family:var(--vibeui-hero-047-display);font-weight:800;font-size:1.3rem;letter-spacing:-.01em;color:var(--vibeui-hero-047-fg);font-variant-numeric:tabular-nums}
-@keyframes vibeui-hero-047-idle{50%{stroke-dashoffset:.35}}
-@keyframes vibeui-hero-047-beat{30%{scale:1.06;filter:drop-shadow(0 0 10px var(--vibeui-hero-047-accent))}}
 [data-vibeui-block="hero-047"] [data-part="shell"]{position:relative;z-index:4;width:100%;max-width:84rem;margin:0 auto;padding:1.5rem 1.25rem 3rem;display:grid;gap:2rem;align-items:end;pointer-events:none}
-[data-vibeui-block="hero-047"] [data-part="copy"]{opacity:0;translate:0 1.25rem;visibility:hidden;transition:opacity 1s ease-out .35s,translate 1.1s var(--vibeui-hero-047-ease) .35s,visibility 0s}
-[data-vibeui-block="hero-047"][data-phase="parked"] [data-part="copy"]{opacity:1;translate:0 0;visibility:visible}
+[data-vibeui-block="hero-047"] [data-part="copy"]{animation:vibeui-hero-047-in 1s var(--vibeui-hero-047-ease) .2s both}
+@keyframes vibeui-hero-047-in{from{opacity:0;translate:0 1.25rem}}
+@keyframes vibeui-hero-047-rise{from{translate:0 110%}}
 [data-vibeui-block="hero-047"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 1.1rem;font-family:var(--vibeui-hero-047-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--vibeui-hero-047-accent)}
 [data-vibeui-block="hero-047"] [data-part="eyebrow"]::before{content:"";width:2rem;height:1px;background:var(--vibeui-hero-047-accent)}
 [data-vibeui-block="hero-047"] [data-part="title"]{margin:0;font-family:var(--vibeui-hero-047-display);font-weight:900;font-size:clamp(2.2rem,4.2cqi,3.8rem);line-height:1;letter-spacing:-.025em}
 [data-vibeui-block="hero-047"] [data-part="line"]{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
-[data-vibeui-block="hero-047"] [data-part="line"] span{display:block;translate:0 110%;transition:translate .9s var(--vibeui-hero-047-ease);transition-delay:calc(var(--vibeui-hero-047-i) * .12s + .45s)}
-[data-vibeui-block="hero-047"][data-phase="parked"] [data-part="line"] span{translate:0 0}
+[data-vibeui-block="hero-047"] [data-part="line"] span{display:block;animation:vibeui-hero-047-rise .9s var(--vibeui-hero-047-ease) both;animation-delay:calc(var(--vibeui-hero-047-i) * .12s + .3s)}
 [data-vibeui-block="hero-047"] [data-part="line"]:last-child span{color:var(--vibeui-hero-047-accent)}
 [data-vibeui-block="hero-047"] [data-part="lede"]{margin:1.1rem 0 0;max-width:30rem;font-size:1.02rem;color:var(--vibeui-hero-047-muted)}
 [data-vibeui-block="hero-047"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.4rem;margin:1.6rem 0 0}
@@ -139,24 +128,17 @@ color-scheme:light;
 }
 @media (prefers-reduced-motion:reduce){
 [data-vibeui-block="hero-047"] *{transition:none!important;animation:none!important}
-[data-vibeui-block="hero-047"] :is([data-part="video"],[data-part="loader"],[data-part="replay"]){display:none}
+[data-vibeui-block="hero-047"] :is([data-part="video"],[data-part="poster"],[data-part="replay"]){display:none}
 [data-vibeui-block="hero-047"] [data-part="still"]{display:block}
 [data-vibeui-block="hero-047"] :is([data-part="subject"],[data-part="shade"],[data-part="wordmark"]){opacity:1;translate:0 0}
-[data-vibeui-block="hero-047"] [data-part="copy"]{opacity:1;translate:0 0;visibility:visible}
-[data-vibeui-block="hero-047"] [data-part="line"] span{translate:0 0}
 }`
 
-// Если за столько ролик не готов играть, интро пропускаем: сразу стоп-кадр и сайт.
+// Если за столько ролик не готов играть, вместо него — сразу стоп-кадр.
 const READY_TIMEOUT = 5000
-// Пульс на готовности — два удара, потом старт ролика.
-const BEAT_MS = 1000
 // Последние секунды ролика замедляются до SLOW_RATE — герой «оседает»,
 // и стоп-кадр наступает без рывка.
 const SLOW_RAMP = 1.4
 const SLOW_RATE = 0.3
-
-// Два удара кардиограммы: изолиния, зубец P, комплекс QRS, зубец T.
-const ECG = "M0 34H40l6-4 6 4H70l4 6 6-30 6 34 4-10H112q8-10 16 0H150l6-4 6 4H180l4 6 6-30 6 34 4-10H222q6-6 12 0H240"
 
 const DEFAULT_STATS: Hero047Stat[] = [
   { value: 24, suffix: "/7", label: "дежурный врач без записи" },
@@ -166,30 +148,13 @@ const DEFAULT_STATS: Hero047Stat[] = [
 
 type Phase = "loading" | "playing" | "parked"
 
-// Линия ЭКГ загрузки — отдельный memo-компонент: смена фазы блока
-// не перерисовывает её, пока не меняются прогресс и пульс.
-const Loader = memo(function Loader({ progress, beat, label }: { progress: number | null; beat: boolean; label: string }) {
-  return (
-    <div data-part="loader" role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress === null ? undefined : Math.round(progress * 100)}>
-      <svg data-part="ecg" viewBox="0 0 240 60" data-idle={progress === null && !beat ? "true" : undefined} data-beat={beat ? "true" : undefined}>
-        <path data-part="ecg-track" d={ECG} />
-        <path data-part="ecg-line" d={ECG} pathLength={1} style={{ strokeDashoffset: beat ? 0 : 1 - (progress ?? 0) }} />
-      </svg>
-      <p data-part="pulse">
-        {label}
-        <b>{String(Math.round((beat ? 1 : (progress ?? 0)) * 100)).padStart(3, "0")}</b>
-      </p>
-    </div>
-  )
-})
-
-// Показатель «набегает» от нуля, когда хиро останавливается на стоп-кадре.
-function Stat({ stat, run, separator }: { stat: Hero047Stat; run: boolean; separator: string }) {
+// Показатель «набегает» от нуля при появлении хиро.
+function Stat({ stat, separator }: { stat: Hero047Stat; separator: string }) {
   const ref = useRef<HTMLElement>(null)
   const decimals = Number.isInteger(stat.value) ? 0 : 1
   useEffect(() => {
     const node = ref.current
-    if (!node || !run) return
+    if (!node || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     const start = performance.now()
     let frame = 0
     const step = (now: number) => {
@@ -200,14 +165,15 @@ function Stat({ stat, run, separator }: { stat: Hero047Stat; run: boolean; separ
     }
     frame = requestAnimationFrame(step)
     return () => cancelAnimationFrame(frame)
-  }, [run, stat, decimals, separator])
+  }, [stat, decimals, separator])
   return <b ref={ref}>{stat.value.toFixed(decimals).replace(".", separator) + (stat.suffix ?? "")}</b>
 }
 
-/** Хиро-интро ветклиники: линия ЭКГ на загрузке, ролик с героем, стоп-кадр и только потом весь текст. */
+/** Хиро ветклиники: текст сразу, фоном — ролик с героем, который замирает на последнем кадре. */
 export function Hero047({
   videoSrc = "/demo/vet/intro.mp4",
   videoWebmSrc = "/demo/vet/intro.webm",
+  posterSrc = "/demo/vet/intro-start.webp",
   stillSrc = "/demo/vet/intro-end.webp",
   subjectSrc = "/demo/vet/intro-cat.webp",
   wordmark = "Лапа",
@@ -219,7 +185,6 @@ export function Hero047({
   primaryHref = "#booking",
   stats = DEFAULT_STATS,
   decimalSeparator = ",",
-  loadingLabel = "Загрузка",
   skipLabel = "Пропустить",
   replayLabel = "Смотреть ещё раз",
   accent,
@@ -229,9 +194,7 @@ export function Hero047({
   style,
 }: Hero047Props) {
   const [phase, setPhase] = useState<Phase>("loading")
-  const [progress, setProgress] = useState<number | null>(0)
   const [failed, setFailed] = useState(false)
-  const [beat, setBeat] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const palette = {
@@ -244,11 +207,9 @@ export function Hero047({
   useEffect(() => {
     const video = videoRef.current
     if (!video || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    // Ролик грузится обычной буферизацией: линия ЭКГ показывает, сколько уже
-    // в буфере, старт — когда браузер уверен, что доиграет без остановок
-    // (canplaythrough). Не успел за READY_TIMEOUT — сайт со стоп-кадром.
+    // Старт — когда браузер уверен, что доиграет без остановок (canplaythrough);
+    // до этого фоном первый кадр. Не успел за READY_TIMEOUT — стоп-кадр.
     let started = false
-    let beatTimer = 0
     const fail = () => {
       window.clearTimeout(readyTimer)
       setFailed(true)
@@ -258,15 +219,7 @@ export function Hero047({
       if (started) return
       started = true
       window.clearTimeout(readyTimer)
-      setBeat(true)
-      beatTimer = window.setTimeout(() => {
-        video.play().then(() => setPhase("playing")).catch(fail)
-      }, BEAT_MS)
-    }
-    const buffered = () => {
-      if (!video.duration || started) return
-      const end = video.buffered.length ? video.buffered.end(video.buffered.length - 1) : 0
-      setProgress(Math.min(end / video.duration, 0.99))
+      video.play().then(() => setPhase("playing")).catch(fail)
     }
     const readyTimer = window.setTimeout(() => {
       if (started) return
@@ -274,8 +227,6 @@ export function Hero047({
       video.load()
       fail()
     }, READY_TIMEOUT)
-    video.addEventListener("progress", buffered)
-    video.addEventListener("loadedmetadata", buffered)
     video.addEventListener("canplaythrough", start)
     video.addEventListener("error", fail)
     video.muted = true
@@ -284,9 +235,6 @@ export function Hero047({
     video.load()
     return () => {
       window.clearTimeout(readyTimer)
-      window.clearTimeout(beatTimer)
-      video.removeEventListener("progress", buffered)
-      video.removeEventListener("loadedmetadata", buffered)
       video.removeEventListener("canplaythrough", start)
       video.removeEventListener("error", fail)
     }
@@ -339,6 +287,7 @@ export function Hero047({
         <div data-part="scene">
           <div data-part="stage" aria-hidden="true">
             <div data-part="frame">
+              <img data-part="poster" src={posterSrc} alt="" />
               <video ref={videoRef} data-part="video" muted playsInline preload="none" onEnded={() => setPhase("parked")} />
               <img data-part="still" src={stillSrc} alt="" />
               {wordmark ? <p data-part="wordmark">{wordmark}</p> : null}
@@ -346,7 +295,6 @@ export function Hero047({
             </div>
             <i data-part="shade" />
           </div>
-          <Loader progress={progress} beat={beat} label={loadingLabel} />
           <div data-part="shell">
             <div data-part="copy">
               {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
@@ -380,7 +328,7 @@ export function Hero047({
                 <ul data-part="stats">
                   {stats.map((stat) => (
                     <li key={stat.label} data-part="stat">
-                      <Stat stat={stat} run={phase === "parked"} separator={decimalSeparator} />
+                      <Stat stat={stat} separator={decimalSeparator} />
                       <small>{stat.label}</small>
                     </li>
                   ))}

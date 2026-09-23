@@ -179,7 +179,7 @@ export default function VetDemo() {
   return (
     <div style={page} className="min-h-dvh">
       <style href="vibeui-demo-scroll" precedence="medium">
-        {`html{scroll-behavior:smooth;scroll-padding-top:4.25rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media (min-width:56rem){#top{margin-top:-4.25rem}}[data-vibeui-block="navbar-035"]{transition:opacity .9s ease-out .9s,background .3s,box-shadow .3s}:root:not([data-vibeui-hero-047="parked"]) :is([data-vibeui-block="navbar-035"],[data-vibeui-block="vet-001"]){opacity:0;pointer-events:none;transition:none}[data-vibeui-block="vet-001"]{transition:opacity .9s ease-out 1.4s}`}
+        {`html{scroll-behavior:smooth;scroll-padding-top:4.25rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media (min-width:56rem){#top{margin-top:-4.25rem}}`}
       </style>
       <Navbar035 {...cream} />
       <div id="top">

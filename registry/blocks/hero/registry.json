@@ -9063,8 +9063,8 @@
     {
       "name": "hero-047",
       "type": "registry:block",
-      "title": "Хиро-интро ветклиники: кардиограмма загрузки, кошка впрыгивает в кадр и замирает",
-      "description": "Первый экран-интро для ветклиники: страница открывается пустой, по центру прорисовывается линия ЭКГ — она растёт вместе с загрузкой ролика, на готовности бьётся пульс. Затем кошка впрыгивает в кадр сверху, садится и замирает; на стоп-кадре за ней проявляется огромное название клиники, заголовок, кнопка записи с бьющимся сердцем и набегающие показатели. Кнопка «Пропустить» / «Смотреть ещё раз»; если ролик не готов за 5 секунд или включено reduced-motion — сразу стоп-кадр.",
+      "title": "Хиро ветклиники с фоновым роликом: кошка впрыгивает в кадр и замирает",
+      "description": "Первый экран ветклиники: сайт, заголовок, кнопка записи с бьющимся сердцем и набегающие показатели видны сразу, а фоном идёт ролик — кошка впрыгивает в кадр сверху, садится и замирает. Пока ролик грузится, фоном стоит его первый кадр; старт — когда браузер уверен, что доиграет без остановок, к концу ролик замедляется. На стоп-кадре за кошкой встаёт огромное название клиники. Кнопка «Пропустить» / «Смотреть ещё раз»; если ролик не готов за 5 секунд или включено reduced-motion — сразу стоп-кадр.",
       "categories": [
         "hero"
       ],
@@ -9082,18 +9082,17 @@
         "tags": [
           "hero",
           "video",
+          "background video",
           "vet",
           "veterinary",
           "clinic",
           "pet",
           "cat",
-          "intro",
-          "loader",
-          "ecg",
           "heartbeat",
           "freeze frame",
           "wordmark",
-          "cutout"
+          "cutout",
+          "stats"
         ],
         "preview": {
           "props": {},
@@ -9101,28 +9100,27 @@
         },
         "ai": {
           "export": "Hero047",
-          "usage": "<Hero047\n  videoSrc=\"/media/intro.mp4\"\n  videoWebmSrc=\"/media/intro.webm\"\n  stillSrc=\"/media/intro-last.webp\"\n  subjectSrc=\"/media/intro-cat.webp\"\n  wordmark=\"Лапа\"\n  title={[\"Лечим бережно.\", \"Без очередей\", \"и стресса.\"]}\n  stats={[{ value: 24, suffix: \"/7\", label: \"дежурный врач без записи\" }]}\n/>",
-          "summary": "Хиро-интро: линия ЭКГ на загрузке, ролик с питомцем один раз и стоп-кадр, на котором за героем встаёт название и проявляется текст.",
+          "usage": "<Hero047\n  videoSrc=\"/media/hero.mp4\"\n  videoWebmSrc=\"/media/hero.webm\"\n  posterSrc=\"/media/hero-first.webp\"\n  stillSrc=\"/media/hero-last.webp\"\n  subjectSrc=\"/media/hero-cat.webp\"\n  wordmark=\"Лапа\"\n  title={[\"Лечим бережно.\", \"Без очередей\", \"и стресса.\"]}\n  stats={[{ value: 24, suffix: \"/7\", label: \"дежурный врач без записи\" }]}\n/>",
+          "summary": "Хиро с фоновым роликом: текст виден сразу, ролик с питомцем играет один раз и замирает, за героем кадра встаёт название.",
           "preserve": [
-            "фазы loading → playing → parked: пока ролик не готов играть (canplaythrough), на экране только кардиограмма; через READY_TIMEOUT без готовности — сразу стоп-кадр",
-            "рамка [data-part=frame] 16:9 через cqw/cqh и порядок слоёв: видео → надпись → герой без фона → затемнение → текст",
-            "линия ЭКГ — path с pathLength=1, stroke-dashoffset = 1 − доля буфера; на готовности data-beat — два удара, потом старт",
-            "конец ролика замедляется до SLOW_RATE, фаза дублируется атрибутом data-vibeui-hero-047 на <html> — страница прячет шапку до parked"
+            "текст и кнопка видны сразу; ролик — только фон: первый кадр (posterSrc), пока грузится, старт по canplaythrough, через READY_TIMEOUT без готовности — стоп-кадр",
+            "рамка [data-part=frame] 16:9 через cqw/cqh и порядок слоёв: первый кадр → видео → надпись → герой без фона → затемнение → текст",
+            "конец ролика замедляется до SLOW_RATE; надпись и герой без фона появляются только на ended",
+            "fallback: отказ автоплея, ошибка источника и reduced-motion показывают стоп-кадр без видео"
           ],
           "adapt": [
-            "videoSrc, videoWebmSrc, stillSrc, subjectSrc — свой ролик и кадры из него",
+            "videoSrc, videoWebmSrc, posterSrc, stillSrc, subjectSrc — свой ролик и кадры из него",
             "wordmark, eyebrow, title (массив строк, последняя — акцентом), lede",
             "primaryLabel, primaryHint, primaryHref — кнопка записи с сердцем",
             "stats: value, suffix, label; decimalSeparator",
-            "loadingLabel, skipLabel, replayLabel",
+            "skipLabel, replayLabel",
             "accent — акцент",
             "ink — текст",
             "background — фон"
           ],
           "notes": [
             "subjectSrc — последний кадр ролика с вырезанным фоном (например rembg) в том же разрешении, что видео: иначе герой не совпадёт с кадром",
-            "ролик без звука: браузеры автоматически запускают только muted-видео",
-            "чтобы спрятать шапку на время интро: :root:not([data-vibeui-hero-047=parked]) header{opacity:0}"
+            "ролик без звука: браузеры автоматически запускают только muted-видео"
           ]
         },
         "controls": [
@@ -9172,32 +9170,31 @@
         ],
         "i18n": {
           "en": {
-            "title": "Vet clinic intro hero: an ECG loader, a cat leaps into frame and freezes",
-            "description": "An intro first screen for a vet clinic: the page opens empty, an ECG line draws itself in the centre — it grows with the clip loading, and on readiness the pulse beats. Then a cat leaps into the frame from above, sits down and freezes; on the freeze frame a huge clinic name appears behind it, along with the headline, a booking button with a beating heart and counting-up stats. A Skip / Watch again button; if the clip is not ready within 5 seconds or reduced motion is on, the freeze frame shows right away.",
+            "title": "Vet clinic hero with a background clip: a cat leaps into frame and freezes",
+            "description": "A vet clinic first screen: the site, the headline, a booking button with a beating heart and counting-up stats are visible right away, while a clip plays in the background — a cat leaps into the frame from above, sits down and freezes. While the clip loads, its first frame stands in the background; it starts once the browser is sure it can play through, slowing down at the end. On the freeze frame a huge clinic name rises behind the cat. A Skip / Watch again button; if the clip is not ready within 5 seconds or reduced motion is on, the freeze frame shows right away.",
             "ai": {
-              "summary": "An intro hero: an ECG line while loading, a pet clip played once and a freeze frame where the name rises behind the subject and the copy fades in.",
+              "summary": "A hero with a background clip: the copy shows right away, a pet clip plays once and freezes, and the name rises behind the subject.",
               "preserve": [
-                "phases loading → playing → parked: until the clip can play through (canplaythrough) only the ECG is on screen; after READY_TIMEOUT without readiness — straight to the freeze frame",
-                "the 16:9 [data-part=frame] via cqw/cqh and the layer order: video → wordmark → cut-out subject → shade → copy",
-                "the ECG line is a path with pathLength=1, stroke-dashoffset = 1 − buffered share; on readiness data-beat gives two beats, then the start",
-                "the clip slows down to SLOW_RATE at the end, the phase is mirrored as data-vibeui-hero-047 on <html> — the page hides its header until parked"
+                "the copy and button show right away; the clip is only a background: the first frame (posterSrc) while loading, start on canplaythrough, after READY_TIMEOUT without readiness — the freeze frame",
+                "the 16:9 [data-part=frame] via cqw/cqh and the layer order: first frame → video → wordmark → cut-out subject → shade → copy",
+                "the clip slows down to SLOW_RATE at the end; the wordmark and cut-out subject appear only on ended",
+                "fallback: blocked autoplay, a failed source and reduced motion show the freeze frame without video"
               ],
               "adapt": [
-                "videoSrc, videoWebmSrc, stillSrc, subjectSrc — your own clip and frames from it",
+                "videoSrc, videoWebmSrc, posterSrc, stillSrc, subjectSrc — your own clip and frames from it",
                 "wordmark, eyebrow, title (array of lines, the last one in accent), lede",
                 "primaryLabel, primaryHint, primaryHref — the booking button with a heart",
                 "stats: value, suffix, label; decimalSeparator",
-                "loadingLabel, skipLabel, replayLabel",
+                "skipLabel, replayLabel",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
               "notes": [
                 "subjectSrc is the clip's last frame with the background removed (e.g. rembg) at the same resolution as the video, otherwise the subject will not line up with the shot",
-                "the clip is silent: browsers autoplay only muted video",
-                "to hide the header during the intro: :root:not([data-vibeui-hero-047=parked]) header{opacity:0}"
+                "the clip is silent: browsers autoplay only muted video"
               ],
-              "usage": "<Hero047\n  videoSrc=\"/media/intro.mp4\"\n  videoWebmSrc=\"/media/intro.webm\"\n  stillSrc=\"/media/intro-last.webp\"\n  subjectSrc=\"/media/intro-cat.webp\"\n  wordmark=\"Paw\"\n  title={[\"Gentle care.\", \"No queues,\", \"no stress.\"]}\n  stats={[{ value: 24, suffix: \"/7\", label: \"a doctor on duty, no appointment\" }]}\n/>"
+              "usage": "<Hero047\n  videoSrc=\"/media/hero.mp4\"\n  videoWebmSrc=\"/media/hero.webm\"\n  posterSrc=\"/media/hero-first.webp\"\n  stillSrc=\"/media/hero-last.webp\"\n  subjectSrc=\"/media/hero-cat.webp\"\n  wordmark=\"Paw\"\n  title={[\"Gentle care.\", \"No queues,\", \"no stress.\"]}\n  stats={[{ value: 24, suffix: \"/7\", label: \"a doctor on duty, no appointment\" }]}\n/>"
             },
             "controls": {
               "wordmark": {
