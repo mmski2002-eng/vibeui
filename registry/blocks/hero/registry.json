@@ -8887,6 +8887,178 @@
         }
       },
       "docs": "Составной блок: импортирует button-016, button-077 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+    },
+    {
+      "name": "hero-046",
+      "type": "registry:block",
+      "title": "Хиро-интро с видео: загрузка, въезд машины, стоп-кадр и надпись за крышей",
+      "description": "Первый экран-интро: страница открывается пустой, по центру тахометр: стрелка идёт за загрузкой ролика, обороты цифрами, на 100% — секунда в отсечке, и только потом старт. Затем видео играет один раз и останавливается на последнем кадре, где машина стоит боком. Только тогда поверх ложится та же машина без фона, огромная надпись бренда поднимается между ними — будто из-за крыши, — и плавно проявляются заголовок и главная кнопка — круглая «Engine start» в стеклянной капсуле: по наведению кольцо обегает её акцентом, по нажатию она вдавливается и вздрагивает, как стартер. На стоп-кадре машина живая целиком: над ней курсор становится кольцом, рядом плывёт ценник — ценник постоянного размера, текст плавно перетекает из зоны в зону, цена набегает, — у выбранной части (кузов, салон, капот, фары, диски); кнопки-чипы дублируют зоны для клавиатуры и телефона. Кнопка «Пропустить» / «Ещё раз», при reduced-motion — сразу стоп-кадр.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "button-016"
+      ],
+      "files": [
+        {
+          "path": "hero-046/hero-046.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-046.tsx"
+        }
+      ],
+      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит его вместе с блоком. Блок владеет раскладкой и своим текстом, части получают только пропсы.\n\nОдин файл, ноль npm-зависимостей, «use client» ради управления видео. Стоп-кадр вписан в рамку [data-part=frame] с пропорцией 16:9, повторяющей object-fit:cover через container query units (width:max(100cqw,177.778cqh)); видео, надпись и вырезанная машина позиционируются в процентах рамки и совпадают с кадром при любой ширине. На широком блоке (≥56rem) рамка занимает ~86 % ширины справа, левый и нижний края растворяются mask-image, текст ложится слева снизу. Фазы data-phase: loading (ролик качается fetch-ем с прогрессом по Content-Length в blob; SVG-тахометр 0–8 тыс. на дуге 240°, стрелка — rotate по прогрессу, затем LIMITER_MS отсечки) → playing → parked (ended). Фаза дублируется атрибутом data-vibeui-hero-046 на <html>: страница может прятать шапку, пока он не равен parked. Если сети нет, кодек не подошёл или автоплей запрещён — сразу parked и stillSrc. Медиа передаются пропсами: videoSrc (mp4/H.264), videoWebmSrc (VP9, берётся, если браузер не играет H.264), stillSrc (последний кадр), carSrc (машина из последнего кадра без фона, PNG/WebP с альфой того же размера, что кадр). Зоны: shapes в координатах кадра 1920×1080 — многоугольник points или круг cx/cy/r; на машине ли курсор, решает альфа carSrc (карта ужата в 4 раза), какая часть — фигуры зон; первая зона забирает всё остальное на силуэте, поэтому пустых щелей нет. Ценник и кольцо двигаются только transform (размеры кэширует ResizeObserver), ценник догоняет курсор с инерцией и плавно меняет сторону у края; pin — точка, где он встаёт, если зону выбрали кнопкой.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "video",
+          "auto",
+          "car",
+          "detailing",
+          "intro",
+          "cinematic",
+          "freeze frame",
+          "wordmark",
+          "cutout",
+          "parallax",
+          "composite"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero046",
+          "usage": "<Hero046\n  videoSrc=\"/media/intro.mp4\"\n  videoWebmSrc=\"/media/intro.webm\"\n  stillSrc=\"/media/intro-last.webp\"\n  carSrc=\"/media/intro-car.webp\"\n  wordmark=\"Гараж 42\"\n  title={[\"Керамика.\", \"Плёнка.\", \"Полировка.\"]}\n  zones={[{ id: \"wheels\", label: \"Диски\", service: \"Керамика на диски\", price: \"от 5 000 ₽\", shapes: [{ cx: 940, cy: 620, r: 76 }], pin: { x: 940, y: 620 } }]}\n/>",
+          "summary": "Хиро с роликом, который играет один раз и замирает; надпись бренда встаёт за вырезанным объектом из последнего кадра.",
+          "preserve": [
+            "импорт button-016 из @/components/vibeui/ — не встраивать его код в блок и не заменять своим",
+            "рамка [data-part=frame] 16:9 через cqw/cqh и порядок слоёв: видео → надпись → машина без фона → затемнение → текст",
+            "фазы loading → playing → parked: пока ролик не скачан целиком, на экране только тахометр; текст, надпись и машина без фона появляются только на ended",
+            "fallback: отказ автоплея, ошибка источника и reduced-motion показывают стоп-кадр без видео"
+          ],
+          "adapt": [
+            "videoSrc, videoWebmSrc, stillSrc, carSrc — свой ролик и кадры из него",
+            "wordmark, eyebrow, title (массив строк), lede",
+            "primaryLabel, primaryHint, primaryHref, startLabel — главная кнопка в виде кнопки запуска двигателя; secondaryLabel, secondaryHref — вторая кнопка, по умолчанию выключена",
+            "zones: id, label, service, price, note, shapes (points или cx/cy/r в координатах кадра 1920×1080), pin {x, y} — размечаются по своему последнему кадру",
+            "zonesTitle, zonesLabel",
+            "loadingLabel, skipLabel, replayLabel",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон"
+          ],
+          "notes": [
+            "carSrc — последний кадр ролика с вырезанным фоном (например rembg) в том же разрешении, что видео: иначе машина не совпадёт с кадром",
+            "ролик без звука: браузеры автоматически запускают только muted-видео",
+            "первая зона в zones — «всё остальное на машине»: её фигура нужна только как запасная, если carSrc не загрузился",
+            "чтобы спрятать шапку на время интро: :root:not([data-vibeui-hero-046=parked]) header{opacity:0}"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "wordmark",
+            "label": "Надпись",
+            "type": "text",
+            "default": "Гараж 42",
+            "maxLength": 16
+          },
+          {
+            "prop": "lede",
+            "label": "Подзаголовок",
+            "type": "text",
+            "default": "Керамика, антигравийная плёнка и полировка в закрытом боксе. Смета фиксируется после осмотра, каждый этап работ — с фотоотчётом.",
+            "maxLength": 200
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Рассчитать стоимость",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Video intro hero: loader, a car driving in, a freeze frame and a wordmark behind the roof",
+            "description": "An intro first screen: the page opens empty, a tachometer sits in the centre: the needle follows the clip download with rpm in digits, and at 100% it hits the rev limiter for a second before the start. Then the video plays once and stops on its last frame, where the car stands side-on. Only then the same car without background lands on top, a huge brand wordmark rises between them — as if from behind the roof — and the headline and the main button fade in — a round «Engine start» in a glass capsule: on hover a ring runs around it in the accent, on press it sinks and shudders like a starter. On the freeze frame the whole car is alive: over it the cursor turns into a ring, a price tag floats beside it — a fixed-size tag, the text crossfades from zone to zone, the price counts up — for the chosen part (body, interior, hood, lights, wheels); chip buttons duplicate the zones for keyboard and phone. A Skip / Replay button; with reduced motion the freeze frame shows right away.",
+            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings it along with the block. The block owns the layout and its own text, the parts receive props only.\n\nOne file, zero npm dependencies, “use client” to drive the video. The freeze frame sits in a 16:9 [data-part=frame] that mimics object-fit:cover via container query units (width:max(100cqw,177.778cqh)); the video, the wordmark and the cut-out car are placed in frame percentages and line up with the shot at any width. On a wide block (≥56rem) the frame takes ~86 % of the width on the right, its left and bottom edges dissolve via mask-image, the copy sits bottom-left. Phases in data-phase: loading (the clip is fetched with progress from Content-Length into a blob; an SVG tachometer 0–8k on a 240° arc, the needle rotates with progress, then LIMITER_MS of rev limiter) → playing → parked (ended). The phase is mirrored as data-vibeui-hero-046 on <html>: the page can hide its header until it equals parked. With no network, an unsupported codec or blocked autoplay it goes straight to parked and stillSrc. Media come in as props: videoSrc (mp4/H.264), videoWebmSrc (VP9, used when the browser cannot play H.264), stillSrc (last frame), carSrc (the car from the last frame without background, PNG/WebP with alpha at the frame size). Zones: shapes in 1920×1080 frame coordinates — a points polygon or a cx/cy/r circle; whether the cursor is on the car is decided by the alpha of carSrc (a map downscaled 4×), which part — by the zone shapes; the first zone takes everything else on the silhouette, so there are no empty gaps. The tag and the ring move by transform only (ResizeObserver caches the sizes), the tag chases the cursor with inertia and switches sides smoothly near the edge; pin is where it sits when a zone is chosen with a button.",
+            "ai": {
+              "summary": "A hero with a clip that plays once and freezes; the brand wordmark rises behind an object cut out of the last frame.",
+              "preserve": [
+                "the button-016 import from @/components/vibeui/ — do not inline its code into the block or swap in your own",
+                "the 16:9 [data-part=frame] via cqw/cqh and the layer order: video → wordmark → cut-out car → shade → copy",
+                "phases loading → playing → parked: until the clip is fully downloaded only the tachometer is on screen; copy, wordmark and cut-out car appear only on ended",
+                "fallback: blocked autoplay, a failed source and reduced motion show the freeze frame without video"
+              ],
+              "adapt": [
+                "videoSrc, videoWebmSrc, stillSrc, carSrc — your own clip and frames from it",
+                "wordmark, eyebrow, title (array of lines), lede",
+                "primaryLabel, primaryHint, primaryHref, startLabel — the main button styled as an engine start button; secondaryLabel, secondaryHref — a second button, off by default",
+                "zones: id, label, service, price, note, shapes (points or cx/cy/r in 1920×1080 frame coordinates), pin {x, y} — traced over your own last frame",
+                "zonesTitle, zonesLabel",
+                "loadingLabel, skipLabel, replayLabel",
+                "accent — accent",
+                "ink — ink",
+                "background — background"
+              ],
+              "notes": [
+                "carSrc is the clip's last frame with the background removed (e.g. rembg) at the same resolution as the video, otherwise the car will not line up with the shot",
+                "the clip is silent: browsers autoplay only muted video",
+                "the first zone in zones is «everything else on the car»: its shape is only a fallback if carSrc fails to load",
+                "to hide the header during the intro: :root:not([data-vibeui-hero-046=parked]) header{opacity:0}"
+              ],
+              "usage": "<Hero046\n  videoSrc=\"/media/intro.mp4\"\n  videoWebmSrc=\"/media/intro.webm\"\n  stillSrc=\"/media/intro-last.webp\"\n  carSrc=\"/media/intro-car.webp\"\n  wordmark=\"Garage 42\"\n  title={[\"Ceramic.\", \"Film.\", \"Polish.\"]}\n  zones={[{ id: \"wheels\", label: \"Wheels\", service: \"Wheel ceramic\", price: \"from $90\", shapes: [{ cx: 940, cy: 620, r: 76 }], pin: { x: 940, y: 620 } }]}\n/>"
+            },
+            "controls": {
+              "wordmark": {
+                "label": "Wordmark",
+                "default": "Garage 42"
+              },
+              "lede": {
+                "label": "Lede",
+                "default": "Ceramic coating, paint protection film and polishing in a closed bay. The quote is fixed after inspection, every stage is documented with photos."
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Get a quote"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

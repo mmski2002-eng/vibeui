@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react"
 
 import { Navbar034, type Navbar034Props } from "@/registry/blocks/navbar/navbar-034/navbar-034"
-import { Hero034, type Hero034Props } from "@/registry/blocks/hero/hero-034/hero-034"
+import { Hero046, type Hero046Props } from "@/registry/blocks/hero/hero-046/hero-046"
 import { Auto001, type Auto001Props } from "@/registry/blocks/industry/auto-001/auto-001"
 import { Auto002, type Auto002Props } from "@/registry/blocks/industry/auto-002/auto-002"
 import { Auto003, type Auto003Props } from "@/registry/blocks/industry/auto-003/auto-003"
@@ -16,15 +16,15 @@ import { Footer033, type Footer033Props } from "@/registry/blocks/footer/footer-
  * theme as `app/scenarios/auto/demo/page.tsx`, block text in English via
  * props.
  *
- * A dark "garage at night": graphite, metal, one acid orange. The car
- * silhouette draws itself and highlights services, the calculator counts
+ * A dark "garage at night": graphite, metal, one acid orange. A Supra
+ * drifts into frame and freezes on a night bridge, the calculator counts
  * on the fly and carries the choice into slot booking, before/after is a
  * draggable curtain, counters roll up, the crew tilts after the cursor.
  */
 export const metadata = {
   title: "Garage 42 — detailing studio in a closed bay",
   description:
-    "VibeUI «Car service / detailing» scenario demo: a hero with a car silhouette by zones, a service calculator, a before/after slider, a process timeline, the crew, reviews with counters, slot booking and a map.",
+    "VibeUI «Car service / detailing» scenario demo: a hero where a car drifts into frame, a service calculator, a before/after slider, a process timeline, the crew, reviews with counters, slot booking and a map.",
 }
 
 const page: CSSProperties = {
@@ -41,10 +41,10 @@ const PHOTOS = "/demo/auto"
 
 const navbar: Navbar034Props = {
   brand: "Garage 42",
-  status: "lift #2 is free right now",
+  status: "Bay No. 2 is free",
   links: [
     { label: "Services", href: "#services" },
-    { label: "Before / after", href: "#results" },
+    { label: "Our work", href: "#results" },
     { label: "Crew", href: "#team" },
     { label: "Reviews", href: "#reviews" },
     { label: "Contacts", href: "#contacts" },
@@ -56,23 +56,25 @@ const navbar: Navbar034Props = {
   menuCloseLabel: "Close menu",
 }
 
-const hero: Hero034Props = {
+const hero: Hero046Props = {
+  wordmark: "Garage 42",
   eyebrow: "Detailing studio · Saint Petersburg",
-  title: ["Like", "brand", "new"],
-  lede: "Ceramic coating, paint protection film, polishing and interior cleaning in a closed bay with warm light. We show before/after and name the price up front.",
+  title: ["Ceramic.", "Film.", "Polish."],
+  lede: "Ceramic coating, paint protection film and polishing in a closed bay. The quote is fixed after inspection, every stage is documented with photos.",
   primaryLabel: "Get a quote",
-  secondaryLabel: "See before / after",
-  hint: "Hover over the hood, lights, wheels, body or interior — we'll show the service and the price",
-  zones: [
-    { id: "body", label: "Body", service: "9H ceramic, three coats", price: "from 32 000 ₽", note: "Two days in the bay. Hydrophobic for 2–3 years, wash once a fortnight." },
-    { id: "hood", label: "Hood", service: "Paint protection film on the front", price: "from 45 000 ₽", note: "Hood, bumper, mirrors, pillars. XPEL film, 10-year warranty." },
-    { id: "lights", label: "Lights", service: "Headlight polishing and film", price: "from 7 000 ₽", note: "We remove the yellowing and the spider cracks, then 200-micron film on top." },
-    { id: "wheels", label: "Wheels", service: "Wheel cleaning and ceramic", price: "from 5 000 ₽", note: "Off the car, clean the inner side, ceramic coat. Brake dust washes off with water." },
-    { id: "glass", label: "Interior", service: "Interior and leather cleaning", price: "from 9 000 ₽", note: "Seats, headliner, carpets, plastic. Leather — cleaning and conditioner." },
-  ],
-  carLabel: "Car silhouette: zones with services",
+  primaryHint: "a quote in one minute",
   zonesTitle: "Services by zone",
   zonesLabel: "Car zones",
+  zones: [
+    { id: "body", label: "Body", service: "9H ceramic, three coats", price: "from 32 000 ₽", note: "Two days in the bay. The hydrophobic effect lasts 2–3 years.", shapes: [{ points: "1050,562 1105,490 1210,490 1350,482 1480,480 1630,470 1635,422 1745,412 1750,430 1730,480 1755,495 1768,630 1740,672 1640,672 1635,630 1620,578 1590,548 1555,538 1520,548 1490,578 1475,630 1475,676 1100,678 1035,668 1022,632 1018,594 1003,570" }], pin: { x: 1330, y: 590 } },
+    { id: "glass", label: "Interior", service: "Interior and leather cleaning", price: "from 9 000 ₽", note: "Seats, headliner, carpets, plastic. Leather — cleaning and conditioner.", shapes: [{ points: "1095,482 1250,410 1420,405 1500,440 1490,485 1210,492" }], pin: { x: 1290, y: 452 } },
+    { id: "hood", label: "Hood", service: "Paint protection film on the front", price: "from 45 000 ₽", note: "Hood, bumper, mirrors, pillars. XPEL film, 10-year warranty.", shapes: [{ points: "815,522 950,492 1090,478 1110,490 1105,560 1000,556 870,560" }], pin: { x: 965, y: 518 } },
+    { id: "lights", label: "Lights", service: "Headlight polishing and film", price: "from 7 000 ₽", note: "We remove clouding and micro-cracks, then apply a 200-micron protective film.", shapes: [{ points: "700,540 815,522 870,560 862,615 700,625" }], pin: { x: 778, y: 560 } },
+    { id: "wheels", label: "Wheels", service: "Wheel cleaning and ceramic", price: "from 5 000 ₽", note: "Removal, inner-side cleaning, ceramic coating. Brake dust rinses off with water.", shapes: [{ cx: 940, cy: 620, r: 76 }, { cx: 1555, cy: 620, r: 76 }], pin: { x: 1555, y: 620 } },
+  ],
+  loadingLabel: "Loading",
+  skipLabel: "Skip",
+  replayLabel: "Replay the run",
 }
 
 const calculator: Auto001Props = {
@@ -108,9 +110,9 @@ const calculator: Auto001Props = {
 }
 
 const results: Auto002Props = {
-  eyebrow: "Before / after",
-  title: "Drag — and the difference shows",
-  lede: "Three real cars from the bay. Drag the curtain with a finger, a mouse or the arrow keys.",
+  eyebrow: "Results",
+  title: "Before and after the work",
+  lede: "Three cars from our bay. Move the divider to compare the condition before and after treatment.",
   pairs: [
     { label: "Lights", before: `${PHOTOS}/before-lights.webp`, after: `${PHOTOS}/after-lights.webp`, work: "Removed the yellowing and spider cracks in three abrasive stages, then 200-micron protective film on top.", time: "2 hours" },
     { label: "Body", before: `${PHOTOS}/before-body.webp`, after: `${PHOTOS}/after-body.webp`, work: "Two-stage polishing and 9H ceramic in three coats. Black is deep again, no holograms.", time: "2 days" },
@@ -223,7 +225,7 @@ const footer: Footer033Props = {
   tagline: "Detailing studio in a closed bay. Ceramic, film, polishing, interior. Saint Petersburg, since 2017.",
   columns: [
     { title: "Services", links: [{ label: "Ceramic", href: "#services" }, { label: "PPF film", href: "#services" }, { label: "Polishing", href: "#services" }, { label: "Interior cleaning", href: "#services" }] },
-    { title: "Studio", links: [{ label: "Before / after", href: "#results" }, { label: "How it goes", href: "#process" }, { label: "Crew", href: "#team" }, { label: "Reviews", href: "#reviews" }] },
+    { title: "Studio", links: [{ label: "Our work", href: "#results" }, { label: "How we work", href: "#process" }, { label: "Crew", href: "#team" }, { label: "Reviews", href: "#reviews" }] },
     { title: "For clients", links: [{ label: "Book a slot", href: "#booking" }, { label: "Warranty", href: "#" }, { label: "Care guide", href: "#" }, { label: "Gift certificate", href: "#" }] },
   ],
   address: "Obvodny Canal emb., 150, bldg 3",
@@ -237,11 +239,11 @@ export default function AutoDemoEn() {
   return (
     <div style={page} className="min-h-dvh">
       <style href="vibeui-demo-scroll" precedence="medium">
-        {`html{scroll-behavior:smooth;scroll-padding-top:4.25rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+        {`html{scroll-behavior:smooth;scroll-padding-top:4.25rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media (min-width:56rem){#top{margin-top:-4.25rem}}[data-vibeui-block="navbar-034"]{transition:opacity .9s ease-out .9s}:root:not([data-vibeui-hero-046="parked"]) [data-vibeui-block="navbar-034"]{opacity:0;pointer-events:none;transition:none}`}
       </style>
       <Navbar034 {...garage} {...navbar} />
       <div id="top">
-        <Hero034 {...garage} {...hero} />
+        <Hero046 accent={garage.accent} ink={garage.ink} background={garage.background} {...hero} />
       </div>
       <div id="services">
         <Auto001 {...garage} {...calculator} background="#14171b" />

@@ -1429,7 +1429,7 @@ export const SCENARIOS: Scenario[] = [
     },
     sections: [
       { item: "navbar-034", anchor: "", role: "Шапка", roleEn: "Header", note: "Статус «свободен подъёмник №2» с пульсом, телефон, «Записаться», бургер.", noteEn: "A pulsing “lift #2 is free” status, phone, “Book”, burger." },
-      { item: "hero-034", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Силуэт купе прорисовывается штрихом, зоны по наведению показывают услугу и цену.", noteEn: "A coupe silhouette draws itself, hovered zones show a service and price." },
+      { item: "hero-046", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Supra влетает в кадр в дрифте и замирает на ночном мосту, за крышей поднимается «Гараж 42».", noteEn: "A Supra drifts into frame and freezes on a night bridge, «Garage 42» rises behind the roof." },
       { item: "auto-001", anchor: "services", role: "Калькулятор", roleEn: "Calculator", note: "Класс авто и чипы услуг, итог и время на лету, «Записаться» уносит выбор в запись.", noteEn: "Car class and service chips, live total and time, “Book” carries the choice to booking." },
       { item: "auto-002", anchor: "results", role: "До / после", roleEn: "Before / after", note: "Шторка сравнения по вкладкам «фары / кузов / салон».", noteEn: "A comparison curtain with “lights / body / interior” tabs." },
       { item: "auto-003", anchor: "process", role: "Процесс", roleEn: "Process", note: "Четыре шага с рельсой, которая заливается по прокрутке.", noteEn: "Four steps with a rail that fills on scroll." },

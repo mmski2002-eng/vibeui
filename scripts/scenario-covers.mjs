@@ -69,6 +69,15 @@ for (const slug of slugs) {
     // своё появление.
     await page.waitForTimeout(8000)
   }
+  // Видео-интро (hero-046): ждём старта ролика и жмём «Пропустить» — постер
+  // снимается со стоп-кадра, когда текст и шапка уже проявились.
+  const intro = page.locator('[data-vibeui-block="hero-046"]')
+  if (await intro.count()) {
+    await page.waitForSelector('[data-vibeui-block="hero-046"]:not([data-phase="loading"])', { timeout: 60000 })
+    const skip = intro.locator('[data-part="replay"]')
+    if ((await intro.getAttribute("data-phase")) === "playing") await skip.click({ force: true })
+    await page.waitForTimeout(3500)
+  }
   if (READY_TEXT[slug]) {
     await page.getByText(READY_TEXT[slug], { exact: true }).first().waitFor({ timeout: 30000 })
   }
