@@ -1,6 +1,6 @@
 import { headers } from "next/headers"
 import Link from "next/link"
-import { ArrowRight, Infinity as InfinityIcon, Lock, LockOpen, Sparkles } from "lucide-react"
+import { ArrowRight, Lock, LockOpen, Sparkles } from "lucide-react"
 
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { PlanCards } from "@/components/pages/pricing/plan-cards"
@@ -21,6 +21,15 @@ import {
 import { getSession } from "@/lib/session"
 import { getSubscriptionState, isProState } from "@/lib/subscription-state"
 import { getCatalogItems, getItemsByKind } from "@/registry/index"
+
+// Обложки для плитки «Готовые сценарии» и их раскладка веером: задняя
+// левая, задняя правая, передняя по центру; по наведению веер раскрывается.
+const SCENARIO_COVERS = ["restaurant", "wedding", "auto"] as const
+const SCENARIO_FAN = [
+  "left-0 -rotate-8 group-hover:-rotate-12 group-hover:-translate-x-3",
+  "right-0 rotate-8 group-hover:rotate-12 group-hover:translate-x-3",
+  "left-1/2 z-10 -translate-x-1/2 group-hover:scale-105",
+]
 
 /** Витрина красится фирменным оранжевым: блоки из реестра берут его пропом. */
 const BRAND_ACCENT = "#ff5900"
@@ -157,14 +166,17 @@ const buildTexts = ({
     proTiles: [
       {
         title: "Готовые сценарии",
+        visual: "scenarios",
         text: "Целые страницы, собранные из блоков: демо, точный состав и одна ссылка, по которой ИИ-агент соберёт такой же сайт у вас.",
       },
       {
         title: "Закрытые блоки",
+        visual: "lock",
         text: "Сложные секции-showpiece: их видно в превью, но код отдаётся только в PRO — первые экраны, меню, калькуляторы, многошаговые формы.",
       },
       {
         title: "Анимации",
+        visual: "marquee",
         text: `${ANIMATIONS} живых сцен: курсоры, шейдерные фоны, текстовые эффекты, стопки карточек. Каждая — один файл без библиотек.`,
         chips: [
           "Курсоры",
@@ -342,14 +354,17 @@ const buildTexts = ({
     proTiles: [
       {
         title: "Ready-made scenarios",
+        visual: "scenarios",
         text: "Whole pages assembled from blocks: a demo, the exact composition and one link your AI agent uses to build the same site for you.",
       },
       {
         title: "Closed blocks",
+        visual: "lock",
         text: "Complex showpiece sections: visible in the preview, but the code is served only in PRO — heroes, menus, calculators, multi-step forms.",
       },
       {
         title: "Animations",
+        visual: "marquee",
         text: `${ANIMATIONS} live scenes: cursors, shader backgrounds, text effects, card stacks. Each one a single file with no libraries.`,
         chips: [
           "Cursors",
@@ -527,6 +542,7 @@ export async function PricingPage({
     : null
   const pro = state ? isProState(state) : false
   const dates = locale === "en" ? "en-GB" : "ru-RU"
+  const english = club || locale === "en"
   const until =
     state && "until" in state ? state.until.toLocaleDateString(dates) : null
   const catalogHref = localePath(locale, "/components")
@@ -673,7 +689,20 @@ export async function PricingPage({
               <Reveal key={tile.title} delay={index * 120} className="min-w-0">
                 <article className="border-shell-border bg-shell-panel group flex h-full flex-col overflow-hidden rounded-3xl border">
                   <div className="relative flex h-40 w-full items-center justify-center overflow-hidden">
-                    {index === 0 ? (
+                    {tile.visual === "scenarios" ? (
+                      /* Веер обложек реальных демо: по наведению карточки расходятся. */
+                      <div className="relative h-28 w-72 max-w-full" aria-hidden="true">
+                        {SCENARIO_COVERS.map((slug, position) => (
+                          <img
+                            key={slug}
+                            src={`/demo/scenarios/${english ? "en/" : ""}${slug}.webp`}
+                            alt=""
+                            loading="lazy"
+                            className={`border-shell-border absolute top-1/2 aspect-[16/10] w-40 -translate-y-1/2 rounded-xl border object-cover shadow-[0_18px_40px_-18px_rgba(0,0,0,0.55)] transition-transform duration-(--motion-slow) ease-out ${SCENARIO_FAN[position]}`}
+                          />
+                        ))}
+                      </div>
+                    ) : tile.visual === "marquee" ? (
                       /* Бегущая строка категорий: два одинаковых ряда, сдвиг на половину — бесшовный цикл. */
                       /* Абсолют: бегущая строка шире карточки и не должна её растягивать. */
                       <div className="pricing-marquee absolute top-1/2 left-0 flex w-max -translate-y-1/2 gap-2 motion-reduce:animate-none">
@@ -686,7 +715,7 @@ export async function PricingPage({
                           </span>
                         ))}
                       </div>
-                    ) : index === 1 ? (
+                    ) : (
                       <div className="relative grid size-20 place-items-center rounded-2xl bg-[light-dark(#f2f2f2,#151515)] text-[#ff5900] shadow-[0_20px_50px_-20px_rgba(255,89,0,0.45)] transition-transform duration-(--motion-slow) group-hover:-rotate-6">
                         <Lock
                           className="size-8 transition-opacity duration-(--motion-base) group-hover:opacity-0"
@@ -697,22 +726,11 @@ export async function PricingPage({
                           aria-hidden="true"
                         />
                       </div>
-                    ) : (
-                      <p className="text-shell-fg flex items-center gap-3 text-5xl font-semibold tracking-tight tabular-nums">
-                        <span className="text-shell-muted line-through decoration-[#ff5900] decoration-2">
-                          {FREE_MONTHLY_LIMIT}
-                        </span>
-                        <ArrowRight className="text-shell-muted size-6" aria-hidden="true" />
-                        <InfinityIcon
-                          className="size-12 text-[#ff5900] transition-transform duration-(--motion-slow) group-hover:scale-125"
-                          aria-hidden="true"
-                        />
-                      </p>
                     )}
                   </div>
                   <div className="border-shell-border border-t p-6">
                     <h3 className="text-shell-fg flex items-center gap-2 text-lg font-semibold">
-                      {index === 0 ? (
+                      {tile.visual === "scenarios" ? (
                         <Sparkles className="text-shell-accent-text size-4" aria-hidden="true" />
                       ) : null}
                       {tile.title}
