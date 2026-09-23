@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react"
 
 import { Navbar038, type Navbar038Props } from "@/registry/blocks/navbar/navbar-038/navbar-038"
-import { Hero038, type Hero038Props } from "@/registry/blocks/hero/hero-038/hero-038"
+import { Hero048, type Hero048Props } from "@/registry/blocks/hero/hero-048/hero-048"
 import { Delivery001, type Delivery001Props } from "@/registry/blocks/industry/delivery-001/delivery-001"
 import { Delivery002, type Delivery002Props } from "@/registry/blocks/industry/delivery-002/delivery-002"
 import { Delivery003, type Delivery003Props } from "@/registry/blocks/industry/delivery-003/delivery-003"
@@ -16,14 +16,14 @@ import { Footer037, type Footer037Props } from "@/registry/blocks/footer/footer-
  * `app/scenarios/delivery/demo/page.tsx`, block text in English via props.
  *
  * Charcoal, tomato and cream. The "delivered in 28:00" timer ticks in the
- * hero, a CSS burger assembles from layers, a menu with a cart bar at the
+ * hero, a burger stacks in slow motion in the background, a menu with a cart bar at the
  * bottom, a bowl builder, a zone map, a tracker with a courier and sticker
  * reviews. Blocks talk through vibeui-cart:* events.
  */
 export const metadata = {
   title: "Hot — food delivery in 28 minutes",
   description:
-    "VibeUI «Food delivery / dark kitchen» scenario demo: a hero with a live timer and a CSS burger, a menu with a sticky cart, a bowl builder, a delivery zone map, an order tracker, an app promo, sticker reviews and a footer.",
+    "VibeUI «Food delivery / dark kitchen» scenario demo: a hero with a live timer and a burger clip, a menu with a sticky cart, a bowl builder, a delivery zone map, an order tracker, an app promo, sticker reviews and a footer.",
 }
 
 const page: CSSProperties = {
@@ -58,19 +58,21 @@ const navbar: Navbar038Props = {
   countLabel: "In the cart: {n}",
 }
 
-const hero: Hero038Props = {
+const hero: Hero048Props = {
   eyebrow: "Dark kitchen · inside the Third Ring",
-  title: "Hot food delivered in",
-  lede: "Our own kitchen, our own couriers, zero middlemen. We cook after payment and deliver in a thermal bag — the burger arrives crispy, the tom yum scalding.",
+  title: ["Hot food", "delivered in"],
+  lede: "Our own kitchen and couriers, no middlemen. We cook after payment and deliver in a thermal bag — the burger arrives crispy, the tom yum hot.",
   primaryLabel: "Open the menu",
   secondaryLabel: "Build a bowl",
   trust: "4.8 out of 5 · 12 400 orders a month · free from 1 500 ₽",
-  imageAlt: "A double smash burger cut in half on a slate board",
-  sideImageAlt: "Tom yum with shrimp",
-  sticker: "hit of the week · tom yum 490 ₽",
   ticker: ["Smash burger", "Tom yum", "Salmon poke", "Pad thai", "Truffle fries", "San Sebastián cheesecake", "Tonkotsu ramen", "Charcoal shawarma"],
   timerLabel: "{m} minutes {s} seconds",
+  skipLabel: "Skip",
+  replayLabel: "Watch again",
 }
+
+// The header sits above the hero: together they fit the window exactly.
+const HERO_OFFSET = { "--vibeui-hero-048-offset": "4.25rem" } as CSSProperties
 
 const menu: Delivery001Props = {
   eyebrow: "Menu",
@@ -104,17 +106,17 @@ const menu: Delivery001Props = {
 const builder: Delivery002Props = {
   eyebrow: "Builder",
   title: "Build your bowl",
-  lede: "Base, protein, toppings, sauce. The bowl on the right fills up as you choose; calories and price — honest and instant.",
+  lede: "Base, protein, toppings, sauce. The bowl on the right fills up as you choose; calories and price update right away.",
   groups: [
     {
       id: "base",
       title: "Base",
       mode: "single",
       options: [
-        { id: "rice", name: "Rice", price: 0, kcal: 210, color: "#f4efe2" },
-        { id: "quinoa", name: "Quinoa", price: 60, kcal: 190, color: "#d9c9a3" },
-        { id: "noodles", name: "Soba noodles", price: 40, kcal: 240, color: "#a88a6a" },
-        { id: "greens", name: "Salad mix", price: 0, kcal: 40, color: "#7cc95a" },
+        { id: "rice", name: "Rice", price: 0, kcal: 210, color: "#f4efe2", image: `${PHOTOS}/bowl/base-rice.webp` },
+        { id: "quinoa", name: "Quinoa", price: 60, kcal: 190, color: "#d9c9a3", image: `${PHOTOS}/bowl/base-quinoa.webp` },
+        { id: "noodles", name: "Soba noodles", price: 40, kcal: 240, color: "#a88a6a", image: `${PHOTOS}/bowl/base-noodles.webp` },
+        { id: "greens", name: "Salad mix", price: 0, kcal: 40, color: "#7cc95a", image: `${PHOTOS}/bowl/base-greens.webp` },
       ],
     },
     {
@@ -122,10 +124,10 @@ const builder: Delivery002Props = {
       title: "Protein",
       mode: "multi",
       options: [
-        { id: "salmon", name: "Salmon", price: 220, kcal: 180, color: "#ff8a6b", image: `${PHOTOS}/bowl-salmon.png` },
-        { id: "chicken", name: "Grilled chicken", price: 150, kcal: 165, color: "#e6b380", image: `${PHOTOS}/bowl-chicken.png` },
-        { id: "shrimp", name: "Shrimp", price: 240, kcal: 95, color: "#ffb0a0", image: `${PHOTOS}/bowl-shrimp.png` },
-        { id: "tofu", name: "Tofu", price: 110, kcal: 120, color: "#f0e6c8" },
+        { id: "salmon", name: "Salmon", price: 220, kcal: 180, color: "#ff8a6b", image: `${PHOTOS}/bowl/protein-salmon.webp` },
+        { id: "chicken", name: "Grilled chicken", price: 150, kcal: 165, color: "#e6b380", image: `${PHOTOS}/bowl/protein-chicken.webp` },
+        { id: "shrimp", name: "Shrimp", price: 240, kcal: 95, color: "#ffb0a0", image: `${PHOTOS}/bowl/protein-shrimp.webp` },
+        { id: "tofu", name: "Tofu", price: 110, kcal: 120, color: "#f0e6c8", image: `${PHOTOS}/bowl/protein-tofu.webp` },
       ],
     },
     {
@@ -133,14 +135,14 @@ const builder: Delivery002Props = {
       title: "Toppings",
       mode: "multi",
       options: [
-        { id: "avocado", name: "Avocado", price: 90, kcal: 120, color: "#9ad04c" },
-        { id: "edamame", name: "Edamame", price: 60, kcal: 60, color: "#5fb85a" },
-        { id: "mango", name: "Mango", price: 80, kcal: 70, color: "#ffc632" },
-        { id: "corn", name: "Corn", price: 40, kcal: 55, color: "#ffe066" },
-        { id: "egg", name: "Onsen egg", price: 70, kcal: 75, color: "#fff2c2" },
-        { id: "cucumber", name: "Cucumber", price: 30, kcal: 10, color: "#6fd08b" },
-        { id: "sesame", name: "Sesame", price: 20, kcal: 30, color: "#e8dcc0" },
-        { id: "chili", name: "Chili", price: 20, kcal: 5, color: "#ff3d2e" },
+        { id: "avocado", name: "Avocado", price: 90, kcal: 120, color: "#9ad04c", image: `${PHOTOS}/bowl/topping-avocado.webp` },
+        { id: "edamame", name: "Edamame", price: 60, kcal: 60, color: "#5fb85a", image: `${PHOTOS}/bowl/topping-edamame.webp` },
+        { id: "mango", name: "Mango", price: 80, kcal: 70, color: "#ffc632", image: `${PHOTOS}/bowl/topping-mango.webp` },
+        { id: "corn", name: "Corn", price: 40, kcal: 55, color: "#ffe066", image: `${PHOTOS}/bowl/topping-corn.webp` },
+        { id: "egg", name: "Onsen egg", price: 70, kcal: 75, color: "#fff2c2", image: `${PHOTOS}/bowl/topping-egg.webp` },
+        { id: "cucumber", name: "Cucumber", price: 30, kcal: 10, color: "#6fd08b", image: `${PHOTOS}/bowl/topping-cucumber.webp` },
+        { id: "sesame", name: "Sesame", price: 20, kcal: 30, color: "#e8dcc0", image: `${PHOTOS}/bowl/topping-sesame.webp` },
+        { id: "chili", name: "Chili", price: 20, kcal: 5, color: "#ff3d2e", image: `${PHOTOS}/bowl/topping-chili.webp` },
       ],
     },
     {
@@ -148,10 +150,10 @@ const builder: Delivery002Props = {
       title: "Sauce",
       mode: "single",
       options: [
-        { id: "teriyaki", name: "Teriyaki", price: 0, kcal: 60, color: "#7a3b1e" },
-        { id: "ponzu", name: "Ponzu", price: 0, kcal: 25, color: "#d6a34a" },
-        { id: "peanut", name: "Peanut", price: 20, kcal: 110, color: "#c98a4b" },
-        { id: "spicy", name: "Spicy mayo", price: 20, kcal: 130, color: "#ff8060" },
+        { id: "teriyaki", name: "Teriyaki", price: 0, kcal: 60, color: "#7a3b1e", image: `${PHOTOS}/bowl/sauce-teriyaki.webp` },
+        { id: "ponzu", name: "Ponzu", price: 0, kcal: 25, color: "#d6a34a", image: `${PHOTOS}/bowl/sauce-ponzu.webp` },
+        { id: "peanut", name: "Peanut", price: 20, kcal: 110, color: "#c98a4b", image: `${PHOTOS}/bowl/sauce-peanut.webp` },
+        { id: "spicy", name: "Spicy mayo", price: 20, kcal: 130, color: "#ff8060", image: `${PHOTOS}/bowl/sauce-spicy.webp` },
       ],
     },
   ],
@@ -173,26 +175,27 @@ const zones: Delivery003Props = {
   title: "Tap your block",
   lede: "One kitchen, on Baumanskaya. The closer to it — the faster and cheaper. We don't go beyond the ring road yet.",
   zones: [
-    { id: "near", name: "Centre — up to 3 km", minutes: 25, fee: 0, freeFrom: 0 },
-    { id: "mid", name: "Inside the Third Ring", minutes: 35, fee: 149, freeFrom: 1500 },
-    { id: "far", name: "Up to the ring road", minutes: 50, fee: 249, freeFrom: 2500 },
+    { id: "near", name: "Centre — up to 5 km", minutes: 25, fee: 0, freeFrom: 0, radius: 5 },
+    { id: "mid", name: "Third Ring and around", minutes: 35, fee: 149, freeFrom: 1500, radius: 11.5 },
+    { id: "far", name: "Up to the ring road", minutes: 50, fee: 249, freeFrom: 2500, radius: 18 },
   ],
   addresses: [
-    { label: "12 Tverskaya", zone: "near" },
-    { label: "7 Baumanskaya", zone: "near" },
-    { label: "40 Leninsky", zone: "mid" },
-    { label: "Sokol", zone: "mid" },
-    { label: "Lyublino", zone: "far" },
-    { label: "Kuntsevo", zone: "far" },
+    { label: "12 Tverskaya", zone: "near", point: [37.6071, 55.7625] },
+    { label: "7 Baumanskaya", zone: "near", point: [37.6793, 55.7712] },
+    { label: "40 Leninsky", zone: "mid", point: [37.5856, 55.7068] },
+    { label: "Sokol", zone: "mid", point: [37.515, 55.805] },
+    { label: "Lyublino", zone: "far", point: [37.7617, 55.6766] },
+    { label: "Kuntsevo", zone: "far", point: [37.4461, 55.7306] },
   ],
   kitchenLabel: "kitchen",
+  mapLang: "en_US",
   addressesLabel: "Frequent addresses",
-  mapLabel: "Delivery zone map: blocks around the kitchen",
+  mapLabel: "Delivery zone map around the kitchen",
   legendLabel: "Zones",
   minutesUnit: "min",
   yourAddressTitle: "Your address",
   pickZoneTitle: "Pick a zone",
-  pickHint: "Tap a block or an address above",
+  pickHint: "Tap the map or an address above",
   etaNote: "from payment to the door",
   etaIdle: "delivery time",
   feeLabel: "Delivery",
@@ -301,7 +304,7 @@ export default function DeliveryDemoEn() {
       </style>
       <Navbar038 {...hot} {...navbar} />
       <div id="top">
-        <Hero038 {...hot} {...hero} />
+        <Hero048 accent={hot.accent} ink={hot.ink} style={HERO_OFFSET} {...hero} />
       </div>
       <div id="menu">
         <Delivery001 {...hot} {...menu} />

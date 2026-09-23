@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react"
 
 import { Navbar038 } from "@/registry/blocks/navbar/navbar-038/navbar-038"
-import { Hero038 } from "@/registry/blocks/hero/hero-038/hero-038"
+import { Hero048 } from "@/registry/blocks/hero/hero-048/hero-048"
 import { Delivery001 } from "@/registry/blocks/industry/delivery-001/delivery-001"
 import { Delivery002 } from "@/registry/blocks/industry/delivery-002/delivery-002"
 import { Delivery003 } from "@/registry/blocks/industry/delivery-003/delivery-003"
@@ -13,14 +13,14 @@ import { Footer037 } from "@/registry/blocks/footer/footer-037/footer-037"
 
 /**
  * Сценарий «Доставка еды / дарк-китчен»: уголь, томат и сливки. Таймер
- * «привезём за 28:00» тикает в хиро, CSS-бургер собирается из слоёв,
+ * «привезём за 28:00» тикает в хиро, фоном бургер собирается в слоу-мо,
  * меню с корзиной-полосой внизу, конструктор боула, карта зон, трекер
  * с курьером и стикеры-отзывы. Блоки общаются событиями vibeui-cart:*.
  */
 export const metadata = {
   title: "Горячо — доставка еды за 28 минут",
   description:
-    "Демо сценария «Доставка еды / дарк-китчен» VibeUI: хиро с живым таймером и CSS-бургером, меню с закреплённой корзиной, конструктор боула, карта зон доставки, трекер заказа, промо приложения, отзывы-стикеры и подвал.",
+    "Демо сценария «Доставка еды / дарк-китчен» VibeUI: хиро с живым таймером и роликом бургера, меню с закреплённой корзиной, конструктор боула, карта зон доставки, трекер заказа, промо приложения, отзывы-стикеры и подвал.",
 }
 
 const page: CSSProperties = {
@@ -34,6 +34,9 @@ const page: CSSProperties = {
 const hot = { tone: "dark", accent: "#ff3d2e", ink: "#fff4e6", background: "#141414" } as const
 
 const PHOTOS = "/demo/delivery"
+
+// Шапка стоит над хиро: первый экран вместе с ней ровно в окно.
+const HERO_OFFSET = { "--vibeui-hero-048-offset": "4.25rem" } as CSSProperties
 
 const FAQ = [
   { question: "Почему 28 минут, а не «от 30 до 60»?", answer: "Кухня одна, меню короткое, курьеры свои. Мы знаем, сколько готовится каждое блюдо и сколько ехать до каждого квартала. 28 — среднее по центру за последний месяц; в вашей зоне цифра будет на карте выше." },
@@ -51,7 +54,7 @@ export default function DeliveryDemo() {
       </style>
       <Navbar038 {...hot} />
       <div id="top">
-        <Hero038 {...hot} />
+        <Hero048 accent={hot.accent} ink={hot.ink} style={HERO_OFFSET} />
       </div>
       <div id="menu">
         <Delivery001 {...hot} />

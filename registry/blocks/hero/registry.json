@@ -9222,6 +9222,161 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-048",
+      "type": "registry:block",
+      "title": "Хиро доставки еды с фоновым роликом: бургер собирается в слоу-мо, живой таймер",
+      "description": "Первый экран доставки еды или дарк-китчена: заголовок «Горячее привезём за» с живым обратным отсчётом 28:00, кнопки меню и конструктора, строка доверия и бегущая строка блюд видны сразу, а фоном идёт ролик — ингредиенты падают сверху и собираются в бургер в замедленной съёмке. Пока ролик грузится, фон тёмный; на старте блюдо проступает из темноты, к концу ролик замедляется. Кнопка «Пропустить» / «Смотреть ещё раз»; если ролик не готов за 5 секунд или включено reduced-motion — сразу стоп-кадр.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-048/hero-048.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-048.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "video",
+          "background video",
+          "food",
+          "delivery",
+          "restaurant",
+          "dark kitchen",
+          "burger",
+          "countdown",
+          "timer",
+          "marquee",
+          "freeze frame",
+          "wordmark",
+          "cutout",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero048",
+          "usage": "<Hero048\n  videoSrc=\"/media/hero.mp4\"\n  videoWebmSrc=\"/media/hero.webm\"\n  stillSrc=\"/media/hero-last.webp\"\n  subjectSrc=\"/media/hero-dish.webp\"\n  title={[\"Горячее\", \"привезём за\"]}\n  minutes={28}\n/>",
+          "summary": "Хиро доставки с фоновым роликом блюда и живым таймером «привезём за 28:00»: текст виден сразу, ролик играет один раз и замирает, за блюдом встаёт название.",
+          "preserve": [
+            "текст, таймер и кнопки видны сразу; ролик — только фон: до старта темно (или posterSrc), старт по canplaythrough, через READY_TIMEOUT без готовности — стоп-кадр",
+            "рамка [data-part=frame] 16:9 через cqw/cqh: на широком вписана по высоте хиро и прижата вправо (фон ролика совпадает с фоном блока), на узком — cover; слои: видео → темнота → надпись → блюдо без фона → затемнение → текст",
+            "таймер тикает по секунде от minutes и на нуле начинает заново; aria-label собирается из timerLabel",
+            "конец ролика замедляется до SLOW_RATE; надпись и блюдо без фона появляются только на ended"
+          ],
+          "adapt": [
+            "videoSrc, videoWebmSrc, stillSrc, subjectSrc, posterSrc (необязательно) — свой ролик и кадры из него",
+            "wordmark, eyebrow, title (массив строк перед таймером), minutes, lede",
+            "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+            "trust (первая часть до « · » — акцентом), ticker",
+            "timerLabel, skipLabel, replayLabel",
+            "accent — акцент",
+            "ink — текст",
+            "background — фон (под цвет фона ролика)"
+          ],
+          "notes": [
+            "subjectSrc — последний кадр ролика с вырезанным фоном (например rembg) в том же разрешении, что видео: иначе блюдо не совпадёт с кадром",
+            "ролик без звука: браузеры автоматически запускают только muted-видео",
+            "если над хиро стоит шапка, передайте её высоту в style как --vibeui-hero-048-offset — первый экран уместится в окно"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "minutes",
+            "label": "Минут на доставку",
+            "type": "number",
+            "default": 28,
+            "min": 5,
+            "max": 90
+          },
+          {
+            "prop": "primaryLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Открыть меню",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Food delivery hero with a background clip: a burger stacks in slow motion, a live timer",
+            "description": "A first screen for food delivery or a dark kitchen: the headline “Hot food delivered in” with a live 28:00 countdown, menu and builder buttons, a trust line and a marquee of dishes are visible right away, while a clip plays in the background — ingredients fall from above and stack into a burger in slow motion. While the clip loads, the background stays dark; at the start the dish emerges from the darkness, and it slows down at the end. A Skip / Watch again button; if the clip is not ready within 5 seconds or reduced motion is on, the freeze frame shows right away.",
+            "ai": {
+              "summary": "A delivery hero with a background dish clip and a live “delivered in 28:00” timer: the copy shows right away, the clip plays once and freezes, and the name rises behind the dish.",
+              "preserve": [
+                "the copy, timer and buttons show right away; the clip is only a background: dark before the start (or posterSrc), start on canplaythrough, after READY_TIMEOUT without readiness — the freeze frame",
+                "the 16:9 [data-part=frame] via cqw/cqh: on wide screens fitted to the hero height and pinned right (the clip background matches the block background), on narrow ones — cover; layers: video → darkness → wordmark → cut-out dish → shade → copy",
+                "the timer ticks every second from minutes and restarts at zero; its aria-label is built from timerLabel",
+                "the clip slows down to SLOW_RATE at the end; the wordmark and cut-out dish appear only on ended"
+              ],
+              "adapt": [
+                "videoSrc, videoWebmSrc, stillSrc, subjectSrc, posterSrc (optional) — your own clip and frames from it",
+                "wordmark, eyebrow, title (array of lines before the timer), minutes, lede",
+                "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
+                "trust (the part before « · » in accent), ticker",
+                "timerLabel, skipLabel, replayLabel",
+                "accent — accent",
+                "ink — ink",
+                "background — background (match the clip's background)"
+              ],
+              "notes": [
+                "subjectSrc is the clip's last frame with the background removed (e.g. rembg) at the same resolution as the video, otherwise the dish will not line up with the shot",
+                "the clip is silent: browsers autoplay only muted video",
+                "if a header sits above the hero, pass its height in style as --vibeui-hero-048-offset so the first screen fits the window"
+              ],
+              "usage": "<Hero048\n  videoSrc=\"/media/hero.mp4\"\n  videoWebmSrc=\"/media/hero.webm\"\n  stillSrc=\"/media/hero-last.webp\"\n  subjectSrc=\"/media/hero-dish.webp\"\n  title={[\"Hot food\", \"delivered in\"]}\n  minutes={28}\n/>"
+            },
+            "controls": {
+              "minutes": {
+                "label": "Delivery minutes"
+              },
+              "primaryLabel": {
+                "label": "Button",
+                "default": "Open the menu"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

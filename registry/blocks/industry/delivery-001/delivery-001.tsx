@@ -1,7 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState, type CSSProperties } from "react"
-import { Card083 } from "@/registry/components/card/card-083/card-083"
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
 
 export type Delivery001Dish = {
   id: string
@@ -49,9 +48,10 @@ export type Delivery001Props = {
   style?: CSSProperties
 }
 
-// Меню с корзиной: фильтр-чипы по группам, карточки блюд с фото в
-// «вырезанных» формах (круг, капля, блоб — по очереди), кнопка «+» в
-// карточке раскрывается в степпер «− 2 +». Корзина — закреплённая полоса
+// Меню с корзиной: фильтр-чипы по группам, карточки блюд с фото на всю
+// ширину — рамка карточки подсвечивается за курсором, фото приближается;
+// кнопка «+ В корзину» раскрывается в степпер «− 2 +», а копия фото улетает
+// в полосу корзины. Корзина — закреплённая полоса
 // снизу (position:fixed), выезжает при первом добавлении: количество,
 // сумма, прогресс «до бесплатной доставки осталось …» и кнопка
 // оформления. Кросс-блочно: шлёт vibeui-cart:state (count, total),
@@ -79,7 +79,6 @@ container-type:inline-size;
 :where([data-vibeui-block="delivery-001"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="delivery-001"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-delivery-001-bg);color:var(--vibeui-delivery-001-fg);font-family:var(--vibeui-delivery-001-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="delivery-001"] *{box-sizing:border-box}
-[data-vibeui-block="delivery-001"] [data-part="photo"]{width:72%;margin:0 auto}
 [data-vibeui-block="delivery-001"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="delivery-001"] [data-part="head"]{display:grid;gap:1.2rem;align-items:end}
 [data-vibeui-block="delivery-001"] [data-part="eyebrow"]{margin:0 0 .6rem;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-delivery-001-accent)}
@@ -90,16 +89,32 @@ container-type:inline-size;
 [data-vibeui-block="delivery-001"] [data-part="filters"] button:hover{color:var(--vibeui-delivery-001-fg);transform:translateY(-1px)}
 [data-vibeui-block="delivery-001"] [data-part="filters"] button[aria-pressed="true"]{background:var(--vibeui-delivery-001-fg);color:var(--vibeui-delivery-001-on-fg);border-color:transparent}
 [data-vibeui-block="delivery-001"] [data-part="grid"]{display:grid;gap:1rem;margin:2.2rem 0 0;padding:0;list-style:none;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr))}
-[data-vibeui-block="delivery-001"] [data-part="dish"]{position:relative;display:grid;grid-template-rows:auto 1fr auto;gap:.8rem;padding:1.1rem 1.1rem 1.2rem;border-radius:1.6rem;background:var(--vibeui-delivery-001-card);border:1px solid var(--vibeui-delivery-001-line);transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s;animation:vibeui-delivery-001-in .5s cubic-bezier(.2,.8,.2,1) both}
-[data-vibeui-block="delivery-001"] [data-part="dish"]:hover{transform:translateY(-4px);border-color:color-mix(in oklab,var(--vibeui-delivery-001-accent) 60%,transparent)}
-[data-vibeui-block="delivery-001"] [data-part="dish"][data-in="true"]{border-color:var(--vibeui-delivery-001-accent)}
-[data-vibeui-block="delivery-001"] [data-part="dish"]:hover [data-vibeui-block="card-083"] img{transform:scale(1.06) rotate(-4deg)}
+[data-vibeui-block="delivery-001"] [data-part="dish"]{--vibeui-delivery-001-x:50%;--vibeui-delivery-001-y:0%;position:relative;display:grid;grid-template-rows:auto 1fr auto;border-radius:1.5rem;background:var(--vibeui-delivery-001-card);isolation:isolate;transition:translate .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s;animation:vibeui-delivery-001-in .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--vibeui-delivery-001-i) * 70ms)}
+[data-vibeui-block="delivery-001"] [data-part="dish"]::before{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;padding:1px;background:radial-gradient(22rem circle at var(--vibeui-delivery-001-x) var(--vibeui-delivery-001-y),color-mix(in oklab,var(--vibeui-delivery-001-accent) 85%,transparent),transparent 45%),var(--vibeui-delivery-001-line);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.55;transition:opacity .35s}
+[data-vibeui-block="delivery-001"] [data-part="dish"]::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:radial-gradient(24rem circle at var(--vibeui-delivery-001-x) var(--vibeui-delivery-001-y),color-mix(in oklab,var(--vibeui-delivery-001-accent) 12%,transparent),transparent 60%);opacity:0;transition:opacity .35s}
+[data-vibeui-block="delivery-001"] [data-part="dish"]:hover{translate:0 -6px;box-shadow:0 30px 50px -30px rgb(0 0 0 / .7)}
+[data-vibeui-block="delivery-001"] [data-part="dish"]:hover::before{opacity:1}
+[data-vibeui-block="delivery-001"] [data-part="dish"]:hover::after{opacity:1}
+[data-vibeui-block="delivery-001"] [data-part="dish"][data-in="true"]::before{opacity:1;background:var(--vibeui-delivery-001-accent)}
+[data-vibeui-block="delivery-001"] [data-part="photo"]{position:relative;margin:0;aspect-ratio:5/4;border-radius:1.5rem 1.5rem 0 0;overflow:hidden;background:#111}
+[data-vibeui-block="delivery-001"] [data-part="photo"] img{display:block;width:100%;height:100%;object-fit:cover;scale:1.02;transition:scale .8s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="delivery-001"] [data-part="photo"]::after{content:"";position:absolute;inset:auto 0 0;height:45%;background:linear-gradient(to top,var(--vibeui-delivery-001-card),transparent);pointer-events:none}
+[data-vibeui-block="delivery-001"] [data-part="dish"]:hover [data-part="photo"] img{scale:1.1}
+[data-vibeui-block="delivery-001"] [data-part="badge"]{position:absolute;z-index:1;left:.8rem;top:.8rem;padding:.3rem .65rem;border-radius:999px;background:color-mix(in oklab,#000 45%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgb(255 255 255 / .18);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+[data-vibeui-block="delivery-001"] [data-part="badge"]::before{content:"";display:inline-block;width:.4rem;height:.4rem;margin:0 .4rem .08rem 0;border-radius:50%;background:var(--vibeui-delivery-001-accent);vertical-align:middle}
+[data-vibeui-block="delivery-001"] [data-part="body"]{position:relative;z-index:1;margin-top:-1.4rem;padding:0 1.2rem}
 [data-vibeui-block="delivery-001"] [data-part="dish"] h3{margin:0;font-family:var(--vibeui-delivery-001-display);font-weight:700;font-size:1rem;line-height:1.2}
 [data-vibeui-block="delivery-001"] [data-part="text"]{margin:.3rem 0 0;font-size:.86rem;color:var(--vibeui-delivery-001-muted)}
 [data-vibeui-block="delivery-001"] [data-part="meta"]{margin:.5rem 0 0;font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--vibeui-delivery-001-muted)}
-[data-vibeui-block="delivery-001"] [data-part="row"]{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+[data-vibeui-block="delivery-001"] [data-part="row"]{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:1rem 1.2rem 1.2rem;padding-top:.9rem;border-top:1px dashed var(--vibeui-delivery-001-line)}
 [data-vibeui-block="delivery-001"] [data-part="price"]{font-family:var(--vibeui-delivery-001-display);font-weight:900;font-size:1.15rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-[data-vibeui-block="delivery-001"] [data-part="step"]{display:inline-flex;align-items:center;height:2.6rem;border-radius:999px;background:var(--vibeui-delivery-001-fg);color:var(--vibeui-delivery-001-on-fg);overflow:hidden;transition:background .2s}
+[data-vibeui-block="delivery-001"] [data-part="step"]{display:inline-flex;align-items:center;height:2.6rem;border-radius:999px;background:var(--vibeui-delivery-001-fg);color:var(--vibeui-delivery-001-on-fg);overflow:hidden;transition:background .3s,box-shadow .3s}
+[data-vibeui-block="delivery-001"] [data-part="add"]{display:inline-flex;align-items:center;gap:.4rem;height:2.6rem;padding:0 1rem 0 .85rem;border:0;border-radius:999px;background:var(--vibeui-delivery-001-fg);color:var(--vibeui-delivery-001-on-fg);font:inherit;font-weight:700;font-size:.85rem;cursor:pointer;transition:background .3s,color .3s,box-shadow .3s}
+[data-vibeui-block="delivery-001"] [data-part="add"] b{font-size:1.2rem;line-height:1;transition:rotate .4s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="delivery-001"] [data-part="dish"]:hover [data-part="add"]{background:var(--vibeui-delivery-001-accent);color:var(--vibeui-delivery-001-on-accent);box-shadow:0 10px 24px -10px var(--vibeui-delivery-001-accent)}
+[data-vibeui-block="delivery-001"] [data-part="dish"]:hover [data-part="add"] b{rotate:90deg}
+[data-vibeui-block="delivery-001"] [data-part="step"]{animation:vibeui-delivery-001-pop .35s cubic-bezier(.3,1.6,.5,1)}
+@keyframes vibeui-delivery-001-pop{from{scale:.7;opacity:0}}
 [data-vibeui-block="delivery-001"] [data-part="step"][data-active="true"]{background:var(--vibeui-delivery-001-accent);color:var(--vibeui-delivery-001-on-accent)}
 [data-vibeui-block="delivery-001"] [data-part="step"] button{display:grid;place-items:center;width:2.6rem;height:2.6rem;border:0;background:transparent;color:inherit;font:inherit;font-size:1.3rem;font-weight:700;line-height:1;cursor:pointer;transition:transform .15s}
 [data-vibeui-block="delivery-001"] [data-part="step"] button:hover{transform:scale(1.15)}
@@ -120,7 +135,8 @@ container-type:inline-size;
 [data-vibeui-block="delivery-001"] [data-part="checkout"]{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:3rem;padding:0 1.4rem;border-radius:999px;border:0;background:var(--vibeui-delivery-001-accent);color:var(--vibeui-delivery-001-on-accent);font:inherit;font-weight:800;font-size:.95rem;white-space:nowrap;cursor:pointer;transition:transform .18s,box-shadow .2s}
 [data-vibeui-block="delivery-001"] [data-part="checkout"]:hover{transform:translateY(-1px);box-shadow:0 12px 30px -10px var(--vibeui-delivery-001-accent)}
 [data-vibeui-block="delivery-001"] [data-part="checkout"][data-done="true"]{background:#22c55e;color:#fff}
-@keyframes vibeui-delivery-001-in{from{opacity:0;transform:translateY(12px)}}
+@keyframes vibeui-delivery-001-in{from{opacity:0;translate:0 24px;scale:.97}}
+
 @container (min-width: 44rem){[data-vibeui-block="delivery-001"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}[data-vibeui-block="delivery-001"] [data-part="bar"]{grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1.4rem;padding:.8rem .8rem .8rem 1.4rem}[data-vibeui-block="delivery-001"] [data-part="sum"]{flex-direction:column;align-items:flex-start;gap:0}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="delivery-001"] *{animation:none!important;transition:none!important}}`
 
@@ -136,8 +152,6 @@ const DEFAULT_DISHES: Delivery001Dish[] = [
 ]
 
 type Extra = { id: string; name: string; price: number; qty: number }
-
-const SHAPES = ["circle", "drop", "blob"] as const
 
 function formatMoney(value: number, currency: string) {
   return `${String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/g, " ")} ${currency}`
@@ -185,6 +199,7 @@ export function Delivery001({
   const [extras, setExtras] = useState<Extra[]>([])
   const [zone, setZone] = useState<{ fee: number; minutes: number } | null>(null)
   const [done, setDone] = useState(false)
+  const barRef = useRef<HTMLElement>(null)
 
   const kinds = useMemo(() => Array.from(new Set(dishes.map((dish) => dish.kind))), [dishes])
   const visible = filter ? dishes.filter((dish) => dish.kind === filter) : dishes
@@ -257,6 +272,40 @@ export function Delivery001({
     })
   }
 
+  // Копия фото улетает в полосу корзины; сама полоса вздрагивает на приёме.
+  const fly = (from: HTMLElement | null) => {
+    const img = from?.querySelector("img")
+    const bar = barRef.current
+    if (!img || !bar || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const start = img.getBoundingClientRect()
+    const end = bar.getBoundingClientRect()
+    const size = 64
+    const clone = img.cloneNode() as HTMLImageElement
+    Object.assign(clone.style, { position: "fixed", left: `${start.left}px`, top: `${start.top}px`, width: `${start.width}px`, height: `${start.height}px`, objectFit: "cover", borderRadius: "1.5rem", zIndex: "70", pointerEvents: "none" })
+    document.body.append(clone)
+    const targetX = end.left + 36 - start.left - start.width / 2
+    const targetY = (end.top > window.innerHeight ? window.innerHeight - 60 : end.top + end.height / 2) - start.top - start.height / 2
+    const scale = size / start.width
+    const animation = clone.animate(
+      [
+        { transform: "translate(0,0) scale(1)", opacity: 1, borderRadius: "1.5rem" },
+        { transform: `translate(${targetX * 0.4}px,${targetY * 0.2 - 80}px) scale(${(1 + scale) / 2})`, opacity: 1, offset: 0.45 },
+        { transform: `translate(${targetX}px,${targetY}px) scale(${scale})`, opacity: 0.2, borderRadius: "50%" },
+      ],
+      { duration: 750, easing: "cubic-bezier(.5,0,.3,1)" },
+    )
+    animation.onfinish = () => {
+      clone.remove()
+      bar.animate([{ scale: 1 }, { scale: 1.035 }, { scale: 1 }], { duration: 380, easing: "ease-out" })
+    }
+  }
+
+  const spot = (event: PointerEvent<HTMLLIElement>) => {
+    const box = event.currentTarget.getBoundingClientRect()
+    event.currentTarget.style.setProperty("--vibeui-delivery-001-x", `${event.clientX - box.left}px`)
+    event.currentTarget.style.setProperty("--vibeui-delivery-001-y", `${event.clientY - box.top}px`)
+  }
+
   const checkout = () => {
     if (count === 0) return
     setDone(true)
@@ -307,30 +356,51 @@ export function Delivery001({
             {visible.map((dish, index) => {
               const amount = qty[dish.id] ?? 0
               return (
-                <li key={dish.id} data-part="dish" data-in={amount > 0 ? "true" : undefined}>
-                  <Card083 data-part="photo" image={dish.image} name={dish.name} badge={dish.badge} data-shape={SHAPES[index % SHAPES.length]} accent={accent} />
-                  <div>
+                <li key={dish.id} data-part="dish" data-in={amount > 0 ? "true" : undefined} onPointerMove={spot} style={{ ["--vibeui-delivery-001-i" as string]: index }}>
+                  <figure data-part="photo">
+                    {dish.image ? <img src={dish.image} alt={dish.name} loading="lazy" /> : null}
+                    {dish.badge ? <figcaption data-part="badge">{dish.badge}</figcaption> : null}
+                  </figure>
+                  <div data-part="body">
                     <h3>{dish.name}</h3>
                     {dish.text ? <p data-part="text">{dish.text}</p> : null}
                     {dish.meta ? <p data-part="meta">{dish.meta}</p> : null}
                   </div>
                   <div data-part="row">
                     <span data-part="price">{formatMoney(dish.price, currency)}</span>
-                    <div data-part="step" data-active={amount > 0}>
-                      {amount > 0 ? (
-                        <>
-                          <button type="button" aria-label={removeLabel.replace("{name}", dish.name)} onClick={() => change(dish.id, -1)}>
-                            −
-                          </button>
-                          <output aria-live="polite" aria-label={`${dish.name}: ${amount}`}>
-                            {amount}
-                          </output>
-                        </>
-                      ) : null}
-                      <button type="button" aria-label={`${addLabel}: ${dish.name}`} onClick={() => change(dish.id, 1)}>
-                        +
+                    {amount > 0 ? (
+                      <div data-part="step" data-active="true">
+                        <button type="button" aria-label={removeLabel.replace("{name}", dish.name)} onClick={() => change(dish.id, -1)}>
+                          −
+                        </button>
+                        <output aria-live="polite" aria-label={`${dish.name}: ${amount}`}>
+                          {amount}
+                        </output>
+                        <button
+                          type="button"
+                          aria-label={`${addLabel}: ${dish.name}`}
+                          onClick={(event) => {
+                            fly(event.currentTarget.closest("li"))
+                            change(dish.id, 1)
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        data-part="add"
+                        type="button"
+                        aria-label={`${addLabel}: ${dish.name}`}
+                        onClick={(event) => {
+                          fly(event.currentTarget.closest("li"))
+                          change(dish.id, 1)
+                        }}
+                      >
+                        <b aria-hidden="true">+</b>
+                        {addLabel}
                       </button>
-                    </div>
+                    )}
                   </div>
                 </li>
               )
@@ -338,7 +408,7 @@ export function Delivery001({
           </ul>
           {visible.length === 0 ? <p data-part="empty">{emptyText}</p> : null}
         </div>
-        <aside data-part="bar" data-open={count > 0} aria-label={cartLabel} aria-hidden={count === 0}>
+        <aside ref={barRef} data-part="bar" data-open={count > 0} aria-label={cartLabel} aria-hidden={count === 0}>
           <p data-part="sum">
             <b>{formatMoney(total, currency)}</b>
             <span>

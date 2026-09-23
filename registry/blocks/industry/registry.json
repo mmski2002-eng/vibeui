@@ -2022,15 +2022,13 @@
     {
       "name": "delivery-001",
       "type": "registry:block",
-      "title": "Меню с корзиной: карточки блюд, степперы и закреплённая полоса «до бесплатной доставки»",
-      "description": "Меню доставки с корзиной: фильтр-чипы по группам, карточки блюд с фото в вырезанных формах (круг, капля, блоб по очереди), бейджи «хит/острое», кнопка «+» раскрывается в степпер «− 2 +». Корзина — закреплённая полоса снизу (position:fixed), выезжает при первом добавлении: сумма, число блюд, прогресс «до бесплатной доставки осталось …» и кнопка оформления. Шлёт vibeui-cart:state, принимает vibeui-cart:add от конструктора и vibeui-cart:zone от карты зон, по оформлению шлёт vibeui-cart:checkout.",
+      "title": "Меню доставки: карточки блюд с подсветкой за курсором, полётом в корзину и полосой «до бесплатной доставки»",
+      "description": "Меню доставки с корзиной: фильтр-чипы по группам, карточки блюд с фото на всю ширину — рамка подсвечивается за курсором, фото приближается при наведении, бейджи «хит/острое» на стекле. Кнопка «+ В корзину» раскрывается в степпер «− 2 +», а копия фото улетает в корзину. Корзина — закреплённая полоса снизу, выезжает при первом добавлении: сумма, число блюд, прогресс «до бесплатной доставки осталось …» и кнопка оформления. Шлёт vibeui-cart:state, принимает vibeui-cart:add и vibeui-cart:zone, по оформлению шлёт vibeui-cart:checkout.",
       "categories": [
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-083"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "delivery-001/delivery-001.tsx",
@@ -2053,7 +2051,9 @@
           "filter",
           "ecommerce",
           "event",
-          "composite"
+          "spotlight",
+          "fly to cart",
+          "hover"
         ],
         "preview": {
           "props": {},
@@ -2064,10 +2064,10 @@
           "usage": "<Delivery001\n  title=\"Что готовим прямо сейчас\"\n  freeFrom={1500}\n  dishes={[\n    { id: \"smash\", name: \"Смэш-бургер\", price: 590, kind: \"Бургеры\", image: \"/photos/smash.webp\", badge: \"хит\" },\n    { id: \"tomyum\", name: \"Том-ям\", price: 490, kind: \"Азия\", image: \"/photos/tom-yum.webp\" },\n  ]}\n/>",
           "summary": "Меню с корзиной для доставки еды: блюда, степперы и полоса снизу с прогрессом до бесплатной доставки.",
           "preserve": [
-            "импорты card-083 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "count и total считаются в useMemo из qty и extras; useEffect шлёт vibeui-cart:state при их изменении",
-            "полоса bar — position:fixed с transform translate(-50%, 100% + 1.5rem) → 0 при data-open, прогресс — scaleX(--fill)",
-            "слушатели vibeui-cart:add (id, name, price, qty) и vibeui-cart:zone (fee, minutes) ставятся один раз в useEffect"
+            "подсветка рамки — ::before с маской content-box/xor и radial-gradient в точке --vibeui-delivery-001-x/y, которую ставит onPointerMove",
+            "полёт в корзину — клон img с element.animate от фото до полосы bar, по finish полоса вздрагивает; при reduced-motion полёта нет",
+            "полоса bar — position:fixed с transform translate(-50%, 100% + 1.5rem) → 0 при data-open, прогресс — scaleX(--fill)"
           ],
           "adapt": [
             "eyebrow, title, lede, allLabel, addLabel, checkoutLabel",
@@ -2141,15 +2141,15 @@
         ],
         "i18n": {
           "en": {
-            "title": "Menu with a cart: dish cards, steppers and a fixed “to free delivery” bar",
-            "description": "Delivery menu with a cart: group filter chips, dish cards with photos in cut-out shapes (circle, drop, blob in turn), “hit/spicy” badges, a “+” button that unfolds into a “− 2 +” stepper. The cart is a fixed bottom bar (position:fixed) that slides in on the first add: total, item count, a “… left to free delivery” progress and a checkout button. Emits vibeui-cart:state, accepts vibeui-cart:add from the builder and vibeui-cart:zone from the zones map, emits vibeui-cart:checkout on checkout.",
+            "title": "Delivery menu: dish cards with a cursor spotlight, fly-to-cart and a “to free delivery” bar",
+            "description": "A delivery menu with a cart: filter chips by group, dish cards with full-width photos — the border lights up under the cursor, the photo zooms on hover, “hit/spicy” badges on glass. The “+ Add” button expands into a “− 2 +” stepper while a copy of the photo flies into the cart. The cart is a fixed bar at the bottom that slides in on the first add: total, dish count, a “left to free delivery …” progress and a checkout button. Sends vibeui-cart:state, receives vibeui-cart:add and vibeui-cart:zone, sends vibeui-cart:checkout on checkout.",
             "ai": {
               "summary": "Menu with a cart for food delivery: dishes, steppers and a bottom bar with progress to free delivery.",
               "preserve": [
-                "the card-083 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "count and total are computed in useMemo from qty and extras; a useEffect emits vibeui-cart:state when they change",
-                "the bar is position:fixed with transform translate(-50%, 100% + 1.5rem) → 0 on data-open, progress is scaleX(--fill)",
-                "listeners for vibeui-cart:add (id, name, price, qty) and vibeui-cart:zone (fee, minutes) are attached once in useEffect"
+                "count and total are computed in useMemo from qty and extras; a useEffect sends vibeui-cart:state when they change",
+                "the border spotlight is a ::before with a content-box/xor mask and a radial-gradient at --vibeui-delivery-001-x/y set by onPointerMove",
+                "fly-to-cart is an img clone with element.animate from the photo to the bar; on finish the bar bumps; no flight under reduced motion",
+                "the bar is position:fixed with transform translate(-50%, 100% + 1.5rem) → 0 on data-open, the progress is scaleX(--fill)"
               ],
               "adapt": [
                 "eyebrow, title, lede, allLabel, addLabel, checkoutLabel",
@@ -2278,25 +2278,21 @@
                   }
                 ]
               }
-            },
-            "docs": "A composite block: imports card-083 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует card-083 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "delivery-002",
       "type": "registry:block",
-      "title": "Конструктор боула: слои падают в миску, калории и цена считаются",
-      "description": "Конструктор блюда для доставки: группы ингредиентов чипами с цветной точкой — основа и соус по одному, белок и добавки сколько угодно. Справа фото миски: каждый выбранный белок — своё фото той же миски, обрезанное сектором, соус — блик поверх, добавки — цветные горошины с отскоком; без фото — CSS-миска со слоями. Под ней калории, вес и цена пересчитываются на лету, а строка состава читается вслух. Кнопка «В корзину» шлёт vibeui-cart:add и на пару секунд зеленеет.",
+      "title": "Конструктор боула: ингредиенты с фото падают в миску, калории и цена на лету",
+      "description": "Конструктор боула для доставки еды: слева группы ингредиентов плитками с настоящими фото без фона — основа и соус один из, белки и добавки сколько угодно, выбранная плитка подсвечена галочкой. Справа миска сверху: основа ложится кругом внутрь, белки и добавки падают в неё с отскоком и раскладываются по кругу, соус стоит соусницей у края. Под миской калории, вес и цена считаются на лету, кнопка «в корзину» шлёт vibeui-cart:add.",
       "categories": [
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-079"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "delivery-002/delivery-002.tsx",
@@ -2318,7 +2314,8 @@
           "food",
           "interactive",
           "event",
-          "composite"
+          "photo tiles",
+          "drop animation"
         ],
         "preview": {
           "props": {},
@@ -2326,18 +2323,18 @@
         },
         "ai": {
           "export": "Delivery002",
-          "usage": "<Delivery002\n  title=\"Собери свой боул\"\n  basePrice={290}\n  bowlImage=\"/photos/bowl-rice.png\"\n  groups={[\n    { id: \"base\", title: \"Основа\", mode: \"single\", options: [{ id: \"rice\", name: \"Рис\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Белок\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Лосось\", price: 220, kcal: 180, color: \"#ff8a6b\", image: \"/photos/bowl-salmon.png\" }] },\n  ]}\n/>",
-          "summary": "Конструктор боула или пиццы: выбираешь ингредиенты — миска наполняется, цена и калории считаются.",
+          "usage": "<Delivery002\n  title=\"Собери свой боул\"\n  basePrice={290}\n  bowlImage=\"/photos/bowl-empty.webp\"\n  groups={[\n    { id: \"base\", title: \"Основа\", mode: \"single\", options: [{ id: \"rice\", name: \"Рис\", price: 0, kcal: 210, color: \"#f4efe2\", image: \"/photos/base-rice.webp\" }] },\n    { id: \"protein\", title: \"Белок\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Лосось\", price: 220, kcal: 180, color: \"#ff8a6b\", image: \"/photos/protein-salmon.webp\" }] },\n  ]}\n/>",
+          "summary": "Конструктор боула с фото ингредиентов: выбор плитками, миска собирается на глазах, калории и цена сразу.",
           "preserve": [
-            "импорты button-079 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "picked — массив id в порядке выбора; single-группы заменяют свой вариант, multi — переключают",
-            "с bowlImage: белки с image режутся clip-path polygon сектором через wedge(i, n), добавки без фото — горошины по кругу с золотым углом; без bowlImage — слои по таблице SPOTS с keyframes drop",
+            "ингредиенты — фото сверху без фона одного ракурса и света; основа — круг inset 14% внутри миски, белки 34%, добавки 25% ширины миски",
+            "места в миске считает spot(i, n) по кругу, left/top с transition — при новом ингредиенте остальные плавно сдвигаются; появление — keyframes drop на img",
             "add шлёт vibeui-cart:add с detail { id: bowl-<ids>, name, price, qty: 1 } и ставит data-done на 2.2 с"
           ],
           "adapt": [
             "eyebrow, title, lede, addLabel, addedLabel",
-            "groups: id, title, mode (single | multi), options: id, name, price, kcal, color, image (фото миски с этим ингредиентом)",
-            "bowlImage, basePrice, currency",
+            "groups: id, title, mode (single | multi), options: id, name, price, kcal, color (заглушка), image (фото ингредиента без фона)",
+            "bowlImage (пустая миска сверху без фона), basePrice, currency",
             "tone — тема",
             "accent — акцент",
             "ink — текст",
@@ -2398,26 +2395,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Bowl builder: layers drop into a bowl, calories and price add up",
-            "description": "A dish builder for delivery: ingredient groups as chips with a colour dot — base and sauce pick one, protein and toppings pick any. On the right a bowl photo: each chosen protein is its own photo of the same bowl clipped to a sector, the sauce a glow on top, toppings bouncing colour dots; without photos a CSS bowl with layers. Below it calories, weight and price recalculate live and the recipe line is read aloud. The “Add to cart” button emits vibeui-cart:add and turns green for a couple of seconds.",
+            "title": "Bowl builder: ingredient photos drop into the bowl, calories and price on the fly",
+            "description": "A bowl builder for food delivery: on the left, ingredient groups as tiles with real cut-out photos — base and sauce pick one, proteins and toppings as many as you like, the chosen tile gets a check mark. On the right, the bowl from above: the base settles as a circle inside, proteins and toppings drop in with a bounce and arrange in a ring, the sauce stands in a dish at the edge. Below the bowl, calories, weight and price update on the fly, and the “add to cart” button sends vibeui-cart:add.",
             "ai": {
-              "summary": "A bowl or pizza builder: pick ingredients — the bowl fills up, price and calories add up.",
+              "summary": "A bowl builder with ingredient photos: pick tiles, the bowl assembles before your eyes, calories and price at once.",
               "preserve": [
-                "the button-079 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "picked is an array of ids in pick order; single groups replace their option, multi groups toggle",
-                "with bowlImage: proteins with image are clipped to a sector by clip-path polygon via wedge(i, n), toppings without a photo are dots around a circle at the golden angle; without bowlImage — layers from the SPOTS table with drop keyframes",
-                "add emits vibeui-cart:add with detail { id: bowl-<ids>, name, price, qty: 1 } and sets data-done for 2.2 s"
+                "ingredients are top-down cut-out photos with the same angle and light; the base is a circle inset 14% inside the bowl, proteins 34%, toppings 25% of the bowl width",
+                "spot(i, n) places items in a ring, left/top with a transition — on a new ingredient the others slide over; appearance is the drop keyframes on the img",
+                "add sends vibeui-cart:add with detail { id: bowl-<ids>, name, price, qty: 1 } and sets data-done for 2.2 s"
               ],
               "adapt": [
                 "eyebrow, title, lede, addLabel, addedLabel",
-                "groups: id, title, mode (single | multi), options: id, name, price, kcal, color, image (a photo of the bowl with this ingredient)",
-                "bowlImage, basePrice, currency",
+                "groups: id, title, mode (single | multi), options: id, name, price, kcal, color (fallback), image (cut-out ingredient photo)",
+                "bowlImage (an empty bowl from above, no background), basePrice, currency",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Delivery002\n  title=\"Build your bowl\"\n  basePrice={5}\n  currency=\"$\"\n  groups={[\n    { id: \"base\", title: \"Base\", mode: \"single\", options: [{ id: \"rice\", name: \"Rice\", price: 0, kcal: 210, color: \"#f4efe2\" }] },\n    { id: \"protein\", title: \"Protein\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Salmon\", price: 4, kcal: 180, color: \"#ff8a6b\", image: \"/photos/bowl-salmon.png\" }] },\n  ]}\n/>"
+              "usage": "<Delivery002\n  title=\"Build your bowl\"\n  basePrice={290}\n  bowlImage=\"/photos/bowl-empty.webp\"\n  groups={[\n    { id: \"base\", title: \"Base\", mode: \"single\", options: [{ id: \"rice\", name: \"Rice\", price: 0, kcal: 210, color: \"#f4efe2\", image: \"/photos/base-rice.webp\" }] },\n    { id: \"protein\", title: \"Protein\", mode: \"multi\", options: [{ id: \"salmon\", name: \"Salmon\", price: 220, kcal: 180, color: \"#ff8a6b\", image: \"/photos/protein-salmon.webp\" }] },\n  ]}\n/>"
             },
             "controls": {
               "title": {
@@ -2624,18 +2621,16 @@
                   }
                 ]
               }
-            },
-            "docs": "A composite block: imports button-079 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует button-079 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "delivery-003",
       "type": "registry:block",
-      "title": "Зона доставки: SVG-карта кварталов, клик по зоне или адрес → время и цена",
-      "description": "Секция «куда везём»: стилизованная карта — SVG-сетка кварталов с рекой и кухней в центре, от которой расходятся кольца-пульс. Кварталы раскрашены по трём зонам удаления, по наведению приподнимаются, клик выбирает зону; чипы частых адресов сверху делают то же. Справа ответ: минуты крупно, стоимость доставки, порог бесплатной доставки, название зоны. Выбор уходит событием vibeui-cart:zone.",
+      "title": "Зона доставки на Яндекс Карте: кольца зон от кухни, метки адресов, клик → время и цена",
+      "description": "Секция «куда везём» на настоящей карте: виджет Яндекс Карт (без API-ключа) затемнён под тёмную тему, поверх — кольца трёх зон от кухни, кухня с пульсом и метки частых адресов, пересчитанные из координат по проекции Меркатора. Клик по карте выбирает зону по расстоянию до кухни и ставит булавку, метки и чипы адресов выбирают зону адреса. Справа ответ: минуты крупно, стоимость доставки, порог бесплатной доставки, название зоны. Выбор уходит событием vibeui-cart:zone.",
       "categories": [
         "industry"
       ],
@@ -2655,14 +2650,15 @@
           "map",
           "zones",
           "area",
-          "svg",
           "city",
           "address",
           "eta",
           "fee",
           "interactive",
           "event",
-          "composite"
+          "yandex maps",
+          "geo",
+          "radius"
         ],
         "preview": {
           "props": {},
@@ -2671,17 +2667,18 @@
         "ai": {
           "export": "Delivery003",
           "usage": "<Delivery003\n  title=\"Тапни свой квартал\"\n  zones={[\n    { id: \"near\", name: \"Центр\", minutes: 25, fee: 0, freeFrom: 0 },\n    { id: \"mid\", name: \"Внутри ТТК\", minutes: 35, fee: 149, freeFrom: 1500 },\n    { id: \"far\", name: \"До МКАД\", minutes: 50, fee: 249, freeFrom: 2500 },\n  ]}\n  addresses={[{ label: \"Тверская, 12\", zone: \"near\" }, { label: \"Сокол\", zone: \"mid\" }]}\n/>",
-          "summary": "Карта зон доставки на SVG-кварталах: клик или адрес показывают, за сколько и почём привезём.",
+          "summary": "Карта зон доставки на Яндекс Карте: кольца от кухни, адреса и клик показывают, за сколько и почём привезём.",
           "preserve": [
-            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
-            "BLOCKS считаются один раз на уровне модуля: сетка 13×9, кварталы у реки (riverX) пропускаются, зона — по расстоянию от CENTER",
-            "rect кварталов — tabIndex 0, role button, Enter/Space вызывают choose; data-on подсвечивает всю выбранную зону",
-            "choose шлёт vibeui-cart:zone с detail { label, minutes, fee, freeFrom }; кольца-пульс — три circle с keyframes ring и задержками"
+            "карта — iframe yandex.ru/map-widget с ll/z/lang, pointer-events:none и CSS-фильтр затемнения; её нельзя двигать, иначе оверлей разъедется",
+            "метки — toPixels (Web Mercator, тайл 256) от кухни в пикселях, кольца — radius / kmPerPixel; значения округляются, чтобы SSR и клиент совпали",
+            "клик по оверлею: расстояние в пикселях × kmPerPixel → первая зона с radius ≥ расстояния; дальше последней — ничего",
+            "choose шлёт vibeui-cart:zone с detail { label, minutes, fee, freeFrom }"
           ],
           "adapt": [
             "eyebrow, title, lede, kitchenLabel, currency",
-            "zones: id, name, minutes, fee, freeFrom (от ближней к дальней)",
-            "addresses: label, zone",
+            "kitchen ([долгота, широта]), zoom, mapLang (ru_RU, en_US)",
+            "zones: id, name, minutes, fee, freeFrom, radius (км, от ближней к дальней)",
+            "addresses: label, zone, point ([долгота, широта])",
             "tone — тема",
             "accent — акцент",
             "ink — текст",
@@ -2741,20 +2738,21 @@
         ],
         "i18n": {
           "en": {
-            "title": "Delivery area: an SVG map of blocks, click a zone or an address → time and price",
-            "description": "A “where we deliver” section: a stylised map — an SVG grid of city blocks with a river and the kitchen in the centre sending out pulse rings. Blocks are coloured by three distance zones, lift on hover, a click picks the zone; the frequent-address chips above do the same. On the right the answer: minutes in large type, delivery fee, free-delivery threshold, zone name. The choice is emitted as vibeui-cart:zone.",
+            "title": "Delivery zones on a Yandex map: zone rings around the kitchen, address pins, click → time and price",
+            "description": "A “where we deliver” section on a real map: a Yandex Maps widget (no API key) darkened for a dark theme, with three zone rings around the kitchen, a pulsing kitchen and pins for frequent addresses converted from coordinates with the Mercator projection. A click on the map picks the zone by distance to the kitchen and drops a pin; address pins and chips pick the address's zone. On the right: minutes in large type, delivery fee, free-delivery threshold and zone name. The choice goes out as a vibeui-cart:zone event.",
             "ai": {
-              "summary": "A delivery-area map of SVG blocks: a click or an address shows how fast and for how much we deliver.",
+              "summary": "Delivery zones on a Yandex map: rings around the kitchen, addresses and a click show how fast and how much.",
               "preserve": [
-                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "BLOCKS are computed once at module level: a 13×9 grid, blocks near the river (riverX) are skipped, zone by distance from CENTER",
-                "block rects have tabIndex 0, role button, Enter/Space call choose; data-on highlights the whole chosen zone",
-                "choose emits vibeui-cart:zone with detail { label, minutes, fee, freeFrom }; pulse rings are three circles with ring keyframes and delays"
+                "the map is a yandex.ru/map-widget iframe with ll/z/lang, pointer-events:none and a darkening CSS filter; it must not move, or the overlay drifts",
+                "pins use toPixels (Web Mercator, 256 tile) from the kitchen in pixels, rings are radius / kmPerPixel; values are rounded so SSR and client match",
+                "a click on the overlay: pixel distance × kmPerPixel → the first zone whose radius ≥ distance; beyond the last one — nothing",
+                "choose sends vibeui-cart:zone with detail { label, minutes, fee, freeFrom }"
               ],
               "adapt": [
                 "eyebrow, title, lede, kitchenLabel, currency",
-                "zones: id, name, minutes, fee, freeFrom (nearest first)",
-                "addresses: label, zone",
+                "kitchen ([longitude, latitude]), zoom, mapLang (ru_RU, en_US)",
+                "zones: id, name, minutes, fee, freeFrom, radius (km, nearest first)",
+                "addresses: label, zone, point ([longitude, latitude])",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
@@ -2841,25 +2839,21 @@
                   }
                 ]
               }
-            },
-            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "delivery-004",
       "type": "registry:block",
-      "title": "Трекер заказа: статусы проигрываются, курьер едет по маршруту",
-      "description": "Демонстрация трекера доставки: слева четыре статуса — принят, готовим, курьер выехал, у двери — с вертикальной линией, которая заполняется, и временем у каждого; справа карточка-«телефон» с картой, пунктирным маршрутом от кухни до дома и курьером, который едет по кривой через CSS offset-path. Шаги проигрываются таймерами по кнопке «показать, как это выглядит», в конце всплывает сообщение от курьера. Слушает vibeui-cart:checkout и стартует сам.",
+      "title": "Трекер заказа: шаги с живым прогрессом и телефон с картой, по которой едет курьер",
+      "description": "Демонстрация трекера доставки: слева шаги с иконками — принят, готовим, курьер выехал, у двери; текущий подсвечен и заполняет свою полоску, пройденные отмечены галочкой. Справа телефон с приложением: кольцо прогресса с минутами до приезда, тёмная карта кварталов с рекой и парком, маршрут по улицам — курьер едет по нему через CSS offset-path, пройденный путь светится; снизу карточка курьера, в конце его сообщение. Стартует сам при появлении на экране, по кнопке и по vibeui-cart:checkout.",
       "categories": [
         "industry"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "card-084"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "delivery-004/delivery-004.tsx",
@@ -2881,7 +2875,9 @@
           "animation",
           "demo",
           "event",
-          "composite"
+          "phone mockup",
+          "progress ring",
+          "autoplay"
         ],
         "preview": {
           "props": {},
@@ -2892,10 +2888,10 @@
           "usage": "<Delivery004\n  title=\"Видно каждую минуту\"\n  courierName=\"Артём\"\n  steps={[\n    { title: \"Заказ принят\", text: \"Повар видит заказ.\", time: \"12:41\", after: 300, progress: 0 },\n    { title: \"Готовим\", text: \"Ещё 9 минут.\", time: \"12:43\", after: 1800, progress: 0 },\n    { title: \"Курьер выехал\", text: \"2,3 км до вас.\", time: \"12:56\", after: 3600, progress: 100 },\n    { title: \"У двери\", text: \"Приятного аппетита.\", time: \"13:07\", after: 6600, progress: 100 },\n  ]}\n/>",
           "summary": "Трекер заказа для доставки: статусы включаются по очереди, курьер едет по карте, в конце сообщение.",
           "preserve": [
-            "импорты card-084 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "run — счётчик запусков; useEffect на run ставит setTimeout на каждый steps[i].after и вызывает setStep(i), таймеры чистятся",
-            "курьер — g с offset-path:path(ROUTE), offset-distance из --vibeui-delivery-004-d (progress шага) с transition 2.6 с; trail — тот же path с pathLength 1 и stroke-dashoffset",
-            "слушатель vibeui-cart:checkout сбрасывает step в −1 и увеличивает run; data-state todo/now/done на шагах"
+            "первый запуск — IntersectionObserver с threshold 0.45, один раз; повтор — кнопкой и по vibeui-cart:checkout",
+            "курьер — g с offset-path:path(ROUTE), offset-distance из --vibeui-delivery-004-d с transition 2.8 с; trail — тот же path с pathLength 1 и stroke-dashoffset",
+            "полоска текущего шага идёт keyframes fill за время до следующего шага (--vibeui-delivery-004-span)"
           ],
           "adapt": [
             "eyebrow, title, lede, playLabel, replayLabel, courierName",
@@ -2959,15 +2955,15 @@
         ],
         "i18n": {
           "en": {
-            "title": "Order tracker: statuses play out, the courier rides the route",
-            "description": "A delivery tracker demo: four statuses on the left — accepted, cooking, courier on the way, at the door — with a vertical line that fills up and a time for each; on the right a phone-like card with a map, a dashed route from the kitchen to the home and a courier riding the curve via CSS offset-path. Steps play out with timers on the “show how it looks” button, a courier message pops up at the end. Listens to vibeui-cart:checkout and starts on its own.",
+            "title": "Order tracker: steps with live progress and a phone with a map where the courier drives",
+            "description": "A delivery tracker demo: on the left, steps with icons — received, cooking, courier on the way, at the door; the current one is highlighted and fills its bar, past ones get a check mark. On the right, a phone with an app: a progress ring with minutes to arrival, a dark block map with a river and a park, a route along the streets — the courier drives it via CSS offset-path while the travelled path glows; below, a courier card and finally their message. Starts by itself when it comes into view, by the button and on vibeui-cart:checkout.",
             "ai": {
               "summary": "An order tracker for delivery: statuses light up in turn, the courier rides across the map, a message at the end.",
               "preserve": [
-                "the card-084 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "run is a launch counter; a useEffect on run sets a setTimeout for every steps[i].after calling setStep(i), timers are cleared",
-                "the courier is a g with offset-path:path(ROUTE), offset-distance from --vibeui-delivery-004-d (the step's progress) with a 2.6 s transition; trail is the same path with pathLength 1 and stroke-dashoffset",
-                "the vibeui-cart:checkout listener resets step to −1 and bumps run; data-state todo/now/done on steps"
+                "run is a launch counter; a useEffect on run sets a setTimeout for each steps[i].after and calls setStep(i), timers are cleared",
+                "the first run is an IntersectionObserver with threshold 0.45, once; replays come from the button and vibeui-cart:checkout",
+                "the courier is a g with offset-path:path(ROUTE), offset-distance from --vibeui-delivery-004-d with a 2.8 s transition; the trail is the same path with pathLength 1 and stroke-dashoffset",
+                "the current step's bar runs the fill keyframes over the time until the next step (--vibeui-delivery-004-span)"
               ],
               "adapt": [
                 "eyebrow, title, lede, playLabel, replayLabel, courierName",
@@ -3040,12 +3036,10 @@
                   }
                 ]
               }
-            },
-            "docs": "A composite block: imports card-084 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует card-084 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "delivery-005",
