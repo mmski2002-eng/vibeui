@@ -1461,7 +1461,7 @@ export const SCENARIOS: Scenario[] = [
     },
     sections: [
       { item: "navbar-035", anchor: "", role: "Шапка", roleEn: "Header", note: "Виляющая лапа, «открыто до / закроемся через» по времени посетителя, телефон, бургер.", noteEn: "A wagging paw, “open till / closing in” by the visitor's time, phone, burger." },
-      { item: "hero-035", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "CSS-морда: зрачки за курсором, ухо дёргается, переключатель кот / собака / кролик.", noteEn: "A CSS face: pupils follow the cursor, an ear twitches, a cat / dog / rabbit switch." },
+      { item: "hero-047", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Интро: линия ЭКГ на загрузке, кошка впрыгивает в кадр и замирает, за ней встаёт название клиники.", noteEn: "Intro: an ECG line while loading, a cat leaps into frame and freezes, the clinic name rises behind it." },
       { item: "vet-001", anchor: "", role: "Срочно", roleEn: "Urgent", note: "Закреплённая пилюля с пульсом → панель «что делать сейчас» с чек-листом.", noteEn: "A pinned pulsing pill → a “what to do now” panel with a checklist." },
       { item: "pricing-027", anchor: "services", role: "Цены", roleEn: "Prices", note: "Билеты с перфорацией по питомцу, spotlight, стикер «чаще всего».", noteEn: "Perforated tickets by pet, spotlight, a “most often” sticker." },
       { item: "vet-002", anchor: "body", role: "Схема тела", roleEn: "Body map", note: "SVG-силуэт с пульсирующими хотспотами → услуга, цена, время.", noteEn: "An SVG silhouette with pulsing hotspots → service, price, time." },

@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react"
 
 import { Navbar035, type Navbar035Props } from "@/registry/blocks/navbar/navbar-035/navbar-035"
-import { Hero035, type Hero035Props } from "@/registry/blocks/hero/hero-035/hero-035"
+import { Hero047, type Hero047Props } from "@/registry/blocks/hero/hero-047/hero-047"
 import { Vet001, type Vet001Props } from "@/registry/blocks/industry/vet-001/vet-001"
 import { Pricing027, type Pricing027Props } from "@/registry/blocks/pricing/pricing-027/pricing-027"
 import { Vet002, type Vet002Props } from "@/registry/blocks/industry/vet-002/vet-002"
@@ -17,15 +17,14 @@ import { Footer034, type Footer034Props } from "@/registry/blocks/footer/footer-
  * theme as `app/scenarios/vet/demo/page.tsx`, block text in English via
  * props.
  *
- * A cream "Paw" with a CSS pet face that follows the cursor, an emergency
- * button, a body map, a symptom checker, a live doctors' schedule, a
- * haircut slider and a diary of reviews. The pet switch in the hero also
- * switches the price list (the vibeui-vet:pet event).
+ * A cream "Paw": a cat leaps into frame and freezes on the first screen;
+ * then an emergency button, a body map, a symptom checker, a live doctors'
+ * schedule, a haircut slider and a diary of reviews.
  */
 export const metadata = {
   title: "Paw — vet clinic and grooming at Sokol",
   description:
-    "VibeUI «Vet clinic + grooming» scenario demo: a CSS pet face, an emergency button, price tickets, a body map, a symptom checker, doctors with today's schedule, a haircut slider, a diary of reviews, booking with a map.",
+    "VibeUI «Vet clinic + grooming» scenario demo: an intro hero with a cat, an emergency button, price tickets, a body map, a symptom checker, doctors with today's schedule, a haircut slider, a diary of reviews, booking with a map.",
 }
 
 const page: CSSProperties = {
@@ -60,27 +59,28 @@ const navbar: Navbar035Props = {
   closedLine: "Closed · opens at {time}",
 }
 
-const hero: Hero035Props = {
-  pets: [
-    { key: "cat", label: "Cat", eyebrow: "Vet clinic and grooming at Sokol · 24/7", title: "We treat so gently *the cat won't notice*", lede: "Quiet rooms with no barking, appointments without queues and doctors who pet first, examine second. Vaccines, teeth, neutering — all in one place.", bubble: "Meow. Nobody even held me.", image: `${PHOTOS}/cat-face.png`, imageAlt: "A ginger cat looking at the camera" },
-    { key: "dog", label: "Dog", eyebrow: "Vet clinic and grooming at Sokol · 24/7", title: "We treat so gently *the tail keeps wagging*", lede: "A separate entrance for dogs, scales right in the lobby and a treat after the shot. Orthopedist, dentist, grooming — and nobody rubs you the wrong way.", bubble: "Woof. They give treats here.", image: `${PHOTOS}/dog-face.png`, imageAlt: "A corgi with its tongue out" },
-    { key: "rabbit", label: "Rabbit", eyebrow: "Vet clinic and grooming at Sokol · 24/7", title: "We treat so gently *the ears stay up*", lede: "A rabbit and rodent vet every day, not «on Thursdays». Teeth, digestion, nail trimming — quick, quiet and stress-free for the long-eared.", bubble: "Brought my own carrot.", image: `${PHOTOS}/rabbit-face.png`, imageAlt: "A grey lop-eared rabbit" },
-  ],
+const hero: Hero047Props = {
+  wordmark: "Paw",
+  eyebrow: "Vet clinic and grooming · Sokol",
+  title: ["Gentle care.", "No queues,", "no stress."],
+  lede: "Therapy, vaccination, dentistry and grooming in one clinic. Separate rooms for cats and dogs, a doctor on duty around the clock.",
   primaryLabel: "Book a visit",
-  secondaryLabel: "What hurts?",
+  primaryHint: "free slots available today",
   stats: [
-    { value: 12480, label: "tails treated since 2017" },
+    { value: 24, suffix: "/7", label: "a doctor on duty, no appointment" },
     { value: 4.9, suffix: " / 5", label: "average rating on maps" },
     { value: 18, label: "minutes — average wait for a visit" },
   ],
-  switchLabel: "Who do you have",
   decimalSeparator: ".",
+  loadingLabel: "Loading",
+  skipLabel: "Skip",
+  replayLabel: "Watch again",
 }
 
 const emergency: Vet001Props = {
   label: "Urgent",
   title: "What to do right now",
-  lede: "Call — we're already preparing the room. While you're on the way:",
+  lede: "Call us — we will prepare the room. While you are on the way:",
   steps: ["Don't feed or water if there's vomiting or an injury", "Wrap in a towel, don't press on the belly", "Poisoning — don't induce vomiting yourself, bring the packaging", "Bleeding — a tight bandage, not a tourniquet", "Tell us how much your pet weighs"],
   note: "A doctor on duty around the clock, no appointment needed. At night — entrance from the courtyard, button by the door.",
   address: "62 Leningradsky Ave., entrance from the park side",
@@ -90,29 +90,29 @@ const emergency: Vet001Props = {
 
 const pricing: Pricing027Props = {
   eyebrow: "Services and prices",
-  title: "No «ask at the front desk»",
-  lede: "Prices are fixed and written down in advance. If something beyond the plan comes up during the visit — we ask first, then do it.",
+  title: "Fixed prices",
+  lede: "Service prices are known in advance. If anything beyond the plan is needed during the visit, the doctor agrees it with you before starting.",
   groups: [
     {
       key: "cat",
       label: "Cats",
       items: [
-        { name: "First visit to a GP", note: "Exam, treatment plan, answers to every «is this normal?»", price: "1 200 ₽", popular: true },
+        { name: "First visit to a GP", note: "Exam, treatment plan, answers to the owner's questions", price: "1 200 ₽", popular: true },
         { name: "Combined vaccine", note: "Nobivac Tricat + rabies, passport filled in", price: "2 400 ₽" },
         { name: "Cat spaying", note: "Laparoscopic, no stitches to remove, home the same day", price: "9 800 ₽", popular: true },
-        { name: "Cat neutering", note: "20 minutes under anaesthesia, demanding food by the evening", price: "4 500 ₽" },
+        { name: "Cat neutering", note: "About 20 minutes under general anaesthesia", price: "4 500 ₽" },
         { name: "Ultrasonic teeth cleaning", note: "Under sedation, with polishing", price: "6 900 ₽" },
-        { name: "Nail trimming", note: "While you wait for the visit — free", price: "400 ₽" },
+        { name: "Nail trimming", note: "Free with a booked visit", price: "400 ₽" },
       ],
     },
     {
       key: "dog",
       label: "Dogs",
       items: [
-        { name: "First visit to a GP", note: "Exam, weighing, plan, a treat after", price: "1 400 ₽", popular: true },
+        { name: "First visit to a GP", note: "Exam, weighing, treatment plan", price: "1 400 ₽", popular: true },
         { name: "Combined vaccine", note: "Nobivac DHPPi + Lepto + rabies", price: "2 600 ₽" },
         { name: "Spaying", note: "Laparoscopic, up to 25 kg", price: "14 500 ₽" },
-        { name: "Orthopedist visit", note: "Limping, dysplasia, «jumps, but weirdly»", price: "2 200 ₽", popular: true },
+        { name: "Orthopedist visit", note: "Limping, dysplasia, gait problems", price: "2 200 ₽", popular: true },
         { name: "Ultrasonic teeth cleaning", note: "Under sedation, with polishing", price: "8 400 ₽" },
         { name: "Microchipping", note: "Chip + registration, 5 minutes", price: "1 500 ₽" },
       ],
@@ -125,8 +125,8 @@ const pricing: Pricing027Props = {
         { name: "Teeth filing", note: "Incisors, under light sedation", price: "2 800 ₽" },
         { name: "Rabbit neutering", note: "Inhalation anaesthesia, home in 3 hours", price: "5 900 ₽" },
         { name: "RHD + myxomatosis vaccine", note: "Every six months, passport filled in", price: "1 900 ₽" },
-        { name: "Nail trimming", note: "Five minutes and a carrot", price: "350 ₽" },
-        { name: "Abdominal ultrasound", note: "«Hasn't eaten since yesterday» — that's here, urgently", price: "2 300 ₽" },
+        { name: "Nail trimming", note: "About five minutes", price: "350 ₽" },
+        { name: "Abdominal ultrasound", note: "Urgent if not eating for over a day", price: "2 300 ₽" },
       ],
     },
   ],
@@ -138,16 +138,16 @@ const pricing: Pricing027Props = {
 
 const bodyMap: Vet002Props = {
   eyebrow: "Pet map",
-  title: "Tap where it hurts",
-  lede: "A dot on the diagram — a service and a price. Can't find yours — message the front desk, we'll work out who to see.",
+  title: "Choose what concerns you",
+  lede: "Each dot on the diagram is a service with its price. If yours is not there, the front desk will tell you which doctor to see.",
   spots: [
-    { key: "ears", label: "Ears", x: 31, y: 22, service: "Ear cleaning and otoscope exam", price: "900 ₽", duration: "15 minutes", text: "Shaking the head, scratching, smell — we look at the canal, take a swab, clean. Drops are chosen for what we find, not «just in case»." },
-    { key: "eyes", label: "Eyes", x: 24, y: 17, service: "Ophthalmologist visit", price: "1 800 ₽", duration: "30 minutes", text: "Watery, red, third eyelid — slit-lamp exam, Schirmer test and fluorescein. No «put some drops in»." },
-    { key: "teeth", label: "Teeth", x: 17, y: 32, service: "Ultrasonic teeth cleaning", price: "from 6 900 ₽", duration: "≈ 1 hour", text: "Under sedation, with polishing and X-rays. Bad breath isn't «the breed», it's tartar. Gone in one visit." },
+    { key: "ears", label: "Ears", x: 31, y: 22, service: "Ear cleaning and otoscope exam", price: "900 ₽", duration: "15 minutes", text: "Shaking the head, scratching, smell — we look at the canal, take a swab, clean. Drops are prescribed based on the results." },
+    { key: "eyes", label: "Eyes", x: 24, y: 17, service: "Ophthalmologist visit", price: "1 800 ₽", duration: "30 minutes", text: "Watery, red, third eyelid — slit-lamp exam, Schirmer test and fluorescein." },
+    { key: "teeth", label: "Teeth", x: 17, y: 32, service: "Ultrasonic teeth cleaning", price: "from 6 900 ₽", duration: "≈ 1 hour", text: "Under sedation, with polishing and X-rays. Bad breath is usually caused by tartar, which we remove in one visit." },
     { key: "coat", label: "Coat and skin", x: 52, y: 36, service: "Dermatologist visit", price: "1 600 ₽", duration: "30 minutes", text: "Itching, hair loss, dandruff — a scraping and a Wood's lamp on the spot. If it's an allergy, we'll help find out to what exactly." },
     { key: "belly", label: "Belly", x: 48, y: 60, service: "Abdominal ultrasound", price: "2 300 ₽", duration: "25 minutes", text: "Not eating, vomiting, sitting oddly — we look right away, no appointment for tomorrow. Report and images sent via messenger." },
     { key: "paws", label: "Paws and nails", x: 31, y: 86, service: "Nail trimming + paw pad check", price: "400 ₽", duration: "10 minutes", text: "While you wait for the visit — free. Limping — then to the orthopedist, X-ray the same day." },
-    { key: "tail", label: "Tail", x: 86, y: 16, service: "Surgeon visit", price: "1 500 ₽", duration: "20 minutes", text: "Caught in a door, won't lift it, «hangs» — exam, X-ray if needed. Tail's fine — everything's fine." },
+    { key: "tail", label: "Tail", x: 86, y: 16, service: "Surgeon visit", price: "1 500 ₽", duration: "20 minutes", text: "Injury or the pet will not lift its tail — a surgeon exam, X-ray if needed." },
   ],
   imageAlt: "A beagle in profile",
   actionLabel: "Book a visit",
@@ -155,9 +155,9 @@ const bodyMap: Vet002Props = {
 }
 
 const symptoms: Vet003Props = {
-  eyebrow: "Something wrong?",
+  eyebrow: "Symptoms",
   title: "Tick what you've noticed",
-  lede: "We'll tell you which doctor and how urgent. It's not a diagnosis — a route, so you don't have to guess at three in the morning.",
+  lede: "We'll tell you which doctor and how urgent. It is not a diagnosis but a route to help you decide quickly at any time of day.",
   symptoms: [
     { label: "Not eating for a second day", doctor: "GP", urgency: 2 },
     { label: "Vomiting more than twice", doctor: "GP", urgency: 2 },
@@ -177,8 +177,8 @@ const symptoms: Vet003Props = {
   ],
   levels: ["routine, this week", "within a day", "urgent, right now"],
   actionLabel: "Book a visit",
-  disclaimer: "If in doubt — call. The doctor on duty will answer and tell you whether to come now. It's free.",
-  emptyText: "Nothing ticked yet. Tap the symptoms above — the cards will assemble themselves.",
+  disclaimer: "If in doubt, call us. The doctor on duty will advise free of charge and tell you whether to come now.",
+  emptyText: "No symptoms selected. Tick them above to see doctor recommendations.",
   chipsLabel: "Symptoms",
   scaleTitles: ["Urgency scale", "You can book a routine visit", "Today, don't put it off", "Come now"],
   scaleEmpty: "Tick the symptoms — the slider will show how serious it is.",
@@ -196,7 +196,7 @@ const doctors: People015Props = {
   doctors: [
     { name: "Marina Sokolova", role: "Chief doctor, GP", photo: `${PHOTOS}/doctor-01.webp`, tags: ["cats", "ultrasound", "endocrinology"], days: [1, 2, 3, 4, 5], hours: "9:00–17:00", since: "in practice since 2009" },
     { name: "Artem Gusev", role: "Surgeon, orthopedist", photo: `${PHOTOS}/doctor-02.webp`, tags: ["surgery", "fractures", "laparoscopy"], days: [1, 3, 5, 6], hours: "11:00–21:00", since: "in practice since 2013" },
-    { name: "Dasha Kim", role: "Exotic and small mammal vet", photo: `${PHOTOS}/doctor-03.webp`, tags: ["rabbits", "rodents", "birds"], days: [0, 2, 4, 6], hours: "10:00–19:00", since: "in practice since 2017" },
+    { name: "Daria Kim", role: "Exotic and small mammal vet", photo: `${PHOTOS}/doctor-03.webp`, tags: ["rabbits", "rodents", "birds"], days: [0, 2, 4, 6], hours: "10:00–19:00", since: "in practice since 2017" },
     { name: "Ilya Romanov", role: "Dentist, doctor on duty", photo: `${PHOTOS}/doctor-04.webp`, tags: ["teeth", "night shifts", "intensive care"], days: [0, 1, 2, 3, 4, 5, 6], hours: "21:00–9:00", since: "in practice since 2015" },
   ],
   actionLabel: "All 11 doctors",
@@ -213,7 +213,7 @@ const doctors: People015Props = {
 
 const grooming: Vet004Props = {
   eyebrow: "Grooming",
-  title: "Turn the dial — and see what you'll get",
+  title: "Calculate the grooming price",
   lede: "Cut length, dog size and extras — the price is calculated instantly. The groomer will look at the coat and say if the plan is worth changing.",
   sizes: [
     { key: "s", label: "S", note: "up to 5 kg", price: 2200 },
@@ -230,7 +230,7 @@ const grooming: Vet004Props = {
   marks: [
     { upTo: 5, label: "clippers — summer and mats" },
     { upTo: 12, label: "short and neat" },
-    { upTo: 25, label: "styled, like in a magazine" },
+    { upTo: 25, label: "styled cut" },
     { upTo: 99, label: "just wash and tidy up" },
   ],
   imageAlt: "A spitz before and after a haircut",
@@ -244,25 +244,25 @@ const grooming: Vet004Props = {
 }
 
 const diary: Testimonials027Props = {
-  eyebrow: "Diary",
-  title: "Notes from owners",
+  eyebrow: "Reviews",
+  title: "Owner reviews",
   lede: "Reviews from maps and messenger — as is, with names and dates. Owners send the photos themselves.",
   entries: [
-    { pet: "Baton", owner: "Olya, owner", date: "14 March", text: "Neutering. In the morning I was the one scared, by evening he was demanding dinner. Didn't touch the stitches, no cone needed.", photo: `${PHOTOS}/diary-01.webp`, sticker: "wasn't scared" },
-    { pet: "Miss Plush", owner: "Artem and Nastya", date: "2 April", text: "Lion cut. Groomer Lena showed before and after photos and asked if we were sure. We were. No regrets.", photo: `${PHOTOS}/diary-02.webp`, sticker: "lion" },
-    { pet: "Funtik", owner: "Grandpa Misha", date: "19 April", text: "Stopped eating at night. Came at two in the morning, ultrasound done right away. A day later he was eating hay as if nothing happened.", photo: `${PHOTOS}/diary-03.webp`, sticker: "24/7" },
-    { pet: "Zosya", owner: "Katya, owner", date: "5 May", text: "Teeth cleaning. No smell, eats crunchy food, kisses me on the nose. The orthopedist checked a paw while at it — free.", photo: `${PHOTOS}/diary-04.webp`, sticker: "5 / 5" },
-    { pet: "Keks", owner: "The Ivanov family", date: "23 May", text: "First vaccine. The doctor gave a treat before the shot, not after — and the puppy never figured out what happened.", sticker: "first time" },
-    { pet: "Marcel", owner: "Ira, owner", date: "8 June", text: "The dermatologist found the allergen in one visit. Three years of scratching, a month without.", sticker: "found it" },
+    { pet: "Baton", owner: "Olga", date: "14 March", text: "Neutering went smoothly: by the evening he was eating again. The stitches caused no trouble, no cone needed.", photo: `${PHOTOS}/diary-01.webp`, sticker: "no stress" },
+    { pet: "Miss Plush", owner: "Artem and Anastasia", date: "2 April", text: "A styled cut. Groomer Elena showed before and after photos and agreed the result with us in advance. We are very pleased.", photo: `${PHOTOS}/diary-02.webp`, sticker: "grooming" },
+    { pet: "Funtik", owner: "Mikhail", date: "19 April", text: "Our rabbit stopped eating at night. We came at two in the morning and got an ultrasound right away. A day later his appetite was back.", photo: `${PHOTOS}/diary-03.webp`, sticker: "24/7" },
+    { pet: "Zosya", owner: "Ekaterina", date: "5 May", text: "Teeth cleaning: the smell is gone and she eats dry food again. The orthopedist also checked a paw free of charge.", photo: `${PHOTOS}/diary-04.webp`, sticker: "5 / 5" },
+    { pet: "Keks", owner: "The Ivanov family", date: "23 May", text: "The puppy's first vaccine. The doctor was calm and gentle, and the puppy went through it without stress.", sticker: "first vaccine" },
+    { pet: "Marcel", owner: "Irina", date: "8 June", text: "The dermatologist found the allergen in one visit. Three years of scratching, a month without.", sticker: "result" },
   ],
-  hint: "drag the strip",
+  hint: "scroll the strip",
   trackLabel: "Reviews",
 }
 
 const contact: Contact023Props = {
   eyebrow: "Booking",
-  title: "Come in, we're already warming the table",
-  lede: "Leave your phone number — the front desk will call back within 15 minutes, find a time and tell you what to bring.",
+  title: "Book a visit",
+  lede: "Leave your phone number — the front desk will call back within 15 minutes, find a time and explain how to prepare for the visit.",
   address: "62 Leningradsky Avenue",
   metro: "Sokol · 6 minutes on foot, entrance from the park side",
   hours: [
@@ -274,7 +274,7 @@ const contact: Contact023Props = {
   mapLabel: "Open in maps",
   petOptions: ["Cat", "Dog", "Rabbit or rodent", "Bird", "Someone else"],
   actionLabel: "Book a visit",
-  doneTitle: "Booked",
+  doneTitle: "Request received",
   doneText: "We'll call back within 15 minutes. If it's urgent — call us, the doctor on duty is in.",
   nameLabel: "Your name",
   phoneLabel: "Phone",
@@ -282,13 +282,13 @@ const contact: Contact023Props = {
   whenLabel: "When is convenient",
   noteLabel: "What happened — briefly",
   notePlaceholder: "What happened",
-  fine: "By pressing the button you agree that we'll call you back. Nothing more.",
+  fine: "By pressing the button you agree to a call back to arrange the visit.",
   mapAria: "Map: {address}",
 }
 
 const footer: Footer034Props = {
   brand: "Paw",
-  caption: "Vet clinic and grooming at Sokol. We treat cats, dogs, rabbits and everyone who fits in a carrier.",
+  caption: "Vet clinic and grooming at Sokol. We treat cats, dogs, rabbits, rodents and birds.",
   address: "62 Leningradsky Avenue · Sokol metro",
   hours: "Visits 9:00–21:00 · emergencies — around the clock",
   columns: [
@@ -313,11 +313,11 @@ export default function VetDemoEn() {
   return (
     <div style={page} className="min-h-dvh">
       <style href="vibeui-demo-scroll" precedence="medium">
-        {`html{scroll-behavior:smooth;scroll-padding-top:4.25rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+        {`html{scroll-behavior:smooth;scroll-padding-top:4.25rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media (min-width:56rem){#top{margin-top:-4.25rem}}[data-vibeui-block="navbar-035"]{transition:opacity .9s ease-out .9s,background .3s,box-shadow .3s}:root:not([data-vibeui-hero-047="parked"]) :is([data-vibeui-block="navbar-035"],[data-vibeui-block="vet-001"]){opacity:0;pointer-events:none;transition:none}[data-vibeui-block="vet-001"]{transition:opacity .9s ease-out 1.4s}`}
       </style>
       <Navbar035 {...cream} {...navbar} />
       <div id="top">
-        <Hero035 {...cream} {...hero} />
+        <Hero047 accent={cream.accent} ink={cream.ink} background={cream.background} {...hero} />
       </div>
       <Vet001 {...cream} {...emergency} />
       <div id="services">
