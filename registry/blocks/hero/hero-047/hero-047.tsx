@@ -82,7 +82,8 @@ color-scheme:light;
 [data-vibeui-block="hero-047"][data-phase="parked"] [data-part="wordmark"]{opacity:1;translate:0 0}
 [data-vibeui-block="hero-047"] [data-part="shade"]{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity 1.2s ease-out;background:linear-gradient(0deg,var(--vibeui-hero-047-bg) 4%,transparent 36%)}
 [data-vibeui-block="hero-047"][data-phase="parked"] [data-part="shade"]{opacity:1}
-[data-vibeui-block="hero-047"] [data-part="shell"]{position:relative;z-index:4;width:100%;max-width:84rem;margin:0 auto;padding:1.5rem 1.25rem 3rem;display:grid;gap:2rem;align-items:end;pointer-events:none}
+[data-vibeui-block="hero-047"] [data-part="veil"]{display:none}
+[data-vibeui-block="hero-047"] [data-part="shell"]{position:relative;z-index:4;width:100%;max-width:80rem;margin:0 auto;padding:1.5rem 1.25rem 3rem;display:grid;gap:2rem;align-items:end;pointer-events:none}
 [data-vibeui-block="hero-047"] [data-part="copy"]{animation:vibeui-hero-047-in 1s var(--vibeui-hero-047-ease) .2s both}
 @keyframes vibeui-hero-047-in{from{opacity:0;translate:0 1.25rem}}
 @keyframes vibeui-hero-047-rise{from{translate:0 110%}}
@@ -122,7 +123,8 @@ color-scheme:light;
 [data-vibeui-block="hero-047"] [data-part="stage"]{position:absolute;inset:0;aspect-ratio:auto}
 [data-vibeui-block="hero-047"] [data-part="frame"]{right:auto;left:50%;translate:-50% -50%}
 [data-vibeui-block="hero-047"] [data-part="shade"]{background:linear-gradient(0deg,color-mix(in oklab,var(--vibeui-hero-047-bg) 80%,transparent),transparent 30%),linear-gradient(90deg,color-mix(in oklab,var(--vibeui-hero-047-bg) 70%,transparent),transparent 46%)}
-[data-vibeui-block="hero-047"] [data-part="shell"]{padding:0 2rem 3rem}
+[data-vibeui-block="hero-047"] [data-part="veil"]{display:block;position:absolute;inset:0 auto 0 0;width:62%;z-index:3;pointer-events:none;background:linear-gradient(90deg,color-mix(in oklab,var(--vibeui-hero-047-bg) 88%,transparent),color-mix(in oklab,var(--vibeui-hero-047-bg) 70%,transparent) 45%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);mask-image:linear-gradient(90deg,#000 45%,transparent)}
+[data-vibeui-block="hero-047"] [data-part="shell"]{padding:6rem 1.25rem 3rem}
 [data-vibeui-block="hero-047"] [data-part="copy"]{max-width:36rem}
 [data-vibeui-block="hero-047"] [data-part="replay"]{right:1.5rem;bottom:1.25rem}
 }
@@ -294,6 +296,7 @@ export function Hero047({
               <img data-part="subject" src={subjectSrc} alt="" />
             </div>
             <i data-part="shade" />
+            <i data-part="veil" />
           </div>
           <div data-part="shell">
             <div data-part="copy">

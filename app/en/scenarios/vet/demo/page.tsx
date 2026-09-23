@@ -308,36 +308,54 @@ const footer: Footer034Props = {
   copyright: "© 2017–2026 Paw",
 }
 
+// Каскад при прокрутке: анимируем содержимое секций, не их фон, чтобы полосы
+// не моргали. Только translate/opacity и только from-кадр — конечное значение
+// берётся живым, поэтому hover-сдвиги блоков продолжают работать.
+const REVEAL = `@supports (animation-timeline: view()){
+[data-reveal] :is([data-part="eyebrow"],[data-part="title"],[data-part="lede"],[data-part="today"],[data-part="hint"],[data-part="tabs"],[data-part="fine"],[data-part="disclaimer"],[data-part="ticket"],[data-part="scheme"],[data-part="legend"],[data-part="result"],[data-part="stage"],[data-part="track"],[data-part="form"],[data-part="map"],[data-part="info"]),[data-reveal] [data-vibeui-block="vet-002"] [data-part="card"],[data-reveal] :is([data-part="chips"],[data-part="grid"],[data-part="panel"]) > *{--vet-d:0;animation:vet-reveal linear both;animation-timing-function:cubic-bezier(.22,1,.36,1);animation-timeline:view();animation-range:entry calc(5% + var(--vet-d) * 7%) cover calc(24% + var(--vet-d) * 4%)}
+[data-reveal] :is([data-part="title"],[data-part="legend"],[data-part="info"]),[data-reveal] [data-vibeui-block="vet-002"] [data-part="card"],[data-reveal] :is([data-part="chips"],[data-part="grid"],[data-part="panel"]) > :nth-child(4n+2){--vet-d:1}
+[data-reveal] :is([data-part="lede"],[data-part="tabs"],[data-part="today"],[data-part="hint"]),[data-reveal] :is([data-part="chips"],[data-part="grid"],[data-part="panel"]) > :nth-child(4n+3){--vet-d:2}
+[data-reveal] :is([data-part="chips"],[data-part="grid"],[data-part="panel"]) > :nth-child(4n+4){--vet-d:3}
+[data-reveal] [data-part="grid"] > [data-part="ticket"]:nth-child(3n+1){--vet-d:0}
+[data-reveal] [data-part="grid"] > [data-part="ticket"]:nth-child(3n+2){--vet-d:1}
+[data-reveal] [data-part="grid"] > [data-part="ticket"]:nth-child(3n){--vet-d:2}
+[data-reveal] [data-vibeui-block="pricing-027"] [data-part="grid"] > [data-part="ticket"]{animation:vibeui-pricing-027-rise .45s cubic-bezier(.2,.8,.2,1) both,vet-reveal linear both;animation-delay:calc(var(--vibeui-pricing-027-i) * 50ms),0s;animation-timing-function:cubic-bezier(.2,.8,.2,1),cubic-bezier(.22,1,.36,1);animation-timeline:auto,view();animation-range:normal,entry calc(5% + var(--vet-d) * 7%) cover calc(24% + var(--vet-d) * 4%)}
+@keyframes vet-reveal{from{opacity:0;translate:0 28px}}}
+@media (prefers-reduced-motion:reduce){[data-reveal] *{animation:none!important}}`
+
 export default function VetDemoEn() {
   return (
     <div style={page} className="min-h-dvh">
-      <style href="vibeui-demo-scroll" precedence="medium">
-        {`html{scroll-behavior:smooth;scroll-padding-top:4.25rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media (min-width:56rem){#top{margin-top:-4.25rem}}`}
+      <style href="vibeui-vet-reveal" precedence="medium">
+        {REVEAL}
       </style>
-      <Navbar035 {...cream} {...navbar} />
+      <style href="vibeui-demo-scroll" precedence="medium">
+        {`html{scroll-behavior:smooth;scroll-padding-top:3.75rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
+      </style>
+      <Navbar035 {...cream} overlay {...navbar} />
       <div id="top">
         <Hero047 accent={cream.accent} ink={cream.ink} background={cream.background} {...hero} />
       </div>
       <Vet001 {...cream} {...emergency} />
-      <div id="services">
+      <div id="services" data-reveal>
         <Pricing027 {...cream} {...pricing} background="#f4ecdf" />
       </div>
-      <div id="body">
+      <div id="body" data-reveal>
         <Vet002 {...cream} {...bodyMap} />
       </div>
-      <div id="symptoms">
+      <div id="symptoms" data-reveal>
         <Vet003 {...cream} {...symptoms} background="#f4ecdf" />
       </div>
-      <div id="doctors">
+      <div id="doctors" data-reveal>
         <People015 {...cream} {...doctors} />
       </div>
-      <div id="grooming">
+      <div id="grooming" data-reveal>
         <Vet004 {...cream} {...grooming} background="#f4ecdf" />
       </div>
-      <div id="diary">
+      <div id="diary" data-reveal>
         <Testimonials027 {...cream} {...diary} />
       </div>
-      <div id="contacts">
+      <div id="contacts" data-reveal>
         <Contact023 {...cream} {...contact} background="#f4ecdf" />
       </div>
       <Footer034 {...cream} {...footer} />

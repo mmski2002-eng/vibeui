@@ -77,7 +77,7 @@ container-type:inline-size;
 [data-vibeui-block="contact-023"] [data-part="title"]{margin:0;font-family:var(--vibeui-contact-023-display);font-weight:900;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1;letter-spacing:-.03em}
 [data-vibeui-block="contact-023"] [data-part="lede"]{margin:.9rem 0 0;max-width:30rem;color:var(--vibeui-contact-023-muted)}
 [data-vibeui-block="contact-023"] [data-part="form"]{display:grid;gap:.8rem;margin:1.8rem 0 0;padding:1.5rem;border-radius:1.6rem;background:var(--vibeui-contact-023-card);border:1px solid var(--vibeui-contact-023-line)}
-[data-vibeui-block="contact-023"] [data-part="two"]{display:grid;gap:.8rem}
+[data-vibeui-block="contact-023"] [data-part="two"]{display:grid;gap:.8rem;align-items:end}
 [data-vibeui-block="contact-023"] [data-part="fine"]{margin:0;font-size:.78rem;color:var(--vibeui-contact-023-muted);text-align:center}
 [data-vibeui-block="contact-023"] [data-part="done"]{display:grid;justify-items:center;gap:.8rem;margin:1.8rem 0 0;padding:2.5rem 1.5rem;border-radius:1.6rem;background:var(--vibeui-contact-023-card);border:1px solid var(--vibeui-contact-023-line);text-align:center;animation:vibeui-contact-023-pop .4s cubic-bezier(.34,1.4,.64,1) both}
 [data-vibeui-block="contact-023"] [data-part="done"] svg{width:4.5rem;height:4.5rem;color:var(--vibeui-contact-023-park)}
@@ -206,12 +206,13 @@ export function Contact023({
                 </div>
                 <div data-part="two">
                   <Select001
-                    label={petLabel}
-                    placeholder=""
+                    label=""
+                    aria-label={petLabel}
+                    placeholder={petLabel}
                     options={petOptions.map((option) => ({ value: option, label: option }))}
                     name="pet"
-                    defaultValue={petOptions[0]}
                     accent={accent}
+                    style={{ "--vibeui-select-001-height": "3.5rem" } as CSSProperties}
                   />
                   <Input001
                     type="text"

@@ -76,7 +76,7 @@ container-type:inline-size;
 [data-vibeui-block="vet-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-vet-003-display);font-weight:900;font-size:clamp(2rem,4.8cqi,3.4rem);line-height:1;letter-spacing:-.03em}
 [data-vibeui-block="vet-003"] [data-part="lede"]{margin:.9rem 0 0;color:var(--vibeui-vet-003-muted)}
 [data-vibeui-block="vet-003"] [data-part="chips"]{display:flex;flex-wrap:wrap;gap:.5rem;margin:2rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="vet-003"] [data-part="result"]{display:grid;gap:1.2rem;margin:2rem 0 0;align-items:start}
+[data-vibeui-block="vet-003"] [data-part="result"]{display:grid;gap:1.2rem;margin:2rem 0 0;align-items:stretch}
 [data-vibeui-block="vet-003"] [data-part="gauge"]{padding:1.4rem;border-radius:1.5rem;background:var(--vibeui-vet-003-card);border:1px solid var(--vibeui-vet-003-line)}
 [data-vibeui-block="vet-003"] [data-part="gauge"] h3{margin:0;font-family:var(--vibeui-vet-003-display);font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:-.02em}
 [data-vibeui-block="vet-003"] [data-part="gauge"] p{margin:.4rem 0 0;font-size:.88rem;color:var(--vibeui-vet-003-muted)}

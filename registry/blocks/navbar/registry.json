@@ -6241,15 +6241,13 @@
     {
       "name": "navbar-035",
       "type": "registry:block",
-      "title": "Шапка ветклиники с живым статусом «открыто»",
-      "description": "Липкая шапка клиники или салона: лапа в лого виляет по наведению, чип часов сам считает по времени посетителя — «открыто до 21:00», «закроемся через 40 мин» или «откроемся в 9:00». Телефон, кнопка записи, бургер на узком, стекло при прокрутке.",
+      "title": "Шапка ветклиники: прозрачная поверх хиро, живой статус «открыто»",
+      "description": "Липкая шапка клиники или салона в строгом стиле: лапа в тонком кольце, название разрядкой, меню тонким шрифтом. Статус часов сам считает по времени посетителя — «открыто до 21:00», «закроемся через 40 мин» или «откроемся в 9:00». С overlay вверху страницы шапка прозрачная и первый экран идёт от самого верха, при прокрутке сжимается в стеклянную полосу. Телефон, кнопка записи, бургер на узком.",
       "categories": [
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-016"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-035/navbar-035.tsx",
@@ -6270,7 +6268,9 @@
           "sticky",
           "burger",
           "pet",
-          "composite"
+          "transparent",
+          "overlay",
+          "glass"
         ],
         "preview": {
           "props": {
@@ -6280,20 +6280,21 @@
         },
         "ai": {
           "export": "Navbar035",
-          "usage": "<Navbar035\n  brand=\"Лапа\"\n  caption=\"ветклиника · груминг\"\n  opensAt={9}\n  closesAt={21}\n  phone=\"+7 495 120-24-24\"\n  links={[{ label: \"Услуги\", href: \"#services\" }, { label: \"Врачи\", href: \"#doctors\" }]}\n/>",
+          "usage": "<Navbar035\n  overlay\n  brand=\"Лапа\"\n  caption=\"ветклиника · груминг\"\n  opensAt={9}\n  closesAt={21}\n  phone=\"+7 495 120-24-24\"\n  links={[{ label: \"Услуги\", href: \"#services\" }, { label: \"Врачи\", href: \"#doctors\" }]}\n/>",
           "summary": "Шапка для клиники, салона или магазина с часами: статус «открыто / закрыто» считается на устройстве посетителя.",
           "preserve": [
-            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "overlay: шапка вверху прозрачная и не занимает места — margin-bottom равен минус её высоте (--vibeui-navbar-035-h), поэтому при сжатии на прокрутке страница не прыгает",
+            "при прокрутке высота строки уменьшается, фон — полупрозрачный цвет фона с backdrop-filter и тонкой линией снизу",
             "статус часов — useSyncExternalStore с серверным снимком null, на сервере нейтральное «9:00–21:00», без гидрационных расхождений",
-            "лапа в лого — svg с keyframes wag по наведению на бренд, без сдвига макета",
-            "чип часов виден от 48rem контейнера, телефон от 36rem, ссылки от 60rem; в бургер-меню всё дублируется"
+            "статус часов виден от 52rem контейнера, телефон от 36rem, ссылки от 64rem; в бургер-меню всё дублируется"
           ],
           "adapt": [
             "brand, caption, brandHref, links: label, href",
             "opensAt, closesAt (часы), phone, phoneHref",
-            "actionLabel, actionHref, sticky",
+            "actionLabel, actionHref, sticky, overlay",
             "tone — тема",
             "accent — акцент",
+            "ink — текст",
             "background — фон"
           ]
         },
@@ -6350,25 +6351,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Vet clinic navbar with a live “open now” status",
-            "description": "Sticky header for a clinic or salon: the paw in the logo wags on hover, the hours chip computes from the visitor's time — “open until 21:00”, “closing in 40 min” or “opens at 9:00”. Phone, booking button, burger on narrow, glass on scroll.",
+            "title": "Vet clinic navbar: transparent over the hero, live “open now” status",
+            "description": "A sticky header for a clinic or salon in a strict style: a paw in a thin ring, a letter-spaced name, a light-weight menu. The hours status computes from the visitor's time — “open until 21:00”, “closing in 40 min” or “opens at 9:00”. With overlay the header is transparent at the top of the page and the first screen starts at the very top; on scroll it shrinks into a glass bar. Phone, booking button, burger on narrow.",
             "ai": {
               "summary": "Header for a clinic, salon or shop with hours: the open / closed status is computed on the visitor's device.",
               "preserve": [
-                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "overlay: the header is transparent at the top and takes no space — its margin-bottom is minus its own height (--vibeui-navbar-035-h), so the page does not jump when it shrinks on scroll",
+                "on scroll the row gets shorter and the background becomes a translucent background color with backdrop-filter and a thin bottom line",
                 "the hours status is useSyncExternalStore with a null server snapshot: neutral “9:00–21:00” on the server, no hydration mismatch",
-                "the paw in the logo is an svg with wag keyframes on brand hover, no layout shift",
-                "the hours chip shows from a 48rem container, phone from 36rem, links from 60rem; the burger menu duplicates everything"
+                "the hours status shows from a 52rem container, phone from 36rem, links from 64rem; the burger menu duplicates everything"
               ],
               "adapt": [
                 "brand, caption, brandHref, links: label, href",
                 "opensAt, closesAt (hours), phone, phoneHref",
-                "actionLabel, actionHref, sticky",
+                "actionLabel, actionHref, sticky, overlay",
                 "tone — theme",
                 "accent — accent",
+                "ink — ink",
                 "background — background"
               ],
-              "usage": "<Navbar035\n  brand=\"Paw\"\n  caption=\"vet clinic · grooming\"\n  opensAt={9}\n  closesAt={21}\n  phone=\"+1 415 555-0142\"\n  links={[{ label: \"Services\", href: \"#services\" }, { label: \"Doctors\", href: \"#doctors\" }]}\n/>"
+              "usage": "<Navbar035\n  overlay\n  brand=\"Paw\"\n  caption=\"vet clinic · grooming\"\n  opensAt={9}\n  closesAt={21}\n  phone=\"+1 415 555-0142\"\n  links={[{ label: \"Services\", href: \"#services\" }, { label: \"Doctors\", href: \"#doctors\" }]}\n/>"
             },
             "controls": {
               "brand": {
@@ -6422,12 +6424,10 @@
                 "actionLabel": "Book a visit",
                 "sticky": false
               }
-            },
-            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "navbar-036",

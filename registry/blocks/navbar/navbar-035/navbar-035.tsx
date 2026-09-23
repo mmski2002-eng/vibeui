@@ -2,8 +2,6 @@
 
 import { useEffect, useState, useSyncExternalStore, type CSSProperties } from "react"
 
-import { Button016 } from "@/registry/components/button/button-016/button-016"
-
 export type Navbar035Link = {
   label: string
   href: string
@@ -22,6 +20,8 @@ export type Navbar035Props = {
   actionLabel?: string
   actionHref?: string
   sticky?: boolean
+  /** Прозрачная поверх первого экрана и без собственной высоты: хиро уходит под неё. */
+  overlay?: boolean
   /** aria навигации, меню и кнопки-бургера. */
   navLabel?: string
   menuLabel?: string
@@ -39,12 +39,13 @@ export type Navbar035Props = {
   style?: CSSProperties
 }
 
-// Шапка ветклиники: лапа в лого виляет по наведению, рядом чип с часами,
-// который сам знает, открыто ли сейчас — «открыто до 21:00», «закроемся
-// через 40 мин» или «откроемся в 9:00» по времени посетителя (на сервере
-// рендерится нейтральное «9:00–21:00»). Телефон, кнопка записи, бургер на
-// узком, стекло при прокрутке.
-const FONTS = "https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Golos+Text:wght@400;500;600&display=swap"
+// Шапка ветклиники: лапа в тонком кольце, название разрядкой, статус часов сам
+// знает, открыто ли сейчас — «открыто до 21:00», «закроемся через 40 мин» или
+// «откроемся в 9:00» по времени посетителя (на сервере — нейтральное
+// «9:00–21:00»). С overlay шапка вверху прозрачная и не занимает места в потоке
+// (margin-bottom = минус своя высота) — хиро идёт от самого верха экрана;
+// при прокрутке сжимается в стеклянную полосу.
+const FONTS = "https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="navbar-035"]){
@@ -52,64 +53,69 @@ const STYLES = `
 --vibeui-navbar-035-fg:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-navbar-035-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-navbar-035-on-accent:oklch(from var(--vibeui-navbar-035-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
---vibeui-navbar-035-muted:color-mix(in oklab,var(--vibeui-navbar-035-fg) 60%,var(--vibeui-navbar-035-bg));
---vibeui-navbar-035-line:color-mix(in oklab,var(--vibeui-navbar-035-fg) 12%,transparent);
+--vibeui-navbar-035-muted:color-mix(in oklab,var(--vibeui-navbar-035-fg) 62%,var(--vibeui-navbar-035-bg));
+--vibeui-navbar-035-line:color-mix(in oklab,var(--vibeui-navbar-035-fg) 14%,transparent);
 --vibeui-navbar-035-open:#4f8f45;
 --vibeui-navbar-035-soon:#d99a1e;
---vibeui-navbar-035-display:"Nunito",ui-rounded,ui-sans-serif,system-ui,sans-serif;
 --vibeui-navbar-035-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
+--vibeui-navbar-035-ease:cubic-bezier(.22,1,.36,1);
+--vibeui-navbar-035-h:4.25rem;
 container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="navbar-035"]{color-scheme:dark}
 :where([data-vibeui-block="navbar-035"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="navbar-035"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="navbar-035"]{box-sizing:border-box;position:relative;z-index:50;font-family:var(--vibeui-navbar-035-font);color:var(--vibeui-navbar-035-fg);background:var(--vibeui-navbar-035-bg);font-size:.92rem;line-height:1.4;transition:background .3s,box-shadow .3s}
+[data-vibeui-block="navbar-035"]{box-sizing:border-box;position:relative;z-index:50;font-family:var(--vibeui-navbar-035-font);color:var(--vibeui-navbar-035-fg);background:var(--vibeui-navbar-035-bg);font-size:.9rem;line-height:1.4;box-shadow:0 1px 0 var(--vibeui-navbar-035-line);transition:background .4s,box-shadow .4s,margin .45s var(--vibeui-navbar-035-ease)}
 [data-vibeui-block="navbar-035"][data-sticky="true"]{position:sticky;top:0}
-[data-vibeui-block="navbar-035"][data-scrolled="true"]{background:color-mix(in oklab,var(--vibeui-navbar-035-bg) 82%,transparent);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--vibeui-navbar-035-line)}
+[data-vibeui-block="navbar-035"][data-overlay="true"]{--vibeui-navbar-035-h:5.25rem;margin-bottom:calc(-1 * var(--vibeui-navbar-035-h));background:transparent;box-shadow:0 1px 0 transparent}
+[data-vibeui-block="navbar-035"][data-scrolled="true"]{--vibeui-navbar-035-h:3.75rem;background:color-mix(in oklab,var(--vibeui-navbar-035-bg) 76%,transparent);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 1px 0 var(--vibeui-navbar-035-line),0 12px 32px -24px color-mix(in oklab,var(--vibeui-navbar-035-fg) 55%,transparent)}
+[data-vibeui-block="navbar-035"][data-open="true"]{background:var(--vibeui-navbar-035-bg)}
 [data-vibeui-block="navbar-035"] *{box-sizing:border-box}
-[data-vibeui-block="navbar-035"] [data-part="row"]{display:flex;align-items:center;gap:.7rem;height:4.25rem;max-width:80rem;margin:0 auto;padding:0 1.25rem}
-[data-vibeui-block="navbar-035"] [data-part="brand"]{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;color:inherit;min-width:0}
-[data-vibeui-block="navbar-035"] [data-part="paw"]{flex-shrink:0;width:2.1rem;height:2.1rem;padding:.4rem;border-radius:.8rem;background:var(--vibeui-navbar-035-accent);color:var(--vibeui-navbar-035-on-accent);transform:rotate(-12deg);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+[data-vibeui-block="navbar-035"] [data-part="row"]{display:flex;align-items:center;gap:.8rem;height:var(--vibeui-navbar-035-h);max-width:80rem;margin:0 auto;padding:0 1.25rem;transition:height .45s var(--vibeui-navbar-035-ease)}
+[data-vibeui-block="navbar-035"] [data-part="brand"]{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;color:inherit;min-width:0}
+[data-vibeui-block="navbar-035"] [data-part="mark"]{display:grid;place-items:center;flex-shrink:0;width:2.35rem;height:2.35rem;border-radius:50%;border:1px solid color-mix(in oklab,var(--vibeui-navbar-035-accent) 55%,transparent);color:var(--vibeui-navbar-035-accent);transition:border-color .3s,background .3s}
+[data-vibeui-block="navbar-035"] [data-part="paw"]{width:1.05rem;height:1.05rem;transform:rotate(-12deg)}
+[data-vibeui-block="navbar-035"] [data-part="brand"]:hover [data-part="mark"]{border-color:var(--vibeui-navbar-035-accent);background:color-mix(in oklab,var(--vibeui-navbar-035-accent) 8%,transparent)}
 [data-vibeui-block="navbar-035"] [data-part="brand"]:hover [data-part="paw"]{animation:vibeui-navbar-035-wag .7s ease-in-out}
-[data-vibeui-block="navbar-035"] [data-part="name"]{display:grid;line-height:1.05}
-[data-vibeui-block="navbar-035"] [data-part="name"] b{font-family:var(--vibeui-navbar-035-display);font-weight:900;font-size:1.3rem;letter-spacing:-.02em}
-[data-vibeui-block="navbar-035"] [data-part="name"] small{font-size:.68rem;color:var(--vibeui-navbar-035-muted);white-space:nowrap}
-[data-vibeui-block="navbar-035"] [data-part="nav"]{display:none;gap:1.2rem;margin-left:1rem}
-[data-vibeui-block="navbar-035"] [data-part="nav"] a{position:relative;color:var(--vibeui-navbar-035-muted);text-decoration:none;font-weight:500;padding:.3rem 0;transition:color .2s}
-[data-vibeui-block="navbar-035"] [data-part="nav"] a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--vibeui-navbar-035-accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease-out}
+[data-vibeui-block="navbar-035"] [data-part="name"]{display:grid;gap:.25rem;line-height:1}
+[data-vibeui-block="navbar-035"] [data-part="name"] b{font-weight:600;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;margin-right:-.3em}
+[data-vibeui-block="navbar-035"] [data-part="name"] small{font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--vibeui-navbar-035-muted);white-space:nowrap}
+[data-vibeui-block="navbar-035"] [data-part="nav"]{display:none;gap:1.9rem;margin-left:2.2rem}
+[data-vibeui-block="navbar-035"] [data-part="nav"] a{position:relative;color:var(--vibeui-navbar-035-muted);text-decoration:none;font-weight:400;font-size:.86rem;letter-spacing:.02em;padding:.35rem 0;transition:color .25s}
+[data-vibeui-block="navbar-035"] [data-part="nav"] a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--vibeui-navbar-035-accent);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--vibeui-navbar-035-ease)}
 [data-vibeui-block="navbar-035"] [data-part="nav"] a:hover{color:var(--vibeui-navbar-035-fg)}
-[data-vibeui-block="navbar-035"] [data-part="nav"] a:hover::after{transform:scaleX(1)}
-[data-vibeui-block="navbar-035"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.6rem}
-[data-vibeui-block="navbar-035"] [data-part="hours"]{display:none;align-items:center;gap:.45rem;padding:.4rem .75rem;border-radius:999px;border:1px solid var(--vibeui-navbar-035-line);font-size:.78rem;font-weight:500;color:var(--vibeui-navbar-035-muted);white-space:nowrap}
-[data-vibeui-block="navbar-035"] [data-part="hours"] i{position:relative;width:.55rem;height:.55rem;border-radius:50%;background:var(--vibeui-navbar-035-muted);flex-shrink:0}
-[data-vibeui-block="navbar-035"] [data-part="hours"][data-state="open"]{color:var(--vibeui-navbar-035-fg)}
+[data-vibeui-block="navbar-035"] [data-part="nav"] a:hover::after{transform:scaleX(1);transform-origin:left}
+[data-vibeui-block="navbar-035"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:1.1rem}
+[data-vibeui-block="navbar-035"] [data-part="hours"]{display:none;align-items:center;gap:.5rem;font-size:.76rem;letter-spacing:.02em;color:var(--vibeui-navbar-035-muted);white-space:nowrap}
+[data-vibeui-block="navbar-035"] [data-part="hours"] i{position:relative;width:.4rem;height:.4rem;border-radius:50%;background:var(--vibeui-navbar-035-muted);flex-shrink:0}
 [data-vibeui-block="navbar-035"] [data-part="hours"][data-state="open"] i{background:var(--vibeui-navbar-035-open)}
 [data-vibeui-block="navbar-035"] [data-part="hours"][data-state="soon"] i{background:var(--vibeui-navbar-035-soon)}
-[data-vibeui-block="navbar-035"] [data-part="hours"][data-state="open"] i::after,[data-vibeui-block="navbar-035"] [data-part="hours"][data-state="soon"] i::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid currentColor;color:inherit;opacity:0;animation:vibeui-navbar-035-pulse 2.2s ease-out infinite}
+[data-vibeui-block="navbar-035"] [data-part="hours"][data-state="open"] i::after,[data-vibeui-block="navbar-035"] [data-part="hours"][data-state="soon"] i::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid currentColor;opacity:0;animation:vibeui-navbar-035-pulse 2.4s ease-out infinite}
 [data-vibeui-block="navbar-035"] [data-part="hours"][data-state="open"] i::after{color:var(--vibeui-navbar-035-open)}
 [data-vibeui-block="navbar-035"] [data-part="hours"][data-state="soon"] i::after{color:var(--vibeui-navbar-035-soon)}
-[data-vibeui-block="navbar-035"] [data-part="phone"]{display:none;align-items:center;gap:.4rem;color:var(--vibeui-navbar-035-fg);text-decoration:none;font-family:var(--vibeui-navbar-035-display);font-weight:800;font-size:.95rem;white-space:nowrap;transition:color .2s}
-[data-vibeui-block="navbar-035"] [data-part="phone"] svg{width:1rem;height:1rem;color:var(--vibeui-navbar-035-accent)}
+[data-vibeui-block="navbar-035"] [data-part="phone"]{display:none;color:var(--vibeui-navbar-035-fg);text-decoration:none;font-weight:500;font-size:.88rem;letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .25s}
 [data-vibeui-block="navbar-035"] [data-part="phone"]:hover{color:var(--vibeui-navbar-035-accent)}
-[data-vibeui-block="navbar-035"] button:focus-visible{outline:2px solid var(--vibeui-navbar-035-accent);outline-offset:2px}
-[data-vibeui-block="navbar-035"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.6rem;height:2.6rem;padding:0;border:1px solid var(--vibeui-navbar-035-line);border-radius:999px;background:transparent;color:inherit;cursor:pointer}
-[data-vibeui-block="navbar-035"] [data-part="burger"] i{display:block;width:1rem;height:2px;margin:0 auto;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
-[data-vibeui-block="navbar-035"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
-[data-vibeui-block="navbar-035"] [data-part="burger"][aria-expanded="true"] i:nth-child(2){opacity:0}
-[data-vibeui-block="navbar-035"] [data-part="burger"][aria-expanded="true"] i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-[data-vibeui-block="navbar-035"] [data-part="menu"]{display:grid;gap:.2rem;max-width:80rem;margin:0 auto;padding:.6rem 1.25rem 1.25rem;border-top:1px solid var(--vibeui-navbar-035-line);animation:vibeui-navbar-035-menu .22s ease-out}
+[data-vibeui-block="navbar-035"] [data-part="action"]{display:inline-flex;align-items:center;height:2.5rem;padding:0 1.25rem;border-radius:999px;background:var(--vibeui-navbar-035-accent);color:var(--vibeui-navbar-035-on-accent);text-decoration:none;font-weight:500;font-size:.84rem;letter-spacing:.03em;white-space:nowrap;box-shadow:0 8px 20px -12px var(--vibeui-navbar-035-accent);transition:background .25s,box-shadow .25s,translate .25s}
+[data-vibeui-block="navbar-035"] [data-part="action"]:hover{background:color-mix(in oklab,var(--vibeui-navbar-035-accent) 88%,var(--vibeui-navbar-035-fg));box-shadow:0 12px 24px -12px var(--vibeui-navbar-035-accent);translate:0 -1px}
+[data-vibeui-block="navbar-035"] :is(a,[data-part="burger"]):focus-visible{outline:2px solid var(--vibeui-navbar-035-accent);outline-offset:3px;border-radius:.4rem}
+[data-vibeui-block="navbar-035"] :is([data-part="action"],[data-part="burger"]):focus-visible{border-radius:999px}
+[data-vibeui-block="navbar-035"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:6px;flex-shrink:0;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--vibeui-navbar-035-line);border-radius:50%;background:transparent;color:inherit;cursor:pointer}
+[data-vibeui-block="navbar-035"] [data-part="burger"] i{display:block;width:.95rem;height:1px;margin:0 auto;background:currentColor;transition:transform .3s var(--vibeui-navbar-035-ease)}
+[data-vibeui-block="navbar-035"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(3.5px) rotate(45deg)}
+[data-vibeui-block="navbar-035"] [data-part="burger"][aria-expanded="true"] i:nth-child(2){transform:translateY(-3.5px) rotate(-45deg)}
+[data-vibeui-block="navbar-035"] [data-part="menu"]{display:grid;max-width:80rem;margin:0 auto;padding:.4rem 1.25rem 1.4rem;border-top:1px solid var(--vibeui-navbar-035-line);animation:vibeui-navbar-035-menu .25s ease-out}
 [data-vibeui-block="navbar-035"] [data-part="menu"][hidden]{display:none}
-[data-vibeui-block="navbar-035"] [data-part="menu"] a{padding:.8rem .7rem;border-radius:.8rem;color:var(--vibeui-navbar-035-fg);text-decoration:none;font-weight:600;font-size:1.05rem}
-[data-vibeui-block="navbar-035"] [data-part="menu"] a:hover{background:color-mix(in oklab,var(--vibeui-navbar-035-fg) 6%,transparent)}
-[data-vibeui-block="navbar-035"] [data-part="menu"] [data-part="hours"]{display:inline-flex;justify-self:start;margin:.4rem .7rem 0}
-[data-vibeui-block="navbar-035"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;background:var(--vibeui-navbar-035-accent);color:var(--vibeui-navbar-035-on-accent);font-family:var(--vibeui-navbar-035-display);font-weight:800}
+[data-vibeui-block="navbar-035"] [data-part="menu"] a{padding:.85rem .2rem;border-bottom:1px solid var(--vibeui-navbar-035-line);color:var(--vibeui-navbar-035-fg);text-decoration:none;font-size:1.05rem;letter-spacing:.01em}
+[data-vibeui-block="navbar-035"] [data-part="menu"] [data-part="hours"]{display:inline-flex;justify-self:start;margin:.9rem .2rem 0}
+[data-vibeui-block="navbar-035"] [data-part="menu"] a[data-cta]{margin-top:.9rem;padding:.9rem;border:0;border-radius:999px;text-align:center;background:var(--vibeui-navbar-035-accent);color:var(--vibeui-navbar-035-on-accent);font-weight:500;font-size:.95rem;letter-spacing:.03em}
 @keyframes vibeui-navbar-035-wag{0%,100%{transform:rotate(-12deg)}25%{transform:rotate(14deg) scale(1.08)}50%{transform:rotate(-18deg)}75%{transform:rotate(8deg)}}
-@keyframes vibeui-navbar-035-pulse{0%{transform:scale(.6);opacity:.8}100%{transform:scale(1.9);opacity:0}}
+@keyframes vibeui-navbar-035-pulse{0%{transform:scale(.6);opacity:.8}100%{transform:scale(2.2);opacity:0}}
 @keyframes vibeui-navbar-035-menu{from{opacity:0;transform:translateY(-6px)}}
 @container (min-width: 36rem){[data-vibeui-block="navbar-035"] [data-part="row"] [data-part="phone"]{display:inline-flex}}
-@container (min-width: 48rem){[data-vibeui-block="navbar-035"] [data-part="row"] [data-part="hours"]{display:inline-flex}}
-@container (min-width: 60rem){[data-vibeui-block="navbar-035"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-035"] [data-part="burger"],[data-vibeui-block="navbar-035"] [data-part="menu"]{display:none}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-035"] *{animation:none!important;transition:none!important}}`
+@container (min-width: 52rem){[data-vibeui-block="navbar-035"] [data-part="row"] [data-part="hours"]{display:inline-flex}}
+@container (min-width: 64rem){[data-vibeui-block="navbar-035"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-035"] [data-part="burger"],[data-vibeui-block="navbar-035"] [data-part="menu"]{display:none}}
+@container (max-width: 30rem){[data-vibeui-block="navbar-035"] [data-part="row"] [data-part="action"]{display:none}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-035"],[data-vibeui-block="navbar-035"] *{animation:none!important;transition:none!important}}`
 
 function subscribeMinute(callback: () => void) {
   const id = window.setInterval(callback, 60_000)
@@ -156,6 +162,7 @@ export function Navbar035({
   actionLabel = "Записаться",
   actionHref = "#contacts",
   sticky = true,
+  overlay = false,
   navLabel = "Разделы",
   menuLabel = "Меню",
   menuOpenLabel = "Открыть меню",
@@ -216,10 +223,12 @@ export function Navbar035({
       <style href="vibeui-navbar-035" precedence="medium">
         {STYLES}
       </style>
-      <header data-vibeui-block="navbar-035" data-tone={tone === "auto" ? undefined : tone} data-sticky={sticky} data-scrolled={scrolled} className={className} style={palette}>
+      <header data-vibeui-block="navbar-035" data-tone={tone === "auto" ? undefined : tone} data-sticky={sticky} data-overlay={overlay} data-scrolled={scrolled} data-open={menuOpen} className={className} style={palette}>
         <div data-part="row">
           <a data-part="brand" href={brandHref}>
-            <PawIcon />
+            <span data-part="mark">
+              <PawIcon />
+            </span>
             <span data-part="name">
               <b>{brand}</b>
               {caption ? <small>{caption}</small> : null}
@@ -236,25 +245,15 @@ export function Navbar035({
             {hours}
             {phone ? (
               <a data-part="phone" href={phoneHref}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" />
-                </svg>
                 {phone}
               </a>
             ) : null}
             {actionLabel ? (
-              <Button016
-                data-part="action"
-                label={actionLabel}
-                href={actionHref}
-                external={false}
-                size="sm"
-                tone="accent"
-                accent={accent}
-              />
+              <a data-part="action" href={actionHref}>
+                {actionLabel}
+              </a>
             ) : null}
             <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-035-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
-              <i aria-hidden="true" />
               <i aria-hidden="true" />
               <i aria-hidden="true" />
             </button>
