@@ -6054,15 +6054,13 @@
     {
       "name": "navbar-034",
       "type": "registry:block",
-      "title": "Шапка автосервиса с живым статусом бокса",
-      "description": "Липкая шапка автосервиса или детейлинга: лого-шеврон, зелёная пульсирующая точка со статусом «сейчас свободен подъёмник №2», разделы, телефон и кислотная кнопка «Записаться». При прокрутке — стекло с блюром и тонкая линия-лампа по низу. На узком статус уходит в бургер-меню.",
+      "title": "Шапка автосервиса с эмблемой и живым статусом бокса",
+      "description": "Липкая шапка автосервиса или детейлинга в строгой премиальной подаче: круглая эмблема с номером бокса и название в разрядку, разделы заглавными через тонкие разделители — черта под пунктом растёт из центра, статус бокса с живой точкой, телефон и контурная кнопка «Записаться», которая по наведению заливается светлым. При прокрутке — стекло с блюром и тонкая линия-лампа по низу. На узком разделы уходят в бургер-меню.",
       "categories": [
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-016"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-034/navbar-034.tsx",
@@ -6083,7 +6081,8 @@
           "live",
           "burger",
           "phone",
-          "composite"
+          "emblem",
+          "premium"
         ],
         "preview": {
           "props": {
@@ -6096,13 +6095,13 @@
           "usage": "<Navbar034\n  brand=\"Гараж 42\"\n  status=\"сейчас свободен подъёмник №2\"\n  links={[{ label: \"Услуги\", href: \"#services\" }, { label: \"Контакты\", href: \"#contacts\" }]}\n  phone=\"+7 (812) 420-42-42\"\n  actionLabel=\"Записаться\"\n/>",
           "summary": "Шапка для автосервиса: живой статус бокса, телефон и «Записаться», стекло при прокрутке.",
           "preserve": [
-            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
-            "точка статуса — ::after с keyframes scale+opacity, 1,8 с, без сдвига макета",
+            "эмблема — круг с номером из brand (или emblem) и двойной окантовкой: рамка + акцентное кольцо через inset box-shadow",
+            "разделы — заглавные с разрядкой .26em, разделитель — ::before у a + a, черта — ::after со scaleX из центра",
             "линия по низу — ::after с градиентом, opacity растёт вместе с data-scrolled",
             "статус виден от 40rem контейнера, телефон от 52rem, ссылки от 64rem; в бургере статус дублируется"
           ],
           "adapt": [
-            "brand, brandHref, status, links: label, href",
+            "brand, emblem, brandHref, status, links: label, href",
             "phone, phoneHref, actionLabel, actionHref",
             "sticky",
             "tone — тема",
@@ -6122,7 +6121,7 @@
             "prop": "status",
             "label": "Статус",
             "type": "text",
-            "default": "сейчас свободен подъёмник №2",
+            "default": "Свободен бокс № 2",
             "maxLength": 40
           },
           {
@@ -6162,18 +6161,18 @@
         ],
         "i18n": {
           "en": {
-            "title": "Car service navbar with a live bay status",
-            "description": "Sticky header for a car service or detailing studio: a chevron logo, a green pulsing dot with a “bay №2 is free now” status, sections, a phone number and an acid “Book” button. On scroll — blurred glass and a thin lamp line along the bottom. On narrow screens the status moves into the burger menu.",
+            "title": "Car service navbar with an emblem and a live bay status",
+            "description": "Sticky header for a car service or detailing studio in a strict premium key: a round emblem with the bay number and a letter-spaced name, uppercase sections behind thin dividers — the underline grows from the centre, a bay status with a live dot, a phone number and an outline “Book” button that fills with light on hover. On scroll — blurred glass and a thin lamp line along the bottom. On narrow screens the sections move into the burger menu.",
             "ai": {
               "summary": "Header for a car service: a live bay status, a phone number and “Book”, glass on scroll.",
               "preserve": [
-                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "the status dot is an ::after with scale+opacity keyframes, 1.8 s, no layout shift",
+                "the emblem is a circle with the number from brand (or emblem) and a double edge: a border plus an accent ring via inset box-shadow",
+                "sections are uppercase with .26em tracking, the divider is ::before on a + a, the underline is ::after with scaleX from the centre",
                 "the bottom line is an ::after with a gradient whose opacity grows with data-scrolled",
                 "the status shows from a 40rem container, the phone from 52rem, links from 64rem; the burger repeats the status"
               ],
               "adapt": [
-                "brand, brandHref, status, links: label, href",
+                "brand, emblem, brandHref, status, links: label, href",
                 "phone, phoneHref, actionLabel, actionHref",
                 "sticky",
                 "tone — theme",
@@ -6189,7 +6188,7 @@
               },
               "status": {
                 "label": "Status",
-                "default": "bay №2 is free now"
+                "default": "Bay № 2 is free"
               },
               "tone": {
                 "label": "Theme"
@@ -6234,12 +6233,10 @@
                 "actionLabel": "Book",
                 "sticky": false
               }
-            },
-            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "navbar-035",

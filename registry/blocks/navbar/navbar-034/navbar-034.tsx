@@ -2,8 +2,6 @@
 
 import { useEffect, useState, type CSSProperties } from "react"
 
-import { Button016 } from "@/registry/components/button/button-016/button-016"
-
 export type Navbar034Link = {
   label: string
   href: string
@@ -11,6 +9,8 @@ export type Navbar034Link = {
 
 export type Navbar034Props = {
   brand?: string
+  /** Знак в круглой эмблеме; по умолчанию — число из названия («Гараж 42» → «42»). */
+  emblem?: string
   brandHref?: string
   /** Живой статус бокса: «сейчас свободен подъёмник №2». */
   status?: string
@@ -33,10 +33,12 @@ export type Navbar034Props = {
   style?: CSSProperties
 }
 
-// Шапка автосервиса: лого-шеврон с номером бокса, зелёная пульсирующая
-// точка со статусом «сейчас свободен подъёмник №2», разделы, телефон и
-// кислотная кнопка «Записаться». При прокрутке шапка становится стеклом с
-// тонкой линией-«лампой» по низу. На узком статус уходит в бургер-меню.
+// Шапка автосервиса в строгой премиальной подаче: круглая эмблема с номером
+// бокса, как значок на капоте, и название в разрядку; разделы — заглавными
+// с разрядкой через тонкие вертикальные разделители, черта под пунктом
+// растёт из центра; статус бокса с живой точкой; кнопка записи — контурная
+// капсула, по наведению заливается светлым. При прокрутке шапка становится
+// стеклом с тонкой линией-«лампой» по низу. На узком разделы уходят в бургер.
 const FONTS = "https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
 
 const STYLES = `
@@ -63,23 +65,28 @@ container-type:inline-size;
 [data-vibeui-block="navbar-034"][data-scrolled="true"]::after{opacity:.7}
 [data-vibeui-block="navbar-034"] *{box-sizing:border-box}
 [data-vibeui-block="navbar-034"] [data-part="row"]{display:flex;align-items:center;gap:.8rem;height:4.25rem;max-width:84rem;margin:0 auto;padding:0 1.25rem}
-[data-vibeui-block="navbar-034"] [data-part="brand"]{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--vibeui-navbar-034-display);font-weight:900;font-size:1.05rem;letter-spacing:-.01em;text-transform:uppercase;text-decoration:none;color:inherit;white-space:nowrap}
-[data-vibeui-block="navbar-034"] [data-part="mark"]{width:2rem;height:2rem;color:var(--vibeui-navbar-034-accent)}
-[data-vibeui-block="navbar-034"] [data-part="status"]{display:none;align-items:center;gap:.5rem;margin-left:.4rem;padding:.35rem .8rem .35rem .6rem;border-radius:999px;border:1px solid var(--vibeui-navbar-034-line);font-family:var(--vibeui-navbar-034-mono);font-size:.7rem;letter-spacing:.02em;color:var(--vibeui-navbar-034-muted);white-space:nowrap}
+[data-vibeui-block="navbar-034"] [data-part="brand"]{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--vibeui-navbar-034-display);font-weight:500;font-size:.82rem;letter-spacing:.32em;text-transform:uppercase;text-decoration:none;color:inherit;white-space:nowrap}
+[data-vibeui-block="navbar-034"] [data-part="mark"]{display:grid;place-items:center;flex:none;width:2.4rem;height:2.4rem;border-radius:50%;border:1px solid color-mix(in oklab,var(--vibeui-navbar-034-fg) 34%,transparent);box-shadow:inset 0 0 0 3px var(--vibeui-navbar-034-bg),inset 0 0 0 4px color-mix(in oklab,var(--vibeui-navbar-034-accent) 70%,transparent);font-weight:700;font-size:.8rem;letter-spacing:-.02em;color:var(--vibeui-navbar-034-fg);transition:box-shadow .3s}
+[data-vibeui-block="navbar-034"] [data-part="brand"]:hover [data-part="mark"]{box-shadow:inset 0 0 0 3px var(--vibeui-navbar-034-bg),inset 0 0 0 4px var(--vibeui-navbar-034-accent),0 0 16px -4px var(--vibeui-navbar-034-accent)}
+[data-vibeui-block="navbar-034"] [data-part="status"]{display:none;align-items:center;gap:.55rem;margin-left:.6rem;padding-left:1rem;border-left:1px solid var(--vibeui-navbar-034-line);font-family:var(--vibeui-navbar-034-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-navbar-034-muted);white-space:nowrap}
 [data-vibeui-block="navbar-034"] [data-part="dot"]{position:relative;width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-navbar-034-live);flex-shrink:0}
 [data-vibeui-block="navbar-034"] [data-part="dot"]::after{content:"";position:absolute;inset:-.25rem;border-radius:50%;border:1px solid var(--vibeui-navbar-034-live);animation:vibeui-navbar-034-pulse 1.8s ease-out infinite}
-[data-vibeui-block="navbar-034"] [data-part="nav"]{display:none;gap:1.4rem;margin-left:auto}
-[data-vibeui-block="navbar-034"] [data-part="nav"] a{position:relative;color:var(--vibeui-navbar-034-muted);text-decoration:none;font-weight:500;transition:color .2s}
-[data-vibeui-block="navbar-034"] [data-part="nav"] a::after{content:"";position:absolute;left:0;right:0;bottom:-.3rem;height:2px;background:var(--vibeui-navbar-034-accent);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="navbar-034"] [data-part="nav"]{display:none;align-items:center;margin-left:auto}
+[data-vibeui-block="navbar-034"] [data-part="nav"] a{position:relative;padding:.4rem 1.05rem;font-family:var(--vibeui-navbar-034-display);font-weight:400;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--vibeui-navbar-034-muted);text-decoration:none;transition:color .25s}
+[data-vibeui-block="navbar-034"] [data-part="nav"] a + a::before{content:"";position:absolute;left:0;top:50%;width:1px;height:.8rem;margin-top:-.4rem;background:var(--vibeui-navbar-034-line)}
+[data-vibeui-block="navbar-034"] [data-part="nav"] a::after{content:"";position:absolute;left:1.05rem;right:calc(1.05rem - .26em);bottom:0;height:1px;background:var(--vibeui-navbar-034-accent);transform:scaleX(0);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="navbar-034"] [data-part="nav"] a:hover{color:var(--vibeui-navbar-034-fg)}
 [data-vibeui-block="navbar-034"] [data-part="nav"] a:hover::after{transform:scaleX(1)}
 [data-vibeui-block="navbar-034"] [data-part="right"]{margin-left:auto;display:flex;align-items:center;gap:.9rem}
-[data-vibeui-block="navbar-034"] [data-part="phone"]{display:none;font-family:var(--vibeui-navbar-034-mono);font-size:.85rem;color:var(--vibeui-navbar-034-fg);text-decoration:none;white-space:nowrap;transition:color .2s}
+[data-vibeui-block="navbar-034"] [data-part="phone"]{display:none;font-family:var(--vibeui-navbar-034-display);font-weight:400;font-size:.72rem;letter-spacing:.08em;color:var(--vibeui-navbar-034-fg);text-decoration:none;white-space:nowrap;transition:color .2s}
+[data-vibeui-block="navbar-034"] [data-part="action"]{display:inline-flex;align-items:center;height:2.4rem;padding:0 1.25rem;border-radius:999px;border:1px solid color-mix(in oklab,var(--vibeui-navbar-034-fg) 40%,transparent);font-family:var(--vibeui-navbar-034-display);font-weight:500;font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--vibeui-navbar-034-fg);text-decoration:none;white-space:nowrap;transition:background .3s,color .3s,border-color .3s}
+[data-vibeui-block="navbar-034"] [data-part="action"]:hover{background:var(--vibeui-navbar-034-fg);border-color:var(--vibeui-navbar-034-fg);color:var(--vibeui-navbar-034-bg)}
+[data-vibeui-block="navbar-034"] [data-part="action"]:focus-visible{outline:2px solid var(--vibeui-navbar-034-accent);outline-offset:3px}
 [data-vibeui-block="navbar-034"] [data-part="phone"]:hover{color:var(--vibeui-navbar-034-accent)}
 @keyframes vibeui-navbar-034-pulse{0%{transform:scale(.6);opacity:1}100%{transform:scale(1.9);opacity:0}}
 @container (min-width: 40rem){[data-vibeui-block="navbar-034"] [data-part="status"]{display:inline-flex}}
 @container (min-width: 52rem){[data-vibeui-block="navbar-034"] [data-part="phone"]{display:inline}}
-@container (min-width: 64rem){[data-vibeui-block="navbar-034"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-034"] [data-part="right"]{margin-left:1.4rem}}
+@container (min-width: 64rem){[data-vibeui-block="navbar-034"] [data-part="nav"]{display:flex}[data-vibeui-block="navbar-034"] [data-part="right"]{margin-left:1rem;gap:1.4rem}}
 [data-vibeui-block="navbar-034"] [data-part="burger"]{display:inline-flex;flex-direction:column;justify-content:center;gap:5px;flex-shrink:0;width:2.6rem;height:2.6rem;padding:0;border:1px solid var(--vibeui-navbar-034-line);border-radius:.6rem;background:transparent;color:inherit;cursor:pointer}
 [data-vibeui-block="navbar-034"] [data-part="burger"] i{display:block;width:1.05rem;height:2px;margin:0 auto;background:currentColor;border-radius:2px;transition:transform .25s,opacity .2s}
 [data-vibeui-block="navbar-034"] [data-part="burger"][aria-expanded="true"] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
@@ -90,20 +97,21 @@ container-type:inline-size;
 [data-vibeui-block="navbar-034"] [data-part="menu"][hidden]{display:none}
 [data-vibeui-block="navbar-034"] [data-part="menu"] a{padding:.8rem .7rem;border-radius:.6rem;color:var(--vibeui-navbar-034-fg);text-decoration:none;font-weight:600;font-size:1.05rem}
 [data-vibeui-block="navbar-034"] [data-part="menu"] a:hover{background:color-mix(in oklab,var(--vibeui-navbar-034-fg) 6%,transparent)}
-[data-vibeui-block="navbar-034"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;background:var(--vibeui-navbar-034-accent);color:var(--vibeui-navbar-034-on-accent)}
+[data-vibeui-block="navbar-034"] [data-part="menu"] a[data-cta]{margin-top:.4rem;text-align:center;border:1px solid color-mix(in oklab,var(--vibeui-navbar-034-fg) 40%,transparent);font-family:var(--vibeui-navbar-034-display);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase}
 [data-vibeui-block="navbar-034"] [data-part="menu-status"]{display:flex;align-items:center;gap:.5rem;padding:.5rem .7rem .9rem;font-family:var(--vibeui-navbar-034-mono);font-size:.72rem;color:var(--vibeui-navbar-034-muted)}
 @keyframes vibeui-navbar-034-menu{from{opacity:0;transform:translateY(-6px)}}
 @container (min-width: 64rem){[data-vibeui-block="navbar-034"] [data-part="burger"],[data-vibeui-block="navbar-034"] [data-part="menu"]{display:none}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="navbar-034"] *{animation:none!important;transition:none!important}}`
 
-/** Шапка автосервиса с живым статусом бокса и кислотной кнопкой записи. */
+/** Шапка автосервиса: эмблема с номером бокса, разделы в разрядку, живой статус и контурная кнопка записи. */
 export function Navbar034({
   brand = "Гараж 42",
+  emblem,
   brandHref = "#top",
-  status = "сейчас свободен подъёмник №2",
+  status = "Свободен бокс № 2",
   links = [
     { label: "Услуги", href: "#services" },
-    { label: "До / после", href: "#results" },
+    { label: "Работы", href: "#results" },
     { label: "Мастера", href: "#team" },
     { label: "Отзывы", href: "#reviews" },
     { label: "Контакты", href: "#contacts" },
@@ -133,6 +141,9 @@ export function Navbar034({
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
+  const mark = emblem ?? brand.match(/\d+/)?.[0] ?? brand.slice(0, 1)
+  const name = emblem ? brand : brand.replace(/\s*\d+\s*/, " ").trim() || brand
+
   const palette = {
     ...(accent ? { "--vibeui-navbar-034-accent": accent } : null),
     ...(ink ? { "--vibeui-navbar-034-fg": ink } : null),
@@ -149,11 +160,10 @@ export function Navbar034({
       <header data-vibeui-block="navbar-034" data-tone={tone === "auto" ? undefined : tone} data-sticky={sticky} data-scrolled={scrolled} className={className} style={palette}>
         <div data-part="row">
           <a data-part="brand" href={brandHref}>
-            <svg data-part="mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" aria-hidden="true">
-              <path d="M4 22 16 6l12 16" />
-              <path d="M9 26h14" />
-            </svg>
-            {brand}
+            <span data-part="mark" aria-hidden="true">
+              {mark}
+            </span>
+            <span aria-label={brand}>{name}</span>
           </a>
           {status ? (
             <span data-part="status" role="status">
@@ -175,15 +185,9 @@ export function Navbar034({
               </a>
             ) : null}
             {actionLabel ? (
-              <Button016
-                data-part="action"
-                label={actionLabel}
-                href={actionHref}
-                external={false}
-                size="sm"
-                tone="accent"
-                accent={accent}
-              />
+              <a data-part="action" href={actionHref}>
+                {actionLabel}
+              </a>
             ) : null}
           </div>
           <button data-part="burger" type="button" aria-expanded={menuOpen} aria-controls="vibeui-navbar-034-menu" aria-label={menuOpen ? menuCloseLabel : menuOpenLabel} onClick={() => setMenuOpen((value) => !value)}>
