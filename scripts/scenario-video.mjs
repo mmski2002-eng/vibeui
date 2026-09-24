@@ -248,14 +248,52 @@ const SCENARIOS = {
     await waitFor(page, 1200)
     mark("end")
   },
-  default: async (page, cdp) => {
+  default: async (page) => {
     await page.goto(`${base}/scenarios/${slug}/demo`, { waitUntil: "load" })
-    await waitFor(page, 2000)
-    const ids = await page.evaluate(() => Array.from(document.querySelectorAll("[id]")).map((el) => `#${el.id}`))
-    for (const selector of ids.slice(0, 10)) {
-      await humanScrollToSelector(page, selector)
-      await waitFor(page, 1200)
+    await waitFor(page, 1800)
+
+    // Заставки (конверт/печать/свеча/билет) — так же, как в
+    // scripts/scenario-covers.mjs: кликаем корешок, ждём, пока первый
+    // экран отыграет появление.
+    const gate = page.locator(
+      '[data-vibeui-block="hero-025"] [data-part="seal"], [data-vibeui-block="hero-026"] [data-part="tear"], [data-vibeui-block="hero-027"] [data-part="candle"]',
+    )
+    let gateOpened = false
+    if (await gate.count()) {
+      await moveToCenter(page, gate.first(), 20)
+      await page.mouse.down()
+      await page.mouse.up()
+      gateOpened = true
+      mark("gate-opened")
+      await waitFor(page, 4500)
     }
+
+    // Видео-хиро (hero-046/047/048): ждём, пока заезд доиграет сам —
+    // это и есть контент ролика, торопить нечего.
+    const videoHero = page.locator('[data-vibeui-block="hero-046"], [data-vibeui-block="hero-047"], [data-vibeui-block="hero-048"]').first()
+    if (await videoHero.count()) {
+      const block = await videoHero.getAttribute("data-vibeui-block")
+      await page.waitForSelector(`[data-vibeui-block="${block}"]:not([data-phase="loading"])`, { timeout: 20000 }).catch(() => {})
+      mark("video-hero-loaded")
+      await page.waitForSelector(`[data-vibeui-block="${block}"][data-phase="parked"]`, { timeout: 25000 }).catch(() => {})
+      mark("video-hero-parked")
+    }
+    await waitFor(page, 400)
+
+    // Секции — по id на в меру крупных блоках верхнего уровня; иконки и
+    // мелкие якоря внутри svg не в счёт.
+    const ids = await page.evaluate(() =>
+      Array.from(document.querySelectorAll("body [id]"))
+        .filter((el) => !el.closest("svg") && /^[a-z][a-z0-9-]*$/.test(el.id) && el.getBoundingClientRect().height > 200)
+        .map((el) => `#${el.id}`),
+    )
+    mark(`sections:${ids.length}`)
+    for (const selector of ids.slice(gateOpened ? 1 : 0, 14)) {
+      await humanScrollToSelector(page, selector)
+      mark(`scroll:${selector}`)
+      await waitFor(page, 1300 + Math.random() * 400)
+    }
+    mark("end")
   },
 }
 

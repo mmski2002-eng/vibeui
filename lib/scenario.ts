@@ -32,6 +32,11 @@ export function getScenario(slug: string): Scenario | undefined {
   return SCENARIOS.find((scenario) => scenario.slug === slug)
 }
 
+// Прототип: скролл-видео вместо статичного постера — снято пока не для
+// всех сценариев, остальные молча остаются на постере. fs.existsSync
+// сюда не годится: файл общий с клиентскими компонентами.
+const VIDEO_SLUGS = new Set(["auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery", "tattoo", "vet"])
+
 export function scenarioText(scenario: Scenario, locale: Locale) {
   // Английское демо и его постер есть не у каждого сценария: без них
   // английская витрина показывает русские.
@@ -41,9 +46,7 @@ export function scenarioText(scenario: Scenario, locale: Locale) {
     summary: locale === "ru" ? scenario.summary : scenario.summaryEn,
     demo: english ? `/en${scenario.demo}` : scenario.demo,
     poster: english ? `/demo/scenarios/en/${scenario.slug}.webp` : `/demo/scenarios/${scenario.slug}.webp`,
-    // Прототип: скролл-видео вместо статичного постера — снято пока
-    // только для одного сценария, остальные молча остаются на постере.
-    video: !english && scenario.slug === "auto" ? `/demo/scenarios/${scenario.slug}.mp4` : undefined,
+    video: !english && VIDEO_SLUGS.has(scenario.slug) ? `/demo/scenarios/${scenario.slug}.mp4` : undefined,
   }
 }
 
