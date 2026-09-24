@@ -65,8 +65,10 @@ export type Hero033Props = {
 // Первый экран AI-продукта для созвонов, который иллюстрирует свой же
 // заголовок. Справа монитор с рамкой, бликом и подставкой, на экране —
 // приложение созвона: сетка видео (три человека и плитка бота с
-// эквалайзером), у говорящего подсвечена рамка, справа живые субтитры
-// с временем реплик, снизу панель управления. Если у человека есть ролик —
+// эквалайзером), у говорящего оживает волна-эквалайзер на подписи имени,
+// справа живые субтитры с временем реплик, снизу панель управления.
+// Плитки не подсвечиваются и не масштабируются — только субтитры и волна
+// показывают, кто говорит. Если у человека есть ролик —
 // он играет, пока звучит его реплика, а в остальное время стоит на
 // последнем кадре, будто человек слушает. Реплики кончаются — курсор
 // едет к красной кнопке «Завершить» и нажимает её; приложение гаснет,
@@ -139,10 +141,8 @@ container:vibeui-hero-033/inline-size;
 [data-vibeui-block="hero-033"] [data-part="rec-dot"]{width:1cqw;height:1cqw;border-radius:50%;background:var(--vibeui-hero-033-rec);animation:vibeui-hero-033-blink 1.2s steps(1) infinite}
 [data-vibeui-block="hero-033"] [data-part="body"]{display:grid;grid-template-columns:minmax(0,1fr) 34%;min-height:0}
 [data-vibeui-block="hero-033"] [data-part="tiles"]{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1cqw;padding:1.2cqw;min-height:0}
-[data-vibeui-block="hero-033"] [data-part="tile"]{position:relative;overflow:hidden;border-radius:1.2cqw;background:var(--vibeui-hero-033-app-2);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .05);transition:box-shadow .35s}
-[data-vibeui-block="hero-033"] [data-part="tile"][data-talking="true"]{box-shadow:inset 0 0 0 .35cqw var(--vibeui-hero-033-accent),0 0 3cqw -1cqw var(--vibeui-hero-033-accent)}
-[data-vibeui-block="hero-033"] [data-part="cam"]{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;transition:scale 1.1s var(--vibeui-hero-033-ease)}
-[data-vibeui-block="hero-033"] [data-part="tile"][data-talking="true"] [data-part="cam"]{scale:1.04}
+[data-vibeui-block="hero-033"] [data-part="tile"]{position:relative;overflow:hidden;border-radius:1.2cqw;background:var(--vibeui-hero-033-app-2);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .05)}
+[data-vibeui-block="hero-033"] [data-part="cam"]{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%}
 [data-vibeui-block="hero-033"] [data-part="initial"]{position:absolute;inset:0;display:grid;place-items:center}
 [data-vibeui-block="hero-033"] [data-part="initial-mark"]{display:grid;place-items:center;width:9cqw;height:9cqw;border-radius:50%;background:var(--vibeui-hero-033-c);color:#fff;font-family:var(--vibeui-hero-033-display);font-weight:700;font-size:3.4cqw}
 [data-vibeui-block="hero-033"] [data-part="tag"]{position:absolute;left:.8cqw;bottom:.8cqw;display:inline-flex;align-items:center;gap:.6cqw;padding:.35cqw .8cqw;border-radius:.7cqw;background:rgb(0 0 0 / .55);backdrop-filter:blur(6px);font-size:.85em;font-weight:500}
