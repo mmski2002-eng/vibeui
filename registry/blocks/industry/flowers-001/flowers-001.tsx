@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { useEffect, useRef, type CSSProperties } from "react"
 
 import { Button016 } from "@/registry/components/button/button-016/button-016"
 
@@ -9,9 +9,14 @@ export type Flowers001Item = {
   /** Состав одной строкой: «пионы, эвкалипт, мак». */
   note: string
   price: string
+  /** Фото букета — постер карточки. */
   image: string
+  /** Ролик: букет медленно поворачивается на подставке, бесшовный повтор. */
+  video?: string
   alt?: string
   href?: string
+  /** Метка в углу: «хит», «новое». */
+  badge?: string
 }
 
 export type Flowers001Props = {
@@ -22,6 +27,9 @@ export type Flowers001Props = {
   /** Подпись справа от заголовка, рукописная. */
   note?: string
   allLabel?: string
+  /** aria стрелок ленты. */
+  prevLabel?: string
+  nextLabel?: string
   allHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
@@ -31,12 +39,15 @@ export type Flowers001Props = {
   style?: CSSProperties
 }
 
-// Каталог букетов как оглавление журнала: на широком экране это список
-// названий крупной антиквой с ценой у правого края, а картинка букета
-// не лежит в сетке, а следует за курсором по списку — с лёгким запаздыванием
-// и наклоном по направлению движения (transform + transition, без
-// перерисовок React). На узком экране список превращается в обычную
-// сетку карточек с фото, чтобы всё было видно и без курсора.
+// Каталог букетов витриной: крупные карточки, в каждой букет медленно
+// поворачивается на подставке — ролик играет, только пока карточка видна
+// (IntersectionObserver), вне экрана стоит на паузе. Лента выплывает
+// при прокрутке (animation-timeline: view()), при наведении
+// карточка приподнимается, под названием рукой прописывается росчерк,
+// а цена проявляется. Порядковый номер — как в журнальном оглавлении.
+// Карточки идут одной лентой со scroll-snap: листается стрелками, колесом
+// и пальцем; высота карточки считается от высоты экрана, чтобы секция
+// целиком помещалась в один экран.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
 
 const STYLES = `
@@ -46,7 +57,9 @@ const STYLES = `
 --vibeui-flowers-001-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-flowers-001-on-accent:oklch(from var(--vibeui-flowers-001-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-flowers-001-muted:color-mix(in oklab,var(--vibeui-flowers-001-fg) 62%,var(--vibeui-flowers-001-bg));
---vibeui-flowers-001-line:color-mix(in oklab,var(--vibeui-flowers-001-fg) 16%,transparent);
+--vibeui-flowers-001-line:color-mix(in oklab,var(--vibeui-flowers-001-fg) 14%,transparent);
+--vibeui-flowers-001-card:#efe3d1;
+--vibeui-flowers-001-ease:cubic-bezier(.22,1,.36,1);
 --vibeui-flowers-001-display:"Cormorant",Georgia,"Times New Roman",serif;
 --vibeui-flowers-001-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
 --vibeui-flowers-001-hand:"Caveat","Segoe Script",cursive;
@@ -55,64 +68,64 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="flowers-001"]{color-scheme:dark}
 :where([data-vibeui-block="flowers-001"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="flowers-001"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="flowers-001"]{box-sizing:border-box;position:relative;padding:5rem 0;background:var(--vibeui-flowers-001-bg);color:var(--vibeui-flowers-001-fg);font-family:var(--vibeui-flowers-001-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="flowers-001"]{box-sizing:border-box;position:relative;padding:4rem 0;background:var(--vibeui-flowers-001-bg);color:var(--vibeui-flowers-001-fg);font-family:var(--vibeui-flowers-001-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-001"] *{box-sizing:border-box}
-[data-vibeui-block="flowers-001"] [data-part="all"]{margin:2.5rem 0 0}
-[data-vibeui-block="flowers-001"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
-[data-vibeui-block="flowers-001"] [data-part="head"]{display:grid;gap:1rem;align-items:end;margin:0 0 2.5rem}
+[data-vibeui-block="flowers-001"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="flowers-001"] [data-part="head"]{display:grid;gap:1rem;align-items:end;margin:0 0 1.8rem}
+[data-vibeui-block="flowers-001"] [data-part="side"]{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.4rem}
+[data-vibeui-block="flowers-001"] [data-part="arrows"]{display:flex;gap:.5rem}
+[data-vibeui-block="flowers-001"] [data-part="nav-arrow"]{display:grid;place-items:center;width:2.8rem;height:2.8rem;border-radius:50%;border:1px solid var(--vibeui-flowers-001-line);background:transparent;color:var(--vibeui-flowers-001-fg);cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+[data-vibeui-block="flowers-001"] [data-part="nav-arrow"]:hover{background:var(--vibeui-flowers-001-accent);border-color:var(--vibeui-flowers-001-accent);color:var(--vibeui-flowers-001-on-accent)}
+[data-vibeui-block="flowers-001"] [data-part="nav-arrow"]:focus-visible{outline:2px solid var(--vibeui-flowers-001-accent);outline-offset:3px}
+[data-vibeui-block="flowers-001"] [data-part="arrow-glyph"]{width:1.1rem;height:1.1rem}
 [data-vibeui-block="flowers-001"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-flowers-001-muted)}
-[data-vibeui-block="flowers-001"] [data-part="title"]{margin:0;font-family:var(--vibeui-flowers-001-display);font-weight:500;font-size:clamp(2.2rem,5.4cqi,4.2rem);line-height:1;letter-spacing:-.02em}
+[data-vibeui-block="flowers-001"] [data-part="title"]{margin:0;font-family:var(--vibeui-flowers-001-display);font-weight:500;font-size:clamp(2.2rem,5cqi,3.8rem);line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="flowers-001"] [data-part="lede"]{margin:.8rem 0 0;max-width:34rem;color:var(--vibeui-flowers-001-muted)}
-[data-vibeui-block="flowers-001"] [data-part="note"]{font-family:var(--vibeui-flowers-001-hand);font-size:1.5rem;line-height:1.1;color:var(--vibeui-flowers-001-accent);transform:rotate(-2deg)}
-[data-vibeui-block="flowers-001"] [data-part="list"]{position:relative;margin:0;padding:0;list-style:none;display:grid;gap:1.6rem 1.25rem;grid-template-columns:repeat(2,minmax(0,1fr))}
-[data-vibeui-block="flowers-001"] [data-part="row"]{display:grid;gap:.6rem;color:inherit;text-decoration:none}
-[data-vibeui-block="flowers-001"] [data-part="figure"]{margin:0;aspect-ratio:4/5;overflow:hidden;border-radius:.4rem;background:var(--vibeui-flowers-001-line)}
-[data-vibeui-block="flowers-001"] [data-part="figure"] img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="flowers-001"] [data-part="row"]:hover [data-part="figure"] img{transform:scale(1.05)}
-[data-vibeui-block="flowers-001"] [data-part="index"]{display:none}
-[data-vibeui-block="flowers-001"] [data-part="name"]{margin:0;font-family:var(--vibeui-flowers-001-display);font-weight:500;font-size:1.5rem;line-height:1.05;letter-spacing:-.01em}
-[data-vibeui-block="flowers-001"] [data-part="composition"]{margin:0;font-size:.82rem;color:var(--vibeui-flowers-001-muted)}
-[data-vibeui-block="flowers-001"] [data-part="price"]{font-variant-numeric:tabular-nums;font-weight:500;white-space:nowrap}
-[data-vibeui-block="flowers-001"] [data-part="row-arrow"]{display:none}
-[data-vibeui-block="flowers-001"] [data-part="ghost"]{display:none}
-[data-vibeui-block="flowers-001"] a:focus-visible{outline:2px solid var(--vibeui-flowers-001-accent);outline-offset:3px}
-@container (min-width: 40rem){[data-vibeui-block="flowers-001"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}[data-vibeui-block="flowers-001"] [data-part="list"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@container (min-width: 60rem){
-[data-vibeui-block="flowers-001"] [data-part="list"]{display:block;border-top:1px solid var(--vibeui-flowers-001-line)}
-[data-vibeui-block="flowers-001"] [data-part="row"]{grid-template-columns:3rem minmax(0,1fr) minmax(0,18rem) 7rem 2rem;align-items:baseline;gap:1.5rem;padding:1.35rem 0;border-bottom:1px solid var(--vibeui-flowers-001-line);transition:padding-left .4s cubic-bezier(.2,.7,.2,1),color .3s}
-[data-vibeui-block="flowers-001"] [data-part="row"]:hover{padding-left:1rem;color:var(--vibeui-flowers-001-accent)}
-[data-vibeui-block="flowers-001"] [data-part="figure"]{display:none}
-[data-vibeui-block="flowers-001"] [data-part="index"]{display:block;font-size:.78rem;color:var(--vibeui-flowers-001-muted);font-variant-numeric:tabular-nums}
-[data-vibeui-block="flowers-001"] [data-part="name"]{font-size:clamp(2rem,3.4cqi,3rem)}
-[data-vibeui-block="flowers-001"] [data-part="composition"]{font-size:.9rem}
-[data-vibeui-block="flowers-001"] [data-part="price"]{text-align:right;font-size:1.05rem}
-[data-vibeui-block="flowers-001"] [data-part="row-arrow"]{display:block;width:1.6rem;height:1.6rem;opacity:0;transform:translateX(-.6rem);transition:opacity .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
-[data-vibeui-block="flowers-001"] [data-part="row"]:hover [data-part="row-arrow"]{opacity:1;transform:none}
-[data-vibeui-block="flowers-001"] [data-part="ghost"]{display:block;position:absolute;left:0;top:0;z-index:2;width:15rem;aspect-ratio:4/5;pointer-events:none;overflow:hidden;border-radius:.4rem;box-shadow:0 30px 60px -24px rgb(0 0 0 / .45);opacity:0;transform:translate3d(-50%,-50%,0) scale(.85);transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .3s}
-[data-vibeui-block="flowers-001"] [data-part="ghost"][data-on="true"]{opacity:1}
-[data-vibeui-block="flowers-001"] [data-part="ghost"] img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
-[data-vibeui-block="flowers-001"] [data-part="ghost"] img[data-on="true"]{opacity:1}
-}
+[data-vibeui-block="flowers-001"] [data-part="note"]{margin:0;font-family:var(--vibeui-flowers-001-hand);font-size:1.5rem;line-height:1.1;color:var(--vibeui-flowers-001-accent);rotate:-2deg}
+[data-vibeui-block="flowers-001"] [data-part="list"]{--vibeui-flowers-001-w:min(78vw,21rem,calc((100svh - 28rem) * .8));display:flex;gap:1.4rem;margin:0 -1.25rem;padding:.5rem 1.25rem 1rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:1.25rem;scrollbar-width:none;overscroll-behavior-x:contain}
+[data-vibeui-block="flowers-001"] [data-part="list"]::-webkit-scrollbar{display:none}
+[data-vibeui-block="flowers-001"] [data-part="item"]{flex:0 0 var(--vibeui-flowers-001-w);scroll-snap-align:start}
+[data-vibeui-block="flowers-001"] [data-part="card"]{display:grid;gap:.9rem;color:inherit;text-decoration:none}
+[data-vibeui-block="flowers-001"] [data-part="media"]{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;border-radius:1.1rem;background:var(--vibeui-flowers-001-card);box-shadow:0 1px 0 var(--vibeui-flowers-001-line);transition:translate .6s var(--vibeui-flowers-001-ease),box-shadow .6s}
+[data-vibeui-block="flowers-001"] [data-part="card"]:hover [data-part="media"]{translate:0 -6px;box-shadow:0 30px 50px -30px rgb(60 30 10 / .45)}
+[data-vibeui-block="flowers-001"] [data-part="shot"]{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;scale:1.02;transition:scale 1.2s var(--vibeui-flowers-001-ease)}
+[data-vibeui-block="flowers-001"] [data-part="card"]:hover [data-part="shot"]{scale:1.08}
+[data-vibeui-block="flowers-001"] [data-part="index"]{position:absolute;left:1rem;top:.9rem;font-family:var(--vibeui-flowers-001-display);font-style:italic;font-size:1.1rem;color:color-mix(in oklab,var(--vibeui-flowers-001-fg) 55%,transparent)}
+[data-vibeui-block="flowers-001"] [data-part="badge"]{position:absolute;right:.9rem;top:.9rem;padding:.2rem .6rem;border-radius:999px;background:var(--vibeui-flowers-001-accent);color:var(--vibeui-flowers-001-on-accent);font-family:var(--vibeui-flowers-001-hand);font-size:1.05rem;line-height:1.2;rotate:4deg}
+[data-vibeui-block="flowers-001"] [data-part="meta"]{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.2rem 1rem;align-items:baseline}
+[data-vibeui-block="flowers-001"] [data-part="name"]{position:relative;justify-self:start;margin:0;font-family:var(--vibeui-flowers-001-display);font-weight:500;font-size:clamp(1.4rem,2.4cqi,2rem);line-height:1.05;letter-spacing:-.01em}
+[data-vibeui-block="flowers-001"] [data-part="scribble"]{position:absolute;left:-2%;bottom:-.3em;width:104%;height:.4em;overflow:visible;fill:none;stroke:var(--vibeui-flowers-001-accent);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s var(--vibeui-flowers-001-ease)}
+[data-vibeui-block="flowers-001"] [data-part="card"]:hover [data-part="scribble"]{stroke-dashoffset:0}
+[data-vibeui-block="flowers-001"] [data-part="price"]{font-family:var(--vibeui-flowers-001-display);font-weight:600;font-size:1.3rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+[data-vibeui-block="flowers-001"] [data-part="composition"]{grid-column:1/-1;margin:0;font-size:.86rem;color:var(--vibeui-flowers-001-muted)}
+[data-vibeui-block="flowers-001"] [data-part="all"]{flex:none}
+[data-vibeui-block="flowers-001"] [data-part="card"]:focus-visible{outline:2px solid var(--vibeui-flowers-001-accent);outline-offset:4px;border-radius:1.1rem}
+@keyframes vibeui-flowers-001-in{from{opacity:0;translate:0 40px}}
+@supports (animation-timeline: view()){[data-vibeui-block="flowers-001"] [data-part="list"]{animation:vibeui-flowers-001-in linear both;animation-timeline:view();animation-range:entry 0% cover 30%}}
+@container (min-width: 40rem){[data-vibeui-block="flowers-001"] [data-part="head"]{grid-template-columns:minmax(0,1fr) auto}}
+
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-001"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_ITEMS: Flowers001Item[] = [
-  { name: "Маковое поле", note: "мак, ромашка, зверобой, овёс", price: "3 900 ₽", image: "/demo/flowers/bouquet-01.webp", alt: "Букет с красным маком и полевыми травами в крафтовой бумаге", href: "#builder" },
-  { name: "Утро на даче", note: "пионы, эвкалипт, душистый горошек", price: "5 400 ₽", image: "/demo/flowers/bouquet-02.webp", alt: "Пышный букет с розовыми пионами и эвкалиптом", href: "#builder" },
-  { name: "Сливовый вечер", note: "георгины, скабиоза, амарант, рускус", price: "4 700 ₽", image: "/demo/flowers/bouquet-03.webp", alt: "Тёмный букет с бордовыми георгинами", href: "#builder" },
-  { name: "Ботаник", note: "антуриум, папоротник, монстера, каллы", price: "6 200 ₽", image: "/demo/flowers/bouquet-04.webp", alt: "Зелёный букет с антуриумом и крупными листьями", href: "#builder" },
-  { name: "Бумажный сад", note: "ранункулюсы, анемоны, лаванда, вероника", price: "4 300 ₽", image: "/demo/flowers/bouquet-05.webp", alt: "Нежный букет с ранункулюсами и лавандой", href: "#builder" },
-  { name: "Один стебель", note: "гортензия, одна, в бумаге", price: "1 200 ₽", image: "/demo/flowers/bouquet-06.webp", alt: "Одна крупная голубая гортензия в бумаге", href: "#builder" },
+  { name: "Маковое поле", note: "мак, ромашка, зверобой, овёс", price: "3 900 ₽", image: "/demo/flowers/video/bq-poppy.webp", video: "/demo/flowers/video/bq-poppy.mp4", alt: "Букет с красным маком и полевыми травами в крафтовой бумаге", href: "#builder", badge: "хит" },
+  { name: "Утро на даче", note: "пионы, эвкалипт, душистый горошек", price: "5 400 ₽", image: "/demo/flowers/video/bq-peony.webp", video: "/demo/flowers/video/bq-peony.mp4", alt: "Пышный букет с розовыми пионами и эвкалиптом", href: "#builder" },
+  { name: "Сливовый вечер", note: "георгины, скабиоза, амарант, рускус", price: "4 700 ₽", image: "/demo/flowers/video/bq-plum.webp", video: "/demo/flowers/video/bq-plum.mp4", alt: "Тёмный букет с бордовыми георгинами", href: "#builder" },
+  { name: "Ботаник", note: "антуриум, папоротник, монстера, каллы", price: "6 200 ₽", image: "/demo/flowers/video/bq-botanic.webp", video: "/demo/flowers/video/bq-botanic.mp4", alt: "Зелёный букет с антуриумом и крупными листьями", href: "#builder" },
+  { name: "Бумажный сад", note: "ранункулюсы, анемоны, лаванда, вероника", price: "4 300 ₽", image: "/demo/flowers/video/bq-paper.webp", video: "/demo/flowers/video/bq-paper.mp4", alt: "Нежный букет с ранункулюсами и лавандой", href: "#builder", badge: "новое" },
+  { name: "Один стебель", note: "гортензия, одна, в бумаге", price: "1 200 ₽", image: "/demo/flowers/video/bq-single.webp", video: "/demo/flowers/video/bq-single.mp4", alt: "Одна крупная голубая гортензия в бумаге", href: "#builder" },
 ]
 
-/** Каталог букетов: список названий, картинка следует за курсором. */
+/** Каталог букетов витриной: в каждой карточке букет поворачивается на подставке. */
 export function Flowers001({
   eyebrow = "Букеты недели",
   title = "Что собрали сегодня",
-  lede = "Шесть букетов, которые стоят на витрине прямо сейчас. Наведите на название — покажем, как он выглядит.",
+  lede = "Шесть букетов, которые стоят на витрине прямо сейчас. Каждый можно заказать как есть или пересобрать под себя.",
   items = DEFAULT_ITEMS,
   note = "цены с бумагой и открыткой",
   allLabel = "Собрать свой букет",
   allHref = "#builder",
+  prevLabel = "Назад",
+  nextLabel = "Дальше",
   tone = "auto",
   accent,
   ink,
@@ -120,21 +133,30 @@ export function Flowers001({
   className,
   style,
 }: Flowers001Props) {
-  const [active, setActive] = useState<number | null>(null)
-  const ghostRef = useRef<HTMLLIElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
-  const lastX = useRef(0)
 
-  const move = (event: PointerEvent<HTMLUListElement>) => {
-    const ghost = ghostRef.current
+  // Ролики играют только в видимых карточках — шесть видео разом не грузят процессор.
+  useEffect(() => {
     const list = listRef.current
-    if (!ghost || !list || event.pointerType === "touch") return
-    const rect = list.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    const tilt = Math.max(-8, Math.min(8, (event.clientX - lastX.current) * 0.6))
-    lastX.current = event.clientX
-    ghost.style.transform = `translate3d(calc(${x}px - 50%),calc(${y}px - 50%),0) rotate(${tilt}deg)`
+    if (!list || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const video = entry.target as HTMLVideoElement
+          if (entry.isIntersecting) video.play().catch(() => {})
+          else video.pause()
+        }
+      },
+      { threshold: 0.35 },
+    )
+    list.querySelectorAll("video").forEach((video) => observer.observe(video))
+    return () => observer.disconnect()
+  }, [items])
+
+  const scroll = (direction: number) => {
+    const list = listRef.current
+    if (!list) return
+    list.scrollBy({ left: direction * list.clientWidth * 0.8, behavior: "smooth" })
   }
 
   const palette = {
@@ -158,42 +180,52 @@ export function Flowers001({
               <h2 data-part="title">{title}</h2>
               {lede ? <p data-part="lede">{lede}</p> : null}
             </div>
-            {note ? <p data-part="note">{note}</p> : null}
-          </div>
-          <ul data-part="list" ref={listRef} onPointerMove={move} onPointerLeave={() => setActive(null)}>
-            {items.map((item, index) => (
-              <li key={item.name}>
-                <a data-part="row" href={item.href ?? "#"} onPointerEnter={(event) => (event.pointerType === "touch" ? null : setActive(index))} onFocus={() => setActive(null)}>
-                  <figure data-part="figure">
-                    <img src={item.image} alt={item.alt ?? item.name} loading="lazy" />
-                  </figure>
-                  <span data-part="index">{String(index + 1).padStart(2, "0")}</span>
-                  <h3 data-part="name">{item.name}</h3>
-                  <p data-part="composition">{item.note}</p>
-                  <span data-part="price">{item.price}</span>
-                  <svg data-part="row-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <div data-part="side">
+              {note ? <p data-part="note">{note}</p> : null}
+              {allLabel ? <Button016 data-part="all" label={allLabel} href={allHref} external={false} size="md" tone="neutral" accent={accent} /> : null}
+              <div data-part="arrows">
+                <button data-part="nav-arrow" type="button" onClick={() => scroll(-1)} aria-label={prevLabel}>
+                  <svg data-part="arrow-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M20 12H4M11 5l-7 7 7 7" />
+                  </svg>
+                </button>
+                <button data-part="nav-arrow" type="button" onClick={() => scroll(1)} aria-label={nextLabel}>
+                  <svg data-part="arrow-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 12h16M13 5l7 7-7 7" />
                   </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <ul data-part="list" ref={listRef}>
+            {items.map((item, index) => (
+              <li key={item.name} data-part="item">
+                <a data-part="card" href={item.href ?? "#"}>
+                  <figure data-part="media">
+                    {item.video ? (
+                      <video data-part="shot" src={item.video} poster={item.image} aria-label={item.alt ?? item.name} muted loop playsInline preload="metadata" />
+                    ) : (
+                      <img data-part="shot" src={item.image} alt={item.alt ?? item.name} loading="lazy" />
+                    )}
+                    <span data-part="index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    {item.badge ? <span data-part="badge">{item.badge}</span> : null}
+                  </figure>
+                  <div data-part="meta">
+                    <h3 data-part="name">
+                      {item.name}
+                      <svg data-part="scribble" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
+                        <path d="M2 12C30 4 52 18 80 10s52-6 78 2 30-4 40-6" pathLength={1} />
+                      </svg>
+                    </h3>
+                    <span data-part="price">{item.price}</span>
+                    <p data-part="composition">{item.note}</p>
+                  </div>
                 </a>
               </li>
             ))}
-            <li data-part="ghost" ref={ghostRef} data-on={active !== null} aria-hidden="true">
-              {items.map((item, index) => (
-                <img key={item.name} src={item.image} alt="" data-on={active === index} loading="lazy" />
-              ))}
-            </li>
           </ul>
-          {allLabel ? (
-            <Button016
-              data-part="all"
-              label={allLabel}
-              href={allHref}
-              external={false}
-              size="md"
-              tone="neutral"
-              accent={accent}
-            />
-          ) : null}
         </div>
       </section>
     </>

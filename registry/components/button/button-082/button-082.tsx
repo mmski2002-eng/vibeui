@@ -63,9 +63,9 @@ const STYLES = `
 [data-vibeui-block="button-082"] [data-part="icon"]{width:2.4rem;height:2.4rem;color:var(--vibeui-button-082-muted);transition:color .3s}
 [data-vibeui-block="button-082"] [data-part="icon"] path,[data-vibeui-block="button-082"] [data-part="icon"] circle{stroke-dasharray:100;stroke-dashoffset:0;opacity:.55;transition:opacity .3s}
 [data-vibeui-block="button-082"][aria-expanded="true"] [data-part="icon"]{color:var(--vibeui-button-082-accent)}
-[data-vibeui-block="button-082"][aria-expanded="true"] [data-part="icon"] :is(path{opacity:1;animation:vibeui-button-082-draw .9s cubic-bezier(.2,.7,.2,1) both}
-[data-vibeui-block="button-082"][aria-expanded="true"] [data-part="icon"] :is(path{transition-delay:.15s}
-[data-vibeui-block="button-082"][aria-expanded="true"] [data-part="icon"] :is(path{transition-delay:.3s}
+[data-vibeui-block="button-082"][aria-expanded="true"] [data-part="icon"] :is(path,circle){opacity:1;animation:vibeui-button-082-draw .9s cubic-bezier(.2,.7,.2,1) both}
+[data-vibeui-block="button-082"][aria-expanded="true"] [data-part="icon"] :is(path,circle):nth-child(2){transition-delay:.15s}
+[data-vibeui-block="button-082"][aria-expanded="true"] [data-part="icon"] :is(path,circle):nth-child(3){transition-delay:.3s}
 [data-vibeui-block="button-082"] h3{margin:0;font-family:var(--vibeui-button-082-display);font-weight:600;font-size:1.5rem;line-height:1.1;transition:color .3s}
 [data-vibeui-block="button-082"]:hover h3{color:var(--vibeui-button-082-accent)}
 [data-vibeui-block="button-082"] [data-part="plus"]{position:relative;width:1.6rem;height:1.6rem;border-radius:50%;border:1px solid var(--vibeui-button-082-line)}
@@ -73,7 +73,7 @@ const STYLES = `
 [data-vibeui-block="button-082"] [data-part="plus"]::after{transform:translate(-50%,-50%) rotate(90deg)}
 [data-vibeui-block="button-082"][aria-expanded="true"] [data-part="plus"]::after{transform:translate(-50%,-50%) rotate(0)}
 @media (prefers-reduced-motion:reduce){
-[data-vibeui-block="button-082"] [data-part="icon"] :is(path{stroke-dashoffset:0}
+[data-vibeui-block="button-082"] [data-part="icon"] :is(path,circle){stroke-dashoffset:0}
 }
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-082"] *{animation:none!important;transition:none!important}}
 `

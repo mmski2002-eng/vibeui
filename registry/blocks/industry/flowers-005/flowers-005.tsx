@@ -52,7 +52,7 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="flowers-005"]{color-scheme:dark}
 :where([data-vibeui-block="flowers-005"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="flowers-005"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="flowers-005"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-flowers-005-bg);color:var(--vibeui-flowers-005-fg);font-family:var(--vibeui-flowers-005-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="flowers-005"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-flowers-005-bg);color:var(--vibeui-flowers-005-fg);font-family:var(--vibeui-flowers-005-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-005"] *{box-sizing:border-box}
 [data-vibeui-block="flowers-005"] [data-part="head"]{width:100%}
 [data-vibeui-block="flowers-005"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem;align-items:start}
@@ -65,16 +65,13 @@ container-type:inline-size;
 [data-vibeui-block="flowers-005"] [data-part="counter"] em{display:block;margin-top:.4rem;font-family:var(--vibeui-flowers-005-hand);font-style:normal;font-size:1.35rem;line-height:1.1;color:var(--vibeui-flowers-005-muted);transform:rotate(-2deg);transform-origin:left}
 [data-vibeui-block="flowers-005"] [data-part="list"]{margin:0;padding:0;list-style:none;border-top:1px solid var(--vibeui-flowers-005-line)}
 [data-vibeui-block="flowers-005"] [data-part="item"]{border-bottom:1px solid var(--vibeui-flowers-005-line)}
-circle){opacity:1;animation:vibeui-flowers-005-draw .9s cubic-bezier(.2,.7,.2,1) both}
 @keyframes vibeui-flowers-005-draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
-circle):nth-child(2){transition-delay:.15s}
-circle):nth-child(3){transition-delay:.3s}
 [data-vibeui-block="flowers-005"] [data-part="panel"]{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
 [data-vibeui-block="flowers-005"] [data-part="panel"][data-open="true"]{grid-template-rows:1fr}
 [data-vibeui-block="flowers-005"] [data-part="panel"]>div{overflow:hidden}
 [data-vibeui-block="flowers-005"] [data-part="panel"] p{margin:0;padding:0 0 1.4rem 3.5rem;max-width:34rem;color:var(--vibeui-flowers-005-muted)}
 @container (min-width: 60rem){[data-vibeui-block="flowers-005"] [data-part="shell"]{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:4rem}[data-vibeui-block="flowers-005"] [data-part="aside"]{position:sticky;top:5.5rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-005"] *{animation:none!important;transition:none!important}circle){stroke-dashoffset:0}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-005"] *{animation:none!important;transition:none!important}}`
 
 
 const DEFAULT_ITEMS: Flowers005Item[] = [

@@ -78,17 +78,19 @@ const hero: Hero036Props = {
 const catalog: Flowers001Props = {
   eyebrow: "Bouquets of the week",
   title: "What we arranged today",
-  lede: "Six bouquets standing in the window right now. Hover over a name — we'll show what it looks like.",
+  lede: "Six bouquets standing in the window right now. Order any of them as is or rebuild it your way.",
   items: [
-    { name: "Poppy field", note: "poppy, daisy, St John's wort, oats", price: "3 900 ₽", image: `${PHOTOS}/bouquet-01.webp`, alt: "A bouquet with red poppies and meadow grasses in kraft paper", href: "#builder" },
-    { name: "Morning at the dacha", note: "peonies, eucalyptus, sweet pea", price: "5 400 ₽", image: `${PHOTOS}/bouquet-02.webp`, alt: "A lush bouquet with pink peonies and eucalyptus", href: "#builder" },
-    { name: "Plum evening", note: "dahlias, scabiosa, amaranth, ruscus", price: "4 700 ₽", image: `${PHOTOS}/bouquet-03.webp`, alt: "A dark bouquet with burgundy dahlias", href: "#builder" },
-    { name: "Botanist", note: "anthurium, fern, monstera, callas", price: "6 200 ₽", image: `${PHOTOS}/bouquet-04.webp`, alt: "A green bouquet with anthurium and large leaves", href: "#builder" },
-    { name: "Paper garden", note: "ranunculus, anemones, lavender, veronica", price: "4 300 ₽", image: `${PHOTOS}/bouquet-05.webp`, alt: "A delicate bouquet with ranunculus and lavender", href: "#builder" },
-    { name: "A single stem", note: "hydrangea, one, in paper", price: "1 200 ₽", image: `${PHOTOS}/bouquet-06.webp`, alt: "A single large blue hydrangea in paper", href: "#builder" },
+    { name: "Poppy field", note: "poppy, daisy, St John's wort, oats", price: "3 900 ₽", image: `${PHOTOS}/video/bq-poppy.webp`, video: `${PHOTOS}/video/bq-poppy.mp4`, alt: "A bouquet with red poppies and meadow grasses in kraft paper", href: "#builder" },
+    { name: "Morning at the dacha", note: "peonies, eucalyptus, sweet pea", price: "5 400 ₽", image: `${PHOTOS}/video/bq-peony.webp`, video: `${PHOTOS}/video/bq-peony.mp4`, alt: "A lush bouquet with pink peonies and eucalyptus", href: "#builder" },
+    { name: "Plum evening", note: "dahlias, scabiosa, amaranth, ruscus", price: "4 700 ₽", image: `${PHOTOS}/video/bq-plum.webp`, video: `${PHOTOS}/video/bq-plum.mp4`, alt: "A dark bouquet with burgundy dahlias", href: "#builder" },
+    { name: "Botanist", note: "anthurium, fern, monstera, callas", price: "6 200 ₽", image: `${PHOTOS}/video/bq-botanic.webp`, video: `${PHOTOS}/video/bq-botanic.mp4`, alt: "A green bouquet with anthurium and large leaves", href: "#builder" },
+    { name: "Paper garden", note: "ranunculus, anemones, lavender, veronica", price: "4 300 ₽", image: `${PHOTOS}/video/bq-paper.webp`, video: `${PHOTOS}/video/bq-paper.mp4`, alt: "A delicate bouquet with ranunculus and lavender", href: "#builder" },
+    { name: "A single stem", note: "hydrangea, one, in paper", price: "1 200 ₽", image: `${PHOTOS}/video/bq-single.webp`, video: `${PHOTOS}/video/bq-single.mp4`, alt: "A single large blue hydrangea in paper", href: "#builder" },
   ],
   note: "prices include paper and a card",
   allLabel: "Build your own bouquet",
+  prevLabel: "Back",
+  nextLabel: "Next",
 }
 
 const builder: Flowers002Props = {
@@ -96,12 +98,12 @@ const builder: Flowers002Props = {
   title: "A bouquet to your recipe",
   lede: "Add stems — they go into the vase. We'll tell you the price, how long we'll take to arrange it and how long it will last.",
   flowers: [
-    { name: "Peony", price: 390, days: 6, color: "#e9a3b6", kind: "peony", initial: 3, image: `${PHOTOS}/stem-peony.png` },
-    { name: "Poppy", price: 190, days: 4, color: "#c2361d", kind: "poppy", initial: 2, image: `${PHOTOS}/stem-poppy.png` },
-    { name: "Daisy", price: 120, days: 8, color: "#fbf6ea", kind: "daisy", image: `${PHOTOS}/stem-chamomile.png` },
-    { name: "Ranunculus", price: 260, days: 7, color: "#f0b04c", kind: "peony", image: `${PHOTOS}/stem-ranunculus.png` },
-    { name: "Lavender", price: 140, days: 10, color: "#8b7bb5", kind: "spike", initial: 2, image: `${PHOTOS}/stem-lavender.png` },
-    { name: "Eucalyptus", price: 160, days: 14, color: "#7f9a7a", kind: "leaf", image: `${PHOTOS}/stem-eucalyptus.png` },
+    { name: "Peony", price: 390, days: 6, color: "#e9a3b6", initial: 3, image: `${PHOTOS}/stems/peony.webp`, anchor: 0.532 },
+    { name: "Poppy", price: 190, days: 4, color: "#c2361d", initial: 2, image: `${PHOTOS}/stems/poppy.webp`, anchor: 0.495 },
+    { name: "Daisy", price: 120, days: 8, color: "#fbf6ea", image: `${PHOTOS}/stems/daisy.webp`, anchor: 0.554 },
+    { name: "Ranunculus", price: 260, days: 7, color: "#f0b04c", image: `${PHOTOS}/stems/ranunculus.webp`, anchor: 0.506 },
+    { name: "Lavender", price: 140, days: 10, color: "#8b7bb5", initial: 2, image: `${PHOTOS}/stems/lavender.webp`, anchor: 0.507 },
+    { name: "Eucalyptus", price: 160, days: 14, color: "#7f9a7a", image: `${PHOTOS}/stems/eucalyptus.webp`, anchor: 0.528 },
   ],
   wrapLabel: "paper, ribbon and a card",
   orderLabel: "Order this bouquet",
@@ -147,6 +149,8 @@ const delivery: Flowers003Props = {
   noOrderTitle: "Which bouquet?",
   noOrderText: "Build it in the builder — the mix will appear here. Or describe it in words below.",
   builderLabel: "open the builder",
+  shopLabel: "workshop",
+  riverLabel: "Neva",
   nameLabel: "Your name",
   phoneLabel: "Phone",
   addressLabel: "Address, entrance, floor",
@@ -161,18 +165,18 @@ const season: Flowers004Props = {
   title: "What's in bloom this month",
   lede: "We don't ship roses from Ecuador all year round. Here's an honest calendar: what's fresher, what's cheaper and what lasts longer.",
   months: [
-    { name: "January", flowers: ["amaryllis", "hyacinth", "tulip"], note: "greenhouse-grown, but alive and fragrant" },
-    { name: "February", flowers: ["mimosa", "tulip", "ranunculus"], note: "mimosa — exactly two weeks" },
-    { name: "March", flowers: ["daffodil", "ranunculus", "anemone"], note: "the first Dutch anemones" },
-    { name: "April", flowers: ["lilac", "freesia", "tulip"], note: "lilac comes from Crimea" },
-    { name: "May", flowers: ["peony", "lily of the valley", "poppy"], note: "peonies — from 20 May" },
-    { name: "June", flowers: ["peony", "poppy", "daisy"], note: "peak peonies, best price" },
-    { name: "July", flowers: ["lavender", "delphinium", "cornflower"], note: "meadow flowers from local farms" },
-    { name: "August", flowers: ["dahlia", "sunflower", "hydrangea"], note: "dahlias until the frost" },
-    { name: "September", flowers: ["dahlia", "aster", "scabiosa"], note: "the darkest palette of the year" },
-    { name: "October", flowers: ["chrysanthemum", "physalis", "rowan"], note: "berries and dried flowers" },
-    { name: "November", flowers: ["amaryllis", "eucalyptus", "cotton"], note: "we start drying" },
-    { name: "December", flowers: ["spruce", "ilex", "poinsettia"], note: "conifers and red berries" },
+    { name: "January", flowers: ["amaryllis", "hyacinth", "tulip"], note: "greenhouse-grown, but alive and fragrant", color: "#d94b5b" },
+    { name: "February", flowers: ["mimosa", "tulip", "ranunculus"], note: "mimosa — exactly two weeks", color: "#f2c230" },
+    { name: "March", flowers: ["daffodil", "ranunculus", "anemone"], note: "the first Dutch anemones", color: "#f5e27a" },
+    { name: "April", flowers: ["lilac", "freesia", "tulip"], note: "lilac comes from Crimea", color: "#b995e0" },
+    { name: "May", flowers: ["peony", "lily of the valley", "poppy"], note: "peonies — from 20 May", color: "#f2a3bd" },
+    { name: "June", flowers: ["peony", "poppy", "daisy"], note: "peak peonies, best price", color: "#ff6b57" },
+    { name: "July", flowers: ["lavender", "delphinium", "cornflower"], note: "meadow flowers from local farms", color: "#7f8cf0" },
+    { name: "August", flowers: ["dahlia", "sunflower", "hydrangea"], note: "dahlias until the frost", color: "#ffb938" },
+    { name: "September", flowers: ["dahlia", "aster", "scabiosa"], note: "the darkest palette of the year", color: "#c23a6b" },
+    { name: "October", flowers: ["chrysanthemum", "physalis", "rowan"], note: "berries and dried flowers", color: "#ff8a3d" },
+    { name: "November", flowers: ["amaryllis", "eucalyptus", "cotton"], note: "we start drying", color: "#9fb5a0" },
+    { name: "December", flowers: ["spruce", "ilex", "poinsettia"], note: "conifers and red berries", color: "#e0433f" },
   ],
   nowLabel: "in bloom now",
   prevLabel: "Earlier",
@@ -202,11 +206,10 @@ const about: About017Props = {
   paragraphs: [
     "Stem opened in 2014 in a former pharmacy at 4 Pestelya: the same tiled walls, the same oak counter and the same principle ever since — no cellophane, no dyed roses and nothing that doesn't smell.",
     "Flowers arrive three times a week: from two farms near Petersburg in summer and from Holland in winter. We keep no warehouse: what's in the window was cut yesterday, and we honestly say how long it will last.",
-    "Five florists work in the workshop. Each arranges a bouquet from start to finish — and signs the card with their own name.",
   ],
   photos: [
-    { src: `${PHOTOS}/workshop-01.webp`, alt: "The workshop bench: buckets of flowers, kraft paper, secateurs", caption: "bench No. 2, morning" },
-    { src: `${PHOTOS}/workshop-02.webp`, alt: "A florist's hands trimming peony stems", caption: "we trim every two days" },
+    { src: `${PHOTOS}/video/work-cut.webp`, video: `${PHOTOS}/video/work-cut.mp4`, alt: "A florist's hands trimming stems over a bucket of water", caption: "we trim every two days" },
+    { src: `${PHOTOS}/video/work-wrap.webp`, video: `${PHOTOS}/video/work-wrap.mp4`, alt: "A florist wrapping a bouquet in kraft paper and tying a ribbon", caption: "bench No. 2, morning" },
   ],
   facts: [
     { value: "2014", label: "year opened" },
@@ -303,7 +306,7 @@ export default function FlowersDemoEn() {
       </style>
       <Navbar036 {...paper} {...navbar} />
       <div id="top">
-        <Hero036 {...paper} {...hero} />
+        <Hero036 {...paper} {...hero} video="/demo/flowers/video/hero.mp4" image="/demo/flowers/video/hero.webp" />
       </div>
       <div id="catalog">
         <Flowers001 {...paper} {...catalog} />

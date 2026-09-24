@@ -6,6 +6,8 @@ export type About017Photo = {
   alt: string
   /** Рукописная подпись под снимком. */
   caption?: string
+  /** Короткий ролик вместо фото: без звука, по кругу; src — его постер. */
+  video?: string
 }
 
 export type About017Person = {
@@ -37,10 +39,11 @@ export type About017Props = {
 
 // О мастерской как разворот ботанического журнала: слева большой снимок и
 // второй поменьше, наклеенный поверх с наклоном и рукописной подписью;
-// справа текст с буквицей и три факта в колонке. Ниже флористы —
+// справа текст с буквицей, три факта и под ними флористы —
 // «полароиды» с рукописным именем и фразой от первого лица. Всё
 // появляется по мере прокрутки через animation-timeline: view() — там,
-// где не поддерживается, просто видно сразу. Серверный, без JS.
+// где не поддерживается, просто видно сразу. У снимка может быть ролик —
+// тогда он играет без звука по кругу, фото служит постером. Серверный, без JS.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
 
 const STYLES = `
@@ -59,39 +62,39 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="about-017"]{color-scheme:dark}
 :where([data-vibeui-block="about-017"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="about-017"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="about-017"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-about-017-bg);color:var(--vibeui-about-017-fg);font-family:var(--vibeui-about-017-font);font-size:1rem;line-height:1.55}
+[data-vibeui-block="about-017"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-about-017-bg);color:var(--vibeui-about-017-fg);font-family:var(--vibeui-about-017-font);font-size:1rem;line-height:1.55}
 [data-vibeui-block="about-017"] *{box-sizing:border-box}
 [data-vibeui-block="about-017"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="about-017"] [data-part="spread"]{display:grid;gap:3rem;align-items:start}
 [data-vibeui-block="about-017"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-about-017-muted)}
-[data-vibeui-block="about-017"] [data-part="title"]{margin:0 0 1.6rem;font-family:var(--vibeui-about-017-display);font-weight:500;font-size:clamp(2.2rem,5.4cqi,4.2rem);line-height:1;letter-spacing:-.02em}
+[data-vibeui-block="about-017"] [data-part="title"]{margin:0 0 1.2rem;font-family:var(--vibeui-about-017-display);font-weight:500;font-size:clamp(2.2rem,4cqi,3.4rem);line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="about-017"] [data-part="text"] p{margin:0 0 1rem;max-width:34rem}
 [data-vibeui-block="about-017"] [data-part="text"] h2 + p::first-letter{float:left;margin:.1em .12em 0 0;font-family:var(--vibeui-about-017-display);font-weight:600;font-size:4.2em;line-height:.8;color:var(--vibeui-about-017-accent)}
-[data-vibeui-block="about-017"] [data-part="facts"]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:2rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--vibeui-about-017-line);list-style:none}
+[data-vibeui-block="about-017"] [data-part="facts"]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.4rem 0 0;padding:1.2rem 0 0;border-top:1px solid var(--vibeui-about-017-line);list-style:none}
 [data-vibeui-block="about-017"] [data-part="facts"] b{display:block;font-family:var(--vibeui-about-017-display);font-weight:600;font-size:2rem;line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="about-017"] [data-part="facts"] span{display:block;margin-top:.3rem;font-size:.8rem;color:var(--vibeui-about-017-muted)}
 [data-vibeui-block="about-017"] [data-part="collage"]{position:relative;padding:0 0 3.5rem 0}
-[data-vibeui-block="about-017"] [data-part="big"]{margin:0;width:88%;aspect-ratio:4/5;overflow:hidden;border-radius:.4rem;background:var(--vibeui-about-017-paper)}
+[data-vibeui-block="about-017"] [data-part="big"]{margin:0;width:min(88%,calc((100svh - 17rem) * .8));aspect-ratio:4/5;overflow:hidden;border-radius:.4rem;background:var(--vibeui-about-017-paper)}
 [data-vibeui-block="about-017"] [data-part="small"]{position:absolute;right:0;bottom:0;width:48%;margin:0;padding:.55rem .55rem 2.4rem;background:var(--vibeui-about-017-bg);box-shadow:0 20px 40px -20px rgb(0 0 0 / .5);transform:rotate(3deg)}
 [data-vibeui-block="about-017"] [data-part="small"] div{aspect-ratio:1;overflow:hidden;background:var(--vibeui-about-017-paper)}
-[data-vibeui-block="about-017"] [data-part="collage"] img{display:block;width:100%;height:100%;object-fit:cover}
+[data-vibeui-block="about-017"] [data-part="collage"] :is(img,video){display:block;width:100%;height:100%;object-fit:cover}
 [data-vibeui-block="about-017"] [data-part="caption"]{position:absolute;left:.6rem;right:.6rem;bottom:.5rem;font-family:var(--vibeui-about-017-hand);font-size:1.25rem;line-height:1.1;color:var(--vibeui-about-017-fg);text-align:center}
 [data-vibeui-block="about-017"] [data-part="tape"]{position:absolute;left:50%;top:-.7rem;width:5rem;height:1.4rem;transform:translateX(-50%) rotate(-4deg);background:color-mix(in oklab,var(--vibeui-about-017-accent) 35%,var(--vibeui-about-017-bg));opacity:.85}
 [data-vibeui-block="about-017"] [data-part="bigcap"]{position:absolute;left:0;bottom:.4rem;max-width:40%;font-family:var(--vibeui-about-017-hand);font-size:1.3rem;line-height:1.05;color:var(--vibeui-about-017-accent);transform:rotate(-3deg)}
-[data-vibeui-block="about-017"] [data-part="people"]{margin:4rem 0 0}
-[data-vibeui-block="about-017"] [data-part="people"] h3{margin:0 0 1.4rem;font-family:var(--vibeui-about-017-display);font-weight:500;font-size:1.9rem;line-height:1;letter-spacing:-.02em}
+[data-vibeui-block="about-017"] [data-part="people"]{margin:1.4rem 0 0;padding-top:1.2rem;border-top:1px solid var(--vibeui-about-017-line)}
+[data-vibeui-block="about-017"] [data-part="people"] h3{margin:0 0 .9rem;font-family:var(--vibeui-about-017-display);font-weight:500;font-size:1.4rem;line-height:1;letter-spacing:-.02em}
 [data-vibeui-block="about-017"] [data-part="cards"]{display:grid;gap:1.5rem;margin:0;padding:0;list-style:none}
 @supports (animation-timeline: view()){
 [data-vibeui-block="about-017"] [data-part="collage"],[data-vibeui-block="about-017"] [data-part="text"]{animation:vibeui-about-017-in linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
 }
 @keyframes vibeui-about-017-in{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 @container (min-width: 40rem){[data-vibeui-block="about-017"] [data-part="cards"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@container (min-width: 60rem){[data-vibeui-block="about-017"] [data-part="spread"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}[data-vibeui-block="about-017"] [data-part="collage"]{position:sticky;top:5.5rem}[data-vibeui-block="about-017"] [data-part="people"]{margin-top:5rem}[data-vibeui-block="about-017"] [data-part="cards"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container (min-width: 60rem){[data-vibeui-block="about-017"] [data-part="spread"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}[data-vibeui-block="about-017"] [data-part="collage"]{position:sticky;top:5.5rem}[data-vibeui-block="about-017"] [data-part="cards"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}[data-vibeui-block="about-017"] [data-part="cards"] > *{grid-template-columns:4.5rem minmax(0,1fr);gap:.9rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="about-017"] *{animation:none!important;transition:none!important}}`
 
 const DEFAULT_PHOTOS: About017Photo[] = [
-  { src: "/demo/flowers/workshop-01.webp", alt: "Рабочий стол мастерской: вёдра с цветами, крафтовая бумага, секатор", caption: "стол №2, утро" },
-  { src: "/demo/flowers/workshop-02.webp", alt: "Руки флориста подрезают стебли пионов", caption: "подрезаем каждые два дня" },
+  { src: "/demo/flowers/video/work-cut.webp", video: "/demo/flowers/video/work-cut.mp4", alt: "Руки флориста подрезают стебли над ведром с водой", caption: "подрезаем каждые два дня" },
+  { src: "/demo/flowers/video/work-wrap.webp", video: "/demo/flowers/video/work-wrap.mp4", alt: "Флорист заворачивает букет в крафт и завязывает ленту", caption: "стол №2, утро" },
 ]
 
 const DEFAULT_PEOPLE: About017Person[] = [
@@ -106,7 +109,6 @@ export function About017({
   paragraphs = [
     "Стебель открылся в 2014-м в бывшей аптеке на Пестеля, 4: с тех пор здесь те же кафельные стены, тот же дубовый прилавок и всё тот же принцип — никакого целлофана, никаких крашеных роз и ничего, что не пахнет.",
     "Цветы приезжают три раза в неделю: с двух ферм в Ленобласти летом и из Голландии зимой. Мы не держим склад: то, что стоит на витрине, срезано вчера, и мы честно пишем, сколько простоит.",
-    "В мастерской работают пять флористов. Каждый собирает букет от начала до конца — и подписывает открытку своим именем.",
   ],
   photos = DEFAULT_PHOTOS,
   facts = [
@@ -144,7 +146,7 @@ export function About017({
             <div data-part="collage">
               {big ? (
                 <figure data-part="big">
-                  <img src={big.src} alt={big.alt} loading="lazy" />
+                  {big.video ? <video src={big.video} poster={big.src} aria-label={big.alt} autoPlay muted loop playsInline preload="metadata" /> : <img src={big.src} alt={big.alt} loading="lazy" />}
                 </figure>
               ) : null}
               {big?.caption ? (
@@ -156,7 +158,7 @@ export function About017({
                 <figure data-part="small">
                   <i data-part="tape" aria-hidden="true" />
                   <div>
-                    <img src={small.src} alt={small.alt} loading="lazy" />
+                    {small.video ? <video src={small.video} poster={small.src} aria-label={small.alt} autoPlay muted loop playsInline preload="metadata" /> : <img src={small.src} alt={small.alt} loading="lazy" />}
                   </div>
                   {small.caption ? <figcaption data-part="caption">{small.caption}</figcaption> : null}
                 </figure>
@@ -178,18 +180,18 @@ export function About017({
                   ))}
                 </ul>
               ) : null}
+              {people.length > 0 ? (
+                <div data-part="people">
+                  <h3>{peopleTitle}</h3>
+                  <ul data-part="cards">
+                    {people.map((person, index) => (
+                      <Card134 key={person.name} data-part="card" name={person.name} image={person.image} alt={person.alt} role={person.role} quote={person.quote} index={index} accent={accent} />
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
           </div>
-          {people.length > 0 ? (
-            <div data-part="people">
-              <h3>{peopleTitle}</h3>
-              <ul data-part="cards">
-                {people.map((person, index) => (
-                  <Card134 key={person.name} data-part="card" name={person.name} image={person.image} alt={person.alt} role={person.role} quote={person.quote} index={index} accent={accent} />
-                ))}
-              </ul>
-            </div>
-          ) : null}
         </div>
       </section>
     </>

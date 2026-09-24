@@ -60,7 +60,7 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="testimonials-028"]{color-scheme:dark}
 :where([data-vibeui-block="testimonials-028"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="testimonials-028"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="testimonials-028"]{box-sizing:border-box;padding:5rem 0;overflow:hidden;background:var(--vibeui-testimonials-028-bg);color:var(--vibeui-testimonials-028-fg);font-family:var(--vibeui-testimonials-028-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="testimonials-028"]{box-sizing:border-box;padding:4rem 0;overflow:hidden;background:var(--vibeui-testimonials-028-bg);color:var(--vibeui-testimonials-028-fg);font-family:var(--vibeui-testimonials-028-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="testimonials-028"] *{box-sizing:border-box}
 [data-vibeui-block="testimonials-028"] [data-part="card"]{flex:0 0 min(88%,34rem)}
 [data-vibeui-block="testimonials-028"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}

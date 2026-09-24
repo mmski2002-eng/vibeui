@@ -38,8 +38,9 @@ export type Footer035Props = {
 // Подвал-контакты цветочной мастерской: слева адрес, часы, телефон и
 // рукописная пометка «приходите нюхать», справа карта в «бумажной» рамке
 // (iframe приглушён фильтром под цвет страницы). Ниже — имя мастерской
-// одной строкой во всю ширину, контурной антиквой, которая заливается
-// чернилами при наведении; в самом низу ссылки и копирайт. Без JS.
+// одной строкой во всю ширину, контурной антиквой: при прокрутке она
+// проявляется слева направо, будто её пишут пером, при наведении
+// заливается чернилами; в самом низу ссылки и копирайт. Без JS.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
 
 const STYLES = `
@@ -72,11 +73,13 @@ container-type:inline-size;
 [data-vibeui-block="footer-035"] [data-part="contacts"] a:hover{color:var(--vibeui-footer-035-accent);border-color:var(--vibeui-footer-035-accent)}
 [data-vibeui-block="footer-035"] [data-part="note"]{margin:1.6rem 0 0;font-family:var(--vibeui-footer-035-hand);font-size:1.5rem;line-height:1.05;color:var(--vibeui-footer-035-accent);transform:rotate(-3deg);transform-origin:left}
 [data-vibeui-block="footer-035"] [data-part="map"]{position:relative;margin:0;padding:.6rem;background:var(--vibeui-footer-035-paper);border:1px solid var(--vibeui-footer-035-line);transform:rotate(1deg)}
-[data-vibeui-block="footer-035"] [data-part="map"] iframe{display:block;width:100%;aspect-ratio:4/3;border:0;filter:grayscale(.55) sepia(.18) contrast(.92);background:var(--vibeui-footer-035-line)}
+[data-vibeui-block="footer-035"] [data-part="map"] iframe{display:block;width:100%;aspect-ratio:16/10;max-height:calc(100svh - 24rem);border:0;filter:grayscale(.55) sepia(.18) contrast(.92);background:var(--vibeui-footer-035-line)}
 [data-vibeui-block="footer-035"] [data-part="map"] figcaption{padding:.5rem .2rem 0;font-family:var(--vibeui-footer-035-hand);font-size:1.2rem;text-align:center}
 [data-vibeui-block="footer-035"] [data-part="pin"]{position:absolute;right:-.8rem;top:-.9rem;width:2.4rem;height:2.4rem;color:var(--vibeui-footer-035-accent);transform:rotate(12deg)}
-[data-vibeui-block="footer-035"] [data-part="word"]{margin:4rem 0 0;padding:0;font-family:var(--vibeui-footer-035-display);font-style:italic;font-weight:600;font-size:clamp(4.5rem,21cqi,17rem);line-height:.85;letter-spacing:-.04em;text-align:center;color:transparent;-webkit-text-stroke:1.5px var(--vibeui-footer-035-fg);transition:color .6s cubic-bezier(.2,.7,.2,1);user-select:none;-webkit-user-select:none}
+[data-vibeui-block="footer-035"] [data-part="word"]{margin:2.5rem 0 0;padding:0;font-family:var(--vibeui-footer-035-display);font-style:italic;font-weight:600;font-size:clamp(3.5rem,14cqi,10.5rem);line-height:.85;letter-spacing:-.04em;text-align:center;color:transparent;-webkit-text-stroke:1.5px var(--vibeui-footer-035-fg);transition:color .6s cubic-bezier(.2,.7,.2,1);user-select:none;-webkit-user-select:none}
 [data-vibeui-block="footer-035"] [data-part="word"]:hover{color:var(--vibeui-footer-035-fg)}
+@keyframes vibeui-footer-035-write{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -5% 0 0)}}
+@supports (animation-timeline: view()){[data-vibeui-block="footer-035"] [data-part="word"]{animation:vibeui-footer-035-write linear both;animation-timeline:view();animation-range:entry 10% cover 45%}}
 [data-vibeui-block="footer-035"] [data-part="bottom"]{display:flex;flex-wrap:wrap;align-items:center;gap:.8rem 1.6rem;margin:2rem 0 0;padding:1.2rem 0 0;border-top:1px solid var(--vibeui-footer-035-line);font-size:.85rem;color:var(--vibeui-footer-035-muted)}
 [data-vibeui-block="footer-035"] [data-part="bottom"] nav{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem}
 [data-vibeui-block="footer-035"] [data-part="bottom"] a{color:inherit;text-decoration:none;transition:color .2s}

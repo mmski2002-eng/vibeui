@@ -28,6 +28,9 @@ export type Flowers003Props = {
   /** Имя CustomEvent, из которого форма берёт состав букета. */
   eventName?: string
   builderHref?: string
+  /** Подписи на карте маршрута: мастерская и река. */
+  shopLabel?: string
+  riverLabel?: string
   submitLabel?: string
   doneTitle?: string
   doneText?: string
@@ -76,6 +79,9 @@ export type Flowers003Props = {
 // и лента связаны: ползунок двигает ленту, клик по делению — ползунок.
 // Справа форма заказа: состав приходит из конструктора через CustomEvent,
 // итог считается с доставкой, после отправки — галочка прорисовывается.
+// Над лентой — рисованная карта: Нева, мосты, кварталы и маршрут от
+// мастерской до двери; по маршруту едет курьер на велосипеде (offset-path),
+// пройденный путь прорисовывается, у двери пульсирует метка.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
 
 const STYLES = `
@@ -95,19 +101,39 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="flowers-003"]{color-scheme:dark}
 :where([data-vibeui-block="flowers-003"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="flowers-003"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="flowers-003"]{box-sizing:border-box;padding:5rem 0;background:var(--vibeui-flowers-003-bg);color:var(--vibeui-flowers-003-fg);font-family:var(--vibeui-flowers-003-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="flowers-003"]{box-sizing:border-box;padding:4rem 0;background:var(--vibeui-flowers-003-bg);color:var(--vibeui-flowers-003-fg);font-family:var(--vibeui-flowers-003-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-003"] *{box-sizing:border-box}
 [data-vibeui-block="flowers-003"] [data-part="slot"]{flex:0 0 6.5rem}
-[data-vibeui-block="flowers-003"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
-[data-vibeui-block="flowers-003"] [data-part="head"]{max-width:40rem;margin:0 0 2.5rem}
+[data-vibeui-block="flowers-003"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="flowers-003"] [data-part="head"]{display:grid;gap:.8rem 3rem;align-items:end;margin:0 0 2rem}
 [data-vibeui-block="flowers-003"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-flowers-003-muted)}
-[data-vibeui-block="flowers-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-flowers-003-display);font-weight:500;font-size:clamp(2.2rem,5.4cqi,4.2rem);line-height:1;letter-spacing:-.02em}
-[data-vibeui-block="flowers-003"] [data-part="lede"]{margin:.8rem 0 0;color:var(--vibeui-flowers-003-muted)}
+[data-vibeui-block="flowers-003"] [data-part="title"]{margin:0;font-family:var(--vibeui-flowers-003-display);font-weight:500;font-size:clamp(2.2rem,4cqi,3.4rem);line-height:1;letter-spacing:-.02em}
+[data-vibeui-block="flowers-003"] [data-part="lede"]{margin:0;max-width:30rem;color:var(--vibeui-flowers-003-muted)}
+[data-vibeui-block="flowers-003"] [data-part="map"]{position:relative;margin:-.2rem 0 0;border-radius:.9rem;overflow:hidden;background:color-mix(in oklab,var(--vibeui-flowers-003-fg) 3%,var(--vibeui-flowers-003-bg));box-shadow:inset 0 0 0 1px var(--vibeui-flowers-003-line)}
+[data-vibeui-block="flowers-003"] [data-part="map-svg"]{display:block;width:100%;height:auto}
+[data-vibeui-block="flowers-003"] [data-part="river"]{fill:color-mix(in oklab,#7fa7c9 38%,var(--vibeui-flowers-003-bg))}
+[data-vibeui-block="flowers-003"] [data-part="blocks"]{fill:color-mix(in oklab,var(--vibeui-flowers-003-fg) 7%,var(--vibeui-flowers-003-bg))}
+[data-vibeui-block="flowers-003"] [data-part="park"]{fill:color-mix(in oklab,#7f9a7a 30%,var(--vibeui-flowers-003-bg))}
+[data-vibeui-block="flowers-003"] [data-part="bridge"]{stroke:var(--vibeui-flowers-003-muted);stroke-width:3;opacity:.5}
+[data-vibeui-block="flowers-003"] [data-part="route"]{fill:none;stroke:var(--vibeui-flowers-003-line);stroke-width:3;stroke-dasharray:2 7;stroke-linecap:round}
+[data-vibeui-block="flowers-003"] [data-part="trail"]{fill:none;stroke:var(--vibeui-flowers-003-accent);stroke-width:3.5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-flowers-003-trail 9s cubic-bezier(.45,0,.35,1) infinite}
+[data-vibeui-block="flowers-003"] [data-part="rider"]{offset-path:path("M60 150 C110 150 120 96 180 96 S250 60 300 70 S390 120 440 104 520 56 560 52");offset-rotate:0deg;animation:vibeui-flowers-003-ride 9s cubic-bezier(.45,0,.35,1) infinite}
+[data-vibeui-block="flowers-003"] [data-part="rider-dot"]{fill:var(--vibeui-flowers-003-accent);stroke:var(--vibeui-flowers-003-bg);stroke-width:2.5}
+[data-vibeui-block="flowers-003"] [data-part="rider-bike"]{fill:none;stroke:var(--vibeui-flowers-003-on-accent);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+[data-vibeui-block="flowers-003"] [data-part="shop"]{fill:var(--vibeui-flowers-003-fg)}
+[data-vibeui-block="flowers-003"] [data-part="door"]{fill:var(--vibeui-flowers-003-accent)}
+[data-vibeui-block="flowers-003"] [data-part="door-pulse"]{fill:none;stroke:var(--vibeui-flowers-003-accent);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:vibeui-flowers-003-pulse 2s ease-out infinite}
+[data-vibeui-block="flowers-003"] [data-part="map-label"]{font-family:var(--vibeui-flowers-003-hand);font-size:17px;fill:var(--vibeui-flowers-003-fg)}
+[data-vibeui-block="flowers-003"] [data-part="map-water"]{font-family:var(--vibeui-flowers-003-display);font-style:italic;font-size:15px;fill:color-mix(in oklab,#3d6fa8 70%,var(--vibeui-flowers-003-fg));letter-spacing:.2em}
+@keyframes vibeui-flowers-003-ride{0%,8%{offset-distance:0%}85%,100%{offset-distance:100%}}
+@keyframes vibeui-flowers-003-trail{0%,8%{stroke-dashoffset:1}85%,100%{stroke-dashoffset:0}}
+@keyframes vibeui-flowers-003-pulse{from{scale:.6;opacity:.9}to{scale:2.4;opacity:0}}
+[data-vibeui-block="flowers-003"] [data-part="pair"]{display:grid;gap:.9rem}
 [data-vibeui-block="flowers-003"] [data-part="grid"]{display:grid;gap:2rem;align-items:start}
-[data-vibeui-block="flowers-003"] [data-part="clock"]{display:grid;gap:1.2rem;padding:1.5rem;border-radius:1.2rem;background:var(--vibeui-flowers-003-paper);border:1px solid var(--vibeui-flowers-003-line)}
+[data-vibeui-block="flowers-003"] [data-part="clock"]{display:grid;gap:1rem;padding:1.5rem;border-radius:1.2rem;background:var(--vibeui-flowers-003-paper);border:1px solid var(--vibeui-flowers-003-line)}
 [data-vibeui-block="flowers-003"] [data-part="status"]{margin:0;font-family:var(--vibeui-flowers-003-hand);font-size:1.5rem;line-height:1.05;color:var(--vibeui-flowers-003-accent)}
 [data-vibeui-block="flowers-003"] [data-part="readout"]{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1rem}
-[data-vibeui-block="flowers-003"] [data-part="readout"] b{font-family:var(--vibeui-flowers-003-display);font-weight:500;font-size:clamp(3rem,9cqi,5rem);line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+[data-vibeui-block="flowers-003"] [data-part="readout"] b{font-family:var(--vibeui-flowers-003-display);font-weight:500;font-size:clamp(2.8rem,6cqi,4.2rem);line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="flowers-003"] [data-part="readout"] span{color:var(--vibeui-flowers-003-muted)}
 [data-vibeui-block="flowers-003"] [data-part="tape"]{position:relative;overflow:hidden;min-height:4.6rem;padding:.5rem 0 .2rem 50%;border-top:1px solid var(--vibeui-flowers-003-line);border-bottom:1px solid var(--vibeui-flowers-003-line);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
 [data-vibeui-block="flowers-003"] [data-part="tape"]::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--vibeui-flowers-003-accent);z-index:2}
@@ -140,7 +166,8 @@ container-type:inline-size;
 [data-vibeui-block="flowers-003"] [data-part="done"] h3{margin:0;font-family:var(--vibeui-flowers-003-display);font-size:1.8rem;font-weight:600;line-height:1.1}
 [data-vibeui-block="flowers-003"] [data-part="done"] p{margin:0;color:var(--vibeui-flowers-003-muted)}
 @keyframes vibeui-flowers-003-draw{to{stroke-dashoffset:0}}
-@container (min-width: 60rem){[data-vibeui-block="flowers-003"] [data-part="grid"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:3rem}[data-vibeui-block="flowers-003"] [data-part="clock"]{position:sticky;top:5.5rem;padding:2rem}}
+@container (min-width: 44rem){[data-vibeui-block="flowers-003"] [data-part="pair"]{grid-template-columns:1fr 1fr}}
+@container (min-width: 60rem){[data-vibeui-block="flowers-003"] [data-part="head"]{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}[data-vibeui-block="flowers-003"] [data-part="grid"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:3rem}[data-vibeui-block="flowers-003"] [data-part="clock"]{position:sticky;top:5.5rem;padding:1.6rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="flowers-003"] *{animation:none!important;transition:none!important}[data-vibeui-block="flowers-003"] [data-part="done"] circle,[data-vibeui-block="flowers-003"] [data-part="done"] path{stroke-dashoffset:0}}`
 
 type Slot = { start: number; day: "today" | "tomorrow" }
@@ -200,6 +227,8 @@ export function Flowers003({
   currency = "₽",
   eventName = "vibeui-flowers:order",
   builderHref = "#builder",
+  shopLabel = "мастерская",
+  riverLabel = "Нева",
   submitLabel = "Оформить заказ",
   doneTitle = "Заказ принят",
   doneText = "Флорист позвонит в течение десяти минут — уточнить открытку и подъезд.",
@@ -282,8 +311,10 @@ export function Flowers003({
       <section data-vibeui-block="flowers-003" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
         <div data-part="shell">
           <div data-part="head">
-            {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
-            <h2 data-part="title">{title}</h2>
+            <div>
+              {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
+              <h2 data-part="title">{title}</h2>
+            </div>
             {lede ? <p data-part="lede">{lede}</p> : null}
           </div>
           <div data-part="grid">
@@ -294,6 +325,35 @@ export function Flowers003({
               <div data-part="readout">
                 <b>{current ? byLine.replace("{time}", clock(current.start)) : "—:—"}</b>
                 <span>{current ? windowLine.replace("{day}", current.day === "today" ? todayLabel : tomorrowLabel).replace("{from}", clock(current.start)).replace("{to}", clock(current.start + slotMinutes)) : countingLine}</span>
+              </div>
+              <div data-part="map" aria-hidden="true">
+                <svg data-part="map-svg" viewBox="0 0 620 190">
+                  <path data-part="river" d="M-10 128 C80 118 150 150 250 136 S420 110 500 134 S600 160 630 150 V200 H-10Z" />
+                  <path data-part="river" d="M300 138 C310 100 330 60 360 -10 H392 C360 60 342 104 334 140Z" />
+                  <g data-part="blocks">
+                    <rect x="20" y="20" width="70" height="44" rx="6" />
+                    <rect x="104" y="20" width="56" height="44" rx="6" />
+                    <rect x="200" y="12" width="80" height="36" rx="6" />
+                    <rect x="410" y="14" width="90" height="30" rx="6" />
+                    <rect x="520" y="80" width="80" height="34" rx="6" />
+                    <rect x="210" y="70" width="60" height="30" rx="6" />
+                    <rect x="400" y="62" width="70" height="30" rx="6" />
+                    <rect x="20" y="80" width="60" height="40" rx="6" />
+                  </g>
+                  <ellipse data-part="park" cx="140" cy="102" rx="34" ry="18" />
+                  <path data-part="bridge" d="M226 128v22M470 118v24" />
+                  <text data-part="map-water" x="420" y="172">{riverLabel}</text>
+                  <path data-part="route" d="M60 150 C110 150 120 96 180 96 S250 60 300 70 S390 120 440 104 520 56 560 52" />
+                  <path data-part="trail" d="M60 150 C110 150 120 96 180 96 S250 60 300 70 S390 120 440 104 520 56 560 52" pathLength={1} />
+                  <rect data-part="shop" x="50" y="140" width="20" height="20" rx="5" />
+                  <text data-part="map-label" x="78" y="178">{shopLabel}</text>
+                  <circle data-part="door-pulse" cx="560" cy="52" r="8" />
+                  <circle data-part="door" cx="560" cy="52" r="8" />
+                  <g data-part="rider">
+                    <circle data-part="rider-dot" r="15" />
+                    <path data-part="rider-bike" d="M-7 4a3 3 0 1 0 .01 0M7 4a3 3 0 1 0 .01 0M-7 4l4-7h6l4 7M-3-3l-2-3h-3M3-3h2l2-3" />
+                  </g>
+                </svg>
               </div>
               <div data-part="tape" role="radiogroup" aria-label={tapeLabel}>
                 <div data-part="track" style={{ ["--vibeui-flowers-003-i" as string]: index }}>
@@ -339,6 +399,7 @@ export function Flowers003({
                       </>
                     )}
                   </div>
+                  <div data-part="pair">
                   <div data-part="field">
                     <input id={`${id}-name`} name="name" type="text" placeholder=" " required autoComplete="name" />
                     <label htmlFor={`${id}-name`}>{nameLabel}</label>
@@ -346,6 +407,7 @@ export function Flowers003({
                   <div data-part="field">
                     <input id={`${id}-phone`} name="phone" type="tel" placeholder=" " required autoComplete="tel" />
                     <label htmlFor={`${id}-phone`}>{phoneLabel}</label>
+                  </div>
                   </div>
                   <div data-part="field">
                     <input id={`${id}-address`} name="address" type="text" placeholder=" " required autoComplete="street-address" />

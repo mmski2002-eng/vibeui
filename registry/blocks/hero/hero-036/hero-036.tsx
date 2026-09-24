@@ -19,6 +19,8 @@ export type Hero036Props = {
   /** Рукописная пометка у букета. */
   /** Главное фото — букет, в арке. */
   image?: string
+  /** Ролик в арке вместо фото: играет один раз и замирает на последнем кадре (image — его постер). */
+  video?: string
   imageAlt?: string
   /** Второе фото — полароид с подписью, плывёт с другой глубиной. */
   sideImage?: string
@@ -38,7 +40,9 @@ export type Hero036Props = {
 // расходятся параллаксом (каждому слою своя глубина, transform через одну
 // CSS-переменную); сверху сыплются два-три лепестка. Слева заголовок
 // въезжает строками сквозь маску, под ним кнопки и три факта. Пометка
-// у букета — рукописная, Caveat, со стрелкой.
+// у букета — рукописная, Caveat, со стрелкой. С video в арке играет ролик
+// сборки букета: один раз, на последнем кадре замирает. Под курсивным
+// акцентом заголовка рукой прописывается волнистая линия.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
 
 const STYLES = `
@@ -58,15 +62,17 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-036"]{color-scheme:dark}
 :where([data-vibeui-block="hero-036"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="hero-036"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="hero-036"]{box-sizing:border-box;position:relative;overflow:hidden;padding:2.5rem 0 3.5rem;background:var(--vibeui-hero-036-bg);color:var(--vibeui-hero-036-fg);font-family:var(--vibeui-hero-036-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="hero-036"]{box-sizing:border-box;position:relative;overflow:hidden;padding:0;background:var(--vibeui-hero-036-bg);color:var(--vibeui-hero-036-fg);font-family:var(--vibeui-hero-036-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-036"] *{box-sizing:border-box}
-[data-vibeui-block="hero-036"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:2.5rem;align-items:center}
+[data-vibeui-block="hero-036"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:2.5rem 1.25rem 3.5rem;display:grid;gap:2.5rem;align-items:center}
 [data-vibeui-block="hero-036"] [data-part="eyebrow"]{margin:0 0 1.2rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-hero-036-muted)}
 [data-vibeui-block="hero-036"] [data-part="eyebrow"]::before{content:"";display:inline-block;width:2rem;height:1px;margin:0 .7rem .25em 0;background:var(--vibeui-hero-036-accent);vertical-align:middle}
-[data-vibeui-block="hero-036"] [data-part="title"]{margin:0;font-family:var(--vibeui-hero-036-display);font-weight:500;font-size:clamp(2.7rem,7.2cqi,5.8rem);line-height:.98;letter-spacing:-.02em;text-wrap:balance}
-[data-vibeui-block="hero-036"] [data-part="line"]{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+[data-vibeui-block="hero-036"] [data-part="title"]{margin:0;font-family:var(--vibeui-hero-036-display);font-weight:500;font-size:clamp(2.7rem,min(7.2cqi,10.5svh),5.8rem);line-height:.98;letter-spacing:-.02em;text-wrap:balance}
+[data-vibeui-block="hero-036"] [data-part="line"]{display:block;overflow:hidden;padding-bottom:.16em;margin-bottom:-.16em}
 [data-vibeui-block="hero-036"] [data-part="line"]>span{display:block;transform:translateY(110%);animation:vibeui-hero-036-slide .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.15s + var(--vibeui-hero-036-i) * .13s)}
-[data-vibeui-block="hero-036"] [data-part="title"] em{font-style:italic;font-weight:500;color:var(--vibeui-hero-036-accent)}
+[data-vibeui-block="hero-036"] [data-part="title"] em{position:relative;font-style:italic;font-weight:500;color:var(--vibeui-hero-036-accent)}
+[data-vibeui-block="hero-036"] [data-part="scribble"]{position:absolute;left:-2%;right:-4%;bottom:-.08em;width:106%;height:.22em;overflow:visible;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-hero-036-scribble 1.4s cubic-bezier(.6,.1,.3,1) 1.1s forwards}
+@keyframes vibeui-hero-036-scribble{to{stroke-dashoffset:0}}
 [data-vibeui-block="hero-036"] [data-part="lede"]{max-width:30rem;margin:1.6rem 0 0;font-size:1.05rem;color:var(--vibeui-hero-036-muted);opacity:0;animation:vibeui-hero-036-fade .8s ease-out .6s forwards}
 [data-vibeui-block="hero-036"] [data-part="actions"]{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem;margin:1.8rem 0 0;opacity:0;animation:vibeui-hero-036-fade .8s ease-out .75s forwards}
 [data-vibeui-block="hero-036"] [data-part="facts"]{display:flex;flex-wrap:wrap;gap:1.2rem 2.4rem;margin:2.4rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--vibeui-hero-036-line);list-style:none;opacity:0;animation:vibeui-hero-036-fade .8s ease-out .9s forwards}
@@ -78,7 +84,8 @@ container-type:inline-size;
 [data-vibeui-block="hero-036"] [data-part="note"]{position:absolute;right:-.5rem;top:2%;max-width:9rem;font-family:var(--vibeui-hero-036-hand);font-size:1.35rem;line-height:1.05;color:var(--vibeui-hero-036-accent);transform:translate3d(0,calc(var(--vibeui-hero-036-y,0) * -.3px),0) rotate(-6deg);opacity:0;animation:vibeui-hero-036-fade .8s ease-out 1.1s forwards}
 [data-vibeui-block="hero-036"] [data-part="note"] svg{display:block;width:3rem;height:2rem;margin:.2rem 0 0 .4rem;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 [data-vibeui-block="hero-036"] [data-part="arch"]{position:absolute;left:8%;top:0;width:72%;height:88%;margin:0;overflow:hidden;border-radius:999px 999px 1.2rem 1.2rem;background:var(--vibeui-hero-036-line);box-shadow:0 30px 60px -30px rgb(0 0 0 / .45);opacity:0;animation:vibeui-hero-036-rise 1.1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.15s + var(--vibeui-hero-036-i) * .2s)}
-[data-vibeui-block="hero-036"] [data-part="arch"] img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.06) translateY(calc(var(--vibeui-hero-036-y,0) * .04px))}
+[data-vibeui-block="hero-036"] [data-part="arch"] video{object-position:70% 50%}
+[data-vibeui-block="hero-036"] [data-part="arch"] :is(img,video){display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.06) translateY(calc(var(--vibeui-hero-036-y,0) * .04px))}
 [data-vibeui-block="hero-036"] [data-part="card"]{position:absolute;right:0;bottom:2%;width:44%;margin:0;padding:.5rem .5rem 1.6rem;background:var(--vibeui-hero-036-bg);border:1px solid var(--vibeui-hero-036-line);box-shadow:0 24px 48px -24px rgb(0 0 0 / .4);transform:rotate(4deg);opacity:0;animation:vibeui-hero-036-rise 1.1s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.15s + var(--vibeui-hero-036-i) * .2s)}
 [data-vibeui-block="hero-036"] [data-part="card"] img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
 [data-vibeui-block="hero-036"] [data-part="card"] figcaption{position:absolute;left:0;right:0;bottom:.35rem;text-align:center;font-family:var(--vibeui-hero-036-hand);font-size:1rem;color:var(--vibeui-hero-036-muted)}
@@ -88,13 +95,22 @@ container-type:inline-size;
 @keyframes vibeui-hero-036-fade{to{opacity:1}}
 @keyframes vibeui-hero-036-rise{from{opacity:0;transform:translateY(46px) rotate(-2deg)}to{opacity:1;transform:translateY(0) rotate(0)}}
 @container (min-width: 40rem){[data-vibeui-block="hero-036"] [data-part="note"]{right:-2rem}}
-@container (min-width: 58rem){[data-vibeui-block="hero-036"] [data-part="shell"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:3rem;min-height:calc(100svh - 4.25rem)}[data-vibeui-block="hero-036"] [data-part="scene"]{width:min(100%,32rem);margin:0 0 0 auto}[data-vibeui-block="hero-036"] [data-part="note"]{right:-3rem;top:4%}}
+@container (min-width: 58rem){[data-vibeui-block="hero-036"] [data-part="shell"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:3rem;min-height:calc(100svh - 4.25rem);padding-block:2rem}[data-vibeui-block="hero-036"] [data-part="scene"]{width:min(100%,32rem,calc((100svh - 9rem) * .8));margin:0 0 0 auto}[data-vibeui-block="hero-036"] [data-part="note"]{right:-3rem;top:4%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-036"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-036"] [data-part="line"]>span{transform:none}[data-vibeui-block="hero-036"] [data-part="lede"],[data-vibeui-block="hero-036"] [data-part="actions"],[data-vibeui-block="hero-036"] [data-part="facts"],[data-vibeui-block="hero-036"] [data-part="arch"],[data-vibeui-block="hero-036"] [data-part="card"],[data-vibeui-block="hero-036"] [data-part="note"]{opacity:1}[data-vibeui-block="hero-036"] [data-part="layer"],[data-vibeui-block="hero-036"] [data-part="note"]{transform:none}}`
 
 function renderLine(line: string) {
   // *слово* — курсивный акцент
   const parts = line.split(/(\*[^*]+\*)/g).filter(Boolean)
-  return parts.map((part, index) => (part.startsWith("*") && part.endsWith("*") ? <em key={index}>{part.slice(1, -1)}</em> : <Fragment key={index}>{part}</Fragment>))
+  return parts.map((part, index) => (part.startsWith("*") && part.endsWith("*") ? (
+      <em key={index}>
+        {part.slice(1, -1)}
+        <svg data-part="scribble" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M2 12C30 4 52 18 80 10s52-6 78 2 30-4 40-6" pathLength={1} />
+        </svg>
+      </em>
+    ) : (
+      <Fragment key={index}>{part}</Fragment>
+    )))
 }
 
 
@@ -118,6 +134,7 @@ export function Hero036({
     { value: "7+ дней", label: "стоит в вазе" },
   ],
   image = "/demo/flowers/bouquet-01.webp",
+  video,
   imageAlt = "Букет недели: пионы, мак и ромашка в крафте",
   sideImage = "/demo/flowers/workshop-01.webp",
   sideImageAlt = "Мастерская на Пестеля",
@@ -218,7 +235,7 @@ export function Hero036({
             <i data-part="wash" aria-hidden="true" />
             <div data-part="layer" style={{ ["--vibeui-hero-036-d" as string]: 0.05 }}>
               <figure data-part="arch" style={{ ["--vibeui-hero-036-i" as string]: 0 }}>
-                <img src={image} alt={imageAlt} loading="eager" />
+                {video ? <video src={video} poster={image} aria-label={imageAlt} autoPlay muted playsInline preload="auto" /> : <img src={image} alt={imageAlt} loading="eager" />}
               </figure>
             </div>
             {sideImage ? (

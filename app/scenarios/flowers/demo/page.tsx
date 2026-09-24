@@ -44,7 +44,7 @@ export default function FlowersDemo() {
       </style>
       <Navbar036 {...paper} />
       <div id="top">
-        <Hero036 {...paper} />
+        <Hero036 {...paper} video="/demo/flowers/video/hero.mp4" image="/demo/flowers/video/hero.webp" />
       </div>
       <div id="catalog">
         <Flowers001 {...paper} />

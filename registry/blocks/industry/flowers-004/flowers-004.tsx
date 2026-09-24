@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react"
 import { Card087 } from "@/registry/components/card/card-087/card-087"
 
 export type Flowers004Month = {
@@ -9,6 +9,8 @@ export type Flowers004Month = {
   flowers: readonly string[]
   /** Короткая пометка: «пик пионов», «дорого, но можно». */
   note?: string
+  /** Цвет месяца: им подсвечивается фон и летят лепестки. */
+  color?: string
 }
 
 export type Flowers004Props = {
@@ -37,6 +39,9 @@ export type Flowers004Props = {
 // пусто — ни один не подсвечен, после гидрации лента сама подъезжает к
 // нему), его карточка получает чернильную рамку и рукописную пометку
 // «цветёт сейчас». Стрелки по краям — для клавиатуры и тех, кто не тянет.
+// У каждого месяца свой цвет: под карточкой, на которую навели (иначе —
+// текущей), фон секции мягко подсвечивается им, а сверху медленно падают
+// лепестки того же цвета — цвет переливается через transition.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Golos+Text:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
 
 const STYLES = `
@@ -56,10 +61,14 @@ container-type:inline-size;
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="flowers-004"]{color-scheme:dark}
 :where([data-vibeui-block="flowers-004"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="flowers-004"][data-tone="dark"]){color-scheme:dark}
-[data-vibeui-block="flowers-004"]{box-sizing:border-box;padding:5rem 0;overflow:hidden;background:var(--vibeui-flowers-004-bg);color:var(--vibeui-flowers-004-fg);font-family:var(--vibeui-flowers-004-font);font-size:1rem;line-height:1.5}
+[data-vibeui-block="flowers-004"]{box-sizing:border-box;padding:4rem 0;overflow:hidden;background:var(--vibeui-flowers-004-bg);color:var(--vibeui-flowers-004-fg);font-family:var(--vibeui-flowers-004-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="flowers-004"] *{box-sizing:border-box}
 [data-vibeui-block="flowers-004"] [data-part="month"]{flex:0 0 15rem}
-[data-vibeui-block="flowers-004"] [data-part="shell"]{max-width:84rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="flowers-004"]{position:relative;isolation:isolate}
+[data-vibeui-block="flowers-004"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
+[data-vibeui-block="flowers-004"] [data-part="aura"]{position:absolute;right:-10%;top:-30%;z-index:-1;width:70%;aspect-ratio:1;border-radius:50%;background-color:var(--vibeui-flowers-004-glow);opacity:.22;filter:blur(90px);transition:background-color 1s ease;pointer-events:none}
+[data-vibeui-block="flowers-004"] [data-part="fall"]{position:absolute;top:-2rem;left:var(--vibeui-flowers-004-l);z-index:-1;width:calc(.7rem + var(--vibeui-flowers-004-sz) * .5rem);aspect-ratio:3/4;border-radius:100% 0 100% 0;background-color:var(--vibeui-flowers-004-glow);opacity:0;transition:background-color 1s ease;pointer-events:none;animation:vibeui-flowers-004-fall var(--vibeui-flowers-004-t) linear var(--vibeui-flowers-004-d) infinite}
+@keyframes vibeui-flowers-004-fall{0%{translate:0 0;rotate:0deg;opacity:0}10%{opacity:.7}90%{opacity:.6}100%{translate:-6rem 42rem;rotate:520deg;opacity:0}}
 [data-vibeui-block="flowers-004"] [data-part="head"]{display:grid;gap:1.2rem;align-items:end;margin:0 0 2.2rem}
 [data-vibeui-block="flowers-004"] [data-part="eyebrow"]{margin:0 0 .8rem;font-size:.74rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--vibeui-flowers-004-muted)}
 [data-vibeui-block="flowers-004"] [data-part="title"]{margin:0;font-family:var(--vibeui-flowers-004-display);font-weight:500;font-size:clamp(2.2rem,5.4cqi,4.2rem);line-height:1;letter-spacing:-.02em}
@@ -80,19 +89,27 @@ container-type:inline-size;
 `
 
 const DEFAULT_MONTHS: Flowers004Month[] = [
-  { name: "Январь", flowers: ["амариллис", "гиацинт", "тюльпан"], note: "тепличные, но живые и ароматные" },
-  { name: "Февраль", flowers: ["мимоза", "тюльпан", "ранункулюс"], note: "мимоза — ровно две недели" },
-  { name: "Март", flowers: ["нарцисс", "ранункулюс", "анемон"], note: "первые голландские анемоны" },
-  { name: "Апрель", flowers: ["сирень", "фрезия", "тюльпан"], note: "сирень едет из Крыма" },
-  { name: "Май", flowers: ["пион", "ландыш", "мак"], note: "пионы — с 20 мая" },
-  { name: "Июнь", flowers: ["пион", "мак", "ромашка"], note: "пик пионов, лучшая цена" },
-  { name: "Июль", flowers: ["лаванда", "дельфиниум", "василёк"], note: "полевые с ферм Ленобласти" },
-  { name: "Август", flowers: ["георгин", "подсолнух", "гортензия"], note: "георгины до заморозков" },
-  { name: "Сентябрь", flowers: ["георгин", "астра", "скабиоза"], note: "самая тёмная палитра года" },
-  { name: "Октябрь", flowers: ["хризантема", "физалис", "рябина"], note: "ягоды и сухоцветы" },
-  { name: "Ноябрь", flowers: ["амариллис", "эвкалипт", "хлопок"], note: "начинаем сушить" },
-  { name: "Декабрь", flowers: ["ель", "илекс", "пуансеттия"], note: "хвоя и красные ягоды" },
+  { name: "Январь", flowers: ["амариллис", "гиацинт", "тюльпан"], note: "тепличные, но живые и ароматные", color: "#d94b5b" },
+  { name: "Февраль", flowers: ["мимоза", "тюльпан", "ранункулюс"], note: "мимоза — ровно две недели", color: "#f2c230" },
+  { name: "Март", flowers: ["нарцисс", "ранункулюс", "анемон"], note: "первые голландские анемоны", color: "#f5e27a" },
+  { name: "Апрель", flowers: ["сирень", "фрезия", "тюльпан"], note: "сирень едет из Крыма", color: "#b995e0" },
+  { name: "Май", flowers: ["пион", "ландыш", "мак"], note: "пионы — с 20 мая", color: "#f2a3bd" },
+  { name: "Июнь", flowers: ["пион", "мак", "ромашка"], note: "пик пионов, лучшая цена", color: "#ff6b57" },
+  { name: "Июль", flowers: ["лаванда", "дельфиниум", "василёк"], note: "полевые с ферм Ленобласти", color: "#7f8cf0" },
+  { name: "Август", flowers: ["георгин", "подсолнух", "гортензия"], note: "георгины до заморозков", color: "#ffb938" },
+  { name: "Сентябрь", flowers: ["георгин", "астра", "скабиоза"], note: "самая тёмная палитра года", color: "#c23a6b" },
+  { name: "Октябрь", flowers: ["хризантема", "физалис", "рябина"], note: "ягоды и сухоцветы", color: "#ff8a3d" },
+  { name: "Ноябрь", flowers: ["амариллис", "эвкалипт", "хлопок"], note: "начинаем сушить", color: "#9fb5a0" },
+  { name: "Декабрь", flowers: ["ель", "илекс", "пуансеттия"], note: "хвоя и красные ягоды", color: "#e0433f" },
 ]
+
+// Лепестки: позиция, размер, длительность и задержка заданы заранее — без Math.random.
+const PETALS = Array.from({ length: 12 }, (_, index) => ({
+  left: `${(index * 37 + 11) % 100}%`,
+  size: (index * 7) % 5,
+  time: `${11 + ((index * 5) % 7)}s`,
+  delay: `${-((index * 13) % 17)}s`,
+}))
 
 function subscribeDay(callback: () => void) {
   const id = setInterval(callback, 3_600_000)
@@ -124,6 +141,9 @@ export function Flowers004({
   const month = useSyncExternalStore(subscribeDay, readMonth, () => null)
   const ribbonRef = useRef<HTMLUListElement>(null)
   const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null)
+  const [hover, setHover] = useState<number | null>(null)
+  const lit = hover ?? month ?? 5
+  const glow = months[lit]?.color ?? "var(--vibeui-flowers-004-accent)"
 
   useEffect(() => {
     const ribbon = ribbonRef.current
@@ -164,6 +184,7 @@ export function Flowers004({
     ...(accent ? { "--vibeui-flowers-004-accent": accent } : null),
     ...(ink ? { "--vibeui-flowers-004-fg": ink } : null),
     ...(background ? { "--vibeui-flowers-004-bg": background } : null),
+    "--vibeui-flowers-004-glow": glow,
     ...style,
   } as CSSProperties
 
@@ -174,6 +195,15 @@ export function Flowers004({
         {STYLES}
       </style>
       <section data-vibeui-block="flowers-004" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+        <i data-part="aura" aria-hidden="true" />
+        {PETALS.map((petal, index) => (
+          <i
+            key={index}
+            data-part="fall"
+            aria-hidden="true"
+            style={{ ["--vibeui-flowers-004-l" as string]: petal.left, ["--vibeui-flowers-004-sz" as string]: petal.size, ["--vibeui-flowers-004-t" as string]: petal.time, ["--vibeui-flowers-004-d" as string]: petal.delay } as CSSProperties}
+          />
+        ))}
         <div data-part="shell">
           <div data-part="head">
             <div>
@@ -194,7 +224,14 @@ export function Flowers004({
               </button>
             </div>
           </div>
-          <ul data-part="ribbon" ref={ribbonRef} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} aria-label={ribbonLabel}>
+          <ul data-part="ribbon" ref={ribbonRef} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}
+            onPointerOver={(event) => {
+              const card = (event.target as HTMLElement).closest("li")
+              const index = card ? Array.prototype.indexOf.call(ribbonRef.current?.children ?? [], card) : -1
+              if (index >= 0) setHover(index)
+            }}
+            onPointerLeave={() => setHover(null)}
+            aria-label={ribbonLabel}>
             {months.map((item, index) => (
               <Card087 key={item.name} data-part="month" name={item.name} flowers={item.flowers} note={item.note} nowLabel={nowLabel} month={month} index={index} data-now={month === index} accent={accent} />
             ))}
