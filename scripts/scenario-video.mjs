@@ -35,9 +35,11 @@ const playwright = await import(modulePath)
 const { chromium } = playwright.default ?? playwright
 
 // Курсор — реальный DOM-узел, следует за подлинными mousemove от Playwright
-// (page.mouse.move с steps их и рассылает). Полоса прокрутки скрыта только
-// на время записи. scroll-behavior:smooth страницы отключаем: скроллим сами
-// колесом с собственным ускорением, встроенный smooth будет мешать, не помогать.
+// (page.mouse.move с steps их и рассылает). Стрелка обычная, над кликабельным
+// элементом (computed cursor:pointer или a/button/role=button) превращается в
+// руку — как настоящий курсор ОС. Полоса прокрутки скрыта только на время
+// записи. scroll-behavior:smooth страницы отключаем: скроллим сами колесом с
+// собственным ускорением, встроенный smooth будет мешать, не помогать.
 const INIT_SCRIPT = `
 (function () {
   function ready(fn) {
@@ -50,22 +52,54 @@ const INIT_SCRIPT = `
       'html{scrollbar-width:none!important;scroll-behavior:auto!important}' +
       '::-webkit-scrollbar{width:0!important;height:0!important;display:none!important}'
     document.head.appendChild(style)
-    var el = document.createElement("div")
-    el.id = "__rec_cursor"
-    el.style.cssText =
-      "position:fixed;z-index:2147483647;left:0;top:0;width:22px;height:22px;" +
-      "margin:-3px 0 0 -3px;pointer-events:none;will-change:transform;" +
-      "background:radial-gradient(circle at 30% 30%,#fff,#d8d8d8 55%,#8f8f8f 100%);" +
-      "border:1.5px solid rgba(0,0,0,.55);border-radius:50% 50% 50% 3px;" +
-      "transform:translate(-100px,-100px) rotate(-45deg);box-shadow:0 2px 8px rgba(0,0,0,.45)"
-    document.body.appendChild(el)
+
+    var wrap = document.createElement("div")
+    wrap.id = "__rec_cursor"
+    wrap.style.cssText =
+      "position:fixed;z-index:2147483647;left:0;top:0;width:26px;height:26px;" +
+      "pointer-events:none;will-change:transform;transform:translate(-200px,-200px);" +
+      "filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))"
+    // Стрелка: классический силуэт указателя, белая заливка + тёмный контур —
+    // видно и на светлом, и на тёмном фоне.
+    wrap.innerHTML =
+      '<svg data-c="arrow" viewBox="0 0 24 24" width="24" height="24" style="position:absolute;left:0;top:0">' +
+      '<path d="M4 2 L4 19.5 L8.2 15.8 L11 21.5 L13.6 20.3 L10.9 14.6 L17 14.6 Z" fill="#fff" stroke="#1a1a1a" stroke-width="1.4" stroke-linejoin="round"/>' +
+      "</svg>" +
+      '<svg data-c="hand" viewBox="0 0 24 24" width="26" height="26" style="position:absolute;left:-2px;top:-2px;display:none">' +
+      '<g fill="#fff" stroke="#1a1a1a" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">' +
+      '<path d="M9.5 21c-.5 0-.9-.2-1.3-.6l-4.4-5c-.5-.6-.4-1.5.2-1.9.5-.4 1.2-.4 1.7.1l1.8 1.8V6.2c0-.7.6-1.2 1.2-1.2s1.2.5 1.2 1.2v6.1V4.3c0-.7.6-1.2 1.2-1.2s1.2.5 1.2 1.2v7.9V5.1c0-.7.6-1.2 1.2-1.2s1.2.5 1.2 1.2v7.1V6.7c0-.7.6-1.2 1.2-1.2.7 0 1.2.5 1.2 1.2v7.4 2.4c0 2.5-2 4.5-4.5 4.5Z"/>' +
+      "</g>" +
+      "</svg>"
+    document.body.appendChild(wrap)
+    var arrow = wrap.querySelector('[data-c="arrow"]')
+    var hand = wrap.querySelector('[data-c="hand"]')
+    var isHand = false
+
+    function interactive(el) {
+      if (!el) return false
+      if (el.closest && el.closest("a,button,[role=button],input,select,label,summary")) return true
+      try {
+        return getComputedStyle(el).cursor === "pointer"
+      } catch (e) {
+        return false
+      }
+    }
+
     window.addEventListener(
       "mousemove",
       function (event) {
-        el.style.transform = "translate(" + event.clientX + "px," + event.clientY + "px) rotate(-45deg)"
+        wrap.style.transform = "translate(" + event.clientX + "px," + event.clientY + "px)"
+        var target = document.elementFromPoint(event.clientX, event.clientY)
+        var hover = interactive(target)
+        if (hover !== isHand) {
+          isHand = hover
+          arrow.style.display = hover ? "none" : "block"
+          hand.style.display = hover ? "block" : "none"
+        }
       },
       { passive: true },
     )
+    window.addEventListener("mousedown", function () { wrap.style.transform += " scale(.92)" }, { passive: true })
   })
 })()
 `
@@ -131,9 +165,10 @@ const SCENARIOS = {
       latency: 20,
     })
     mark("goto")
+    // Курсор до первого реального действия остаётся за кадром (стартовая
+    // позиция вне экрана) — незачем ему торчать посреди тахометра и заезда.
     await page.goto(`${base}/scenarios/${slug}/demo`, { waitUntil: "domcontentloaded" })
     mark("dom-loaded")
-    await moveTo(page, 640, 430, 8)
     await page.waitForSelector('[data-vibeui-block="hero-046"]:not([data-phase="loading"])', { timeout: 20000 })
     mark("tacho-done")
     await cdp.send("Network.emulateNetworkConditions", { offline: false, downloadThroughput: -1, uploadThroughput: -1, latency: 0 })

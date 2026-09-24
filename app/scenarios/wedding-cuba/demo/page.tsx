@@ -69,6 +69,8 @@ export default function Page() {
           {...light}
           image={`${IMG}hero.webp`}
           imageAlt="Пустой карибский пляж на закате"
+          videoSrc={`${IMG}hero.mp4`}
+          videoWebmSrc={`${IMG}hero.webm`}
           photo={`${IMG}hero-couple.webp`}
           photoAlt="Соня и Тимур босиком по кромке воды"
         />

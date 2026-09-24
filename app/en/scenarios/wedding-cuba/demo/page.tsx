@@ -100,6 +100,8 @@ export default function Page() {
           calendarTitle="Sonya and Timur's wedding in Cuba"
           image={`${IMG}hero.webp`}
           imageAlt="An empty Caribbean beach at sunset"
+          videoSrc={`${IMG}hero.mp4`}
+          videoWebmSrc={`${IMG}hero.webm`}
           photo={`${IMG}hero-couple.webp`}
           photoAlt="Sonya and Timur barefoot at the water's edge"
           countdownCaption="Until departure"

@@ -20,9 +20,12 @@ export type Hero026Props = {
   calendarLabel?: string
   calendarTitle?: string
   calendarLocation?: string
-  /** Фон на весь экран: пляж. */
+  /** Фон на весь экран: пляж. Со звуком не бывает — playsInline, muted, loop. */
   image?: string
   imageAlt?: string
+  /** Живой фон вместо статичного image: то же море, но с движением волны. */
+  videoSrc?: string
+  videoWebmSrc?: string
   /** Фото пары — полароид на скотче. */
   photo?: string
   photoAlt?: string
@@ -83,7 +86,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-026"]{box-sizing:border-box;position:relative;display:block;overflow:hidden;background:var(--vibeui-hero-026-sand);color:#fffaf0;font-family:var(--vibeui-hero-026-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-026"] *{box-sizing:border-box}
 [data-vibeui-block="hero-026"] [data-part="bg"]{position:absolute;inset:0;background:var(--vibeui-hero-026-sand)}
-[data-vibeui-block="hero-026"] [data-part="bg"] img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}
+[data-vibeui-block="hero-026"] [data-part="bg"] :is(img,video){display:block;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}
 [data-vibeui-block="hero-026"] [data-part="bg"]::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(18 58 75 / .55) 0%,rgb(18 58 75 / .25) 40%,rgb(18 58 75 / .7) 100%)}
 [data-vibeui-block="hero-026"]::after{content:"";position:absolute;inset:0;background-image:${GRAIN};opacity:.25;mix-blend-mode:overlay;pointer-events:none}
 [data-vibeui-block="hero-026"] [data-part="frame"]{position:relative;z-index:1;display:grid;gap:2.5rem;max-width:80rem;margin:0 auto;padding:7rem 1.25rem 3.5rem;min-height:38rem}
@@ -181,7 +184,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-026"] [data-part="frame"]{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);align-items:center;padding:9rem 2.5rem 4.5rem;min-height:42rem}
 [data-vibeui-block="hero-026"] [data-part="side"]{justify-self:end;width:min(100%,22rem)}
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-026"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-026"] [data-part="gate"]{display:none}[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="letter"],[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="side"]{opacity:1}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-026"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-026"] [data-part="gate"]{display:none}[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="letter"],[data-vibeui-block="hero-026"][data-sealed="true"] [data-part="side"]{opacity:1}[data-vibeui-block="hero-026"] [data-part="bg"] video{display:none}}
 /* возвращено после разборки списков селекторов */
 [data-vibeui-block="hero-026"] [data-part="calendar"]:focus-visible,[data-vibeui-block="hero-026"] [data-part="tear"]:focus-visible{outline:2px solid var(--vibeui-hero-026-sun);outline-offset:3px}
 `
@@ -231,6 +234,8 @@ export function Hero026({
   calendarLocation = "Playa Paraíso, Cayo Largo, Cuba",
   image,
   imageAlt = "",
+  videoSrc,
+  videoWebmSrc,
   photo,
   photoAlt = "",
   photoCaption = "Havana, 2025",
@@ -299,7 +304,14 @@ export function Hero026({
       </style>
       <section data-vibeui-block="hero-026" data-tone={tone === "auto" ? undefined : tone} data-sealed={opened ? undefined : "true"} data-intro={intro ? "true" : undefined} className={className} style={palette}>
         <div data-part="bg" aria-hidden="true">
-          {image ? <img src={image} alt={imageAlt} loading="eager" /> : null}
+          {videoSrc ? (
+            <video autoPlay muted loop playsInline poster={image}>
+              {videoWebmSrc ? <source src={videoWebmSrc} type="video/webm" /> : null}
+              <source src={videoSrc} type="video/mp4" />
+            </video>
+          ) : image ? (
+            <img src={image} alt={imageAlt} loading="eager" />
+          ) : null}
         </div>
         <div data-part="frame">
           <div data-part="letter">
