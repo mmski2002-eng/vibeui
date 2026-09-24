@@ -1288,12 +1288,13 @@
   }
 }
 
-@keyframes vibeui-cover-shimmer {
-  from {
-    transform: translateX(0) skewX(-12deg);
+@keyframes vibeui-cover-gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
   }
-  to {
-    transform: translateX(430%) skewX(-12deg);
+  50% {
+    background-position: 100% 50%;
   }
 }
 

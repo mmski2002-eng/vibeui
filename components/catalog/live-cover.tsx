@@ -93,19 +93,21 @@ export function LiveCover({
             preload="metadata"
             onError={() => setVideoFailed(true)}
             onPlaying={() => setVideoPlaying(true)}
-            className="absolute inset-0 z-10 h-full w-full object-cover object-top"
+            className={cn(
+              "absolute inset-0 z-10 h-full w-full object-cover object-top opacity-0 transition-opacity duration-700",
+              videoPlaying && "opacity-100",
+            )}
           />
-          {/* Пока ролик не заиграл — перелив по постеру и бейдж «видео»:
-              иначе карточка минуту-другую выглядит как обычный скриншот. */}
+          {/* Пока ролик не заиграл — живой градиент поверх постера и бейдж
+              «видео»: иначе карточка минуту-другую выглядит как обычный
+              скриншот, а переход в плеер — не рывком, а плавным выцветанием. */}
           <div
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute inset-0 z-20 overflow-hidden transition-opacity duration-500",
+              "pointer-events-none absolute inset-0 z-20 overflow-hidden bg-[length:220%_220%] opacity-90 transition-opacity duration-700 [animation:vibeui-cover-gradient_3s_ease-in-out_infinite] [background-image:linear-gradient(115deg,transparent_10%,color-mix(in_oklab,var(--color-shell-accent)_38%,transparent)_35%,color-mix(in_oklab,var(--color-shell-accent)_16%,transparent)_50%,transparent_70%)]",
               videoPlaying && "opacity-0",
             )}
-          >
-            <div className="absolute inset-y-0 left-[-35%] w-1/3 bg-gradient-to-r from-transparent via-white/35 to-transparent [animation:vibeui-cover-shimmer_1.8s_ease-in-out_infinite]" />
-          </div>
+          />
           <span
             className={cn(
               "pointer-events-none absolute bottom-2 left-2 z-20 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur transition-opacity duration-500",
