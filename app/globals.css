@@ -1288,6 +1288,15 @@
   }
 }
 
+@keyframes vibeui-cover-shimmer {
+  from {
+    transform: translateX(0) skewX(-12deg);
+  }
+  to {
+    transform: translateX(430%) skewX(-12deg);
+  }
+}
+
 @keyframes acc-toast-in {
   from {
     opacity: 0;
