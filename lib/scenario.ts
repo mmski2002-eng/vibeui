@@ -41,6 +41,9 @@ export function scenarioText(scenario: Scenario, locale: Locale) {
     summary: locale === "ru" ? scenario.summary : scenario.summaryEn,
     demo: english ? `/en${scenario.demo}` : scenario.demo,
     poster: english ? `/demo/scenarios/en/${scenario.slug}.webp` : `/demo/scenarios/${scenario.slug}.webp`,
+    // Прототип: скролл-видео вместо статичного постера — снято пока
+    // только для одного сценария, остальные молча остаются на постере.
+    video: !english && scenario.slug === "auto" ? `/demo/scenarios/${scenario.slug}.mp4` : undefined,
   }
 }
 

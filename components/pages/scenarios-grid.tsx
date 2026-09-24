@@ -20,6 +20,8 @@ export type ScenarioCard = {
   href: string
   demo: string
   poster: string
+  /** Скролл-видео вместо постера — прототип, есть не у всех сценариев. */
+  video?: string
   group: ScenarioGroup
   tone: "light" | "dark"
   blocks: number
@@ -138,7 +140,7 @@ export function ScenariosGrid({
           <li key={card.slug}>
             <article className="border-shell-border bg-shell-panel acc-lift group relative flex h-full flex-col overflow-hidden rounded-xl border">
               <div className="relative">
-                <LiveCover src={card.demo} title={card.label} poster={card.poster} />
+                <LiveCover src={card.demo} title={card.label} poster={card.poster} video={card.video} />
                 <LikeButton
                   active={favourite}
                   count={likes}

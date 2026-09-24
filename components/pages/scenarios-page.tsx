@@ -28,6 +28,7 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
         href: localePath(locale, `/scenarios/${scenario.slug}`),
         demo: text.demo,
         poster: text.poster,
+        video: text.video,
         group: scenario.group,
         tone: scenario.theme.tone,
         blocks: scenario.sections.length,

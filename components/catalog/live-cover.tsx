@@ -17,6 +17,7 @@ export function LiveCover({
   src,
   title,
   poster,
+  video,
   width = 1440,
   height = 900,
   className,
@@ -25,6 +26,8 @@ export function LiveCover({
   title: string
   /** Статичный кадр демо; без него iframe грузится сразу. */
   poster?: string
+  /** Скролл-запись сайта вместо постера: играет сразу, без наведения. При 404 сама откатывается на постер+iframe. */
+  video?: string
   width?: number
   height?: number
   className?: string
@@ -33,6 +36,7 @@ export function LiveCover({
   const [scale, setScale] = useState(0)
   const [live, setLive] = useState(!poster)
   const [loaded, setLoaded] = useState(false)
+  const [videoFailed, setVideoFailed] = useState(false)
   const reveal = useRef<number | undefined>(undefined)
 
   useEffect(() => () => window.clearTimeout(reveal.current), [])
@@ -75,7 +79,20 @@ export function LiveCover({
           )}
         />
       ) : null}
-      {scale > 0 && live ? (
+      {video && !videoFailed ? (
+        // eslint-disable-next-line jsx-a11y/media-has-caption
+        <video
+          src={video}
+          poster={poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          onError={() => setVideoFailed(true)}
+          className="absolute inset-0 z-10 h-full w-full object-cover object-top"
+        />
+      ) : scale > 0 && live ? (
         <iframe
           src={src}
           title={title}
