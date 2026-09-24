@@ -2172,8 +2172,8 @@
     {
       "name": "bento-002",
       "type": "registry:block",
-      "title": "Интеграции орбитами вокруг продукта",
-      "description": "Секция интеграций: в центре кружок с именем продукта в свечении, вокруг два пунктирных кольца — внутреннее кружит по часовой, внешнее против и медленнее, марки сервисов контрвращаются и стоят прямо. Наведение останавливает орбиты, марка под курсором заливается акцентом и показывает имя. Справа заголовок и список «что подключается».",
+      "title": "Интеграции маршрутизатором: входы → ядро продукта → выходы, по линиям бегут пакеты",
+      "description": "Секция интеграций в виде схемы: слева входы (сервисы созвонов), в центре ядро продукта с эквалайзером, справа выходы — трекеры, мессенджеры, базы знаний. Всё соединено плавными кривыми, по которым бегут светящиеся пакеты, выход вспыхивает в момент прихода. Наведение на сервис подсвечивает его маршрут. Сверху заголовок и описание, снизу факты в четыре колонки. На узком у сервисов остаются только марки.",
       "categories": [
         "layout"
       ],
@@ -2191,14 +2191,17 @@
         "tags": [
           "bento",
           "integrations",
-          "orbit",
           "logos",
           "services",
           "connect",
           "saas",
           "ai",
           "animation",
-          "composite"
+          "router",
+          "flow",
+          "diagram",
+          "packets",
+          "hub"
         ],
         "preview": {
           "props": {},
@@ -2206,18 +2209,18 @@
         },
         "ai": {
           "export": "Bento002",
-          "usage": "<Bento002\n  core=\"Сводка\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>",
+          "usage": "<Bento002\n  core=\"Сводка\"\n  coreCaption=\"слушает и раскладывает\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>",
           "summary": "Интеграции как орбиты: сервисы кружат вокруг продукта, наведение останавливает и подписывает.",
           "preserve": [
-            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
-            "кольцо крутится keyframes spin за speed секунд, внешнее — speed × 1.5 в обратную сторону",
-            "марка — slot повёрнут на угол, sat контрвращается той же анимацией reverse, буквы остаются прямыми",
-            ":hover на space ставит animation-play-state:paused всем кольцам и маркам"
+            "схема — один SVG viewBox 1000×560 с preserveAspectRatio none, плитки лежат в тех же долях поверх — линии и плитки совпадают",
+            "пакеты — circle с animateMotion по path через mpath, begin сдвинут по индексу; выход вспыхивает keyframes hit с той же задержкой",
+            "наведение на плитку ставит hot — её path и плитка подсвечиваются акцентом",
+            "факты делятся по «: » на заголовок и текст; на узком имена сервисов скрыты, видны марки"
           ],
           "adapt": [
-            "eyebrow, title, lede, core — имя в центре",
-            "inner, outer: name, mark (1–2 буквы)",
-            "speed — секунд на оборот; facts — список справа",
+            "eyebrow, title, lede, core — имя в центре, coreCaption",
+            "inner (входы), outer (выходы): name, mark (1–2 буквы)",
+            "speed — секунд на проход пакета; facts — «Заголовок: текст»",
             "tone — тема",
             "accent — акцент",
             "ink — текст",
@@ -2236,9 +2239,10 @@
             "prop": "speed",
             "label": "Секунд на оборот",
             "type": "number",
-            "default": 40,
-            "min": 10,
-            "max": 120
+            "default": 2.4,
+            "min": 1,
+            "max": 6,
+            "step": 0.2
           },
           {
             "prop": "tone",
@@ -2277,26 +2281,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "Integrations orbiting the product",
-            "description": "An integrations section: a glowing circle with the product name in the centre, two dashed rings around it — the inner spins clockwise, the outer counter-clockwise and slower, service marks counter-rotate and stay upright. Hover pauses the orbits, the mark under the cursor fills with the accent and shows its name. On the right a heading and a “what connects” list.",
+            "title": "Integrations as a router: inputs → product core → outputs, packets run along the wires",
+            "description": "An integrations section as a diagram: inputs on the left (call services), the product core with an equalizer in the centre, outputs on the right — trackers, messengers, knowledge bases. Everything is joined by smooth curves with glowing packets running along them, an output flashes when a packet arrives. Hovering a service highlights its route. A title and lede on top, facts in four columns below. On narrow screens the services keep only their marks.",
             "ai": {
               "summary": "Integrations as orbits: services circle the product, hover pauses and labels them.",
               "preserve": [
-                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "a ring spins with spin keyframes over speed seconds, the outer one over speed × 1.5 in reverse",
-                "a mark is a slot rotated by its angle, sat counter-rotates with the same animation reversed so letters stay upright",
-                ":hover on space sets animation-play-state:paused on every ring and mark"
+                "the diagram is one SVG viewBox 1000×560 with preserveAspectRatio none, the tiles sit on top in the same fractions — wires and tiles line up",
+                "packets are circles with animateMotion along a path via mpath, begin shifted by index; an output flashes with the hit keyframes at the same delay",
+                "hovering a tile sets hot — its path and tile light up in the accent",
+                "facts split on «: » into a title and text; on narrow screens service names are hidden, marks stay"
               ],
               "adapt": [
-                "eyebrow, title, lede, core — the name in the centre",
-                "inner, outer: name, mark (1–2 letters)",
-                "speed — seconds per turn; facts — the list on the right",
+                "eyebrow, title, lede, core — the name in the centre, coreCaption",
+                "inner (inputs), outer (outputs): name, mark (1–2 letters)",
+                "speed — seconds per packet pass; facts — «Title: text»",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Bento002\n  core=\"Recap\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>"
+              "usage": "<Bento002\n  core=\"Recap\"\n  coreCaption=\"listens and files\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>"
             },
             "controls": {
               "core": {
@@ -2384,18 +2388,16 @@
                   "Knowledge bases: decisions pile up in one place"
                 ]
               }
-            },
-            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "bento-008",
       "type": "registry:block",
       "title": "Бенто «как проходят занятия»: таймлайн урока, фото и живые плитки",
-      "description": "Семь плиток разного размера про формат занятий: большая с таймлайном урока из цветных отрезков, по которому бегает игла; высокая с фото и рукописной подписью-стикером; круг «70% говорите вы» на conic-gradient; шесть кружков-учеников, один поднимает руку; тетрадный лист, на котором домашка сама пишется (clip-path); чипы носителей; список «что остаётся после урока». Всё на CSS.",
+      "description": "Семь плиток разного размера про формат занятий: большая с таймлайном урока из цветных отрезков, по которому плывёт светящаяся игла (каждый отрезок вспыхивает в момент, когда она до него доходит); высокая с фото и рукописной подписью-стикером; круг «70% говорите вы» на conic-gradient; шесть кружков-учеников, один поднимает руку; тетрадный лист, на котором домашка пишется сама, строка за строкой (clip-path); чипы носителей; список «что остаётся после урока». Всё на CSS.",
       "categories": [
         "layout"
       ],
@@ -2435,8 +2437,8 @@
           "summary": "Бенто для школы или курсов: как устроено занятие — таймлайн, доля разговора, размер группы, домашка, носители.",
           "preserve": [
             "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
-            "таймлайн — flex с flex:minutes у отрезков, тон отрезка через --i в color-mix; игла — блок 100% ширины с keyframes translateX 0→100%",
-            "домашка пишется через clip-path inset(0 100% 0 0) → inset(0), в конце цикла гаснет; при reduce-motion clip-path снят",
+            "таймлайн — flex с flex:minutes у отрезков, тон отрезка через --i в color-mix; игла — блок 100% ширины с keyframes translateX 0→100%, отрезки вспыхивают через animation-delay = --at (доля пройденных минут) * 14s",
+            "домашка — 2 строки (homework), каждая пишется через свой clip-path keyframe со сдвигом по времени, не одновременно; в конце цикла гаснут; при reduce-motion clip-path снят",
             "сетка: 1 колонка, от 40rem — 2 (урок и домашка на две), от 64rem — 4, урок 2×2, фото на два ряда"
           ],
           "adapt": [
@@ -2504,13 +2506,13 @@
         "i18n": {
           "en": {
             "title": "“How lessons work” bento: a lesson timeline, a photo and live tiles",
-            "description": "Seven tiles of different sizes about the lesson format: a big one with a lesson timeline of coloured segments and a running needle; a tall one with a photo and a handwritten sticker caption; a “70% is you speaking” ring on conic-gradient; six student circles, one raising a hand; a ruled sheet where the homework writes itself (clip-path); native-speaker chips; a list of “what stays after the lesson”. All CSS.",
+            "description": "Seven tiles of different sizes about the lesson format: a big one with a lesson timeline of coloured segments and a glowing needle drifting across it (each segment flashes the instant the needle reaches it); a tall one with a photo and a handwritten sticker caption; a “70% is you speaking” ring on conic-gradient; six student circles, one raising a hand; a ruled sheet where the homework writes itself line by line (clip-path); native-speaker chips; a list of “what stays after the lesson”. All CSS.",
             "ai": {
               "summary": "A bento for a school or courses: how a lesson works — a timeline, speaking share, group size, homework, native speakers.",
               "preserve": [
                 "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the timeline is a flex row with flex:minutes on segments, segment tone via --i in color-mix; the needle is a 100%-wide block with translateX 0→100% keyframes",
-                "the homework writes itself via clip-path inset(0 100% 0 0) → inset(0) and fades at the end of the loop; under reduce-motion the clip-path is removed",
+                "homework is 2 lines, each with its own clip-path keyframe offset in time so they write one after another, not together; both fade at the end of the loop; under reduce-motion the clip-path is removed",
                 "grid: 1 column, from 40rem — 2 (lesson and homework span two), from 64rem — 4, the lesson 2×2, the photo spans two rows"
               ],
               "adapt": [
@@ -2590,7 +2592,11 @@
                 "speakShare": 70,
                 "speakText": "of lesson time is you speaking, not listening",
                 "homeworkTitle": "Homework in a notebook",
-                "homework": "Record a voice note: three things that annoy you in the morning. In English, 40 seconds.",
+                "homework": [
+                  "Record a voice note: three things that annoy you in the morning.",
+                  "In English, 40 seconds — send it to the group chat."
+                ],
+                "homeworkTag": "🎤 voice note · 40 sec",
                 "nativeTitle": "A native speaker once a week",
                 "nativeText": "Every fourth lesson is led by a native speaker — you get used to real speed and accent.",
                 "natives": [

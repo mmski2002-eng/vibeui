@@ -541,7 +541,7 @@ export async function LandingPage({ locale }: { locale: Locale }) {
             а не очередная секция. */}
         <section className="mx-auto w-full max-w-[1440px] px-4 pt-32 pb-24 text-center lg:px-6">
           <h2 className="type-h1 text-shell-fg mx-auto max-w-2xl">
-            {en ? "Ship a page tonight." : "Собери страницу за вечер."}
+            {en ? "Ship a page tonight" : "Собери страницу за вечер"}
           </h2>
           <p className="type-lead text-shell-muted mx-auto mt-4 max-w-xl">
             {en

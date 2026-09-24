@@ -59,7 +59,7 @@ const navbar: Navbar034Props = {
 const hero: Hero046Props = {
   wordmark: "Garage 42",
   eyebrow: "Detailing studio · Saint Petersburg",
-  title: ["Ceramic.", "Film.", "Polish."],
+  title: ["Ceramic.", "Film.", "Polish"],
   lede: "Ceramic coating, paint protection film and polishing in a closed bay. The quote is fixed after inspection, every stage is documented with photos.",
   primaryLabel: "Get a quote",
   primaryHint: "a quote in one minute",

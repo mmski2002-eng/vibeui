@@ -1,7 +1,9 @@
-import type { ComponentProps, CSSProperties } from "react"
+import type { ComponentProps, CSSProperties, ReactNode } from "react"
 
 export type Button016Props = Omit<ComponentProps<"a">, "children"> & {
   label?: string
+  /** Значок перед подписью: логотип, иконка. */
+  icon?: ReactNode
   href?: string
   /** Открывать в новой вкладке: тогда об этом говорится вслух и значком. */
   external?: boolean
@@ -41,15 +43,17 @@ border:1px solid var(--vibeui-button-016-border);border-radius:0.625rem;
 background:var(--vibeui-button-016-bg);color:var(--vibeui-button-016-fg);
 font-family:var(--vibeui-button-016-font);font-size:0.8125rem;font-weight:600;line-height:1;
 text-decoration:none;
-transition:background-color .16s ease;
+transition:background-color .18s ease,border-color .18s ease,transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .25s ease;
 }
 [data-vibeui-block="button-016"][data-size="sm"]{height:2rem;padding:0 0.75rem;font-size:0.75rem;border-radius:0.5rem}
 [data-vibeui-block="button-016"][data-size="lg"]{height:3rem;padding:0 1.375rem;font-size:0.9375rem;border-radius:0.75rem}
 [data-vibeui-block="button-016"][data-tone="accent"]{
 border-color:transparent;background:var(--vibeui-button-016-accent);color:oklch(from var(--vibeui-button-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
+box-shadow:0 5px 16px -5px color-mix(in oklab,var(--vibeui-button-016-accent) 65%,transparent);
 }
-[data-vibeui-block="button-016"]:hover{background:var(--vibeui-button-016-hover)}
-[data-vibeui-block="button-016"][data-tone="accent"]:hover{background:var(--vibeui-button-016-accent);filter:brightness(0.95);color:oklch(from var(--vibeui-button-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);}
+[data-vibeui-block="button-016"]:hover{background:var(--vibeui-button-016-hover);border-color:color-mix(in oklab,var(--vibeui-button-016-fg) 28%,transparent);transform:translateY(-1px);box-shadow:0 8px 18px -12px color-mix(in oklab,var(--vibeui-button-016-fg) 45%,transparent)}
+[data-vibeui-block="button-016"][data-tone="accent"]:hover{background:var(--vibeui-button-016-accent);filter:brightness(0.95);color:oklch(from var(--vibeui-button-016-accent) clamp(0,(0.62 - l) * 100,1) 0 0);transform:translateY(-1px);box-shadow:0 10px 22px -10px color-mix(in oklab,var(--vibeui-button-016-accent) 65%,transparent)}
+[data-vibeui-block="button-016"]:active{transform:translateY(0) scale(.97);box-shadow:none;transition-duration:.08s}
 [data-vibeui-block="button-016"]:focus-visible{outline:2px solid var(--vibeui-button-016-accent);outline-offset:2px}
 /* Значок внешней ссылки: рамка и стрелка из бордюров. */
 [data-vibeui-block="button-016"] [data-part="out"]{position:relative;flex:none;width:0.75rem;height:0.75rem;opacity:.75}
@@ -79,6 +83,7 @@ border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;
 transform:translateY(-50%) rotate(45deg);
 }
 [data-vibeui-block="button-016"]:hover [data-part="arrow"]{transform:translateX(0.1875rem)}
+[data-vibeui-block="button-016"] [data-part="icon"]{flex:none;display:inline-flex;font-size:1.15em;line-height:0}
 [data-vibeui-block="button-016"] [data-part="sr"]{
 position:absolute;width:1px;height:1px;overflow:hidden;
 clip-path:inset(50%);white-space:nowrap;
@@ -114,6 +119,7 @@ function schemeForBackground(background: string): "light" | "dark" | undefined {
  */
 export function Button016({
   label = "Открыть документацию",
+  icon,
   href = "#",
   external = true,
   tone = "neutral",
@@ -155,6 +161,7 @@ export function Button016({
           ? { target: "_blank", rel: "noopener noreferrer" }
           : null)}
       >
+        {icon ? <span data-part="icon" aria-hidden="true">{icon}</span> : null}
         {label}
         {arrow ? <span data-part="arrow" aria-hidden="true" /> : null}
         {external ? (

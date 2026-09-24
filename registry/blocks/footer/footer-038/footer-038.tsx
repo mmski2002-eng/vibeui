@@ -33,8 +33,9 @@ export type Footer038Props = {
 
 // Подвал языковой школы: сверху тетрадная линовка, лого с рукописной
 // подписью и контакты, три колонки ссылок, внизу правовые ссылки, соцсети
-// и копирайт. По самому низу — огромное слово-контур (text-stroke) во всю
-// ширину, при наведении заливается чернилами. Без JS.
+// и копирайт. Опционально — огромное слово-контур (text-stroke) во всю
+// ширину по самому низу, при наведении заливается чернилами; по умолчанию
+// выключено. Без JS.
 const FONTS = "https://fonts.googleapis.com/css2?family=Onest:wght@500;600;700;800&family=Golos+Text:wght@400;500;600&family=Marck+Script&display=swap"
 
 const STYLES = `
@@ -129,14 +130,14 @@ function Column({
   )
 }
 
-/** Подвал языковой школы с огромным словом-контуром. */
+/** Подвал языковой школы: линовка, контакты, колонки, копирайт. */
 export function Footer038({
-  brand = "Слово",
+  brand = "Диалог",
   caption = "языковая онлайн-школа",
   contacts = [
     { label: "+7 812 407-21-90", href: "tel:+78124072190" },
-    { label: "privet@slovo.school", href: "mailto:privet@slovo.school" },
-    { label: "@slovo_school", href: "#telegram" },
+    { label: "privet@dialog.school", href: "mailto:privet@dialog.school" },
+    { label: "@dialog_school", href: "#telegram" },
   ],
   columns = [
     { title: "языки", links: [{ label: "Английский", href: "#schedule" }, { label: "Испанский", href: "#schedule" }, { label: "Итальянский", href: "#schedule" }, { label: "Тест уровня", href: "#test" }] },
@@ -153,8 +154,8 @@ export function Footer038({
     { label: "Конфиденциальность", href: "#privacy" },
     { label: "Лицензия № Л035-01271-78", href: "#license" },
   ],
-  copyright = "© 2026 Слово, Санкт-Петербург",
-  bigWord = "Слово",
+  copyright = "© 2026 Диалог, Санкт-Петербург",
+  bigWord = "",
   navLabel = "Разделы сайта",
   tone = "auto",
   accent,

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type CSSProperties } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 
 import { Button016 } from "@/registry/components/button/button-016/button-016"
 import { Button013 } from "@/registry/components/button/button-013/button-013"
@@ -105,7 +105,7 @@ container-type:inline-size;
 [data-vibeui-block="pricing-031"] [data-part="perweek"] [data-part="label"]{margin:0}
 [data-vibeui-block="pricing-031"] [data-part="perweek"] output{font-family:var(--vibeui-pricing-031-display);font-weight:800;font-size:1.4rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 [data-vibeui-block="pricing-031"] [data-part="ticks"]{display:flex;justify-content:space-between;margin:.5rem 0 0;padding:0;list-style:none;font-size:.72rem;color:var(--vibeui-pricing-031-muted)}
-[data-vibeui-block="pricing-031"] [data-part="receipt"]{position:relative;display:grid;gap:1rem;padding:1.8rem 1.6rem 2.2rem;background:var(--vibeui-pricing-031-paper);border:1px solid var(--vibeui-pricing-031-line);border-bottom:0;border-radius:1.2rem 1.2rem 0 0;transform:rotate(.6deg)}
+[data-vibeui-block="pricing-031"] [data-part="receipt"]{position:relative;display:grid;gap:1rem;padding:1.8rem 1.6rem 2.2rem;background:var(--vibeui-pricing-031-paper);border:1px solid var(--vibeui-pricing-031-line);border-bottom:0;border-radius:1.2rem 1.2rem 0 0;animation:vibeui-pricing-031-swap .45s cubic-bezier(.2,.8,.2,1) both}
 [data-vibeui-block="pricing-031"] [data-part="receipt"]::after{content:"";position:absolute;left:0;right:0;bottom:-.7rem;height:.7rem;background:linear-gradient(135deg,var(--vibeui-pricing-031-paper) 50%,transparent 50%) 0 0/.7rem .7rem repeat-x,linear-gradient(-135deg,var(--vibeui-pricing-031-paper) 50%,transparent 50%) 0 0/.7rem .7rem repeat-x;filter:drop-shadow(0 1px 0 var(--vibeui-pricing-031-line))}
 [data-vibeui-block="pricing-031"] [data-part="sticker"]{position:absolute;right:1rem;top:-.9rem;padding:.4rem .8rem;border-radius:.3rem;background:var(--vibeui-pricing-031-accent);color:var(--vibeui-pricing-031-on-accent);font-family:var(--vibeui-pricing-031-hand);font-size:1.1rem;line-height:1.1;transform:rotate(3deg);animation:vibeui-pricing-031-pop .4s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="pricing-031"] [data-part="receipt"] h3{margin:0;font-family:var(--vibeui-pricing-031-display);font-weight:700;font-size:1.2rem}
@@ -132,6 +132,7 @@ container-type:inline-size;
 [data-vibeui-block="pricing-031"] [data-part="mark"][data-v="part"]{border:1.5px solid var(--vibeui-pricing-031-muted);color:var(--vibeui-pricing-031-muted)}
 [data-vibeui-block="pricing-031"] [data-part="mark"][data-v="no"]{border:1.5px solid var(--vibeui-pricing-031-line);color:var(--vibeui-pricing-031-muted)}
 @keyframes vibeui-pricing-031-pop{from{opacity:0;transform:rotate(3deg) scale(.7)}}
+@keyframes vibeui-pricing-031-swap{from{opacity:0;transform:rotate(1.6deg) translateY(8px) scale(.98)}to{opacity:1;transform:rotate(.6deg) translateY(0) scale(1)}}
 @container (min-width: 56rem){[data-vibeui-block="pricing-031"] [data-part="calc"]{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:2.5rem}[data-vibeui-block="pricing-031"] [data-part="table"] th,[data-vibeui-block="pricing-031"] [data-part="table"] td{padding:1rem 1.2rem;font-size:.95rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-031"] *{animation:none!important;transition:none!important}}`
 
@@ -176,7 +177,7 @@ export function Pricing031({
   actionLabel = "Записаться на пробный урок",
   actionHref = "#trial",
   compareTitle = "Мы, приложение или репетитор?",
-  compareColumns = ["Слово", "Приложение", "Репетитор"],
+  compareColumns = ["Диалог", "Приложение", "Репетитор"],
   compareRows = DEFAULT_ROWS,
   lessonUnits = ["занятие", "занятия", "занятий"],
   formatLabel = "Формат",
@@ -200,6 +201,30 @@ export function Pricing031({
   const format = formats[Math.min(active, formats.length - 1)]
   const lessons = perWeek * weeksPerMonth
   const monthly = format ? format.perLesson * lessons : 0
+
+  const [displayMonthly, setDisplayMonthly] = useState(monthly)
+  const fromRef = useRef(monthly)
+
+  useEffect(() => {
+    const from = fromRef.current
+    const to = monthly
+    if (from === to) return
+    const duration = 500
+    const start = performance.now()
+    let frame = 0
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - start) / duration)
+      const eased = 1 - (1 - progress) ** 3
+      setDisplayMonthly(Math.round(from + (to - from) * eased))
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick)
+      } else {
+        fromRef.current = to
+      }
+    }
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [monthly])
 
   const palette = {
     ...(accent ? { "--vibeui-pricing-031-accent": accent } : null),
@@ -250,7 +275,7 @@ export function Pricing031({
               </div>
             </div>
             {format ? (
-              <div data-part="receipt" aria-live="polite">
+              <div data-part="receipt" aria-live="polite" key={format.key}>
                 {format.sticker ? (
                   <span data-part="sticker" key={format.key}>
                     {format.sticker}
@@ -258,7 +283,7 @@ export function Pricing031({
                 ) : null}
                 <h3>{format.label}</h3>
                 <div data-part="price">
-                  {formatMoney(monthly, currency)}
+                  {formatMoney(displayMonthly, currency)}
                   <small>{perMonthLabel}</small>
                 </div>
                 <dl data-part="breakdown">

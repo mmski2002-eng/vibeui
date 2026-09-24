@@ -5870,15 +5870,13 @@
     {
       "name": "navbar-033",
       "type": "registry:block",
-      "title": "Шапка AI-сервиса с искрой и аврора-линией",
-      "description": "Липкая шапка SaaS: лого с четырёхлучевой искрой, которая мерцает, разделы, тихая ссылка «Войти» и кнопка «Начать бесплатно». При прокрутке — стекло с блюром и тонкая градиентная линия по низу.",
+      "title": "Шапка AI-сервиса: плавающая стеклянная капсула с эквалайзером и живым индикатором созвона",
+      "description": "Шапка SaaS или AI-продукта — не полоса во всю ширину, а плавающая стеклянная капсула по центру. Лого — маленький эквалайзер, который «слушает»: полоски пульсируют вразнобой. Под пунктом меню переезжает подсветка, справа живой индикатор «● Идёт созвон 12:04» с тикающими секундами, «Войти» и кнопка. При прокрутке капсула сужается и темнеет, с overlay висит поверх первого экрана. На узком — лого, кнопка и бургер с выпадающей панелью.",
       "categories": [
         "navbar"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-016"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "navbar-033/navbar-033.tsx",
@@ -5898,7 +5896,12 @@
           "aurora",
           "login",
           "cta",
-          "composite"
+          "floating",
+          "capsule",
+          "glass",
+          "live",
+          "equalizer",
+          "overlay"
         ],
         "preview": {
           "props": {
@@ -5908,18 +5911,18 @@
         },
         "ai": {
           "export": "Navbar033",
-          "usage": "<Navbar033\n  brand=\"Сводка\"\n  links={[{ label: \"Как работает\", href: \"#how\" }, { label: \"Цены\", href: \"#pricing\" }]}\n  actionLabel=\"Начать бесплатно\"\n/>",
+          "usage": "<Navbar033\n  overlay\n  brand=\"Сводка\"\n  links={[{ label: \"Как работает\", href: \"#how\" }, { label: \"Цены\", href: \"#pricing\" }]}\n  liveLabel=\"Идёт созвон\"\n  actionLabel=\"Начать бесплатно\"\n/>",
           "summary": "Шапка для AI-продукта или SaaS: искра в лого, войти и начать бесплатно, стекло при прокрутке.",
           "preserve": [
-            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
-            "искра — svg-звезда с keyframes scale+rotate, 3 секунды, без сдвига макета",
-            "аврора-линия — ::after с градиентом, opacity растёт вместе с data-scrolled",
-            "ссылки скрыты до 56rem контейнера, «Войти» — до 40rem, кнопка всегда видна"
+            "капсула — max-width и height с transition, при data-scrolled сужается; overlay — margin-bottom минус высота, шапка не занимает места",
+            "подсветка меню — один span glow, onPointerEnter ставит ему width и translateX по offsetLeft пункта",
+            "счётчик созвона пишется в DOM через ref раз в секунду — шапка не перерисовывается",
+            "меню от 60rem контейнера, индикатор от 74rem, «Войти» от 40rem; на узком бургер с панелью"
           ],
           "adapt": [
             "brand, brandHref, links: label, href",
             "loginLabel, loginHref, actionLabel, actionHref",
-            "sticky",
+            "liveLabel, liveStart (секунды), sticky, overlay",
             "tone — тема",
             "accent — акцент",
             "background — фон"
@@ -5977,25 +5980,25 @@
         ],
         "i18n": {
           "en": {
-            "title": "AI service navbar with a spark and an aurora line",
-            "description": "Sticky SaaS header: a logo with a twinkling four-point spark, sections, a quiet “Log in” link and a “Start free” button. On scroll — blurred glass and a thin gradient line along the bottom.",
+            "title": "AI service navbar: a floating glass capsule with an equalizer and a live call indicator",
+            "description": "A header for a SaaS or AI product — not a full-width bar but a floating glass capsule in the centre. The logo is a small equalizer that «listens»: its bars pulse out of step. A highlight slides under the hovered menu item, on the right a live «● Call in progress 12:04» indicator with ticking seconds, «Log in» and a button. On scroll the capsule narrows and darkens; with overlay it floats over the first screen. On narrow screens — logo, button and a burger with a drop-down panel.",
             "ai": {
               "summary": "Header for an AI product or SaaS: a spark in the logo, log in and start free, glass on scroll.",
               "preserve": [
-                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "the spark is an svg star with scale+rotate keyframes, 3 seconds, no layout shift",
-                "the aurora line is an ::after with a gradient whose opacity grows with data-scrolled",
-                "links are hidden below a 56rem container, “Log in” below 40rem, the button is always visible"
+                "the capsule has max-width and height with a transition and narrows on data-scrolled; overlay is a negative margin-bottom, the header takes no space",
+                "the menu highlight is a single glow span; onPointerEnter sets its width and translateX from the item's offsetLeft",
+                "the call counter is written to the DOM through a ref once a second — the header does not re-render",
+                "menu from a 60rem container, indicator from 74rem, «Log in» from 40rem; a burger with a panel on narrow screens"
               ],
               "adapt": [
                 "brand, brandHref, links: label, href",
                 "loginLabel, loginHref, actionLabel, actionHref",
-                "sticky",
+                "liveLabel, liveStart (seconds), sticky, overlay",
                 "tone — theme",
                 "accent — accent",
                 "background — background"
               ],
-              "usage": "<Navbar033\n  brand=\"Recap\"\n  links={[{ label: \"How it works\", href: \"#how\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n  actionLabel=\"Start free\"\n/>"
+              "usage": "<Navbar033\n  overlay\n  brand=\"Recap\"\n  links={[{ label: \"How it works\", href: \"#how\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n  liveLabel=\"Call in progress\"\n  actionLabel=\"Start for free\"\n/>"
             },
             "controls": {
               "brand": {
@@ -6044,12 +6047,10 @@
                 "actionLabel": "Start free",
                 "sticky": false
               }
-            },
-            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "navbar-034",

@@ -19,10 +19,12 @@ export type Accordion023Props = Omit<ComponentProps<"div">, "children"> & {
 }
 
 // Идея компонента: плитки на мягких плашках, открыт один раздел; плюс справа
-// поворачивается в крестик и заливается акцентом, ответ раскрывается через
-// grid-template-rows 0fr → 1fr с плавной высотой. Состояние — индекс
-// открытого раздела в React: кнопка с aria-expanded и aria-controls, потому
-// что анимация высоты нативным details не даётся.
+// плавно поворачивается в крестик (135deg, с лёгким scale на hover) и
+// заливается акцентом, ответ раскрывается через grid-template-rows 0fr →
+// 1fr; текст ответа отдельно проявляется fade+translateY с небольшой
+// задержкой после начала раскрытия — не выскакивает разом. Состояние —
+// индекс открытого раздела в React: кнопка с aria-expanded и aria-controls,
+// потому что анимация высоты нативным details не даётся.
 const STYLES = `
 :where([data-vibeui-block="accordion-023"]){
 --vibeui-accordion-023-bg:light-dark(#ffffff,#1a1a1a);
@@ -36,19 +38,23 @@ container-type:inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="accordion-023"]{color-scheme:dark}
 [data-vibeui-block="accordion-023"] [data-part="deck"]{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
-[data-vibeui-block="accordion-023"] [data-part="item"]{border-radius:1.1rem;background:var(--vibeui-accordion-023-card);box-shadow:0 0 0 1px var(--vibeui-accordion-023-line);transition:box-shadow .25s}
-[data-vibeui-block="accordion-023"] [data-part="item"][data-open="true"]{box-shadow:0 0 0 1.5px var(--vibeui-accordion-023-accent)}
-[data-vibeui-block="accordion-023"] [data-part="q"]{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;padding:1.1rem 1.3rem;border:0;background:none;color:inherit;font:inherit;font-weight:700;font-size:1.02rem;text-align:left;cursor:pointer;border-radius:1.1rem}
-[data-vibeui-block="accordion-023"] [data-part="q"] i{flex:none;position:relative;width:1.6rem;height:1.6rem;border-radius:50%;background:color-mix(in oklab,var(--vibeui-accordion-023-accent) 12%,transparent);transition:transform .35s cubic-bezier(.2,.8,.2,1),background .2s}
-[data-vibeui-block="accordion-023"] [data-part="q"] i::before,[data-vibeui-block="accordion-023"] [data-part="q"] i::after{content:"";position:absolute;left:50%;top:50%;width:.7rem;height:2px;background:var(--vibeui-accordion-023-accent);transform:translate(-50%,-50%)}
+[data-vibeui-block="accordion-023"] [data-part="item"]{border-radius:1.1rem;background:var(--vibeui-accordion-023-card);box-shadow:0 0 0 1px var(--vibeui-accordion-023-line);transition:box-shadow .3s ease,transform .3s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="accordion-023"] [data-part="item"][data-open="true"]{box-shadow:0 0 0 1.5px var(--vibeui-accordion-023-accent),0 12px 28px -20px color-mix(in oklab,var(--vibeui-accordion-023-fg) 45%,transparent)}
+[data-vibeui-block="accordion-023"] [data-part="q"]{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;padding:1.1rem 1.3rem;border:0;background:none;color:inherit;font:inherit;font-weight:700;font-size:1.02rem;text-align:left;cursor:pointer;border-radius:1.1rem;transition:color .25s ease}
+[data-vibeui-block="accordion-023"] [data-part="q"]:hover{color:var(--vibeui-accordion-023-accent)}
+[data-vibeui-block="accordion-023"] [data-part="q"] i{flex:none;position:relative;width:1.6rem;height:1.6rem;border-radius:50%;background:color-mix(in oklab,var(--vibeui-accordion-023-accent) 12%,transparent);transition:transform .45s cubic-bezier(.16,1,.3,1),background .3s ease}
+[data-vibeui-block="accordion-023"] [data-part="q"]:hover i{transform:scale(1.08)}
+[data-vibeui-block="accordion-023"] [data-part="q"] i::before,[data-vibeui-block="accordion-023"] [data-part="q"] i::after{content:"";position:absolute;left:50%;top:50%;width:.7rem;height:2px;background:var(--vibeui-accordion-023-accent);transform:translate(-50%,-50%);transition:background .3s ease}
 [data-vibeui-block="accordion-023"] [data-part="q"] i::after{transform:translate(-50%,-50%) rotate(90deg)}
-[data-vibeui-block="accordion-023"] [data-part="q"][aria-expanded="true"] i{transform:rotate(45deg);background:var(--vibeui-accordion-023-accent)}
+[data-vibeui-block="accordion-023"] [data-part="q"][aria-expanded="true"] i{transform:rotate(135deg);background:var(--vibeui-accordion-023-accent)}
+[data-vibeui-block="accordion-023"] [data-part="q"][aria-expanded="true"]:hover i{transform:rotate(135deg) scale(1.08)}
 [data-vibeui-block="accordion-023"] [data-part="q"][aria-expanded="true"] i::before,[data-vibeui-block="accordion-023"] [data-part="q"][aria-expanded="true"] i::after{background:var(--vibeui-accordion-023-bg)}
 [data-vibeui-block="accordion-023"] [data-part="q"]:focus-visible{outline:2px solid var(--vibeui-accordion-023-accent);outline-offset:-4px}
-[data-vibeui-block="accordion-023"] [data-part="a"]{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.2,.8,.2,1)}
+[data-vibeui-block="accordion-023"] [data-part="a"]{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.16,1,.3,1)}
 [data-vibeui-block="accordion-023"] [data-part="a"][data-open="true"]{grid-template-rows:1fr}
 [data-vibeui-block="accordion-023"] [data-part="a"] > div{overflow:hidden}
-[data-vibeui-block="accordion-023"] [data-part="a"] p{margin:0;padding:0 1.3rem 1.2rem;color:var(--vibeui-accordion-023-muted)}
+[data-vibeui-block="accordion-023"] [data-part="a"] p{margin:0;padding:0 1.3rem 1.2rem;color:var(--vibeui-accordion-023-muted);opacity:0;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease}
+[data-vibeui-block="accordion-023"] [data-part="a"][data-open="true"] p{opacity:1;transform:translateY(0);transition:opacity .35s ease .15s,transform .35s cubic-bezier(.2,.8,.2,1) .15s}
 [data-vibeui-block="accordion-023"]{width:100%;min-width:min(100%,16rem);box-sizing:border-box;color:var(--vibeui-accordion-023-fg);font-family:var(--vibeui-accordion-023-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="accordion-023"] *{box-sizing:border-box}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="accordion-023"] *{animation:none!important;transition:none!important}}

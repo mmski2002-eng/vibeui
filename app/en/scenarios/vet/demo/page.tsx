@@ -62,7 +62,7 @@ const navbar: Navbar035Props = {
 const hero: Hero047Props = {
   wordmark: "Paw",
   eyebrow: "Vet clinic and grooming · Sokol",
-  title: ["Gentle care.", "No queues,", "no stress."],
+  title: ["Gentle care.", "No queues,", "no stress"],
   lede: "Therapy, vaccination, dentistry and grooming in one clinic. Separate rooms for cats and dogs, a doctor on duty around the clock.",
   primaryLabel: "Book a visit",
   primaryHint: "free slots available today",

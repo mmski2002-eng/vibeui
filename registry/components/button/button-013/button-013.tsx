@@ -59,7 +59,8 @@ background:var(--vibeui-button-013-on);color:var(--vibeui-button-013-fg);
 box-shadow:0 1px 2px light-dark(oklch(0.2 0 265 / 12%),oklch(0 0 0 / 40%));
 }
 [data-vibeui-block="button-013"] label:has(input:focus-visible){outline:2px solid var(--vibeui-button-013-accent);outline-offset:2px}
-[data-vibeui-block="button-013"] label:hover{color:var(--vibeui-button-013-fg)}
+[data-vibeui-block="button-013"] label:hover{color:var(--vibeui-button-013-fg);background:color-mix(in oklab,var(--vibeui-button-013-fg) 7%,transparent)}
+[data-vibeui-block="button-013"] label:has(input:checked):hover{background:var(--vibeui-button-013-on)}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="button-013"] *{animation:none!important;transition:none!important}}
 `
 

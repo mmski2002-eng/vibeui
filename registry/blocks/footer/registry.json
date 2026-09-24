@@ -5145,7 +5145,7 @@
       "name": "footer-032",
       "type": "registry:block",
       "title": "Подвал SaaS со статусом систем и колонками",
-      "description": "Подвал AI-сервиса: сверху тонкая аврора-линия, лого с искрой и подпись, чип статуса с зелёной точкой-пульсом «все системы работают», три колонки ссылок, внизу копирайт, правовые ссылки и соцсети-чипы. На узком колонки в две, от 60rem — бренд слева, колонки справа.",
+      "description": "Подвал AI-сервиса: сверху тонкая аврора-линия, лого с искрой и подпись, чип статуса с зелёной точкой-пульсом «все системы работают», три колонки ссылок, внизу копирайт, правовые ссылки и соцсети-чипы. На узком колонки в две, от 60rem — бренд слева, колонки справа. Необязательно: карточка recap над колонками — «сводка этой страницы» с разделами «Решения / Задачи / Риски», строки печатаются при появлении подвала; ghost={false} убирает гигантский знак бренда.",
       "categories": [
         "footer"
       ],
@@ -5168,8 +5168,7 @@
           "links",
           "legal",
           "socials",
-          "aurora",
-          "composite"
+          "aurora"
         ],
         "preview": {
           "props": {},
@@ -5180,13 +5179,13 @@
           "usage": "<Footer032\n  brand=\"Сводка\"\n  status=\"Все системы работают\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Цены\", href: \"#pricing\" }] }]}\n/>",
           "summary": "Подвал для SaaS: статус «все системы работают» с пульсом, колонки ссылок, правовые ссылки и соцсети.",
           "preserve": [
-            "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
+            "recap — отдельная карточка во всю ширину над колонками, строки печатаются clip-path на animation-timeline: view() с фолбэком «видно сразу»",
             "статус — ссылка-чип, точка с ::after и keyframes pulse (scale + opacity), цвет --ok",
             "аврора-линия — ::before высотой 1px с градиентом от прозрачного к акценту и обратно",
             "колонки: 2 до 44rem, 3 выше; от 60rem shell двухколоночный, bottom растянут на всю ширину"
           ],
           "adapt": [
-            "brand, caption, status, statusHref, copyright",
+            "brand, caption, status, statusHref, copyright, ghost, recap: title, meta, sections: label, items",
             "columns: title, links: label, href",
             "socials, legal: label, href",
             "tone — тема",
@@ -5247,17 +5246,17 @@
         "i18n": {
           "en": {
             "title": "SaaS footer with a system status and columns",
-            "description": "An AI service footer: a thin aurora line on top, a logo with a spark and a caption, a status chip with a pulsing green dot “all systems operational”, three link columns, at the bottom the copyright, legal links and social chips. Two columns on narrow, from 60rem — brand on the left, columns on the right.",
+            "description": "An AI service footer: a thin aurora line on top, a logo with a spark and a caption, a status chip with a pulsing green dot “all systems operational”, three link columns, at the bottom the copyright, legal links and social chips. Two columns on narrow, from 60rem — brand on the left, columns on the right. Optional: a recap card above the columns — «a recap of this page» with «Decisions / Tasks / Risks» sections whose lines type in when the footer appears; ghost={false} removes the giant brand mark.",
             "ai": {
               "summary": "A SaaS footer: an “all systems operational” status with a pulse, link columns, legal links and socials.",
               "preserve": [
-                "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
+                "recap is a separate full-width card above the columns, its lines type in with clip-path on animation-timeline: view() with a «visible at once» fallback",
                 "the status is a chip link, a dot with ::after and pulse keyframes (scale + opacity), colour --ok",
                 "the aurora line is a 1px ::before with a gradient from transparent to the accent and back",
                 "columns: 2 below 44rem, 3 above; from 60rem the shell is two-column and bottom spans the full width"
               ],
               "adapt": [
-                "brand, caption, status, statusHref, copyright",
+                "brand, caption, status, statusHref, copyright, ghost, recap: title, meta, sections: label, items",
                 "columns: title, links: label, href",
                 "socials, legal: label, href",
                 "tone — theme",
@@ -5374,12 +5373,10 @@
                 ],
                 "copyright": "© 2026 Recap"
               }
-            },
-            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "footer-033",

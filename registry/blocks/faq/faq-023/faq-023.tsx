@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+import type { CSSProperties, ReactNode } from "react"
 
 import {
   Accordion023,
@@ -14,6 +14,8 @@ export type Faq023Props = {
   lede?: string
   items?: readonly Faq023Item[]
   contactLabel?: string
+  /** Значок перед подписью кнопки: логотип мессенджера. */
+  contactIcon?: ReactNode
   contactHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
@@ -73,6 +75,7 @@ export function Faq023({
   lede = "Коротко о приватности, деньгах и часах. Не нашли ответ — напишите, отвечаем за день.",
   items = DEFAULT_ITEMS,
   contactLabel = "Задать вопрос",
+  contactIcon,
   contactHref = "#",
   tone = "auto",
   accent,
@@ -107,6 +110,7 @@ export function Faq023({
                 tone={buttonTone}
                 data-part="contact"
                 label={contactLabel}
+                icon={contactIcon}
                 href={contactHref}
                 external={false}
                 size="lg"

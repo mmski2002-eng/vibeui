@@ -54,7 +54,7 @@ export default function SaasDemo() {
         {`[data-demo-grain]{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:220px}`}
       </style>
       <div data-demo-grain="" aria-hidden="true" />
-      <Navbar033 {...aurora} />
+      <Navbar033 {...aurora} overlay />
       <div id="top">
         <Hero033 {...aurora} />
       </div>
@@ -77,7 +77,19 @@ export default function SaasDemo() {
       <div id="start">
         <Cta026 {...aurora} />
       </div>
-      <Footer032 {...aurora} />
+      <Footer032
+        {...aurora}
+        ghost={false}
+        recap={{
+          title: "Сводка этой страницы",
+          meta: "сделано за 38 с",
+          sections: [
+            { label: "Решения", items: ["Протоколы больше не пишем", "Следующий созвон — со Сводкой"] },
+            { label: "Задачи", items: ["Оставить почту — вы, сегодня", "Подключить календарь — 2 минуты"] },
+            { label: "Риски", items: ["Продолжить конспектировать вручную"] },
+          ],
+        }}
+      />
     </div>
   )
 }

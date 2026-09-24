@@ -21,20 +21,31 @@ import { Footer038 } from "@/registry/blocks/footer/footer-038/footer-038"
  * график словаря рисуется, преподаватели наклоняются за курсором.
  */
 export const metadata = {
-  title: "Слово — онлайн-школа английского, испанского и итальянского",
+  title: "Диалог — онлайн-школа английского, испанского и итальянского",
   description:
     "Демо сценария «Языковая онлайн-школа» VibeUI: хиро с переводимым словом и живым диалогом, тест уровня со шкалой A1–C1, расписание групп с ближайшим стартом, график прогресса, преподаватели с акцентами, тарифы с калькулятором и сравнением, отзывы «до → после», форма пробного урока.",
 }
 
 const page: CSSProperties = {
   colorScheme: "light",
-  background: "#fbfaf7",
+  background: "#faf8f3",
   color: "#1b2a6b",
   fontFamily: '"Golos Text",ui-sans-serif,system-ui,sans-serif',
 }
 
 // Тема страницы: блоки каталога по умолчанию нейтральные, цвета задаёт сценарий.
-const notebook = { tone: "light", accent: "#ff6b4a", ink: "#1b2a6b", background: "#fbfaf7" } as const
+const notebook = { tone: "light", accent: "#e8613c", ink: "#1b2a6b", background: "#faf8f3" } as const
+
+// Значок Telegram для кнопки «Спросить в Telegram» в FAQ.
+const TELEGRAM_ICON = (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+    <circle cx="12" cy="12" r="12" fill="#26A5E4" />
+    <path
+      d="M5.6 12.1l11.2-4.32c.52-.2.98.13.8.9L15.7 17.7c-.14.62-.51.77-1.03.48l-2.85-2.1-1.37 1.32c-.15.15-.28.28-.58.28l.2-2.94 5.38-4.86c.24-.2-.05-.32-.36-.12l-6.65 4.19-2.86-.9c-.62-.2-.63-.62.13-.94z"
+      fill="#fff"
+    />
+  </svg>
+)
 
 const TEACHERS = [
   { name: "Emma Whitfield", role: "английский · носитель", from: "Манчестер", years: 9, note: "любимое слово — serendipity", accent: "манчестерский", image: "/demo/language/teacher-01.webp", imageAlt: "Эмма Уитфилд, преподаватель английского" },
@@ -86,7 +97,7 @@ export default function LanguageDemo() {
         <Cta032 {...notebook} />
       </div>
       <div id="faq">
-        <Faq023 {...notebook} eyebrow="Вопросы" title="Что спрашивают перед первым уроком" lede="Коротко о том, что волнует чаще всего. Остальное — на пробном занятии." items={FAQ} contactLabel="Спросить в Telegram" contactHref="#trial" />
+        <Faq023 {...notebook} eyebrow="Вопросы" title="Что спрашивают перед первым уроком" lede="Коротко о том, что волнует чаще всего. Остальное — на пробном занятии." items={FAQ} contactLabel="Спросить в Telegram" contactIcon={TELEGRAM_ICON} contactHref="#trial" />
       </div>
       <Footer038 {...notebook} />
     </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type CSSProperties } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 
 import { Button016 } from "@/registry/components/button/button-016/button-016"
 
@@ -85,17 +85,18 @@ container-type:inline-size;
 [data-vibeui-block="hero-039"] [data-part="ghost"]:nth-of-type(1){left:-2%;top:6%;transform:rotate(-8deg)}
 [data-vibeui-block="hero-039"] [data-part="ghost"]:nth-of-type(2){right:4%;top:-2%;transform:rotate(6deg)}
 [data-vibeui-block="hero-039"] [data-part="ghost"]:nth-of-type(3){left:38%;bottom:-4%;transform:rotate(-4deg)}
-[data-vibeui-block="hero-039"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:center}
+[data-vibeui-block="hero-039"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:0 1.25rem;display:grid;gap:3rem;align-items:start}
 [data-vibeui-block="hero-039"] [data-part="eyebrow"]{display:inline-flex;align-items:center;gap:.6rem;margin:0 0 1.2rem;padding:.4rem .9rem .4rem .5rem;border-radius:999px;border:1px solid var(--vibeui-hero-039-line);background:var(--vibeui-hero-039-paper);font-size:.8rem;font-weight:500;color:var(--vibeui-hero-039-muted)}
 [data-vibeui-block="hero-039"] [data-part="eyebrow"] i{width:.6rem;height:.6rem;border-radius:50%;background:var(--vibeui-hero-039-accent);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-hero-039-accent) 20%,transparent)}
 [data-vibeui-block="hero-039"] [data-part="title"]{margin:0;font-family:var(--vibeui-hero-039-display);font-weight:800;font-size:clamp(2.5rem,6.4cqi,4.9rem);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
-[data-vibeui-block="hero-039"] [data-part="flip"]{position:relative;display:inline-grid;vertical-align:baseline;perspective:600px;color:var(--vibeui-hero-039-accent);white-space:nowrap}
-[data-vibeui-block="hero-039"] [data-part="flip"] > span{grid-area:1/1;display:inline-flex;align-items:baseline;gap:.35em;visibility:hidden;backface-visibility:hidden;transform-origin:50% 100%}
-[data-vibeui-block="hero-039"] [data-part="flip"] > span[data-state="in"]{visibility:visible;animation:vibeui-hero-039-in .7s cubic-bezier(.2,.8,.2,1) both}
-[data-vibeui-block="hero-039"] [data-part="flip"] > span[data-state="out"]{visibility:visible;animation:vibeui-hero-039-out .45s cubic-bezier(.6,0,.8,.4) both}
+[data-vibeui-block="hero-039"] [data-part="flip"]{position:relative;display:inline-grid;vertical-align:baseline;color:var(--vibeui-hero-039-accent);white-space:nowrap}
+[data-vibeui-block="hero-039"] [data-part="flip"] > span{position:relative;grid-area:1/1;display:inline-flex;align-items:baseline;gap:.35em;visibility:hidden;will-change:transform,opacity,filter}
+[data-vibeui-block="hero-039"] [data-part="flip"] > span[data-state="in"]{visibility:visible;animation:vibeui-hero-039-in .62s cubic-bezier(.2,.85,.25,1) both}
+[data-vibeui-block="hero-039"] [data-part="flip"] > span[data-state="out"]{visibility:visible;animation:vibeui-hero-039-out .5s cubic-bezier(.55,0,.85,.35) both}
 [data-vibeui-block="hero-039"] [data-part="flip"] small{font-family:var(--vibeui-hero-039-display);font-size:.28em;font-weight:700;letter-spacing:.06em;padding:.25em .5em;border-radius:.45em;background:var(--vibeui-hero-039-accent);color:var(--vibeui-hero-039-on-accent);transform:translateY(-.9em)}
-[data-vibeui-block="hero-039"] [data-part="flip"] svg{position:absolute;left:0;right:0;bottom:-.08em;width:100%;height:.28em;color:var(--vibeui-hero-039-accent);overflow:visible;pointer-events:none}
-[data-vibeui-block="hero-039"] [data-part="flip"] path{stroke-dasharray:110;stroke-dashoffset:110;animation:vibeui-hero-039-ink 1s cubic-bezier(.2,.8,.2,1) .4s forwards}
+[data-vibeui-block="hero-039"] [data-part="flip"] svg{position:absolute;left:0;right:0;bottom:-.12em;width:100%;height:.28em;color:var(--vibeui-hero-039-accent);overflow:visible;pointer-events:none}
+[data-vibeui-block="hero-039"] [data-part="flip"] path{stroke-dasharray:110;stroke-dashoffset:110}
+[data-vibeui-block="hero-039"] [data-part="flip"] > span[data-state="in"] path{animation:vibeui-hero-039-ink .85s cubic-bezier(.2,.8,.2,1) .22s both}
 [data-vibeui-block="hero-039"] [data-part="lede"]{margin:1.4rem 0 0;max-width:32rem;font-size:1.1rem;color:var(--vibeui-hero-039-muted)}
 [data-vibeui-block="hero-039"] [data-part="actions"]{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.8rem 0 0}
 [data-vibeui-block="hero-039"] [data-part="trust"]{margin:1.6rem 0 0;font-family:var(--vibeui-hero-039-hand);font-size:1.35rem;color:var(--vibeui-hero-039-muted);transform:rotate(-1.5deg);transform-origin:left}
@@ -103,7 +104,7 @@ container-type:inline-size;
 [data-vibeui-block="hero-039"] [data-part="chat"]::before{content:"";position:absolute;left:.6rem;top:1.4rem;bottom:1.4rem;width:.5rem;background:repeating-linear-gradient(180deg,var(--vibeui-hero-039-line) 0 .5rem,transparent .5rem 1.6rem);border-radius:999px;opacity:.9}
 [data-vibeui-block="hero-039"] [data-part="chathead"]{display:flex;align-items:center;gap:.6rem;padding:1rem 1.2rem .6rem 3.4rem;font-size:.78rem;font-weight:500;color:var(--vibeui-hero-039-muted)}
 [data-vibeui-block="hero-039"] [data-part="chathead"] i{width:.5rem;height:.5rem;border-radius:50%;background:#22c55e;animation:vibeui-hero-039-live 1.6s ease-in-out infinite}
-[data-vibeui-block="hero-039"] [data-part="thread"]{display:grid;gap:.7rem;margin:0;padding:.4rem 1.2rem 1.6rem 3.4rem;list-style:none;min-height:19rem;align-content:start}
+[data-vibeui-block="hero-039"] [data-part="thread"]{display:grid;gap:.7rem;margin:0;padding:.4rem 1.2rem 1.6rem 3.4rem;list-style:none;min-height:23rem;align-content:start}
 [data-vibeui-block="hero-039"] [data-part="msg"]{display:grid;gap:.25rem;max-width:85%;animation:vibeui-hero-039-pop .35s cubic-bezier(.2,.8,.2,1)}
 [data-vibeui-block="hero-039"] [data-part="msg"][data-who="student"]{justify-self:end;text-align:right}
 [data-vibeui-block="hero-039"] [data-part="msg"] b{font-family:var(--vibeui-hero-039-hand);font-weight:400;font-size:1rem;color:var(--vibeui-hero-039-accent)}
@@ -117,8 +118,8 @@ container-type:inline-size;
 [data-vibeui-block="hero-039"] [data-part="dots"] i:nth-child(3){animation-delay:.3s}
 [data-vibeui-block="hero-039"] [data-part="note"]{font-family:var(--vibeui-hero-039-hand);font-size:1rem;color:var(--vibeui-hero-039-muted);animation:vibeui-hero-039-pop .4s ease-out}
 [data-vibeui-block="hero-039"] [data-part="sticker"]{position:absolute;right:-.8rem;top:-1.2rem;max-width:11rem;padding:.7rem .9rem;border-radius:.3rem;background:var(--vibeui-hero-039-accent);color:var(--vibeui-hero-039-on-accent);font-family:var(--vibeui-hero-039-hand);font-size:1.05rem;line-height:1.2;transform:rotate(4deg);box-shadow:0 10px 20px -10px color-mix(in oklab,var(--vibeui-hero-039-fg) 50%,transparent)}
-@keyframes vibeui-hero-039-in{from{transform:rotateX(-92deg);opacity:0}to{transform:rotateX(0);opacity:1}}
-@keyframes vibeui-hero-039-out{from{transform:rotateX(0);opacity:1}to{transform:rotateX(88deg);opacity:0}}
+@keyframes vibeui-hero-039-in{from{opacity:0;transform:translateY(.5em) rotate(-2.5deg);filter:blur(5px)}60%{filter:blur(0)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes vibeui-hero-039-out{from{opacity:1;transform:none;filter:blur(0)}to{opacity:0;transform:translateY(-.55em) rotate(2.5deg);filter:blur(5px)}}
 @keyframes vibeui-hero-039-ink{to{stroke-dashoffset:0}}
 @keyframes vibeui-hero-039-live{0%,100%{opacity:1}50%{opacity:.35}}
 @keyframes vibeui-hero-039-blink{to{opacity:0}}
@@ -144,9 +145,9 @@ const DEFAULT_MESSAGES: Hero039Message[] = [
 /** Хиро языковой школы: слово-перелистывание в заголовке и живой диалог урока. */
 export function Hero039({
   eyebrow = "Онлайн-школа · с 2019 года",
-  titleStart = "Через три месяца вы расскажете это",
+  titleStart = "Заговорите",
   words = DEFAULT_WORDS,
-  titleEnd = "",
+  titleEnd = "за три месяца",
   lede = "Английский, испанский и итальянский в группах до шести человек. Разговор с первого урока, преподаватели-носители раз в неделю, тетрадь с домашкой — и ни одной таблицы неправильных глаголов наизусть.",
   primaryLabel = "Пройти тест уровня",
   primaryHref = "#test",
@@ -240,11 +241,11 @@ export function Hero039({
                   <span key={item.word} data-state={index === flip.index ? "in" : index === flip.previous ? "out" : undefined} aria-hidden={index !== flip.index}>
                     {item.word}
                     {item.lang ? <small>{item.lang}</small> : null}
+                    <svg viewBox="0 0 100 10" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M2 6c18-5 40-5 60-2s26 2 36-1" />
+                    </svg>
                   </span>
                 ))}
-                <svg viewBox="0 0 100 10" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M2 6c18-5 40-5 60-2s26 2 36-1" />
-                </svg>
               </span>
               {titleEnd ? <> {titleEnd}</> : null}
             </h1>

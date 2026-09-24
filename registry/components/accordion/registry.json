@@ -5695,8 +5695,8 @@
           "usage": "<Accordion023\n  items={[\n    { question: \"Работает без интернета?\", answer: \"Да, полностью.\" },\n    { question: \"Можно отменить подписку?\", answer: \"В любой момент в настройках магазина.\" },\n  ]}\n/>",
           "summary": "Плитки с плюсом-крестиком: один открыт, высота анимируется через grid-template-rows, доступность из коробки.",
           "preserve": [
-            "раскрытие — grid-template-rows с transition, состояние — индекс открытого раздела",
-            "плюс — два псевдоэлемента, rotate(45deg) даёт крестик; заливка по aria-expanded",
+            "раскрытие — grid-template-rows с transition, состояние — индекс открытого раздела; текст ответа отдельно проявляется fade+translateY с задержкой .15s, чтобы не выскакивать разом с высотой",
+            "плюс — два псевдоэлемента, rotate(135deg) даёт крестик; заливка по aria-expanded",
             "палитру --vibeui-accordion-023-* и light-dark(): компонент следует color-scheme окружения",
             "кнопка с aria-expanded и aria-controls — не заменять на div с onClick"
           ],
@@ -5751,8 +5751,8 @@
             "ai": {
               "summary": "Tiles with a plus-to-cross toggle: one open, the height animates via grid-template-rows, accessibility out of the box.",
               "preserve": [
-                "expansion is grid-template-rows with a transition, the state is the open index",
-                "the plus is two pseudo-elements, rotate(45deg) makes a cross; fill on aria-expanded",
+                "expansion is grid-template-rows with a transition, the state is the open index; the answer text fades in with a translateY separately, delayed .15s so it doesn't pop in together with the height",
+                "the plus is two pseudo-elements, rotate(135deg) makes a cross; fill on aria-expanded",
                 "the --vibeui-accordion-023-* palette and light-dark(): the component follows the surrounding color-scheme",
                 "a button with aria-expanded and aria-controls — do not replace with a div and onClick"
               ],

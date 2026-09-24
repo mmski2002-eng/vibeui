@@ -86,7 +86,7 @@ container-type:inline-size;
 [data-vibeui-block="pricing-025"] [data-part="shell"]{position:relative;max-width:80rem;margin:0 auto;padding:0 1.25rem}
 [data-vibeui-block="pricing-025"] [data-part="head"]{max-width:44rem;margin:0 auto;text-align:center}
 [data-vibeui-block="pricing-025"] [data-part="eyebrow"]{margin:0 0 .8rem;font-family:var(--vibeui-pricing-025-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-pricing-025-accent);opacity:0;transform:translateY(10px);transition:opacity .6s var(--vibeui-pricing-025-ease),transform .6s var(--vibeui-pricing-025-ease)}
-[data-vibeui-block="pricing-025"] [data-part="title"]{margin:0;font-family:var(--vibeui-pricing-025-display);font-weight:800;font-size:clamp(2.2rem,5.4cqi,4rem);line-height:1;letter-spacing:-.04em;text-wrap:balance}
+[data-vibeui-block="pricing-025"] [data-part="title"]{margin:0;font-family:var(--vibeui-pricing-025-display);font-weight:700;font-size:clamp(2rem,4.2cqi,3.3rem);line-height:1.05;letter-spacing:-.035em;text-wrap:balance}
 [data-vibeui-block="pricing-025"] [data-part="w"]{display:inline-block;overflow:hidden;vertical-align:bottom;padding:.06em .04em 0;margin:0 -.04em}
 [data-vibeui-block="pricing-025"] [data-part="w"] span{display:inline-block;transform:translateY(112%);transition:transform .8s var(--vibeui-pricing-025-ease);transition-delay:calc(var(--vibeui-pricing-025-i) * .06s)}
 [data-vibeui-block="pricing-025"][data-in="true"] [data-part="w"] span{transform:none}
@@ -100,7 +100,7 @@ container-type:inline-size;
 [data-vibeui-block="pricing-025"] [data-part="period"]{display:flex;align-items:center;justify-content:center;gap:.8rem;font-size:.88rem;color:var(--vibeui-pricing-025-muted)}
 [data-vibeui-block="pricing-025"] [data-part="save"]{font-family:var(--vibeui-pricing-025-mono);font-size:.68rem;padding:.15rem .5rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-pricing-025-accent) 18%,transparent);color:var(--vibeui-pricing-025-accent)}
 [data-vibeui-block="pricing-025"] [data-part="grid"]{display:grid;gap:1rem;margin:2.5rem 0 0;padding:0;list-style:none}
-[data-vibeui-block="pricing-025"] [data-part="plan"]{--vibeui-pricing-025-x:50%;--vibeui-pricing-025-y:0%;position:relative;display:grid;gap:1.2rem;padding:1.6rem;border-radius:1.4rem;background:var(--vibeui-pricing-025-glass);border:1px solid var(--vibeui-pricing-025-line);opacity:0;translate:0 28px;transition:opacity .8s var(--vibeui-pricing-025-ease) calc(.4s + var(--vibeui-pricing-025-i) * .12s),translate .8s var(--vibeui-pricing-025-ease) calc(.4s + var(--vibeui-pricing-025-i) * .12s),border-color .4s}
+[data-vibeui-block="pricing-025"] [data-part="plan"]{--vibeui-pricing-025-x:50%;--vibeui-pricing-025-y:0%;position:relative;display:grid;grid-template-rows:auto auto auto 1fr auto;gap:1.2rem;padding:1.6rem;border-radius:1.4rem;background:var(--vibeui-pricing-025-glass);border:1px solid var(--vibeui-pricing-025-line);opacity:0;translate:0 28px;transition:opacity .8s var(--vibeui-pricing-025-ease) calc(.4s + var(--vibeui-pricing-025-i) * .12s),translate .8s var(--vibeui-pricing-025-ease) calc(.4s + var(--vibeui-pricing-025-i) * .12s),border-color .4s}
 [data-vibeui-block="pricing-025"][data-in="true"] [data-part="plan"]{opacity:1;translate:0 0}
 [data-vibeui-block="pricing-025"] [data-part="plan"]:hover{border-color:color-mix(in oklab,var(--vibeui-pricing-025-accent) 40%,transparent)}
 [data-vibeui-block="pricing-025"] [data-part="plan"]::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(24rem circle at var(--vibeui-pricing-025-x) var(--vibeui-pricing-025-y),color-mix(in oklab,var(--vibeui-pricing-025-accent) 14%,transparent),transparent 60%);opacity:0;transition:opacity .5s;pointer-events:none}
@@ -118,13 +118,13 @@ container-type:inline-size;
 [data-vibeui-block="pricing-025"] [data-part="odo"] [data-c]{display:inline-block;height:1em}
 [data-vibeui-block="pricing-025"] [data-part="price"] small{font-family:var(--vibeui-pricing-025-font);font-weight:500;font-size:.85rem;color:var(--vibeui-pricing-025-muted);letter-spacing:0}
 [data-vibeui-block="pricing-025"] [data-part="note"]{margin:0;font-size:.85rem;color:var(--vibeui-pricing-025-muted);min-height:2.6em}
-[data-vibeui-block="pricing-025"] [data-part="features"]{margin:0;padding:0;list-style:none;display:grid;gap:.5rem;font-size:.9rem}
+[data-vibeui-block="pricing-025"] [data-part="features"]{margin:0;padding:0;list-style:none;display:grid;align-content:start;gap:.5rem;font-size:.9rem}
 [data-vibeui-block="pricing-025"] [data-part="features"] li{display:flex;gap:.5rem;align-items:baseline}
 [data-vibeui-block="pricing-025"] [data-part="features"] li::before{content:"✓";font-family:var(--vibeui-pricing-025-mono);color:var(--vibeui-pricing-025-accent);font-size:.8rem}
 @keyframes vibeui-pricing-025-breathe{from{background-position:0 0,0% 50%}to{background-position:0 0,100% 50%}}
 @keyframes vibeui-pricing-025-halo{from{opacity:.25;transform:scale(.98)}to{opacity:.55;transform:scale(1.02)}}
 @container (min-width: 44rem){[data-vibeui-block="pricing-025"] [data-part="controls"]{grid-template-columns:1fr auto;align-items:center}[data-vibeui-block="pricing-025"] [data-part="seats"]{grid-column:1/-1}}
-@container (min-width: 56rem){[data-vibeui-block="pricing-025"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}[data-vibeui-block="pricing-025"] [data-part="plan"][data-featured="true"]{transform:translateY(-.6rem)}}
+@container (min-width: 56rem){[data-vibeui-block="pricing-025"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="pricing-025"] *{animation:none!important;transition:none!important}[data-vibeui-block="pricing-025"] [data-part="w"] span,[data-vibeui-block="pricing-025"] [data-part="controls"],[data-vibeui-block="pricing-025"] [data-part="eyebrow"],[data-vibeui-block="pricing-025"] [data-part="lede"]{opacity:1;transform:none}[data-vibeui-block="pricing-025"] [data-part="plan"]{opacity:1;translate:0 0}}`
 
 const DEFAULT_PLANS: Pricing025Plan[] = [
@@ -306,7 +306,7 @@ export function Pricing025({
                       label={plan.actionLabel}
                       href={plan.actionHref ?? "#"}
                       external={false}
-                      tone="accent"
+                      tone={plan.featured ? "accent" : "neutral"}
                       accent={accent}
                     />
                   ) : null}

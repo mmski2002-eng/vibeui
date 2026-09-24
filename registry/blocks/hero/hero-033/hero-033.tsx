@@ -1,18 +1,22 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react"
+import { useEffect, useState, type CSSProperties } from "react"
 
-import { Button016 } from "@/registry/components/button/button-016/button-016"
+export type Hero033Person = {
+  name: string
+  /** Цвет аватара. */
+  color: string
+}
 
 export type Hero033Line = {
-  /** Кто говорит в расшифровке. */
-  who: string
+  /** Индекс говорящего в people. */
+  who: number
   text: string
 }
 
 export type Hero033Props = {
   eyebrow?: string
-  /** Слово в *звёздочках* — аврора-градиентом. */
+  /** Слово в *звёздочках* — акцентным градиентом. */
   title?: string
   lede?: string
   primaryLabel?: string
@@ -21,12 +25,26 @@ export type Hero033Props = {
   secondaryHref?: string
   /** Строка доверия: «4 200 команд уже перестали писать протоколы». */
   trust?: string
-  transcriptTitle?: string
-  transcript?: readonly Hero033Line[]
-  summaryTitle?: string
-  /** Ответ ассистента: строки печатаются по токенам; строка с «# » — заголовок секции. */
-  summary?: readonly string[]
-  /** aria демо-панели. */
+  /** Окно созвона: название, метка записи, участники и субтитры по очереди. */
+  callTitle?: string
+  recLabel?: string
+  people?: readonly Hero033Person[]
+  captions?: readonly Hero033Line[]
+  /** Плашка после созвона: «Созвон завершён · 42:10», «сводка готова за 38 с». */
+  endedLabel?: string
+  readyLabel?: string
+  /** Задача в трекере. */
+  taskKey?: string
+  taskTitle?: string
+  taskMeta?: string
+  taskStatus?: string
+  /** Сообщение в мессенджере. */
+  chatTitle?: string
+  chatText?: string
+  /** Страница решений в базе знаний. */
+  docTitle?: string
+  docItems?: readonly string[]
+  /** aria сцены. */
   demoLabel?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
@@ -36,18 +54,15 @@ export type Hero033Props = {
   style?: CSSProperties
 }
 
-// Первый экран AI-продукта, который сам себя демонстрирует: слева
-// расшифровка созвона с репликами, справа окно ассистента, где сводка
-// печатается по словам с мигающим курсором (setTimeout по токену, пауза
-// на заголовках секций) и по кругу начинает заново. Пока печатается
-// строка сводки, в расшифровке подсвечивается реплика, из которой она
-// выросла (совпадение по основам слов). Заголовок гигантский, слова
-// въезжают через маску, слово в звёздочках — аврора-градиентом. Аврора
-// на фоне чуть плывёт за курсором (параллакс), стеклянная панель ловит
-// блик и spotlight под указателем, главная кнопка магнитится к курсору.
-const FONTS = "https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@500;600;700;800&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-
-const NOISE = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")"
+// Первый экран AI-продукта для созвонов, который иллюстрирует свой же
+// заголовок. Справа сцена по кругу: идёт созвон на троих — у говорящего
+// пульсирует кольцо, снизу бегут субтитры, в углу «Сводка записывает».
+// Созвон завершается — окно сжимается в плашку «Созвон завершён · сводка
+// готова за 38 с», и одна за другой выезжают готовые результаты в настоящих
+// мини-интерфейсах: задача в трекере с исполнителем и сроком, сообщение со
+// сводкой в мессенджере, страница решений в базе знаний. Пауза — и заново.
+// Слева заголовок в три строки, слово в звёздочках — градиентом.
+const FONTS = "https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@500;600;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 
 const STYLES = `
 :where([data-vibeui-block="hero-033"]){
@@ -56,90 +71,113 @@ const STYLES = `
 --vibeui-hero-033-accent:light-dark(#1a1a1a,#f2f2f2);
 --vibeui-hero-033-on-accent:oklch(from var(--vibeui-hero-033-accent) clamp(0,(0.62 - l) * 100,1) 0 0);
 --vibeui-hero-033-muted:color-mix(in oklab,var(--vibeui-hero-033-fg) 60%,var(--vibeui-hero-033-bg));
---vibeui-hero-033-line:color-mix(in oklab,var(--vibeui-hero-033-fg) 14%,transparent);
---vibeui-hero-033-glass:color-mix(in oklab,var(--vibeui-hero-033-fg) 6%,transparent);
---vibeui-hero-033-a2:#8b5cf6;
---vibeui-hero-033-a3:#f472b6;
---vibeui-hero-033-px:0;
---vibeui-hero-033-py:0;
---vibeui-hero-033-ease:cubic-bezier(.2,.8,.2,1);
+--vibeui-hero-033-line:color-mix(in oklab,var(--vibeui-hero-033-fg) 10%,transparent);
+--vibeui-hero-033-panel:color-mix(in oklab,var(--vibeui-hero-033-fg) 5%,var(--vibeui-hero-033-bg));
+--vibeui-hero-033-a2:#8b7cf6;
+--vibeui-hero-033-rec:#ff5c7a;
+--vibeui-hero-033-ease:cubic-bezier(.22,1,.36,1);
 --vibeui-hero-033-display:"Wix Madefor Display",ui-sans-serif,system-ui,sans-serif;
 --vibeui-hero-033-font:"Golos Text",ui-sans-serif,system-ui,sans-serif;
---vibeui-hero-033-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-container-type:inline-size;
+--vibeui-hero-033-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+container:vibeui-hero-033/inline-size;
 }
 :where(.dark,[data-theme="dark"]) [data-vibeui-block="hero-033"]{color-scheme:dark}
 :where([data-vibeui-block="hero-033"][data-tone="light"]){color-scheme:light}
 :where([data-vibeui-block="hero-033"][data-tone="dark"]){color-scheme:dark}
 [data-vibeui-block="hero-033"]{box-sizing:border-box;position:relative;overflow:hidden;isolation:isolate;background:var(--vibeui-hero-033-bg);color:var(--vibeui-hero-033-fg);font-family:var(--vibeui-hero-033-font);font-size:1rem;line-height:1.5}
 [data-vibeui-block="hero-033"] *{box-sizing:border-box}
-[data-vibeui-block="hero-033"] [data-part="primary"]{transition:transform .4s var(--vibeui-hero-033-ease)}
-[data-vibeui-block="hero-033"] [data-part="noise"]{position:absolute;inset:0;z-index:1;background-image:${NOISE};background-size:200px;opacity:.06;mix-blend-mode:soft-light;pointer-events:none}
-[data-vibeui-block="hero-033"] [data-part="aurora"]{position:absolute;inset:-25% -15% auto;height:80%;pointer-events:none;filter:blur(48px);transform:translate3d(calc(var(--vibeui-hero-033-px) * 2.5%),calc(var(--vibeui-hero-033-py) * 2.5%),0);transition:transform .9s var(--vibeui-hero-033-ease)}
-[data-vibeui-block="hero-033"] [data-part="blob"]{position:absolute;border-radius:50%;animation:vibeui-hero-033-drift 18s ease-in-out infinite alternate}
-[data-vibeui-block="hero-033"] [data-part="blob"]:nth-child(1){left:8%;top:10%;width:42%;aspect-ratio:1.3;background:color-mix(in oklab,var(--vibeui-hero-033-accent) 42%,transparent)}
-[data-vibeui-block="hero-033"] [data-part="blob"]:nth-child(2){left:45%;top:0;width:36%;aspect-ratio:1;background:color-mix(in oklab,var(--vibeui-hero-033-a2) 40%,transparent);animation-delay:-6s;animation-direction:alternate-reverse}
-[data-vibeui-block="hero-033"] [data-part="blob"]:nth-child(3){left:70%;top:25%;width:32%;aspect-ratio:1.2;background:color-mix(in oklab,var(--vibeui-hero-033-a3) 32%,transparent);animation-delay:-11s}
-[data-vibeui-block="hero-033"] [data-part="shell"]{position:relative;z-index:2;max-width:80rem;margin:0 auto;padding:4.5rem 1.25rem 4rem;display:grid;gap:3rem;align-items:center}
-[data-vibeui-block="hero-033"] [data-part="eyebrow"]{margin:0 0 1.2rem;display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .8rem;border-radius:999px;border:1px solid var(--vibeui-hero-033-line);background:var(--vibeui-hero-033-glass);font-family:var(--vibeui-hero-033-mono);font-size:.72rem;letter-spacing:.06em;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .7s var(--vibeui-hero-033-ease) both}
-[data-vibeui-block="hero-033"] [data-part="eyebrow"] i{width:.45rem;height:.45rem;border-radius:50%;background:var(--vibeui-hero-033-accent);box-shadow:0 0 12px var(--vibeui-hero-033-accent);animation:vibeui-hero-033-pulse 1.6s ease-in-out infinite}
-[data-vibeui-block="hero-033"] [data-part="title"]{margin:0;font-family:var(--vibeui-hero-033-display);font-weight:800;font-size:clamp(2.8rem,7.4cqi,6.2rem);line-height:.96;letter-spacing:-.045em;text-wrap:balance}
+[data-vibeui-block="hero-033"] [data-part="glow"]{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 55% at 78% 30%,color-mix(in oklab,var(--vibeui-hero-033-a2) 22%,transparent),transparent 70%),radial-gradient(45% 50% at 12% 10%,color-mix(in oklab,var(--vibeui-hero-033-accent) 14%,transparent),transparent 70%),linear-gradient(to bottom,transparent 70%,var(--vibeui-hero-033-bg))}
+[data-vibeui-block="hero-033"] [data-part="grid"]{position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--vibeui-hero-033-line) 1px,transparent 1px),linear-gradient(90deg,var(--vibeui-hero-033-line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(70% 60% at 50% 30%,#000,transparent);opacity:.5}
+[data-vibeui-block="hero-033"] [data-part="shell"]{max-width:80rem;margin:0 auto;padding:7rem 1.25rem 4rem;display:grid;gap:3rem;align-items:center}
+[data-vibeui-block="hero-033"] [data-part="eyebrow"]{margin:0 0 1.4rem;display:inline-flex;align-items:center;gap:.55rem;padding:.3rem .75rem .3rem .35rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-hero-033-fg) 6%,transparent);box-shadow:inset 0 0 0 1px var(--vibeui-hero-033-line);font-size:.8rem;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .7s var(--vibeui-hero-033-ease) both}
+[data-vibeui-block="hero-033"] [data-part="eyebrow-dot"]{position:relative;width:1.3rem;height:1.3rem;border-radius:50%;background:color-mix(in oklab,var(--vibeui-hero-033-accent) 16%,transparent)}
+[data-vibeui-block="hero-033"] [data-part="eyebrow-dot"]::after{content:"";position:absolute;inset:.4rem;border-radius:50%;background:var(--vibeui-hero-033-accent);box-shadow:0 0 10px var(--vibeui-hero-033-accent)}
+[data-vibeui-block="hero-033"] [data-part="title"]{margin:0;font-family:var(--vibeui-hero-033-display);font-weight:700;font-size:clamp(2.4rem,4.3cqi,3.9rem);line-height:1.04;letter-spacing:-.035em;text-wrap:balance}
 [data-vibeui-block="hero-033"] [data-part="w"]{display:inline-block;overflow:hidden;vertical-align:bottom;padding:.06em .04em 0;margin:0 -.04em}
-[data-vibeui-block="hero-033"] [data-part="w"] span{display:inline-block;transform:translateY(112%);animation:vibeui-hero-033-mask .9s var(--vibeui-hero-033-ease) forwards;animation-delay:calc(.12s + var(--vibeui-hero-033-i) * .07s)}
-[data-vibeui-block="hero-033"] [data-part="w"] span[data-em]{background:linear-gradient(100deg,var(--vibeui-hero-033-accent),var(--vibeui-hero-033-a2) 50%,var(--vibeui-hero-033-a3));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:vibeui-hero-033-mask .9s var(--vibeui-hero-033-ease) forwards,vibeui-hero-033-hue 6s linear infinite;animation-delay:calc(.12s + var(--vibeui-hero-033-i) * .07s),0s}
-[data-vibeui-block="hero-033"] [data-part="lede"]{margin:1.4rem 0 0;max-width:32rem;font-size:1.12rem;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .55s both}
-[data-vibeui-block="hero-033"] [data-part="actions"]{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.8rem;animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .7s both}
-[data-vibeui-block="hero-033"] [data-part="trust"]{margin:1.4rem 0 0;font-size:.85rem;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .85s both}
-[data-vibeui-block="hero-033"] [data-part="demo"]{--vibeui-hero-033-x:50%;--vibeui-hero-033-y:30%;position:relative;overflow:hidden;display:grid;gap:.8rem;border-radius:1.4rem;padding:.8rem;background:var(--vibeui-hero-033-glass);border:1px solid color-mix(in oklab,var(--vibeui-hero-033-fg) 18%,transparent);backdrop-filter:blur(18px);box-shadow:0 50px 100px -40px rgb(0 0 0 / .75),0 30px 80px -50px var(--vibeui-hero-033-accent),0 1px 0 rgb(255 255 255 / .16) inset;animation:vibeui-hero-033-rise 1.1s var(--vibeui-hero-033-ease) .35s both;transition:transform .8s var(--vibeui-hero-033-ease)}
-[data-vibeui-block="hero-033"] [data-part="demo"]::before{content:"";position:absolute;inset:0;background:radial-gradient(28rem circle at var(--vibeui-hero-033-x) var(--vibeui-hero-033-y),color-mix(in oklab,var(--vibeui-hero-033-accent) 22%,transparent),transparent 55%);opacity:0;transition:opacity .5s;pointer-events:none}
-[data-vibeui-block="hero-033"] [data-part="demo"][data-hover="true"]::before{opacity:1}
-[data-vibeui-block="hero-033"] [data-part="demo"]::after{content:"";position:absolute;inset:-60% -30%;background:linear-gradient(115deg,transparent 40%,rgb(255 255 255 / .16) 48%,rgb(255 255 255 / .05) 52%,transparent 60%);transform:translateX(-70%) rotate(0.001deg);animation:vibeui-hero-033-sheen 9s var(--vibeui-hero-033-ease) 1.6s infinite;pointer-events:none}
-[data-vibeui-block="hero-033"] [data-part="pane"]{position:relative;border-radius:.9rem;background:color-mix(in oklab,var(--vibeui-hero-033-bg) 72%,transparent);border:1px solid var(--vibeui-hero-033-line);padding:.9rem 1rem;min-height:11rem;font-size:.85rem}
-[data-vibeui-block="hero-033"] [data-part="ph"]{display:flex;align-items:center;gap:.5rem;margin:0 0 .7rem;font-family:var(--vibeui-hero-033-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-hero-033-muted)}
-[data-vibeui-block="hero-033"] [data-part="ph"] i{width:.4rem;height:.4rem;border-radius:50%;background:var(--vibeui-hero-033-accent)}
-[data-vibeui-block="hero-033"] [data-part="ph"][data-ai="true"] i{box-shadow:0 0 10px var(--vibeui-hero-033-accent);animation:vibeui-hero-033-pulse 1.4s ease-in-out infinite}
-[data-vibeui-block="hero-033"] [data-part="lines"]{margin:0;padding:0;list-style:none;display:grid;gap:.3rem;color:var(--vibeui-hero-033-muted)}
-[data-vibeui-block="hero-033"] [data-part="lines"] li{position:relative;padding:.3rem .55rem .3rem .75rem;margin:0 -.55rem 0 -.75rem;border-radius:.5rem;border-left:2px solid transparent;transition:background .5s var(--vibeui-hero-033-ease),color .5s,border-color .5s,transform .5s var(--vibeui-hero-033-ease)}
-[data-vibeui-block="hero-033"] [data-part="lines"] li b{font-weight:600;color:var(--vibeui-hero-033-fg)}
-[data-vibeui-block="hero-033"] [data-part="lines"] li[data-active="true"]{background:color-mix(in oklab,var(--vibeui-hero-033-accent) 14%,transparent);color:var(--vibeui-hero-033-fg);border-left-color:var(--vibeui-hero-033-accent);transform:translateX(3px)}
-[data-vibeui-block="hero-033"] [data-part="lines"] li[data-active="true"] b{color:var(--vibeui-hero-033-accent)}
-[data-vibeui-block="hero-033"] [data-part="output"]{margin:0;white-space:pre-wrap;word-break:break-word;line-height:1.55}
-[data-vibeui-block="hero-033"] [data-part="output"] b{display:block;margin-top:.55rem;font-family:var(--vibeui-hero-033-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-hero-033-accent);animation:vibeui-hero-033-up .5s var(--vibeui-hero-033-ease) both}
-[data-vibeui-block="hero-033"] [data-part="output"] b:first-child{margin-top:0}
-[data-vibeui-block="hero-033"] [data-part="output"] i{display:inline-block;width:.5em;height:1em;vertical-align:text-bottom;background:var(--vibeui-hero-033-accent);box-shadow:0 0 10px var(--vibeui-hero-033-accent);animation:vibeui-hero-033-cursor 1s steps(1) infinite}
-@keyframes vibeui-hero-033-drift{from{transform:translate(-6%,-4%) scale(1)}to{transform:translate(6%,6%) scale(1.15)}}
-@keyframes vibeui-hero-033-pulse{50%{opacity:.4}}
-@keyframes vibeui-hero-033-cursor{50%{opacity:0}}
-@keyframes vibeui-hero-033-mask{to{transform:translateY(0)}}
-@keyframes vibeui-hero-033-hue{to{background-position:200% 0}}
-@keyframes vibeui-hero-033-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes vibeui-hero-033-rise{from{opacity:0;transform:translateY(40px) scale(.97)}to{opacity:1}}
-@keyframes vibeui-hero-033-sheen{0%{transform:translateX(-70%) rotate(0.001deg)}35%,100%{transform:translateX(70%) rotate(0.001deg)}}
-@container (min-width: 60rem){[data-vibeui-block="hero-033"] [data-part="shell"]{grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:4rem;padding:6rem 2rem 5.5rem}[data-vibeui-block="hero-033"] [data-part="demo"]{grid-template-columns:1fr 1fr;transform:perspective(1400px) rotateY(calc(var(--vibeui-hero-033-px) * -3deg)) rotateX(calc(var(--vibeui-hero-033-py) * 3deg))}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-033"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-033"] [data-part="w"] span{transform:none}[data-vibeui-block="hero-033"] [data-part="demo"]{transform:none}}`
+[data-vibeui-block="hero-033"] [data-part="w"] > span{display:inline-block;translate:0 112%;animation:vibeui-hero-033-mask .9s var(--vibeui-hero-033-ease) forwards;animation-delay:calc(.1s + var(--vibeui-hero-033-i) * .06s)}
+[data-vibeui-block="hero-033"] [data-part="w"] > span[data-em]{background:linear-gradient(100deg,var(--vibeui-hero-033-accent),var(--vibeui-hero-033-a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+[data-vibeui-block="hero-033"] [data-part="lede"]{margin:1.5rem 0 0;max-width:31rem;font-size:1.1rem;line-height:1.6;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .5s both}
+[data-vibeui-block="hero-033"] [data-part="actions"]{display:flex;align-items:center;gap:.7rem 1.4rem;flex-wrap:wrap;margin-top:2rem;animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .65s both}
+[data-vibeui-block="hero-033"] [data-part="primary"]{display:inline-flex;align-items:center;gap:.6rem;height:3.2rem;padding:0 1.5rem;border-radius:999px;background:var(--vibeui-hero-033-accent);color:var(--vibeui-hero-033-on-accent);font-weight:600;text-decoration:none;box-shadow:0 14px 34px -14px var(--vibeui-hero-033-accent),inset 0 1px 0 rgb(255 255 255 / .35);transition:translate .3s var(--vibeui-hero-033-ease),box-shadow .3s}
+[data-vibeui-block="hero-033"] [data-part="primary"]:hover{translate:0 -2px;box-shadow:0 20px 40px -14px var(--vibeui-hero-033-accent),inset 0 1px 0 rgb(255 255 255 / .35)}
+[data-vibeui-block="hero-033"] [data-part="secondary"]{display:inline-flex;align-items:center;gap:.5rem;color:var(--vibeui-hero-033-fg);font-weight:500;text-decoration:none;padding:.3rem 0;border-bottom:1px solid var(--vibeui-hero-033-line);transition:border-color .3s}
+[data-vibeui-block="hero-033"] [data-part="secondary"]:hover{border-color:var(--vibeui-hero-033-accent)}
+[data-vibeui-block="hero-033"] :is([data-part="primary"],[data-part="secondary"]):focus-visible{outline:2px solid var(--vibeui-hero-033-accent);outline-offset:4px}
+[data-vibeui-block="hero-033"] [data-part="trust"]{display:flex;align-items:center;gap:.7rem;margin:2rem 0 0;font-size:.85rem;color:var(--vibeui-hero-033-muted);animation:vibeui-hero-033-up .8s var(--vibeui-hero-033-ease) .8s both}
+[data-vibeui-block="hero-033"] [data-part="faces"]{display:flex}
+[data-vibeui-block="hero-033"] [data-part="faces"] i{width:1.6rem;height:1.6rem;margin-left:-.45rem;border-radius:50%;border:2px solid var(--vibeui-hero-033-bg);background:var(--vibeui-hero-033-c)}
+[data-vibeui-block="hero-033"] [data-part="faces"] i:first-child{margin-left:0}
+[data-vibeui-block="hero-033"] [data-part="stage"]{position:relative;height:28rem;animation:vibeui-hero-033-rise 1s var(--vibeui-hero-033-ease) .3s both}
+[data-vibeui-block="hero-033"] [data-part="call"]{position:absolute;inset:0 0 auto;height:22rem;display:grid;grid-template-rows:auto 1fr auto;border-radius:1.4rem;background:var(--vibeui-hero-033-panel);box-shadow:inset 0 0 0 1px var(--vibeui-hero-033-line),0 40px 80px -40px rgb(0 0 0 / .8);overflow:hidden;transform-origin:50% 0;transition:height .8s var(--vibeui-hero-033-ease),opacity .6s,translate .8s var(--vibeui-hero-033-ease)}
+[data-vibeui-block="hero-033"][data-phase="results"] [data-part="call"]{height:3.2rem}
+[data-vibeui-block="hero-033"] [data-part="bar"]{display:flex;align-items:center;gap:.6rem;height:3.2rem;padding:0 1rem;border-bottom:1px solid var(--vibeui-hero-033-line);font-size:.82rem}
+[data-vibeui-block="hero-033"] [data-part="dots"]{display:flex;gap:.3rem}
+[data-vibeui-block="hero-033"] [data-part="dots"] i{width:.55rem;height:.55rem;border-radius:50%;background:color-mix(in oklab,var(--vibeui-hero-033-fg) 18%,transparent)}
+[data-vibeui-block="hero-033"] [data-part="call-title"]{font-weight:600}
+[data-vibeui-block="hero-033"] [data-part="rec"]{display:inline-flex;align-items:center;gap:.4rem;margin-left:auto;padding:.2rem .6rem;border-radius:999px;background:color-mix(in oklab,var(--vibeui-hero-033-rec) 14%,transparent);color:color-mix(in oklab,var(--vibeui-hero-033-rec) 70%,var(--vibeui-hero-033-fg));font-size:.72rem;font-weight:500;white-space:nowrap}
+[data-vibeui-block="hero-033"] [data-part="rec"] i{width:.4rem;height:.4rem;border-radius:50%;background:var(--vibeui-hero-033-rec);animation:vibeui-hero-033-blink 1.2s steps(1) infinite}
+[data-vibeui-block="hero-033"][data-phase="results"] [data-part="rec"]{background:color-mix(in oklab,var(--vibeui-hero-033-accent) 14%,transparent);color:var(--vibeui-hero-033-accent)}
+[data-vibeui-block="hero-033"][data-phase="results"] [data-part="rec"] i{background:var(--vibeui-hero-033-accent);animation:none}
+[data-vibeui-block="hero-033"] [data-part="time"]{font-family:var(--vibeui-hero-033-mono);font-size:.74rem;color:var(--vibeui-hero-033-muted);font-variant-numeric:tabular-nums}
+[data-vibeui-block="hero-033"] [data-part="people"]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;padding:.8rem;transition:opacity .4s}
+[data-vibeui-block="hero-033"][data-phase="results"] [data-part="people"],[data-vibeui-block="hero-033"][data-phase="results"] [data-part="caption"]{opacity:0}
+[data-vibeui-block="hero-033"] [data-part="tile"]{position:relative;display:grid;place-items:center;border-radius:1rem;background:radial-gradient(120% 90% at 50% 0%,color-mix(in oklab,var(--vibeui-hero-033-c) 22%,transparent),transparent 70%),color-mix(in oklab,var(--vibeui-hero-033-fg) 4%,transparent);box-shadow:inset 0 0 0 1px var(--vibeui-hero-033-line);transition:box-shadow .4s}
+[data-vibeui-block="hero-033"] [data-part="tile"][data-talking="true"]{box-shadow:inset 0 0 0 1.5px var(--vibeui-hero-033-accent),0 0 30px -10px var(--vibeui-hero-033-accent)}
+[data-vibeui-block="hero-033"] [data-part="avatar"]{position:relative;display:grid;place-items:center;width:3.4rem;height:3.4rem;border-radius:50%;background:linear-gradient(145deg,var(--vibeui-hero-033-c),color-mix(in oklab,var(--vibeui-hero-033-c) 50%,#000));color:#fff;font-family:var(--vibeui-hero-033-display);font-weight:700;font-size:1.2rem}
+[data-vibeui-block="hero-033"] [data-part="tile"][data-talking="true"] [data-part="avatar"]::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--vibeui-hero-033-accent);animation:vibeui-hero-033-talk 1.2s ease-out infinite}
+[data-vibeui-block="hero-033"] [data-part="name"]{position:absolute;left:.6rem;bottom:.5rem;display:flex;align-items:center;gap:.35rem;font-size:.72rem;font-weight:500;color:var(--vibeui-hero-033-muted)}
+[data-vibeui-block="hero-033"] [data-part="wave"]{display:inline-flex;align-items:center;gap:1.5px;height:.7rem}
+[data-vibeui-block="hero-033"] [data-part="wave"] i{width:2px;height:100%;border-radius:2px;background:var(--vibeui-hero-033-accent);transform:scaleY(.25);transform-origin:center}
+[data-vibeui-block="hero-033"] [data-part="tile"][data-talking="true"] [data-part="wave"] i{animation:vibeui-hero-033-eq .8s ease-in-out infinite}
+[data-vibeui-block="hero-033"] [data-part="wave"] i:nth-child(2){animation-delay:-.3s}
+[data-vibeui-block="hero-033"] [data-part="wave"] i:nth-child(3){animation-delay:-.55s}
+[data-vibeui-block="hero-033"] [data-part="caption"]{min-height:3.4rem;margin:0;padding:.7rem 1rem .9rem;font-size:.86rem;line-height:1.45;color:var(--vibeui-hero-033-fg);transition:opacity .4s}
+[data-vibeui-block="hero-033"] [data-part="caption"] b{color:var(--vibeui-hero-033-accent);font-weight:600}
+[data-vibeui-block="hero-033"] [data-part="caption"] span{animation:vibeui-hero-033-type .5s ease-out both}
+[data-vibeui-block="hero-033"] [data-part="results"]{position:absolute;inset:4rem 0 0;display:grid;align-content:start;gap:.7rem}
+[data-vibeui-block="hero-033"] [data-part="card"]{display:flex;align-items:flex-start;gap:.8rem;padding:.9rem 1rem;border-radius:1.1rem;background:var(--vibeui-hero-033-panel);box-shadow:inset 0 0 0 1px var(--vibeui-hero-033-line),0 24px 50px -30px rgb(0 0 0 / .8);opacity:0;translate:0 18px;scale:.97;transition:opacity .5s,translate .7s var(--vibeui-hero-033-ease),scale .7s var(--vibeui-hero-033-ease);transition-delay:0s}
+[data-vibeui-block="hero-033"][data-phase="results"] [data-part="card"]{opacity:1;translate:0 0;scale:1;transition-delay:calc(.35s + var(--vibeui-hero-033-i) * .45s)}
+[data-vibeui-block="hero-033"] [data-part="app"]{display:grid;place-items:center;flex:none;width:2.2rem;height:2.2rem;border-radius:.65rem;color:#fff;font-family:var(--vibeui-hero-033-display);font-weight:700;font-size:.85rem}
+[data-vibeui-block="hero-033"] [data-part="app"][data-app="task"]{background:linear-gradient(145deg,#2f7bff,#1c4fd6)}
+[data-vibeui-block="hero-033"] [data-part="app"][data-app="chat"]{background:linear-gradient(145deg,#37b7ff,#1f8fe0)}
+[data-vibeui-block="hero-033"] [data-part="app"][data-app="doc"]{background:#f2f2f2;color:#111}
+[data-vibeui-block="hero-033"] [data-part="body"]{flex:1;min-width:0;display:grid;gap:.25rem}
+[data-vibeui-block="hero-033"] [data-part="card-head"]{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--vibeui-hero-033-muted)}
+[data-vibeui-block="hero-033"] [data-part="card-head"] code{font-family:var(--vibeui-hero-033-mono);font-size:.7rem;color:var(--vibeui-hero-033-fg)}
+[data-vibeui-block="hero-033"] [data-part="status"]{margin-left:auto;padding:.05rem .45rem;border-radius:.35rem;background:color-mix(in oklab,var(--vibeui-hero-033-accent) 14%,transparent);color:var(--vibeui-hero-033-accent);font-size:.66rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+[data-vibeui-block="hero-033"] [data-part="card-title"]{margin:0;font-weight:600;font-size:.92rem}
+[data-vibeui-block="hero-033"] [data-part="card-text"]{margin:0;font-size:.82rem;color:var(--vibeui-hero-033-muted)}
+[data-vibeui-block="hero-033"] [data-part="bubble"]{margin:0;padding:.55rem .75rem;border-radius:.2rem .9rem .9rem .9rem;background:color-mix(in oklab,var(--vibeui-hero-033-fg) 7%,transparent);font-size:.82rem;line-height:1.45}
+[data-vibeui-block="hero-033"] [data-part="checks"]{display:grid;gap:.2rem;margin:0;padding:0;list-style:none;font-size:.82rem;color:var(--vibeui-hero-033-muted)}
+[data-vibeui-block="hero-033"] [data-part="checks"] li{display:flex;align-items:center;gap:.45rem}
+[data-vibeui-block="hero-033"] [data-part="checks"] li::before{content:"";flex:none;width:.8rem;height:.8rem;border-radius:.25rem;background:var(--vibeui-hero-033-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.2 2.2L9.5 3.6' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/80% no-repeat}
+@keyframes vibeui-hero-033-mask{to{translate:0 0}}
+@keyframes vibeui-hero-033-up{from{opacity:0;translate:0 14px}}
+@keyframes vibeui-hero-033-rise{from{opacity:0;translate:0 30px}}
+@keyframes vibeui-hero-033-blink{50%{opacity:.2}}
+@keyframes vibeui-hero-033-talk{from{scale:1;opacity:.9}to{scale:1.35;opacity:0}}
+@keyframes vibeui-hero-033-eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+@keyframes vibeui-hero-033-type{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+@container vibeui-hero-033 (min-width: 60rem){[data-vibeui-block="hero-033"] [data-part="shell"]{grid-template-columns:minmax(0,1fr) minmax(0,31rem);gap:4rem;min-height:min(100svh,52rem);padding:7.5rem 1.25rem 4rem}}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="hero-033"] *{animation:none!important;transition:none!important}[data-vibeui-block="hero-033"] [data-part="w"] > span{translate:0 0}[data-vibeui-block="hero-033"] [data-part="call"]{height:3.2rem}[data-vibeui-block="hero-033"] :is([data-part="people"],[data-part="caption"]){opacity:0}[data-vibeui-block="hero-033"] [data-part="card"]{opacity:1;translate:0 0;scale:1}}`
 
-const DEFAULT_TRANSCRIPT: Hero033Line[] = [
-  { who: "Лена", text: "Давайте релиз перенесём на четверг, тесты не успевают." },
-  { who: "Марк", text: "Ок, но тогда я беру на себя миграцию базы до среды." },
-  { who: "Оля", text: "Мне нужно от дизайна финальные иконки к вторнику, иначе всё сдвинется." },
-  { who: "Лена", text: "Риск: у платёжного провайдера окно обслуживания в среду ночью." },
+const DEFAULT_PEOPLE: Hero033Person[] = [
+  { name: "Лена", color: "#8b7cf6" },
+  { name: "Марк", color: "#22c3a6" },
+  { name: "Оля", color: "#f59e5b" },
 ]
 
-const DEFAULT_SUMMARY = ["# Решения", "Релиз перенесён на четверг.", "# Задачи", "Марк — миграция базы до среды.", "Дизайн — иконки Оле до вторника.", "# Риски", "Окно обслуживания провайдера в среду ночью."]
+const DEFAULT_CAPTIONS: Hero033Line[] = [
+  { who: 0, text: "Давайте релиз перенесём на четверг, тесты не успевают." },
+  { who: 1, text: "Ок, тогда я беру миграцию базы до среды." },
+  { who: 2, text: "Мне нужны финальные иконки к вторнику." },
+  { who: 0, text: "И риск: у провайдера окно обслуживания в среду ночью." },
+]
 
-// Основы слов для сопоставления строки сводки с репликой: первые четыре
-// буквы слов длиннее трёх — «перенесём/перенесён», «среды/среду» сходятся.
-function stems(text: string) {
-  return new Set(
-    text
-      .toLowerCase()
-      .split(/[^a-zа-яё0-9]+/i)
-      .filter((word) => word.length > 3)
-      .map((word) => word.slice(0, 4)),
-  )
-}
+const CAPTION_MS = 2200
+const HOLD_MS = 6500
 
-/** Первый экран AI-продукта: ассистент печатает сводку по расшифровке. */
+/** Первый экран AI-продукта: созвон заканчивается, а результаты сами разлетаются по сервисам. */
 export function Hero033({
   eyebrow = "AI для встреч · без протоколов",
   title = "Созвон закончился — *решения уже в трекере*",
@@ -149,11 +187,21 @@ export function Hero033({
   secondaryLabel = "Попробовать в песочнице",
   secondaryHref = "#sandbox",
   trust = "4 200 команд уже перестали писать протоколы",
-  transcriptTitle = "расшифровка · 42:10",
-  transcript = DEFAULT_TRANSCRIPT,
-  summaryTitle = "сводка",
-  summary = DEFAULT_SUMMARY,
-  demoLabel = "Демо: расшифровка и сводка",
+  callTitle = "Планёрка релиза",
+  recLabel = "Сводка записывает",
+  people = DEFAULT_PEOPLE,
+  captions = DEFAULT_CAPTIONS,
+  endedLabel = "Созвон завершён · 42:10",
+  readyLabel = "сводка готова за 38 с",
+  taskKey = "REL-248",
+  taskTitle = "Миграция базы",
+  taskMeta = "Марк · до среды",
+  taskStatus = "в работе",
+  chatTitle = "#релиз · Сводка",
+  chatText = "Релиз переносим на четверг. Задачи: миграция базы — Марк, иконки — дизайн. Риск: окно провайдера в среду.",
+  docTitle = "Решения · планёрка релиза",
+  docItems = ["Релиз — в четверг", "Деплой утром, после окна провайдера"],
+  demoLabel = "Демо: созвон и его результаты",
   tone = "auto",
   accent,
   ink,
@@ -161,100 +209,33 @@ export function Hero033({
   className,
   style,
 }: Hero033Props) {
-  const [count, setCount] = useState(0)
-  const rootRef = useRef<HTMLElement>(null)
-  const demoRef = useRef<HTMLDivElement>(null)
-  const primaryRef = useRef<HTMLAnchorElement>(null)
-  const tokens = useMemo(() => summary.flatMap((line) => (line.startsWith("# ") ? [line] : line.split(" ").map((word, index, all) => (index < all.length - 1 ? `${word} ` : `${word}\n`)))), [summary])
+  const [phase, setPhase] = useState<"call" | "results">("call")
+  const [line, setLine] = useState(0)
 
-  // Для каждого токена — индекс реплики, которую подсветить: строка сводки
-  // ищет реплику с наибольшим числом общих основ, заголовок берёт реплику
-  // следующей за ним строки.
-  const owners = useMemo(() => {
-    const lineStems = transcript.map((line) => stems(`${line.who} ${line.text}`))
-    const byLine = summary.map((line) => {
-      if (line.startsWith("# ")) return -1
-      const own = stems(line)
-      let best = -1
-      let bestScore = 0
-      lineStems.forEach((set, index) => {
-        let score = 0
-        own.forEach((stem) => {
-          if (set.has(stem)) score += 1
-        })
-        if (score > bestScore) {
-          bestScore = score
-          best = index
-        }
-      })
-      return best
-    })
-    for (let i = summary.length - 1, next = -1; i >= 0; i -= 1) {
-      if (byLine[i] === -1) byLine[i] = next
-      else next = byLine[i]
-    }
-    return summary.flatMap((line, index) => Array.from({ length: line.startsWith("# ") ? 1 : line.split(" ").length }, () => byLine[index]))
-  }, [summary, transcript])
-
+  // Сцена по кругу: субтитры по очереди, потом результаты, пауза — и заново.
   useEffect(() => {
-    let i = 0
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     let timer = 0
-    const step = () => {
-      i += 1
-      setCount(i)
-      if (i >= tokens.length) {
-        timer = window.setTimeout(() => {
-          i = 0
-          setCount(0)
-          timer = window.setTimeout(step, 700)
-        }, 5000)
+    let index = 0
+    const next = () => {
+      if (index < captions.length - 1) {
+        index += 1
+        setLine(index)
+        timer = window.setTimeout(next, CAPTION_MS)
         return
       }
-      timer = window.setTimeout(step, tokens[i - 1].startsWith("# ") ? 420 : 70 + Math.random() * 90)
+      setPhase("results")
+      timer = window.setTimeout(() => {
+        index = 0
+        setLine(0)
+        setPhase("call")
+        timer = window.setTimeout(next, CAPTION_MS)
+      }, HOLD_MS)
     }
-    timer = window.setTimeout(step, 900)
+    timer = window.setTimeout(next, CAPTION_MS)
     return () => window.clearTimeout(timer)
-  }, [tokens])
+  }, [captions.length])
 
-  const onRootMove = (event: PointerEvent<HTMLElement>) => {
-    if (event.pointerType !== "mouse") return
-    const root = rootRef.current
-    if (!root) return
-    const rect = root.getBoundingClientRect()
-    root.style.setProperty("--vibeui-hero-033-px", (((event.clientX - rect.left) / rect.width) * 2 - 1).toFixed(3))
-    root.style.setProperty("--vibeui-hero-033-py", (((event.clientY - rect.top) / rect.height) * 2 - 1).toFixed(3))
-  }
-  const onRootLeave = () => {
-    const root = rootRef.current
-    if (!root) return
-    root.style.setProperty("--vibeui-hero-033-px", "0")
-    root.style.setProperty("--vibeui-hero-033-py", "0")
-  }
-  const onDemoMove = (event: PointerEvent<HTMLDivElement>) => {
-    const demo = demoRef.current
-    if (!demo) return
-    const rect = demo.getBoundingClientRect()
-    demo.style.setProperty("--vibeui-hero-033-x", `${event.clientX - rect.left}px`)
-    demo.style.setProperty("--vibeui-hero-033-y", `${event.clientY - rect.top}px`)
-    demo.dataset.hover = "true"
-  }
-  const onDemoLeave = () => {
-    if (demoRef.current) demoRef.current.dataset.hover = "false"
-  }
-  const onPrimaryMove = (event: PointerEvent<HTMLAnchorElement>) => {
-    if (event.pointerType !== "mouse") return
-    const button = primaryRef.current
-    if (!button) return
-    const rect = button.getBoundingClientRect()
-    const dx = (event.clientX - rect.left - rect.width / 2) / (rect.width / 2)
-    const dy = (event.clientY - rect.top - rect.height / 2) / (rect.height / 2)
-    button.style.transform = `translate(${(dx * 7).toFixed(1)}px,${(dy * 6).toFixed(1)}px)`
-  }
-  const onPrimaryLeave = () => {
-    if (primaryRef.current) primaryRef.current.style.transform = ""
-  }
-
-  const activeLine = count > 0 ? owners[Math.min(count, owners.length) - 1] : -1
   const words = title.split(/(\*[^*]+\*)/).flatMap((part) => {
     const em = part.startsWith("*")
     return (em ? part.slice(1, -1) : part)
@@ -262,6 +243,9 @@ export function Hero033({
       .filter(Boolean)
       .map((word) => ({ word, em }))
   })
+  const caption = captions[line]
+  const talking = phase === "call" ? caption?.who : -1
+
   const palette = {
     ...(accent ? { "--vibeui-hero-033-accent": accent } : null),
     ...(ink ? { "--vibeui-hero-033-fg": ink } : null),
@@ -275,18 +259,14 @@ export function Hero033({
       <style href="vibeui-hero-033" precedence="medium">
         {STYLES}
       </style>
-      <section ref={rootRef} data-vibeui-block="hero-033" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette} onPointerMove={onRootMove} onPointerLeave={onRootLeave}>
-        <div data-part="aurora" aria-hidden="true">
-          <i data-part="blob" />
-          <i data-part="blob" />
-          <i data-part="blob" />
-        </div>
-        <div data-part="noise" aria-hidden="true" />
+      <section data-vibeui-block="hero-033" data-tone={tone === "auto" ? undefined : tone} data-phase={phase} className={className} style={palette}>
+        <i data-part="glow" aria-hidden="true" />
+        <i data-part="grid" aria-hidden="true" />
         <div data-part="shell">
           <div>
             {eyebrow ? (
               <p data-part="eyebrow">
-                <i aria-hidden="true" />
+                <span data-part="eyebrow-dot" aria-hidden="true" />
                 {eyebrow}
               </p>
             ) : null}
@@ -304,45 +284,98 @@ export function Hero033({
             {lede ? <p data-part="lede">{lede}</p> : null}
             <div data-part="actions">
               {primaryLabel ? (
-                <Button016 ref={primaryRef} data-part="primary" label={primaryLabel} href={primaryHref} external={false} arrow size="lg" tone="accent" accent={accent} onPointerMove={onPrimaryMove} onPointerLeave={onPrimaryLeave} />
+                <a data-part="primary" href={primaryHref}>
+                  {primaryLabel}
+                </a>
               ) : null}
               {secondaryLabel ? (
-                <Button016
-                  data-part="secondary"
-                  size="lg"
-                  label={secondaryLabel}
-                  href={secondaryHref}
-                  external={false}
-                  tone="neutral"
-                  accent={accent}
-                />
+                <a data-part="secondary" href={secondaryHref}>
+                  {secondaryLabel}
+                </a>
               ) : null}
             </div>
-            {trust ? <p data-part="trust">{trust}</p> : null}
+            {trust ? (
+              <p data-part="trust">
+                <span data-part="faces" aria-hidden="true">
+                  {people.map((person) => (
+                    <i key={person.name} style={{ ["--vibeui-hero-033-c" as string]: person.color } as CSSProperties} />
+                  ))}
+                </span>
+                {trust}
+              </p>
+            ) : null}
           </div>
-          <div ref={demoRef} data-part="demo" aria-label={demoLabel} onPointerMove={onDemoMove} onPointerLeave={onDemoLeave}>
-            <div data-part="pane">
-              <p data-part="ph">
-                <i aria-hidden="true" />
-                {transcriptTitle}
-              </p>
-              <ul data-part="lines">
-                {transcript.map((line, index) => (
-                  <li key={index} data-active={index === activeLine ? "true" : undefined}>
-                    <b>{line.who}:</b> {line.text}
-                  </li>
+          <div data-part="stage" role="img" aria-label={demoLabel}>
+            <div data-part="call">
+              <div data-part="bar">
+                <span data-part="dots" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span data-part="call-title">{phase === "results" ? endedLabel : callTitle}</span>
+                <span data-part="rec">
+                  <i aria-hidden="true" />
+                  {phase === "results" ? readyLabel : recLabel}
+                </span>
+              </div>
+              <div data-part="people">
+                {people.map((person, index) => (
+                  <div key={person.name} data-part="tile" data-talking={talking === index} style={{ ["--vibeui-hero-033-c" as string]: person.color } as CSSProperties}>
+                    <span data-part="avatar">{person.name.charAt(0)}</span>
+                    <span data-part="name">
+                      <span data-part="wave" aria-hidden="true">
+                        <i />
+                        <i />
+                        <i />
+                      </span>
+                      {person.name}
+                    </span>
+                  </div>
                 ))}
-              </ul>
+              </div>
+              {caption ? (
+                <p data-part="caption">
+                  <b>{people[caption.who]?.name}:</b> <span key={line}>{caption.text}</span>
+                </p>
+              ) : null}
             </div>
-            <div data-part="pane">
-              <p data-part="ph" data-ai="true">
-                <i aria-hidden="true" />
-                {summaryTitle}
-              </p>
-              <pre data-part="output" aria-live="polite">
-                {tokens.slice(0, count).map((token, index) => (token.startsWith("# ") ? <b key={index}>{token.slice(2)}</b> : <span key={index}>{token}</span>))}
-                <i aria-hidden="true" />
-              </pre>
+            <div data-part="results">
+              <div data-part="card" style={{ ["--vibeui-hero-033-i" as string]: 0 } as CSSProperties}>
+                <span data-part="app" data-app="task">
+                  J
+                </span>
+                <div data-part="body">
+                  <span data-part="card-head">
+                    <code>{taskKey}</code>
+                    <span data-part="status">{taskStatus}</span>
+                  </span>
+                  <p data-part="card-title">{taskTitle}</p>
+                  <p data-part="card-text">{taskMeta}</p>
+                </div>
+              </div>
+              <div data-part="card" style={{ ["--vibeui-hero-033-i" as string]: 1 } as CSSProperties}>
+                <span data-part="app" data-app="chat">
+                  T
+                </span>
+                <div data-part="body">
+                  <span data-part="card-head">{chatTitle}</span>
+                  <p data-part="bubble">{chatText}</p>
+                </div>
+              </div>
+              <div data-part="card" style={{ ["--vibeui-hero-033-i" as string]: 2 } as CSSProperties}>
+                <span data-part="app" data-app="doc">
+                  N
+                </span>
+                <div data-part="body">
+                  <p data-part="card-title">{docTitle}</p>
+                  <ul data-part="checks">
+                    {docItems.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>

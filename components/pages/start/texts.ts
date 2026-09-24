@@ -109,7 +109,7 @@ const RU: StartTexts = {
     pause: "Пауза",
     play: "Запустить",
     scenes: [
-      "Выбери дизайн. Отдай ИИ. Получи сайт.",
+      "Выбери дизайн. Отдай ИИ. Получи сайт",
       "Выберите блок в каталоге",
       "Нажмите «Копировать для ИИ»",
       "Вставьте ссылку в чат агента",
@@ -295,7 +295,7 @@ const EN: StartTexts = {
     pause: "Pause",
     play: "Play",
     scenes: [
-      "Pick a design. Hand it to AI. Ship the page.",
+      "Pick a design. Hand it to AI. Ship the page",
       "Pick a block in the catalog",
       "Press “Copy for AI”",
       "Paste the link into your agent's chat",

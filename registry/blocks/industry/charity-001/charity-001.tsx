@@ -85,12 +85,12 @@ container-type:inline-size;
 [data-vibeui-block="charity-001"] [data-part="card"]{position:relative;max-width:26rem;margin:0 auto;padding:2rem 1.8rem 1.8rem;background:var(--vibeui-charity-001-bg);border:1px solid var(--vibeui-charity-001-line);box-shadow:0 30px 60px -30px rgb(0 0 0 / .45),0 1px 0 var(--vibeui-charity-001-line);transform:rotate(-1.5deg);display:grid;gap:1rem}
 [data-vibeui-block="charity-001"] [data-part="card"]::before{content:"";position:absolute;top:-.7rem;right:2rem;width:5rem;height:1.4rem;transform:rotate(4deg);background:color-mix(in oklab,var(--vibeui-charity-001-second) 55%,transparent);opacity:.85}
 [data-vibeui-block="charity-001"] [data-part="card"]::after{content:"";position:absolute;inset:.5rem;border:1px dashed var(--vibeui-charity-001-line);pointer-events:none}
-[data-vibeui-block="charity-001"] [data-part="icon"]{width:5.5rem;height:5.5rem;color:var(--vibeui-charity-001-accent)}
-[data-vibeui-block="charity-001"] [data-part="icon"] path,[data-vibeui-block="charity-001"] [data-part="icon"] circle{stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-charity-001-draw 1.1s cubic-bezier(.2,.8,.2,1) forwards}
-[data-vibeui-block="charity-001"] [data-part="icon"] :nth-child(2){animation-delay:.15s}
-[data-vibeui-block="charity-001"] [data-part="icon"] :nth-child(3){animation-delay:.3s}
-[data-vibeui-block="charity-001"] [data-part="icon"] :nth-child(4){animation-delay:.45s}
-[data-vibeui-block="charity-001"] [data-part="icon"] :nth-child(5){animation-delay:.6s}
+[data-vibeui-block="charity-001"] [data-part="emblem"]{width:5.5rem;height:5.5rem;color:var(--vibeui-charity-001-accent)}
+[data-vibeui-block="charity-001"] [data-part="emblem"] path,[data-vibeui-block="charity-001"] [data-part="emblem"] circle{stroke-dasharray:1;stroke-dashoffset:1;animation:vibeui-charity-001-draw 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+[data-vibeui-block="charity-001"] [data-part="emblem"] :nth-child(2){animation-delay:.15s}
+[data-vibeui-block="charity-001"] [data-part="emblem"] :nth-child(3){animation-delay:.3s}
+[data-vibeui-block="charity-001"] [data-part="emblem"] :nth-child(4){animation-delay:.45s}
+[data-vibeui-block="charity-001"] [data-part="emblem"] :nth-child(5){animation-delay:.6s}
 [data-vibeui-block="charity-001"] [data-part="amount"]{margin:0;font-family:var(--vibeui-charity-001-display);font-weight:700;font-size:2.6rem;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;animation:vibeui-charity-001-in .5s cubic-bezier(.2,.8,.2,1) both}
 [data-vibeui-block="charity-001"] [data-part="amount"] small{font-family:var(--vibeui-charity-001-font);font-weight:500;font-size:.9rem;color:var(--vibeui-charity-001-muted);margin-left:.5rem;letter-spacing:0}
 [data-vibeui-block="charity-001"] [data-part="what"]{margin:0;font-family:var(--vibeui-charity-001-display);font-weight:500;font-size:1.5rem;line-height:1.15;animation:vibeui-charity-001-in .5s cubic-bezier(.2,.8,.2,1) .08s both}
@@ -99,7 +99,7 @@ container-type:inline-size;
 @keyframes vibeui-charity-001-draw{to{stroke-dashoffset:0}}
 @keyframes vibeui-charity-001-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @container (min-width: 56rem){[data-vibeui-block="charity-001"] [data-part="shell"]{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:4rem}[data-vibeui-block="charity-001"] [data-part="stage"]{padding:1.5rem}}
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="charity-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="charity-001"] [data-part="icon"] path,[data-vibeui-block="charity-001"] [data-part="icon"] circle{stroke-dashoffset:0}}`
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="charity-001"] *{animation:none!important;transition:none!important}[data-vibeui-block="charity-001"] [data-part="emblem"] path,[data-vibeui-block="charity-001"] [data-part="emblem"] circle{stroke-dashoffset:0}}`
 
 const DEFAULT_TIERS: Charity001Tier[] = [
   { amount: 500, title: "Продукты на неделю", text: "Хлеб, крупы, овощи, молоко и что-то к чаю — соцработник привозит пакет и остаётся на разговор.", icon: "bag", note: "и полчаса разговора" },
@@ -205,7 +205,7 @@ export function Charity001({
           <div data-part="stage" aria-live="polite">
             {tier ? (
               <article data-part="card" key={tier.amount}>
-                <svg data-part="icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg data-part="emblem" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   {ICONS[tier.icon].map((d, pathIndex) => (
                     <path key={pathIndex} d={d} pathLength={1} />
                   ))}

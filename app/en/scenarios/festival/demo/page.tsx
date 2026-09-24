@@ -65,7 +65,7 @@ export default function Page() {
       <div id="hero">
         <Hero023
           {...light}
-          title="Three days of the city*.*"
+          title="Three days of the city"
           meta="22–24 August · Ostrov Park · entry by ticket, plus free zones"
           tagsLabel="What's on"
           tags={[

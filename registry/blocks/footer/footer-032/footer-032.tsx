@@ -10,8 +10,25 @@ export type Footer032Column = {
   links: readonly Footer032Link[]
 }
 
+export type Footer032RecapSection = {
+  label: string
+  items: readonly string[]
+}
+
+export type Footer032Recap = {
+  /** «Сводка этой страницы». */
+  title: string
+  /** Мелкая строка справа: «сделано за 38 с». */
+  meta?: string
+  sections: readonly Footer032RecapSection[]
+}
+
 export type Footer032Props = {
   brand?: string
+  /** Карточка-итог над колонками в стиле продукта: разделы с пунктами печатаются при появлении. */
+  recap?: Footer032Recap
+  /** Гигантский контурный знак бренда внизу. */
+  ghost?: boolean
   caption?: string
   /** Строка статуса: «Все системы работают». Пусто — не показывать. */
   status?: string
@@ -36,7 +53,9 @@ export type Footer032Props = {
 // проявляются каскадом на scroll-driven animation-timeline: view() с
 // фолбэком «видно всегда»; ссылки подчёркиваются линией, которая
 // вырастает от левого края. На узком колонки в две, на широком — бренд
-// слева, колонки справа.
+// слева, колонки справа. С recap над всем этим лежит карточка-итог —
+// «сводка этой страницы»: разделы «Решения / Задачи / Риски», строки
+// печатаются слева направо, когда подвал входит в экран.
 const FONTS = "https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
 
 const STYLES = `
@@ -91,6 +110,18 @@ container-type:inline-size;
 @container (min-width: 44rem){[data-vibeui-block="footer-032"] [data-part="columns"]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @container (min-width: 60rem){[data-vibeui-block="footer-032"] [data-part="shell"]{grid-template-columns:minmax(0,1.2fr) minmax(0,2fr);align-items:start}[data-vibeui-block="footer-032"] [data-part="bottom"]{grid-column:1/-1}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-032"] *{animation:none!important;transition:none!important}}
+[data-vibeui-block="footer-032"] [data-part="recap"]{grid-column:1/-1;position:relative;display:grid;gap:1.2rem;margin:0 0 1rem;padding:1.4rem 1.5rem 1.5rem;border-radius:1.4rem;background:linear-gradient(160deg,color-mix(in oklab,var(--vibeui-footer-032-accent) 9%,transparent),transparent 55%),var(--vibeui-footer-032-glass);box-shadow:inset 0 0 0 1px var(--vibeui-footer-032-line),0 30px 60px -40px rgb(0 0 0 / .8)}
+[data-vibeui-block="footer-032"] [data-part="recap-head"]{display:flex;align-items:center;gap:.6rem;margin:0;font-family:var(--vibeui-footer-032-display);font-weight:700;font-size:1.05rem}
+[data-vibeui-block="footer-032"] [data-part="recap-dot"]{width:.5rem;height:.5rem;border-radius:50%;background:var(--vibeui-footer-032-accent);box-shadow:0 0 10px var(--vibeui-footer-032-accent)}
+[data-vibeui-block="footer-032"] [data-part="recap-meta"]{margin-left:auto;font-family:var(--vibeui-footer-032-mono);font-size:.7rem;font-weight:400;color:var(--vibeui-footer-032-muted)}
+[data-vibeui-block="footer-032"] [data-part="recap-grid"]{display:grid;gap:1.2rem 2rem}
+[data-vibeui-block="footer-032"] [data-part="recap-label"]{margin:0 0 .45rem;font-family:var(--vibeui-footer-032-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-032-accent)}
+[data-vibeui-block="footer-032"] [data-part="recap-items"]{display:grid;gap:.3rem;margin:0;padding:0;list-style:none}
+[data-vibeui-block="footer-032"] [data-part="recap-item"]{position:relative;padding-left:1rem;color:var(--vibeui-footer-032-fg)}
+[data-vibeui-block="footer-032"] [data-part="recap-item"]::before{content:"";position:absolute;left:0;top:.62em;width:.35rem;height:1px;background:var(--vibeui-footer-032-muted)}
+@container (min-width: 44rem){[data-vibeui-block="footer-032"] [data-part="recap-grid"]{grid-template-columns:repeat(var(--vibeui-footer-032-n),minmax(0,1fr))}}
+@keyframes vibeui-footer-032-type{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@supports (animation-timeline: view()){[data-vibeui-block="footer-032"] [data-part="recap-item"]{animation:vibeui-footer-032-type linear both;animation-timeline:view();animation-range:entry calc(20% + var(--vibeui-footer-032-i) * 6%) cover calc(35% + var(--vibeui-footer-032-i) * 5%)}}
 [data-vibeui-block="footer-032"] [data-part="column"] h3{margin:0 0 .8rem;font-family:var(--vibeui-footer-032-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vibeui-footer-032-muted)}
 [data-vibeui-block="footer-032"] [data-part="column"] ul{margin:0;padding:0;list-style:none;display:grid;gap:.5rem}
 [data-vibeui-block="footer-032"] [data-part="column"] a{position:relative;display:inline-block;color:var(--vibeui-footer-032-fg);text-decoration:none;transition:color .3s,transform .4s var(--vibeui-footer-032-ease)}
@@ -152,6 +183,8 @@ function Column({
 /** Подвал AI-сервиса со статусом систем и колонками ссылок. */
 export function Footer032({
   brand = "Сводка",
+  recap,
+  ghost = true,
   caption = "AI, который слушает созвоны и раскладывает решения по местам.",
   status = "Все системы работают",
   statusHref = "#status",
@@ -181,10 +214,35 @@ export function Footer032({
         {STYLES}
       </style>
       <footer data-vibeui-block="footer-032" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
-        <p data-part="ghost" data-text={brand} aria-hidden="true">
-          {brand}
-        </p>
+        {ghost ? (
+          <p data-part="ghost" data-text={brand} aria-hidden="true">
+            {brand}
+          </p>
+        ) : null}
         <div data-part="shell">
+          {recap ? (
+            <section data-part="recap" aria-label={recap.title}>
+              <p data-part="recap-head">
+                <i data-part="recap-dot" aria-hidden="true" />
+                {recap.title}
+                {recap.meta ? <span data-part="recap-meta">{recap.meta}</span> : null}
+              </p>
+              <div data-part="recap-grid" style={{ ["--vibeui-footer-032-n" as string]: recap.sections.length } as CSSProperties}>
+                {recap.sections.map((section, sectionIndex) => (
+                  <div key={section.label}>
+                    <p data-part="recap-label">{section.label}</p>
+                    <ul data-part="recap-items">
+                      {section.items.map((item, itemIndex) => (
+                        <li key={item} data-part="recap-item" style={{ ["--vibeui-footer-032-i" as string]: sectionIndex * 2 + itemIndex } as CSSProperties}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ) : null}
           <div>
             <div data-part="brand">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

@@ -25,20 +25,31 @@ import { Footer038 } from "@/registry/blocks/footer/footer-038/footer-038"
  * chart draws itself, the teachers tilt after the cursor.
  */
 export const metadata = {
-  title: "Slovo — an online school of English, Spanish and Italian",
+  title: "Dialogue — an online school of English, Spanish and Italian",
   description:
     "VibeUI «Online language school» scenario demo: a hero with a translating word and a live dialogue, a level test with an A1–C1 scale, a group schedule with the nearest start, a progress chart, teachers with accents, plans with a calculator and a comparison, «before → after» reviews, a trial lesson form, questions and a footer.",
 }
 
 const page: CSSProperties = {
   colorScheme: "light",
-  background: "#fbfaf7",
+  background: "#faf8f3",
   color: "#1b2a6b",
   fontFamily: '"Golos Text",ui-sans-serif,system-ui,sans-serif',
 }
 
 // Page theme: catalogue blocks are neutral by default, the scenario sets the colours.
-const notebook = { tone: "light", accent: "#ff6b4a", ink: "#1b2a6b", background: "#fbfaf7" } as const
+const notebook = { tone: "light", accent: "#e8613c", ink: "#1b2a6b", background: "#faf8f3" } as const
+
+// Telegram brand mark for the "Ask on Telegram" FAQ button.
+const TELEGRAM_ICON = (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+    <circle cx="12" cy="12" r="12" fill="#26A5E4" />
+    <path
+      d="M5.6 12.1l11.2-4.32c.52-.2.98.13.8.9L15.7 17.7c-.14.62-.51.77-1.03.48l-2.85-2.1-1.37 1.32c-.15.15-.28.28-.58.28l.2-2.94 5.38-4.86c.24-.2-.05-.32-.36-.12l-6.65 4.19-2.86-.9c-.62-.2-.63-.62.13-.94z"
+      fill="#fff"
+    />
+  </svg>
+)
 
 const TEACHERS = [
   { name: "Emma Whitfield", role: "English · native speaker", from: "Manchester", years: 9, note: "favourite word — serendipity", accent: "Mancunian", image: "/demo/language/teacher-01.webp", imageAlt: "Emma Whitfield, English teacher" },
@@ -63,7 +74,7 @@ export default function LanguageDemoEn() {
       </style>
       <Navbar039
         {...notebook}
-        brand="Slovo"
+        brand="Dialogue"
         caption="language school"
         links={[
           { label: "Level test", href: "#test" },
@@ -83,12 +94,13 @@ export default function LanguageDemoEn() {
         <Hero039
           {...notebook}
           eyebrow="Online school · since 2019"
-          titleStart="In three months you'll tell this story"
+          titleStart="Speak"
           words={[
-            { word: "in English", lang: "EN" },
-            { word: "in Spanish", lang: "ES" },
-            { word: "in Italian", lang: "IT" },
+            { word: "English", lang: "EN" },
+            { word: "Spanish", lang: "ES" },
+            { word: "Italian", lang: "IT" },
           ]}
+          titleEnd="in three months"
           lede="English, Spanish and Italian in groups of up to six. Conversation from the first lesson, native-speaker teachers once a week, a notebook with homework — and not a single table of irregular verbs to memorise."
           primaryLabel="Take the level test"
           secondaryLabel="Free trial lesson"
@@ -266,7 +278,7 @@ export default function LanguageDemoEn() {
           ]}
           actionLabel="Book a trial lesson"
           compareTitle="Us, an app or a tutor?"
-          compareColumns={["Slovo", "An app", "A tutor"]}
+          compareColumns={["Dialogue", "An app", "A tutor"]}
           compareRows={[
             { label: "Live conversation in every lesson", values: ["yes", "no", "yes"] },
             { label: "A native speaker", values: ["yes", "no", "part"] },
@@ -326,11 +338,11 @@ export default function LanguageDemoEn() {
         />
       </div>
       <div id="faq">
-        <Faq023 {...notebook} eyebrow="Questions" title="What people ask before the first lesson" lede="Briefly about what worries people most. The rest — at the trial lesson." items={FAQ} contactLabel="Ask on Telegram" contactHref="#trial" />
+        <Faq023 {...notebook} eyebrow="Questions" title="What people ask before the first lesson" lede="Briefly about what worries people most. The rest — at the trial lesson." items={FAQ} contactLabel="Ask on Telegram" contactIcon={TELEGRAM_ICON} contactHref="#trial" />
       </div>
       <Footer038
         {...notebook}
-        brand="Slovo"
+        brand="Dialogue"
         caption="an online language school"
         columns={[
           { title: "languages", links: [{ label: "English", href: "#schedule" }, { label: "Spanish", href: "#schedule" }, { label: "Italian", href: "#schedule" }, { label: "Level test", href: "#test" }] },
@@ -342,8 +354,7 @@ export default function LanguageDemoEn() {
           { label: "Privacy", href: "#privacy" },
           { label: "Licence No. L035-01271-78", href: "#license" },
         ]}
-        copyright="© 2026 Slovo, Saint Petersburg"
-        bigWord="Slovo"
+        copyright="© 2026 Dialogue, Saint Petersburg"
         navLabel="Site sections"
       />
     </div>

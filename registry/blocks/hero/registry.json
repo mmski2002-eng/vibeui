@@ -4274,7 +4274,7 @@
         ],
         "ai": {
           "export": "Hero023",
-          "usage": "<Hero023\n  title=\"Три дня города*.*\"\n  meta=\"22–24 августа · парк «Остров»\"\n  tags={[\n    { label: \"#Музыка\", color: \"#ffe2d6\", emoji: \"🎸\", href: \"#program\" },\n    { label: \"#Ночь\", color: \"#122378\", ink: \"#fff\", emoji: \"🌙\", href: \"#program\" },\n  ]}\n/>",
+          "usage": "<Hero023\n  title=\"Три дня города\"\n  meta=\"22–24 августа · парк «Остров»\"\n  tags={[\n    { label: \"#Музыка\", color: \"#ffe2d6\", emoji: \"🎸\", href: \"#program\" },\n    { label: \"#Ночь\", color: \"#122378\", ink: \"#fff\", emoji: \"🌙\", href: \"#program\" },\n  ]}\n/>",
           "summary": "Самодостаточный первый экран для фестиваля, медиа или сообщества: гигантский заголовок и цветные капсулы разделов со стикерами. Капсулы — массив пропсом с цветом на каждую.",
           "preserve": [
             "импорты badge-034 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
@@ -4308,7 +4308,7 @@
             "prop": "title",
             "label": "Заголовок",
             "type": "text",
-            "default": "Три дня города*.*",
+            "default": "Три дня города",
             "maxLength": 40
           },
           {
@@ -4353,12 +4353,12 @@
                 "Pass ink=\"#fff\" on dark pills, otherwise the text is black.",
                 "Emoji render in the system font: stickers differ across OSes, which is expected."
               ],
-              "usage": "<Hero023\n  title=\"Three days of the city*.*\"\n  meta=\"22–24 August · Island Park\"\n  tags={[\n    { label: \"#Music\", color: \"#ffe2d6\", emoji: \"🎸\", href: \"#program\" },\n    { label: \"#Night\", color: \"#122378\", ink: \"#fff\", emoji: \"🌙\", href: \"#program\" },\n  ]}\n/>"
+              "usage": "<Hero023\n  title=\"Three days of the city\"\n  meta=\"22–24 August · Island Park\"\n  tags={[\n    { label: \"#Music\", color: \"#ffe2d6\", emoji: \"🎸\", href: \"#program\" },\n    { label: \"#Night\", color: \"#122378\", ink: \"#fff\", emoji: \"🌙\", href: \"#program\" },\n  ]}\n/>"
             },
             "controls": {
               "title": {
                 "label": "Title",
-                "default": "Three days of the city*.*"
+                "default": "Three days of the city"
               },
               "meta": {
                 "label": "Caption",
@@ -4377,7 +4377,7 @@
             "preview": {
               "width": "natural",
               "props": {
-                "title": "Three days of the city*.*",
+                "title": "Three days of the city",
                 "meta": "22–24 August · Island Park · ticketed and free zones",
                 "tagsLabel": "What’s on",
                 "tags": [
@@ -6133,15 +6133,13 @@
     {
       "name": "hero-033",
       "type": "registry:block",
-      "title": "Хиро AI-сервиса: ассистент печатает сводку по расшифровке",
-      "description": "Первый экран SaaS на аврора-пятнах: заголовок с градиентным словом, две кнопки и строка доверия слева; справа стеклянное окно — расшифровка созвона с ролями, а в соседней панели ассистент печатает сводку по токенам с курсором и зацикливается. Решения, задачи, риски выделены заголовками.",
+      "title": "Хиро AI для созвонов: встреча заканчивается, а результаты сами разлетаются по сервисам",
+      "description": "Первый экран AI-продукта для встреч, который иллюстрирует свой заголовок. Справа сцена по кругу: идёт созвон на троих — у говорящего пульсирует кольцо и волна голоса, снизу бегут субтитры, в углу «Сводка записывает». Созвон завершается — окно сжимается в плашку «Созвон завершён · сводка готова за 38 с», и одна за другой выезжают готовые результаты: задача в трекере с исполнителем и сроком, сообщение со сводкой в мессенджере, страница решений в базе знаний. Слева заголовок в три строки со словами-градиентом, кнопка и строка доверия с аватарами.",
       "categories": [
         "hero"
       ],
       "dependencies": [],
-      "registryDependencies": [
-        "button-016"
-      ],
+      "registryDependencies": [],
       "files": [
         {
           "path": "hero-033/hero-033.tsx",
@@ -6161,9 +6159,14 @@
           "aurora",
           "glass",
           "meeting",
-          "transcript",
           "summary",
-          "composite"
+          "video call",
+          "meeting",
+          "captions",
+          "results",
+          "jira",
+          "telegram",
+          "notion"
         ],
         "preview": {
           "props": {},
@@ -6171,18 +6174,18 @@
         },
         "ai": {
           "export": "Hero033",
-          "usage": "<Hero033\n  title=\"Созвон закончился — *решения уже в трекере*\"\n  transcript={[{ who: \"Лена\", text: \"Релиз переносим на четверг.\" }]}\n  summary={[\"# Решения\", \"Релиз перенесён на четверг.\"]}\n/>",
+          "usage": "<Hero033\n  title=\"Созвон закончился — *решения уже в трекере*\"\n  people={[{ name: \"Лена\", color: \"#8b7cf6\" }, { name: \"Марк\", color: \"#22c3a6\" }]}\n  captions={[{ who: 0, text: \"Релиз переносим на четверг.\" }, { who: 1, text: \"Беру миграцию базы.\" }]}\n  taskTitle=\"Миграция базы\"\n  taskMeta=\"Марк · до среды\"\n/>",
           "summary": "Хиро для AI-продукта: продукт показывает себя сам — сводка печатается по токенам рядом с расшифровкой.",
           "preserve": [
-            "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
-            "печать идёт по токенам из summary с useMemo и setTimeout, курсор мигает, после паузы цикл начинается заново",
-            "звёздочки в title (*слово*) рендерятся градиентным span, остальное — обычный текст",
-            "аврора — три размытых круга с медленным float, при reduce-motion стоят на месте"
+            "сцена — фазы call → results по setTimeout: субтитры по очереди, потом результаты, пауза HOLD_MS и заново",
+            "окно созвона сжимается сменой height до строки-плашки, карточки результатов выезжают с transition-delay по индексу",
+            "говорящий — data-talking на плитке: кольцо вокруг аватара и волна из трёх полосок",
+            "звёздочки в title (*слово*) — градиентный span; при reduced-motion сразу показаны результаты"
           ],
           "adapt": [
             "eyebrow, title (со *звёздочками* для градиента), lede, trust",
             "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
-            "transcriptTitle, transcript: who, text; summaryTitle, summary (строки, # — заголовок)",
+            "callTitle, recLabel, people: name, color; captions: who (индекс), text; endedLabel, readyLabel; taskKey, taskTitle, taskMeta, taskStatus, chatTitle, chatText, docTitle, docItems",
             "tone — тема",
             "accent — акцент",
             "ink — текст",
@@ -6242,26 +6245,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "AI service hero: the assistant types a recap from a transcript",
-            "description": "SaaS first screen on aurora blobs: a headline with a gradient word, two buttons and a trust line on the left; on the right a glass window — a call transcript with roles, and in the neighbouring panel the assistant types a recap token by token with a cursor and loops. Decisions, tasks and risks are marked with headings.",
+            "title": "AI meetings hero: the call ends and the results fly out to the services by themselves",
+            "description": "A first screen for an AI meeting product that illustrates its own headline. On the right a looping scene: a call of three — the speaker gets a pulsing ring and a voice wave, captions run below, «Recap is recording» in the corner. The call ends — the window shrinks into a «Call ended · summary ready in 38 s» strip, and the finished results slide in one by one: a tracker task with an assignee and a deadline, a summary message in the messenger, a decisions page in the knowledge base. On the left a three-line headline with gradient words, a button and a trust line with avatars.",
             "ai": {
               "summary": "Hero for an AI product: the product shows itself — a recap types out token by token next to the transcript.",
               "preserve": [
-                "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "typing walks the summary tokens with useMemo and setTimeout, the cursor blinks, after a pause the loop restarts",
-                "asterisks in title (*word*) render as a gradient span, the rest is plain text",
-                "the aurora is three blurred circles with a slow float, still under reduce-motion"
+                "the scene runs call → results phases on setTimeout: captions one by one, then the results, a HOLD_MS pause and again",
+                "the call window shrinks by changing height to a strip, the result cards slide in with a transition-delay by index",
+                "the speaker is data-talking on the tile: a ring around the avatar and a three-bar wave",
+                "asterisks in title (*word*) become a gradient span; under reduced motion the results show at once"
               ],
               "adapt": [
                 "eyebrow, title (with *asterisks* for the gradient), lede, trust",
                 "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
-                "transcriptTitle, transcript: who, text; summaryTitle, summary (lines, # is a heading)",
+                "callTitle, recLabel, people: name, color; captions: who (index), text; endedLabel, readyLabel; taskKey, taskTitle, taskMeta, taskStatus, chatTitle, chatText, docTitle, docItems",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero033\n  title=\"The call ended — *decisions are already in the tracker*\"\n  transcript={[{ who: \"Lena\", text: \"We move the release to Thursday.\" }]}\n  summary={[\"# Decisions\", \"Release moved to Thursday.\"]}\n/>"
+              "usage": "<Hero033\n  title=\"Call over — *decisions in the tracker*\"\n  people={[{ name: \"Lena\", color: \"#8b7cf6\" }, { name: \"Mark\", color: \"#22c3a6\" }]}\n  captions={[{ who: 0, text: \"Release moves to Thursday.\" }, { who: 1, text: \"I will take the migration.\" }]}\n  taskTitle=\"Database migration\"\n  taskMeta=\"Mark · by Wednesday\"\n/>"
             },
             "controls": {
               "title": {
@@ -6323,12 +6326,10 @@
                   "Provider maintenance window Wednesday night."
                 ]
               }
-            },
-            "docs": "A composite block: imports button-016 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone."
+            }
           }
         }
-      },
-      "docs": "Составной блок: импортирует button-016 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+      }
     },
     {
       "name": "hero-034",
@@ -7405,7 +7406,7 @@
       "name": "hero-039",
       "type": "registry:block",
       "title": "Хиро языковой школы: слово-перелистывание и живой диалог урока",
-      "description": "Первый экран на тетрадной клетке: в заголовке одно слово «переводится» по кругу — по-английски → по-испански → по-итальянски — перелистываясь вокруг оси X, под ним чернильная черта и чип языка. Справа тетрадный лист с полями и живым диалогом: точки «печатает», реплика набирается по буквам, под репликой преподавателя проявляется перевод, стикер с домашкой. Позади бледные рукописные Hello / Hola / Ciao.",
+      "description": "Первый экран на тетрадной клетке: в заголовке одно слово «переводится» по кругу — по-английски → по-испански → по-итальянски — мягким переходом со сдвигом и лёгким блюром, под ним чернильная черта, которая перерисовывается при каждой смене, и чип языка. Справа тетрадный лист с полями и живым диалогом: точки «печатает», реплика набирается по буквам, под репликой преподавателя проявляется перевод, стикер с домашкой. Позади бледные рукописные Hello / Hola / Ciao.",
       "categories": [
         "hero"
       ],
@@ -7441,11 +7442,11 @@
         },
         "ai": {
           "export": "Hero039",
-          "usage": "<Hero039\n  titleStart=\"Через три месяца вы расскажете это\"\n  words={[{ word: \"по-английски\", lang: \"EN\" }, { word: \"по-испански\", lang: \"ES\" }]}\n  messages={[{ who: \"teacher\", text: \"How was your weekend?\", note: \"Как прошли выходные?\" }, { who: \"student\", text: \"Great, I went hiking.\" }]}\n/>",
+          "usage": "<Hero039\n  titleStart=\"Заговорите\"\n  titleEnd=\"за три месяца\"\n  words={[{ word: \"по-английски\", lang: \"EN\" }, { word: \"по-испански\", lang: \"ES\" }]}\n  messages={[{ who: \"teacher\", text: \"How was your weekend?\", note: \"Как прошли выходные?\" }, { who: \"student\", text: \"Great, I went hiking.\" }]}\n/>",
           "summary": "Хиро для языковой школы или курсов: слово в заголовке перелистывается на другой язык, рядом печатается диалог урока.",
           "preserve": [
             "импорты button-016 из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
-            "слова лежат в одной grid-ячейке (grid-area 1/1), активное — data-state=in с keyframes rotateX, предыдущее — data-state=out; ширина резервируется по самому длинному",
+            "слова лежат в одной grid-ячейке (grid-area 1/1), активное — data-state=in с keyframes translateY+blur, предыдущее — data-state=out; у каждого слова своя чернильная подчёркивающая svg, перерисовывается при каждом входе",
             "печать идёт из состояния { index, chars }: chars −1 — точки, потом по букве через setTimeout, после последней реплики пауза и цикл заново",
             "лист диалога — background-image из линовки и коралловой вертикали полей, перфорация — ::before, поворот 1deg"
           ],
@@ -7464,7 +7465,7 @@
             "prop": "titleStart",
             "label": "Начало заголовка",
             "type": "text",
-            "default": "Через три месяца вы расскажете это",
+            "default": "Заговорите",
             "maxLength": 60
           },
           {
@@ -7520,12 +7521,12 @@
         "i18n": {
           "en": {
             "title": "Language school hero: a flipping word and a live lesson dialogue",
-            "description": "A first screen on notebook grid paper: one word in the headline “translates” in a loop — in English → in Spanish → in Italian — flipping around the X axis, with an ink stroke and a language chip. On the right a ruled sheet with a margin and a live dialogue: typing dots, a line typed letter by letter, a translation appearing under the teacher's line, a homework sticker. Faint handwritten Hello / Hola / Ciao behind.",
+            "description": "A first screen on notebook grid paper: one word in the headline “translates” in a loop — English → Spanish → Italian — with a soft slide-and-blur transition, an ink stroke that redraws on every change, and a language chip. On the right a ruled sheet with a margin and a live dialogue: typing dots, a line typed letter by letter, a translation appearing under the teacher's line, a homework sticker. Faint handwritten Hello / Hola / Ciao behind.",
             "ai": {
               "summary": "Hero for a language school or courses: a headline word flips into another language while a lesson dialogue types itself next to it.",
               "preserve": [
                 "the button-016 imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
-                "words share one grid cell (grid-area 1/1), the active one is data-state=in with rotateX keyframes, the previous one data-state=out; width is reserved by the longest",
+                "words share one grid cell (grid-area 1/1), the active one is data-state=in with translateY+blur keyframes, the previous one data-state=out; each word has its own ink underline svg that redraws on every entrance",
                 "typing runs from { index, chars } state: chars −1 shows dots, then one letter per setTimeout, after the last line a pause and the loop restarts",
                 "the dialogue sheet is a background-image of ruled lines plus a coral margin, the perforation is a ::before, rotated 1deg"
               ],
@@ -7538,12 +7539,12 @@
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero039\n  titleStart=\"In three months you will tell this\"\n  words={[{ word: \"in English\", lang: \"EN\" }, { word: \"in Spanish\", lang: \"ES\" }]}\n  messages={[{ who: \"teacher\", text: \"How was your weekend?\", note: \"¿Qué tal el fin de semana?\" }, { who: \"student\", text: \"Great, I went hiking.\" }]}\n/>"
+              "usage": "<Hero039\n  titleStart=\"Speak\"\n  titleEnd=\"in three months\"\n  words={[{ word: \"English\", lang: \"EN\" }, { word: \"Spanish\", lang: \"ES\" }]}\n  messages={[{ who: \"teacher\", text: \"How was your weekend?\", note: \"¿Qué tal el fin de semana?\" }, { who: \"student\", text: \"Great, I went hiking.\" }]}\n/>"
             },
             "controls": {
               "titleStart": {
                 "label": "Title start",
-                "default": "In three months you will tell this"
+                "default": "Speak"
               },
               "trust": {
                 "label": "Trust line",
@@ -7568,21 +7569,22 @@
             "preview": {
               "props": {
                 "eyebrow": "Online school · since 2019",
-                "titleStart": "In three months you will tell this",
+                "titleStart": "Speak",
                 "words": [
                   {
-                    "word": "in English",
+                    "word": "English",
                     "lang": "EN"
                   },
                   {
-                    "word": "in Spanish",
+                    "word": "Spanish",
                     "lang": "ES"
                   },
                   {
-                    "word": "in Italian",
+                    "word": "Italian",
                     "lang": "IT"
                   }
                 ],
+                "titleEnd": "in three months",
                 "lede": "English, Spanish and Italian in groups of up to six. Speaking from the first lesson, native teachers once a week, a notebook with homework — and not a single table of irregular verbs to memorise.",
                 "primaryLabel": "Take the level test",
                 "secondaryLabel": "Free trial lesson",

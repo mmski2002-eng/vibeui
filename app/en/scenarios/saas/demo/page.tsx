@@ -39,14 +39,12 @@ const page: CSSProperties = {
 // Page theme: catalogue blocks are neutral by default, the scenario sets the colours.
 const aurora = { tone: "dark", accent: "#5ee7ff", ink: "#eef2ff", background: "#0a0f1e" } as const
 
-const TRANSCRIPT = [
-  { who: "Lena", text: "Let's move the release to Thursday, the tests won't make it." },
-  { who: "Mark", text: "OK, but then I'm taking the database migration by Wednesday." },
-  { who: "Olya", text: "I need the final icons from design by Tuesday, otherwise everything slips." },
-  { who: "Lena", text: "Risk: the payment provider has a maintenance window on Wednesday night." },
+const CAPTIONS = [
+  { who: 0, text: "Let's move the release to Thursday, the tests won't make it." },
+  { who: 1, text: "Fine, then I'll take the database migration by Wednesday." },
+  { who: 2, text: "I need the final icons by Tuesday." },
+  { who: 0, text: "And a risk: the provider has a maintenance window on Wednesday night." },
 ]
-
-const SUMMARY = ["# Decisions", "Release moved to Thursday.", "# Tasks", "Mark — database migration by Wednesday.", "Design — icons to Olya by Tuesday.", "# Risks", "Provider maintenance window on Wednesday night."]
 
 const SAMPLE = `Lena: Let's move the release to Thursday, the tests won't make it.
 Mark: OK, but then I'm taking the database migration by Wednesday.
@@ -89,6 +87,8 @@ export default function SaasDemoEn() {
         menuLabel="Menu"
         menuOpenLabel="Open menu"
         menuCloseLabel="Close menu"
+        liveLabel="Call in progress"
+        overlay
       />
       <div id="top">
         <Hero033
@@ -99,11 +99,24 @@ export default function SaasDemoEn() {
           primaryLabel="Start for free"
           secondaryLabel="Try it in the sandbox"
           trust="4,200 teams have already stopped writing minutes"
-          transcriptTitle="transcript · 42:10"
-          transcript={TRANSCRIPT}
-          summaryTitle="summary"
-          summary={SUMMARY}
-          demoLabel="Demo: transcript and summary"
+          callTitle="Release stand-up"
+          recLabel="Recap is recording"
+          people={[
+            { name: "Lena", color: "#8b7cf6" },
+            { name: "Mark", color: "#22c3a6" },
+            { name: "Olya", color: "#f59e5b" },
+          ]}
+          captions={CAPTIONS}
+          endedLabel="Call ended · 42:10"
+          readyLabel="summary ready in 38 s"
+          taskStatus="in progress"
+          taskTitle="Database migration"
+          taskMeta="Mark · by Wednesday"
+          chatTitle="#release · Recap"
+          chatText="Release moves to Thursday. Tasks: database migration — Mark, icons — design. Risk: provider window on Wednesday."
+          docTitle="Decisions · release stand-up"
+          docItems={["Release — on Thursday", "Deploy in the morning, after the provider window"]}
+          demoLabel="Demo: a call and its results"
         />
       </div>
       <div id="how">
@@ -149,6 +162,7 @@ export default function SaasDemoEn() {
           title="Lives where the team already lives"
           lede="Connects to what you already have: calls, tracker, knowledge base, messenger. No «go to our app»."
           core="Recap"
+          coreCaption="listens and files"
           inner={[{ name: "Zoom", mark: "Z" }, { name: "Google Meet", mark: "M" }, { name: "Webex", mark: "W" }, { name: "Teams", mark: "T" }]}
           facts={["Calls: the bot joins as a participant or takes a recording", "Trackers: tasks are created with an assignee and a deadline", "Messengers: the summary arrives a minute after the meeting", "Knowledge bases: decisions accumulate in one place"]}
           spaceLabel="{core}: integrations"
@@ -196,6 +210,16 @@ export default function SaasDemoEn() {
       <Footer032
         {...aurora}
         brand="Recap"
+        ghost={false}
+        recap={{
+          title: "A recap of this page",
+          meta: "done in 38 s",
+          sections: [
+            { label: "Decisions", items: ["No more writing minutes", "Next call — with Recap"] },
+            { label: "Tasks", items: ["Leave your email — you, today", "Connect the calendar — 2 minutes"] },
+            { label: "Risks", items: ["Keep taking notes by hand"] },
+          ],
+        }}
         caption="The AI that listens to calls and files the decisions where they belong."
         status="All systems operational"
         columns={[

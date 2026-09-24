@@ -71,7 +71,7 @@ const buildTexts = ({
   ({
   ru: {
     eyebrow: "Тарифы",
-    title: "Сайт за вечер.\nДизайн — ваш.",
+    title: "Сайт за вечер.\nДизайн — ваш",
     lede: `${number(ITEMS)} блоков, компонентов и анимаций. Выбираете, копируете промпт, ИИ-агент ставит в проект как есть: анимации, типографика, отступы. Ноль зависимостей.`,
     heroPrimary: "Начать бесплатно",
     heroPrimarySigned: "Открыть каталог",
@@ -86,7 +86,7 @@ const buildTexts = ({
       "Без автосписаний",
     ],
     plansEyebrow: "Тарифы",
-    plansTitle: "Бесплатно — чтобы попробовать. PRO — чтобы собирать.",
+    plansTitle: "Бесплатно — чтобы попробовать. PRO — чтобы собирать",
     plans: {
       switchLabel: "Период оплаты",
       month: "Помесячно",
@@ -248,7 +248,7 @@ const buildTexts = ({
     ],
     contactText: "Не нашли свой вопрос?",
     contactLabel: "Написать в поддержку",
-    ctaTitle: "Начните бесплатно. PRO — когда лимит станет тесен.",
+    ctaTitle: "Начните бесплатно. PRO — когда лимит станет тесен",
     ctaText: `${FREE_MONTHLY_LIMIT} компонентов в месяц без карты. Потом — ${number(MONTHLY)} ₽ за месяц, без автосписаний.`,
     ctaButton: "Создать аккаунт",
     ctaButtonSigned: "Открыть каталог",
@@ -259,7 +259,7 @@ const buildTexts = ({
   },
   en: {
     eyebrow: "Pricing",
-    title: "A site in an evening.\nThe design is yours.",
+    title: "A site in an evening.\nThe design is yours",
     lede: `${number(ITEMS)} blocks, components and animations. Pick, copy the prompt, and the AI agent installs it as is: animations, typography, spacing. Zero dependencies.`,
     heroPrimary: "Start for free",
     heroPrimarySigned: "Open the catalog",
@@ -274,7 +274,7 @@ const buildTexts = ({
       "No auto-charges",
     ],
     plansEyebrow: "Plans",
-    plansTitle: "Free to try. PRO to build.",
+    plansTitle: "Free to try. PRO to build",
     plans: {
       switchLabel: "Billing period",
       month: "Monthly",
@@ -436,7 +436,7 @@ const buildTexts = ({
     ],
     contactText: "Did not find your question?",
     contactLabel: "Write to support",
-    ctaTitle: "Start for free. Go PRO when the limit gets tight.",
+    ctaTitle: "Start for free. Go PRO when the limit gets tight",
     ctaText: `${FREE_MONTHLY_LIMIT} components a month with no card. Then ${number(MONTHLY)} ₽ for a month, no auto-charges.`,
     ctaButton: "Create an account",
     ctaButtonSigned: "Open the catalog",
