@@ -182,7 +182,7 @@ function Column({
 
 /** Подвал AI-сервиса со статусом систем и колонками ссылок. */
 export function Footer032({
-  brand = "Сводка",
+  brand = "Tally",
   recap,
   ghost = true,
   caption = "AI, который слушает созвоны и раскладывает решения по местам.",
@@ -191,7 +191,7 @@ export function Footer032({
   columns = DEFAULT_COLUMNS,
   socials = [{ label: "Telegram", href: "#" }, { label: "X", href: "#" }, { label: "GitHub", href: "#" }],
   legal = [{ label: "Конфиденциальность", href: "#privacy" }, { label: "Условия", href: "#terms" }, { label: "Обработка данных", href: "#dpa" }],
-  copyright = "© 2026 Сводка",
+  copyright = "© 2026 Tally",
   navLabel = "Разделы сайта",
   tone = "auto",
   accent,

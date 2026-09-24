@@ -24,7 +24,7 @@ import { Footer032 } from "@/registry/blocks/footer/footer-032/footer-032"
  * pipeline and pricing are muted, the call to action is bright again.
  */
 export const metadata = {
-  title: "Recap — the AI that turns calls into decisions",
+  title: "Tally — the AI that turns calls into decisions",
   description:
     "VibeUI «AI tool / SaaS» scenario demo: a hero with a typing summary, a «how it works» pipeline, a sandbox, integration orbits, per-seat pricing, questions about data and a glass call to action.",
 }
@@ -74,7 +74,7 @@ export default function SaasDemoEn() {
       <div data-demo-grain="" aria-hidden="true" />
       <Navbar033
         {...aurora}
-        brand="Recap"
+        brand="Tally"
         links={[
           { label: "How it works", href: "#how" },
           { label: "Try it", href: "#sandbox" },
@@ -95,28 +95,30 @@ export default function SaasDemoEn() {
           {...aurora}
           eyebrow="AI for meetings · no minutes"
           title="Call over — *decisions in the tracker*"
-          lede="Recap listens to the meeting, picks out decisions, tasks and risks and files them into Jira, Notion and Telegram. While you pour your coffee."
+          lede="Tally listens to the meeting, picks out decisions, tasks and risks and files them into Jira, Notion and Telegram. While you pour your coffee."
           primaryLabel="Start for free"
           secondaryLabel="Try it in the sandbox"
           trust="4,200 teams have already stopped writing minutes"
           callTitle="Release stand-up"
-          recLabel="Recap is recording"
+          recLabel="Tally is recording"
+          botName="Tally"
+          captionsTitle="Captions"
+          leaveLabel="Leave"
           people={[
-            { name: "Lena", color: "#8b7cf6" },
-            { name: "Mark", color: "#22c3a6" },
-            { name: "Olya", color: "#f59e5b" },
+            { name: "Lena", photo: "/demo/people/call-lena.webp", video: "/demo/people/call-lena.mp4", color: "#b8a6ff" },
+            { name: "Mark", photo: "/demo/people/call-mark.webp", video: "/demo/people/call-mark.mp4", color: "#5fe0c4" },
+            { name: "Olya", photo: "/demo/people/call-olya.webp", video: "/demo/people/call-olya.mp4", color: "#ffb37a" },
           ]}
           captions={CAPTIONS}
           endedLabel="Call ended · 42:10"
           readyLabel="summary ready in 38 s"
-          taskStatus="in progress"
-          taskTitle="Database migration"
-          taskMeta="Mark · by Wednesday"
-          chatTitle="#release · Recap"
-          chatText="Release moves to Thursday. Tasks: database migration — Mark, icons — design. Risk: provider window on Wednesday."
-          docTitle="Decisions · release stand-up"
-          docItems={["Release — on Thursday", "Deploy in the morning, after the provider window"]}
-          demoLabel="Demo: a call and its results"
+          nowLabel="now"
+          notices={[
+            { app: "chat", appName: "Telegram", title: "Tally · #release", text: "Release moves to Thursday. Tasks: database migration — Mark, icons — design." },
+            { app: "task", appName: "Jira", title: "REL-248 assigned to Mark", text: "Database migration · due Wednesday" },
+            { app: "doc", appName: "Notion", title: "Decisions · release stand-up", text: "2 decisions and 1 risk added to the base" },
+          ]}
+          demoLabel="Demo: a call on a monitor and notifications with its results"
         />
       </div>
       <div id="how">
@@ -161,9 +163,9 @@ export default function SaasDemoEn() {
           eyebrow="Integrations"
           title="Lives where the team already lives"
           lede="Connects to what you already have: calls, tracker, knowledge base, messenger. No «go to our app»."
-          core="Recap"
+          core="Tally"
           coreCaption="listens and files"
-          inner={[{ name: "Zoom", mark: "Z" }, { name: "Google Meet", mark: "M" }, { name: "Webex", mark: "W" }, { name: "Teams", mark: "T" }]}
+          inner={[{ name: "Zoom", brand: "zoom" }, { name: "Google Meet", brand: "googlemeet" }, { name: "VK Calls", brand: "vk" }, { name: "Webex", brand: "webex" }]}
           facts={["Calls: the bot joins as a participant or takes a recording", "Trackers: tasks are created with an assignee and a deadline", "Messengers: the summary arrives a minute after the meeting", "Knowledge bases: decisions accumulate in one place"]}
           spaceLabel="{core}: integrations"
         />
@@ -209,13 +211,13 @@ export default function SaasDemoEn() {
       </div>
       <Footer032
         {...aurora}
-        brand="Recap"
+        brand="Tally"
         ghost={false}
         recap={{
           title: "A recap of this page",
           meta: "done in 38 s",
           sections: [
-            { label: "Decisions", items: ["No more writing minutes", "Next call — with Recap"] },
+            { label: "Decisions", items: ["No more writing minutes", "Next call — with Tally"] },
             { label: "Tasks", items: ["Leave your email — you, today", "Connect the calendar — 2 minutes"] },
             { label: "Risks", items: ["Keep taking notes by hand"] },
           ],
@@ -228,7 +230,7 @@ export default function SaasDemoEn() {
           { title: "Help", links: [{ label: "Documentation", href: "#docs" }, { label: "API", href: "#api" }, { label: "Security", href: "#security" }, { label: "Support", href: "#support" }] },
         ]}
         legal={[{ label: "Privacy", href: "#privacy" }, { label: "Terms", href: "#terms" }, { label: "Data processing", href: "#dpa" }]}
-        copyright="© 2026 Recap"
+        copyright="© 2026 Tally"
         navLabel="Site sections"
       />
     </div>

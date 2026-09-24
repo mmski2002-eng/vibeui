@@ -6133,8 +6133,8 @@
     {
       "name": "hero-033",
       "type": "registry:block",
-      "title": "Хиро AI для созвонов: встреча заканчивается, а результаты сами разлетаются по сервисам",
-      "description": "Первый экран AI-продукта для встреч, который иллюстрирует свой заголовок. Справа сцена по кругу: идёт созвон на троих — у говорящего пульсирует кольцо и волна голоса, снизу бегут субтитры, в углу «Сводка записывает». Созвон завершается — окно сжимается в плашку «Созвон завершён · сводка готова за 38 с», и одна за другой выезжают готовые результаты: задача в трекере с исполнителем и сроком, сообщение со сводкой в мессенджере, страница решений в базе знаний. Слева заголовок в три строки со словами-градиентом, кнопка и строка доверия с аватарами.",
+      "title": "Хиро AI для созвонов: монитор с приложением встречи, после «Завершить» приходят уведомления с результатами",
+      "description": "Первый экран AI-продукта для встреч, который иллюстрирует свой заголовок. Справа монитор с рамкой, бликом и подставкой, на экране приложение созвона: видео участников в интерьере, плитка бота с эквалайзером, рамка у говорящего, живые субтитры с временем реплик и панель управления. Реплики кончаются — курсор едет к красной кнопке «Завершить» и нажимает её, приложение гаснет, открывается рабочий стол с плашкой «Созвон завершён · сводка готова за 38 с», и одно за другим падают системные уведомления: сводка в мессенджере, задача в трекере, решения в базе знаний. Слева заголовок в три строки со словами-градиентом, кнопка и строка доверия с аватарами.",
       "categories": [
         "hero"
       ],
@@ -6161,12 +6161,15 @@
           "meeting",
           "summary",
           "video call",
-          "meeting",
           "captions",
           "results",
           "jira",
           "telegram",
-          "notion"
+          "notion",
+          "monitor",
+          "notifications",
+          "cursor",
+          "desktop"
         ],
         "preview": {
           "props": {},
@@ -6174,18 +6177,18 @@
         },
         "ai": {
           "export": "Hero033",
-          "usage": "<Hero033\n  title=\"Созвон закончился — *решения уже в трекере*\"\n  people={[{ name: \"Лена\", color: \"#8b7cf6\" }, { name: \"Марк\", color: \"#22c3a6\" }]}\n  captions={[{ who: 0, text: \"Релиз переносим на четверг.\" }, { who: 1, text: \"Беру миграцию базы.\" }]}\n  taskTitle=\"Миграция базы\"\n  taskMeta=\"Марк · до среды\"\n/>",
+          "usage": "<Hero033\n  title=\"Созвон закончился — *решения уже в трекере*\"\n  people={[{ name: \"Лена\", photo: \"/photos/lena.webp\", color: \"#b8a6ff\" }, { name: \"Марк\", photo: \"/photos/mark.webp\", color: \"#5fe0c4\" }]}\n  captions={[{ who: 0, text: \"Релиз переносим на четверг.\" }, { who: 1, text: \"Беру миграцию базы.\" }]}\n  notices={[{ app: \"task\", appName: \"Jira\", title: \"REL-248 назначена на Марка\", text: \"Миграция базы · срок — среда\" }]}\n/>",
           "summary": "Хиро для AI-продукта: продукт показывает себя сам — сводка печатается по токенам рядом с расшифровкой.",
           "preserve": [
-            "сцена — фазы call → results по setTimeout: субтитры по очереди, потом результаты, пауза HOLD_MS и заново",
-            "окно созвона сжимается сменой height до строки-плашки, карточки результатов выезжают с transition-delay по индексу",
-            "говорящий — data-talking на плитке: кольцо вокруг аватара и волна из трёх полосок",
-            "звёздочки в title (*слово*) — градиентный span; при reduced-motion сразу показаны результаты"
+            "сцена — фазы call → ending → done по setTimeout: субтитры по очереди, курсор жмёт «Завершить», рабочий стол с уведомлениями, пауза HOLD_MS и заново",
+            "экран — container-type:inline-size, всё внутри в cqw; размер шрифта задан слоям app и desktop, а не самому экрану (cqw на контейнере считается от внешнего)",
+            "уведомления выезжают справа с transition-delay по индексу, у говорящего — рамка и волна, камера чуть приближается",
+            "звёздочки в title (*слово*) — градиентный span; при reduced-motion сцена стоит на первой фазе без анимаций"
           ],
           "adapt": [
             "eyebrow, title (со *звёздочками* для градиента), lede, trust",
             "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
-            "callTitle, recLabel, people: name, color; captions: who (индекс), text; endedLabel, readyLabel; taskKey, taskTitle, taskMeta, taskStatus, chatTitle, chatText, docTitle, docItems",
+            "callTitle, recLabel, botName, captionsTitle, leaveLabel, people: name, photo, color; captions: who (индекс), text; startMinute; endedLabel, readyLabel, nowLabel; notices: app (chat | task | doc), appName, title, text",
             "tone — тема",
             "accent — акцент",
             "ink — текст",
@@ -6245,26 +6248,26 @@
         ],
         "i18n": {
           "en": {
-            "title": "AI meetings hero: the call ends and the results fly out to the services by themselves",
-            "description": "A first screen for an AI meeting product that illustrates its own headline. On the right a looping scene: a call of three — the speaker gets a pulsing ring and a voice wave, captions run below, «Recap is recording» in the corner. The call ends — the window shrinks into a «Call ended · summary ready in 38 s» strip, and the finished results slide in one by one: a tracker task with an assignee and a deadline, a summary message in the messenger, a decisions page in the knowledge base. On the left a three-line headline with gradient words, a button and a trust line with avatars.",
+            "title": "AI meetings hero: a monitor with a call app, after «Leave» the results arrive as notifications",
+            "description": "A first screen for an AI meeting product that illustrates its own headline. On the right a monitor with a bezel, a reflection and a stand, showing a call app: participant videos in real rooms, a bot tile with an equalizer, a frame around the speaker, live captions with timestamps and a control bar. When the lines run out a cursor moves to the red «Leave» button and clicks it, the app fades, a desktop opens with a «Call ended · summary ready in 38 s» strip, and system notifications drop in one by one: a summary in the messenger, a task in the tracker, decisions in the knowledge base. On the left a three-line headline with gradient words, a button and a trust line with avatars.",
             "ai": {
               "summary": "Hero for an AI product: the product shows itself — a recap types out token by token next to the transcript.",
               "preserve": [
-                "the scene runs call → results phases on setTimeout: captions one by one, then the results, a HOLD_MS pause and again",
-                "the call window shrinks by changing height to a strip, the result cards slide in with a transition-delay by index",
-                "the speaker is data-talking on the tile: a ring around the avatar and a three-bar wave",
-                "asterisks in title (*word*) become a gradient span; under reduced motion the results show at once"
+                "the scene runs call → ending → done phases on setTimeout: captions one by one, the cursor clicks «Leave», a desktop with notifications, a HOLD_MS pause and again",
+                "the screen is container-type:inline-size and everything inside uses cqw; the font size is set on the app and desktop layers, not the screen itself (cqw on a container resolves against the outer one)",
+                "notifications slide in from the right with a transition-delay by index; the speaker gets a frame and a wave, the camera zooms in slightly",
+                "asterisks in title (*word*) become a gradient span; under reduced motion the scene stays on the first phase with no animation"
               ],
               "adapt": [
                 "eyebrow, title (with *asterisks* for the gradient), lede, trust",
                 "primaryLabel, primaryHref, secondaryLabel, secondaryHref",
-                "callTitle, recLabel, people: name, color; captions: who (index), text; endedLabel, readyLabel; taskKey, taskTitle, taskMeta, taskStatus, chatTitle, chatText, docTitle, docItems",
+                "callTitle, recLabel, botName, captionsTitle, leaveLabel, people: name, photo, color; captions: who (index), text; startMinute; endedLabel, readyLabel, nowLabel; notices: app (chat | task | doc), appName, title, text",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Hero033\n  title=\"Call over — *decisions in the tracker*\"\n  people={[{ name: \"Lena\", color: \"#8b7cf6\" }, { name: \"Mark\", color: \"#22c3a6\" }]}\n  captions={[{ who: 0, text: \"Release moves to Thursday.\" }, { who: 1, text: \"I will take the migration.\" }]}\n  taskTitle=\"Database migration\"\n  taskMeta=\"Mark · by Wednesday\"\n/>"
+              "usage": "<Hero033\n  title=\"Call over — *decisions in the tracker*\"\n  people={[{ name: \"Lena\", photo: \"/photos/lena.webp\", color: \"#b8a6ff\" }, { name: \"Mark\", photo: \"/photos/mark.webp\", color: \"#5fe0c4\" }]}\n  captions={[{ who: 0, text: \"Release moves to Thursday.\" }, { who: 1, text: \"I will take the migration.\" }]}\n  notices={[{ app: \"task\", appName: \"Jira\", title: \"REL-248 assigned to Mark\", text: \"Database migration · due Wednesday\" }]}\n/>"
             },
             "controls": {
               "title": {
@@ -6292,7 +6295,7 @@
               "props": {
                 "eyebrow": "AI for meetings · no minutes",
                 "title": "The call ended — *decisions are already in the tracker*",
-                "lede": "Recap listens to the meeting, extracts decisions, tasks and risks and files them into Jira, Notion and Telegram. While you pour your coffee.",
+                "lede": "Tally listens to the meeting, extracts decisions, tasks and risks and files them into Jira, Notion and Telegram. While you pour your coffee.",
                 "primaryLabel": "Start free",
                 "secondaryLabel": "Try the sandbox",
                 "trust": "4,200 teams stopped writing minutes",

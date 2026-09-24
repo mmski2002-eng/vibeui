@@ -2173,7 +2173,7 @@
       "name": "bento-002",
       "type": "registry:block",
       "title": "Интеграции маршрутизатором: входы → ядро продукта → выходы, по линиям бегут пакеты",
-      "description": "Секция интеграций в виде схемы: слева входы (сервисы созвонов), в центре ядро продукта с эквалайзером, справа выходы — трекеры, мессенджеры, базы знаний. Всё соединено плавными кривыми, по которым бегут светящиеся пакеты, выход вспыхивает в момент прихода. Наведение на сервис подсвечивает его маршрут. Сверху заголовок и описание, снизу факты в четыре колонки. На узком у сервисов остаются только марки.",
+      "description": "Секция интеграций в виде схемы: слева входы (сервисы созвонов), в центре ядро продукта с эквалайзером, справа выходы — трекеры, мессенджеры, базы знаний. Всё соединено плавными кривыми, по которым бегут светящиеся пакеты, выход вспыхивает в момент прихода. Наведение на сервис подсвечивает его маршрут. Сверху заголовок и описание, снизу факты в четыре колонки. На узком у сервисов остаются только марки. Знаки сервисов — официальные, из Simple Icons (CC0), встроены в блок.",
       "categories": [
         "layout"
       ],
@@ -2209,7 +2209,7 @@
         },
         "ai": {
           "export": "Bento002",
-          "usage": "<Bento002\n  core=\"Сводка\"\n  coreCaption=\"слушает и раскладывает\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>",
+          "usage": "<Bento002\n  core=\"Tally\"\n  coreCaption=\"слушает и раскладывает\"\n  inner={[{ name: \"Zoom\", brand: \"zoom\" }, { name: \"Meet\", brand: \"googlemeet\" }]}\n  outer={[{ name: \"Jira\", brand: \"jira\" }, { name: \"Notion\", brand: \"notion\" }, { name: \"Telegram\", brand: \"telegram\" }]}\n/>",
           "summary": "Интеграции как орбиты: сервисы кружат вокруг продукта, наведение останавливает и подписывает.",
           "preserve": [
             "схема — один SVG viewBox 1000×560 с preserveAspectRatio none, плитки лежат в тех же долях поверх — линии и плитки совпадают",
@@ -2219,7 +2219,7 @@
           ],
           "adapt": [
             "eyebrow, title, lede, core — имя в центре, coreCaption",
-            "inner (входы), outer (выходы): name, mark (1–2 буквы)",
+            "inner (входы), outer (выходы): name, brand (zoom, googlemeet, vk, webex, jira, notion, telegram, linear, confluence, trello) или свои icon (path 24×24) и color, mark — буквы, если знака нет",
             "speed — секунд на проход пакета; facts — «Заголовок: текст»",
             "tone — тема",
             "accent — акцент",
@@ -2232,7 +2232,7 @@
             "prop": "core",
             "label": "Центр",
             "type": "text",
-            "default": "Сводка",
+            "default": "Tally",
             "maxLength": 16
           },
           {
@@ -2282,7 +2282,7 @@
         "i18n": {
           "en": {
             "title": "Integrations as a router: inputs → product core → outputs, packets run along the wires",
-            "description": "An integrations section as a diagram: inputs on the left (call services), the product core with an equalizer in the centre, outputs on the right — trackers, messengers, knowledge bases. Everything is joined by smooth curves with glowing packets running along them, an output flashes when a packet arrives. Hovering a service highlights its route. A title and lede on top, facts in four columns below. On narrow screens the services keep only their marks.",
+            "description": "An integrations section as a diagram: inputs on the left (call services), the product core with an equalizer in the centre, outputs on the right — trackers, messengers, knowledge bases. Everything is joined by smooth curves with glowing packets running along them, an output flashes when a packet arrives. Hovering a service highlights its route. A title and lede on top, facts in four columns below. On narrow screens the services keep only their marks. Service logos are the official ones from Simple Icons (CC0), embedded in the block.",
             "ai": {
               "summary": "Integrations as orbits: services circle the product, hover pauses and labels them.",
               "preserve": [
@@ -2293,19 +2293,19 @@
               ],
               "adapt": [
                 "eyebrow, title, lede, core — the name in the centre, coreCaption",
-                "inner (inputs), outer (outputs): name, mark (1–2 letters)",
+                "inner (inputs), outer (outputs): name, brand (zoom, googlemeet, vk, webex, jira, notion, telegram, linear, confluence, trello) or your own icon (24×24 path) and color, mark — letters when there is no logo",
                 "speed — seconds per packet pass; facts — «Title: text»",
                 "tone — theme",
                 "accent — accent",
                 "ink — ink",
                 "background — background"
               ],
-              "usage": "<Bento002\n  core=\"Recap\"\n  coreCaption=\"listens and files\"\n  inner={[{ name: \"Zoom\", mark: \"Z\" }, { name: \"Meet\", mark: \"M\" }]}\n  outer={[{ name: \"Jira\", mark: \"J\" }, { name: \"Notion\", mark: \"N\" }, { name: \"Telegram\", mark: \"TG\" }]}\n/>"
+              "usage": "<Bento002\n  core=\"Tally\"\n  coreCaption=\"listens and files\"\n  inner={[{ name: \"Zoom\", brand: \"zoom\" }, { name: \"Meet\", brand: \"googlemeet\" }]}\n  outer={[{ name: \"Jira\", brand: \"jira\" }, { name: \"Notion\", brand: \"notion\" }, { name: \"Telegram\", brand: \"telegram\" }]}\n/>"
             },
             "controls": {
               "core": {
                 "label": "Core",
-                "default": "Recap"
+                "default": "Tally"
               },
               "speed": {
                 "label": "Seconds per turn"
@@ -2328,7 +2328,7 @@
                 "eyebrow": "Integrations",
                 "title": "Lives where your team already lives",
                 "lede": "Connects to what you have: calls, tracker, knowledge base, messenger. No “go to our app”.",
-                "core": "Recap",
+                "core": "Tally",
                 "inner": [
                   {
                     "name": "Zoom",

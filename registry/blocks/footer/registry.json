@@ -5176,7 +5176,7 @@
         },
         "ai": {
           "export": "Footer032",
-          "usage": "<Footer032\n  brand=\"Сводка\"\n  status=\"Все системы работают\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Цены\", href: \"#pricing\" }] }]}\n/>",
+          "usage": "<Footer032\n  brand=\"Tally\"\n  status=\"Все системы работают\"\n  columns={[{ title: \"Продукт\", links: [{ label: \"Цены\", href: \"#pricing\" }] }]}\n/>",
           "summary": "Подвал для SaaS: статус «все системы работают» с пульсом, колонки ссылок, правовые ссылки и соцсети.",
           "preserve": [
             "recap — отдельная карточка во всю ширину над колонками, строки печатаются clip-path на animation-timeline: view() с фолбэком «видно сразу»",
@@ -5198,7 +5198,7 @@
             "prop": "brand",
             "label": "Бренд",
             "type": "text",
-            "default": "Сводка",
+            "default": "Tally",
             "maxLength": 24
           },
           {
@@ -5263,12 +5263,12 @@
                 "accent — accent",
                 "background — background"
               ],
-              "usage": "<Footer032\n  brand=\"Recap\"\n  status=\"All systems operational\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"#pricing\" }] }]}\n/>"
+              "usage": "<Footer032\n  brand=\"Tally\"\n  status=\"All systems operational\"\n  columns={[{ title: \"Product\", links: [{ label: \"Pricing\", href: \"#pricing\" }] }]}\n/>"
             },
             "controls": {
               "brand": {
                 "label": "Brand",
-                "default": "Recap"
+                "default": "Tally"
               },
               "status": {
                 "label": "Status",
@@ -5289,7 +5289,7 @@
             },
             "preview": {
               "props": {
-                "brand": "Recap",
+                "brand": "Tally",
                 "caption": "AI that listens to calls and files decisions where they belong.",
                 "status": "All systems operational",
                 "columns": [
@@ -5371,7 +5371,7 @@
                     "href": "#dpa"
                   }
                 ],
-                "copyright": "© 2026 Recap"
+                "copyright": "© 2026 Tally"
               }
             }
           }

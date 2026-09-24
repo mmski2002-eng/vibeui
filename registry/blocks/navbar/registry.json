@@ -5911,7 +5911,7 @@
         },
         "ai": {
           "export": "Navbar033",
-          "usage": "<Navbar033\n  overlay\n  brand=\"Сводка\"\n  links={[{ label: \"Как работает\", href: \"#how\" }, { label: \"Цены\", href: \"#pricing\" }]}\n  liveLabel=\"Идёт созвон\"\n  actionLabel=\"Начать бесплатно\"\n/>",
+          "usage": "<Navbar033\n  overlay\n  brand=\"Tally\"\n  links={[{ label: \"Как работает\", href: \"#how\" }, { label: \"Цены\", href: \"#pricing\" }]}\n  liveLabel=\"Идёт созвон\"\n  actionLabel=\"Начать бесплатно\"\n/>",
           "summary": "Шапка для AI-продукта или SaaS: искра в лого, войти и начать бесплатно, стекло при прокрутке.",
           "preserve": [
             "капсула — max-width и height с transition, при data-scrolled сужается; overlay — margin-bottom минус высота, шапка не занимает места",
@@ -5933,7 +5933,7 @@
             "prop": "brand",
             "label": "Бренд",
             "type": "text",
-            "default": "Сводка",
+            "default": "Tally",
             "maxLength": 24
           },
           {
@@ -5998,12 +5998,12 @@
                 "accent — accent",
                 "background — background"
               ],
-              "usage": "<Navbar033\n  overlay\n  brand=\"Recap\"\n  links={[{ label: \"How it works\", href: \"#how\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n  liveLabel=\"Call in progress\"\n  actionLabel=\"Start for free\"\n/>"
+              "usage": "<Navbar033\n  overlay\n  brand=\"Tally\"\n  links={[{ label: \"How it works\", href: \"#how\" }, { label: \"Pricing\", href: \"#pricing\" }]}\n  liveLabel=\"Call in progress\"\n  actionLabel=\"Start for free\"\n/>"
             },
             "controls": {
               "brand": {
                 "label": "Brand",
-                "default": "Recap"
+                "default": "Tally"
               },
               "actionLabel": {
                 "label": "Button",
@@ -6024,7 +6024,7 @@
             },
             "preview": {
               "props": {
-                "brand": "Recap",
+                "brand": "Tally",
                 "links": [
                   {
                     "label": "How it works",

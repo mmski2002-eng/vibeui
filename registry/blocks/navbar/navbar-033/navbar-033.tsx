@@ -112,7 +112,7 @@ function clock(total: number) {
 
 /** Шапка AI-сервиса: плавающая капсула с эквалайзером в лого и живым индикатором созвона. */
 export function Navbar033({
-  brand = "Сводка",
+  brand = "Tally",
   brandHref = "#top",
   links = [
     { label: "Как работает", href: "#how" },

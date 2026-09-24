@@ -163,7 +163,8 @@ export default function LanguageDemoEn() {
           group={["MK", "AS", "DP", "OV", "IL", "EN"]}
           speakText="of the lesson you're the one talking, not listening"
           homeworkTitle="Homework in the notebook"
-          homework="Record a voice message: three things that annoy you in the morning. In English, 40 seconds."
+          homework={["Record a voice message: three things that annoy you in the morning.", "In English, 40 seconds — send it to the group chat."]}
+          homeworkTag="🎤 voice note · 40 sec"
           nativeTitle="A native speaker once a week"
           nativeText="Every fourth lesson is led by a native speaker — you get used to the speed and the accent."
           recordTitle="After the lesson you keep"

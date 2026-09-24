@@ -37,16 +37,16 @@ const slugs = [...source.matchAll(pattern)]
 const modulePath = process.env.PLAYWRIGHT_MODULE
   ? pathToFileURL(process.env.PLAYWRIGHT_MODULE).href
   : createRequire(import.meta.url).resolve("playwright")
-const { chromium } = await import(modulePath)
+const playwright = await import(modulePath)
+const { chromium } = playwright.default ?? playwright
 
 // Кнопки заставок: печать конверта (hero-025), корешок билета (hero-026),
 // фитиль свечи (hero-027).
 const GATE_BUTTONS = '[data-vibeui-block="hero-025"] [data-part="seal"], [data-vibeui-block="hero-026"] [data-part="tear"], [data-vibeui-block="hero-027"] [data-part="candle"]'
 
-// Первые экраны, которые печатают текст по токенам: ждём последнюю строку,
-// иначе на постере пустая панель и один заголовок. Слова — отдельные span,
-// поэтому ждём последнее слово.
-const READY_TEXT = { saas: "ночью." }
+// Первые экраны со сценой по шагам: ждём нужный шаг, иначе на постере
+// пустая панель. У SaaS — четвёртая реплика в субтитрах созвона.
+const READY_SELECTOR = { saas: '[data-vibeui-block="hero-033"] [data-part="line"]:nth-child(4)' }
 
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM,
@@ -69,17 +69,26 @@ for (const slug of slugs) {
     // своё появление.
     await page.waitForTimeout(8000)
   }
-  // Видео-интро (hero-046): ждём старта ролика и жмём «Пропустить» — постер
-  // снимается со стоп-кадра, когда текст и шапка уже проявились.
-  const intro = page.locator('[data-vibeui-block="hero-046"]')
+  // Видео-хиро (hero-046/047/048): ждём старта ролика и жмём «Пропустить» —
+  // постер снимается со стоп-кадра, когда текст и шапка уже проявились.
+  const VIDEO_HEROES = ["hero-046", "hero-047", "hero-048"].map((name) => `[data-vibeui-block="${name}"]`)
+  const intro = page.locator(VIDEO_HEROES.join(", ")).first()
   if (await intro.count()) {
-    await page.waitForSelector('[data-vibeui-block="hero-046"]:not([data-phase="loading"])', { timeout: 60000 })
+    await page.waitForSelector(VIDEO_HEROES.map((selector) => `${selector}:not([data-phase="loading"])`).join(", "), { timeout: 60000 })
     const skip = intro.locator('[data-part="replay"]')
     if ((await intro.getAttribute("data-phase")) === "playing") await skip.click({ force: true })
     await page.waitForTimeout(3500)
   }
-  if (READY_TEXT[slug]) {
-    await page.getByText(READY_TEXT[slug], { exact: true }).first().waitFor({ timeout: 30000 })
+  if (READY_SELECTOR[slug]) {
+    await page.waitForSelector(READY_SELECTOR[slug], { timeout: 30000 })
+    await page.waitForTimeout(1400)
+  }
+  // Плавающая кнопка экстренной помощи (vet-001) сама раскрывает панель —
+  // на постере она закрывает первый экран.
+  const panelClose = page.locator('[data-vibeui-block="vet-001"] [data-part="close"]')
+  if ((await panelClose.count()) && (await panelClose.isVisible())) {
+    await panelClose.click({ force: true })
+    await page.waitForTimeout(700)
   }
   const png = await page.screenshot({ type: "png" })
   const webp = await sharp(png).resize({ width: 960 }).webp({ quality: 80 }).toBuffer()
