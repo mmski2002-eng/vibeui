@@ -242,7 +242,10 @@ export function Bento008({
   } as CSSProperties
 
   const totalMinutes = segments.reduce((sum, segment) => sum + segment.minutes, 0) || 1
-  let elapsedMinutes = 0
+  const segmentStarts = segments.reduce<number[]>((starts, segment, index) => {
+    starts.push(index === 0 ? 0 : starts[index - 1] + segments[index - 1].minutes)
+    return starts
+  }, [])
 
   return (
     <>
@@ -262,15 +265,11 @@ export function Bento008({
               <h3>{lessonTitle}</h3>
               <p>{lessonText}</p>
               <div data-part="timeline" aria-hidden="true">
-                {segments.map((segment, index) => {
-                  const at = elapsedMinutes / totalMinutes
-                  elapsedMinutes += segment.minutes
-                  return (
-                    <span key={segment.label} style={{ flex: segment.minutes, ["--vibeui-bento-008-i" as string]: index, ["--vibeui-bento-008-at" as string]: at }}>
-                      {segment.label}
-                    </span>
-                  )
-                })}
+                {segments.map((segment, index) => (
+                  <span key={segment.label} style={{ flex: segment.minutes, ["--vibeui-bento-008-i" as string]: index, ["--vibeui-bento-008-at" as string]: segmentStarts[index] / totalMinutes }}>
+                    {segment.label}
+                  </span>
+                ))}
                 <i data-part="needle">
                   <i />
                 </i>

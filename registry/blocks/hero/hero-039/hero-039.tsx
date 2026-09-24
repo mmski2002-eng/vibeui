@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState, type CSSProperties } from "react"
+import { useEffect, useState, type CSSProperties } from "react"
 
 import { Button016 } from "@/registry/components/button/button-016/button-016"
 
