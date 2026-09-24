@@ -311,7 +311,9 @@ export function Hero033({
 
   const speaker = phase === "call" ? (captions[line]?.who ?? -1) : -1
 
-  // Говорящий играет с начала, остальные стоят на последнем кадре.
+  // Говорящий играет с начала, остальные стоят на последнем кадре. Видео,
+  // уже остановленное на последнем кадре, повторно не трогаем — иначе
+  // лишний seek на паузе даёт заметное дрожание кадра при каждой реплике.
   useEffect(() => {
     videos.current.forEach((video, index) => {
       if (!video) return
@@ -320,6 +322,7 @@ export function Hero033({
         video.play().catch(() => {})
         return
       }
+      if (video.paused) return
       video.pause()
       if (Number.isFinite(video.duration)) video.currentTime = Math.max(0, video.duration - 0.08)
     })
