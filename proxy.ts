@@ -107,6 +107,9 @@ function isClubPage(pathname: string) {
 function rewriteEnglish(request: NextRequest, requestHeaders?: Headers) {
   const url = request.nextUrl.clone()
   url.pathname = englishFile(request.nextUrl.pathname)
+  // За nginx адрес запроса https://localhost:3003. Rewrite с https стучится
+  // в Node по TLS, а процесс слушает обычный http — отсюда EPROTO и 500.
+  url.protocol = "http:"
 
   return NextResponse.rewrite(
     url,
