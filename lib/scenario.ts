@@ -35,7 +35,7 @@ export function getScenario(slug: string): Scenario | undefined {
 // Прототип: скролл-видео вместо статичного постера — снято пока не для
 // всех сценариев, остальные молча остаются на постере. fs.existsSync
 // сюда не годится: файл общий с клиентскими компонентами.
-const VIDEO_SLUGS = new Set(["auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery", "tattoo", "vet", "language"])
+const VIDEO_SLUGS = new Set(["auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery", "tattoo", "vet", "language", "flowers"])
 
 export function scenarioText(scenario: Scenario, locale: Locale) {
   // Английское демо и его постер есть не у каждого сценария: без них
