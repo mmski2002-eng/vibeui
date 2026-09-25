@@ -101,18 +101,39 @@ jobs:
 
       - name: Проверить живой сайт
         run: |
-          curl -fsS --http1.1 -o /tmp/vibeui-components.html -w 'components %{http_code}\n' https://vibeui.ru/components
-          # Страница item'а публичная (её индексирует Google) и рендерится, но
-          # код и команда установки закрыты: отдаются только по подписанной
-          # ссылке после входа. Поэтому здесь проверяем сам рендер по slug, а
-          # закрытость — маршрутом /c/<name>, который анониму отвечает 401.
-          curl -fsS https://vibeui.ru/components/button-001 | grep -q "button-001"
-          test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.ru/c/button-001)" = "401"
-          curl -fsS https://vibeui.ru/start | grep -q 'id="paste"'
-          test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.ru/en/start)" = "404"
-          curl -fsS https://vibeui.ru/robots.txt | grep -q "Sitemap: https://vibeui.ru/sitemap.xml"
-          curl -fsS https://vibeui.ru/sitemap.xml | grep -q "<loc>https://vibeui.ru/components</loc>"
-          curl -fsS https://vibeui.ru/sitemap.xml | grep -q "https://vibeui.club/components"
+          # Код 23 у curl на runner — обрыв записи большого тела, хотя ответ уже
+          # 200. Код статуса берём из -w и не даём этому обрыву уронить шаг.
+          fetch() {
+            curl -sS --http1.1 --retry 2 --retry-delay 2 -o "$1" -w '%{http_code}' "$2" || true
+          }
+          code=$(fetch /tmp/vibeui-components.html https://vibeui.ru/components)
+          echo "components $code"
+          test "$code" = "200"
+          # Страница item'а публичная и рендерится, код установки закрыт:
+          # /c/<name> анониму отвечает 401.
+          code=$(fetch /tmp/vibeui-item.html https://vibeui.ru/components/button-001)
+          echo "button $code"
+          test "$code" = "200"
+          grep -q button-001 /tmp/vibeui-item.html
+          code=$(fetch /tmp/vibeui-c.html https://vibeui.ru/c/button-001)
+          echo "registry $code"
+          test "$code" = "401"
+          code=$(fetch /tmp/vibeui-start.html https://vibeui.ru/start)
+          echo "start $code"
+          test "$code" = "200"
+          grep -q 'id="paste"' /tmp/vibeui-start.html
+          code=$(fetch /tmp/vibeui-en.html https://vibeui.ru/en/start)
+          echo "en $code"
+          test "$code" = "404"
+          code=$(fetch /tmp/vibeui-robots.txt https://vibeui.ru/robots.txt)
+          echo "robots $code"
+          test "$code" = "200"
+          grep -q "Sitemap: https://vibeui.ru/sitemap.xml" /tmp/vibeui-robots.txt
+          code=$(fetch /tmp/vibeui-sitemap.xml https://vibeui.ru/sitemap.xml)
+          echo "sitemap $code"
+          test "$code" = "200"
+          grep -q "<loc>https://vibeui.ru/components</loc>" /tmp/vibeui-sitemap.xml
+          grep -q "https://vibeui.club/components" /tmp/vibeui-sitemap.xml
 
       # vibeui.club — отдельный инстанс на латвийском VPS (не РФ: NOWPayments
       # доступен, латенси для англоязычных ниже). Тот же собранный релиз, свой
@@ -133,9 +154,29 @@ jobs:
 
       - name: Проверить живой .club
         run: |
-          curl -fsS https://vibeui.club/start | grep -q 'id="paste"'
-          curl -fsS https://vibeui.club/scenarios/bakery/demo | grep -q 'Order for the morning'
-          curl -fsS https://vibeui.club/scenarios | grep -q '/scenarios/bakery/demo'
-          test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.club/en/start)" = "404"
-          curl -fsS https://vibeui.club/robots.txt | grep -q "Sitemap: https://vibeui.club/sitemap.xml"
-          curl -fsS https://vibeui.club/sitemap.xml | grep -q "<loc>https://vibeui.club/components</loc>"
+          fetch() {
+            curl -sS --http1.1 --retry 2 --retry-delay 2 -o "$1" -w '%{http_code}' "$2" || true
+          }
+          code=$(fetch /tmp/club-start.html https://vibeui.club/start)
+          echo "start $code"
+          test "$code" = "200"
+          grep -q 'id="paste"' /tmp/club-start.html
+          code=$(fetch /tmp/club-bakery.html https://vibeui.club/scenarios/bakery/demo)
+          echo "bakery $code"
+          test "$code" = "200"
+          grep -q 'Order for the morning' /tmp/club-bakery.html
+          code=$(fetch /tmp/club-scenarios.html https://vibeui.club/scenarios)
+          echo "scenarios $code"
+          test "$code" = "200"
+          grep -q '/scenarios/bakery/demo' /tmp/club-scenarios.html
+          code=$(fetch /tmp/club-en.html https://vibeui.club/en/start)
+          echo "en $code"
+          test "$code" = "404"
+          code=$(fetch /tmp/club-robots.txt https://vibeui.club/robots.txt)
+          echo "robots $code"
+          test "$code" = "200"
+          grep -q "Sitemap: https://vibeui.club/sitemap.xml" /tmp/club-robots.txt
+          code=$(fetch /tmp/club-sitemap.xml https://vibeui.club/sitemap.xml)
+          echo "sitemap $code"
+          test "$code" = "200"
+          grep -q "<loc>https://vibeui.club/components</loc>" /tmp/club-sitemap.xml
