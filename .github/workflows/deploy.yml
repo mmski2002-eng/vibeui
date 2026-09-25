@@ -101,7 +101,7 @@ jobs:
 
       - name: Проверить живой сайт
         run: |
-          curl -fsS -o /dev/null -w 'components %{http_code}\n' https://vibeui.ru/components
+          curl -fsS --http1.1 -o /tmp/vibeui-components.html -w 'components %{http_code}\n' https://vibeui.ru/components
           # Страница item'а публичная (её индексирует Google) и рендерится, но
           # код и команда установки закрыты: отдаются только по подписанной
           # ссылке после входа. Поэтому здесь проверяем сам рендер по slug, а
