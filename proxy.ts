@@ -58,12 +58,10 @@ export function proxy(request: NextRequest) {
 
   const club = isClubHost(request)
 
-  // Старый адрес с приставкой. Редиректа нет: страницы по этому пути больше нет.
+  // Старый адрес с приставкой. Редиректа нет. Rewrite на пустой путь в Next 16
+  // отдаёт 500, поэтому ответ 404 собираем здесь.
   if (isRetiredEnglishPath(pathname)) {
-    const missing = request.nextUrl.clone()
-    missing.pathname = "/__missing"
-
-    return NextResponse.rewrite(missing)
+    return new NextResponse(null, { status: 404 })
   }
 
   // Гейтинг кабинета — только для /account. Остальные страницы публичны:
