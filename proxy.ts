@@ -3,29 +3,6 @@ import { NextResponse, type NextRequest } from "next/server"
 
 import { PATH_HEADER } from "@/lib/session.shared"
 
-/**
- * Разделы, у которых на vibeui.club отдаётся английская страница. В адресе
- * приставки нет: запрос внутри переписывается на файл из `app/en`, браузер
- * остаётся на `/pricing`. /c, /f, /r, /s, /i, /preview — общие, matcher их
- * не ловит.
- */
-const LOCALIZABLE = new Set([
-  "components",
-  "blocks",
-  "animations",
-  "scenarios",
-  "search",
-  "pricing",
-  "account",
-  "signin",
-  "signup",
-  "reset",
-  "report",
-  "start",
-  "verify",
-  "legal",
-])
-
 function isAccountPath(pathname: string) {
   return pathname === "/account" || pathname.startsWith("/account/")
 }
@@ -34,14 +11,10 @@ function isRetiredEnglishPath(pathname: string) {
   return pathname === "/en" || pathname.startsWith("/en/")
 }
 
-/** Английский файл из `app/en` для публичного пути без приставки. */
-function englishFile(pathname: string) {
-  return pathname === "/" ? "/en" : `/en${pathname}`
-}
-
 /**
- * Прокси-слой Next (бывший middleware). Закрывает кабинет от анонимов и на
- * vibeui.club подставляет английские файлы под те же пути, что на .ru.
+ * Прокси-слой Next (бывший middleware). Закрывает кабинет от анонимов.
+ * Английские файлы на vibeui.club подставляет next.config (beforeFiles),
+ * не этот слой: абсолютный rewrite уходил вторым запросом на /en и получал 404.
  * `/en/...` публичным адресом не является.
  */
 export function proxy(request: NextRequest) {
@@ -55,8 +28,6 @@ export function proxy(request: NextRequest) {
   if (ref) {
     return NextResponse.redirect(new URL(`/i/${ref}`, request.url))
   }
-
-  const club = isClubHost(request)
 
   // Старый адрес с приставкой. Редиректа нет. Rewrite на пустой путь в Next 16
   // отдаёт 500, поэтому ответ 404 собираем здесь.
@@ -75,10 +46,6 @@ export function proxy(request: NextRequest) {
       const passthrough = new Headers(request.headers)
       passthrough.set(PATH_HEADER, pathname + request.nextUrl.search)
 
-      if (club) {
-        return rewriteEnglish(request, passthrough)
-      }
-
       return NextResponse.next({ request: { headers: passthrough } })
     }
 
@@ -89,39 +56,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(signin)
   }
 
-  if (club && isClubPage(pathname)) {
-    return rewriteEnglish(request)
-  }
-
   return NextResponse.next()
-}
-
-function isClubPage(pathname: string) {
-  if (pathname === "/") return true
-
-  const segment = pathname.split("/")[1] ?? ""
-
-  return LOCALIZABLE.has(segment)
-}
-
-function rewriteEnglish(request: NextRequest, requestHeaders?: Headers) {
-  const url = request.nextUrl.clone()
-  url.pathname = englishFile(request.nextUrl.pathname)
-  // За nginx адрес запроса https://localhost:3003. Rewrite с https стучится
-  // в Node по TLS, а процесс слушает обычный http — отсюда EPROTO и 500.
-  url.protocol = "http:"
-
-  return NextResponse.rewrite(
-    url,
-    requestHeaders ? { request: { headers: requestHeaders } } : undefined,
-  )
-}
-
-/** Пришёл ли запрос на англоязычный домен vibeui.club. */
-function isClubHost(request: NextRequest) {
-  const host = (request.headers.get("host") ?? "").split(":")[0].toLowerCase()
-
-  return host === "vibeui.club" || host === "www.vibeui.club"
 }
 
 export const config = {

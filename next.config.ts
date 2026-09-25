@@ -106,10 +106,51 @@ const MERGED_CATEGORIES: Record<string, Record<string, string>> = {
   },
 }
 
+/** Те же разделы, что LOCALIZABLE в proxy.ts. На .club их отдаёт app/en. */
+const CLUB_SECTIONS = [
+  "components",
+  "blocks",
+  "animations",
+  "scenarios",
+  "search",
+  "pricing",
+  "account",
+  "signin",
+  "signup",
+  "reset",
+  "report",
+  "start",
+  "verify",
+  "legal",
+]
+
+function clubEnglishRewrites() {
+  return ["vibeui.club", "www.vibeui.club"].flatMap((host) => {
+    const has = [{ type: "host" as const, value: host }]
+
+    return [
+      { source: "/", destination: "/en", has },
+      ...CLUB_SECTIONS.flatMap((section) => [
+        { source: `/${section}`, destination: `/en/${section}`, has },
+        {
+          source: `/${section}/:path*`,
+          destination: `/en/${section}/:path*`,
+          has,
+        },
+      ]),
+    ]
+  })
+}
+
 const nextConfig: NextConfig = {
   // Самодостаточный сервер для деплоя на собственный VPS:
   // .next/standalone содержит node_modules, нужные в рантайме.
   output: "standalone",
+  // Внутренний rewrite, не второй HTTP-запрос. Иначе /en снова ловит запрет
+  // в proxy и публичный /start на .club становится 404.
+  async rewrites() {
+    return { beforeFiles: clubEnglishRewrites() }
+  },
   async redirects() {
     return Object.entries(MERGED_CATEGORIES).flatMap(([base, map]) =>
       Object.entries(map).map(([child, parent]) => ({
