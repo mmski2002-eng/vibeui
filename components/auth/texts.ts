@@ -42,6 +42,7 @@ export const AUTH_TEXTS = {
     offer: "офертой",
     consentAnd: "и",
     privacy: "политикой конфиденциальности",
+    consentAccount: "Соглашаюсь создать аккаунт.",
     verifySent:
       "Письмо со ссылкой отправлено. Откройте её, чтобы подтвердить адрес и войти. Ссылка действует 30 минут.",
     resetSent:
@@ -115,6 +116,7 @@ export const AUTH_TEXTS = {
     offer: "terms",
     consentAnd: "and",
     privacy: "privacy policy",
+    consentAccount: "I agree to create an account.",
     verifySent:
       "The link is on its way. Open it to confirm your address and sign in. It expires in 30 minutes.",
     resetSent:

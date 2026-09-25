@@ -122,20 +122,26 @@ export function SignUpForm({ locale }: { locale: Locale }) {
           className="accent-shell-accent mt-0.5 size-4 shrink-0"
         />
         <span className="text-shell-muted leading-relaxed">
-          {t.consent}{" "}
-          <Link
-            href={localePath(locale, "/legal/offer")}
-            className="text-shell-fg underline"
-          >
-            {t.offer}
-          </Link>{" "}
-          {t.consentAnd}{" "}
-          <Link
-            href={localePath(locale, "/legal/privacy")}
-            className="text-shell-fg underline"
-          >
-            {t.privacy}
-          </Link>
+          {locale === "ru" ? (
+            <>
+              {t.consent}{" "}
+              <Link
+                href={localePath(locale, "/legal/offer")}
+                className="text-shell-fg underline"
+              >
+                {t.offer}
+              </Link>{" "}
+              {t.consentAnd}{" "}
+              <Link
+                href={localePath(locale, "/legal/privacy")}
+                className="text-shell-fg underline"
+              >
+                {t.privacy}
+              </Link>
+            </>
+          ) : (
+            t.consentAccount
+          )}
         </span>
       </label>
 

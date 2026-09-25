@@ -496,7 +496,6 @@ function cryptoTexts(t: ReturnType<typeof buildTexts>["en"]) {
       return item
     }),
     ctaText: `${FREE_MONTHLY_LIMIT} components a month for free. Then $${um} for a month, no auto-charges.`,
-    legal: "Crypto payments via NOWPayments. By subscribing you accept the",
   }
 }
 
@@ -820,23 +819,25 @@ export async function PricingPage({
           </section>
         </Reveal>
 
-        <p className="text-shell-muted mt-10 text-sm leading-relaxed">
-          {t.legal}{" "}
-          <Link
-            href={localePath(locale, "/legal/offer")}
-            className="text-shell-fg underline-offset-4 hover:underline"
-          >
-            {t.offer}
-          </Link>{" "}
-          {t.and}{" "}
-          <Link
-            href={localePath(locale, "/legal/privacy")}
-            className="text-shell-fg underline-offset-4 hover:underline"
-          >
-            {t.privacy}
-          </Link>
-          .
-        </p>
+        {locale === "ru" && (
+          <p className="text-shell-muted mt-10 text-sm leading-relaxed">
+            {t.legal}{" "}
+            <Link
+              href={localePath(locale, "/legal/offer")}
+              className="text-shell-fg underline-offset-4 hover:underline"
+            >
+              {t.offer}
+            </Link>{" "}
+            {t.and}{" "}
+            <Link
+              href={localePath(locale, "/legal/privacy")}
+              className="text-shell-fg underline-offset-4 hover:underline"
+            >
+              {t.privacy}
+            </Link>
+            .
+          </p>
+        )}
       </main>
     </CatalogShell>
   )
