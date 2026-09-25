@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
+import { headers } from "next/headers"
 
-import { SITE_URL } from "@/lib/seo"
+import { CLUB_ORIGIN, isClubHost, RU_ORIGIN } from "@/lib/seo"
 
 /**
  * Закрыто всё, что не является страницей каталога: `/preview` — голый iframe
@@ -9,7 +10,11 @@ import { SITE_URL } from "@/lib/seo"
  *
  * `/s` — бриф сценария для агента, как `/c`.
  */
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const origin = isClubHost((await headers()).get("host"))
+    ? CLUB_ORIGIN
+    : RU_ORIGIN
+
   return {
     rules: [
       {
@@ -22,12 +27,11 @@ export default function robots(): MetadataRoute.Robots {
           "/f/",
           "/r/",
           "/search",
-          "/en/search",
           "/s/",
         ],
       },
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
+    sitemap: `${origin}/sitemap.xml`,
+    host: origin,
   }
 }

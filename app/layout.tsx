@@ -96,7 +96,7 @@ export const metadata: Metadata = {
 // Заодно правит lang на английской витрине: <html> объявлен в единственном
 // корневом layout'е, а язык раздела известен только по пути. Для поисковиков
 // язык страницы задают hreflang в <head> и sitemap, здесь — для читалок.
-const THEME_INIT_SCRIPT = `(function(){var d=document.documentElement;var t=null;try{t=localStorage.getItem("vibeui-shell-theme")}catch(e){}if(t!=="light"&&t!=="dark"){t=null;d.setAttribute("data-shell-follows-system","")}if(!t){try{t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}catch(e){t="dark"}}d.setAttribute("data-shell-theme",t);var p=location.pathname;if(p==="/en"||p.indexOf("/en/")===0)d.lang="en"})()`
+const THEME_INIT_SCRIPT = `(function(){var d=document.documentElement;var t=null;try{t=localStorage.getItem("vibeui-shell-theme")}catch(e){}if(t!=="light"&&t!=="dark"){t=null;d.setAttribute("data-shell-follows-system","")}if(!t){try{t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}catch(e){t="dark"}}d.setAttribute("data-shell-theme",t);var h=location.hostname;if(h==="vibeui.club"||h==="www.vibeui.club")d.lang="en"})()`
 
 // Поисковикам: что за сайт и как искать по нему. Достаточно объявить один раз
 // в корне — на всех страницах разметка одна и та же.

@@ -57,7 +57,7 @@ export async function GET(
   const siteUrl = getSiteBaseUrl() ?? new URL(request.url).origin
   const kind = getItemKind(item.name) ?? "block"
   const base = itemBasePath(kind)
-  const pagePath = locale === "en" ? `/en${base}` : base
+  const pagePath = base
   const values = resolveControlValues(item, search)
   const surface = search.get("theme")
   const theme = surface === "light" || surface === "dark" ? surface : undefined

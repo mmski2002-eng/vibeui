@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, type Locale, localePath } from "@/lib/i18n"
+import type { Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
 import type { ItemKind } from "@/registry/categories"
 import {
@@ -19,6 +19,26 @@ export const SITE_URL = (
 
 export const SITE_NAME = "VibeUI"
 
+export const RU_ORIGIN = "https://vibeui.ru"
+export const CLUB_ORIGIN = "https://vibeui.club"
+
+export function isClubHost(host: string | null | undefined) {
+  const name = (host ?? "").split(":")[0].toLowerCase()
+
+  return name === "vibeui.club" || name === "www.vibeui.club"
+}
+
+export function originFor(locale: Locale) {
+  return locale === "en" ? CLUB_ORIGIN : RU_ORIGIN
+}
+
+/** Абсолютный публичный адрес страницы на домене её языка. */
+export function pageUrl(locale: Locale, path: string) {
+  const bare = path.startsWith("/") ? path : `/${path}`
+
+  return bare === "/" ? originFor(locale) : `${originFor(locale)}${bare}`
+}
+
 /** Локаль в формате Open Graph. */
 const OG_LOCALE: Record<Locale, string> = {
   ru: "ru_RU",
@@ -26,17 +46,19 @@ const OG_LOCALE: Record<Locale, string> = {
 }
 
 /**
- * Canonical и hreflang для страницы. `path` — путь без языкового префикса
- * (`/components/hero-001`), пара для второго языка выводится из него же:
- * русская версия живёт в корне, английская под `/en`.
+ * Canonical и hreflang. Русский адрес на vibeui.ru, английский на vibeui.club,
+ * путь один и тот же. x-default — английский: язык без пары садится на .club.
  */
 export function alternates(locale: Locale, path: string) {
+  const ru = pageUrl("ru", path)
+  const en = pageUrl("en", path)
+
   return {
-    canonical: localePath(locale, path),
+    canonical: locale === "en" ? en : ru,
     languages: {
-      ru: localePath("ru", path),
-      en: localePath("en", path),
-      "x-default": localePath(DEFAULT_LOCALE, path),
+      ru,
+      en,
+      "x-default": en,
     },
   }
 }
@@ -59,7 +81,7 @@ export function pageMetadata({
   /** Заголовок уже содержит имя сайта — шаблон `%s — VibeUI` не применять. */
   absoluteTitle?: boolean
 }) {
-  const url = localePath(locale, path)
+  const url = pageUrl(locale, path)
 
   return {
     title: absoluteTitle ? { absolute: title } : title,
@@ -155,7 +177,7 @@ export function breadcrumbs(
         "@type": "ListItem",
         position: index + 1,
         name: entry.name,
-        item: `${SITE_URL}${localePath(locale, entry.path)}`,
+        item: pageUrl(locale, entry.path),
       }),
     ),
   }

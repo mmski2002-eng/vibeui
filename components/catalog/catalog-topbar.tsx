@@ -40,16 +40,6 @@ export function CatalogTopbar({
   )
 
   const authed = hydrated && Boolean(session)
-  // vibeui.club — только английский, переключатель языка там не нужен (клик
-  // «Рус» всё равно вернул бы на /en через proxy). Определяем по хосту на
-  // клиенте после гидратации: в шелле headers() звать нельзя — это сняло бы
-  // каталог с статики. До гидратации показываем как на сервере (без мигания
-  // на .ru); на .club переключатель просто исчезает после гидратации.
-  const clubHost =
-    hydrated &&
-    typeof window !== "undefined" &&
-    (window.location.hostname === "vibeui.club" ||
-      window.location.hostname === "www.vibeui.club")
   const sections = [
     { href: "/components", label: t.topbar.components },
     { href: "/blocks", label: t.topbar.blocks },
@@ -140,7 +130,7 @@ export function CatalogTopbar({
 
         <div className="col-start-2 row-start-1 flex items-center justify-end gap-2 lg:col-start-3 lg:gap-3">
           <ThemeSwitch />
-          {clubHost ? null : <LocaleSwitch locale={locale} />}
+          <LocaleSwitch locale={locale} />
           <span
             className="bg-shell-border mx-0.5 hidden h-5 w-px sm:block"
             aria-hidden="true"

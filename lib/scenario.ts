@@ -44,7 +44,7 @@ export function scenarioText(scenario: Scenario, locale: Locale) {
   return {
     label: locale === "ru" ? scenario.label : scenario.en,
     summary: locale === "ru" ? scenario.summary : scenario.summaryEn,
-    demo: english ? `/en${scenario.demo}` : scenario.demo,
+    demo: scenario.demo,
     poster: english ? `/demo/scenarios/en/${scenario.slug}.webp` : `/demo/scenarios/${scenario.slug}.webp`,
     video: !english && VIDEO_SLUGS.has(scenario.slug) ? `/demo/scenarios/${scenario.slug}.mp4` : undefined,
   }
@@ -70,7 +70,7 @@ export function scenarioSections(
         note: locale === "ru" ? section.note : section.noteEn,
         item,
         kind,
-        path: `${locale === "en" ? "/en" : ""}${base}/${section.item}`,
+        path: `${base}/${section.item}`,
         exportName: item.meta?.ai?.export,
         anchor: section.anchor ?? "",
       },

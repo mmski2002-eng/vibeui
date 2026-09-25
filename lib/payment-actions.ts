@@ -110,7 +110,7 @@ export async function startCryptoCheckout(formData: FormData) {
 
   // Крипто-касса не подключена — не роняем кнопку, возвращаем на тарифы.
   if (!isNowpaymentsConfigured()) {
-    redirect("/en/pricing")
+    redirect("/pricing")
   }
 
   const user = await requireUser("en")
@@ -124,8 +124,8 @@ export async function startCryptoCheckout(formData: FormData) {
       orderId: `${user.id}:${planId}`,
       orderDescription: CRYPTO_DESCRIPTION[planId] ?? `VibeUI ${plan.id}`,
       ipnCallbackUrl: `${CLUB_URL}/api/payments/nowpayments/webhook`,
-      successUrl: `${CLUB_URL}/en/account/subscription`,
-      cancelUrl: `${CLUB_URL}/en/pricing`,
+      successUrl: `${CLUB_URL}/account/subscription`,
+      cancelUrl: `${CLUB_URL}/pricing`,
     })
 
     url = invoice.invoice_url
@@ -133,7 +133,7 @@ export async function startCryptoCheckout(formData: FormData) {
     console.error("[crypto] NOWPayments не ответил", error)
   }
 
-  redirect(url ?? "/en/pricing")
+  redirect(url ?? "/pricing")
 }
 
 /**

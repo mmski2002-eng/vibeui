@@ -10,7 +10,7 @@ import { JsonLd } from "@/components/json-ld"
 import { ReportDialog } from "@/components/report/report-dialog"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
-import { breadcrumbs, SITE_URL } from "@/lib/seo"
+import { breadcrumbs, pageUrl, SITE_URL } from "@/lib/seo"
 import { getItemDocUrl } from "@/lib/site"
 import {
   catalogBasePath,
@@ -82,7 +82,7 @@ export async function ItemPage({
           "@type": "SoftwareSourceCode",
           name: block.title ?? block.name,
           description: block.description,
-          url: `${SITE_URL}${localePath(locale, path)}`,
+          url: pageUrl(locale, path),
           codeSampleType: "full solution",
           programmingLanguage: "TypeScript",
           runtimePlatform: "React",

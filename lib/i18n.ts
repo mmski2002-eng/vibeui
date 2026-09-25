@@ -2,16 +2,19 @@ export const LOCALES = ["ru", "en"] as const
 
 export type Locale = (typeof LOCALES)[number]
 
-/** Русский живёт в корне, английский — под `/en`. Старые ссылки не ломаются. */
+/** Русский — vibeui.ru, английский — vibeui.club. В адресе приставки языка нет. */
 export const DEFAULT_LOCALE: Locale = "ru"
 
 export function isLocale(value: string | undefined): value is Locale {
   return value === "ru" || value === "en"
 }
 
-/** Путь внутри сайта для выбранного языка. Принимает путь без префикса. */
-export function localePath(locale: Locale, path: string): string {
-  return locale === DEFAULT_LOCALE ? path : `/en${path === "/" ? "" : path}`
+/**
+ * Публичный путь страницы. Оба языка живут в корне своего домена, поэтому
+ * префикс к пути не добавляется.
+ */
+export function localePath(_locale: Locale, path: string): string {
+  return path
 }
 
 /** Обратная операция: убирает префикс, чтобы переключатель нашёл пару. */

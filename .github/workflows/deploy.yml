@@ -109,11 +109,10 @@ jobs:
           curl -fsS https://vibeui.ru/components/button-001 | grep -q "button-001"
           test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.ru/c/button-001)" = "401"
           curl -fsS https://vibeui.ru/start | grep -q 'id="paste"'
-          curl -fsS https://vibeui.ru/en/start | grep -q 'id="paste"'
-          curl -fsS https://vibeui.ru/en/scenarios/bakery/demo | grep -q 'Order for the morning'
-          curl -fsS https://vibeui.ru/en/scenarios | grep -q '/en/scenarios/bakery/demo'
+          test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.ru/en/start)" = "404"
           curl -fsS https://vibeui.ru/robots.txt | grep -q "Sitemap: https://vibeui.ru/sitemap.xml"
           curl -fsS https://vibeui.ru/sitemap.xml | grep -q "<loc>https://vibeui.ru/components</loc>"
+          curl -fsS https://vibeui.ru/sitemap.xml | grep -q "https://vibeui.club/components"
 
       # vibeui.club — отдельный инстанс на латвийском VPS (не РФ: NOWPayments
       # доступен, латенси для англоязычных ниже). Тот же собранный релиз, свой
@@ -131,3 +130,12 @@ jobs:
           ssh "root@$CLUB_HOST" "REL='$REL' bash -s" < scripts/deploy-remote-club.sh
         env:
           CLUB_HOST: 216.173.70.241
+
+      - name: Проверить живой .club
+        run: |
+          curl -fsS https://vibeui.club/start | grep -q 'id="paste"'
+          curl -fsS https://vibeui.club/scenarios/bakery/demo | grep -q 'Order for the morning'
+          curl -fsS https://vibeui.club/scenarios | grep -q '/scenarios/bakery/demo'
+          test "$(curl -s -o /dev/null -w '%{http_code}' https://vibeui.club/en/start)" = "404"
+          curl -fsS https://vibeui.club/robots.txt | grep -q "Sitemap: https://vibeui.club/sitemap.xml"
+          curl -fsS https://vibeui.club/sitemap.xml | grep -q "<loc>https://vibeui.club/components</loc>"

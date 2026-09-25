@@ -3,17 +3,17 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { LOCALES, localePath, stripLocale, type Locale } from "@/lib/i18n"
+import { LOCALES, stripLocale, type Locale } from "@/lib/i18n"
 
 const LABELS: Record<Locale, string> = { ru: "Рус", en: "Eng" }
+const ORIGIN: Record<Locale, string> = {
+  ru: "https://vibeui.ru",
+  en: "https://vibeui.club",
+}
 
 /**
- * Переключатель языка. Ведёт на ту же страницу в другом языке, а не на
- * главную: человек читает конкретный компонент и хочет прочитать его же.
- *
- * Выбор запоминается кукой: главную язык подбирает по заголовку браузера
- * (см. proxy.ts), и без этой отметки следующий заход снова уводил бы
- * англоязычного гостя с русской версии, которую он только что выбрал сам.
+ * Переключатель языка. Та же страница на другом домене: русский на
+ * vibeui.ru, английский на vibeui.club. Приставки в пути нет.
  */
 export function LocaleSwitch({ locale }: { locale: Locale }) {
   const pathname = usePathname()
@@ -28,10 +28,7 @@ export function LocaleSwitch({ locale }: { locale: Locale }) {
       {LOCALES.map((option) => (
         <Link
           key={option}
-          href={localePath(option, bare)}
-          onClick={() => {
-            document.cookie = `vibeui-locale=${option}; path=/; max-age=31536000; samesite=lax`
-          }}
+          href={`${ORIGIN[option]}${bare === "/" ? "" : bare}`}
           aria-current={option === locale ? "true" : undefined}
           className={
             // Одна пилюля с двумя состояниями, а не две соседние кнопки.

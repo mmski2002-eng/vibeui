@@ -112,13 +112,11 @@ const nextConfig: NextConfig = {
   output: "standalone",
   async redirects() {
     return Object.entries(MERGED_CATEGORIES).flatMap(([base, map]) =>
-      Object.entries(map).flatMap(([child, parent]) =>
-        ["", "/en"].map((prefix) => ({
-          source: `${prefix}/${base}/${child}`,
-          destination: `${prefix}/${base}/${parent}`,
-          permanent: true,
-        })),
-      ),
+      Object.entries(map).map(([child, parent]) => ({
+        source: `/${base}/${child}`,
+        destination: `/${base}/${parent}`,
+        permanent: true,
+      })),
     )
   },
 }
