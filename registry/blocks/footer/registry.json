@@ -4008,7 +4008,7 @@
       "name": "footer-026",
       "type": "registry:block",
       "title": "Подвал с хвоей по углам и монограммой со снежинкой",
-      "description": "Подвал зимней свадьбы на синей ночи: ветки хвои по углам, по центру монограмма со снежинкой, имена антиквой и рукописное «до встречи в снегу», дата и место; ниже ряд якорей, хэштег и «ответьте до…». Невысокий.",
+      "description": "Подвал зимней свадьбы на синей ночи: полночь на весь экран — луна, огромный контурный час «00:00» с бликом и фейерверк из снежинок, раскрывающийся при прокрутке; ниже ветки хвои по углам, монограмма со снежинкой, имена и «до встречи в снегу», дата, якоря, хэштег и «ответьте до…». Без clock — невысокий.",
       "categories": [
         "footer"
       ],
@@ -4021,7 +4021,7 @@
           "target": "@components/vibeui/footer-026.tsx"
         }
       ],
-      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Ветки — два SVG path по углам (правый зеркален scaleX(-1)), хвойный цвет с прозрачностью; на узких экранах меньше. Центр — монограмма с SVG-снежинкой в drop-shadow, имена Cormorant, рукописная строка Marck Script, дата и место капителями с точкой-свечкой. Нижняя строка — якоря капителями, хэштег-капсула на Instagram, «ответьте до» с ссылкой; от 56rem разъезжается по краям. Фон всегда тёмный (light-dark даёт две глубины). Палитра --vibeui-footer-026-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.",
+      "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает.\n\nОдин файл, ноль зависимостей, серверный. Ветки — два SVG path по углам (правый зеркален scaleX(-1)), хвойный цвет с прозрачностью; на узких экранах меньше. Центр — монограмма с SVG-снежинкой в drop-shadow, имена Cormorant, рукописная строка Marck Script, дата и место капителями с точкой-свечкой. Нижняя строка — якоря капителями, хэштег-капсула на Instagram, «ответьте до» с ссылкой; от 56rem разъезжается по краям. Фон всегда тёмный (light-dark даёт две глубины). Палитра --vibeui-footer-026-* нейтральная: чернила и бумага через light-dark(), цвета сайта передаются пропсами accent, ink и background; тёмная тема — по .dark/[data-theme] или tone. Шрифты Cormorant Garamond, Marck Script и Manrope подключаются <link precedence> с Google Fonts, с fallback на системные. accent и background переопределяют цвета, prefers-reduced-motion гасит анимации.\n\nС пропом clock подвал вырастает до min(100svh, 60rem): CSS-луна с кратерами из radial-gradient, час Cormorant 300 контуром (text-stroke) с бликом background-clip:text, три залпа фейерверка — лучи span с углом --a и дальностью --reach, раскрываются по animation-timeline: view() и мерцают; без поддержки scroll-timeline стоят раскрытыми. Пустой clock возвращает невысокий подвал.",
       "meta": {
         "tags": [
           "wedding",
@@ -4053,9 +4053,10 @@
             "импорты  из @/components/vibeui/ — не встраивать их код в блок и не заменять своими; частям уходят только пропсы",
             "ветки хвои по углам и монограмму со светящейся снежинкой",
             "рукописную строку под именами и точку-свечку между датой и местом",
-            "невысокие две строки — подвал завершает, а не повторяет страницу"
+            "полночь с луной, часом и фейерверком по прокрутке — финал страницы; без clock — невысокие две строки"
           ],
           "adapt": [
+            "clock, clockCaption — час финала и подпись; пустой clock — невысокий подвал",
             "initials, names, script, dateLabel, place, hashtag, links",
             "rsvpText, rsvpLabel, rsvpHref",
             "accent и background, tone"
@@ -4107,17 +4108,18 @@
         "i18n": {
           "en": {
             "title": "Footer with pine branches in the corners and a snowflake monogram",
-            "description": "A winter-wedding footer on night blue: pine branches in the corners, a snowflake monogram in the centre, serif names and a handwritten “see you in the snow”, date and place; below a row of anchors, the hashtag and “reply by…”. Short.",
-            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The branches are two SVG paths in the corners (the right one mirrored with scaleX(-1)), pine-coloured with transparency; smaller on narrow screens. The centre has the monogram with an SVG snowflake in a drop-shadow, Cormorant names, a Marck Script line, date and place in small caps with a candle dot. The bottom row has small-caps anchors, an Instagram hashtag pill and “reply by” with a link; from 56rem it spreads to the edges. The background is always dark (light-dark gives two depths). Palette --vibeui-footer-026-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.",
+            "description": "A winter-wedding footer on night blue: midnight across the full screen — a moon, a huge outlined “00:00” with a glint and a snowflake firework that blooms on scroll; below, pine branches in the corners, a snowflake monogram, names and “see you in the snow”, date, anchors, hashtag and “reply by…”. Short without clock.",
+            "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nOne file, zero npm dependencies, server-rendered. The branches are two SVG paths in the corners (the right one mirrored with scaleX(-1)), pine-coloured with transparency; smaller on narrow screens. The centre has the monogram with an SVG snowflake in a drop-shadow, Cormorant names, a Marck Script line, date and place in small caps with a candle dot. The bottom row has small-caps anchors, an Instagram hashtag pill and “reply by” with a link; from 56rem it spreads to the edges. The background is always dark (light-dark gives two depths). Palette --vibeui-footer-026-* is neutral: ink and paper via light-dark(), the site colours come through the accent, ink and background props; dark theme via .dark/[data-theme] or tone. Cormorant Garamond, Marck Script and Manrope come via <link precedence> from Google Fonts with system fallbacks. accent and background override colours, prefers-reduced-motion disables animations.\n\nWith the clock prop the footer grows to min(100svh, 60rem): a CSS moon with radial-gradient craters, the hour in outlined Cormorant 300 (text-stroke) with a background-clip:text glint, three firework bursts — span rays with angle --a and reach --reach that bloom on animation-timeline: view() and twinkle; without scroll-timeline support they stay open. An empty clock brings back the short footer.",
             "ai": {
               "summary": "A self-contained winter-wedding footer: pine in the corners, a snowflake monogram, names and “see you in the snow”, date and place, anchors, hashtag and “reply by”. All via props, always dark.",
               "preserve": [
                 "the  imports from @/components/vibeui/ — do not inline their code into the block or swap in your own; the parts receive props only",
                 "the pine branches in the corners and the monogram with a glowing snowflake",
                 "the handwritten line under the names and the candle dot between date and place",
-                "two short rows — the footer closes rather than repeats the page"
+                "midnight with the moon, hour and scroll firework — the page finale; without clock, two short rows"
               ],
               "adapt": [
+                "clock, clockCaption — the finale hour and caption; empty clock gives the short footer",
                 "initials, names, script, dateLabel, place, hashtag, links",
                 "rsvpText, rsvpLabel, rsvpHref",
                 "accent and background, tone"
@@ -4182,7 +4184,8 @@
                   }
                 ],
                 "rsvpText": "Please reply",
-                "rsvpLabel": "by 1 November"
+                "rsvpLabel": "by 1 November",
+                "clockCaption": "midnight · the last dance"
               }
             }
           }

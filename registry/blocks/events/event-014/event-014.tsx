@@ -85,6 +85,9 @@ container-type:inline-size;
 [data-vibeui-block="event-014"] [data-part="grid"]{grid-template-columns:minmax(0,1.5fr) minmax(16rem,.7fr);gap:3rem}
 [data-vibeui-block="event-014"] [data-part="looks"]{grid-template-columns:1fr 1fr}
 }
+/* Заголовок оттаивает при входе в кадр: иней с него сходит по мере прокрутки. Без поддержки scroll-timeline — просто виден. */
+@keyframes vibeui-event-014-thaw{from{opacity:.15;filter:blur(14px);text-shadow:0 0 24px rgb(207 224 245 / .9)}60%{opacity:.9}to{opacity:1;filter:blur(0);text-shadow:0 0 0 rgb(207 224 245 / 0)}}
+@supports (animation-timeline:view()){[data-vibeui-block="event-014"] [data-part="title"]{animation:vibeui-event-014-thaw linear both;animation-timeline:view();animation-range:entry 10% cover 35%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-014"] *{animation:none!important;transition:none!important}}`
 
 const ICONS: Record<string, string> = {

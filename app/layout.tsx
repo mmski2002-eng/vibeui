@@ -81,7 +81,10 @@ export const metadata: Metadata = {
     google:
       process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ||
       "HcuGcVeu4NGN_Ruulsn7Xkd8VQB8rw_iftfCCZwLLjE",
-    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "73c966fb1814e673",
+    yandex: [
+      process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "73c966fb1814e673",
+      "76d9779913efc610",
+    ],
   },
 }
 

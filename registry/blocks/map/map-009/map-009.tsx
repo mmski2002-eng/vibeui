@@ -104,6 +104,9 @@ container-type:inline-size;
 @container (min-width:72rem){
 [data-vibeui-block="map-009"] [data-part="ways"]{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
+/* Заголовок оттаивает при входе в кадр: иней с него сходит по мере прокрутки. Без поддержки scroll-timeline — просто виден. */
+@keyframes vibeui-map-009-thaw{from{opacity:.15;filter:blur(14px);text-shadow:0 0 24px rgb(207 224 245 / .9)}60%{opacity:.9}to{opacity:1;filter:blur(0);text-shadow:0 0 0 rgb(207 224 245 / 0)}}
+@supports (animation-timeline:view()){[data-vibeui-block="map-009"] [data-part="title"]{animation:vibeui-map-009-thaw linear both;animation-timeline:view();animation-range:entry 10% cover 35%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="map-009"] *{animation:none!important;transition:none!important}}`
 
 

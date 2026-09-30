@@ -72,4 +72,7 @@ export const PREVIEWS = {
   "bento-014": dynamic(() =>
     import("@/registry/blocks/layout/bento-014/bento-014").then((module) => module.Bento014),
   ),
+  "layout-017": dynamic(() =>
+    import("@/registry/blocks/layout/layout-017/layout-017").then((module) => module.Layout017),
+  ),
 } satisfies PreviewMap

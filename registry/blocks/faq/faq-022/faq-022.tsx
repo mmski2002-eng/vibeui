@@ -63,6 +63,9 @@ container-type:inline-size;
 @container (min-width:56rem){
 [data-vibeui-block="faq-022"] [data-part="shell"]{padding:5rem 2.5rem}
 }
+/* Заголовок оттаивает при входе в кадр: иней с него сходит по мере прокрутки. Без поддержки scroll-timeline — просто виден. */
+@keyframes vibeui-faq-022-thaw{from{opacity:.15;filter:blur(14px);text-shadow:0 0 24px rgb(207 224 245 / .9)}60%{opacity:.9}to{opacity:1;filter:blur(0);text-shadow:0 0 0 rgb(207 224 245 / 0)}}
+@supports (animation-timeline:view()){[data-vibeui-block="faq-022"] [data-part="title"]{animation:vibeui-faq-022-thaw linear both;animation-timeline:view();animation-range:entry 10% cover 35%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="faq-022"] *{animation:none!important;transition:none!important}}`
 
 /** Вопросы зимней свадьбы: аккордеон на стекле с инеем, маркер-снежинка поворачивается и загорается, один открыт за раз. */

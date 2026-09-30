@@ -62,7 +62,7 @@ container-type:inline-size;
 [data-vibeui-block="navbar-027"]{box-sizing:border-box;position:relative;display:block;color:var(--vibeui-navbar-027-fg);font-family:var(--vibeui-navbar-027-font);font-size:1rem;line-height:1.3}
 [data-vibeui-block="navbar-027"] *{box-sizing:border-box}
 [data-vibeui-block="navbar-027"] [data-part="action"]{display:none}
-[data-vibeui-block="navbar-027"] [data-part="sheet"] [data-part="action"]{margin-top:.75rem;align-self:flex-start}
+[data-vibeui-block="navbar-027"] [data-part="sheet"] [data-part="action"]{display:inline-flex;margin-top:.75rem;align-self:flex-start}
 [data-vibeui-block="navbar-027"][data-placement="fixed"]{position:fixed;top:0;left:0;right:0;z-index:40}
 [data-vibeui-block="navbar-027"][data-placement="fixed"]:not([data-scrolled="true"]):not([data-open="true"]){--vibeui-navbar-027-fg:#f2eee6;--vibeui-navbar-027-muted:rgb(242 238 230 / .75);--vibeui-navbar-027-line:rgb(242 238 230 / .3);text-shadow:0 1px 14px rgb(11 18 32 / .6)}
 [data-vibeui-block="navbar-027"] a{color:inherit;text-decoration:none}
@@ -108,6 +108,7 @@ container-type:inline-size;
 @container (min-width:60rem){
 [data-vibeui-block="navbar-027"] [data-part="links"]{display:flex}
 [data-vibeui-block="navbar-027"] [data-part="music-label"]{display:inline}
+[data-vibeui-block="navbar-027"] [data-part="tools"] > [data-part="action"]{display:inline-flex}
 [data-vibeui-block="navbar-027"] [data-part="toggle"],[data-vibeui-block="navbar-027"] [data-part="sheet"]{display:none!important}
 }
 /* Имена — только когда рядом с монограммой, разделами и кнопками есть реальный

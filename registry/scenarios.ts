@@ -1134,6 +1134,14 @@ export const SCENARIOS: Scenario[] = [
         noteEn: "A garland with four bulbs lighting up on scroll, frames underneath.",
       },
       {
+        item: "layout-017",
+        anchor: "",
+        role: "Пауза",
+        roleEn: "Interlude",
+        note: "Огромная контурная дата во всю ширину, тёплый блик по прокрутке, «когда стемнеет» и сугроб.",
+        noteEn: "A huge outlined date across the full width, a warm glint on scroll, “when it gets dark” and a snowdrift.",
+      },
+      {
         item: "event-013",
         anchor: "evening",
         role: "Вечер",

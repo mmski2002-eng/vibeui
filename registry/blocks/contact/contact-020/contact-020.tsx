@@ -181,6 +181,9 @@ container-type:inline-size;
 [data-vibeui-block="contact-020"] [data-part="form"]{padding:2.25rem 2.5rem}
 [data-vibeui-block="contact-020"] [data-part="envelope"]{position:sticky;top:5rem}
 }
+/* Заголовок оттаивает при входе в кадр: иней с него сходит по мере прокрутки. Без поддержки scroll-timeline — просто виден. */
+@keyframes vibeui-contact-020-thaw{from{opacity:.15;filter:blur(14px);text-shadow:0 0 24px rgb(207 224 245 / .9)}60%{opacity:.9}to{opacity:1;filter:blur(0);text-shadow:0 0 0 rgb(207 224 245 / 0)}}
+@supports (animation-timeline:view()){[data-vibeui-block="contact-020"] [data-part="title"]{animation:vibeui-contact-020-thaw linear both;animation-timeline:view();animation-range:entry 10% cover 35%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="contact-020"] *{animation:none!important;transition:none!important}[data-vibeui-block="contact-020"] [data-part="envelope"][data-sent="true"] [data-part="stamp"]{opacity:.95}}
 /* возвращено после разборки списков селекторов */
 [data-vibeui-block="contact-020"] [data-part="choice"]:focus-visible{outline:2px solid var(--vibeui-contact-020-wax);outline-offset:3px}

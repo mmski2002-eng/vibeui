@@ -44,10 +44,11 @@ const STYLES = `
 [data-vibeui-block="card-116"] [data-part="name"]{margin:0;padding-right:2rem;font-family:var(--vibeui-card-116-display);font-size:1.7rem;font-weight:500;line-height:1.1}
 [data-vibeui-block="card-116"] [data-part="role"]{font-family:var(--vibeui-card-116-script);font-size:1.15rem;color:var(--vibeui-card-116-accent)}
 [data-vibeui-block="card-116"] [data-part="text"]{margin:.4rem 0 0;font-size:.92rem;color:var(--vibeui-card-116-muted)}
-[data-vibeui-block="card-116"] [data-part="contact"]{display:inline-flex;align-items:center;gap:.45rem;margin-top:.8rem;width:max-content;font-family:var(--vibeui-card-116-display);font-size:.98rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--vibeui-card-116-silver);border-bottom:1px solid var(--vibeui-card-116-line);transition:color .25s,border-color .25s}
+[data-vibeui-block="card-116"] [data-part="contact"]{display:inline-flex;align-items:center;gap:.45rem;margin-top:.8rem;width:fit-content;max-width:100%;font-family:var(--vibeui-card-116-display);font-size:.98rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--vibeui-card-116-silver);border-bottom:1px solid var(--vibeui-card-116-line);transition:color .25s,border-color .25s}
 [data-vibeui-block="card-116"] [data-part="contact"]:hover{color:var(--vibeui-card-116-accent);border-color:var(--vibeui-card-116-accent)}
 [data-vibeui-block="card-116"] [data-part="contact"] svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 @container (min-width:56rem){
+[data-vibeui-block="card-116"] > *{grid-column:1/-1}
 [data-vibeui-block="card-116"] [data-part="pic"]{grid-row:auto;width:7rem;height:7rem;margin-bottom:.6rem}
 [data-vibeui-block="card-116"] [data-part="name"]{padding-right:0}
 }

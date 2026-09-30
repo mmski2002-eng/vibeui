@@ -31,7 +31,9 @@ const STYLES = `
 [data-vibeui-block="card-132"][data-lit="true"]{opacity:1;transform:none}
 [data-vibeui-block="card-132"] [data-part="dot"]{position:absolute;left:-1.6rem;top:.45rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--vibeui-card-132-bg);border:1px solid var(--vibeui-card-132-silver);transition:background .6s,border-color .6s,box-shadow .6s}
 [data-vibeui-block="card-132"][data-lit="true"] [data-part="dot"]{background:var(--vibeui-card-132-accent);border-color:var(--vibeui-card-132-accent)}
-[data-vibeui-block="card-132"][data-now="true"] [data-part="dot"]{box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-card-132-accent) 25%,transparent)}
+[data-vibeui-block="card-132"] [data-part="dot"]{transition:background .6s,border-color .6s,box-shadow .6s,transform .6s cubic-bezier(.3,1.6,.4,1)}
+[data-vibeui-block="card-132"][data-lit="true"] [data-part="dot"]{box-shadow:0 0 .6rem .15rem color-mix(in oklab,var(--vibeui-card-132-accent) 60%,transparent),0 0 1.8rem .3rem color-mix(in oklab,var(--vibeui-card-132-accent) 22%,transparent)}
+[data-vibeui-block="card-132"][data-now="true"] [data-part="dot"]{transform:scale(1.45);box-shadow:0 0 0 4px color-mix(in oklab,var(--vibeui-card-132-accent) 25%,transparent),0 0 1rem .3rem color-mix(in oklab,var(--vibeui-card-132-accent) 70%,transparent),0 0 2.6rem .7rem color-mix(in oklab,var(--vibeui-card-132-accent) 28%,transparent)}
 [data-vibeui-block="card-132"] [data-part="date"]{display:block;margin:0 0 .5rem;font-family:var(--vibeui-card-132-display);font-style:italic;font-size:1rem;font-weight:500;letter-spacing:.02em;color:var(--vibeui-card-132-accent)}
 [data-vibeui-block="card-132"] figure{position:relative;margin:0 0 .8rem;aspect-ratio:3/2;overflow:hidden;border-radius:.5rem;background:var(--vibeui-card-132-card);border:1px solid var(--vibeui-card-132-line)}
 [data-vibeui-block="card-132"] img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.85) brightness(.9);transition:filter .7s}

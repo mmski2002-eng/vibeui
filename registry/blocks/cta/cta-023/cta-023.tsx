@@ -82,6 +82,9 @@ container-type:inline-size;
 [data-vibeui-block="cta-023"] [data-part="shell"]{padding:5.5rem 2.5rem}
 [data-vibeui-block="cta-023"] [data-part="grid"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}
 }
+/* Заголовок оттаивает при входе в кадр: иней с него сходит по мере прокрутки. Без поддержки scroll-timeline — просто виден. */
+@keyframes vibeui-cta-023-thaw{from{opacity:.15;filter:blur(14px);text-shadow:0 0 24px rgb(207 224 245 / .9)}60%{opacity:.9}to{opacity:1;filter:blur(0);text-shadow:0 0 0 rgb(207 224 245 / 0)}}
+@supports (animation-timeline:view()){[data-vibeui-block="cta-023"] [data-part="title"]{animation:vibeui-cta-023-thaw linear both;animation-timeline:view();animation-range:entry 10% cover 35%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="cta-023"] *{animation:none!important;transition:none!important}[data-vibeui-block="cta-023"] [data-part="hearth"][data-copied="true"] [data-part="stamp"]{opacity:.95}}`
 
 /** Подарки «на камин»: карточка-камин с живым огнём, реквизиты на полке, копирование ставит штамп «Спасибо». */

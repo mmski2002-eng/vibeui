@@ -82,6 +82,9 @@ container-type:inline-size;
 [data-vibeui-block="event-013"] [data-part="moon"] i{top:-14rem;width:4rem;height:4rem;left:-2rem}
 [data-vibeui-block="event-013"] [data-part="list"]{padding-left:1rem}
 }
+/* Заголовок оттаивает при входе в кадр: иней с него сходит по мере прокрутки. Без поддержки scroll-timeline — просто виден. */
+@keyframes vibeui-event-013-thaw{from{opacity:.15;filter:blur(14px);text-shadow:0 0 24px rgb(207 224 245 / .9)}60%{opacity:.9}to{opacity:1;filter:blur(0);text-shadow:0 0 0 rgb(207 224 245 / 0)}}
+@supports (animation-timeline:view()){[data-vibeui-block="event-013"] [data-part="title"]{animation:vibeui-event-013-thaw linear both;animation-timeline:view();animation-range:entry 10% cover 35%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="event-013"] *{animation:none!important;transition:none!important}}`
 
 /** Программа вечера: луна ползёт по небу при прокрутке, небо темнеет, пункты вечера подсвечиваются свечой. */

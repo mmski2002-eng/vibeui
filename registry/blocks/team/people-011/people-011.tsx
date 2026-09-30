@@ -59,11 +59,15 @@ container-type:inline-size;
 [data-vibeui-block="people-011"] [data-part="title"]{margin:0;font-family:var(--vibeui-people-011-display);font-size:clamp(2.2rem,5.5cqi,3.8rem);font-weight:500;line-height:1.05}
 [data-vibeui-block="people-011"] [data-part="lede"]{max-width:36rem;margin:1rem 0 0;color:var(--vibeui-people-011-muted)}
 [data-vibeui-block="people-011"] [data-part="grid"]{display:grid;gap:1.25rem;margin:2.5rem 0 0;padding:0;list-style:none}
+[data-vibeui-block="people-011"] [data-part="grid"] > li{display:grid}
 @keyframes vibeui-people-011-flicker{0%,100%{transform:scaleX(1) scaleY(1)}30%{transform:scaleX(.9) scaleY(1.1)}60%{transform:scaleX(1.05) scaleY(.92)}}
 @container (min-width:56rem){
 [data-vibeui-block="people-011"] [data-part="shell"]{padding:5rem 2.5rem}
 [data-vibeui-block="people-011"] [data-part="grid"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+/* Заголовок оттаивает при входе в кадр: иней с него сходит по мере прокрутки. Без поддержки scroll-timeline — просто виден. */
+@keyframes vibeui-people-011-thaw{from{opacity:.15;filter:blur(14px);text-shadow:0 0 24px rgb(207 224 245 / .9)}60%{opacity:.9}to{opacity:1;filter:blur(0);text-shadow:0 0 0 rgb(207 224 245 / 0)}}
+@supports (animation-timeline:view()){[data-vibeui-block="people-011"] [data-part="title"]{animation:vibeui-people-011-thaw linear both;animation-timeline:view();animation-range:entry 10% cover 35%}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="people-011"] *{animation:none!important;transition:none!important}}`
 
 /** «Кто встречает»: свидетели и организатор в карточках со свечкой — портрет в круге, роль курсивом, контакт; наведение — свечка ярче. */

@@ -9,6 +9,8 @@ export type Background006Props = {
   wind?: number
   /** Скорость падения, 1 — спокойный снег. */
   speed?: number
+  /** Размер снежинок, 1 — обычный. Крупные редкие хлопья для переднего плана — 3–4. */
+  scale?: number
   /** Цвет снежинок. */
   color?: string
   /** Форма: "dot" — мягкие точки, "star" — шестилучевые снежинки-кристаллы. */
@@ -70,6 +72,7 @@ export function Background006({
   density = 1,
   wind = 0.25,
   speed = 1,
+  scale = 1,
   color = "#ffffff",
   shape = "dot",
   backdrop,
@@ -80,14 +83,14 @@ export function Background006({
   style,
 }: Background006Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const settings = useRef({ density, wind, speed, color, shape, paused })
+  const settings = useRef({ density, wind, speed, scale, color, shape, paused })
 
   // Свежие значения для цикла анимации без перезапуска эффекта. Обновляем в
   // эффекте, а не во время рендера: правка ref в рендере ломает конкурентный
   // режим и запрещена react-hooks/refs.
   useEffect(() => {
-    settings.current = { density, wind, speed, color, shape, paused }
-  }, [density, wind, speed, color, shape, paused])
+    settings.current = { density, wind, speed, scale, color, shape, paused }
+  }, [density, wind, speed, scale, color, shape, paused])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -149,7 +152,7 @@ export function Background006({
     }
 
     const draw = (delta: number) => {
-      const { wind: gust, speed: pace, color: ink, shape: form } = settings.current
+      const { wind: gust, speed: pace, scale: grow, color: ink, shape: form } = settings.current
       context.clearRect(0, 0, width, height)
       const star = form === "star"
       if (star) {
@@ -174,7 +177,7 @@ export function Background006({
           else if (flake.x < -6) flake.x = width + 6
         }
         if (star && sprite) {
-          const size = flake.r * 4.2
+          const size = flake.r * 4.2 * grow
           context.globalAlpha = 0.3 + flake.depth * 0.55
           context.save()
           context.translate(flake.x, flake.y)
@@ -185,12 +188,12 @@ export function Background006({
         } else {
           context.globalAlpha = 0.28 + flake.depth * 0.6
           context.beginPath()
-          context.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2)
+          context.arc(flake.x, flake.y, flake.r * grow, 0, Math.PI * 2)
           context.fill()
           if (flake.depth > 0.8) {
             context.globalAlpha = 0.12
             context.beginPath()
-            context.arc(flake.x, flake.y, flake.r * 2.2, 0, Math.PI * 2)
+            context.arc(flake.x, flake.y, flake.r * 2.2 * grow, 0, Math.PI * 2)
             context.fill()
           }
         }

@@ -3693,6 +3693,166 @@
         }
       },
       "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+    },
+    {
+      "name": "layout-017",
+      "type": "registry:block",
+      "title": "Типографская пауза-разворот",
+      "description": "Пауза между секциями: одна огромная контурная строка во всю ширину (дата, число, слово), по ней при прокрутке проходит тёплый блик, сверху подпись капителью, поверх рукописная строка, снизу сугроб вместо резкого края. Разделитель и воздух для длинного лендинга, свадьбы, приглашения.",
+      "categories": [
+        "layout"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "layout-017/layout-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/layout-017.tsx"
+        }
+      ],
+      "docs": "Один файл, ноль зависимостей, серверный. Строка — Cormorant Garamond 300, прозрачная заливка с -webkit-text-stroke и фоном-бликом через background-clip:text; размер от ширины блока (21cqi), white-space:nowrap. Анимации на animation-timeline: view(): блик проезжает строку слева направо, строка сдвигается на ±5% по X, рукописная строка поднимается и проявляется. Без поддержки scroll-timeline блик стоит посередине, всё видно сразу; prefers-reduced-motion гасит анимации. Сугроб — SVG из двух path цвета чернил с прозрачностью 4–7%, ложится на любой фон. Палитра --vibeui-layout-017-* нейтральная через light-dark(), цвета сайта — пропсами accent, ink, background (в т.ч. transparent, чтобы показать фон страницы); тёмная тема — по .dark/[data-theme] или tone. Шрифты с Google Fonts через <link precedence> с системным fallback.",
+      "meta": {
+        "tags": [
+          "divider",
+          "interlude",
+          "typography",
+          "kinetic",
+          "outline",
+          "scroll",
+          "wedding",
+          "date",
+          "big-type"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "cardControls": [
+          "line",
+          "script",
+          "tone",
+          "accent"
+        ],
+        "ai": {
+          "export": "Layout017",
+          "usage": "<Layout017\n  caption=\"Суббота · Лесная усадьба · 16:00\"\n  line=\"18 · XII\"\n  script=\"когда стемнеет\"\n  background=\"transparent\"\n/>",
+          "summary": "Типографская пауза между секциями: огромная контурная строка во всю ширину, тёплый блик по прокрутке, рукописная строка поверх и сугроб по нижнему краю. Всё пропсами, анимации только на CSS scroll-timeline.",
+          "preserve": [
+            "одну строку во всю ширину контурной антиквой, без заливки — пауза держится на масштабе, а не на тексте",
+            "блик и сдвиг строки на animation-timeline: view() без JS и статичный вид без поддержки",
+            "рукописную строку с наклоном поверх нижнего края строки",
+            "сугроб по нижнему краю вместо резкой границы секции"
+          ],
+          "adapt": [
+            "line, script, caption — текст паузы; line короткая, до 10 знаков",
+            "drift — убрать сугроб",
+            "accent, ink, background, tone"
+          ],
+          "notes": [
+            "Ставьте между плотными секциями, не чаще одного-двух раз на страницу.",
+            "background=\"transparent\" — чтобы под паузой шёл общий фон страницы."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "line",
+            "label": "Строка",
+            "type": "text",
+            "default": "18 · XII",
+            "maxLength": 12
+          },
+          {
+            "prop": "script",
+            "label": "Рукописная",
+            "type": "text",
+            "default": "когда стемнеет",
+            "maxLength": 30
+          },
+          {
+            "prop": "drift",
+            "label": "Сугроб",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "auto"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Typographic interlude spread",
+            "description": "A pause between sections: one huge outlined line across the full width (a date, a number, a word), a warm glint slides across it on scroll, a small-caps caption above, a handwritten line on top and a snowdrift at the bottom instead of a hard edge. A divider and breathing room for a long landing page, a wedding or an invitation.",
+            "docs": "One file, zero dependencies, server-rendered. The line is Cormorant Garamond 300 with a transparent fill, -webkit-text-stroke and a glint background via background-clip:text; sized from the block width (21cqi), white-space:nowrap. Animations run on animation-timeline: view(): the glint travels left to right, the line shifts ±5% on X, the handwritten line rises and fades in. Without scroll-timeline support the glint sits in the middle and everything is visible at once; prefers-reduced-motion disables animations. The snowdrift is an SVG of two ink-coloured paths at 4–7% opacity, so it sits on any background. Palette --vibeui-layout-017-* is neutral via light-dark(), site colours come through the accent, ink and background props (including transparent to show the page background); dark theme via .dark/[data-theme] or tone. Fonts come from Google Fonts via <link precedence> with system fallbacks.",
+            "ai": {
+              "summary": "A typographic pause between sections: a huge outlined line across the full width, a warm glint on scroll, a handwritten line on top and a snowdrift along the bottom edge. All via props, animations on CSS scroll-timeline only.",
+              "preserve": [
+                "one full-width line in outlined serif with no fill — the pause relies on scale, not on text",
+                "the glint and line shift on animation-timeline: view() without JS, and the static look without support",
+                "the tilted handwritten line over the bottom of the big line",
+                "the snowdrift along the bottom edge instead of a hard section border"
+              ],
+              "adapt": [
+                "line, script, caption — the pause text; keep line short, up to 10 characters",
+                "drift — remove the snowdrift",
+                "accent, ink, background, tone"
+              ],
+              "notes": [
+                "Place it between dense sections, no more than once or twice per page.",
+                "background=\"transparent\" lets the page background run under the pause."
+              ],
+              "usage": "<Layout017\n  caption=\"Saturday · Forest estate · 4 pm\"\n  line=\"18 · XII\"\n  script=\"when it gets dark\"\n  background=\"transparent\"\n/>"
+            },
+            "controls": {
+              "line": {
+                "label": "Line",
+                "default": "18 · XII"
+              },
+              "script": {
+                "label": "Handwritten",
+                "default": "when it gets dark"
+              },
+              "drift": {
+                "label": "Snowdrift"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "caption": "Saturday · Forest estate · 4 pm",
+                "script": "when it gets dark"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

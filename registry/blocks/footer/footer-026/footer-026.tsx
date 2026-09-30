@@ -11,6 +11,9 @@ export type Footer026Props = {
   /** Рукописная строка: «до встречи в снегу». */
   script?: string
   hashtag?: string
+  /** Час финала крупной антиквой: «00:00». С ним подвал вырастает в полный экран — луна и фейерверк. Пусто — невысокий подвал. */
+  clock?: string
+  clockCaption?: string
   links?: readonly Footer026Link[]
   rsvpText?: string
   rsvpLabel?: string
@@ -26,7 +29,9 @@ export type Footer026Props = {
 // Подвал зимней свадьбы: ветки хвои по углам (SVG-линии), по центру
 // монограмма со снежинкой, имена антиквой и рукописное «до встречи в
 // снегу», дата и место; ниже ряд якорей, хэштег и «ответьте до…».
-// Невысокий, фон — синяя ночь. Серверный.
+// С clock подвал становится полуночью на весь экран: луна, час антиквой и
+// фейерверк, который раскрывается по мере прокрутки (scroll-timeline, без
+// JS; без поддержки — стоит раскрытым). Без clock — невысокий. Серверный.
 const FONTS = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marck+Script&family=Manrope:wght@400;500;600;700&display=swap"
 
 const STYLES = `
@@ -71,6 +76,23 @@ container-type:inline-size;
 [data-vibeui-block="footer-026"] [data-part="bottom"]{justify-content:space-between}
 [data-vibeui-block="footer-026"] [data-part="pine"]{width:20rem;height:20rem}
 }
+/* Полночь: подвал на весь экран, луна, час и фейерверк из снежинок. */
+[data-vibeui-block="footer-026"][data-midnight="true"]{display:grid;align-content:end;min-height:min(100svh,60rem)}
+[data-vibeui-block="footer-026"] [data-part="midnight"]{position:relative;display:grid;justify-items:center;gap:.4rem;padding:7rem 1.25rem 1rem;text-align:center}
+[data-vibeui-block="footer-026"] [data-part="clock"]{margin:0;font-family:var(--vibeui-footer-026-display);font-size:clamp(5rem,24cqi,15rem);font-weight:300;line-height:.85;letter-spacing:-.03em;font-variant-numeric:lining-nums;color:transparent;-webkit-text-stroke:1px color-mix(in oklab,var(--vibeui-footer-026-fg) 55%,transparent);background:linear-gradient(100deg,transparent 30%,color-mix(in oklab,var(--vibeui-footer-026-accent) 70%,transparent) 48%,transparent 66%) 0 0/250% 100% no-repeat text;animation:vibeui-footer-026-glint 7s ease-in-out infinite}
+[data-vibeui-block="footer-026"] [data-part="clock-caption"]{font-family:var(--vibeui-footer-026-script);font-size:clamp(1.3rem,3cqi,1.9rem);color:var(--vibeui-footer-026-accent)}
+@keyframes vibeui-footer-026-glint{0%,15%{background-position:100% 0}60%,100%{background-position:0 0}}
+[data-vibeui-block="footer-026"] [data-part="moon"]{position:absolute;right:12%;top:2.5rem;width:clamp(3.5rem,9cqi,6.5rem);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 36% 38%,rgb(0 0 0 / .08) 0 9%,transparent 10%),radial-gradient(circle at 64% 62%,rgb(0 0 0 / .07) 0 12%,transparent 13%),radial-gradient(circle at 40% 35%,#fffaf0,#e9e1cf 70%,#d8ccb4);box-shadow:0 0 2.5rem .6rem rgb(242 238 230 / .22),0 0 9rem 2rem rgb(159 176 200 / .16);pointer-events:none}
+[data-vibeui-block="footer-026"] [data-part="burst"]{position:absolute;width:0;height:0;pointer-events:none}
+[data-vibeui-block="footer-026"] [data-part="burst"] i{position:absolute;left:-1px;bottom:0;width:2px;height:var(--vibeui-footer-026-tail,2.4rem);border-radius:2px;transform-origin:50% 100%;background:linear-gradient(to top,transparent,var(--vibeui-footer-026-spark));transform:rotate(var(--a)) translateY(var(--reach));opacity:.85}
+[data-vibeui-block="footer-026"] [data-part="burst"] i::before{content:"";position:absolute;left:50%;top:-3px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--vibeui-footer-026-spark);box-shadow:0 0 8px 2px var(--vibeui-footer-026-spark);animation:vibeui-footer-026-twinkle 2.4s ease-in-out infinite;animation-delay:var(--d,0s)}
+[data-vibeui-block="footer-026"] [data-part="burst"]:nth-of-type(1){left:18%;top:5rem;--vibeui-footer-026-spark:var(--vibeui-footer-026-accent)}
+[data-vibeui-block="footer-026"] [data-part="burst"]:nth-of-type(2){left:42%;top:3rem;--vibeui-footer-026-spark:#e8f0fb;--vibeui-footer-026-tail:1.6rem}
+[data-vibeui-block="footer-026"] [data-part="burst"]:nth-of-type(3){left:84%;top:19rem;--vibeui-footer-026-spark:var(--vibeui-footer-026-accent);--vibeui-footer-026-tail:1.9rem}
+@keyframes vibeui-footer-026-twinkle{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes vibeui-footer-026-bloom{from{transform:rotate(var(--a)) translateY(0) scaleY(.2);opacity:0}25%{opacity:1}to{transform:rotate(var(--a)) translateY(var(--reach)) scaleY(1);opacity:.85}}
+@supports (animation-timeline:view()){[data-vibeui-block="footer-026"] [data-part="burst"] i{animation:vibeui-footer-026-bloom ease-out both;animation-timeline:view();animation-range:entry 10% cover 55%}[data-vibeui-block="footer-026"] [data-part="burst"]:nth-of-type(2) i{animation-range:entry 25% cover 65%}[data-vibeui-block="footer-026"] [data-part="burst"]:nth-of-type(3) i{animation-range:entry 35% cover 75%}}
+@container (max-width:40rem){[data-vibeui-block="footer-026"] [data-part="burst"]:nth-of-type(n+2){display:none}[data-vibeui-block="footer-026"] [data-part="burst"]:nth-of-type(1){left:28%;top:5.5rem;scale:.7}[data-vibeui-block="footer-026"] [data-part="moon"]{right:10%;top:2rem}[data-vibeui-block="footer-026"] [data-part="midnight"]{padding-top:10rem}}
 @media (prefers-reduced-motion:reduce){[data-vibeui-block="footer-026"] *{animation:none!important;transition:none!important}}
 [data-vibeui-block="footer-026"] [data-part="links"]{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem 1.2rem;margin:0;padding:0;list-style:none}
 [data-vibeui-block="footer-026"] [data-part="links"] a{font-family:var(--vibeui-footer-026-display);font-size:.98rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;opacity:.8;transition:opacity .25s,color .25s}
@@ -78,6 +100,9 @@ container-type:inline-size;
 `
 
 const PINE = "M10 130c30-30 60-60 100-90M40 100c-4-12-2-24 2-34M40 100c10-8 22-12 34-12M62 78c-3-11-1-22 3-30M62 78c10-6 22-9 33-8M84 58c-2-10 0-20 4-28M84 58c9-5 20-7 30-6M30 110c-6-10-6-22-3-32M30 110c8-2 18-1 27 2"
+
+// Лучей в каждом из трёх залпов.
+const BURSTS = [14, 10, 12] as const
 
 export type LinksLink = { label: string; href: string }
 
@@ -123,6 +148,8 @@ export function Footer026({
   place = "Лесная усадьба",
   script = "до встречи в снегу",
   hashtag = "#лераидимавснегу",
+  clock = "00:00",
+  clockCaption = "полночь · последний танец",
   links = [
     { label: "История", href: "#story" },
     { label: "Вечер", href: "#evening" },
@@ -153,13 +180,27 @@ export function Footer026({
       <style href="vibeui-footer-026" precedence="medium">
         {STYLES}
       </style>
-      <footer data-vibeui-block="footer-026" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
+      <footer data-vibeui-block="footer-026" data-tone={tone === "auto" ? undefined : tone} data-midnight={clock ? "true" : undefined} className={className} style={palette}>
         <svg data-part="pine" viewBox="0 0 140 140" aria-hidden="true">
           <path d={PINE} />
         </svg>
         <svg data-part="pine" viewBox="0 0 140 140" aria-hidden="true">
           <path d={PINE} />
         </svg>
+        {clock ? (
+          <div data-part="midnight">
+            <i data-part="moon" aria-hidden="true" />
+            {BURSTS.map((count, burst) => (
+              <span key={burst} data-part="burst" aria-hidden="true">
+                {Array.from({ length: count }, (_, ray) => (
+                  <i key={ray} style={{ "--a": `${(360 / count) * ray + burst * 11}deg`, "--reach": `-${2.2 + (ray % 3) * 0.9}rem`, "--d": `${(ray % 5) * 0.37}s` } as CSSProperties} />
+                ))}
+              </span>
+            ))}
+            <p data-part="clock">{clock}</p>
+            {clockCaption ? <span data-part="clock-caption">{clockCaption}</span> : null}
+          </div>
+        ) : null}
         <div data-part="shell">
           <div>
             <span data-part="mono">

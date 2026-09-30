@@ -1215,7 +1215,7 @@
             "pointer-events:none — слой не перехватывает клики страницы"
           ],
           "adapt": [
-            "density, wind, speed, color, backdrop, zIndex",
+            "density, wind, speed, scale, color, backdrop, zIndex",
             "fixed — на весь экран или внутри родителя; paused — выключить не размонтируя",
             "className и style"
           ],
@@ -1276,7 +1276,7 @@
                 "pointer-events:none — the layer never intercepts page clicks"
               ],
               "adapt": [
-                "density, wind, speed, color, backdrop, zIndex",
+                "density, wind, speed, scale, color, backdrop, zIndex",
                 "fixed — full screen or inside the parent; paused — off without unmounting",
                 "className and style"
               ],

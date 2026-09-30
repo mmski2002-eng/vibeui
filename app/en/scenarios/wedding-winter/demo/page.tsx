@@ -3,6 +3,7 @@ import type { CSSProperties } from "react"
 import { Background006 } from "@/registry/animations/background/background-006/background-006"
 import { Navbar027 } from "@/registry/blocks/navbar/navbar-027/navbar-027"
 import { Hero027 } from "@/registry/blocks/hero/hero-027/hero-027"
+import { Layout017 } from "@/registry/blocks/layout/layout-017/layout-017"
 import { About013 } from "@/registry/blocks/about/about-013/about-013"
 import { Event013 } from "@/registry/blocks/events/event-013/event-013"
 import { Event014 } from "@/registry/blocks/events/event-014/event-014"
@@ -23,6 +24,11 @@ import { Footer026 } from "@/registry/blocks/footer/footer-026/footer-026"
  * Marck Script + Manrope. A candle at the entrance, a house in the woods, a
  * story as a garland, a programme with the moon, a letter as the reply.
  * A showcase of the result, not a template.
+ *
+ * The page is one evening from sunset to midnight: the sky runs as one
+ * background down the whole height (sections are transparent), a sunset
+ * afterglow under the first screen, near-black midnight by the footer. Snow
+ * in two layers: dense behind the content, rare big flakes at the edges.
  */
 export const metadata = {
   title: "Valeria and Dmitry — 18 December 2027, Forest Estate",
@@ -32,16 +38,23 @@ export const metadata = {
 
 const page: CSSProperties = {
   colorScheme: "dark",
-  background: "#0b1220",
+  background:
+    "radial-gradient(120% 36rem at 50% 100svh, rgb(214 128 118 / .16), transparent 70%) no-repeat, linear-gradient(180deg, #0b1220 0, #0b1220 100svh, #1a1a35 calc(100svh + 22rem), #121d38 28%, #0d1629 52%, #080d18 78%, #04060b 100%)",
   color: "#f2eee6",
   fontFamily: '"Manrope",ui-sans-serif,system-ui,sans-serif',
 }
 
 // Page theme: catalogue blocks are neutral by default, the scenario sets the colours.
-const dark = { tone: "dark", background: "#0b1220", ink: "#f2eee6", accent: "#f2b64f" } as const
-// A second tone for rhythm: even sections are slightly lighter; bands of depth
-// break up the monotone canvas so the page breathes instead of stretching as one blue.
-const lift = { ...dark, background: "#101d33" } as const
+// Sections are transparent so the page sky runs beneath them.
+const dark = { tone: "dark", background: "transparent", ink: "#f2eee6", accent: "#f2b64f" } as const
+
+const content: CSSProperties = { position: "relative", zIndex: 1 }
+
+// Foreground snow at the edges only: big flakes stay off the text column.
+const foreground: CSSProperties = {
+  filter: "blur(1.5px)",
+  maskImage: "linear-gradient(90deg, #000 0, #000 9%, transparent 22%, transparent 78%, #000 91%, #000 100%)",
+}
 
 const IMG = "/demo/wedding-winter/"
 
@@ -61,12 +74,14 @@ export default function Page() {
     <div style={page} className="dark min-h-dvh" data-demo="wedding-winter">
       {/* Night blue for cards, lines and muted text: in the catalogue the blocks are grey, the scenario sets the shade. */}
       <style href="vibeui-demo-winter-night" precedence="medium">
-        {`[data-vibeui-block]{--vibeui-navbar-027-muted:#9fb0c8;--vibeui-navbar-027-line:rgb(159 176 200 / .28);--vibeui-about-013-card:#131c2e;--vibeui-about-013-muted:#9fb0c8;--vibeui-about-013-line:rgb(159 176 200 / .22);--vibeui-event-013-card:#131c2e;--vibeui-event-013-muted:#9fb0c8;--vibeui-event-013-line:rgb(159 176 200 / .22);--vibeui-event-014-card:#131c2e;--vibeui-event-014-muted:#9fb0c8;--vibeui-event-014-line:rgb(159 176 200 / .24);--vibeui-map-009-card:#131c2e;--vibeui-map-009-muted:#9fb0c8;--vibeui-map-009-line:rgb(159 176 200 / .24);--vibeui-contact-020-muted:#9fb0c8;--vibeui-contact-020-line:rgb(159 176 200 / .24);--vibeui-faq-022-card:#131c2e;--vibeui-faq-022-muted:#9fb0c8;--vibeui-faq-022-line:rgb(159 176 200 / .24);--vibeui-portfolio-010-card:#131c2e;--vibeui-portfolio-010-muted:#9fb0c8;--vibeui-portfolio-010-line:rgb(159 176 200 / .35);--vibeui-people-011-card:#131c2e;--vibeui-people-011-muted:#9fb0c8;--vibeui-people-011-line:rgb(159 176 200 / .24);--vibeui-cta-023-card:#131c2e;--vibeui-cta-023-muted:#9fb0c8;--vibeui-cta-023-line:rgb(159 176 200 / .24);--vibeui-testimonials-022-card:#131c2e;--vibeui-testimonials-022-muted:#9fb0c8;--vibeui-testimonials-022-line:rgb(159 176 200 / .24);--vibeui-hero-027-line:rgb(159 176 200 / .35);--vibeui-footer-026-line:rgb(159 176 200 / .2);}`}
+        {`[data-vibeui-block]{--vibeui-accordion-022-card:rgb(19 28 46 / .82);--vibeui-accordion-022-muted:#9fb0c8;--vibeui-accordion-022-line:rgb(159 176 200 / .24);--vibeui-card-116-card:rgb(19 28 46 / .82);--vibeui-card-116-bg:#0b1220;--vibeui-card-116-muted:#9fb0c8;--vibeui-card-116-line:rgb(159 176 200 / .24);--vibeui-card-125-card:rgb(19 28 46 / .82);--vibeui-card-125-muted:#9fb0c8;--vibeui-card-125-line:rgb(159 176 200 / .24);--vibeui-card-126-card:rgb(19 28 46 / .82);--vibeui-card-126-bg:#0b1220;--vibeui-card-126-muted:#9fb0c8;--vibeui-card-126-line:rgb(159 176 200 / .24);--vibeui-card-132-card:#131c2e;--vibeui-card-132-bg:#0b1220;--vibeui-card-132-muted:#9fb0c8;--vibeui-card-132-line:rgb(159 176 200 / .22);--vibeui-card-140-card:rgb(19 28 46 / .82);--vibeui-card-140-muted:#9fb0c8;--vibeui-card-140-line:rgb(159 176 200 / .24);--vibeui-button-104-card:#131c2e;--vibeui-button-104-bg:#0b1220;--vibeui-button-104-line:rgb(159 176 200 / .35);--vibeui-navbar-027-muted:#9fb0c8;--vibeui-navbar-027-line:rgb(159 176 200 / .28);--vibeui-about-013-card:#131c2e;--vibeui-about-013-muted:#9fb0c8;--vibeui-about-013-line:rgb(159 176 200 / .22);--vibeui-event-013-card:#131c2e;--vibeui-event-013-muted:#9fb0c8;--vibeui-event-013-line:rgb(159 176 200 / .22);--vibeui-event-014-card:#131c2e;--vibeui-event-014-muted:#9fb0c8;--vibeui-event-014-line:rgb(159 176 200 / .24);--vibeui-map-009-card:#131c2e;--vibeui-map-009-muted:#9fb0c8;--vibeui-map-009-line:rgb(159 176 200 / .24);--vibeui-contact-020-muted:#9fb0c8;--vibeui-contact-020-line:rgb(159 176 200 / .24);--vibeui-faq-022-card:#131c2e;--vibeui-faq-022-muted:#9fb0c8;--vibeui-faq-022-line:rgb(159 176 200 / .24);--vibeui-portfolio-010-card:#131c2e;--vibeui-portfolio-010-muted:#9fb0c8;--vibeui-portfolio-010-line:rgb(159 176 200 / .35);--vibeui-people-011-card:#131c2e;--vibeui-people-011-muted:#9fb0c8;--vibeui-people-011-line:rgb(159 176 200 / .24);--vibeui-cta-023-card:#131c2e;--vibeui-cta-023-muted:#9fb0c8;--vibeui-cta-023-line:rgb(159 176 200 / .24);--vibeui-testimonials-022-card:#131c2e;--vibeui-testimonials-022-muted:#9fb0c8;--vibeui-testimonials-022-line:rgb(159 176 200 / .24);--vibeui-hero-027-line:rgb(159 176 200 / .35);--vibeui-footer-026-line:rgb(159 176 200 / .2);}`}
       </style>
       <style href="vibeui-demo-scroll" precedence="medium">
         {`html{scroll-behavior:smooth;scroll-padding-top:5rem}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}`}
       </style>
-      <Background006 density={0.6} wind={0.2} shape="star" zIndex={30} />
+      <Background006 density={0.6} wind={0.2} shape="star" zIndex={0} />
+      <Background006 density={0.05} wind={0.25} speed={1.5} scale={3.2} shape="star" zIndex={30} style={foreground} />
+      <div style={content}>
       <Navbar027
         {...dark}
         background="rgb(11 18 32 / .78)"
@@ -90,6 +105,7 @@ export default function Page() {
       <div id="hero">
         <Hero027
           {...dark}
+          background="#0b1220"
           candle={false}
           names="Valeria & Dmitry"
           script="when it gets dark"
@@ -127,9 +143,11 @@ export default function Page() {
           ]}
         />
       </div>
+      <Layout017 {...dark} caption="Saturday · Forest Estate · 4 pm" script="when it gets dark" />
+
       <div id="evening">
         <Event013
-          {...lift}
+          {...dark}
           eyebrow="The evening"
           title="From sunset to midnight"
           lede="We start when the sun sets and finish when the moon is over the woods. In between — the fireplace, mulled wine and dancing."
@@ -175,7 +193,7 @@ export default function Page() {
       </div>
       <div id="place">
         <Map009
-          {...lift}
+          {...dark}
           eyebrow="Getting there"
           title="Forest Estate"
           lede="Forty kilometres from the ring road along Novorizhskoye highway, then ten minutes through the woods. The navigator leads correctly, the snow is cleared."
@@ -265,7 +283,7 @@ export default function Page() {
       </div>
       <div id="faq">
         <Faq022
-          {...lift}
+          {...dark}
           eyebrow="Questions"
           title="What people ask before winter"
           lede="Everything we've been asked in the last month. No answer — write to Marina, she replies faster than we do."
@@ -297,7 +315,7 @@ export default function Page() {
       </div>
       <div id="people">
         <People011
-          {...lift}
+          {...dark}
           eyebrow="Who's meeting you"
           title="They're waiting for you at the gates"
           lede="For any question before the wedding — go to them. They know where the parking is, who sits with whom and when the fireworks are."
@@ -325,7 +343,7 @@ export default function Page() {
       </div>
       <div id="wishes">
         <Testimonials022
-          {...lift}
+          {...dark}
           eyebrow="Wishes"
           title="Write on the glass"
           lede="The living room window will fog up by evening — that's where you'll write for real. For now — here: everyone who's coming will see it."
@@ -345,7 +363,6 @@ export default function Page() {
       <div id="footer">
         <Footer026
           {...dark}
-          background="#070c15"
           initials={["V", "D"]}
           names="Valeria and Dmitry"
           dateLabel="18 December 2027"
@@ -361,7 +378,9 @@ export default function Page() {
           ]}
           rsvpText="Please reply"
           rsvpLabel="by 1 November"
+          clockCaption="midnight · the last dance"
         />
+      </div>
       </div>
     </div>
   )
