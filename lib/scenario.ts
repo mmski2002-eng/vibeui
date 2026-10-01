@@ -46,7 +46,9 @@ export function scenarioText(scenario: Scenario, locale: Locale) {
     summary: locale === "ru" ? scenario.summary : scenario.summaryEn,
     demo: scenario.demo,
     poster: english ? `/demo/scenarios/en/${scenario.slug}.webp` : `/demo/scenarios/${scenario.slug}.webp`,
-    video: !english && VIDEO_SLUGS.has(scenario.slug) ? `/demo/scenarios/${scenario.slug}.mp4` : undefined,
+    video: english
+      ? scenario.slug === "language" ? "/demo/scenarios/en/language.mp4" : undefined
+      : VIDEO_SLUGS.has(scenario.slug) ? `/demo/scenarios/${scenario.slug}.mp4` : undefined,
   }
 }
 

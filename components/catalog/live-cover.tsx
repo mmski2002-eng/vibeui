@@ -33,6 +33,7 @@ export function LiveCover({
   className?: string
 }) {
   const host = useRef<HTMLDivElement>(null)
+  const videoElement = useRef<HTMLVideoElement>(null)
   const [scale, setScale] = useState(0)
   const [live, setLive] = useState(!poster)
   const [loaded, setLoaded] = useState(false)
@@ -41,6 +42,33 @@ export function LiveCover({
   const reveal = useRef<number | undefined>(undefined)
 
   useEffect(() => () => window.clearTimeout(reveal.current), [])
+
+  useEffect(() => {
+    const element = videoElement.current
+    if (!element || !video || videoFailed) return
+
+    let visible = false
+    function syncPlayback() {
+      if (!element) return
+      if (visible && !document.hidden) {
+        void element.play().catch(() => {})
+      } else {
+        element.pause()
+      }
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      syncPlayback()
+    })
+    observer.observe(element)
+    document.addEventListener("visibilitychange", syncPlayback)
+    return () => {
+      observer.disconnect()
+      document.removeEventListener("visibilitychange", syncPlayback)
+      element.pause()
+    }
+  }, [video, videoFailed])
 
   useEffect(() => {
     const element = host.current
@@ -82,15 +110,14 @@ export function LiveCover({
       ) : null}
       {video && !videoFailed ? (
         <>
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
+            ref={videoElement}
             src={video}
             poster={poster}
-            autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             onError={() => setVideoFailed(true)}
             onPlaying={() => setVideoPlaying(true)}
             className={cn(
