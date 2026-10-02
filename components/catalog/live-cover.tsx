@@ -38,7 +38,9 @@ export function LiveCover({
   const [live, setLive] = useState(!poster)
   const [loaded, setLoaded] = useState(false)
   const [videoFailed, setVideoFailed] = useState(false)
-  const [videoPlaying, setVideoPlaying] = useState(false)
+  const [readyVideo, setReadyVideo] = useState<string | undefined>(undefined)
+  const videoPlaying = Boolean(video && readyVideo === video && !videoFailed)
+  const frameRequest = useRef<number | undefined>(undefined)
   const reveal = useRef<number | undefined>(undefined)
 
   useEffect(() => () => window.clearTimeout(reveal.current), [])
@@ -67,6 +69,10 @@ export function LiveCover({
       observer.disconnect()
       document.removeEventListener("visibilitychange", syncPlayback)
       element.pause()
+      if (frameRequest.current !== undefined) {
+        element.cancelVideoFrameCallback(frameRequest.current)
+        frameRequest.current = undefined
+      }
     }
   }, [video, videoFailed])
 
@@ -102,49 +108,42 @@ export function LiveCover({
           // Поверх iframe: тот до загрузки белый, а после load ещё
           // отыгрывает появление первого экрана — постер прикрывает и то,
           // и другое, и уходит только когда под ним уже готовая страница.
+          // Видео переключаем без crossfade: смешивание разных кадров
+          // оставляет статичный объект из постера поверх движущегося клипа.
           className={cn(
-            "absolute inset-0 z-10 h-full w-full object-cover object-top transition-opacity duration-700",
-            loaded && "pointer-events-none opacity-0",
+            "pointer-events-none absolute inset-0 z-20 h-full w-full object-cover object-top",
+            (!video || videoFailed) && "transition-opacity duration-700",
+            (video && !videoFailed ? videoPlaying : loaded) && "opacity-0",
           )}
         />
       ) : null}
       {video && !videoFailed ? (
-        <>
-          <video
-            ref={videoElement}
-            src={video}
-            poster={poster}
-            muted
-            loop
-            playsInline
-            preload="auto"
-            onError={() => setVideoFailed(true)}
-            onPlaying={() => setVideoPlaying(true)}
-            className={cn(
-              "absolute inset-0 z-10 h-full w-full object-cover object-top opacity-0 transition-opacity duration-700",
-              videoPlaying && "opacity-100",
-            )}
-          />
-          {/* Пока ролик не заиграл — живой градиент поверх постера и бейдж
-              «видео»: иначе карточка минуту-другую выглядит как обычный
-              скриншот, а переход в плеер — не рывком, а плавным выцветанием. */}
-          <div
-            aria-hidden="true"
-            className={cn(
-              "pointer-events-none absolute inset-0 z-20 overflow-hidden bg-[length:220%_220%] opacity-90 transition-opacity duration-700 [animation:vibeui-cover-gradient_3s_ease-in-out_infinite] [background-image:linear-gradient(115deg,transparent_10%,color-mix(in_oklab,var(--color-shell-accent)_38%,transparent)_35%,color-mix(in_oklab,var(--color-shell-accent)_16%,transparent)_50%,transparent_70%)]",
-              videoPlaying && "opacity-0",
-            )}
-          />
-          <span
-            className={cn(
-              "pointer-events-none absolute bottom-2 left-2 z-20 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur transition-opacity duration-500",
-              videoPlaying && "opacity-0",
-            )}
-          >
-            <i className="bg-shell-accent size-1.5 animate-pulse rounded-full" />
-            видео
-          </span>
-        </>
+        <video
+          ref={videoElement}
+          src={video}
+          poster={poster}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          onError={() => setVideoFailed(true)}
+          onPlaying={(event) => {
+            const element = event.currentTarget
+            if (frameRequest.current !== undefined || readyVideo === video)
+              return
+            if (typeof element.requestVideoFrameCallback === "function") {
+              frameRequest.current = element.requestVideoFrameCallback(() => {
+                frameRequest.current = undefined
+                setReadyVideo(video)
+              })
+            } else if (
+              element.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+            ) {
+              setReadyVideo(video)
+            }
+          }}
+          className="absolute inset-0 z-10 h-full w-full object-cover object-top"
+        />
       ) : scale > 0 && live ? (
         <iframe
           src={src}

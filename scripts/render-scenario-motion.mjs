@@ -453,7 +453,20 @@ async function render(slug) {
           await replay.evaluate(button => button.click())
           await page.clock.runFor(50)
         }
+        // Let the native play() promise settle BEFORE pausing for frame seeks.
+        // Otherwise the hero's AbortError handler switches to its final state,
+        // leaving the parked car and final copy over the moving intro film.
+        const playback = heroVideo.evaluate(video => video.play())
+        await cdp.send('HeadlessExperimental.beginFrame', { frameTimeTicks: director.nativeStart, interval: 1000 / FPS })
+        await playback
+        await page.clock.runFor(800)
+        director.nativeStart += 800
+        await cdp.send('HeadlessExperimental.beginFrame', { frameTimeTicks: director.nativeStart, interval: 1000 / FPS })
         await page.evaluate(() => { for (const video of document.querySelectorAll('video')) { video.pause(); video.currentTime = 0 } })
+        if (slug === 'auto') {
+          const phase = await page.locator('[data-vibeui-block="hero-046"]').getAttribute('data-phase')
+          if (phase !== 'playing') throw new Error(`Auto intro must not show the parked overlay: ${phase}`)
+        }
         const duration = await heroVideo.evaluate(video => Number.isFinite(video.duration) ? video.duration : 4)
         await director.hold(Math.min(18, Math.max(3.2, duration + 1.8)))
       } else await director.hold(3.2)
