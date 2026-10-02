@@ -218,9 +218,9 @@ const RU: Dictionary = {
   locale: "ru",
   label: "Рус",
   topbar: {
-    components: "Компоненты",
+    components: "Элементы",
     blocks: "Блоки",
-    scenarios: "Сценарии",
+    scenarios: "Сайты",
     pricing: "Тарифы",
     items: (count) => {
       const tail = count % 100
@@ -512,7 +512,7 @@ const EN: Dictionary = {
   topbar: {
     components: "Components",
     blocks: "Blocks",
-    scenarios: "Scenarios",
+    scenarios: "Websites",
     items: (count) => `${count} items`,
     animations: "Animations",
     pricing: "Pricing",
