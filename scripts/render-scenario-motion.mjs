@@ -7,11 +7,13 @@
  * Install Chromium for that Playwright version before rendering.
  * node scripts/render-scenario-motion.mjs saas --frames 120 (short verification)
  * node scripts/render-scenario-motion.mjs all
+ * node scripts/render-scenario-motion.mjs --missing --locale both
  * Outputs, WebP posters and audits: .playwright-mcp/scenario-motion/<slug>/.
  * MOTION_BASE overrides the site URL; MOTION_AUDIT overrides the output folder.
  */
 import { createRequire } from "node:module"
-import { mkdir, writeFile } from "node:fs/promises"
+import { mkdir, writeFile, readFile } from "node:fs/promises"
+import { existsSync } from "node:fs"
 import { spawn, execFileSync } from "node:child_process"
 import { once } from "node:events"
 import { setTimeout as delay } from "node:timers/promises"
@@ -24,15 +26,38 @@ const { chromium } = require("playwright")
 const sharp = require("sharp")
 const ffmpeg = require("@ffmpeg-installer/ffmpeg").path
 const ffprobe = require("@ffprobe-installer/ffprobe").path
-const slugs = ["auto", "saas", "wedding-winter", "photographer", "wedding-cuba", "delivery", "tattoo", "restaurant", "vet", "flowers", "wedding"]
+const scenarioSource = await readFile(path.join(root, "registry/scenarios.ts"), "utf8")
+const slugs = [...scenarioSource.matchAll(/^\s+slug: "([a-z0-9-]+)"/gm)].map(match => match[1])
 const args = process.argv.slice(2)
-const selected = args[0] === "all" ? slugs : args.filter(arg => slugs.includes(arg))
+const missingOnly = args.includes("--missing")
+const selected = args[0] === "all" || missingOnly ? slugs : args.filter(arg => slugs.includes(arg))
+const localeOption = args.includes("--locale") ? args[args.indexOf("--locale") + 1] : "en"
+if (!["ru", "en", "both"].includes(localeOption)) throw new Error("Use --locale ru, en or both")
+const locales = localeOption === "both" ? ["ru", "en"] : [localeOption]
+let jobs = locales.flatMap(locale => selected.map(slug => ({ slug, locale }))).filter(({ slug, locale }) =>
+  !missingOnly || !existsSync(path.join(root, "public/demo/scenarios", locale === "en" ? "en" : "", `${slug}.mp4`)))
 const frameLimit = args.includes("--frames") ? Number(args[args.indexOf("--frames") + 1]) : Infinity
 const FPS = 60
 const WIDTH = 1280
 const HEIGHT = 800
 const auditRoot = process.env.MOTION_AUDIT ?? path.join(root, ".playwright-mcp/scenario-motion")
-const base = process.env.MOTION_BASE ?? "https://vibeui.club"
+if (args.includes("--resume")) {
+  const pending = []
+  for (const job of jobs) {
+    const directory = path.join(auditRoot, ...(args.includes("--locale") ? [job.locale] : []), job.slug)
+    try {
+      const audit = JSON.parse(await readFile(path.join(directory, "audit.json"), "utf8"))
+      const interactionsComplete = audit.checkpoints[0]?.scroll < 100 &&
+        (job.slug !== "course" || audit.actions.some(action => action.selector === '#who [data-part="tab"]' && action.before !== action.after)) &&
+        (job.slug !== "podcast" || audit.actions.some(action => action.result === "player-open")) &&
+        (job.slug !== "wedding-winter" || !audit.checkpoints.some(point => /data-motion-scene="[12]"/.test(point.name)))
+      if (interactionsComplete && audit.seconds > 10 && audit.checkpoints.length >= 5 && existsSync(path.join(directory, `${job.slug}.mp4`))) continue
+    } catch { /* Missing or incomplete output must be rendered again. */ }
+    pending.push(job)
+  }
+  jobs = pending
+}
+const baseFor = locale => process.env.MOTION_BASE ?? (locale === "ru" ? "https://vibeui.ru" : "https://vibeui.club")
 
 const ease = value => value ** 3 * (value * (value * 6 - 15) + 10)
 const cursorScript = () => {
@@ -66,6 +91,16 @@ class Director {
     this.actions = []
   }
 
+  async compositorFrame(options) {
+    let timer
+    try {
+      return await Promise.race([
+        this.cdp.send("HeadlessExperimental.beginFrame", options),
+        new Promise((_, reject) => { timer = setTimeout(() => reject(new Error("Compositor frame timed out")), 20000) }),
+      ])
+    } finally { clearTimeout(timer) }
+  }
+
   async mouse(method, ...args) {
     const changed = await this.page.evaluate(({ method, args }) => {
       const pointer = window.__motionPointer ?? { x: 1050, y: 720 }
@@ -94,9 +129,15 @@ class Director {
         if (method === 'down') {
           window.__motionPressed = hit
           hit.closest('input,textarea,button,summary')?.focus({ preventScroll: true })
-        } else if (window.__motionPressed === hit) {
-          if (typeof hit.click === 'function') hit.click()
-          else hit.dispatchEvent(new MouseEvent('click', options))
+        } else {
+          const pressed = window.__motionPressed
+          const interactive = 'button,input,summary,[role="button"],[role="tab"]'
+          const common = pressed?.closest(interactive)
+          const target = pressed === hit ? hit : common && common === hit.closest(interactive) ? common : null
+          // Hover/focus may replace an icon between down and up. Native clicks
+          // still belong to their shared button, not the replaced SVG leaf.
+          if (target && typeof target.click === 'function') target.click()
+          else if (target) target.dispatchEvent(new MouseEvent('click', options))
           window.__motionPressed = null
         }
       }
@@ -119,7 +160,10 @@ class Director {
       await this.mouse("move", pointer.x, pointer.y)
       this.pointer = pointer
     }
-    await this.page.clock.runFor(1000 / FPS)
+    // Advance the installed Playwright clock only in the main document. The
+    // public context-wide runFor also appends a replay script on every frame;
+    // thousands of those stall third-party map frames when they navigate.
+    await this.page.evaluate(milliseconds => window.__pwClock.controller.runFor(milliseconds), 1000 / FPS)
     const mediaUpdate = this.page.evaluate(async time => {
       for (const animation of document.getAnimations()) {
         if (animation.timeline !== document.timeline) continue
@@ -171,27 +215,28 @@ class Director {
     }, this.frame * 1000 / FPS)
     // Flush the compositor while media seeks settle. Waiting for seeked first
     // can deadlock a video whose decoder is waiting for this explicit frame.
-    await this.cdp.send("HeadlessExperimental.beginFrame", {
+    if (this.captureMode === "compositor") await this.compositorFrame({
       frameTimeTicks: this.nativeStart + this.frame * 1000 / FPS,
       interval: 1000 / FPS,
     })
     await Promise.race([mediaUpdate, delay(10000, undefined, { ref: false }).then(() => { throw new Error("Video seek timed out") })])
     let screenshotData
-    for (let attempt = 0; attempt < 5 && !screenshotData; attempt++) {
+    for (let attempt = 0; this.captureMode === "compositor" && attempt < 5 && !screenshotData; attempt++) {
       if (attempt) {
         // A new compositor surface may not offer a screenshot on its first
         // frame. Invalidate only the added cursor and retry the same clock time.
         await this.page.evaluate(attempt => { document.getElementById('__motion_cursor').style.opacity = attempt % 2 ? '.999' : '1' }, attempt)
         await delay(20)
       }
-      ;({ screenshotData } = await this.cdp.send("HeadlessExperimental.beginFrame", {
+      ;({ screenshotData } = await this.compositorFrame({
         frameTimeTicks: this.nativeStart + this.frame * 1000 / FPS + attempt * .1,
         interval: 1000 / FPS,
         screenshot: { format: "jpeg", quality: 94, optimizeForSpeed: true },
       }))
     }
-    if (!screenshotData) throw new Error("Browser did not return a rendered frame")
-    const buffer = Buffer.from(screenshotData, "base64")
+    if (this.captureMode === "compositor" && !screenshotData) throw new Error("Browser did not return a rendered frame")
+    const buffer = this.captureMode === "compositor" ? Buffer.from(screenshotData, "base64") :
+      await this.page.screenshot({ type: "jpeg", quality: 94, caret: "initial", timeout: 20000 })
     if (!this.encoder.stdin.write(buffer)) await once(this.encoder.stdin, "drain")
     this.lastFrame = buffer
     this.frame++
@@ -224,7 +269,7 @@ class Director {
   async pan(geometry, selector, duration) {
     const distance = geometry.to - geometry.from
     if (Math.abs(distance) < 2) return
-    const seconds = duration ?? Math.min(2.7, Math.max(1.3, Math.abs(distance) / 650))
+    const seconds = duration ?? Math.max(1.3, Math.abs(distance) / 650)
     const frames = Math.round(seconds * FPS)
     const trace = { selector, from: geometry.from, to: geometry.to, start: this.frame, samples: [] }
     // Quintic easing has zero velocity AND acceleration at each end.
@@ -245,13 +290,13 @@ class Director {
         from: scrollY,
         to: Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, scrollY + y + height / 2 - innerHeight * .62)),
       }), { y: box.y, height: box.height })
-      await this.pan(geometry, 'interactive-control', 1.15)
+      await this.pan(geometry, 'interactive-control')
       await this.hold(.35)
       box = await locator.boundingBox()
     }
-    if (!box || box.y < 70 || box.y + box.height > HEIGHT - 15 || box.x < 0 || box.x + box.width > WIDTH) return false
+    if (!box || box.y < 70 || box.y + box.height > HEIGHT - 15 || box.x >= WIDTH - 8 || box.x + box.width <= 8) return false
     const from = this.pointer
-    const to = { x: box.x + box.width / 2, y: box.y + box.height / 2 }
+    const to = { x: Math.max(8, Math.min(WIDTH - 8, box.x + box.width / 2)), y: box.y + box.height / 2 }
     const frames = Math.round(seconds * FPS)
     for (let i = 1; i <= frames; i++) {
       const p = i / frames, e = ease(p)
@@ -263,14 +308,20 @@ class Director {
   async click(selector, index = 0, linger = .65) {
     console.log(`${this.slug}: click ${selector} [${index}]`)
     const locator = this.page.locator(selector).nth(index)
-    if (!await locator.count() || await locator.isDisabled()) return false
+    if (!await locator.count() || !await locator.isVisible() || await locator.isDisabled()) return false
     if (!await this.moveTo(locator)) return false
-    const before = await locator.getAttribute("aria-pressed") ?? await locator.getAttribute("aria-selected")
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const onTarget = await locator.evaluate((element, pointer) => element.contains(document.elementFromPoint(pointer.x, pointer.y)), this.pointer)
+      if (onTarget) break
+      if (!await this.moveTo(locator, .2)) return false
+    }
+    if (!await locator.evaluate((element, pointer) => element.contains(document.elementFromPoint(pointer.x, pointer.y)), this.pointer)) return false
+    const before = await locator.getAttribute("aria-pressed") ?? await locator.getAttribute("aria-selected") ?? await locator.getAttribute("aria-expanded")
     await this.mouse("down")
     await this.hold(.08)
     await this.mouse("up")
     await this.hold(linger)
-    this.actions.push({ selector, index, frame: this.frame, before, after: await locator.getAttribute("aria-pressed") ?? await locator.getAttribute("aria-selected") })
+    this.actions.push({ selector, index, frame: this.frame, before, after: await locator.getAttribute("aria-pressed") ?? await locator.getAttribute("aria-selected") ?? await locator.getAttribute("aria-expanded") })
     return true
   }
 
@@ -324,6 +375,77 @@ class Director {
 }
 
 const interactions = {
+  api: {
+    "#sandbox": async d => { await d.click('#sandbox [data-part="suggestion"]', 1, 1.8) },
+    "#pricing": async d => { await d.slider('#pricing input[type="range"]', .65) },
+  },
+  app: {
+    "#results": async d => { await d.slider('#results input[type="range"]', .25); await d.slider('#results input[type="range"]', .78) },
+    "#faq": async d => { await d.click('#faq [data-part="q"], #faq summary', 1, .9) },
+  },
+  bakery: {
+    "#shelf": async d => { await d.click('#shelf [data-part="add"]', 0, .9) },
+    "#coffee": async d => { await d.slider('#coffee input[type="range"]', .75) },
+    "#box": async d => { await d.click('#box [data-part="picker"] button', 1, .65); await d.click('#box [data-part="picker"] button', 3, .8) },
+  },
+  charity: {
+    "#impact": async d => { await d.click('#impact [data-part="chip"]', 2, 1) },
+    "#stories": async d => { await d.click('#stories [data-part="env"]', 0, 3); await d.click('#stories [data-part="close"]', 0, .8) },
+  },
+  course: {
+    "#who": async d => { await d.click('#who [data-part="tab"]', 1, 1) },
+    "#program": async d => { await d.click('#program [data-part="week-head"]', 1, 1); await d.click('#program [data-part="week-head"]', 2, 1) },
+    "#faq": async d => { await d.click('#faq summary, #faq [data-part="q"]', 1, .9) },
+  },
+  festival: {
+    "#schedule": async d => { await d.click('#schedule [data-part="day"]', 1, 1); await d.click('#schedule [data-part="filter"]', 1, .8) },
+    "#faq": async d => { await d.click('#faq summary, #faq [data-part="q"]', 1, .9) },
+  },
+  fintech: {
+    "#dashboard": async d => { await d.click('#dashboard [data-part="period"]', 1, 1.1) },
+    "#calc": async d => { await d.slider('#calc input[type="range"]', .7) },
+    "#faq": async d => { await d.click('#faq [data-part="q"], #faq summary', 1, .9) },
+  },
+  gadget: {
+    "#inside": async d => { await d.slider('#inside input[type="range"]', .8) },
+    "#preorder": async d => { await d.click('#preorder [data-part="swatch"]', 1, 1) },
+    "#faq": async d => { await d.click('#faq [data-part="q"], #faq summary', 1, .9) },
+  },
+  market: {
+    "#catalog": async d => { await d.click('#catalog [data-part="chip"]', 1, .8); await d.click('#catalog [data-part="chip"]', 0, .8); await d.click('#catalog [data-part="quick"]', 0, 1) },
+    "#bundle": async d => { await d.click('#bundle [data-part="toggle"]', 0, .65); await d.click('#bundle [data-part="toggle"]', 1, .8) },
+    "#faq": async d => { await d.click('#faq [data-part="q"], #faq summary', 1, .9) },
+  },
+  opensource: {
+    "#playground": async d => { await d.click('#playground [data-part="toggle"]', 0, 1); await d.click('#playground [data-part="toggle"]', 2, 1) },
+  },
+  podcast: {
+    "#episodes": async d => {
+      if (await d.page.locator('[data-vibeui-block="podcast-007"]').getAttribute('data-open') === 'true') {
+        await d.moveTo(d.page.locator('#episodes [data-part="row"]').first(), .5)
+        await d.hold(1.2)
+        d.actions.push({ selector: '#episodes [data-part="row"]', action: "hover", result: "player-open", frame: d.frame })
+      } else if (!await d.click('#episodes [data-part="play"]', 0, 1.4)) throw new Error("Podcast play button is unreachable")
+      if (await d.page.locator('[data-vibeui-block="podcast-007"]').getAttribute('data-open') !== 'true') throw new Error("Podcast player did not open")
+      d.actions.at(-1).result = "player-open"
+    },
+  },
+  portfolio: {
+    "#contact": async d => { await d.type('#contact input[type="text"]', d.locale === "ru" ? 'Алекс' : 'Alex') },
+  },
+  realty: {
+    "#objects": async d => { await d.click('#objects [data-part="chip"]', 1, .9); await d.click('#objects [data-part="chip"]', 0, .8) },
+    "#mortgage": async d => { await d.slider('#mortgage input[type="range"]', .55) },
+    "#faq": async d => { await d.click('#faq summary, #faq [data-part="q"]', 1, .9) },
+  },
+  renovation: {
+    "#calc": async d => { await d.slider('#calc input[type="range"]', .55); await d.click('#calc [data-part="type"]', 1, .8) },
+    "#works": async d => { await d.click('#works [data-part="tab"]', 1, .8); await d.slider('#works input[type="range"]', .8) },
+  },
+  writer: {
+    "#book": async d => { await d.click('#book [data-part="book"]', 0, 1.1); await d.click('#book [data-part="formats"] button', 1, .8) },
+    "#texts": async d => { await d.click('#texts [data-part="row"]', 0, 1.2); await d.click('#texts [data-part="row"]', 0, .6) },
+  },
   auto: {
     "#services": async d => { await d.click('#services [data-part="card"]', 1); await d.click('#services [data-part="class"]', 2) },
     "#results": async d => { await d.slider('#results input[type="range"]', .2); await d.slider('#results input[type="range"]', .8) },
@@ -339,7 +461,7 @@ const interactions = {
     "#security": async d => { await d.click('#security [data-part="q"]', 1, 1.0) },
   },
   "wedding-winter": {
-    "#rsvp": async d => { await d.click('#rsvp [data-part="choice"]'); await d.click('#rsvp button:has-text("Next")', 0, .7); await d.type('#rsvp input[type="text"]', 'Alex') },
+    "#rsvp": async d => { await d.type('#rsvp input[type="text"]', d.locale === "ru" ? 'Алекс' : 'Alex'); await d.click('#rsvp [data-part="choice"]'); await d.click('#rsvp [data-part="nav"] button:not(:disabled)', 0, .9) },
     "#faq": async d => { await d.click('#faq summary', 0, .8) },
   },
   photographer: {
@@ -382,8 +504,8 @@ const interactions = {
     "#care": async d => { await d.click('#care [data-part="head"]', 2, .9) },
   },
   wedding: {
-    "#story": async d => { await d.click('#story button[aria-label="Next"]', 0, 1) },
-    "#rsvp": async d => { await d.click('#rsvp [data-part="choice"]'); await d.type('#rsvp input[type="text"]', 'Alex'); await d.click('#rsvp button:has-text("Next")', 0, .9) },
+    "#story": async d => { await d.click('#story button', 1, 1) },
+    "#rsvp": async d => { await d.type('#rsvp input[type="text"]', d.locale === "ru" ? 'Алекс' : 'Alex'); await d.click('#rsvp [data-part="choice"]'); await d.click('#rsvp [data-part="nav"] button:not(:disabled)', 0, .9) },
     "#faq": async d => { await d.click('#faq summary', 0, .8) },
   },
 }
@@ -397,25 +519,35 @@ async function contactSheet(directory, checkpoints) {
   await sharp({ create: { width: width * columns, height: Math.ceil(tiles.length / columns) * height, channels: 3, background: "#181818" } }).composite(tiles).jpeg({ quality: 85 }).toFile(path.join(directory, "contact-sheet.jpg"))
 }
 
-async function render(slug) {
-  const directory = path.join(auditRoot, slug)
+async function render(slug, locale, captureOverride) {
+  const directory = path.join(auditRoot, ...(args.includes("--locale") ? [locale] : []), slug)
   await mkdir(directory, { recursive: true })
-  const browser = await chromium.launch({ headless: true, args: ["--enable-begin-frame-control", "--run-all-compositor-stages-before-draw"] })
-  const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: 1, locale: "en-US" })
-  let encoder
+  // The experimental compositor command can stall when a live map navigates.
+  // Native still capture uses the same frozen UI clock and per-frame poses.
+  const captureMode = captureOverride ?? process.env.MOTION_CAPTURE ?? (["bakery", "app"].includes(slug) ? "screenshot" : "compositor")
+  if (!["screenshot", "compositor"].includes(captureMode)) throw new Error("Invalid MOTION_CAPTURE")
+  const browser = await chromium.launch({ headless: true, args: captureMode === "compositor" ? ["--enable-begin-frame-control", "--run-all-compositor-stages-before-draw"] : [] })
+  const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: 1, locale: locale === "ru" ? "ru-RU" : "en-US" })
+  let encoder, completion
   try {
     await page.clock.install()
-    const response = await page.goto(`${base}/scenarios/${slug}/demo`, { waitUntil: "networkidle", timeout: 120000 })
+    await page.addInitScript(() => {
+      // Third-party map widgets keep their own native timers and rendering.
+      if (window.top !== window) window.__pwClock?.controller.uninstall()
+    })
+    const response = await page.goto(`${baseFor(locale)}/scenarios/${slug}/demo`, { waitUntil: "domcontentloaded", timeout: 120000 })
     if (response.status() !== 200) throw new Error(`HTTP ${response.status()}`)
+    await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {})
     await page.evaluate(() => document.fonts.ready)
     // Force lazy images to load before freezing the render clock; this never
     // changes their styling or content and avoids blank gallery cards later.
     await page.evaluate(async () => {
       const images = Array.from(document.images)
       images.forEach(image => { image.loading = "eager" })
+      document.querySelectorAll('iframe').forEach(frame => { frame.loading = "eager" })
       await Promise.all(images.map(image => image.decode().catch(() => {})))
     })
-    await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000))
+    await page.evaluate(() => window.__pwClock.controller.pauseAt(Date.now() + 1000))
     await page.evaluate(cursorScript)
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }))
     const cdp = await page.context().newCDPSession(page)
@@ -429,39 +561,42 @@ async function render(slug) {
     encoder = spawn(ffmpeg, ["-hide_banner", "-loglevel", "error", "-y", "-f", "image2pipe", "-framerate", String(FPS), "-vcodec", "mjpeg", "-i", "pipe:0", "-an", "-c:v", "libx264", "-threads", "2", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p", "-movflags", "+faststart", output], { stdio: ["pipe", "ignore", "pipe"], windowsHide: true })
     let encoderError = ""
     encoder.stderr.on("data", data => { encoderError += data })
-    const completion = new Promise((resolve, reject) => {
+    completion = new Promise((resolve, reject) => {
       encoder.on("error", reject)
       encoder.on("close", code => code === 0 ? resolve() : reject(new Error(encoderError)))
     })
     completion.catch(() => {})
-    const director = new Director(page, cdp, encoder, directory, slug)
+    const director = new Director(page, cdp, encoder, directory, `${locale}/${slug}`)
+    director.locale = locale
+    director.captureMode = captureMode
     director.nativeStart = nativeStart
     director.documentNode = documentRoot.nodeId
     try {
-      const gate = page.locator('[data-part="seal"], [data-part="tear"], [data-part="candle"]').first()
+      const gateSelector = '[data-vibeui-block^="hero-"] button[data-part="seal"], [data-vibeui-block^="hero-"] button[data-part="tear"], [data-vibeui-block^="hero-"] button[data-part="candle"]'
+      const gate = page.locator(gateSelector).first()
       if (await gate.count() && await gate.isVisible()) {
         await director.hold(.7)
-        await director.click('[data-part="seal"], [data-part="tear"], [data-part="candle"]', 0, 2.1)
+        await director.click(gateSelector, 0, 2.1)
       }
       // Replay the original hero film, including its native entrance transition.
       const heroVideo = page.locator('[data-vibeui-block^="hero-"] video').first()
       if (await heroVideo.count()) {
         await heroVideo.evaluate(video => { video.pause(); video.currentTime = 0; video.dispatchEvent(new Event("ended")) })
-        await page.clock.runFor(50)
+        await page.evaluate(() => window.__pwClock.controller.runFor(50))
         const replay = page.locator('[data-vibeui-block^="hero-"] [data-part="replay"]')
         if (await replay.count()) {
           await replay.evaluate(button => button.click())
-          await page.clock.runFor(50)
+          await page.evaluate(() => window.__pwClock.controller.runFor(50))
         }
         // Let the native play() promise settle BEFORE pausing for frame seeks.
         // Otherwise the hero's AbortError handler switches to its final state,
         // leaving the parked car and final copy over the moving intro film.
         const playback = heroVideo.evaluate(video => video.play())
-        await cdp.send('HeadlessExperimental.beginFrame', { frameTimeTicks: director.nativeStart, interval: 1000 / FPS })
+        if (captureMode === "compositor") await cdp.send('HeadlessExperimental.beginFrame', { frameTimeTicks: director.nativeStart, interval: 1000 / FPS })
         await playback
-        await page.clock.runFor(800)
+        await page.evaluate(() => window.__pwClock.controller.runFor(800))
         director.nativeStart += 800
-        await cdp.send('HeadlessExperimental.beginFrame', { frameTimeTicks: director.nativeStart, interval: 1000 / FPS })
+        if (captureMode === "compositor") await cdp.send('HeadlessExperimental.beginFrame', { frameTimeTicks: director.nativeStart, interval: 1000 / FPS })
         await page.evaluate(() => { for (const video of document.querySelectorAll('video')) { video.pause(); video.currentTime = 0 } })
         if (slug === 'auto') {
           const phase = await page.locator('[data-vibeui-block="hero-046"]').getAttribute('data-phase')
@@ -470,13 +605,31 @@ async function render(slug) {
         const duration = await heroVideo.evaluate(video => Number.isFinite(video.duration) ? video.duration : 4)
         await director.hold(Math.min(18, Math.max(3.2, duration + 1.8)))
       } else await director.hold(3.2)
+      if (slug === "podcast") {
+        if (!await director.click('[data-vibeui-block="hero-029"] button[data-part="play"]', 0, 1.2)) throw new Error("Hero podcast play button is unreachable")
+        if (await page.locator('[data-vibeui-block="podcast-007"]').getAttribute('data-open') !== 'true') throw new Error("Hero podcast player did not open")
+        director.actions.at(-1).result = "player-open"
+      }
       await director.checkpoint("hero")
       await sharp(director.lastFrame).resize(960, 600).webp({ quality: 80 }).toFile(path.join(directory, `${slug}.webp`))
 
       const scenes = await page.evaluate(() => {
         const ids = Array.from(document.querySelectorAll('body [id]')).filter(el => /^[a-z][a-z0-9-]*$/.test(el.id) && !el.closest('svg') && el.getBoundingClientRect().height > 180)
         const outer = ids.filter(el => !ids.some(other => other !== el && other.contains(el)))
-        const result = outer.filter(el => !['hero','top'].includes(el.id)).map(el => `#${el.id}`)
+        const entries = outer.filter(el => !['hero','top'].includes(el.id)).map(el => ({ el, selector: `#${el.id}` }))
+        // Some demo sections (logos, reading excerpts) have no anchor. Include
+        // those too, without changing the site's layout or styling.
+        const blocks = Array.from(document.querySelectorAll('[data-vibeui-block]')).filter(el =>
+          !el.parentElement.closest('[data-vibeui-block]') &&
+          !/^(navbar|hero|footer|background)-/.test(el.dataset.vibeuiBlock) &&
+          !['fixed', 'absolute'].includes(getComputedStyle(el).position) &&
+          el.getBoundingClientRect().height > 180 &&
+          !outer.some(wrapper => wrapper === el || wrapper.contains(el)))
+        blocks.forEach((el, index) => {
+          el.dataset.motionScene = String(index)
+          entries.push({ el, selector: `[data-motion-scene="${index}"]` })
+        })
+        const result = entries.sort((a, b) => a.el.getBoundingClientRect().top - b.el.getBoundingClientRect().top).map(entry => entry.selector)
         const footer = document.querySelector('footer,[data-vibeui-block^="footer-"]')
         if (footer && !result.some(selector => document.querySelector(selector).contains(footer))) result.push('footer,[data-vibeui-block^="footer-"]')
         return result
@@ -492,8 +645,13 @@ async function render(slug) {
         await director.checkpoint(selector)
         const height = await page.locator(selector).first().evaluate(el => el.getBoundingClientRect().height)
         if (height > HEIGHT + 240) {
-          await director.scrollTo(selector, { lower: true, duration: 1.35 })
-          await director.hold(.9)
+          const geometry = await page.locator(selector).first().evaluate(el => ({ from: scrollY, to: Math.min(document.documentElement.scrollHeight - innerHeight, scrollY + el.getBoundingClientRect().bottom - innerHeight + 80) }))
+          const distance = geometry.to - geometry.from
+          const steps = Math.max(1, Math.ceil(distance / (HEIGHT * .85)))
+          for (let step = 1; step <= steps; step++) {
+            await director.pan({ from: await page.evaluate(() => scrollY), to: geometry.from + distance * step / steps }, `${selector}-detail-${step}`)
+            await director.hold(step === steps ? .9 : .45)
+          }
           await director.checkpoint(`${selector}-lower`)
         }
       }
@@ -507,28 +665,35 @@ async function render(slug) {
     if (probe.streams.some(stream => stream.codec_type === "audio")) throw new Error("Unexpected audio track")
     if (probe.streams[0].avg_frame_rate !== "60/1") throw new Error("Unexpected frame rate")
     execFileSync(ffmpeg, ["-v", "error", "-i", output, "-f", "null", "-"], { windowsHide: true, timeout: 120000 })
-    const audit = { slug, url: page.url(), frames: director.frame, seconds: director.frame / FPS, width: WIDTH, height: HEIGHT, checkpoints: director.checkpoints, scrolls: director.scrolls, actions: director.actions, streams: probe.streams, size: probe.format.size }
+    const audit = { slug, locale, captureMode, url: page.url(), frames: director.frame, seconds: director.frame / FPS, width: WIDTH, height: HEIGHT, checkpoints: director.checkpoints, scrolls: director.scrolls, actions: director.actions, streams: probe.streams, size: probe.format.size }
     await writeFile(path.join(directory, "audit.json"), JSON.stringify(audit, null, 2))
     if (director.checkpoints.length) await contactSheet(directory, director.checkpoints)
-    console.log(`DONE ${slug}: ${audit.seconds.toFixed(2)}s, ${(Number(audit.size) / 1048576).toFixed(2)} MiB, ${audit.actions.length} interactions`)
+    console.log(`DONE ${locale}/${slug}: ${audit.seconds.toFixed(2)}s, ${(Number(audit.size) / 1048576).toFixed(2)} MiB, ${audit.actions.length} interactions`)
   } catch (error) {
-    console.error(`FAILED ${slug}:`, error)
+    console.error(`FAILED ${locale}/${slug}:`, error)
     throw error
   } finally {
-    if (encoder && !encoder.killed) encoder.stdin.end()
+    if (encoder && !encoder.killed) {
+      encoder.stdin.end()
+      await completion?.catch(() => {})
+    }
     await browser.close()
   }
 }
 
-if (!selected.length) throw new Error("Specify scenario slugs or all")
+if (!selected.length) throw new Error("Specify scenario slugs, all or --missing")
 await mkdir(auditRoot, { recursive: true })
 // Two independent browsers overlap screenshot I/O without overcrowding this host.
 let next = 0
 const failures = []
-await Promise.all(Array.from({ length: Math.min(2, selected.length) }, async () => {
-  while (next < selected.length) {
-    const slug = selected[next++]
-    try { await render(slug) } catch { failures.push(slug) }
+console.log(`Render queue: ${jobs.map(job => `${job.locale}/${job.slug}`).join(', ')}`)
+await Promise.all(Array.from({ length: Math.min(2, jobs.length) }, async () => {
+  while (next < jobs.length) {
+    const { slug, locale } = jobs[next++]
+    try { await render(slug, locale) } catch {
+      console.log(`Retry ${locale}/${slug} with native still capture`)
+      try { await render(slug, locale, "screenshot") } catch { failures.push(`${locale}/${slug}`) }
+    }
   }
 }))
 if (failures.length) throw new Error(`Scenarios to retry: ${failures.join(', ')}`)

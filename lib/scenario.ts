@@ -32,11 +32,21 @@ export function getScenario(slug: string): Scenario | undefined {
   return SCENARIOS.find((scenario) => scenario.slug === slug)
 }
 
-// Прототип: скролл-видео вместо статичного постера — снято пока не для
-// всех сценариев, остальные молча остаются на постере. fs.existsSync
-// сюда не годится: файл общий с клиентскими компонентами.
-const VIDEO_SLUGS = new Set(["auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery", "tattoo", "vet", "language", "flowers"])
-const EN_VIDEO_SLUGS = new Set([...VIDEO_SLUGS, "wedding-winter", "wedding"])
+// Явный список готовых роликов оставляет постер для новых
+// сценариев, пока их видео не создано; fs здесь нельзя использовать,
+// поскольку этот модуль импортируется и клиентскими компонентами.
+const VIDEO_SLUGS = new Set([
+  "auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery",
+  "tattoo", "vet", "language", "flowers", "wedding-winter", "wedding",
+  "realty", "course", "festival", "bakery", "opensource",
+  "portfolio", "app", "renovation", "fintech", "market", "api", "gadget",
+  "charity",
+])
+
+const EN_VIDEO_SLUGS = new Set([
+  "auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery",
+  "tattoo", "vet", "language", "flowers", "wedding-winter", "wedding",
+])
 
 export function scenarioText(scenario: Scenario, locale: Locale) {
   // Английское демо и его постер есть не у каждого сценария: без них
