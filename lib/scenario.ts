@@ -38,15 +38,12 @@ export function getScenario(slug: string): Scenario | undefined {
 const VIDEO_SLUGS = new Set([
   "auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery",
   "tattoo", "vet", "language", "flowers", "wedding-winter", "wedding",
-  "realty", "course", "festival", "bakery", "opensource",
+  "realty", "course", "festival", "bakery", "podcast", "opensource",
   "portfolio", "app", "renovation", "fintech", "market", "api", "gadget",
-  "charity",
+  "charity", "writer",
 ])
 
-const EN_VIDEO_SLUGS = new Set([
-  "auto", "wedding-cuba", "saas", "photographer", "restaurant", "delivery",
-  "tattoo", "vet", "language", "flowers", "wedding-winter", "wedding",
-])
+const EN_VIDEO_SLUGS = VIDEO_SLUGS
 
 export function scenarioText(scenario: Scenario, locale: Locale) {
   // Английское демо и его постер есть не у каждого сценария: без них
