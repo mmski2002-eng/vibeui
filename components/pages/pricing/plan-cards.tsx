@@ -5,7 +5,10 @@ import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { Check, Crown, Sparkles } from "lucide-react"
 
-import { PromoField, type PromoTexts } from "@/components/pages/pricing/promo-field"
+import {
+  PromoField,
+  type PromoTexts,
+} from "@/components/pages/pricing/promo-field"
 import { startCheckout } from "@/lib/payment-actions"
 import type { AppliedPromo } from "@/lib/promo.shared"
 import { cn } from "@/lib/utils"
@@ -58,7 +61,12 @@ export type PlanCardsTexts = {
 export type PlanCardsProps = {
   locale: "ru" | "en"
   texts: PlanCardsTexts
-  prices: { monthly: number; yearly: number; enterpriseMonthly: number; enterpriseYearly: number }
+  prices: {
+    monthly: number
+    yearly: number
+    enterpriseMonthly: number
+    enterpriseYearly: number
+  }
   signed: boolean
   pro: boolean
   signupHref: string
@@ -175,7 +183,7 @@ export function PlanCards({
     currencyBefore
       ? `${currency}${money.format(value)}`
       : `${money.format(value)} ${currency}`
-  const [yearly, setYearly] = useState(true)
+  const [yearly, setYearly] = useState(false)
   const [applied, setApplied] = useState<AppliedPromo | null>(null)
   const listPro = yearly ? prices.yearly : prices.monthly
   const listEnterprise = yearly
@@ -252,7 +260,9 @@ export function PlanCards({
           <p className="text-shell-muted text-xs font-medium tracking-wide uppercase">
             {t.free.eyebrow}
           </p>
-          <h2 className="text-shell-fg mt-2 text-xl font-semibold">{t.free.name}</h2>
+          <h2 className="text-shell-fg mt-2 text-xl font-semibold">
+            {t.free.name}
+          </h2>
           <p className="text-shell-fg mt-5 text-4xl font-semibold tracking-tight tabular-nums">
             {amount(0)}
           </p>
@@ -265,10 +275,15 @@ export function PlanCards({
             ))}
           </ul>
           <div className="mt-auto pt-8">
-            <Link href={signed ? accountHref : signupHref} className={outlineButton}>
+            <Link
+              href={signed ? accountHref : signupHref}
+              className={outlineButton}
+            >
               {signed ? t.free.ctaSigned : t.free.cta}
             </Link>
-            <p className="text-shell-muted mt-3 text-center text-xs">{t.free.under}</p>
+            <p className="text-shell-muted mt-3 text-center text-xs">
+              {t.free.under}
+            </p>
           </div>
         </article>
 
@@ -305,7 +320,10 @@ export function PlanCards({
                   <AnimatedPrice value={proPrice} /> {currency}
                 </>
               )}
-              <span className="text-base font-normal text-[#f2f2f2]/60"> {period}</span>
+              <span className="text-base font-normal text-[#f2f2f2]/60">
+                {" "}
+                {period}
+              </span>
             </span>
           </p>
           <p className="mt-1 min-h-5 text-sm text-[#f2f2f2]/60">
@@ -324,7 +342,9 @@ export function PlanCards({
             />
           ) : null}
           <ul className="mt-6 grid gap-2.5">
-            <li className="text-sm font-medium text-[#f2f2f2]/80">{t.pro.plusAll}</li>
+            <li className="text-sm font-medium text-[#f2f2f2]/80">
+              {t.pro.plusAll}
+            </li>
             {t.pro.features.map((feature) => (
               <Feature key={feature} tone="onDark">
                 {feature}
@@ -350,20 +370,29 @@ export function PlanCards({
               </div>
             ) : (
               <form action={payAction}>
-                <input type="hidden" name="plan" value={yearly ? "yearly" : "monthly"} />
+                <input
+                  type="hidden"
+                  name="plan"
+                  value={yearly ? "yearly" : "monthly"}
+                />
                 <input type="hidden" name="locale" value={locale} />
-                {applied ? <input type="hidden" name="promo" value={applied.code} /> : null}
+                {applied ? (
+                  <input type="hidden" name="promo" value={applied.code} />
+                ) : null}
                 <button type="submit" className={proButton}>
                   {yearly ? t.pro.payYear : t.pro.payMonth}
                   {applied ? (
                     <span className="ml-1.5 font-normal opacity-80">
-                      · {money.format(proPrice)} ₽ {t.promo.instead} {money.format(listPro)}
+                      · {money.format(proPrice)} ₽ {t.promo.instead}{" "}
+                      {money.format(listPro)}
                     </span>
                   ) : null}
                 </button>
               </form>
             )}
-            <p className="mt-3 text-center text-xs text-[#f2f2f2]/50">{t.pro.under}</p>
+            <p className="mt-3 text-center text-xs text-[#f2f2f2]/50">
+              {t.pro.under}
+            </p>
           </div>
         </article>
 
@@ -378,7 +407,9 @@ export function PlanCards({
               {t.enterprise.badge}
             </span>
           </div>
-          <h2 className="text-shell-fg mt-2 text-xl font-semibold">{t.enterprise.name}</h2>
+          <h2 className="text-shell-fg mt-2 text-xl font-semibold">
+            {t.enterprise.name}
+          </h2>
           <p className="text-shell-fg mt-5 flex flex-wrap items-baseline gap-x-3 text-4xl font-semibold tracking-tight tabular-nums">
             {applied ? (
               <s className="promo-old text-shell-muted decoration-shell-accent/60 text-xl font-medium decoration-2">
@@ -396,11 +427,18 @@ export function PlanCards({
                   <AnimatedPrice value={enterprisePrice} /> {currency}
                 </>
               )}
-              <span className="text-shell-muted text-base font-normal"> {period}</span>
+              <span className="text-shell-muted text-base font-normal">
+                {" "}
+                {period}
+              </span>
             </span>
           </p>
           <p className="text-shell-muted mt-1 min-h-5 text-sm">
-            {discountNote ? discountNote : yearly ? t.yearlyNoteEnterprise : " "}
+            {discountNote
+              ? discountNote
+              : yearly
+                ? t.yearlyNoteEnterprise
+                : " "}
           </p>
           {promo.eligible && !pro ? (
             <PromoField
@@ -414,7 +452,9 @@ export function PlanCards({
             />
           ) : null}
           <ul className="text-shell-muted mt-6 grid gap-2.5">
-            <li className="text-shell-fg text-sm font-medium">{t.enterprise.plusAll}</li>
+            <li className="text-shell-fg text-sm font-medium">
+              {t.enterprise.plusAll}
+            </li>
             {t.enterprise.features.map((feature) => (
               <Feature key={feature} tone="accent">
                 {feature}
@@ -434,13 +474,17 @@ export function PlanCards({
                   value={yearly ? "enterprise-yearly" : "enterprise-monthly"}
                 />
                 <input type="hidden" name="locale" value={locale} />
-                {applied ? <input type="hidden" name="promo" value={applied.code} /> : null}
+                {applied ? (
+                  <input type="hidden" name="promo" value={applied.code} />
+                ) : null}
                 <button type="submit" className={outlineButton}>
                   {t.enterprise.cta}
                 </button>
               </form>
             )}
-            <p className="text-shell-muted mt-3 text-center text-xs">{t.enterprise.under}</p>
+            <p className="text-shell-muted mt-3 text-center text-xs">
+              {t.enterprise.under}
+            </p>
           </div>
         </article>
       </div>

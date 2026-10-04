@@ -142,6 +142,7 @@ type Dictionary = {
       all: string
       groups: Record<"local" | "product" | "content" | "events", string>
       tones: { light: string; dark: string }
+      grid: { two: string; four: string }
     }
     openRecipe: string
     openInCatalog: string
@@ -168,7 +169,7 @@ type Dictionary = {
     imagePrompt: string
     howTo: string
     howToSteps: string[]
-  },
+  }
   item: {
     preview: string
     use: string
@@ -406,8 +407,14 @@ const RU: Dictionary = {
     },
     filters: {
       all: "Все",
-      groups: { local: "Локальный бизнес", product: "Продукт и SaaS", content: "Контент и люди", events: "События" },
+      groups: {
+        local: "Локальный бизнес",
+        product: "Продукт и SaaS",
+        content: "Контент и люди",
+        events: "События",
+      },
       tones: { light: "Светлые", dark: "Тёмные" },
+      grid: { two: "Две карточки в строке", four: "Четыре карточки в строке" },
     },
     openRecipe: "Из чего собрано",
     openInCatalog: "Открыть в каталоге",
@@ -430,7 +437,8 @@ const RU: Dictionary = {
     rules: "Общие правила страницы",
     ruleTheme: (tone, accent, ink) =>
       `Одна тема на все блоки: tone="${tone}", accent="${accent}", ink="${ink}" — передаются каждому блоку пропсами.`,
-    ruleFont: (font) => `Шрифты ${font} блоки подключают сами; страница ставит тот же шрифт на текст между блоками.`,
+    ruleFont: (font) =>
+      `Шрифты ${font} блоки подключают сами; страница ставит тот же шрифт на текст между блоками.`,
     ruleList: [
       "Все секции внутри обёртки sketch-018: она даёт въезд листов, нитку и доодлы на полях.",
       "Стикеры и разделители — между секциями, позиционированием со стороны страницы.",
@@ -457,11 +465,7 @@ const RU: Dictionary = {
     copyHint:
       "Вставь ссылку в чат агента в своём проекте и напиши, куда добавить блок. Ссылка личная и действует 24 часа.",
     flow: "Как это работает",
-    flowSteps: [
-      "Выбрали здесь",
-      "Вставили в чат агента",
-      "Получили в проекте",
-    ],
+    flowSteps: ["Выбрали здесь", "Вставили в чат агента", "Получили в проекте"],
     flowChat: "добавь это на главную первым экраном:",
     adapt: "Что можно поменять",
     anatomy: "Анатомия",
@@ -639,8 +643,14 @@ const EN: Dictionary = {
     blocksCount: (count) => `${count} block${count === 1 ? "" : "s"}`,
     filters: {
       all: "All",
-      groups: { local: "Local business", product: "Product & SaaS", content: "Content & people", events: "Events" },
+      groups: {
+        local: "Local business",
+        product: "Product & SaaS",
+        content: "Content & people",
+        events: "Events",
+      },
       tones: { light: "Light", dark: "Dark" },
+      grid: { two: "Two cards per row", four: "Four cards per row" },
     },
     openRecipe: "What it is made of",
     openInCatalog: "Open in the catalog",
@@ -663,7 +673,8 @@ const EN: Dictionary = {
     rules: "Page rules",
     ruleTheme: (tone, accent, ink) =>
       `One theme for every block: tone="${tone}", accent="${accent}", ink="${ink}" — passed to each block as props.`,
-    ruleFont: (font) => `The blocks load the ${font} fonts themselves; the page sets the same font on text between blocks.`,
+    ruleFont: (font) =>
+      `The blocks load the ${font} fonts themselves; the page sets the same font on text between blocks.`,
     ruleList: [
       "Every section sits inside the sketch-018 wrapper: it provides the sheet slide-in, the thread and the margin doodles.",
       "Stickers and dividers go between sections, positioned from the page side.",
@@ -690,7 +701,11 @@ const EN: Dictionary = {
     copyHint:
       "Paste the link into your agent's chat and say where the block should go. The link is personal and valid for 24 hours.",
     flow: "How it works",
-    flowSteps: ["Pick it here", "Paste into the chat", "Get it in your project"],
+    flowSteps: [
+      "Pick it here",
+      "Paste into the chat",
+      "Get it in your project",
+    ],
     flowChat: "put this on the home page as the hero:",
     adapt: "What you can change",
     anatomy: "Anatomy",

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, Columns2, LayoutGrid } from "lucide-react"
 
 import { useFavorites } from "@/components/catalog/favorites-provider"
 import { LikeButton } from "@/components/catalog/like-button"
@@ -33,6 +33,7 @@ export type ScenarioGridText = {
   all: string
   groups: Record<ScenarioGroup, string>
   tones: { light: string; dark: string }
+  grid: { two: string; four: string }
   openDemo: string
   favourite: string
 }
@@ -67,16 +68,25 @@ export function ScenariosGrid({
 }) {
   const [group, setGroup] = useState<ScenarioGroup | "all">("all")
   const [tone, setTone] = useState<"light" | "dark" | "all">("all")
-  const { items: favorites, counts, pinnedCounts: order, toggle } = useFavorites()
+  const [columns, setColumns] = useState<2 | 4>(4)
+  const {
+    items: favorites,
+    counts,
+    pinnedCounts: order,
+    toggle,
+  } = useFavorites()
   const signedIn = Boolean(useSession().data)
   const router = useRouter()
 
   const visible = useMemo(() => {
     const filtered = cards.filter(
-      (card) => (group === "all" || card.group === group) && (tone === "all" || card.tone === tone),
+      (card) =>
+        (group === "all" || card.group === group) &&
+        (tone === "all" || card.tone === tone),
     )
     if (!order) return filtered
-    const likes = (card: ScenarioCard) => order[scenarioFavoriteName(card.slug)] ?? 0
+    const likes = (card: ScenarioCard) =>
+      order[scenarioFavoriteName(card.slug)] ?? 0
     return [...filtered].sort((a, b) => likes(b) - likes(a))
   }, [cards, group, tone, order])
 
@@ -89,8 +99,12 @@ export function ScenariosGrid({
   }
 
   const groupCounts = useMemo(() => {
-    const totals = { all: cards.length } as Record<ScenarioGroup | "all", number>
-    for (const key of GROUP_ORDER) totals[key] = cards.filter((card) => card.group === key).length
+    const totals = { all: cards.length } as Record<
+      ScenarioGroup | "all",
+      number
+    >
+    for (const key of GROUP_ORDER)
+      totals[key] = cards.filter((card) => card.group === key).length
     return totals
   }, [cards])
 
@@ -98,7 +112,7 @@ export function ScenariosGrid({
     <>
       <div className="border-shell-border mb-6 flex items-end justify-between gap-4 border-b">
         <div
-          className="-mb-px flex min-w-0 flex-1 gap-x-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="-mb-px flex min-w-0 flex-1 [scrollbar-width:none] gap-x-1 overflow-x-auto [&::-webkit-scrollbar]:hidden"
           role="tablist"
           aria-label="Сфера"
         >
@@ -111,75 +125,133 @@ export function ScenariosGrid({
             </Tab>
           ))}
         </div>
-        <div
-          className="border-shell-border bg-shell-panel mb-2 inline-flex h-8 shrink-0 items-center rounded-lg border p-0.5"
-          role="group"
-          aria-label="Тема"
-        >
-          <Segment active={tone === "all"} onClick={() => setTone("all")} label={text.all}>
-            <i
-              className="border-shell-border-strong size-2.5 rounded-full border bg-[linear-gradient(90deg,#fff_50%,#171717_50%)]"
-              aria-hidden="true"
-            />
-          </Segment>
-          <Segment active={tone === "light"} onClick={() => setTone("light")} label={text.tones.light}>
-            <i className="border-shell-border-strong size-2.5 rounded-full border bg-white" aria-hidden="true" />
-          </Segment>
-          <Segment active={tone === "dark"} onClick={() => setTone("dark")} label={text.tones.dark}>
-            <i className="size-2.5 rounded-full bg-neutral-900" aria-hidden="true" />
-          </Segment>
+        <div className="mb-2 flex shrink-0 items-center gap-2">
+          <div
+            className="border-shell-border bg-shell-panel inline-flex h-8 items-center rounded-lg border p-0.5"
+            role="group"
+            aria-label={locale === "en" ? "Theme" : "Тема"}
+          >
+            <Segment
+              active={tone === "all"}
+              onClick={() => setTone("all")}
+              label={text.all}
+            >
+              <i
+                className="border-shell-border-strong size-2.5 rounded-full border bg-[linear-gradient(90deg,#fff_50%,#171717_50%)]"
+                aria-hidden="true"
+              />
+            </Segment>
+            <Segment
+              active={tone === "light"}
+              onClick={() => setTone("light")}
+              label={text.tones.light}
+            >
+              <i
+                className="border-shell-border-strong size-2.5 rounded-full border bg-white"
+                aria-hidden="true"
+              />
+            </Segment>
+            <Segment
+              active={tone === "dark"}
+              onClick={() => setTone("dark")}
+              label={text.tones.dark}
+            >
+              <i
+                className="size-2.5 rounded-full bg-neutral-900"
+                aria-hidden="true"
+              />
+            </Segment>
+          </div>
+          <div
+            className="border-shell-border bg-shell-panel hidden h-8 items-center rounded-lg border p-0.5 sm:inline-flex"
+            role="group"
+            aria-label={locale === "en" ? "Grid size" : "Размер сетки"}
+          >
+            <IconSegment
+              active={columns === 4}
+              onClick={() => setColumns(4)}
+              label={text.grid.four}
+            >
+              <LayoutGrid className="size-3.5" aria-hidden="true" />
+            </IconSegment>
+            <IconSegment
+              active={columns === 2}
+              onClick={() => setColumns(2)}
+              label={text.grid.two}
+            >
+              <Columns2 className="size-3.5" aria-hidden="true" />
+            </IconSegment>
+          </div>
         </div>
       </div>
 
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <ul
+        className={cn(
+          "grid gap-4 sm:grid-cols-2",
+          columns === 4 && "lg:grid-cols-3 xl:grid-cols-4",
+        )}
+      >
         {visible.map((card) => {
           const favName = scenarioFavoriteName(card.slug)
           const favourite = favorites?.has(favName) ?? false
           const likes = counts[favName] ?? 0
           return (
-          <li key={card.slug}>
-            <article className="border-shell-border bg-shell-panel acc-lift group relative flex h-full flex-col overflow-hidden rounded-xl border">
-              <div className="relative">
-                <LiveCover src={card.demo} title={card.label} poster={card.poster} video={card.video} />
-                <LikeButton
-                  active={favourite}
-                  count={likes}
-                  label={text.favourite}
-                  onClick={() => onFavourite(card.slug)}
-                  tone={card.tone}
-                  className="absolute top-2 right-2 z-20"
-                />
-                <Link
-                  href={card.demo}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label={`${text.openDemo}: ${card.label}`}
-                  className="bg-shell-panel/90 text-shell-fg hover:bg-shell-accent hover:text-shell-accent-fg absolute right-2 bottom-2 z-20 inline-flex size-8 items-center justify-center rounded-full opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
-                >
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
-                {card.isNew ? (
-                  <span className="bg-shell-accent text-shell-accent-fg absolute top-2 left-2 z-20 rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase">
-                    new
-                  </span>
-                ) : null}
-              </div>
-              <div className="flex flex-1 items-start justify-between gap-2 p-3">
-                <h2 className="text-shell-fg text-sm leading-snug font-medium">
-                  <Link href={card.href} className="after:absolute after:inset-0 after:z-10">
-                    {card.label}
-                  </Link>
-                </h2>
-                <span className="text-shell-muted flex shrink-0 items-center gap-1.5 text-xs tabular-nums">
-                  <i
-                    className={cn("size-2 rounded-full", card.tone === "dark" ? "bg-neutral-900" : "border-shell-border-strong border bg-white")}
-                    aria-hidden="true"
+            <li key={card.slug}>
+              <article className="border-shell-border bg-shell-panel acc-lift group relative flex h-full flex-col overflow-hidden rounded-xl border">
+                <div className="relative">
+                  <LiveCover
+                    src={card.demo}
+                    title={card.label}
+                    poster={card.poster}
+                    video={card.video}
                   />
-                  {card.blocksLabel}
-                </span>
-              </div>
-            </article>
-          </li>
+                  <LikeButton
+                    active={favourite}
+                    count={likes}
+                    label={text.favourite}
+                    onClick={() => onFavourite(card.slug)}
+                    tone={card.tone}
+                    className="absolute top-2 right-2 z-20"
+                  />
+                  <Link
+                    href={card.demo}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`${text.openDemo}: ${card.label}`}
+                    className="bg-shell-panel/90 text-shell-fg hover:bg-shell-accent hover:text-shell-accent-fg absolute right-2 bottom-2 z-20 inline-flex size-8 items-center justify-center rounded-full opacity-0 shadow-sm backdrop-blur transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+                  >
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                  </Link>
+                  {card.isNew ? (
+                    <span className="bg-shell-accent text-shell-accent-fg absolute top-2 left-2 z-20 rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase">
+                      new
+                    </span>
+                  ) : null}
+                </div>
+                <div className="flex flex-1 items-start justify-between gap-2 p-3">
+                  <h2 className="text-shell-fg text-sm leading-snug font-medium">
+                    <Link
+                      href={card.href}
+                      className="after:absolute after:inset-0 after:z-10"
+                    >
+                      {card.label}
+                    </Link>
+                  </h2>
+                  <span className="text-shell-muted flex shrink-0 items-center gap-1.5 text-xs tabular-nums">
+                    <i
+                      className={cn(
+                        "size-2 rounded-full",
+                        card.tone === "dark"
+                          ? "bg-neutral-900"
+                          : "border-shell-border-strong border bg-white",
+                      )}
+                      aria-hidden="true"
+                    />
+                    {card.blocksLabel}
+                  </span>
+                </div>
+              </article>
+            </li>
           )
         })}
       </ul>
@@ -187,7 +259,15 @@ export function ScenariosGrid({
   )
 }
 
-function Tab({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+function Tab({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean
+  onClick: () => void
+  children: React.ReactNode
+}) {
   return (
     <button
       type="button"
@@ -196,7 +276,9 @@ function Tab({ active, onClick, children }: { active: boolean; onClick: () => vo
       aria-selected={active}
       className={cn(
         "focus-visible:ring-shell-ring inline-flex h-10 items-center gap-1.5 border-b-2 px-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:outline-none",
-        active ? "border-shell-accent text-shell-fg" : "text-shell-muted hover:text-shell-fg border-transparent",
+        active
+          ? "border-shell-accent text-shell-fg"
+          : "text-shell-muted hover:text-shell-fg border-transparent",
       )}
     >
       {children}
@@ -224,7 +306,9 @@ function Segment({
       title={label}
       className={cn(
         "focus-visible:ring-shell-ring inline-flex h-7 items-center gap-1.5 rounded-md px-2 text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none",
-        active ? "bg-shell-fg text-shell" : "text-shell-muted hover:text-shell-fg",
+        active
+          ? "bg-shell-fg text-shell"
+          : "text-shell-muted hover:text-shell-fg",
       )}
     >
       {children}
@@ -234,5 +318,35 @@ function Segment({
 }
 
 function Count({ children }: { children: React.ReactNode }) {
-  return <span className="opacity-60 tabular-nums">{children}</span>
+  return <span className="tabular-nums opacity-60">{children}</span>
+}
+
+function IconSegment({
+  active,
+  onClick,
+  label,
+  children,
+}: {
+  active: boolean
+  onClick: () => void
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      aria-label={label}
+      title={label}
+      className={cn(
+        "focus-visible:ring-shell-ring inline-flex size-7 items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:outline-none",
+        active
+          ? "bg-shell-fg text-shell"
+          : "text-shell-muted hover:text-shell-fg",
+      )}
+    >
+      {children}
+    </button>
+  )
 }
