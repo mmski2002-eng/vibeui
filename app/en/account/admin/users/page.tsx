@@ -1,7 +1,7 @@
 import { AdminUsers } from "@/components/pages/admin/users"
 
 export const metadata = {
-  title: "Пользователи",
+  title: "Users",
   robots: { index: false, follow: false },
 }
 
@@ -12,5 +12,11 @@ export default async function Page({
 }) {
   const { q, page } = await searchParams
 
-  return <AdminUsers query={q} page={Number(page) > 1 ? Number(page) : 1} />
+  return (
+    <AdminUsers
+      query={q}
+      page={Number(page) > 1 ? Number(page) : 1}
+      locale="en"
+    />
+  )
 }

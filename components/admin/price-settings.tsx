@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 
 import { INPUT_CLASS } from "@/components/admin/parts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { setPlanPrices } from "@/lib/admin-actions"
 
 type Values = {
@@ -26,14 +26,16 @@ export function PriceSettings({
   promoPercent,
   commissionPercent,
   defaults,
+  locale = "ru",
 }: {
   monthly: string
   yearly: string
   promoPercent: string
   commissionPercent: string
   defaults: Values
+  locale?: "ru" | "en"
 }) {
-  const t = ADMIN_TEXTS.payments
+  const t = getAdminTexts(locale).payments
   const router = useRouter()
   const [values, setValues] = useState<Values>({
     monthly,

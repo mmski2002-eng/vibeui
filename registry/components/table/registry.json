@@ -779,7 +779,7 @@
                 ]
               }
             },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-004-*. A client component: \"use client\" for the sake of sorting. A column heading is a button, and the state is declared with the aria-sort attribute on the cell. Numbers are compared by subtraction, strings by localeCompare with the Russian locale, so \"ё\" lands in its proper place."
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in local variables --vibeui-table-004-*. A client component: \"use client\" for the sake of sorting. A column heading is a button, and the state is declared with the aria-sort attribute on the cell. Numbers are compared by subtraction, strings by localeCompare with the selected locale so locale-specific letters sort correctly."
           }
         },
         "cardControls": [

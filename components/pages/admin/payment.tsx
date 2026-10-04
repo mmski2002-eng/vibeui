@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm"
 
 import { PaymentActions } from "@/components/admin/payment-actions"
 import { AdminHeading, Pill } from "@/components/admin/parts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import { payment, user } from "@/lib/db/schema"
@@ -23,10 +23,17 @@ function statusOf(value: string) {
 }
 
 /** Карточка платежа: что мы знаем, что можно сделать. */
-export async function AdminPayment({ id }: { id: string }) {
+export async function AdminPayment({
+  id,
+  locale = "ru",
+}: {
+  id: string
+  locale?: "ru" | "en"
+}) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.payments
+  const adminTexts = getAdminTexts(locale)
+  const t = adminTexts.payments
 
   const [row] = await db
     .select({
@@ -69,7 +76,15 @@ export async function AdminPayment({ id }: { id: string }) {
 
       <div className="border-shell-border bg-shell-panel acc-shadow acc-reveal grid gap-3 rounded-2xl border p-5 text-sm">
         <Row label={t.columnStatus}>
-          <Pill tone={row.status === "succeeded" ? "ok" : row.status === "pending" ? "warn" : "muted"}>
+          <Pill
+            tone={
+              row.status === "succeeded"
+                ? "ok"
+                : row.status === "pending"
+                  ? "warn"
+                  : "muted"
+            }
+          >
             {t.status[statusOf(row.status)]}
           </Pill>
         </Row>
@@ -85,7 +100,8 @@ export async function AdminPayment({ id }: { id: string }) {
         </Row>
         <Row label={t.paid}>
           <span className="text-shell-fg tabular-nums">
-            {row.paidAt?.toLocaleString("ru-RU") ?? ADMIN_TEXTS.common.nothing}
+            {row.paidAt?.toLocaleString(locale === "en" ? "en-US" : "ru-RU") ??
+              adminTexts.common.nothing}
           </span>
         </Row>
         <Row label={t.receipt}>
@@ -112,7 +128,11 @@ export async function AdminPayment({ id }: { id: string }) {
         </Row>
       </div>
 
-      <PaymentActions paymentId={row.id} receiptUrl={row.receiptUrl} />
+      <PaymentActions
+        paymentId={row.id}
+        receiptUrl={row.receiptUrl}
+        locale={locale}
+      />
 
       {row.payload ? (
         <details className="border-shell-border bg-shell-panel acc-shadow mt-6 rounded-2xl border">

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Save, Trash2, UserPlus } from "lucide-react"
 
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { Button } from "@/components/account/ui/button"
 import { useToast } from "@/components/account/ui/toast"
 import {
@@ -17,8 +17,8 @@ const INPUT =
   "border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 min-w-0 flex-1 rounded-lg border px-3 text-sm outline-none transition-colors focus-visible:ring-2"
 
 /** Форма «имя → ссылка». Право проверяется на сервере, здесь только ввод. */
-export function CreateInviteForm() {
-  const t = ADMIN_TEXTS.partners
+export function CreateInviteForm({ locale = "ru" }: { locale?: "ru" | "en" }) {
+  const t = getAdminTexts(locale).partners
   const router = useRouter()
   const [name, setName] = useState("")
   const [promoCode, setPromoCode] = useState("")
@@ -93,8 +93,14 @@ export function CreateInviteForm() {
 
 /** Удаление незанятой ссылки. Подтверждение через confirm: действие
  *  редкое, а отдельный диалог ради него — лишний экран. */
-export function DeleteInviteButton({ id }: { id: string }) {
-  const t = ADMIN_TEXTS.partners
+export function DeleteInviteButton({
+  id,
+  locale = "ru",
+}: {
+  id: string
+  locale?: "ru" | "en"
+}) {
+  const t = getAdminTexts(locale).partners
   const router = useRouter()
   const toast = useToast()
   const [pending, setPending] = useState(false)
@@ -135,14 +141,16 @@ export function PartnerPromoForm({
   percent,
   active,
   defaultPercent,
+  locale = "ru",
 }: {
   id: string
   code: string | null
   percent: number | null
   active: boolean
   defaultPercent: number
+  locale?: "ru" | "en"
 }) {
-  const t = ADMIN_TEXTS.partners
+  const t = getAdminTexts(locale).partners
   const router = useRouter()
   const toast = useToast()
   const [values, setValues] = useState({

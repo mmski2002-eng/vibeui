@@ -2401,7 +2401,7 @@
               },
               "externalHint": {
                 "label": "externalHint",
-                "default": "(откроется в новой вкладке)"
+                "default": "(will open in a new tab)"
               }
             },
             "title": "Link Button",
@@ -4774,7 +4774,7 @@
                 "the reset caption through the resetLabel prop",
                 "the reaction to a choice through the onFileChange prop",
                 "the accent colour through the accent prop",
-                "the file weight units through the unitText prop: the component ships the Russian МБ, КБ and Б",
+                "the file weight units through the unitText prop: the component ships the Russian MB, KB and B",
                 "background — the component background; empty means no background, taking the page colour"
               ],
               "notes": [
@@ -8714,7 +8714,7 @@
                 }
               }
             },
-            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-057-* variables. Server component. The number is shortened to \"тыс.\" and \"млн\" with a comma as the decimal separator; the full value through toLocaleString goes into title and aria-label, because the shortening rounds and lies. The bars are normalised to the maximum of the trend array, and a minimum height of 12% keeps zero values from disappearing. The last bar is highlighted as the current period."
+            "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-057-* variables. Server component. The number is shortened to \"thousand\" and \"million\" with a comma as the decimal separator; the full value through toLocaleString goes into title and aria-label, because the shortening rounds and lies. The bars are normalised to the maximum of the trend array, and a minimum height of 12% keeps zero values from disappearing. The last bar is highlighted as the current period."
           }
         },
         "cardControls": [
@@ -14804,11 +14804,11 @@
               },
               "todayLabel": {
                 "label": "todayLabel",
-                "default": "сегодня"
+                "default": "today"
               },
               "tomorrowLabel": {
                 "label": "tomorrowLabel",
-                "default": "завтра"
+                "default": "tomorrow"
               }
             }
           }
@@ -14888,7 +14888,7 @@
             "docs": "Extracted from the flowers-005 block as is: one file, no dependencies, its own palette in the --vibeui-button-082-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Accordion header button: icon, title and a plus, expanded through aria-expanded.",
-              "usage": "<Button082 title=\"Подрежьте стебли наискосок\" />",
+              "usage": "<Button082 title=\"Trim the stems at an angle\" />",
               "preserve": [
                 "the local --vibeui-button-082-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14906,7 +14906,7 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Подрежьте стебли наискосок"
+                "default": "Trim the stems at an angle"
               },
               "accent": {
                 "label": "Accent"
@@ -15010,7 +15010,7 @@
               },
               "state": {
                 "label": "state",
-                "default": "Слот записи"
+                "default": "Recording slot"
               }
             }
           }
@@ -15124,7 +15124,7 @@
             "docs": "Extracted from the renovation-001 block as is: one file, no dependencies, its own palette in the --vibeui-button-085-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Renovation type radio button: name and rate per m² with a note; selected through aria-checked.",
-              "usage": "<Button085 name=\"Косметический\" note=\"обои, покраска, полы\" />",
+              "usage": "<Button085 name=\"Cosmetic\" note=\"wallpaper, painting, flooring\" />",
               "preserve": [
                 "the local --vibeui-button-085-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15142,18 +15142,18 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Косметический"
+                "default": "Cosmetic"
               },
               "note": {
                 "label": "note",
-                "default": "обои, покраска, полы"
+                "default": "wallpaper, painting, flooring"
               },
               "accent": {
                 "label": "Accent"
               },
               "fromLabel": {
                 "label": "fromLabel",
-                "default": "от"
+                "default": "from"
               },
               "currency": {
                 "label": "currency",
@@ -15161,7 +15161,7 @@
               },
               "areaUnit": {
                 "label": "areaUnit",
-                "default": "м²"
+                "default": "m²"
               }
             }
           }
@@ -15268,7 +15268,7 @@
             "docs": "Extracted from the renovation-003 block as is: one file, no dependencies, its own palette in the --vibeui-button-086-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Before/after project tab button: name and caption; active through aria-selected.",
-              "usage": "<Button086 name=\"Двушка на Ленинском\" area=\"62 м²\" kindText=\"Капитальный\" />",
+              "usage": "<Button086 name=\"Kopeck piece on Leninsky\" area=\"62 m²\" kindText=\"Capital\" />",
               "preserve": [
                 "the local --vibeui-button-086-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15286,22 +15286,22 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Двушка на Ленинском"
+                "default": "Kopeck piece on Leninsky"
               },
               "area": {
                 "label": "area",
-                "default": "62 м²"
+                "default": "62 m²"
               },
               "kindText": {
                 "label": "kindText",
-                "default": "Капитальный"
+                "default": "Capital"
               },
               "accent": {
                 "label": "Accent"
               },
               "weekShort": {
                 "label": "weekShort",
-                "default": "нед"
+                "default": "weeks"
               }
             }
           }
@@ -15382,7 +15382,7 @@
             "docs": "Extracted from the vet-003 block as is: one file, no dependencies, its own palette in the --vibeui-button-087-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Symptom toggle chip with urgency level through data-level; selected through aria-pressed.",
-              "usage": "<Button087 label=\"Не ест второй день\" />",
+              "usage": "<Button087 label=\"Not eating for two days\" />",
               "preserve": [
                 "the local --vibeui-button-087-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15400,7 +15400,7 @@
             "controls": {
               "label": {
                 "label": "label",
-                "default": "Не ест второй день"
+                "default": "Not eating for two days"
               },
               "accent": {
                 "label": "Accent"
@@ -15515,7 +15515,7 @@
             "docs": "Extracted from the writer-002 block as is: one file, no dependencies, its own palette in the --vibeui-button-088-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Text archive row button: topic, title, year, reading minutes and “more/less”; expanded through aria-expanded.",
-              "usage": "<Button088 topic=\"Города\" title=\"Город, который спит на боку\" year=\"2024\" />",
+              "usage": "<Button088 topic=\"Cities\" title=\"The city that sleeps on its side\" year=\"2024\" />",
               "preserve": [
                 "the local --vibeui-button-088-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15533,11 +15533,11 @@
             "controls": {
               "topic": {
                 "label": "topic",
-                "default": "Города"
+                "default": "Cities"
               },
               "title": {
                 "label": "title",
-                "default": "Город, который спит на боку"
+                "default": "The city that sleeps on its side"
               },
               "year": {
                 "label": "year",
@@ -15548,11 +15548,11 @@
               },
               "lessLabel": {
                 "label": "lessLabel",
-                "default": "свернуть"
+                "default": "collapse"
               },
               "moreLabel": {
                 "label": "moreLabel",
-                "default": "читать дальше"
+                "default": "read more"
               }
             }
           }
@@ -15640,7 +15640,7 @@
             "docs": "Extracted from the gadget-003 block as is: one file, no dependencies, its own palette in the --vibeui-button-090-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Colour swatch button: colour dot and name; selected through aria-pressed.",
-              "usage": "<Button090 color=\"#2b2b2b\" name=\"Графит\" />",
+              "usage": "<Button090 color=\"#2b2b2b\" name=\"Graphite\" />",
               "preserve": [
                 "the local --vibeui-button-090-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15662,7 +15662,7 @@
               },
               "name": {
                 "label": "name",
-                "default": "Графит"
+                "default": "Graphite"
               },
               "accent": {
                 "label": "Accent"
@@ -15781,7 +15781,7 @@
             "docs": "Extracted from the restaurant-005 block as is: one file, no dependencies, its own palette in the --vibeui-button-094-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Gallery frame button: photo with a caption and aspect through a variable; hidden through data-hidden when opened.",
-              "usage": "<Button094 aspect=\"3 / 2\" caption=\"бар\" alt=\"…\" />",
+              "usage": "<Button094 aspect=\"3 / 2\" caption=\"bar\" alt=\"…\" />",
               "preserve": [
                 "the local --vibeui-button-094-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15803,7 +15803,7 @@
               },
               "caption": {
                 "label": "caption",
-                "default": "бар"
+                "default": "bar"
               },
               "alt": {
                 "label": "alt",
@@ -15818,7 +15818,7 @@
               },
               "openLabel": {
                 "label": "openLabel",
-                "default": "Открыть фото"
+                "default": "Open photo"
               }
             }
           }
@@ -15917,7 +15917,7 @@
             "docs": "Extracted from the podcast-006 block as is: one file, no dependencies, its own palette in the --vibeui-button-098-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Platform tile link with a mark and name; tilts after the cursor through variables.",
-              "usage": "<Button098 href=\"#\" mark=\"Я\" name=\"Яндекс Музыка\" />",
+              "usage": "<Button098 href=\"#\" mark=\"I\" name=\"Yandex Music\" />",
               "preserve": [
                 "the local --vibeui-button-098-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15939,11 +15939,11 @@
               },
               "mark": {
                 "label": "mark",
-                "default": "Я"
+                "default": "I"
               },
               "name": {
                 "label": "name",
-                "default": "Яндекс Музыка"
+                "default": "Yandex Music"
               },
               "accent": {
                 "label": "Accent"
@@ -16055,11 +16055,11 @@
               },
               "pauseLabel": {
                 "label": "pauseLabel",
-                "default": "Пауза"
+                "default": "Pause"
               },
               "playLabel": {
                 "label": "playLabel",
-                "default": "Слушать"
+                "default": "Listen"
               }
             }
           }
@@ -16255,7 +16255,7 @@
             "docs": "Extracted from the event-009 block as is: one file, no dependencies, its own palette in the --vibeui-button-100-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Dress-code colour swatch button: colour, name and hex; shows “copied” after a click.",
-              "usage": "<Button100 hex=\"#f1e8d8\" name=\"Крем\" />",
+              "usage": "<Button100 hex=\"#f1e8d8\" name=\"Cream\" />",
               "preserve": [
                 "the local --vibeui-button-100-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16277,14 +16277,14 @@
               },
               "name": {
                 "label": "name",
-                "default": "Крем"
+                "default": "Cream"
               },
               "accent": {
                 "label": "Accent"
               },
               "copiedLabel": {
                 "label": "copiedLabel",
-                "default": "скопировано"
+                "default": "copied"
               }
             }
           }
@@ -16432,7 +16432,7 @@
               },
               "meta": {
                 "label": "meta",
-                "default": "Плитка работы с тегом стиля"
+                "default": "Tile work with style tag"
               }
             }
           }
@@ -16531,7 +16531,7 @@
             "docs": "Extracted from the portfolio-008 block as is: one file, no dependencies, its own palette in the --vibeui-button-102-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Gallery tile button: photo and caption; shape through data-shape.",
-              "usage": "<Button102 src=\"\" caption=\"Воскресное утро\" alt=\"…\" />",
+              "usage": "<Button102 src=\"\" caption=\"Sunday morning\" alt=\"…\" />",
               "preserve": [
                 "the local --vibeui-button-102-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16553,7 +16553,7 @@
               },
               "caption": {
                 "label": "caption",
-                "default": "Воскресное утро"
+                "default": "Sunday morning"
               },
               "alt": {
                 "label": "alt",
@@ -16659,7 +16659,7 @@
             "docs": "Extracted from the portfolio-010 block as is: one file, no dependencies, its own palette in the --vibeui-button-104-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Mosaic tile button: photo and caption; shape through data-shape.",
-              "usage": "<Button104 src=\"\" caption=\"Дорога в лес\" alt=\"…\" />",
+              "usage": "<Button104 src=\"\" caption=\"Road to the forest\" alt=\"…\" />",
               "preserve": [
                 "the local --vibeui-button-104-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16681,7 +16681,7 @@
               },
               "caption": {
                 "label": "caption",
-                "default": "Дорога в лес"
+                "default": "Road to the forest"
               },
               "alt": {
                 "label": "alt",
@@ -16814,7 +16814,7 @@
             "docs": "Extracted from the portfolio-009 block as is: one file, no dependencies, its own palette in the --vibeui-button-103-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Flip card button: front with a photo and back with text; flipped through data-flipped.",
-              "usage": "<Button103 src=\"\" caption=\"Велосипед на двоих\" alt=\"…\" />",
+              "usage": "<Button103 src=\"\" caption=\"Bicycle for two\" alt=\"…\" />",
               "preserve": [
                 "the local --vibeui-button-103-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16836,7 +16836,7 @@
               },
               "caption": {
                 "label": "caption",
-                "default": "Велосипед на двоих"
+                "default": "Bicycle for two"
               },
               "alt": {
                 "label": "alt",
@@ -16847,15 +16847,15 @@
               },
               "from": {
                 "label": "from",
-                "default": "Переворачивающаяся карточка"
+                "default": "Flipping card"
               },
               "date": {
                 "label": "date",
-                "default": "Переворачивающаяся карточка"
+                "default": "Flipping card"
               },
               "back": {
                 "label": "back",
-                "default": "Переворачивающаяся карточка"
+                "default": "Flipping card"
               }
             }
           }
@@ -16956,7 +16956,7 @@
               },
               "loginLabel": {
                 "label": "loginLabel",
-                "default": "Войти"
+                "default": "Login"
               }
             }
           }
@@ -17069,7 +17069,7 @@
               },
               "bagLabel": {
                 "label": "bagLabel",
-                "default": "Корзина"
+                "default": "Cart"
               }
             }
           }
@@ -17190,7 +17190,7 @@
               },
               "actionLabel": {
                 "label": "actionLabel",
-                "default": "Записаться"
+                "default": "Sign up"
               },
               "actionPrice": {
                 "label": "actionPrice",
@@ -17315,11 +17315,11 @@
               },
               "actionShort": {
                 "label": "actionShort",
-                "default": "Заказать"
+                "default": "Order"
               },
               "actionLabel": {
                 "label": "actionLabel",
-                "default": "Заказать к утру"
+                "default": "Order by morning"
               }
             }
           }
@@ -17529,11 +17529,11 @@
               },
               "cartLabel": {
                 "label": "cartLabel",
-                "default": "Корзина"
+                "default": "Cart"
               },
               "countLabel": {
                 "label": "countLabel",
-                "default": "В корзине {n}"
+                "default": "In cart {n}"
               }
             }
           }
@@ -17621,7 +17621,7 @@
             "docs": "Extracted from the navbar-019 block as is: one file, no dependencies, its own palette in the --vibeui-button-109-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Mobile bar item: icon, label and badge; current through aria-current.",
-              "usage": "<Button109 href=\"#home\" label=\"Главная\" />",
+              "usage": "<Button109 href=\"#home\" label=\"Home\" />",
               "preserve": [
                 "the local --vibeui-button-109-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -17643,7 +17643,7 @@
               },
               "label": {
                 "label": "label",
-                "default": "Главная"
+                "default": "Home"
               },
               "accent": {
                 "label": "Accent"
@@ -17754,11 +17754,11 @@
               },
               "copiedLabel": {
                 "label": "copiedLabel",
-                "default": "Скопировано"
+                "default": "Copied"
               },
               "copyLabel": {
                 "label": "copyLabel",
-                "default": "Копировать"
+                "default": "Copy"
               }
             }
           }
@@ -17854,7 +17854,7 @@
             "docs": "Extracted from the cta-015 block as is: one file, no dependencies, its own palette in the --vibeui-button-116-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Store badge link: platform icon, caption and store name.",
-              "usage": "<Button116 store=\"iOS\" href=\"#ios\" caption=\"Скачать для\" />",
+              "usage": "<Button116 store=\"iOS\" href=\"#ios\" caption=\"Download for\" />",
               "preserve": [
                 "the local --vibeui-button-116-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -17880,7 +17880,7 @@
               },
               "caption": {
                 "label": "caption",
-                "default": "Скачать для"
+                "default": "Download for"
               },
               "accent": {
                 "label": "Accent"
@@ -18003,7 +18003,7 @@
               },
               "label": {
                 "label": "label",
-                "default": "Записаться"
+                "default": "Sign up"
               },
               "price": {
                 "label": "price",
@@ -18102,7 +18102,7 @@
             "docs": "Extracted from the download-004 block as is: one file, no dependencies, its own palette in the --vibeui-button-121-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Store link button: platform icon, caption and name.",
-              "usage": "<Button121 href=\"…\" name=\"App Store\" caption=\"Загрузить в\" />",
+              "usage": "<Button121 href=\"…\" name=\"App Store\" caption=\"Load to\" />",
               "preserve": [
                 "the local --vibeui-button-121-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18128,7 +18128,7 @@
               },
               "caption": {
                 "label": "caption",
-                "default": "Загрузить в"
+                "default": "Load to"
               },
               "accent": {
                 "label": "Accent"
@@ -18255,7 +18255,7 @@
               },
               "primaryLabel": {
                 "label": "primaryLabel",
-                "default": "Скачать для"
+                "default": "Download for"
               }
             }
           }
@@ -18351,7 +18351,7 @@
             "docs": "Extracted from the download-013 block as is: one file, no dependencies, its own palette in the --vibeui-button-123-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Store badge link in a QR-code block: icon, caption and name.",
-              "usage": "<Button123 href=\"#appstore\" top=\"Скачать в\" store=\"App Store\" />",
+              "usage": "<Button123 href=\"#appstore\" top=\"Download in\" store=\"App Store\" />",
               "preserve": [
                 "the local --vibeui-button-123-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18373,7 +18373,7 @@
               },
               "top": {
                 "label": "top",
-                "default": "Скачать в"
+                "default": "Download in"
               },
               "store": {
                 "label": "store",
@@ -18501,11 +18501,11 @@
               },
               "prevCaption": {
                 "label": "prevCaption",
-                "default": "Назад"
+                "default": "Back"
               },
               "prevLabel": {
                 "label": "prevLabel",
-                "default": "Установка"
+                "default": "Installation"
               }
             }
           }
@@ -18620,11 +18620,11 @@
               },
               "runningLabel": {
                 "label": "runningLabel",
-                "default": "Думаю…"
+                "default": "I think..."
               },
               "runLabel": {
                 "label": "runLabel",
-                "default": "Сделать сводку"
+                "default": "Make summary"
               },
               "phase": {
                 "label": "phase",
@@ -18708,7 +18708,7 @@
             "docs": "Extracted from the delivery-002 block as is: one file, no dependencies, its own palette in the --vibeui-button-079-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Ingredient toggle chip with a colour dot; selected through aria-checked/aria-pressed.",
-              "usage": "<Button079 name=\"Микс салата\" />",
+              "usage": "<Button079 name=\"Salad mix\" />",
               "preserve": [
                 "the local --vibeui-button-079-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18726,7 +18726,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Микс салата"
+                "default": "Salad mix"
               },
               "accent": {
                 "label": "Accent"

@@ -9,7 +9,7 @@ import {
 } from "lucide-react"
 
 import { Ranked } from "@/components/admin/parts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { AreaChart, Bars, Funnel } from "@/components/account/ui/charts"
 import { PageHeader } from "@/components/account/ui/page-header"
 import { Panel, PanelHeader } from "@/components/account/ui/panel"
@@ -33,10 +33,16 @@ import { formatNumber } from "@/lib/format"
  * Никаких выдуманных показателей: каждое число здесь — это запрос к базе.
  * Там, где данных нет, так и написано; нулями достижения не рисуем.
  */
-export async function AdminSummary({ period }: { period: Period }) {
+export async function AdminSummary({
+  period,
+  locale = "ru",
+}: {
+  period: Period
+  locale?: "ru" | "en"
+}) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.summary
+  const t = getAdminTexts(locale).summary
   const [money, people, discovery, trends] = await Promise.all([
     moneyStats(period),
     peopleStats(period),
@@ -44,10 +50,13 @@ export async function AdminSummary({ period }: { period: Period }) {
     trendStats(period),
   ])
 
-  const since = periodStart(period).toLocaleDateString("ru-RU", {
-    day: "numeric",
-    month: "long",
-  })
+  const since = periodStart(period).toLocaleDateString(
+    locale === "en" ? "en-US" : "ru-RU",
+    {
+      day: "numeric",
+      month: "long",
+    },
+  )
 
   return (
     <div className="grid gap-6">
@@ -144,7 +153,10 @@ export async function AdminSummary({ period }: { period: Period }) {
         <PanelHeader
           title={
             <span className="flex items-center gap-2">
-              <AlertTriangle className="text-shell-warn size-4" aria-hidden="true" />
+              <AlertTriangle
+                className="text-shell-warn size-4"
+                aria-hidden="true"
+              />
               {t.attention}
             </span>
           }
@@ -195,7 +207,10 @@ export async function AdminSummary({ period }: { period: Period }) {
           <PanelHeader
             title={
               <span className="flex items-center gap-2">
-                <Search className="text-shell-muted size-4" aria-hidden="true" />
+                <Search
+                  className="text-shell-muted size-4"
+                  aria-hidden="true"
+                />
                 {t.searchTitle}
               </span>
             }

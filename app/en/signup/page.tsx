@@ -22,8 +22,8 @@ export default function SignUpPageEn() {
         title={t.signUpTitle}
         description={t.signUpHint}
       >
-        {/* Форма читает ?next= и ?reset= из адреса: без границы
-            Suspense страница входа перестала бы собираться заранее. */}
+        {/* The form reads ?next= and ?reset=, so Suspense keeps this page
+            eligible for static rendering. */}
         <Suspense fallback={null}>
           <SignUpForm locale={LOCALE} />
         </Suspense>

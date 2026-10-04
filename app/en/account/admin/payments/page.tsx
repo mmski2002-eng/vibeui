@@ -1,7 +1,7 @@
 import { AdminPayments } from "@/components/pages/admin/payments"
 
 export const metadata = {
-  title: "Платежи",
+  title: "Payments",
   robots: { index: false, follow: false },
 }
 
@@ -17,6 +17,7 @@ export default async function Page({
       query={q}
       status={status}
       page={Number(page) > 1 ? Number(page) : 1}
+      locale="en"
     />
   )
 }

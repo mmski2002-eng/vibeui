@@ -53,6 +53,7 @@ const LOCALES = ["en"]
 
 const TRANSLATED_ARRAYS = ["preserve", "adapt", "notes"]
 const COLOR_PATTERN = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i
+const CYRILLIC_PATTERN = /[\u0400-\u04ff]/
 
 const errors = []
 const warnings = []
@@ -194,6 +195,10 @@ function validateI18n(where, item) {
       continue
     }
 
+    if (CYRILLIC_PATTERN.test(JSON.stringify(translated))) {
+      errors.push(`${at}: в английском переводе осталась кириллица`)
+    }
+
     // `docs` рендерится на странице item'а: без перевода англоязычный
     // человек видит там русский абзац. У блоков перевод пока не заведён —
     // правило включится, когда он появится.
@@ -305,7 +310,11 @@ function validateSource(where, directory, item) {
   // их не встраивают в чужую разметку и не цепляют за data-slot.
   const isComponent = directory.split(path.sep).includes("components")
   const isBlock = directory.split(path.sep).includes("blocks")
-  const kind = isBlock ? "block" : directory.split(path.sep).includes("components") ? "component" : "animation"
+  const kind = isBlock
+    ? "block"
+    : directory.split(path.sep).includes("components")
+      ? "component"
+      : "animation"
 
   // Чужие пакеты допустимы только объявленные в dependencies: их ставит
   // `Copy for AI`, всё остальное item тащить не может.
@@ -335,7 +344,9 @@ function validateSource(where, directory, item) {
           `${where}: импорт "${specifier}" — от блока зависеть нельзя`,
         )
       } else if (!dependency) {
-        errors.push(`${where}: импорт "${specifier}" — item "${name}" не найден`)
+        errors.push(
+          `${where}: импорт "${specifier}" — item "${name}" не найден`,
+        )
       } else if (!registryDeclared.has(name)) {
         errors.push(
           `${where}: импорт "${specifier}" — "${name}" не объявлен в registryDependencies, CLI его не поставит`,
@@ -370,7 +381,8 @@ function validateSource(where, directory, item) {
       // Комментарий перед правилом — не часть селектора.
       const selector = rule[1].replace(/\/\*[\s\S]*?\*\//g, "").trim()
 
-      if (selector.startsWith("@") || !selector.includes("data-vibeui-block")) continue
+      if (selector.startsWith("@") || !selector.includes("data-vibeui-block"))
+        continue
 
       const tag = selector.match(
         /(?:^|[\s>+~,])(a|button|input|select|textarea|details|summary|svg|label|kbd)(?=$|[\s:>+~,.[])/,
@@ -380,7 +392,10 @@ function validateSource(where, directory, item) {
         // Тег сразу после корня блока накрывает всё, включая части, —
         // ошибка. Тег внутри своей data-part может быть и безобидным
         // (`[data-part="clock"] svg`): это предупреждение для глаз.
-        const rootScoped = /^\[data-vibeui-block="[^"]+"\]\s+(?:a|button|input|select|textarea|details|summary|svg|label|kbd)/.test(selector)
+        const rootScoped =
+          /^\[data-vibeui-block="[^"]+"\]\s+(?:a|button|input|select|textarea|details|summary|svg|label|kbd)/.test(
+            selector,
+          )
         const message = `${where}: селектор «${selector.slice(0, 70)}» бьёт по тегу <${tag[1]}> — если внутри стоит компонент, он получит чужой стиль; адресуй через data-part`
 
         if (rootScoped) {
@@ -407,14 +422,21 @@ function validateSource(where, directory, item) {
     // а не глазами: заголовок аккордеона в 2.5rem заметили только на витрине.
     const dependencySource = CATALOG.get(name)?.source ?? ""
     const partsOfDependency = new Set(
-      [...dependencySource.matchAll(/data-part="([\w-]+)"/g)].map((match) => match[1]),
+      [...dependencySource.matchAll(/data-part="([\w-]+)"/g)].map(
+        (match) => match[1],
+      ),
     )
     // Явный дотяг через корень компонента — `[data-vibeui-block="card-068"] [data-part="rows"]` —
     // осознанный: состояние живёт на предке в блоке (свёрнутый сайдбар), а часть — в компоненте.
     const reach = new RegExp(`\\[data-vibeui-block="${name}"\\][^,{]*`, "g")
-    const shared = [...source.replace(reach, "").matchAll(/data-part="([\w-]+)"/g)]
+    const shared = [
+      ...source.replace(reach, "").matchAll(/data-part="([\w-]+)"/g),
+    ]
       .map((match) => match[1])
-      .filter((part, index, all) => partsOfDependency.has(part) && all.indexOf(part) === index)
+      .filter(
+        (part, index, all) =>
+          partsOfDependency.has(part) && all.indexOf(part) === index,
+      )
 
     if (shared.length > 0) {
       errors.push(
@@ -426,7 +448,9 @@ function validateSource(where, directory, item) {
   // Точка стилизации в проекте пользователя. Без неё чужой проект не может
   // дотянуться до компонента иначе как по нашему внутреннему атрибуту.
   if (isComponent && !/data-slot="/.test(source)) {
-    errors.push(`${where}: нет data-slot — не за что зацепиться в чужом проекте`)
+    errors.push(
+      `${where}: нет data-slot — не за что зацепиться в чужом проекте`,
+    )
   }
 
   // ComponentProps вместо ComponentPropsWithoutRef: иначе ref не
@@ -493,11 +517,15 @@ function validateSource(where, directory, item) {
   // только глазами. Проверяем, потому что ловушка уже срабатывала.
   // Скобки считаются, а не ищется «\n}»: однострочный @container {…{…}}
   // иначе тянется до следующего закрытия и ловит чужие правила.
-  for (const query of source.matchAll(/@container[^{]*\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/g)) {
+  for (const query of source.matchAll(
+    /@container[^{]*\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/g,
+  )) {
     // Только собственный корень как единственный селектор: `[side] [data-vibeui-block="card-068"]{…}`
     // — правило блока для корня вложенного компонента, это потомок.
     const selfRule = query[1].match(
-      new RegExp(`(?:^|[,{\\n])\\s*\\[data-vibeui-block="${item.name}"\\]\\s*\\{[^}]*\\}`),
+      new RegExp(
+        `(?:^|[,{\\n])\\s*\\[data-vibeui-block="${item.name}"\\]\\s*\\{[^}]*\\}`,
+      ),
     )
 
     if (selfRule) {
@@ -523,18 +551,24 @@ function validateSource(where, directory, item) {
   // слой, прижатый к окну (fixed-popover и <dialog> в top layer), и потолок
   // размера (`max-width: min(24rem, 100vw - 2rem)`) — он не задаёт размер, а
   // страхует всплывашку от вылета за край экрана.
-  const viewportSizing = [...source.matchAll(/([a-z-]+)\s*:\s*([^;{}]*[\d.]v[wh]\b[^;{}]*)/g)]
-    .filter(([, property, value]) => {
-      // Потолок размера — законное применение: `min(24rem, 100vw - 2rem)`
-      // страхует всплывашку от вылета за край экрана, но размер задаёт rem.
-      if (/^(?:max|min)-(?:width|height|inline-size|block-size)$/.test(property)) {
-        return false
-      }
+  const viewportSizing = [
+    ...source.matchAll(/([a-z-]+)\s*:\s*([^;{}]*[\d.]v[wh]\b[^;{}]*)/g),
+  ].filter(([, property, value]) => {
+    // Потолок размера — законное применение: `min(24rem, 100vw - 2rem)`
+    // страхует всплывашку от вылета за край экрана, но размер задаёт rem.
+    if (
+      /^(?:max|min)-(?:width|height|inline-size|block-size)$/.test(property)
+    ) {
+      return false
+    }
 
-      return !/\bmin\(/.test(value)
-    })
+    return !/\bmin\(/.test(value)
+  })
 
-  if (viewportSizing.length > 0 && !/position:\s*fixed|\bdialog\s*\{/.test(source)) {
+  if (
+    viewportSizing.length > 0 &&
+    !/position:\s*fixed|\bdialog\s*\{/.test(source)
+  ) {
     const [first] = viewportSizing
     errors.push(
       `${where}: единица окна в "${first[0].trim().slice(0, 40)}" — размер item'а считается от его ширины, а не от окна`,
@@ -638,7 +672,9 @@ function validateSlots(where, item, category) {
 
   if (slots === undefined) {
     if (SLOTS_REQUIRED.has(category)) {
-      errors.push(`${where}: нет meta.slots (обязательно в категории ${category})`)
+      errors.push(
+        `${where}: нет meta.slots (обязательно в категории ${category})`,
+      )
     }
     return
   }
@@ -648,7 +684,9 @@ function validateSlots(where, item, category) {
   }
 
   if (!SLOT_DENSITY.includes(slots.density)) {
-    errors.push(`${where}: meta.slots.density "${slots.density}" не из ${SLOT_DENSITY.join("/")}`)
+    errors.push(
+      `${where}: meta.slots.density "${slots.density}" не из ${SLOT_DENSITY.join("/")}`,
+    )
   }
 
   if (slots.needs !== undefined) {
@@ -657,7 +695,9 @@ function validateSlots(where, item, category) {
     } else {
       for (const need of slots.needs) {
         if (!SLOT_NEEDS.includes(need)) {
-          errors.push(`${where}: meta.slots.needs "${need}" не из ${SLOT_NEEDS.join("/")}`)
+          errors.push(
+            `${where}: meta.slots.needs "${need}" не из ${SLOT_NEEDS.join("/")}`,
+          )
         }
       }
     }
@@ -764,7 +804,9 @@ const registries = TREES.flatMap(([directory, options]) =>
 // собирается до первой проверки.
 for (const { file, items } of registries) {
   for (const item of items) {
-    const relative = item.files?.find((entry) => entry.path?.endsWith(".tsx"))?.path
+    const relative = item.files?.find((entry) =>
+      entry.path?.endsWith(".tsx"),
+    )?.path
     const source = relative ? path.join(path.dirname(file), relative) : null
 
     CATALOG.set(item.name, {
@@ -777,6 +819,59 @@ for (const { file, items } of registries) {
 for (const { file, options, items } of registries) {
   for (const item of items) {
     validateItem(file, item, options)
+  }
+}
+
+// Английская ветка не должна содержать даже скрытую кириллицу: эти файлы
+// обслуживают vibeui.club напрямую, а комментарии из демо и code-view могут
+// попасть в выдаваемый пользователю исходник.
+{
+  const englishRoot = path.join(process.cwd(), "app/en")
+  const stack = [englishRoot]
+
+  while (stack.length > 0) {
+    const directory = stack.pop()
+
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const target = path.join(directory, entry.name)
+
+      if (entry.isDirectory()) {
+        stack.push(target)
+      } else if (/\.(?:ts|tsx|js|jsx|json|css)$/.test(entry.name)) {
+        if (CYRILLIC_PATTERN.test(readFileSync(target, "utf8"))) {
+          errors.push(
+            `${path.relative(process.cwd(), target)}: в английской ветке осталась кириллица`,
+          )
+        }
+      }
+    }
+  }
+
+  const adminSource = readFileSync(
+    path.join(process.cwd(), "components/admin/texts.ts"),
+    "utf8",
+  )
+  const adminEnglish = adminSource.slice(
+    adminSource.indexOf("const LOG_ACTIONS_EN"),
+    adminSource.indexOf("export function getAdminTexts"),
+  )
+
+  if (CYRILLIC_PATTERN.test(adminEnglish)) {
+    errors.push(
+      "components/admin/texts.ts: в английском словаре админки осталась кириллица",
+    )
+  }
+
+  const promptSource = readFileSync(
+    path.join(process.cwd(), "lib/i18n-prompt.ts"),
+    "utf8",
+  )
+  const englishPrompt = promptSource.slice(promptSource.indexOf("\n  en:"))
+
+  if (CYRILLIC_PATTERN.test(englishPrompt)) {
+    errors.push(
+      "lib/i18n-prompt.ts: в английском шаблоне промпта осталась кириллица",
+    )
   }
 }
 

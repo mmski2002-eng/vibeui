@@ -6536,7 +6536,7 @@
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
                 "Years run descending: that is closer for birth dates, but future dates want the order reversed.",
                 "The value is not assembled outwards: build YYYY-MM-DD from the three numbers before submitting.",
-                "Month names are in the Russian genitive to fit \"12 апреля\" — headings need the nominative instead.",
+                "Month names are in the Russian genitive to fit \"12 April\" — headings need the nominative instead.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."
               ],
               "usage": "<Date007 legend=\"Date of birth\" defaultValue=\"1987-04-12\" fromYear={1940} toYear={2010} />"

@@ -187,15 +187,15 @@
               },
               "titleAccent": {
                 "label": "titleAccent",
-                "default": "Заголовок секции"
+                "default": "Section header"
               },
               "lede": {
                 "label": "lede",
-                "default": "Заголовок секции"
+                "default": "Section header"
               },
               "display": {
                 "label": "display",
-                "default": "Заголовок секции"
+                "default": "Section header"
               }
             },
             "preview": {
@@ -522,15 +522,15 @@
               },
               "eyebrow": {
                 "label": "eyebrow",
-                "default": "Тетрадный лист"
+                "default": "Notebook sheet"
               },
               "title": {
                 "label": "title",
-                "default": "Клетка, линейка или точки"
+                "default": "Cell, ruler or dots"
               },
               "note": {
                 "label": "note",
-                "default": "Разлиновка из CSS-градиентов: ничего не грузит и не считает. Шаг, приглушение и крупная клетка — пропсами; содержимое кладётся поверх."
+                "default": "Ruled from CSS-gradients: does not load or count anything. Step, mute and large cell - props; the contents are placed on top."
               }
             }
           }

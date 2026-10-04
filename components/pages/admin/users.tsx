@@ -2,7 +2,7 @@ import { count, desc, ilike, or, sql } from "drizzle-orm"
 import { Search } from "lucide-react"
 
 import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { Button } from "@/components/account/ui/button"
 import { CellStack, DataTable } from "@/components/account/ui/data-table"
 import { Pager } from "@/components/account/ui/pager"
@@ -21,13 +21,15 @@ const PAGE = 40
 export async function AdminUsers({
   query,
   page = 1,
+  locale = "ru",
 }: {
   query?: string
   page?: number
+  locale?: "ru" | "en"
 }) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.users
+  const t = getAdminTexts(locale).users
   const needle = query?.trim()
   const where = needle
     ? or(ilike(user.email, `%${needle}%`), ilike(user.name, `%${needle}%`))
@@ -101,12 +103,16 @@ export async function AdminUsers({
           { key: "user", label: t.columnUser },
           { key: "state", label: t.columnState, hideBelow: "md" },
           { key: "plan", label: t.columnPlan, className: "w-28" },
-          { key: "joined", label: t.columnJoined, align: "right", className: "w-32" },
+          {
+            key: "joined",
+            label: t.columnJoined,
+            align: "right",
+            className: "w-32",
+          },
         ]}
         rows={rows.map((row) => {
           const state = resolveSubscription(row.subscription ?? undefined)
-          const pro =
-            state.kind !== "free" && state.kind !== "expired"
+          const pro = state.kind !== "free" && state.kind !== "expired"
 
           return {
             id: row.id,
@@ -121,13 +127,13 @@ export async function AdminUsers({
                   <StatusPill tone="warn">{t.unverified}</StatusPill>
                 )}
               </span>,
-              <StatusPill
-                key="plan"
-                tone={pro ? "solid" : "muted"}
-              >
+              <StatusPill key="plan" tone={pro ? "solid" : "muted"}>
                 {state.kind}
               </StatusPill>,
-              <span key="joined" className="text-shell-muted text-xs tabular-nums">
+              <span
+                key="joined"
+                className="text-shell-muted text-xs tabular-nums"
+              >
                 {formatDate(row.createdAt)}
               </span>,
             ],
@@ -135,7 +141,13 @@ export async function AdminUsers({
         })}
       />
 
-      <Pager page={page} hasNext={hasNext} total={total} perPage={PAGE} href={pageHref} />
+      <Pager
+        page={page}
+        hasNext={hasNext}
+        total={total}
+        perPage={PAGE}
+        href={pageHref}
+      />
     </>
   )
 }

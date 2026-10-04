@@ -5,7 +5,7 @@ import { AdminHeading } from "@/components/admin/parts"
 import { ButtonLink } from "@/components/account/ui/button"
 import { CellStack, DataTable } from "@/components/account/ui/data-table"
 import { formatDateTime } from "@/lib/format"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import { adminAction } from "@/lib/db/schema"
@@ -14,10 +14,16 @@ const PAGE = 60
 
 /** Журнал действий. Только чтение: записи не редактируются и не удаляются —
  *  иначе он перестаёт быть доказательством. */
-export async function AdminLog({ before }: { before?: string }) {
+export async function AdminLog({
+  before,
+  locale = "ru",
+}: {
+  before?: string
+  locale?: "ru" | "en"
+}) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.log
+  const t = getAdminTexts(locale).log
   const cursor = before ? new Date(before) : null
 
   const rows = await db
@@ -46,7 +52,12 @@ export async function AdminLog({ before }: { before?: string }) {
           { key: "when", label: t.columnWhen, className: "w-36" },
           { key: "what", label: t.columnWhat },
           { key: "who", label: t.columnWho, hideBelow: "md" },
-          { key: "target", label: t.columnTarget, align: "right", className: "w-28" },
+          {
+            key: "target",
+            label: t.columnTarget,
+            align: "right",
+            className: "w-28",
+          },
         ]}
         rows={page.map((row) => ({
           id: row.id,

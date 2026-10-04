@@ -1,7 +1,7 @@
 import { AdminUser } from "@/components/pages/admin/user"
 
 export const metadata = {
-  title: "Пользователь",
+  title: "User",
   robots: { index: false, follow: false },
 }
 
@@ -12,5 +12,5 @@ export default async function Page({
 }) {
   const { id } = await params
 
-  return <AdminUser id={id} />
+  return <AdminUser id={id} locale="en" />
 }

@@ -1369,7 +1369,7 @@
                 "slides without src get a branded plate with a number",
                 "the arrows disable at the edges — the carousel does not loop"
               ],
-              "usage": "<Stack010 slides={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\" }]} initial={0} />"
+              "usage": "<Stack010 slides={[{ src: \"/photos/1.jpg\", title: \"Keyboard\" }, { src: \"/photos/2.jpg\", title: \"Headset\" }]} initial={0} />"
             },
             "controls": {
               "open": {
@@ -1522,7 +1522,7 @@
                 "slides without src get a branded plate with a number",
                 "the panel background is light in the light theme and translucent black in the dark one"
               ],
-              "usage": "<Stack011 slides={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\" }]} initial={0} />"
+              "usage": "<Stack011 slides={[{ src: \"/photos/1.jpg\", title: \"Keyboard\" }, { src: \"/photos/2.jpg\", title: \"Headset\" }]} initial={0} />"
             },
             "controls": {
               "initial": {
@@ -1687,7 +1687,7 @@
                 "snapshots without src get a branded plate with a number",
                 "from the keyboard the scale is scrubbed by tabbing through the main ticks"
               ],
-              "usage": "<Stack012 snapshots={[{ src: \"/photos/1.jpg\", title: \"Клавиатура\", date: \"Сегодня\" }, { src: \"/photos/2.jpg\", title: \"Гарнитура\", date: \"Вчера\" }]} />"
+              "usage": "<Stack012 snapshots={[{ src: \"/photos/1.jpg\", title: \"Keyboard\", date: \"Today\" }, { src: \"/photos/2.jpg\", title: \"Headset\", date: \"Yesterday\" }]} />"
             },
             "controls": {
               "initial": {

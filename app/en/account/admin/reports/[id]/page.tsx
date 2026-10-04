@@ -1,7 +1,7 @@
 import { AdminReport } from "@/components/pages/admin/report"
 
 export const metadata = {
-  title: "Обращение",
+  title: "Report",
   robots: { index: false, follow: false },
 }
 
@@ -12,5 +12,5 @@ export default async function Page({
 }) {
   const { id } = await params
 
-  return <AdminReport id={id} />
+  return <AdminReport id={id} locale="en" />
 }

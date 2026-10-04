@@ -3152,13 +3152,13 @@
         "i18n": {
           "en": {
             "description": "An expiry badge whose wording changes along with the tone: \"21 days left\", \"expires in 3 days\", \"expires today\", \"overdue\".",
-            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-020-* variables. Server rendered: no hooks. The state is derived from the number of days and the warnAt threshold and goes into data-state, which changes only --hue and --chroma — four tones rest on two variables. The colour is not the main thing here: each state has wording of its own, so the term is clear in a black-and-white list and aloud in a screen reader. The number is declined through Intl.PluralRules: the language rules come from locale and the word forms from the dayForms prop, so \"11 дней\" is correct without exceptions hard-coded into the component. The clock is inline SVG under aria-hidden.",
+            "docs": "One file, zero dependencies, the palette in the local --vibeui-badge-020-* variables. Server rendered: no hooks. The state is derived from the number of days and the warnAt threshold and goes into data-state, which changes only --hue and --chroma — four tones rest on two variables. The colour is not the main thing here: each state has wording of its own, so the term is clear in a black-and-white list and aloud in a screen reader. The number is declined through Intl.PluralRules: the language rules come from locale and the word forms from the dayForms prop, so \"11 days\" is correct without exceptions hard-coded into the component. The clock is inline SVG under aria-hidden.",
             "ai": {
               "summary": "An expiry badge: thresholds switch both the tone and the wording itself, and the day count is declined in Russian. Zero dependencies, one file, no client JS.",
               "preserve": [
                 "the local --vibeui-badge-020-* palette — do not swap it for your theme tokens",
                 "the change of wording, not just of tone: colour is the first thing lost in print and colour blindness",
-                "pluralisation through Intl.PluralRules rather than a remainder if-chain: \"11 дня\" reads as a typo and undermines trust in the number",
+                "pluralisation through Intl.PluralRules rather than a remainder if-chain: \"11 day\" reads as a typo and undermines trust in the number",
                 "the separate \"today\" state: \"expires in 0 days\" is meaningless",
                 "tabular figures — otherwise the badge jitters as the term is recomputed",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"
@@ -5199,7 +5199,7 @@
             "docs": "Extracted from the hero-023 block as is: one file, no dependencies, its own palette in the --vibeui-badge-034-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Coloured festival capsule tag with an emoji sticker; colour and ink through variables.",
-              "usage": "<Badge034 emoji=\"🎸\" href=\"#program\" label=\"#Музыка\" />",
+              "usage": "<Badge034 emoji=\"🎸\" href=\"#program\" label=\"#Music\" />",
               "preserve": [
                 "the local --vibeui-badge-034-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -5225,7 +5225,7 @@
               },
               "label": {
                 "label": "label",
-                "default": "#Музыка"
+                "default": "#Music"
               },
               "accent": {
                 "label": "Accent"

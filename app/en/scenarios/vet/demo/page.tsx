@@ -308,9 +308,9 @@ const footer: Footer034Props = {
   copyright: "© 2017–2026 Paw",
 }
 
-// Каскад при прокрутке: анимируем содержимое секций, не их фон, чтобы полосы
-// не моргали. Только translate/opacity и только from-кадр — конечное значение
-// берётся живым, поэтому hover-сдвиги блоков продолжают работать.
+// Scroll cascade: animate section contents instead of backgrounds to avoid
+// flashing bands. Only translate/opacity and a from-frame are set, preserving
+// live end values so hover transforms continue to work.
 const REVEAL = `@supports (animation-timeline: view()){
 [data-reveal] :is([data-part="eyebrow"],[data-part="title"],[data-part="lede"],[data-part="today"],[data-part="hint"],[data-part="tabs"],[data-part="fine"],[data-part="disclaimer"],[data-part="ticket"],[data-part="scheme"],[data-part="legend"],[data-part="result"],[data-part="stage"],[data-part="track"],[data-part="form"],[data-part="map"],[data-part="info"]),[data-reveal] [data-vibeui-block="vet-002"] [data-part="card"],[data-reveal] :is([data-part="chips"],[data-part="grid"],[data-part="panel"]) > *{--vet-d:0;animation:vet-reveal linear both;animation-timing-function:cubic-bezier(.22,1,.36,1);animation-timeline:view();animation-range:entry calc(5% + var(--vet-d) * 7%) cover calc(24% + var(--vet-d) * 4%)}
 [data-reveal] :is([data-part="title"],[data-part="legend"],[data-part="info"]),[data-reveal] [data-vibeui-block="vet-002"] [data-part="card"],[data-reveal] :is([data-part="chips"],[data-part="grid"],[data-part="panel"]) > :nth-child(4n+2){--vet-d:1}

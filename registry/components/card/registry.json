@@ -6900,7 +6900,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Напишите нам — разберём ваш случай и добавим ответ в список, чтобы следующему было проще."
+                "default": "Write to us - we will analyze your case and add the answer to the list to make it easier for the next one."
               }
             },
             "preview": {
@@ -7136,7 +7136,7 @@
               },
               "caption": {
                 "label": "caption",
-                "default": "Кадр с наложением"
+                "default": "Frame with overlay"
               }
             },
             "preview": {
@@ -7241,7 +7241,7 @@
             "docs": "Extracted from the people-001 block as is: one file, no dependencies, its own palette in the --vibeui-card-049-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A person card for a team grid: avatar, name, role and a row of icon links to mail and profiles.",
-              "usage": "<Card049 name=\"Алексей Громов\" image=\"…\" role=\"Основатель, продукт\" />",
+              "usage": "<Card049 name=\"Alexey Gromov\" image=\"…\" role=\"Founder, product\" />",
               "preserve": [
                 "the local --vibeui-card-049-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -7259,7 +7259,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Алексей Громов"
+                "default": "Alexey Gromov"
               },
               "image": {
                 "label": "image",
@@ -7267,7 +7267,7 @@
               },
               "role": {
                 "label": "role",
-                "default": "Основатель, продукт"
+                "default": "Founder, product"
               },
               "accent": {
                 "label": "Accent"
@@ -7375,7 +7375,7 @@
             "docs": "Extracted from the people-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-050-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A member card with avatar, name, role and a department label for a filtered grid.",
-              "usage": "<Card050 name=\"Вера Лапина\" department=\"Дизайн\" image=\"…\" />",
+              "usage": "<Card050 name=\"Vera Lapina\" department=\"Design\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-050-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -7393,11 +7393,11 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Вера Лапина"
+                "default": "Vera Lapina"
               },
               "department": {
                 "label": "department",
-                "default": "Дизайн"
+                "default": "Design"
               },
               "image": {
                 "label": "image",
@@ -7408,7 +7408,7 @@
               },
               "role": {
                 "label": "role",
-                "default": "Дизайн-система и токены"
+                "default": "Design system and tokens"
               }
             }
           }
@@ -7513,7 +7513,7 @@
             "docs": "Extracted from the people-003 block as is: one file, no dependencies, its own palette in the --vibeui-card-051-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A leader card for a row: a large avatar, name, position and a short line about their area.",
-              "usage": "<Card051 name=\"Алексей Громов\" quote=\"Мы не продаём компоненты — мы продаём ве\" image=\"…\" />",
+              "usage": "<Card051 name=\"Alexey Gromov\" quote=\"We don't sell components - we sell products\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-051-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -7531,11 +7531,11 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Алексей Громов"
+                "default": "Alexey Gromov"
               },
               "quote": {
                 "label": "quote",
-                "default": "Мы не продаём компоненты — мы продаём вечер, за который маркетолог собирает страницу без разработчика."
+                "default": "We don't sell components - we sell an evening during which a marketer puts together a page without a developer."
               },
               "image": {
                 "label": "image",
@@ -7546,7 +7546,7 @@
               },
               "role": {
                 "label": "role",
-                "default": "Основатель и продукт"
+                "default": "Founder and product"
               }
             }
           }
@@ -7659,7 +7659,7 @@
             "docs": "Extracted from the people-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-052-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A team list row: avatar, name and role on the left, city and tenure on the right, a thin divider.",
-              "usage": "<Card052 name=\"Алексей Громов\" image=\"…\" role=\"Основатель, продукт\" />",
+              "usage": "<Card052 name=\"Alexey Gromov\" image=\"…\" role=\"Founder, product\" />",
               "preserve": [
                 "the local --vibeui-card-052-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -7677,7 +7677,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Алексей Громов"
+                "default": "Alexey Gromov"
               },
               "image": {
                 "label": "image",
@@ -7685,18 +7685,18 @@
               },
               "role": {
                 "label": "role",
-                "default": "Основатель, продукт"
+                "default": "Founder, product"
               },
               "accent": {
                 "label": "Accent"
               },
               "city": {
                 "label": "city",
-                "default": "Санкт-Петербург"
+                "default": "St. Petersburg"
               },
               "since": {
                 "label": "since",
-                "default": "с 2021"
+                "default": "s 2021"
               }
             }
           }
@@ -7793,7 +7793,7 @@
             "docs": "Extracted from the people-005 block as is: one file, no dependencies, its own palette in the --vibeui-card-053-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A member card for a hiring grid: avatar, name, role and one line about what they work on.",
-              "usage": "<Card053 name=\"Тимур Ахметов\" image=\"…\" role=\"Доступность и качество\" />",
+              "usage": "<Card053 name=\"Timur Akhmetov\" image=\"…\" role=\"Availability and quality\" />",
               "preserve": [
                 "the local --vibeui-card-053-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -7811,7 +7811,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Тимур Ахметов"
+                "default": "Timur Akhmetov"
               },
               "image": {
                 "label": "image",
@@ -7819,7 +7819,7 @@
               },
               "role": {
                 "label": "role",
-                "default": "Доступность и качество"
+                "default": "Availability and quality"
               },
               "accent": {
                 "label": "Accent"
@@ -7948,7 +7948,7 @@
             "docs": "Extracted from the people-007 block as is: one file, no dependencies, its own palette in the --vibeui-card-054-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A real-estate agent card: portrait, name, specialty, deal count and a contact button.",
-              "usage": "<Card054 name=\"Андрей Фёдоров\" image=\"…\" fact=\"0 оспоренных сделок\" />",
+              "usage": "<Card054 name=\"Andrey Fedorov\" image=\"…\" fact=\"0 disputed transactions\" />",
               "preserve": [
                 "the local --vibeui-card-054-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -7966,7 +7966,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Андрей Фёдоров"
+                "default": "Andrey Fedorov"
               },
               "image": {
                 "label": "image",
@@ -7974,22 +7974,22 @@
               },
               "fact": {
                 "label": "fact",
-                "default": "0 оспоренных сделок"
+                "default": "0 disputed transactions"
               },
               "accent": {
                 "label": "Accent"
               },
               "role": {
                 "label": "role",
-                "default": "Юрист. История квартиры, долги, собственники"
+                "default": "Lawyer. History of the apartment, debts, owners"
               },
               "phone": {
                 "label": "phone",
-                "default": "Агент с портретом"
+                "default": "Agent with portrait"
               },
               "chatLabel": {
                 "label": "chatLabel",
-                "default": "Агент с портретом"
+                "default": "Agent with portrait"
               }
             }
           }
@@ -8115,7 +8115,7 @@
             "docs": "Extracted from the people-008 block as is: one file, no dependencies, its own palette in the --vibeui-card-055-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A coloured headliner card with an expandable description: photo, name, stage and time, its own colour through a variable.",
-              "usage": "<Card055 name=\"Даниил Орлов\" ink=\"#fff\" color=\"#98f5af\" />",
+              "usage": "<Card055 name=\"Daniil Orlov\" ink=\"#fff\" color=\"#98f5af\" />",
               "preserve": [
                 "the local --vibeui-card-055-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -8133,7 +8133,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Даниил Орлов"
+                "default": "Daniil Orlov"
               },
               "ink": {
                 "label": "ink",
@@ -8152,11 +8152,11 @@
               },
               "tag": {
                 "label": "tag",
-                "default": "Хедлайнер на цветной карто…"
+                "default": "Headliner on color card..."
               },
               "href": {
                 "label": "href",
-                "default": "Хедлайнер на цветной карто…"
+                "default": "Headliner on color card..."
               }
             }
           }
@@ -8281,7 +8281,7 @@
             "docs": "Extracted from the people-009 block as is: one file, no dependencies, its own palette in the --vibeui-card-056-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A polaroid master card with a neon outline from the data colour: photo, name, style and a booking link.",
-              "usage": "<Card056 name=\"Лина\" color=\"#c8ff3a\" image=\"…\" />",
+              "usage": "<Card056 name=\"Lina\" color=\"#c8ff3a\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-056-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -8299,7 +8299,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Лина"
+                "default": "Lina"
               },
               "color": {
                 "label": "color",
@@ -8314,15 +8314,15 @@
               },
               "experience": {
                 "label": "experience",
-                "default": "Мастер-полароид с неоном"
+                "default": "Master Polaroid with neon"
               },
               "slot": {
                 "label": "slot",
-                "default": "Мастер-полароид с неоном"
+                "default": "Master Polaroid with neon"
               },
               "href": {
                 "label": "href",
-                "default": "Мастер-полароид с неоном"
+                "default": "Master Polaroid with neon"
               }
             }
           }
@@ -8447,7 +8447,7 @@
             "docs": "Extracted from the people-012 block as is: one file, no dependencies, its own palette in the --vibeui-card-057-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A member tile for a bento grid: a full-tile photo, name and role at the bottom, a note on the back on focus.",
-              "usage": "<Card057 name=\"Тимур\" note=\"Мой стандарт: 18 грамм в 36, 93 градуса,\" image=\"/demo/bakery/timur.webp\" />",
+              "usage": "<Card057 name=\"Timur\" note=\"My standard: 18 grams in 36, 93 degrees,\" image=\"/demo/bakery/timur.webp\" />",
               "preserve": [
                 "the local --vibeui-card-057-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -8465,11 +8465,11 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Тимур"
+                "default": "Timur"
               },
               "note": {
                 "label": "note",
-                "default": "Мой стандарт: 18 грамм в 36, 93 градуса, и если гость улыбнулся до первого глотка — смена удалась."
+                "default": "My standard: 18 grams in 36, 93 degrees, and if the guest smiled before the first sip, the change was a success."
               },
               "image": {
                 "label": "image",
@@ -8484,11 +8484,11 @@
               },
               "role": {
                 "label": "role",
-                "default": "Бенто-плитка участника"
+                "default": "Member Bento Bar"
               },
               "quote": {
                 "label": "quote",
-                "default": "Бенто-плитка участника"
+                "default": "Member Bento Bar"
               }
             }
           }
@@ -8612,7 +8612,7 @@
             "docs": "Extracted from the people-014 block as is: one file, no dependencies, its own palette in the --vibeui-card-058-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A mechanic card with photo, name, specialty and a cursor tilt; the tilt is passed by the block.",
-              "usage": "<Card058 name=\"Даша Орлова\" photo=\"/demo/auto/master-03.webp\" role=\"Салон, кожа, химчистка\" />",
+              "usage": "<Card058 name=\"Dasha Orlova\" photo=\"/demo/auto/master-03.webp\" role=\"Interior, leather, dry cleaning\" />",
               "preserve": [
                 "the local --vibeui-card-058-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -8630,7 +8630,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Даша Орлова"
+                "default": "Dasha Orlova"
               },
               "photo": {
                 "label": "photo",
@@ -8638,22 +8638,22 @@
               },
               "role": {
                 "label": "role",
-                "default": "Салон, кожа, химчистка"
+                "default": "Interior, leather, dry cleaning"
               },
               "accent": {
                 "label": "Accent"
               },
               "years": {
                 "label": "years",
-                "default": "Мастер автосервиса"
+                "default": "Car service technician"
               },
               "cars": {
                 "label": "cars",
-                "default": "Мастер автосервиса"
+                "default": "Car service technician"
               },
               "yearsLabel": {
                 "label": "yearsLabel",
-                "default": "стаж"
+                "default": "experience"
               }
             }
           }
@@ -8776,7 +8776,7 @@
             "docs": "Extracted from the people-017 block as is: one file, no dependencies, its own palette in the --vibeui-card-059-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A crew card in the style of a staff roster: number, name, position, grade and tenure as a table.",
-              "usage": "<Card059 name=\"Ринат Валеев\" photo=\"…\" role=\"Плотник, монтаж\" />",
+              "usage": "<Card059 name=\"Rinat Valeev\" photo=\"…\" role=\"Carpenter, installation\" />",
               "preserve": [
                 "the local --vibeui-card-059-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -8794,7 +8794,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Ринат Валеев"
+                "default": "Rinat Valeev"
               },
               "photo": {
                 "label": "photo",
@@ -8802,22 +8802,22 @@
               },
               "role": {
                 "label": "role",
-                "default": "Плотник, монтаж"
+                "default": "Carpenter, installation"
               },
               "accent": {
                 "label": "Accent"
               },
               "text": {
                 "label": "text",
-                "default": "Карточка штатного расписания"
+                "default": "Staffing card"
               },
               "now": {
                 "label": "now",
-                "default": "Карточка штатного расписания"
+                "default": "Staffing card"
               },
               "yearsLine": {
                 "label": "yearsLine",
-                "default": "стаж {n} лет"
+                "default": "experience {n} years"
               }
             }
           }
@@ -8931,7 +8931,7 @@
             "docs": "Extracted from the people-024 block as is: one file, no dependencies, its own palette in the --vibeui-card-060-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A team polaroid: photo in a white frame, a handwritten caption and the role, a slight rotation through a variable.",
-              "usage": "<Card060 name=\"Катя Рябова\" image=\"…\" imageAlt=\"…\" />",
+              "usage": "<Card060 name=\"Katya Ryabova\" image=\"…\" imageAlt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-060-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -8949,7 +8949,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Катя Рябова"
+                "default": "Katya Ryabova"
               },
               "image": {
                 "label": "image",
@@ -8964,11 +8964,11 @@
               },
               "role": {
                 "label": "role",
-                "default": "Старший соцработник"
+                "default": "Senior Social Worker"
               },
               "quote": {
                 "label": "quote",
-                "default": "Полароид с рукописной подп…"
+                "default": "Polaroid with handwritten signature..."
               }
             }
           }
@@ -9081,7 +9081,7 @@
             "docs": "Extracted from the testimonials-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-027-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A framed testimonial card: the quote, the author with avatar and role, and a source badge on the right — chat, letter, interview.",
-              "usage": "<Card027 name=\"Анна Ковалёва\" quote=\"Раньше на посадочную страницу уходила не\" image=\"…\" />",
+              "usage": "<Card027 name=\"Anna Kovaleva\" quote=\"Previously, it didn’t go to the landing page\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-027-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -9099,11 +9099,11 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Анна Ковалёва"
+                "default": "Anna Kovaleva"
               },
               "quote": {
                 "label": "quote",
-                "default": "Раньше на посадочную страницу уходила неделя вёрстки. Сейчас маркетолог собирает её сам за вечер, а мы только проверяем тексты."
+                "default": "Previously, a landing page took a week of layout. Now the marketer collects it himself in the evening, and we only check the texts."
               },
               "image": {
                 "label": "image",
@@ -9114,11 +9114,11 @@
               },
               "role": {
                 "label": "role",
-                "default": "Руководитель маркетинга, «Северный путь»"
+                "default": "Head of Marketing, Northern Way"
               },
               "source": {
                 "label": "source",
-                "default": "Отзыв в чате"
+                "default": "Feedback in chat"
               }
             }
           }
@@ -9229,7 +9229,7 @@
             "docs": "Extracted from the testimonials-005 block as is: one file, no dependencies, its own palette in the --vibeui-card-028-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A testimonial card with a title and a star row in the header, the quote and the author line; the rating is duplicated as a number for screen readers.",
-              "usage": "<Card028 title=\"Приехало раньше срока\" date=\"12 марта\" quote=\"Заказывала в пятницу вечером, привезли в\" />",
+              "usage": "<Card028 title=\"Arrived ahead of schedule\" date=\"12 March\" quote=\"Ordered on Friday evening, delivered to\" />",
               "preserve": [
                 "the local --vibeui-card-028-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -9247,26 +9247,26 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Приехало раньше срока"
+                "default": "Arrived ahead of schedule"
               },
               "date": {
                 "label": "date",
-                "default": "12 марта"
+                "default": "12 March"
               },
               "quote": {
                 "label": "quote",
-                "default": "Заказывала в пятницу вечером, привезли в субботу днём. Упаковано плотно, ничего не помялось, курьер дождался, пока проверю."
+                "default": "Ordered on Friday evening, delivered on Saturday afternoon. Packed tightly, nothing was wrinkled, the courier waited until I checked it."
               },
               "accent": {
                 "label": "Accent"
               },
               "name": {
                 "label": "name",
-                "default": "Наталья В."
+                "default": "Natalya V."
               },
               "ratingLabel": {
                 "label": "ratingLabel",
-                "default": "Оценка {value} из 5"
+                "default": "Rating {value} from 5"
               }
             }
           }
@@ -9371,7 +9371,7 @@
             "docs": "Extracted from the testimonials-006 block as is: one file, no dependencies, its own palette in the --vibeui-card-029-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A variable-height testimonial card for a wall: the full quote, the author with avatar and role at the bottom, no text clamping.",
-              "usage": "<Card029 name=\"Анна Ковалёва\" quote=\"Раньше каждый лендинг начинался с пустог\" image=\"…\" />",
+              "usage": "<Card029 name=\"Anna Kovaleva\" quote=\"Previously, every landing page began with empty spaces\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-029-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -9389,11 +9389,11 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Анна Ковалёва"
+                "default": "Anna Kovaleva"
               },
               "quote": {
                 "label": "quote",
-                "default": "Раньше каждый лендинг начинался с пустого файла и заканчивался спором о кнопке."
+                "default": "Previously, every landing page started with an empty file and ended with an argument about a button."
               },
               "image": {
                 "label": "image",
@@ -9404,7 +9404,7 @@
               },
               "role": {
                 "label": "role",
-                "default": "Маркетинг, «Северный путь»"
+                "default": "Marketing, “Northern Way”"
               }
             }
           }
@@ -9515,7 +9515,7 @@
             "docs": "Extracted from the testimonials-008 block as is: one file, no dependencies, its own palette in the --vibeui-card-030-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A testimonial card with a large result figure and its label on top, and the quote explaining how it was achieved.",
-              "usage": "<Card030 name=\"Анна Ковалёва\" metric=\"−40%\" metricLabel=\"времени на вёрстку лендинга\" />",
+              "usage": "<Card030 name=\"Anna Kovaleva\" metric=\"−40%\" metricLabel=\"time for landing page layout\" />",
               "preserve": [
                 "the local --vibeui-card-030-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -9533,7 +9533,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Анна Ковалёва"
+                "default": "Anna Kovaleva"
               },
               "metric": {
                 "label": "metric",
@@ -9541,18 +9541,18 @@
               },
               "metricLabel": {
                 "label": "metricLabel",
-                "default": "времени на вёрстку лендинга"
+                "default": "time for landing page layout"
               },
               "accent": {
                 "label": "Accent"
               },
               "quote": {
                 "label": "quote",
-                "default": "Секции берём готовыми, агент ставит их в проект сам. Руки доходят до текстов и офферов — того, что реально двигает конверсию."
+                "default": "We take sections ready-made, the agent puts them into the project himself. Hands come to texts and offers - what really drives conversion."
               },
               "role": {
                 "label": "role",
-                "default": "Руководитель маркетинга, «Северный путь»"
+                "default": "Head of Marketing, Northern Way"
               }
             }
           }
@@ -9657,7 +9657,7 @@
             "docs": "Extracted from the testimonials-009 block as is: one file, no dependencies, its own palette in the --vibeui-card-031-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A social-post style card: avatar, name and handle in the header, the post text and a reactions row at the bottom.",
-              "usage": "<Card031 handle=\"@akovaleva\" name=\"Анна Ковалёва\" image=\"…\" />",
+              "usage": "<Card031 handle=\"@akovaleva\" name=\"Anna Kovaleva\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-031-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -9679,7 +9679,7 @@
               },
               "name": {
                 "label": "name",
-                "default": "Анна Ковалёва"
+                "default": "Anna Kovaleva"
               },
               "image": {
                 "label": "image",
@@ -9690,7 +9690,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Собрала лендинг курса за вечер. Выбрала блоки в каталоге, скинула агенту — он поставил всё сам. Утром поправила тексты и запустила рекламу."
+                "default": "I put together the course landing page in the evening. I selected the blocks from the catalog, sent them to the agent - he installed everything himself. In the morning I corrected the texts and launched advertising."
               }
             }
           }
@@ -9777,7 +9777,7 @@
             "docs": "Extracted from the testimonials-011 block as is: one file, no dependencies, its own palette in the --vibeui-card-032-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A rating card for an external platform: the name, a large score with stars, the review count and a link to the page.",
-              "usage": "<Card032 platform=\"GitHub\" reviews=\"2 340 звёзд\" />",
+              "usage": "<Card032 platform=\"GitHub\" reviews=\"2 340 stars\" />",
               "preserve": [
                 "the local --vibeui-card-032-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -9799,7 +9799,7 @@
               },
               "reviews": {
                 "label": "reviews",
-                "default": "2 340 звёзд"
+                "default": "2 340 stars"
               },
               "accent": {
                 "label": "Accent"
@@ -9924,7 +9924,7 @@
             "docs": "Extracted from the testimonials-016 block as is: one file, no dependencies, its own palette in the --vibeui-card-033-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A deal testimonial card: a quote mark, the quote, the name and deal type as a caption, the animation offset through a variable.",
-              "usage": "<Card033 name=\"Анна\" deal=\"купила трёшку в центре\" quote=\"Квартира была с долгом по капремонту и п\" />",
+              "usage": "<Card033 name=\"Anna\" deal=\"bought three rubles in the center\" quote=\"The apartment had a debt for major repairs and\" />",
               "preserve": [
                 "the local --vibeui-card-033-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -9942,15 +9942,15 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Анна"
+                "default": "Anna"
               },
               "deal": {
                 "label": "deal",
-                "default": "купила трёшку в центре"
+                "default": "bought three rubles in the center"
               },
               "quote": {
                 "label": "quote",
-                "default": "Квартира была с долгом по капремонту и прописанным родственником. Андрей всё вычистил до сделки, мы ничего не заметили."
+                "default": "The apartment had a debt for major repairs and a registered relative. Andrey cleaned everything out before the deal, we didn’t notice anything."
               },
               "accent": {
                 "label": "Accent"
@@ -9961,11 +9961,11 @@
               },
               "source": {
                 "label": "source",
-                "default": "Отзыв после сделки"
+                "default": "Review after transaction"
               },
               "ratingLabel": {
                 "label": "ratingLabel",
-                "default": "Оценка {n} из 5"
+                "default": "Rating {n} from 5"
               }
             }
           }
@@ -10080,7 +10080,7 @@
             "docs": "Extracted from the testimonials-017 block as is: one file, no dependencies, its own palette in the --vibeui-card-034-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A translucent testimonial card for a photo background: stars, the quote, the name — readable on any frame thanks to blur and a surface.",
-              "usage": "<Card034 name=\"Анна Л.\" quote=\"Отмечали день рождения на двенадцать чел\" occasion=\"день рождения\" />",
+              "usage": "<Card034 name=\"Anna L.\" quote=\"Celebrated a birthday for twelve people\" occasion=\"birthday\" />",
               "preserve": [
                 "the local --vibeui-card-034-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -10098,26 +10098,26 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Анна Л."
+                "default": "Anna L."
               },
               "quote": {
                 "label": "quote",
-                "default": "Отмечали день рождения на двенадцать человек — дальний зал, своё меню, ни одной накладки."
+                "default": "We celebrated a birthday for twelve people - a distant hall, our own menu, not a single extra."
               },
               "occasion": {
                 "label": "occasion",
-                "default": "день рождения"
+                "default": "birthday"
               },
               "accent": {
                 "label": "Accent"
               },
               "source": {
                 "label": "source",
-                "default": "Отзыв поверх фото"
+                "default": "Review over photo"
               },
               "ratingLabel": {
                 "label": "ratingLabel",
-                "default": "Оценка {n} из 5"
+                "default": "Rating {n} from 5"
               }
             }
           }
@@ -10240,7 +10240,7 @@
             "docs": "Extracted from the testimonials-025 block as is: one file, no dependencies, its own palette in the --vibeui-card-035-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "An app-store style review card: stars, title, text, name and date, the app version in small print.",
-              "usage": "<Card035 title=\"Тихо и без рекламы\" text=\"Никаких «премиум за 3 990 в год» на кажд\" name=\"Оля\" />",
+              "usage": "<Card035 title=\"Quiet and ad-free\" text=\"No “premium for 3 990 per year\" for each\" name=\"Olya\" />",
               "preserve": [
                 "the local --vibeui-card-035-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -10258,30 +10258,30 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Тихо и без рекламы"
+                "default": "Quiet and ad-free"
               },
               "text": {
                 "label": "text",
-                "default": "Никаких «премиум за 3 990 в год» на каждом экране. Бесплатной версии хватает."
+                "default": "No “premium for 3 990 per year\" on each screen. The free version is enough."
               },
               "name": {
                 "label": "name",
-                "default": "Оля"
+                "default": "Olya"
               },
               "accent": {
                 "label": "Accent"
               },
               "date": {
                 "label": "date",
-                "default": "Отзыв из магазина приложений"
+                "default": "Review from the app store"
               },
               "store": {
                 "label": "store",
-                "default": "Отзыв из магазина приложений"
+                "default": "Review from the app store"
               },
               "starsLabel": {
                 "label": "starsLabel",
-                "default": "{n} из 5"
+                "default": "{n} from 5"
               }
             }
           }
@@ -10404,7 +10404,7 @@
             "docs": "Extracted from the testimonials-027 block as is: one file, no dependencies, its own palette in the --vibeui-card-036-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A polaroid card with a tape strip: the pet photo, the owner's handwritten note, the date and a mood sticker.",
-              "usage": "<Card036 pet=\"Марсель\" date=\"8 июня\" sticker=\"нашли\" />",
+              "usage": "<Card036 pet=\"Marcel\" date=\"8 June\" sticker=\"found\" />",
               "preserve": [
                 "the local --vibeui-card-036-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -10422,15 +10422,15 @@
             "controls": {
               "pet": {
                 "label": "pet",
-                "default": "Марсель"
+                "default": "Marcel"
               },
               "date": {
                 "label": "date",
-                "default": "8 июня"
+                "default": "8 June"
               },
               "sticker": {
                 "label": "sticker",
-                "default": "нашли"
+                "default": "found"
               },
               "accent": {
                 "label": "Accent"
@@ -10441,11 +10441,11 @@
               },
               "text": {
                 "label": "text",
-                "default": "Дерматолог нашёл, на что аллергия, за один приём. Три года чесался, месяц — нет."
+                "default": "The dermatologist found what I was allergic to in one visit. I was itching for three years, but not for a month."
               },
               "owner": {
                 "label": "owner",
-                "default": "Ира, хозяйка"
+                "default": "Ira, hostess"
               }
             }
           }
@@ -10569,7 +10569,7 @@
             "docs": "Extracted from the testimonials-028 block as is: one file, no dependencies, its own palette in the --vibeui-card-037-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A postcard-style testimonial: handwritten text with the occasion, a stamp and a postmark, the sender's signature.",
-              "usage": "<Card037 name=\"Ольга\" text=\"Подписка раз в две недели уже полгода. Н\" occasion=\"подписка\" />",
+              "usage": "<Card037 name=\"Olga\" text=\"Subscription every two weeks for six months now. N\" occasion=\"subscription\" />",
               "preserve": [
                 "the local --vibeui-card-037-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -10587,30 +10587,30 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Ольга"
+                "default": "Olga"
               },
               "text": {
                 "label": "text",
-                "default": "Подписка раз в две недели уже полгода. Ни разу не повторились, и всегда пишут, как ухаживать. Лучшее, что я себе покупаю."
+                "default": "Subscription every two weeks for six months now. They have never repeated themselves, and they always write about how to care for them. The best thing I buy for myself."
               },
               "occasion": {
                 "label": "occasion",
-                "default": "подписка"
+                "default": "subscription"
               },
               "accent": {
                 "label": "Accent"
               },
               "date": {
                 "label": "date",
-                "default": "Отзыв-открытка"
+                "default": "Postcard review"
               },
               "place": {
                 "label": "place",
-                "default": "Отзыв-открытка"
+                "default": "Postcard review"
               },
               "postLabel": {
                 "label": "postLabel",
-                "default": "почта"
+                "default": "mail"
               }
             }
           }
@@ -10732,7 +10732,7 @@
             "docs": "Extracted from the testimonials-034 block as is: one file, no dependencies, its own palette in the --vibeui-card-038-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A testimonial styled as a code comment: avatar and handle, monospace text, a stack label and a profile link.",
-              "usage": "<Card038 handle=\"@sergey_v\" name=\"Сергей Волков\" role=\"Индивидуальный разработчик\" />",
+              "usage": "<Card038 handle=\"@sergey_v\" name=\"Sergey Volkov\" role=\"Individual developer\" />",
               "preserve": [
                 "the local --vibeui-card-038-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -10754,26 +10754,26 @@
               },
               "name": {
                 "label": "name",
-                "default": "Сергей Волков"
+                "default": "Sergey Volkov"
               },
               "role": {
                 "label": "role",
-                "default": "Индивидуальный разработчик"
+                "default": "Individual developer"
               },
               "accent": {
                 "label": "Accent"
               },
               "text": {
                 "label": "text",
-                "default": "Десяти тысяч бесплатных хватает на пет-проект с запасом. Ключ выдали за полминуты, карту не просили. Документация — с примерами на четырёх языках."
+                "default": "Ten thousand free ones are enough for a pet project with a reserve. The key was given out in half a minute, they didn’t ask for a card. Documentation - with examples in four languages."
               },
               "metric": {
                 "label": "metric",
-                "default": "Отзыв как комментарий разр…"
+                "default": "Review as a comment..."
               },
               "stackLabel": {
                 "label": "stackLabel",
-                "default": "Стек"
+                "default": "Stack"
               }
             }
           }
@@ -10876,7 +10876,7 @@
             "docs": "Extracted from the testimonials-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-026-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A frameless testimonial card: company mark and name, industry in small uppercase, the quote and a dashed signature.",
-              "usage": "<Card026 company=\"Северный путь\" industry=\"Логистика\" quote=\"Личный кабинет клиента переписали за мес\" />",
+              "usage": "<Card026 company=\"Northern route\" industry=\"Logistics\" quote=\"The client’s personal account was rewritten within a month\" />",
               "preserve": [
                 "the local --vibeui-card-026-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -10894,22 +10894,22 @@
             "controls": {
               "company": {
                 "label": "company",
-                "default": "Северный путь"
+                "default": "Northern route"
               },
               "industry": {
                 "label": "industry",
-                "default": "Логистика"
+                "default": "Logistics"
               },
               "quote": {
                 "label": "quote",
-                "default": "Личный кабинет клиента переписали за месяц вместо квартала и не потеряли ни одного сценария."
+                "default": "The client's personal account was rewritten in a month instead of a quarter and not a single script was lost."
               },
               "accent": {
                 "label": "Accent"
               },
               "person": {
                 "label": "person",
-                "default": "Анна Ковалёва, маркетинг"
+                "default": "Anna Kovaleva, marketing"
               }
             }
           }
@@ -11004,7 +11004,7 @@
             "docs": "Extracted from the testimonials-001 block as is: one file, no dependencies, its own palette in the --vibeui-card-040-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A testimonial card for a grid with a featured one: the quote in guillemets, initials in a circle, the name and role; featured stretches the card.",
-              "usage": "<Card040 name=\"Анна Ковалёва\" quote=\"Мы перестали спорить о вёрстке. Дизайнер\" role=\"Арт-директор, студия «Полёт»\" />",
+              "usage": "<Card040 name=\"Anna Kovaleva\" quote=\"We stopped arguing about layout. Designer\" role=\"Art director, Polet studio\" />",
               "preserve": [
                 "the local --vibeui-card-040-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -11022,15 +11022,15 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Анна Ковалёва"
+                "default": "Anna Kovaleva"
               },
               "quote": {
                 "label": "quote",
-                "default": "Мы перестали спорить о вёрстке. Дизайнер выбирает блок, агент ставит ровно его — и то, что видно в превью, оказывается на странице без переделок."
+                "default": "We stopped arguing about layout. The designer selects a block, the agent places it exactly - and what is visible in the preview ends up on the page without any changes."
               },
               "role": {
                 "label": "role",
-                "default": "Арт-директор, студия «Полёт»"
+                "default": "Art director, Polet studio"
               },
               "accent": {
                 "label": "Accent"
@@ -11138,7 +11138,7 @@
             "docs": "Extracted from the testimonials-007 block as is: one file, no dependencies, its own palette in the --vibeui-card-042-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A compact fixed-width testimonial card for a marquee: the quote, avatar, name and role.",
-              "usage": "<Card042 quote=\"Лендинг собрали за вечер: выбрали блоки,\" name=\"Анна Ковалёва\" image=\"…\" />",
+              "usage": "<Card042 quote=\"The landing page was put together in the evening: blocks were chosen,\" name=\"Anna Kovaleva\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-042-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -11156,11 +11156,11 @@
             "controls": {
               "quote": {
                 "label": "quote",
-                "default": "Лендинг собрали за вечер: выбрали блоки, отдали агенту, поправили тексты."
+                "default": "The landing page was put together in an evening: blocks were selected, given to the agent, texts were corrected."
               },
               "name": {
                 "label": "name",
-                "default": "Анна Ковалёва"
+                "default": "Anna Kovaleva"
               },
               "image": {
                 "label": "image",
@@ -11171,7 +11171,7 @@
               },
               "role": {
                 "label": "role",
-                "default": "Маркетинг, «Северный путь»"
+                "default": "Marketing, “Northern Way”"
               }
             }
           }
@@ -11281,7 +11281,7 @@
             "docs": "Extracted from the testimonials-012 block as is: one file, no dependencies, its own palette in the --vibeui-card-043-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A testimonial card for a segment tab panel: the quote, avatar, name and role, no frame of its own.",
-              "usage": "<Card043 name=\"Мария Соболева\" quote=\"Считали каждый день до запуска. Библиоте\" image=\"…\" />",
+              "usage": "<Card043 name=\"Maria Soboleva\" quote=\"Counted every day until launch. Libraries\" image=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-043-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -11299,11 +11299,11 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Мария Соболева"
+                "default": "Maria Soboleva"
               },
               "quote": {
                 "label": "quote",
-                "default": "Считали каждый день до запуска. Библиотека сэкономила нам недели: страница выглядит так, будто над ней работала студия."
+                "default": "Counted every day until launch. The library saved us weeks: the page looks like a studio worked on it."
               },
               "image": {
                 "label": "image",
@@ -11314,7 +11314,7 @@
               },
               "role": {
                 "label": "role",
-                "default": "Отзыв в панели сегмента"
+                "default": "Feedback in the segment panel"
               }
             }
           }
@@ -11414,7 +11414,7 @@
               },
               "point": {
                 "label": "point",
-                "default": "Пункт «до / после»"
+                "default": "Before/after item"
               }
             }
           }
@@ -11538,7 +11538,7 @@
             "docs": "Extracted from the testimonials-032 block as is: one file, no dependencies, its own palette in the --vibeui-card-047-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A testimonial card with a portrait, the quote and a result figure; featured frames the card.",
-              "usage": "<Card047 name=\"Дарья Немцова\" metric=\"12\" metricLabel=\"карт сотрудников\" />",
+              "usage": "<Card047 name=\"Daria Nemtsova\" metric=\"12\" metricLabel=\"employee cards\" />",
               "preserve": [
                 "the local --vibeui-card-047-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -11556,7 +11556,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Дарья Немцова"
+                "default": "Daria Nemtsova"
               },
               "metric": {
                 "label": "metric",
@@ -11564,22 +11564,22 @@
               },
               "metricLabel": {
                 "label": "metricLabel",
-                "default": "карт сотрудников"
+                "default": "employee cards"
               },
               "accent": {
                 "label": "Accent"
               },
               "quote": {
                 "label": "quote",
-                "default": "Карты сотрудникам с лимитами по категориям закрыли вечную проблему «а на что ушли восемь тысяч». Теперь видно в приложении, без чеков в чате."
+                "default": "Employee cards with category limits solved the eternal problem of “what did eight thousand go to?” Now visible in the application, without receipts in chat."
               },
               "initials": {
                 "label": "initials",
-                "default": "Отзыв предпринимателя с ме…"
+                "default": "Feedback from an entrepreneur..."
               },
               "role": {
                 "label": "role",
-                "default": "Студия дизайна «Лист», Санкт-Петербург"
+                "default": "Design studio \"List\", St. Petersburg"
               }
             }
           }
@@ -11679,7 +11679,7 @@
             "docs": "Extracted from the testimonials-035 block as is: one file, no dependencies, its own palette in the --vibeui-card-048-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A press quote card for a tilted marquee: the outlet name as a logo, the quote, the date.",
-              "usage": "<Card048 quote=\"Закат за 15 минут усыпляет лучше любого \" who=\"Кирилл\" role=\"Калининград\" />",
+              "usage": "<Card048 quote=\"Sunset 15 minutes puts you to sleep better than anyone \" who=\"Kirill\" role=\"Kaliningrad\" />",
               "preserve": [
                 "the local --vibeui-card-048-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -11697,15 +11697,15 @@
             "controls": {
               "quote": {
                 "label": "quote",
-                "default": "Закат за 15 минут усыпляет лучше любого подкаста."
+                "default": "Sunset 15 minutes puts you to sleep better than any podcast."
               },
               "who": {
                 "label": "who",
-                "default": "Кирилл"
+                "default": "Kirill"
               },
               "role": {
                 "label": "role",
-                "default": "Калининград"
+                "default": "Kaliningrad"
               },
               "accent": {
                 "label": "Accent"
@@ -12068,7 +12068,7 @@
             "docs": "Extracted from the bento-009 block as is: one file, no dependencies, its own palette in the --vibeui-card-076-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Bento tile: meta caption, figure by kind (bars, currencies, cards, list) and text. Large variant via data-large.",
-              "usage": "<Card076 title=\"Переводы по СБП за секунды\" meta=\"0 ₽ комиссии\" text=\"Контрагенту, сотруднику или самому себе \" />",
+              "usage": "<Card076 title=\"Transfers via SBP in seconds\" meta=\"0 ₽ commissions\" text=\"To a counterparty, employee or yourself \" />",
               "preserve": [
                 "the local --vibeui-card-076-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -12086,15 +12086,15 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Переводы по СБП за секунды"
+                "default": "Transfers via SBP in seconds"
               },
               "meta": {
                 "label": "meta",
-                "default": "0 ₽ комиссии"
+                "default": "0 ₽ commissions"
               },
               "text": {
                 "label": "text",
-                "default": "Контрагенту, сотруднику или самому себе — по номеру телефона или реквизитам. Комиссии нет, деньги приходят до того, как вы закроете приложение."
+                "default": "To a counterparty, employee or yourself - by phone number or details. There is no commission, the money comes before you close the application."
               },
               "accent": {
                 "label": "Accent"
@@ -12220,7 +12220,7 @@
             "docs": "Extracted from the bento-011 block as is: one file, no dependencies, its own palette in the --vibeui-card-077-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Tile with request method and path, a response demo (address, distance, suggestions) and a description. Wide variant via data-wide.",
-              "usage": "<Card077 path=\"/v2/geocode\" title=\"Прямое геокодирование\" text=\"Строка адреса в любом виде — с опечаткам\" />",
+              "usage": "<Card077 path=\"/v2/geocode\" title=\"Direct geocoding\" text=\"Address line in any form - with typos\" />",
               "preserve": [
                 "the local --vibeui-card-077-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -12242,26 +12242,26 @@
               },
               "title": {
                 "label": "title",
-                "default": "Прямое геокодирование"
+                "default": "Direct geocoding"
               },
               "text": {
                 "label": "text",
-                "default": "Строка адреса в любом виде — с опечатками, сокращениями, без индекса — превращается в координаты дома и нормализованный адрес."
+                "default": "The address line in any form - with typos, abbreviations, without an index - turns into house coordinates and a normalized address."
               },
               "accent": {
                 "label": "Accent"
               },
               "meta": {
                 "label": "meta",
-                "default": "Плитка API-маршрута"
+                "default": "Tiles API-route"
               },
               "demoAddress": {
                 "label": "demoAddress",
-                "default": "«Тверская 7, мск»"
+                "default": "«Tverskaya 7, Moscow time\""
               },
               "demoDistance": {
                 "label": "demoDistance",
-                "default": "7,4 км · 18 мин"
+                "default": "7,4 km · 18 min"
               }
             }
           }
@@ -12349,7 +12349,7 @@
             "docs": "Extracted from the bento-012 block as is: one file, no dependencies, its own palette in the --vibeui-card-078-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Alarm row from an app screen: time, label and a toggle with on/off state and a live last one.",
-              "usage": "<Card078 time=\"06:00\" label=\"Будни · рассвет 30 мин\" />",
+              "usage": "<Card078 time=\"06:00\" label=\"Everyday life · dawn 30 min\" />",
               "preserve": [
                 "the local --vibeui-card-078-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -12371,7 +12371,7 @@
               },
               "label": {
                 "label": "label",
-                "default": "Будни · рассвет 30 мин"
+                "default": "Everyday life · dawn 30 min"
               },
               "accent": {
                 "label": "Accent"
@@ -12469,7 +12469,7 @@
             "docs": "Extracted from the bento-001 block as is: one file, no dependencies, its own palette in the --vibeui-card-075-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Bento feature tile with title, text and a live demo: compress, formats, batch or upload — chosen by the demo value. Wide variant via data-wide.",
-              "usage": "<Card075 title=\"Виртуализация из коробки\" text=\"48 000 строк рендерятся как 12: в DOM то\" />",
+              "usage": "<Card075 title=\"Virtualization out of the box\" text=\"48 000 lines are rendered as 12: in DOM then\" />",
               "preserve": [
                 "the local --vibeui-card-075-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -12487,18 +12487,18 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Виртуализация из коробки"
+                "default": "Virtualization out of the box"
               },
               "text": {
                 "label": "text",
-                "default": "48 000 строк рендерятся как 12: в DOM только то, что в окне. Включается сама, когда строк больше двухсот."
+                "default": "48 000 lines are rendered as 12: in DOM only what's in the window. It turns on itself when there are more than two hundred lines."
               },
               "accent": {
                 "label": "Accent"
               },
               "kbUnit": {
                 "label": "kbUnit",
-                "default": "кб"
+                "default": "kb"
               }
             }
           }
@@ -12618,7 +12618,7 @@
             "docs": "Extracted from the charity-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-081-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Envelope button: pocket, flap, seal, photo stamp, recipient line and an “open” caption.",
-              "usage": "<Card081 name=\"Нина Петровна\" image=\"…\" imageAlt=\"…\" />",
+              "usage": "<Card081 name=\"Nina Petrovna\" image=\"…\" imageAlt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-081-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -12636,7 +12636,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Нина Петровна"
+                "default": "Nina Petrovna"
               },
               "image": {
                 "label": "image",
@@ -12651,15 +12651,15 @@
               },
               "meta": {
                 "label": "meta",
-                "default": "84 года · Ржев"
+                "default": "84 year · Rzhev"
               },
               "openLabel": {
                 "label": "openLabel",
-                "default": "Открыть письмо"
+                "default": "Open letter"
               },
               "fromLabel": {
                 "label": "fromLabel",
-                "default": "от кого:"
+                "default": "from:"
               }
             }
           }
@@ -12750,7 +12750,7 @@
             "docs": "Extracted from the charity-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-082-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Map point list row: indicator, city and note; lit through data-lit.",
-              "usage": "<Card082 city=\"Тверь\" note=\"с 2019\" />",
+              "usage": "<Card082 city=\"Tver\" note=\"s 2019\" />",
               "preserve": [
                 "the local --vibeui-card-082-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -12768,11 +12768,11 @@
             "controls": {
               "city": {
                 "label": "city",
-                "default": "Тверь"
+                "default": "Tver"
               },
               "note": {
                 "label": "note",
-                "default": "с 2019"
+                "default": "s 2019"
               },
               "accent": {
                 "label": "Accent"
@@ -12876,7 +12876,7 @@
             "docs": "Extracted from the delivery-001 block as is: one file, no dependencies, its own palette in the --vibeui-card-083-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Figure with a dish photo and a badge; mask shape through data-shape.",
-              "usage": "<Card083 image=\"/demo/delivery/dish-01.webp\" name=\"Смэш-бургер двойной\" badge=\"хит\" />",
+              "usage": "<Card083 image=\"/demo/delivery/dish-01.webp\" name=\"Double Smash Burger\" badge=\"hit\" />",
               "preserve": [
                 "the local --vibeui-card-083-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -12898,11 +12898,11 @@
               },
               "name": {
                 "label": "name",
-                "default": "Смэш-бургер двойной"
+                "default": "Double Smash Burger"
               },
               "badge": {
                 "label": "badge",
-                "default": "хит"
+                "default": "hit"
               },
               "accent": {
                 "label": "Accent"
@@ -13001,7 +13001,7 @@
             "docs": "Extracted from the delivery-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-084-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Order status step: title, time and text; done/now/todo through data-state.",
-              "usage": "<Card084 title=\"Заказ принят\" time=\"12:41\" text=\"Оплата прошла, повар видит заказ на экра\" />",
+              "usage": "<Card084 title=\"Order accepted\" time=\"12:41\" text=\"Payment has been completed, the cook sees the order on the screen\" />",
               "preserve": [
                 "the local --vibeui-card-084-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -13019,7 +13019,7 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Заказ принят"
+                "default": "Order accepted"
               },
               "time": {
                 "label": "time",
@@ -13027,7 +13027,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Оплата прошла, повар видит заказ на экране."
+                "default": "The payment has been completed, the cook sees the order on the screen."
               },
               "accent": {
                 "label": "Accent"
@@ -13154,7 +13154,7 @@
             "docs": "Extracted from the delivery-005 block as is: one file, no dependencies, its own palette in the --vibeui-card-085-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Review sticker: name, text and emoji reactions with counters.",
-              "usage": "<Card085 dish=\"смэш\" name=\"Катя\" meta=\"Бауманская · 14-й заказ\" />",
+              "usage": "<Card085 dish=\"smash\" name=\"Katya\" meta=\"Baumanskaya · 14-th order\" />",
               "preserve": [
                 "the local --vibeui-card-085-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -13172,30 +13172,30 @@
             "controls": {
               "dish": {
                 "label": "dish",
-                "default": "смэш"
+                "default": "smash"
               },
               "name": {
                 "label": "name",
-                "default": "Катя"
+                "default": "Katya"
               },
               "meta": {
                 "label": "meta",
-                "default": "Бауманская · 14-й заказ"
+                "default": "Baumanskaya · 14-th order"
               },
               "accent": {
                 "label": "Accent"
               },
               "text": {
                 "label": "text",
-                "default": "Смэш приехал за 19 минут и был реально хрустящим. Соус «Горячо» — отдельная любовь, берите двойной."
+                "default": "Smash came for 19 minutes and was really crispy. “Hot” sauce is a separate favorite, take a double one."
               },
               "reactionsLabel": {
                 "label": "reactionsLabel",
-                "default": "Реакции"
+                "default": "Reactions"
               },
               "reactionLabel": {
                 "label": "reactionLabel",
-                "default": "Реакция {emoji}: {n}"
+                "default": "Reaction {emoji}: {n}"
               }
             }
           }
@@ -13294,7 +13294,7 @@
             "docs": "Extracted from the flowers-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-087-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Seasonal calendar card: number, month, flowers in season, note and a petal; the current month is marked.",
-              "usage": "<Card087 name=\"Январь\" note=\"тепличные, но живые и ароматные\" />",
+              "usage": "<Card087 name=\"January\" note=\"greenhouse, but lively and fragrant\" />",
               "preserve": [
                 "the local --vibeui-card-087-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -13312,18 +13312,18 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Январь"
+                "default": "January"
               },
               "note": {
                 "label": "note",
-                "default": "тепличные, но живые и ароматные"
+                "default": "greenhouse, but lively and fragrant"
               },
               "accent": {
                 "label": "Accent"
               },
               "nowLabel": {
                 "label": "nowLabel",
-                "default": "цветёт сейчас"
+                "default": "is blooming now"
               }
             }
           }
@@ -13431,7 +13431,7 @@
             "docs": "Extracted from the auto-003 block as is: one file, no dependencies, its own palette in the --vibeui-card-088-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Process step: number, title and text; passed ones lit through data-on.",
-              "usage": "<Card088 title=\"Осмотр под лампой\" text=\"Заезжаете в бокс, мастер смотрит кузов п\" duration=\"20 минут\" />",
+              "usage": "<Card088 title=\"Inspection under lamp\" text=\"You pull into the box, the master looks at the body\" duration=\"20 minutes\" />",
               "preserve": [
                 "the local --vibeui-card-088-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -13449,22 +13449,22 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Осмотр под лампой"
+                "default": "Inspection under lamp"
               },
               "text": {
                 "label": "text",
-                "default": "Заезжаете в бокс, мастер смотрит кузов под софитами, меряет толщину лака, показывает проблемные места и фиксирует цену."
+                "default": "You come into the box, the master looks at the body under the soffits, measures the thickness of the varnish, shows problem areas and fixes the price."
               },
               "duration": {
                 "label": "duration",
-                "default": "20 минут"
+                "default": "20 minutes"
               },
               "accent": {
                 "label": "Accent"
               },
               "result": {
                 "label": "result",
-                "default": "Шаг автосервиса"
+                "default": "Car service step"
               }
             }
           }
@@ -13555,7 +13555,7 @@
             "docs": "Extracted from the course-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-090-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Programme lesson row: type icon (video, text, practice), title and length.",
-              "usage": "<Card090 title=\"Разбор домашек потока\" length=\"1 ч\" />",
+              "usage": "<Card090 title=\"Analysis of stream homework\" length=\"1 h\" />",
               "preserve": [
                 "the local --vibeui-card-090-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -13573,11 +13573,11 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Разбор домашек потока"
+                "default": "Analysis of stream homework"
               },
               "length": {
                 "label": "length",
-                "default": "1 ч"
+                "default": "1 h"
               },
               "accent": {
                 "label": "Accent"
@@ -13704,7 +13704,7 @@
             "docs": "Extracted from the course-003 block as is: one file, no dependencies, its own palette in the --vibeui-card-091-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Graduate card: work with gain, avatar and name, the “before → after” path; cursor glow through data-seen.",
-              "usage": "<Card091 name=\"Артём Гусев\" work=\"…\" workAlt=\"…\" />",
+              "usage": "<Card091 name=\"Artyom Gusev\" work=\"…\" workAlt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-091-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -13722,7 +13722,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Артём Гусев"
+                "default": "Artyom Gusev"
               },
               "work": {
                 "label": "work",
@@ -13737,7 +13737,7 @@
               },
               "gain": {
                 "label": "gain",
-                "default": "Карточка кейса выпускника"
+                "default": "Graduate Case Card"
               },
               "image": {
                 "label": "image",
@@ -13745,7 +13745,7 @@
               },
               "before": {
                 "label": "before",
-                "default": "маркетолог, 4 года"
+                "default": "marketer, 4 year"
               }
             }
           }
@@ -13855,7 +13855,7 @@
             "docs": "Extracted from the course-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-092-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Event in a calendar strip: time, kind with a pulse for live, title and teacher.",
-              "usage": "<Card092 title=\"Три урока недели открываются\" kind=\"запись\" time=\"с утра\" />",
+              "usage": "<Card092 title=\"Three lessons of the week open\" kind=\"entry\" time=\"in the morning\" />",
               "preserve": [
                 "the local --vibeui-card-092-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -13873,22 +13873,22 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Три урока недели открываются"
+                "default": "Three lessons of the week open"
               },
               "kind": {
                 "label": "kind",
-                "default": "запись"
+                "default": "entry"
               },
               "time": {
                 "label": "time",
-                "default": "с утра"
+                "default": "in the morning"
               },
               "accent": {
                 "label": "Accent"
               },
               "text": {
                 "label": "text",
-                "default": "Событие недели курса"
+                "default": "Course Week Event"
               }
             }
           }
@@ -14002,7 +14002,7 @@
             "docs": "Extracted from the realty-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-093-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "District list row: thumbnail, name with a note and price per m² with a count; active through data-active.",
-              "usage": "<Card093 name=\"Петроградская\" image=\"…\" note=\"модерн, тихие дворы, 10 минут до центра\" />",
+              "usage": "<Card093 name=\"Petrogradskaya\" image=\"…\" note=\"modern, quiet courtyards, 10 minutes to the center\" />",
               "preserve": [
                 "the local --vibeui-card-093-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14020,7 +14020,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Петроградская"
+                "default": "Petrogradskaya"
               },
               "image": {
                 "label": "image",
@@ -14028,18 +14028,18 @@
               },
               "note": {
                 "label": "note",
-                "default": "модерн, тихие дворы, 10 минут до центра"
+                "default": "modern, quiet courtyards, 10 minutes to the center"
               },
               "accent": {
                 "label": "Accent"
               },
               "count": {
                 "label": "count",
-                "default": "164 объекта"
+                "default": "164 object"
               },
               "price": {
                 "label": "price",
-                "default": "285 тыс ₽"
+                "default": "285 thousand ₽"
               }
             }
           }
@@ -14137,7 +14137,7 @@
             "docs": "Extracted from the realty-005 block as is: one file, no dependencies, its own palette in the --vibeui-card-094-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Real-estate deal step: number, title and text.",
-              "usage": "<Card094 title=\"Разговор\" text=\"Слушаем, зачем вам квартира и на сколько\" time=\"1 день\" />",
+              "usage": "<Card094 title=\"Conversation\" text=\"Let's hear why you need an apartment and for how long\" time=\"1 day\" />",
               "preserve": [
                 "the local --vibeui-card-094-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14155,15 +14155,15 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Разговор"
+                "default": "Conversation"
               },
               "text": {
                 "label": "text",
-                "default": "Слушаем, зачем вам квартира и на сколько лет. Согласуем бюджет и районы."
+                "default": "We're listening to why you need an apartment and for how long. We will agree on the budget and districts."
               },
               "time": {
                 "label": "time",
-                "default": "1 день"
+                "default": "1 day"
               },
               "accent": {
                 "label": "Accent"
@@ -14254,7 +14254,7 @@
             "docs": "Extracted from the renovation-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-095-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Gantt chart row: stage name with a check, lane and a progress bar by weeks; done/now/todo state.",
-              "usage": "<Card095 name=\"Демонтаж\" />",
+              "usage": "<Card095 name=\"Dismantling\" />",
               "preserve": [
                 "the local --vibeui-card-095-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14272,14 +14272,14 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Демонтаж"
+                "default": "Dismantling"
               },
               "accent": {
                 "label": "Accent"
               },
               "weeksLabel": {
                 "label": "weeksLabel",
-                "default": "недели {from}–{to}"
+                "default": "weeks {from}–{to}"
               }
             }
           }
@@ -14407,7 +14407,7 @@
             "docs": "Extracted from the renovation-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-096-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Construction feed entry: day with date and time, title, text, photo and author; future ones through data-future.",
-              "usage": "<Card096 day=\"38\" title=\"Затирка швов в гостевом санузле\" time=\"09:40\" />",
+              "usage": "<Card096 day=\"38\" title=\"Grouting in the guest bathroom\" time=\"09:40\" />",
               "preserve": [
                 "the local --vibeui-card-096-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14429,7 +14429,7 @@
               },
               "title": {
                 "label": "title",
-                "default": "Затирка швов в гостевом санузле"
+                "default": "Grouting in the guest bathroom"
               },
               "time": {
                 "label": "time",
@@ -14440,7 +14440,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Отчёт со стройки"
+                "default": "Report from the construction site"
               },
               "photo": {
                 "label": "photo",
@@ -14448,7 +14448,7 @@
               },
               "by": {
                 "label": "by",
-                "default": "Отчёт со стройки"
+                "default": "Report from the construction site"
               }
             }
           }
@@ -14549,7 +14549,7 @@
             "docs": "Extracted from the writer-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-097-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Handwritten reader note in the margin: quote and a signature with name and city; tilt through a variable.",
-              "usage": "<Card097 text=\"Читала в метро и проехала свою станцию. \" name=\"Марина\" from=\"Казань\" />",
+              "usage": "<Card097 text=\"I was reading on the subway and passed my station. \" name=\"Marina\" from=\"Kazan\" />",
               "preserve": [
                 "the local --vibeui-card-097-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14567,15 +14567,15 @@
             "controls": {
               "text": {
                 "label": "text",
-                "default": "Читала в метро и проехала свою станцию. Дважды."
+                "default": "I was reading on the subway and passed my station. Twice."
               },
               "name": {
                 "label": "name",
-                "default": "Марина"
+                "default": "Marina"
               },
               "from": {
                 "label": "from",
-                "default": "Казань"
+                "default": "Kazan"
               },
               "accent": {
                 "label": "Accent"
@@ -14674,7 +14674,7 @@
             "docs": "Extracted from the fintech-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-098-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Fee comparison row: bank name, yearly amount and a bar relative to the maximum; own bank highlighted through data-ours.",
-              "usage": "<Card098 name=\"Ось · Рост\" />",
+              "usage": "<Card098 name=\"Axis · Height\" />",
               "preserve": [
                 "the local --vibeui-card-098-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14692,7 +14692,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Ось · Рост"
+                "default": "Axis · Height"
               },
               "accent": {
                 "label": "Accent"
@@ -14703,7 +14703,7 @@
               },
               "perYearLabel": {
                 "label": "perYearLabel",
-                "default": "/ год"
+                "default": "/ year"
               }
             }
           }
@@ -14791,7 +14791,7 @@
             "docs": "Extracted from the fintech-003 block as is: one file, no dependencies, its own palette in the --vibeui-card-099-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Security layer card: icon (biometrics, shield, key…), title and text; active through data-active.",
-              "usage": "<Card099 title=\"Вход по лицу и ключу\" text=\"Биометрия на телефоне, аппаратный ключ и\" />",
+              "usage": "<Card099 title=\"Login by face and key\" text=\"Biometrics on the phone, hardware key and\" />",
               "preserve": [
                 "the local --vibeui-card-099-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14809,11 +14809,11 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Вход по лицу и ключу"
+                "default": "Login by face and key"
               },
               "text": {
                 "label": "text",
-                "default": "Биометрия на телефоне, аппаратный ключ или подтверждение в приложении. СМС-кодов, которые перехватывают, нет."
+                "default": "Biometrics on the phone, hardware key or verification in the application. There are no SMS codes that can be intercepted."
               },
               "accent": {
                 "label": "Accent"
@@ -14903,7 +14903,7 @@
             "docs": "Extracted from the gadget-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-101-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Exploded-view parts list row: name and description; highlighted through data-hot.",
-              "usage": "<Card101 name=\"Диффузор\" text=\"Опаловый поликарбонат, 2 мм. Рассеивает \" />",
+              "usage": "<Card101 name=\"Diffuser\" text=\"Opal polycarbonate, 2 mm. Dispels \" />",
               "preserve": [
                 "the local --vibeui-card-101-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -14921,11 +14921,11 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Диффузор"
+                "default": "Diffuser"
               },
               "text": {
                 "label": "text",
-                "default": "Опаловый поликарбонат, 2 мм. Рассеивает 96 светодиодов в один ровный диск без точек."
+                "default": "Opal polycarbonate, 2 mm. Dispels 96 LEDs into one smooth disk without dots."
               },
               "accent": {
                 "label": "Accent"
@@ -15040,7 +15040,7 @@
             "docs": "Extracted from the market-003 block as is: one file, no dependencies, its own palette in the --vibeui-card-102-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Perforated licence ticket card: stub with price and sticker, name, rules with + and − signs, a button.",
-              "usage": "<Card102 name=\"Личная\" who=\"Один человек, свои проекты и портфолио.\" />",
+              "usage": "<Card102 name=\"Personal\" who=\"One person, your own projects and portfolio.\" />",
               "preserve": [
                 "the local --vibeui-card-102-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15058,18 +15058,18 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Личная"
+                "default": "Personal"
               },
               "who": {
                 "label": "who",
-                "default": "Один человек, свои проекты и портфолио."
+                "default": "One person, your own projects and portfolio."
               },
               "accent": {
                 "label": "Accent"
               },
               "featuredLabel": {
                 "label": "featuredLabel",
-                "default": "берут чаще"
+                "default": "are taken more often"
               },
               "currency": {
                 "label": "currency",
@@ -15077,7 +15077,7 @@
               },
               "seatsLine": {
                 "label": "seatsLine",
-                "default": "{n} мест · ×{factor}"
+                "default": "{n} places · ×{factor}"
               }
             }
           }
@@ -15197,7 +15197,7 @@
             "docs": "Extracted from the api-002 block as is: one file, no dependencies, its own palette in the --vibeui-card-103-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "API region card: status, uptime, p50 and a sparkline drawn on reveal.",
-              "usage": "<Card103 name=\"Москва\" code=\"msk-1\" uptime=\"99,99 %\" />",
+              "usage": "<Card103 name=\"Moscow\" code=\"msk-1\" uptime=\"99,99 %\" />",
               "preserve": [
                 "the local --vibeui-card-103-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15215,7 +15215,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Москва"
+                "default": "Moscow"
               },
               "code": {
                 "label": "code",
@@ -15230,15 +15230,15 @@
               },
               "uptimeLabel": {
                 "label": "uptimeLabel",
-                "default": "аптайм 30 дн."
+                "default": "uptime 30 days"
               },
               "p50Label": {
                 "label": "p50Label",
-                "default": "p50 сейчас"
+                "default": "p50 now"
               },
               "sparkLabel": {
                 "label": "sparkLabel",
-                "default": "Латентность {name} за 24 часа"
+                "default": "Latency {name} for 24 hours"
               }
             }
           }
@@ -15345,7 +15345,7 @@
             "docs": "Extracted from the app-001 block as is: one file, no dependencies, its own palette in the --vibeui-card-104-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Feature list item next to the phone: title, text and a screen caption; active and passed ones through data-active/data-done.",
-              "usage": "<Card104 title=\"Дыхание, которое ведёт\" text=\"Круг растёт и сжимается, а вы просто сле\" screenTitle=\"Вечернее дыхание\" />",
+              "usage": "<Card104 title=\"The breath that leads\" text=\"The circle grows and shrinks, and you just follow\" screenTitle=\"Evening breath\" />",
               "preserve": [
                 "the local --vibeui-card-104-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15363,22 +15363,22 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Дыхание, которое ведёт"
+                "default": "The breath that leads"
               },
               "text": {
                 "label": "text",
-                "default": "Круг растёт и сжимается, а вы просто следуете. Три практики: 4-7-8, коробочное, «вечер»."
+                "default": "The circle grows and contracts, and you just follow. Three practices: 4-7-8, boxed, “evening”."
               },
               "screenTitle": {
                 "label": "screenTitle",
-                "default": "Вечернее дыхание"
+                "default": "Evening breath"
               },
               "accent": {
                 "label": "Accent"
               },
               "screenPrefix": {
                 "label": "screenPrefix",
-                "default": "экран"
+                "default": "screen"
               }
             }
           }
@@ -15479,7 +15479,7 @@
             "docs": "Extracted from the podcast-005 block as is: one file, no dependencies, its own palette in the --vibeui-card-106-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Quote link for a marquee: quoted text, author and an underline on hover.",
-              "usage": "<Card106 text=\"Одиночество — это не когда никого нет, а\" href=\"#episodes\" who=\"Сергей Волков · № 112\" />",
+              "usage": "<Card106 text=\"Loneliness is not when there is no one, but\" href=\"#episodes\" who=\"Sergey Volkov · № 112\" />",
               "preserve": [
                 "the local --vibeui-card-106-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15497,7 +15497,7 @@
             "controls": {
               "text": {
                 "label": "text",
-                "default": "Одиночество — это не когда никого нет, а когда некому позвонить"
+                "default": "Loneliness is not when there is no one, but when there is no one to call"
               },
               "href": {
                 "label": "href",
@@ -15505,7 +15505,7 @@
               },
               "who": {
                 "label": "who",
-                "default": "Сергей Волков · № 112"
+                "default": "Sergey Volkov · № 112"
               },
               "accent": {
                 "label": "Accent"
@@ -15625,15 +15625,15 @@
               },
               "beforeLabel": {
                 "label": "beforeLabel",
-                "default": "до"
+                "default": "to"
               },
               "hoursUnit": {
                 "label": "hoursUnit",
-                "default": "ч"
+                "default": "h"
               },
               "beforeNote": {
                 "label": "beforeNote",
-                "default": "засыпали за 48 мин"
+                "default": "fell asleep for 48 min"
               }
             }
           }
@@ -15750,15 +15750,15 @@
               },
               "quote": {
                 "label": "quote",
-                "default": "Крупная цитата с автором"
+                "default": "Large quote with the author"
               },
               "name": {
                 "label": "name",
-                "default": "Анна Ковалёва"
+                "default": "Anna Kovaleva"
               },
               "role": {
                 "label": "role",
-                "default": "Крупная цитата с автором"
+                "default": "Large quote with the author"
               }
             }
           }
@@ -15882,7 +15882,7 @@
             "docs": "Extracted from the testimonials-018 block as is: one file, no dependencies, its own palette in the --vibeui-card-108-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Marquee card: video button with a cover, quote, avatar, linked name and role.",
-              "usage": "<Card108 name=\"Марина Соколова\" videoHref=\"#\" video=\"…\" />",
+              "usage": "<Card108 name=\"Marina Sokolova\" videoHref=\"#\" video=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-108-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -15900,7 +15900,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Марина Соколова"
+                "default": "Marina Sokolova"
               },
               "videoHref": {
                 "label": "videoHref",
@@ -15915,7 +15915,7 @@
               },
               "quote": {
                 "label": "quote",
-                "default": "Самое ценное — ревью. Куратор разобрал мою домашку на 20 минут видео и показал, где я теряю пользователя. На работе так никто не делает."
+                "default": "The most valuable thing is the review. The curator sorted my homework into 20 minutes of video and showed where I was losing the user. Nobody does that at work."
               },
               "image": {
                 "label": "image",
@@ -15923,7 +15923,7 @@
               },
               "href": {
                 "label": "href",
-                "default": "Карточка отзыва с видео"
+                "default": "Review card with video"
               }
             }
           }
@@ -16046,7 +16046,7 @@
             "docs": "Extracted from the testimonials-019 block as is: one file, no dependencies, its own palette in the --vibeui-card-109-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Card button of a 3D carousel: photo with an “after” badge, quote, name, meta and stars; position through variables.",
-              "usage": "<Card109 name=\"Илья\" image=\"…\" imageAlt=\"…\" />",
+              "usage": "<Card109 name=\"Ilya\" image=\"…\" imageAlt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-109-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16064,7 +16064,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Илья"
+                "default": "Ilya"
               },
               "image": {
                 "label": "image",
@@ -16079,15 +16079,15 @@
               },
               "after": {
                 "label": "after",
-                "default": "Карточка карусели отзывов"
+                "default": "Review carousel card"
               },
               "quote": {
                 "label": "quote",
-                "default": "Марк переспросил три раза, где будет проходить рукав рубашки. Через два года лев смотрится так, будто сделан вчера."
+                "default": "Mark asked three times where the shirt sleeve would go. Two years later, the lion looks like it was made yesterday."
               },
               "meta": {
                 "label": "meta",
-                "default": "Карточка карусели отзывов"
+                "default": "Review carousel card"
               }
             }
           }
@@ -16207,7 +16207,7 @@
             "docs": "Extracted from the testimonials-029 block as is: one file, no dependencies, its own palette in the --vibeui-card-113-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Theatre-style review: number, stars, quote, name and role.",
-              "usage": "<Card113 number=\"0298\" object=\"Двушка на Ленинском, 62 м²\" date=\"14.08.2026\" />",
+              "usage": "<Card113 number=\"0298\" object=\"Kopeck piece on Leninsky, 62 m²\" date=\"14.08.2026\" />",
               "preserve": [
                 "the local --vibeui-card-113-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16229,7 +16229,7 @@
               },
               "object": {
                 "label": "object",
-                "default": "Двушка на Ленинском, 62 м²"
+                "default": "Kopeck piece on Leninsky, 62 m²"
               },
               "date": {
                 "label": "date",
@@ -16240,15 +16240,15 @@
               },
               "text": {
                 "label": "text",
-                "default": "Сдали на два дня раньше срока. Каждый вечер фото в чате, я ни разу не ездила проверять. Плитку в санузле переложили бы, если бы я попросила — не пришлось."
+                "default": "Delivered two days ahead of schedule. Every evening there are photos in the chat, I never went to check. They would have moved the tiles in the bathroom if I had asked, but they didn’t have to."
               },
               "remark": {
                 "label": "remark",
-                "default": "Отзыв-акт"
+                "default": "Revocation act"
               },
               "name": {
                 "label": "name",
-                "default": "Анна Р."
+                "default": "Anna R."
               }
             }
           }
@@ -16371,7 +16371,7 @@
             "docs": "Extracted from the testimonials-031 block as is: one file, no dependencies, its own palette in the --vibeui-card-114-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Student card: gain sticker, quote, note, who and how many months, a “before → after” level scale.",
-              "usage": "<Card114 name=\"Марина\" quote=\"Пришла с «лондон из зе кэпитал», через п\" note=\"сдала IELTS на 7.0\" />",
+              "usage": "<Card114 name=\"Marina\" quote=\"Came from “London from the Capital”, via p\" note=\"passed IELTS on 7.0\" />",
               "preserve": [
                 "the local --vibeui-card-114-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16389,22 +16389,22 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Марина"
+                "default": "Marina"
               },
               "quote": {
                 "label": "quote",
-                "default": "Пришла с «лондон из зе кэпитал», через полгода вела созвон с заказчиком из Дублина и даже поняла его шутку про погоду."
+                "default": "I came from London from the Capital, six months later I was on a call with a customer from Dublin and even understood his joke about the weather."
               },
               "note": {
                 "label": "note",
-                "default": "сдала IELTS на 7.0"
+                "default": "passed IELTS on 7.0"
               },
               "accent": {
                 "label": "Accent"
               },
               "lang": {
                 "label": "lang",
-                "default": "английский"
+                "default": "English"
               },
               "before": {
                 "label": "before",
@@ -16536,7 +16536,7 @@
             "docs": "Extracted from the testimonials-023 block as is: one file, no dependencies, its own palette in the --vibeui-card-110-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Review styled as a receipt: header with brand and place, lines, total and thanks; prints on reveal.",
-              "usage": "<Card110 name=\"Марина\" no=\"0412\" time=\"08:14\" />",
+              "usage": "<Card110 name=\"Marina\" no=\"0412\" time=\"08:14\" />",
               "preserve": [
                 "the local --vibeui-card-110-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16554,7 +16554,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Марина"
+                "default": "Marina"
               },
               "no": {
                 "label": "no",
@@ -16569,15 +16569,15 @@
               },
               "sum": {
                 "label": "sum",
-                "default": "Чек-отзыв"
+                "default": "Receipt check"
               },
               "reviewLabel": {
                 "label": "reviewLabel",
-                "default": "Отзыв: {name}"
+                "default": "Review: {name}"
               },
               "brand": {
                 "label": "brand",
-                "default": "Корка"
+                "default": "Crust"
               }
             }
           }
@@ -16713,7 +16713,7 @@
               },
               "starsLabel": {
                 "label": "starsLabel",
-                "default": "{n} из 5"
+                "default": "{n} from 5"
               }
             }
           }
@@ -16838,7 +16838,7 @@
             "docs": "Extracted from the people-010 block as is: one file, no dependencies, its own palette in the --vibeui-card-115-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Team member card: photo, name, role and a short text.",
-              "usage": "<Card115 image=\"…\" imageAlt=\"…\" name=\"Ксения\" />",
+              "usage": "<Card115 image=\"…\" imageAlt=\"…\" name=\"Ksenia\" />",
               "preserve": [
                 "the local --vibeui-card-115-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -16864,22 +16864,22 @@
               },
               "name": {
                 "label": "name",
-                "default": "Ксения"
+                "default": "Ksenia"
               },
               "accent": {
                 "label": "Accent"
               },
               "role": {
                 "label": "role",
-                "default": "Свидетельница"
+                "default": "Witness"
               },
               "text": {
                 "label": "text",
-                "default": "Карточка человека с фото"
+                "default": "Person's card with photo"
               },
               "contactLabel": {
                 "label": "contactLabel",
-                "default": "Карточка человека с фото"
+                "default": "Person's card with photo"
               }
             }
           }
@@ -17004,7 +17004,7 @@
             "docs": "Extracted from the people-011 block as is: one file, no dependencies, its own palette in the --vibeui-card-116-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Team member card with a “candle”: photo, name, role; warm light on hover.",
-              "usage": "<Card116 image=\"…\" imageAlt=\"…\" name=\"Кристина\" />",
+              "usage": "<Card116 image=\"…\" imageAlt=\"…\" name=\"Christina\" />",
               "preserve": [
                 "the local --vibeui-card-116-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -17030,22 +17030,22 @@
               },
               "name": {
                 "label": "name",
-                "default": "Кристина"
+                "default": "Christina"
               },
               "accent": {
                 "label": "Accent"
               },
               "role": {
                 "label": "role",
-                "default": "Свидетельница"
+                "default": "Witness"
               },
               "text": {
                 "label": "text",
-                "default": "Карточка при свече"
+                "default": "Card by candlelight"
               },
               "contactLabel": {
                 "label": "contactLabel",
-                "default": "Карточка при свече"
+                "default": "Card by candlelight"
               }
             }
           }
@@ -17163,7 +17163,7 @@
             "docs": "Extracted from the people-013 block as is: one file, no dependencies, its own palette in the --vibeui-card-117-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Guest link card for a marquee strip: photo, name and caption.",
-              "usage": "<Card117 name=\"Сергей Волков\" href=\"#episodes\" image=\"/demo/podcast/guest-01.webp\" />",
+              "usage": "<Card117 name=\"Sergey Volkov\" href=\"#episodes\" image=\"/demo/podcast/guest-01.webp\" />",
               "preserve": [
                 "the local --vibeui-card-117-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -17181,7 +17181,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Сергей Волков"
+                "default": "Sergey Volkov"
               },
               "href": {
                 "label": "href",
@@ -17196,11 +17196,11 @@
               },
               "role": {
                 "label": "role",
-                "default": "Карточка гостя ленты"
+                "default": "Tape Guest Card"
               },
               "episode": {
                 "label": "episode",
-                "default": "Карточка гостя ленты"
+                "default": "Tape Guest Card"
               }
             }
           }
@@ -17353,15 +17353,15 @@
               },
               "stage": {
                 "label": "stage",
-                "default": "Слот программы"
+                "default": "Program slot"
               },
               "tag": {
                 "label": "tag",
-                "default": "Слот программы"
+                "default": "Program slot"
               },
               "tagColor": {
                 "label": "tagColor",
-                "default": "Слот программы"
+                "default": "Program slot"
               }
             }
           }
@@ -17476,7 +17476,7 @@
             "docs": "Extracted from the event-007 block as is: one file, no dependencies, its own palette in the --vibeui-card-120-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Venue card with a coloured frame: name, address, facts and a link.",
-              "usage": "<Card120 name=\"Главная сцена\" href=\"#\" text=\"Сцена на понтонах посреди пруда, зрители\" />",
+              "usage": "<Card120 name=\"Main stage\" href=\"#\" text=\"Scene on pontoons in the middle of a pond, spectators\" />",
               "preserve": [
                 "the local --vibeui-card-120-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -17494,7 +17494,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Главная сцена"
+                "default": "Main stage"
               },
               "href": {
                 "label": "href",
@@ -17502,7 +17502,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Сцена на понтонах посреди пруда, зрители — на склоне и на воде."
+                "default": "Stage on pontoons in the middle of a pond, spectators on the slope and on the water."
               },
               "accent": {
                 "label": "Accent"
@@ -17630,7 +17630,7 @@
             "docs": "Extracted from the event-008 block as is: one file, no dependencies, its own palette in the --vibeui-card-121-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Timeline step: time, dot, title and text; current through data-current.",
-              "usage": "<Card121 time=\"15:00\" title=\"Сбор гостей\" icon=\"glass\" />",
+              "usage": "<Card121 time=\"15:00\" title=\"Gathering of guests\" icon=\"glass\" />",
               "preserve": [
                 "the local --vibeui-card-121-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -17652,7 +17652,7 @@
               },
               "title": {
                 "label": "title",
-                "default": "Сбор гостей"
+                "default": "Gathering of guests"
               },
               "icon": {
                 "label": "icon",
@@ -17663,11 +17663,11 @@
               },
               "place": {
                 "label": "place",
-                "default": "Шаг таймлайна дня"
+                "default": "Day timeline step"
               },
               "text": {
                 "label": "text",
-                "default": "Шаг таймлайна дня"
+                "default": "Day timeline step"
               }
             }
           }
@@ -17804,7 +17804,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Слот дня"
+                "default": "Slot of the day"
               }
             }
           }
@@ -17911,7 +17911,7 @@
             "docs": "Extracted from the event-011 block as is: one file, no dependencies, its own palette in the --vibeui-card-123-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Guest tip card: icon, title and text.",
-              "usage": "<Card123 title=\"Перелёт\" icon=\"plane\" value=\"13 ч 20 мин\" />",
+              "usage": "<Card123 title=\"Flight\" icon=\"plane\" value=\"13 h 20 min\" />",
               "preserve": [
                 "the local --vibeui-card-123-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -17929,7 +17929,7 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Перелёт"
+                "default": "Flight"
               },
               "icon": {
                 "label": "icon",
@@ -17937,14 +17937,14 @@
               },
               "value": {
                 "label": "value",
-                "default": "13 ч 20 мин"
+                "default": "13 h 20 min"
               },
               "accent": {
                 "label": "Accent"
               },
               "text": {
                 "label": "text",
-                "default": "Прямой рейс Москва — Гавана, вылет 12 февраля в 09:40, багаж 23 кг включён."
+                "default": "Direct flight Moscow - Havana, departure 12 February at 09:40, luggage 23 kg included."
               }
             }
           }
@@ -18056,7 +18056,7 @@
             "docs": "Extracted from the event-012 block as is: one file, no dependencies, its own palette in the --vibeui-card-124-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Look card for a party dress code: photo, who it suits and the look title with a caption.",
-              "usage": "<Card124 who=\"Ей\" image=\"…\" imageAlt=\"…\" />",
+              "usage": "<Card124 who=\"Her\" image=\"…\" imageAlt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-124-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18074,7 +18074,7 @@
             "controls": {
               "who": {
                 "label": "who",
-                "default": "Ей"
+                "default": "Her"
               },
               "image": {
                 "label": "image",
@@ -18089,11 +18089,11 @@
               },
               "title": {
                 "label": "title",
-                "default": "Лён, миди, плоская подошва"
+                "default": "Linen, midi, flat sole"
               },
               "text": {
                 "label": "text",
-                "default": "Платье или комбинезон в песке, мяте или коралле. Каблуки утонут — сандалии или босиком."
+                "default": "Dress or jumpsuit in sand, mint or coral. Heels will sink - sandals or barefoot."
               }
             }
           }
@@ -18201,7 +18201,7 @@
             "docs": "Extracted from the event-013 block as is: one file, no dependencies, its own palette in the --vibeui-card-125-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Programme row with an indicator: time, title and text; active and passed ones through data-active/data-done.",
-              "usage": "<Card125 time=\"15:30\" title=\"Сбор гостей\" place=\"у камина\" />",
+              "usage": "<Card125 time=\"15:30\" title=\"Gathering of guests\" place=\"by the fireplace\" />",
               "preserve": [
                 "the local --vibeui-card-125-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18223,18 +18223,18 @@
               },
               "title": {
                 "label": "title",
-                "default": "Сбор гостей"
+                "default": "Gathering of guests"
               },
               "place": {
                 "label": "place",
-                "default": "у камина"
+                "default": "by the fireplace"
               },
               "accent": {
                 "label": "Accent"
               },
               "text": {
                 "label": "text",
-                "default": "Слот живой программы"
+                "default": "Live program slot"
               }
             }
           }
@@ -18346,7 +18346,7 @@
             "docs": "Extracted from the event-014 block as is: one file, no dependencies, its own palette in the --vibeui-card-126-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Look card for a winter dress code: photo, who it suits and the look title with a caption.",
-              "usage": "<Card126 who=\"Ей\" image=\"…\" imageAlt=\"…\" />",
+              "usage": "<Card126 who=\"Her\" image=\"…\" imageAlt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-126-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18364,7 +18364,7 @@
             "controls": {
               "who": {
                 "label": "who",
-                "default": "Ей"
+                "default": "Her"
               },
               "image": {
                 "label": "image",
@@ -18379,11 +18379,11 @@
               },
               "title": {
                 "label": "title",
-                "default": "Длинное и тёплое"
+                "default": "Long and warm"
               },
               "text": {
                 "label": "text",
-                "default": "Бархат, шерсть, плотный шёлк — в ночи, бордо или хвое. Шаль дадим на террасе. Каблук можно: в доме паркет."
+                "default": "Velvet, wool, thick silk - in the night, burgundy or pine. We'll give you a shawl on the terrace. You can use a heel: the house has parquet."
               }
             }
           }
@@ -18483,7 +18483,7 @@
             "docs": "Extracted from the portfolio-011 block as is: one file, no dependencies, its own palette in the --vibeui-card-127-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Frame with a full-bleed photo and a caption; tile size through data-span.",
-              "usage": "<Card127 src=\"/demo/bakery/hands-flour.webp\" alt=\"Руки формуют тесто на столе в муке\" note=\"5:40, формовка\" />",
+              "usage": "<Card127 src=\"/demo/bakery/hands-flour.webp\" alt=\"Hands forming dough on the table in flour\" note=\"5:40, molding\" />",
               "preserve": [
                 "the local --vibeui-card-127-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18505,11 +18505,11 @@
               },
               "alt": {
                 "label": "alt",
-                "default": "Руки формуют тесто на столе в муке"
+                "default": "Hands forming dough on the table in flour"
               },
               "note": {
                 "label": "note",
-                "default": "5:40, формовка"
+                "default": "5:40, molding"
               },
               "accent": {
                 "label": "Accent"
@@ -18600,7 +18600,7 @@
             "docs": "Extracted from the about-010 block as is: one file, no dependencies, its own palette in the --vibeui-card-129-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "List item with a title and text in one row.",
-              "usage": "<Card129 title=\"Одноразовое всё\" text=\"Иглы, картриджи, краски в капсулах и плё\" />",
+              "usage": "<Card129 title=\"Disposable everything\" text=\"Needles, cartridges, paints in capsules and plastic\" />",
               "preserve": [
                 "the local --vibeui-card-129-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18618,11 +18618,11 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Одноразовое всё"
+                "default": "Disposable everything"
               },
               "text": {
                 "label": "text",
-                "default": "Иглы, картриджи, краски в капсулах и плёнка вскрываются при вас."
+                "default": "Needles, cartridges, paint capsules and film are opened in front of you."
               },
               "accent": {
                 "label": "Accent"
@@ -18740,7 +18740,7 @@
             "docs": "Extracted from the about-011 block as is: one file, no dependencies, its own palette in the --vibeui-card-130-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Film-strip frame: photo in a perforated frame, caption with a year, title and text.",
-              "usage": "<Card130 title=\"Кофе у окна\" image=\"…\" imageAlt=\"…\" />",
+              "usage": "<Card130 title=\"Coffee by the window\" image=\"…\" imageAlt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-130-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -18758,7 +18758,7 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Кофе у окна"
+                "default": "Coffee by the window"
               },
               "image": {
                 "label": "image",
@@ -18773,11 +18773,11 @@
               },
               "date": {
                 "label": "date",
-                "default": "Октябрь 2021"
+                "default": "October 2021"
               },
               "text": {
                 "label": "text",
-                "default": "Кадр плёнки"
+                "default": "Film frame"
               }
             }
           }
@@ -18930,15 +18930,15 @@
               },
               "city": {
                 "label": "city",
-                "default": "Остановка маршрута"
+                "default": "Stop route"
               },
               "date": {
                 "label": "date",
-                "default": "Остановка маршрута"
+                "default": "Stop route"
               },
               "title": {
                 "label": "title",
-                "default": "Остановка маршрута"
+                "default": "Stop route"
               }
             }
           }
@@ -19087,7 +19087,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Кадр таймлайна"
+                "default": "Timeline frame"
               }
             }
           }
@@ -19199,7 +19199,7 @@
             "docs": "Extracted from the about-017 block as is: one file, no dependencies, its own palette in the --vibeui-card-134-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Person card: polaroid with a name, name, role and quote; tilt through a variable.",
-              "usage": "<Card134 name=\"Вера Лапина\" image=\"/demo/flowers/florist-01.webp\" alt=\"…\" />",
+              "usage": "<Card134 name=\"Vera Lapina\" image=\"/demo/flowers/florist-01.webp\" alt=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-134-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -19217,7 +19217,7 @@
             "controls": {
               "name": {
                 "label": "name",
-                "default": "Вера Лапина"
+                "default": "Vera Lapina"
               },
               "image": {
                 "label": "image",
@@ -19232,11 +19232,11 @@
               },
               "role": {
                 "label": "role",
-                "default": "основатель, флорист"
+                "default": "founder, florist"
               },
               "quote": {
                 "label": "quote",
-                "default": "Букет должен пахнуть садом, а не магазином."
+                "default": "The bouquet should smell like a garden, not a store."
               }
             }
           }
@@ -19324,7 +19324,7 @@
             "docs": "Extracted from the stats-001 block as is: one file, no dependencies, its own palette in the --vibeui-card-135-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Stat with a neon ring and a counter: the ring fills through a variable, the number counts up on reveal.",
-              "usage": "<Card135 label=\"лет студии\" suffix=\"…\" />",
+              "usage": "<Card135 label=\"years studio\" suffix=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-135-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -19342,7 +19342,7 @@
             "controls": {
               "label": {
                 "label": "label",
-                "default": "лет студии"
+                "default": "years studio"
               },
               "suffix": {
                 "label": "suffix",
@@ -19471,7 +19471,7 @@
             "docs": "Extracted from the map-004 block as is: one file, no dependencies, its own palette in the --vibeui-card-136-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Listing link card next to a map: thumbnail, name with a note, price and count; active through data-active.",
-              "usage": "<Card136 href=\"…\" image=\"…\" name=\"Петроградская\" />",
+              "usage": "<Card136 href=\"…\" image=\"…\" name=\"Petrogradskaya\" />",
               "preserve": [
                 "the local --vibeui-card-136-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -19497,22 +19497,22 @@
               },
               "name": {
                 "label": "name",
-                "default": "Петроградская"
+                "default": "Petrogradskaya"
               },
               "accent": {
                 "label": "Accent"
               },
               "note": {
                 "label": "note",
-                "default": "Карточка объекта на карте"
+                "default": "Object card on the map"
               },
               "price": {
                 "label": "price",
-                "default": "285 тыс ₽"
+                "default": "285 thousand ₽"
               },
               "count": {
                 "label": "count",
-                "default": "Карточка объекта на карте"
+                "default": "Object card on the map"
               }
             }
           }
@@ -19611,7 +19611,7 @@
             "docs": "Extracted from the map-007 block as is: one file, no dependencies, its own palette in the --vibeui-card-138-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "“How to get there” row: transport icon, title and travel time.",
-              "usage": "<Card138 mode=\"На машине\" icon=\"car\" text=\"45 минут от МКАД по Дмитровскому шоссе. \" />",
+              "usage": "<Card138 mode=\"By car\" icon=\"car\" text=\"45 minutes from the Moscow Ring Road along Dmitrovskoe Highway. \" />",
               "preserve": [
                 "the local --vibeui-card-138-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -19629,7 +19629,7 @@
             "controls": {
               "mode": {
                 "label": "mode",
-                "default": "На машине"
+                "default": "By car"
               },
               "icon": {
                 "label": "icon",
@@ -19637,7 +19637,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "45 минут от МКАД по Дмитровскому шоссе. Парковка у ворот усадьбы, бесплатно."
+                "default": "45 minutes from the Moscow Ring Road along Dmitrovskoe Highway. Parking at the estate gate, free of charge."
               },
               "accent": {
                 "label": "Accent"
@@ -19738,7 +19738,7 @@
             "docs": "Extracted from the map-009 block as is: one file, no dependencies, its own palette in the --vibeui-card-140-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "“How to get there” row: icon, title and caption.",
-              "usage": "<Card140 title=\"На машине\" icon=\"car\" text=\"Час от центра без пробок. Точка в навига\" />",
+              "usage": "<Card140 title=\"By car\" icon=\"car\" text=\"An hour from the center without traffic jams. Navigation point\" />",
               "preserve": [
                 "the local --vibeui-card-140-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -19756,7 +19756,7 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "На машине"
+                "default": "By car"
               },
               "icon": {
                 "label": "icon",
@@ -19764,7 +19764,7 @@
               },
               "text": {
                 "label": "text",
-                "default": "Час от центра без пробок. Точка в навигаторе — по кнопке выше. Въезд через ворота, охрана знает про свадьбу."
+                "default": "An hour from the center without traffic jams. The dot in the navigator is the button above. Entry through the gate, security knows about the wedding."
               },
               "accent": {
                 "label": "Accent"
@@ -19884,11 +19884,11 @@
               },
               "address": {
                 "label": "address",
-                "default": "Санкт-Петербург, Большая Пушкарская, 20, вход со двора"
+                "default": "St. Petersburg, Bolshaya Pushkarskaya, 20, entrance from the yard"
               },
               "routeLabel": {
                 "label": "routeLabel",
-                "default": "Построить маршрут"
+                "default": "Build route"
               },
               "phone": {
                 "label": "phone",
@@ -20151,11 +20151,11 @@
               },
               "selfTag": {
                 "label": "selfTag",
-                "default": "это мы"
+                "default": "this is us"
               },
               "unit": {
                 "label": "unit",
-                "default": "КБ"
+                "default": "KB"
               }
             }
           }
@@ -20243,7 +20243,7 @@
             "docs": "Extracted from the comparison-010 block as is: one file, no dependencies, its own palette in the --vibeui-card-145-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Stat: a number with a suffix counting up on reveal, and a label.",
-              "usage": "<Card145 label=\"объектов сдано\" suffix=\"…\" />",
+              "usage": "<Card145 label=\"objects delivered\" suffix=\"…\" />",
               "preserve": [
                 "the local --vibeui-card-145-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -20261,7 +20261,7 @@
             "controls": {
               "label": {
                 "label": "label",
-                "default": "объектов сдано"
+                "default": "objects delivered"
               },
               "suffix": {
                 "label": "suffix",
@@ -20387,7 +20387,7 @@
             "docs": "Extracted from the comparison-016 block as is: one file, no dependencies, its own palette in the --vibeui-card-146-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Plan comparison row: label with a “new” badge, a “now” cell with a bar and an “after” cell.",
-              "usage": "<Card146 label=\"Яркость\" current=\"1 200 лм\" previous=\"800 лм\" />",
+              "usage": "<Card146 label=\"Brightness\" current=\"1 200 lm\" previous=\"800 lm\" />",
               "preserve": [
                 "the local --vibeui-card-146-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -20405,30 +20405,30 @@
             "controls": {
               "label": {
                 "label": "label",
-                "default": "Яркость"
+                "default": "Brightness"
               },
               "current": {
                 "label": "current",
-                "default": "1 200 лм"
+                "default": "1 200 lm"
               },
               "previous": {
                 "label": "previous",
-                "default": "800 лм"
+                "default": "800 lm"
               },
               "accent": {
                 "label": "Accent"
               },
               "newLabel": {
                 "label": "newLabel",
-                "default": "новое"
+                "default": "new"
               },
               "currentName": {
                 "label": "currentName",
-                "default": "Луч 2"
+                "default": "Beam 2"
               },
               "previousName": {
                 "label": "previousName",
-                "default": "Луч 1"
+                "default": "Beam 1"
               }
             }
           }
@@ -20548,7 +20548,7 @@
               },
               "kicker": {
                 "label": "kicker",
-                "default": "Следующий проект"
+                "default": "Next project"
               },
               "src": {
                 "label": "src",
@@ -20639,7 +20639,7 @@
             "docs": "Extracted from the faq-012 block as is: one file, no dependencies, its own palette in the --vibeui-card-148-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "FAQ card with schema.org markup: question and a full answer.",
-              "usage": "<Card148 question=\"Что такое VibeUI?\" answer=\"Каталог готовых секций для сайтов, рассч\" />",
+              "usage": "<Card148 question=\"What is VibeUI?\" answer=\"Catalog of ready-made sections for websites, calculation\" />",
               "preserve": [
                 "the local --vibeui-card-148-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -20657,11 +20657,11 @@
             "controls": {
               "question": {
                 "label": "question",
-                "default": "Что такое VibeUI?"
+                "default": "What is VibeUI?"
               },
               "answer": {
                 "label": "answer",
-                "default": "Каталог готовых секций для сайтов, рассчитанный на работу с AI-агентом: выбираете дизайн, копируете инструкцию — агент ставит настоящий компонент в проект."
+                "default": "Catalog of ready-made sections for websites, designed to work with AI-agent: choose a design, copy the instructions - the agent puts the real component into the project."
               },
               "accent": {
                 "label": "Accent"
@@ -20762,7 +20762,7 @@
             "docs": "Extracted from the faq-015 block as is: one file, no dependencies, its own palette in the --vibeui-card-149-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A details/summary element: question with a marker and the answer, opens natively.",
-              "usage": "<Card149 question=\"Где на карточке блока кнопка Copy for AI\" answer=\"В правом верхнем углу карточки и на стра\" imageLabel=\"Скриншот: карточка блока с кнопкой Copy \" />",
+              "usage": "<Card149 question=\"Where is the button on the block card Copy for AI\" answer=\"In the upper right corner of the card and on the page\" imageLabel=\"Screenshot: block card with a button Copy \" />",
               "preserve": [
                 "the local --vibeui-card-149-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -20780,15 +20780,15 @@
             "controls": {
               "question": {
                 "label": "question",
-                "default": "Где на карточке блока кнопка Copy for AI?"
+                "default": "Where is the button on the block card Copy for AI?"
               },
               "answer": {
                 "label": "answer",
-                "default": "В правом верхнем углу карточки и на странице блока рядом с превью. Нажатие кладёт в буфер готовую инструкцию для агента."
+                "default": "In the upper right corner of the card and on the block page next to the preview. Clicking places a ready-made instruction for the agent into the buffer."
               },
               "imageLabel": {
                 "label": "imageLabel",
-                "default": "Скриншот: карточка блока с кнопкой Copy for AI"
+                "default": "Screenshot: block card with a button Copy for AI"
               },
               "accent": {
                 "label": "Accent"
@@ -20889,7 +20889,7 @@
             "docs": "Extracted from the ai-001 block as is: one file, no dependencies, its own palette in the --vibeui-card-150-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Pipeline step: link to the previous one, a numbered node, a card with content by step kind; lit through data-lit/data-run.",
-              "usage": "<Card150 title=\"Слушает встречу\" meta=\"во время созвона\" text=\"Подключается к Zoom, Meet или Телемосту \" />",
+              "usage": "<Card150 title=\"Listening to a meeting\" meta=\"during a call\" text=\"Connects to Zoom, Meet or Teleconference \" />",
               "preserve": [
                 "the local --vibeui-card-150-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -20907,15 +20907,15 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Слушает встречу"
+                "default": "Listening to a meeting"
               },
               "meta": {
                 "label": "meta",
-                "default": "во время созвона"
+                "default": "during a call"
               },
               "text": {
                 "label": "text",
-                "default": "Подключается к Zoom, Meet или Телемосту как участник. Или берёт запись."
+                "default": "Connects to Zoom, Meet or Teleconference as a participant. Or takes a recording."
               },
               "accent": {
                 "label": "Accent"
@@ -21027,11 +21027,11 @@
               },
               "heading": {
                 "label": "heading",
-                "default": "Операции"
+                "default": "Operations"
               },
               "countText": {
                 "label": "countText",
-                "default": "{count} записей"
+                "default": "{count} records"
               }
             }
           }
@@ -21132,7 +21132,7 @@
               },
               "heading": {
                 "label": "heading",
-                "default": "Отгрузки"
+                "default": "Shipments"
               }
             }
           }
@@ -21249,15 +21249,15 @@
               },
               "heading": {
                 "label": "heading",
-                "default": "Лента событий кассы"
+                "default": "Cashier event feed"
               },
               "countText": {
                 "label": "countText",
-                "default": "Загружено {shown} из {total}"
+                "default": "Loaded {shown} from {total}"
               },
               "progressLabel": {
                 "label": "progressLabel",
-                "default": "Доля загруженных строк"
+                "default": "Proportion of rows loaded"
               }
             }
           }
@@ -21374,11 +21374,11 @@
               },
               "heading": {
                 "label": "heading",
-                "default": "Маршрут обработки заявки"
+                "default": "Application processing route"
               },
               "stepsTemplate": {
                 "label": "stepsTemplate",
-                "default": "Шагов в маршруте: {count}"
+                "default": "Steps in the route: {count}"
               },
               "message": {
                 "label": "message",

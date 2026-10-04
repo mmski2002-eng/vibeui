@@ -6,7 +6,7 @@ import {
   DeleteInviteButton,
 } from "@/components/admin/partner-actions"
 import { AdminHeading } from "@/components/admin/parts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { CopyLink } from "@/components/account/copy-link"
 import { EmptyState } from "@/components/account/ui/empty-state"
 import { Panel } from "@/components/account/ui/panel"
@@ -17,17 +17,19 @@ import { listInvites } from "@/lib/partners"
 import { SITE_URL } from "@/lib/seo"
 
 /** Список приглашений блогеров: кто зарегистрировался, кого привёл. */
-export async function AdminPartners() {
+export async function AdminPartners({
+  locale = "ru",
+}: { locale?: "ru" | "en" } = {}) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.partners
+  const t = getAdminTexts(locale).partners
   const invites = await listInvites()
 
   return (
     <>
       <AdminHeading title={t.title} lead={t.lead} />
 
-      <CreateInviteForm />
+      <CreateInviteForm locale={locale} />
 
       {invites.length === 0 ? (
         <div className="mt-6">
@@ -52,31 +54,41 @@ export async function AdminPartners() {
                 {invite.promoCode ? (
                   <span
                     className={`font-mono text-xs ${invite.promoActive ? "text-shell-fg" : "text-shell-muted line-through"}`}
-                    title={invite.promoActive ? t.promoCode : `${t.promoCode}: ${t.promoOff}`}
+                    title={
+                      invite.promoActive
+                        ? t.promoCode
+                        : `${t.promoCode}: ${t.promoOff}`
+                    }
                   >
                     {invite.promoCode}
                   </span>
                 ) : null}
                 {invite.claimedBy ? (
-                  <StatusPill tone="ok" dot>{t.claimed}</StatusPill>
+                  <StatusPill tone="ok" dot>
+                    {t.claimed}
+                  </StatusPill>
                 ) : (
                   <StatusPill tone="muted">{t.notClaimed}</StatusPill>
                 )}
                 <span className="text-shell-muted shrink-0 text-xs tabular-nums">
-                  {t.referrals}: <span className="text-shell-fg">{invite.referrals}</span> · {t.paid}:{" "}
+                  {t.referrals}:{" "}
+                  <span className="text-shell-fg">{invite.referrals}</span> ·{" "}
+                  {t.paid}:{" "}
                   <span className="text-shell-fg">{invite.referralsPaid}</span>
                 </span>
                 <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
                   {formatDate(invite.createdAt)}
                 </span>
                 {invite.claimedBy ? null : (
-                  <DeleteInviteButton id={invite.id} />
+                  <DeleteInviteButton id={invite.id} locale={locale} />
                 )}
               </div>
               {invite.claimedBy ? (
                 <p className="text-shell-muted truncate text-xs">
                   {invite.partnerEmail}
-                  {invite.claimedAt ? ` · ${formatDate(invite.claimedAt)}` : null}
+                  {invite.claimedAt
+                    ? ` · ${formatDate(invite.claimedAt)}`
+                    : null}
                 </p>
               ) : (
                 <CopyLink url={`${SITE_URL}/?ref=${invite.code}`} />

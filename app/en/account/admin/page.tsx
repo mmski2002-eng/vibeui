@@ -2,7 +2,7 @@ import { AdminSummary } from "@/components/pages/admin/summary"
 import type { Period } from "@/lib/admin-stats"
 
 export const metadata = {
-  title: "Сводка",
+  title: "Overview",
   robots: { index: false, follow: false },
 }
 
@@ -17,5 +17,5 @@ export default async function Page({
 }) {
   const { period } = await searchParams
 
-  return <AdminSummary period={parsePeriod(period)} />
+  return <AdminSummary period={parsePeriod(period)} locale="en" />
 }

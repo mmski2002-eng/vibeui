@@ -6863,7 +6863,7 @@
             "docs": "Extracted from the stats-012 block as is: one file, no dependencies, its own palette in the --vibeui-chart-031-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "Arc gauge: fill by fraction, value with a unit in the centre, label and a delta to the previous period.",
-              "usage": "<Chart031 label=\"Яркость\" unit=\"лм\" previousLabel=\"Луч 1\" />",
+              "usage": "<Chart031 label=\"Brightness\" unit=\"lm\" previousLabel=\"Beam 1\" />",
               "preserve": [
                 "the local --vibeui-chart-031-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -6881,22 +6881,22 @@
             "controls": {
               "label": {
                 "label": "label",
-                "default": "Яркость"
+                "default": "Brightness"
               },
               "unit": {
                 "label": "unit",
-                "default": "лм"
+                "default": "lm"
               },
               "previousLabel": {
                 "label": "previousLabel",
-                "default": "Луч 1"
+                "default": "Beam 1"
               },
               "accent": {
                 "label": "Accent"
               },
               "wasLabel": {
                 "label": "wasLabel",
-                "default": "было"
+                "default": "was"
               }
             }
           }

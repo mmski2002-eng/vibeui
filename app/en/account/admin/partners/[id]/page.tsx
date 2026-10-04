@@ -1,7 +1,7 @@
 import { AdminPartner } from "@/components/pages/admin/partner"
 
 export const metadata = {
-  title: "Партнёр",
+  title: "Partner",
   robots: { index: false, follow: false },
 }
 
@@ -14,5 +14,5 @@ export default async function Page({
 }) {
   const [{ id }, { before }] = await Promise.all([params, searchParams])
 
-  return <AdminPartner id={id} before={before} />
+  return <AdminPartner id={id} before={before} locale="en" />
 }

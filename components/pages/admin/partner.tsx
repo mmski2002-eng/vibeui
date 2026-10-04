@@ -5,7 +5,7 @@ import { PartnerPromoForm } from "@/components/admin/partner-actions"
 import { AdminHeading, Metric, Pill, Section } from "@/components/admin/parts"
 import { AreaChart, Funnel } from "@/components/account/ui/charts"
 import { Panel, PanelHeader } from "@/components/account/ui/panel"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { CopyLink } from "@/components/account/copy-link"
 import { requireAdmin } from "@/lib/admin"
 import {
@@ -30,13 +30,15 @@ const PAGE = 50
 export async function AdminPartner({
   id,
   before,
+  locale = "ru",
 }: {
   id: string
   before?: string
+  locale?: "ru" | "en"
 }) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.partners
+  const t = getAdminTexts(locale).partners
   const row = await getInvite(id)
 
   if (!row) {
@@ -63,7 +65,13 @@ export async function AdminPartner({
       partnerId && code ? partnerStats(partnerId, code, 90) : null,
       partnerId
         ? promoStats(partnerId)
-        : { payments: 0, revenue: 0, discount: 0, commission: 0, commissionPercent: 0 },
+        : {
+            payments: 0,
+            revenue: 0,
+            discount: 0,
+            commission: 0,
+            commissionPercent: 0,
+          },
       defaultPromoPercent(),
       partnerId ? payoutTotals(partnerId) : { paid: 0, count: 0 },
       partnerId ? listPayouts(partnerId) : [],
@@ -154,6 +162,7 @@ export async function AdminPartner({
           {t.promoNote}
         </p>
         <PartnerPromoForm
+          locale={locale}
           id={invite.id}
           code={invite.promoCode}
           percent={invite.promoPercent}
@@ -171,19 +180,25 @@ export async function AdminPartner({
             {t.payoutPaid}:{" "}
             <span className="text-shell-fg">{t.rub(paidOut.paid)}</span> ·{" "}
             {t.payoutPending}:{" "}
-            <span className="text-shell-accent-text">{t.rub(pendingPayout)}</span>
+            <span className="text-shell-accent-text">
+              {t.rub(pendingPayout)}
+            </span>
           </span>
         }
       >
         <p className="text-shell-muted mb-3 text-sm">
           {t.payoutInn}:{" "}
-          <span className="text-shell-fg">{invite.payoutInn ?? t.payoutNone}</span>{" "}
+          <span className="text-shell-fg">
+            {invite.payoutInn ?? t.payoutNone}
+          </span>{" "}
           · {t.payoutDetails}:{" "}
           <span className="text-shell-fg">
             {invite.payoutDetails ?? t.payoutNone}
           </span>
         </p>
-        {partnerId ? <RecordPayoutForm partnerId={partnerId} /> : null}
+        {partnerId ? (
+          <RecordPayoutForm partnerId={partnerId} locale={locale} />
+        ) : null}
         {payouts.length > 0 ? (
           <ul className="border-shell-border divide-shell-divider mt-4 divide-y rounded-xl border">
             {payouts.map((row) => (
@@ -226,7 +241,11 @@ export async function AdminPartner({
         ) : (
           <ul className="border-shell-border bg-shell-panel acc-shadow acc-reveal divide-shell-divider divide-y rounded-2xl border">
             {page.map((referral) => (
-              <ReferralItem key={referral.id} referral={referral} />
+              <ReferralItem
+                key={referral.id}
+                referral={referral}
+                locale={locale}
+              />
             ))}
           </ul>
         )}
@@ -244,10 +263,17 @@ export async function AdminPartner({
   )
 }
 
-function ReferralItem({ referral }: { referral: ReferralRow }) {
-  const t = ADMIN_TEXTS.partners
+function ReferralItem({
+  referral,
+  locale,
+}: {
+  referral: ReferralRow
+  locale: "ru" | "en"
+}) {
+  const t = getAdminTexts(locale).partners
   const state = resolveSubscription(referral.subscription ?? undefined)
-  const date = (value: Date) => value.toLocaleDateString("ru-RU")
+  const date = (value: Date) =>
+    value.toLocaleDateString(locale === "en" ? "en-US" : "ru-RU")
 
   const status = !referral.firstPaidAt
     ? t.notPaid

@@ -1093,7 +1093,7 @@
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "The auto counter writes the Russian «N человек» — for languages or numbers needing another form, set countLabel manually.",
+                "The auto counter writes the Russian «N person\" — for languages or numbers needing another form, set countLabel manually.",
                 "since is a free-form string (\"since 2021\", \"3 years\"): the component neither parses nor computes it.",
                 "The row key is the name, so the names in the list must be unique."
               ],

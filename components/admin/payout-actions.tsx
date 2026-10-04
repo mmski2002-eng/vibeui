@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Wallet } from "lucide-react"
 
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { Button } from "@/components/account/ui/button"
 import { useToast } from "@/components/account/ui/toast"
 import { recordPartnerPayout } from "@/lib/admin-actions"
@@ -13,8 +13,14 @@ const INPUT =
   "border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 min-w-0 rounded-lg border px-3 text-sm outline-none transition-colors focus-visible:ring-2"
 
 /** Запись факта выплаты блогеру: сумма и заметка. */
-export function RecordPayoutForm({ partnerId }: { partnerId: string }) {
-  const t = ADMIN_TEXTS.partners
+export function RecordPayoutForm({
+  partnerId,
+  locale = "ru",
+}: {
+  partnerId: string
+  locale?: "ru" | "en"
+}) {
+  const t = getAdminTexts(locale).partners
   const router = useRouter()
   const toast = useToast()
   const [values, setValues] = useState({ amount: "", note: "" })
@@ -35,7 +41,9 @@ export function RecordPayoutForm({ partnerId }: { partnerId: string }) {
         } catch (error) {
           toast({
             title:
-              error instanceof Error && error.message ? error.message : t.failed,
+              error instanceof Error && error.message
+                ? error.message
+                : t.failed,
             tone: "danger",
           })
         } finally {

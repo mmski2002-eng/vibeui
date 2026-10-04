@@ -8034,7 +8034,7 @@
                 }
               }
             },
-            "docs": "Server component, no hooks. The attachment count is inflected by the standard rules of Russian: the pluralForm function picks the form (1 файл, 3 файла, 12 файлов), and the text itself comes from the countText templates with {count} substituted rather than being printed as a static word — otherwise a tile with any count other than one would sound ungrammatical on \"1\". The metadata line is assembled from three parts — the counter, a decorative dot separator and the date: on a narrow container the date and the dot are the first to be hidden through @container, while the attachment count always remains, because for skimming a list it matters more than the exact date. itemCount is clamped from below at zero inside the component. The icon tile's colour follows the category-wide \"background and glyph from one hue\" formula, switched by tone. The palette has been moved to light-dark(): in the dark branch the border is lighter than the background rather than darker. The tile has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour."
+            "docs": "Server component, no hooks. The attachment count is inflected by the standard rules of Russian: the pluralForm function picks the form (1 file, 3 file, 12 files), and the text itself comes from the countText templates with {count} substituted rather than being printed as a static word — otherwise a tile with any count other than one would sound ungrammatical on \"1\". The metadata line is assembled from three parts — the counter, a decorative dot separator and the date: on a narrow container the date and the dot are the first to be hidden through @container, while the attachment count always remains, because for skimming a list it matters more than the exact date. itemCount is clamped from below at zero inside the component. The icon tile's colour follows the category-wide \"background and glyph from one hue\" formula, switched by tone. The palette has been moved to light-dark(): in the dark branch the border is lighter than the background rather than darker. The tile has no surface by default — it is set by the background prop, and then the theme branch is computed from the lightness of the given colour."
           }
         },
         "cardControls": [
@@ -8917,7 +8917,7 @@
                 "rounded square tiles instead of circles: a service badge reads as an app icon, not an avatar",
                 "the reversed flex row instead of z-index on every tile",
                 "the sentence under the stack instead of a bare \"+N\" counter: visible names first, then \"and N more services\"",
-                "the Russian plural agreement for \"service\": 1 сервис, 2 сервиса, 5 сервисов",
+                "the Russian plural agreement for \"service\": 1 service, 2 service, 5 services",
                 "the stack hidden from screen readers with aria-hidden: the caption already names every service as text",
                 "the transparent surface by default — the component sits on the page background instead of laying a panel under itself",
                 "light-dark() in the palette: the component has to follow the surrounding color-scheme rather than ship a dark theme of its own"

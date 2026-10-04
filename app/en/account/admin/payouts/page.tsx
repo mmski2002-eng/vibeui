@@ -1,10 +1,10 @@
 import { AdminPayouts } from "@/components/pages/admin/payouts"
 
 export const metadata = {
-  title: "Выплаты",
+  title: "Payouts",
   robots: { index: false, follow: false },
 }
 
 export default function Page() {
-  return <AdminPayouts />
+  return <AdminPayouts locale="en" />
 }

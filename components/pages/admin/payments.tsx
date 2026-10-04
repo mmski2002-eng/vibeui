@@ -4,7 +4,7 @@ import { Download, Search } from "lucide-react"
 
 import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
 import { PriceSettings } from "@/components/admin/price-settings"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { ADMIN_TEXTS, getAdminTexts } from "@/components/admin/texts"
 import { Button } from "@/components/account/ui/button"
 import { CellStack, DataTable } from "@/components/account/ui/data-table"
 import { Pager } from "@/components/account/ui/pager"
@@ -53,14 +53,16 @@ export async function AdminPayments({
   query,
   status,
   page = 1,
+  locale = "ru",
 }: {
   query?: string
   status?: string
   page?: number
+  locale?: "ru" | "en"
 }) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.payments
+  const t = getAdminTexts(locale).payments
   const needle = query?.trim()
 
   const where = and(
@@ -146,6 +148,7 @@ export async function AdminPayments({
       />
 
       <PriceSettings
+        locale={locale}
         monthly={rub(plans.monthly.price)}
         yearly={rub(plans.yearly.price)}
         promoPercent={String(promoPercent)}
@@ -207,9 +210,25 @@ export async function AdminPayments({
           { key: "date", label: t.columnDate, className: "w-28" },
           { key: "user", label: t.columnUser },
           { key: "status", label: t.columnStatus, className: "w-32" },
-          { key: "promo", label: t.columnPromo, className: "w-36", hideBelow: "md" },
-          { key: "amount", label: t.columnAmount, align: "right", className: "w-28" },
-          { key: "open", label: "", align: "right", className: "w-24", hideBelow: "sm" },
+          {
+            key: "promo",
+            label: t.columnPromo,
+            className: "w-36",
+            hideBelow: "md",
+          },
+          {
+            key: "amount",
+            label: t.columnAmount,
+            align: "right",
+            className: "w-28",
+          },
+          {
+            key: "open",
+            label: "",
+            align: "right",
+            className: "w-24",
+            hideBelow: "sm",
+          },
         ]}
         rows={rows.map((row) => {
           const status = statusOf(row.status)
@@ -217,7 +236,10 @@ export async function AdminPayments({
           return {
             id: row.id,
             cells: [
-              <span key="date" className="text-shell-muted text-xs tabular-nums">
+              <span
+                key="date"
+                className="text-shell-muted text-xs tabular-nums"
+              >
                 {formatDate(row.paidAt ?? row.createdAt)}
               </span>,
               <CellStack
@@ -248,7 +270,9 @@ export async function AdminPayments({
                   mono
                 />
               ) : (
-                <span key="promo" className="text-shell-muted text-xs">—</span>
+                <span key="promo" className="text-shell-muted text-xs">
+                  —
+                </span>
               ),
               <span key="amount" className="font-medium tabular-nums">
                 {formatNumber(Number(row.amount), "rub")}
@@ -265,7 +289,13 @@ export async function AdminPayments({
         })}
       />
 
-      <Pager page={page} hasNext={hasNext} total={total} perPage={PAGE} href={pageHref} />
+      <Pager
+        page={page}
+        hasNext={hasNext}
+        total={total}
+        perPage={PAGE}
+        href={pageHref}
+      />
     </>
   )
 }

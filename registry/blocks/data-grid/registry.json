@@ -1281,10 +1281,10 @@
                   "status": "Filter by status"
                 },
                 "statusText": {
-                  "Новый": "New",
-                  "В работе": "In progress",
-                  "Оплачен": "Paid",
-                  "Отменён": "Cancelled"
+                  "New": "New",
+                  "In progress": "In progress",
+                  "Paid": "Paid",
+                  "Cancelled": "Cancelled"
                 },
                 "anyStatusText": "Any status",
                 "noFilterText": "no filter",
@@ -2536,9 +2536,9 @@
                   }
                 ],
                 "statusText": {
-                  "Новая": "New",
-                  "В работе": "In progress",
-                  "Архив": "Archive"
+                  "New": "New",
+                  "In progress": "In progress",
+                  "Archive": "Archive"
                 }
               }
             }
@@ -3991,7 +3991,7 @@
               ],
               "notes": [
                 "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html — otherwise light-dark() always returns the light branch.",
-                "Matching is a case-insensitive substring test with no normalisation: «ё» and «е» stay different letters.",
+                "Matching is a case-insensitive substring test with no normalisation: accented and unaccented letters stay distinct.",
                 "The string is split on every render — memoise it once you reach thousands of rows.",
                 "Rows without a match are dimmed rather than hidden: the filter mode is a deliberate checkbox.",
                 "Do not lift the CSS variables into globals.css: the component has to stay a single file."

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
 
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import {
   markRefunded,
   replayPayment,
@@ -20,11 +20,13 @@ import {
 export function PaymentActions({
   paymentId,
   receiptUrl,
+  locale = "ru",
 }: {
   paymentId: string
   receiptUrl: string | null
+  locale?: "ru" | "en"
 }) {
-  const t = ADMIN_TEXTS.payments
+  const t = getAdminTexts(locale).payments
   const router = useRouter()
   const [pending, setPending] = useState<string>()
   const [message, setMessage] = useState<string>()

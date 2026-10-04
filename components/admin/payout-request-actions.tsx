@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Check, ThumbsUp, X } from "lucide-react"
 
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { Button } from "@/components/account/ui/button"
 import { useToast } from "@/components/account/ui/toast"
 import { resolvePayoutRequest } from "@/lib/admin-actions"
@@ -18,11 +18,13 @@ type Action = "approve" | "pay" | "reject"
 export function PayoutRequestActions({
   id,
   status,
+  locale = "ru",
 }: {
   id: string
   status: string
+  locale?: "ru" | "en"
 }) {
-  const t = ADMIN_TEXTS.payouts
+  const t = getAdminTexts(locale).payouts
   const router = useRouter()
   const toast = useToast()
   const [receipt, setReceipt] = useState("")

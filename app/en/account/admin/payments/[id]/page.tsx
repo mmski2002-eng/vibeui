@@ -1,7 +1,7 @@
 import { AdminPayment } from "@/components/pages/admin/payment"
 
 export const metadata = {
-  title: "Платёж",
+  title: "Payment",
   robots: { index: false, follow: false },
 }
 
@@ -12,5 +12,5 @@ export default async function Page({
 }) {
   const { id } = await params
 
-  return <AdminPayment id={id} />
+  return <AdminPayment id={id} locale="en" />
 }

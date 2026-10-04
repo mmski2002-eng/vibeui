@@ -4,7 +4,7 @@ import { asc, eq } from "drizzle-orm"
 
 import { AdminHeading, Pill } from "@/components/admin/parts"
 import { ReportPanel } from "@/components/admin/report-panel"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { ADMIN_TEXTS, getAdminTexts } from "@/components/admin/texts"
 import { CatalogThumbnail } from "@/components/catalog/catalog-thumbnail"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
@@ -16,16 +16,18 @@ type Status = keyof typeof ADMIN_TEXTS.reports.status
 
 /** Карточка обращения: переписка, ответ, статус и — для жалоб на компонент —
  *  живое превью того самого компонента. */
-export async function AdminReport({ id }: { id: string }) {
+export async function AdminReport({
+  id,
+  locale = "ru",
+}: {
+  id: string
+  locale?: "ru" | "en"
+}) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.reports
+  const t = getAdminTexts(locale).reports
 
-  const [row] = await db
-    .select()
-    .from(report)
-    .where(eq(report.id, id))
-    .limit(1)
+  const [row] = await db.select().from(report).where(eq(report.id, id)).limit(1)
 
   if (!row) {
     notFound()
@@ -58,7 +60,17 @@ export async function AdminReport({ id }: { id: string }) {
         action={
           <div className="flex items-center gap-2">
             <Pill>{t.kind[row.kind as Kind] ?? row.kind}</Pill>
-            <Pill tone={row.status === "new" ? "warn" : row.status === "answered" ? "ok" : row.status === "in_progress" ? "accent" : "muted"}>
+            <Pill
+              tone={
+                row.status === "new"
+                  ? "warn"
+                  : row.status === "answered"
+                    ? "ok"
+                    : row.status === "in_progress"
+                      ? "accent"
+                      : "muted"
+              }
+            >
               {t.status[row.status as Status] ?? row.status}
             </Pill>
           </div>
@@ -95,10 +107,11 @@ export async function AdminReport({ id }: { id: string }) {
                 <p className="text-shell-fg text-sm leading-relaxed whitespace-pre-wrap">
                   {message.body}
                 </p>
-                {message.authorType === "admin" &&
-                !message.deliveredByEmail ? (
+                {message.authorType === "admin" && !message.deliveredByEmail ? (
                   <p className="text-shell-accent-text mt-2 text-xs">
-                    Письмо не ушло — ответ сохранён только здесь.
+                    {locale === "en"
+                      ? "The email was not sent — the reply is saved here only."
+                      : "Письмо не ушло — ответ сохранён только здесь."}
                   </p>
                 ) : null}
               </li>
@@ -106,6 +119,7 @@ export async function AdminReport({ id }: { id: string }) {
           </ul>
 
           <ReportPanel
+            locale={locale}
             id={row.id}
             status={row.status}
             assignee={row.assigneeEmail}
@@ -121,7 +135,7 @@ export async function AdminReport({ id }: { id: string }) {
               {/* Половина жалоб на компонент разбирается взглядом на превью,
                   поэтому оно здесь же, а не по ссылке. */}
               <div className="bg-preview-surface flex min-h-40 items-center justify-center">
-                <CatalogThumbnail slug={row.itemName} locale="ru" />
+                <CatalogThumbnail slug={row.itemName} locale={locale} />
               </div>
               <div className="px-4 py-3">
                 <Link

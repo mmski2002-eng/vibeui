@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
 
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import {
   addReportNote,
   assignReport,
@@ -23,12 +23,14 @@ export function ReportPanel({
   id,
   status,
   assignee,
+  locale = "ru",
 }: {
   id: string
   status: string
   assignee: string | null
+  locale?: "ru" | "en"
 }) {
-  const t = ADMIN_TEXTS.reports
+  const t = getAdminTexts(locale).reports
   const router = useRouter()
   const [reply, setReply] = useState("")
   const [note, setNote] = useState("")
@@ -79,7 +81,9 @@ export function ReportPanel({
           </label>
 
           {assignee ? (
-            <span className="text-shell-muted text-sm">{t.taken(assignee)}</span>
+            <span className="text-shell-muted text-sm">
+              {t.taken(assignee)}
+            </span>
           ) : (
             <button
               type="button"
@@ -114,7 +118,7 @@ export function ReportPanel({
               setReply("")
             })
           }
-          className="acc-press bg-shell-accent text-shell-accent-fg mt-3 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold hover:bg-shell-accent-deep disabled:opacity-60"
+          className="acc-press bg-shell-accent text-shell-accent-fg hover:bg-shell-accent-deep mt-3 inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-semibold disabled:opacity-60"
         >
           {pending === "reply" ? (
             <Loader2 className="size-4 animate-spin" aria-hidden="true" />

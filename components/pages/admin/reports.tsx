@@ -4,7 +4,7 @@ import { AdminHeading, INPUT_CLASS } from "@/components/admin/parts"
 import { Button, ButtonLink } from "@/components/account/ui/button"
 import { CellStack, DataTable } from "@/components/account/ui/data-table"
 import { StatusPill, type PillTone } from "@/components/account/ui/status-pill"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { ADMIN_TEXTS, getAdminTexts } from "@/components/admin/texts"
 import { requireAdmin } from "@/lib/admin"
 import { db } from "@/lib/db"
 import { report } from "@/lib/db/schema"
@@ -36,15 +36,18 @@ export async function AdminReports({
   mine,
   before,
   adminEmail,
+  locale = "ru",
 }: {
   kind?: string
   status?: string
   mine?: boolean
   before?: string
   adminEmail?: string
+  locale?: "ru" | "en"
 }) {
   const admin = await requireAdmin()
-  const t = ADMIN_TEXTS.reports
+  const adminTexts = getAdminTexts(locale)
+  const t = adminTexts.reports
   const cursor = before ? new Date(before) : null
 
   const filters = [
@@ -81,16 +84,24 @@ export async function AdminReports({
         action=""
         style={{ ["--i" as string]: 1 }}
       >
-        <select name="kind" defaultValue={kind ?? "all"} className={INPUT_CLASS}>
-          <option value="all">{ADMIN_TEXTS.payments.all}</option>
+        <select
+          name="kind"
+          defaultValue={kind ?? "all"}
+          className={INPUT_CLASS}
+        >
+          <option value="all">{adminTexts.payments.all}</option>
           {Object.entries(t.kind).map(([key, label]) => (
             <option key={key} value={key}>
               {label}
             </option>
           ))}
         </select>
-        <select name="status" defaultValue={status ?? "all"} className={INPUT_CLASS}>
-          <option value="all">{ADMIN_TEXTS.payments.all}</option>
+        <select
+          name="status"
+          defaultValue={status ?? "all"}
+          className={INPUT_CLASS}
+        >
+          <option value="all">{adminTexts.payments.all}</option>
           {Object.entries(t.status).map(([key, label]) => (
             <option key={key} value={key}>
               {label}
@@ -107,7 +118,7 @@ export async function AdminReports({
           />
           {t.mine}
         </label>
-        <Button type="submit">{ADMIN_TEXTS.users.find}</Button>
+        <Button type="submit">{adminTexts.users.find}</Button>
       </form>
 
       <DataTable
@@ -129,8 +140,14 @@ export async function AdminReports({
               primary={row.subject}
               secondary={`${row.email}${row.itemName ? ` · ${row.itemName}` : ""}`}
             />,
-            <StatusPill key="kind">{t.kind[row.kind as Kind] ?? row.kind}</StatusPill>,
-            <StatusPill key="status" tone={STATUS_TONE[row.status as Status] ?? "muted"} dot={row.status === "new"}>
+            <StatusPill key="kind">
+              {t.kind[row.kind as Kind] ?? row.kind}
+            </StatusPill>,
+            <StatusPill
+              key="status"
+              tone={STATUS_TONE[row.status as Status] ?? "muted"}
+              dot={row.status === "new"}
+            >
               {t.status[row.status as Status] ?? row.status}
             </StatusPill>,
             <span key="age" className="text-shell-muted text-xs tabular-nums">

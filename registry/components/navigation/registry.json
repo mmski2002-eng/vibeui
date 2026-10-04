@@ -7672,7 +7672,7 @@
             "docs": "Extracted from the footer-021 block as is: one file, no dependencies, its own palette in the --vibeui-footerlinks-002-* variables. The block owns the layout and data and passes them as props.",
             "ai": {
               "summary": "A boutique footer column: a serif title, links in a thin line.",
-              "usage": "<Footerlinks002 title=\"Курс\" />",
+              "usage": "<Footerlinks002 title=\"Course\" />",
               "preserve": [
                 "the local --vibeui-footerlinks-002-* palette — do not swap it for your theme tokens",
                 "the markup and order of the card parts: this is the drawing of the block it came from",
@@ -7690,7 +7690,7 @@
             "controls": {
               "title": {
                 "label": "title",
-                "default": "Курс"
+                "default": "Course"
               },
               "accent": {
                 "label": "Accent"

@@ -1,7 +1,7 @@
 import { AdminReports } from "@/components/pages/admin/reports"
 
 export const metadata = {
-  title: "Жалобы",
+  title: "Reports",
   robots: { index: false, follow: false },
 }
 
@@ -23,6 +23,7 @@ export default async function Page({
       status={status}
       mine={mine === "1"}
       before={before}
+      locale="en"
     />
   )
 }

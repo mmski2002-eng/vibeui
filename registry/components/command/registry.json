@@ -888,10 +888,10 @@
             "preview": {
               "props": {
                 "kindText": {
-                  "Файл": "File",
-                  "Символ": "Symbol",
-                  "Настройка": "Setting",
-                  "Документ": "Document"
+                  "File": "File",
+                  "Symbol": "Symbol",
+                  "Setting": "Setting",
+                  "Document": "Document"
                 },
                 "items": [
                   {

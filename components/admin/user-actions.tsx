@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { Button as UiButton } from "@/components/account/ui/button"
 import { Panel } from "@/components/account/ui/panel"
 import { useToast } from "@/components/account/ui/toast"
@@ -29,13 +29,16 @@ export function UserActions({
   blocked,
   verified,
   note,
+  locale = "ru",
 }: {
   userId: string
   blocked: boolean
   verified: boolean
   note: string
+  locale?: "ru" | "en"
 }) {
-  const t = ADMIN_TEXTS.users.actions
+  const adminTexts = getAdminTexts(locale)
+  const t = adminTexts.users.actions
   const router = useRouter()
   const [reason, setReason] = useState("")
   const [days, setDays] = useState(30)
@@ -69,7 +72,7 @@ export function UserActions({
         <input
           value={reason}
           onChange={(event) => setReason(event.target.value)}
-          className="border-shell-border bg-shell-elevated text-shell-fg focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 w-full rounded-lg border px-3 text-sm outline-none transition-colors focus-visible:ring-2"
+          className="border-shell-border bg-shell-elevated text-shell-fg focus-visible:border-shell-accent focus-visible:ring-shell-ring h-10 w-full rounded-lg border px-3 text-sm transition-colors outline-none focus-visible:ring-2"
         />
         <p className="text-shell-muted mt-1.5 text-xs">{t.reasonRequired}</p>
       </div>
@@ -176,7 +179,7 @@ export function UserActions({
 
       <div className="border-shell-border border-t pt-4">
         <p className="text-shell-fg text-sm font-medium">
-          {ADMIN_TEXTS.users.card.note}
+          {adminTexts.users.card.note}
         </p>
         <textarea
           value={text}
@@ -186,22 +189,15 @@ export function UserActions({
         />
         <Button
           busy={pending === "note"}
-          label={ADMIN_TEXTS.users.card.noteSave}
+          label={adminTexts.users.card.noteSave}
           onRun={() => run("note", () => saveUserNote({ userId, note: text }))}
         />
       </div>
-
     </Panel>
   )
 }
 
-function Row({
-  note,
-  children,
-}: {
-  note?: string
-  children: React.ReactNode
-}) {
+function Row({ note, children }: { note?: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       {note ? (

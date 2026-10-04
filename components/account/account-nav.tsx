@@ -24,7 +24,7 @@ import {
 } from "lucide-react"
 
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { localePath, stripLocale, type Locale } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
@@ -77,7 +77,13 @@ export function AccountNav({
         { href: "/account/payments", label: t.nav.payments, icon: Receipt },
         { href: "/account/token", label: t.nav.connect, icon: Plug },
         ...(partner
-          ? [{ href: "/account/referrals", label: t.nav.referrals, icon: UserPlus }]
+          ? [
+              {
+                href: "/account/referrals",
+                label: t.nav.referrals,
+                icon: UserPlus,
+              },
+            ]
           : []),
         { href: "/account/security", label: t.nav.profile, icon: Shield },
         { href: "/account/support", label: t.nav.support, icon: LifeBuoy },
@@ -86,42 +92,43 @@ export function AccountNav({
   ]
 
   if (admin) {
+    const adminTexts = getAdminTexts(locale)
     groups.push({
-      title: ADMIN_TEXTS.nav.group,
+      title: adminTexts.nav.group,
       items: [
         {
           href: "/account/admin",
-          label: ADMIN_TEXTS.nav.summary,
+          label: adminTexts.nav.summary,
           icon: BarChart3,
         },
         {
           href: "/account/admin/payments",
-          label: ADMIN_TEXTS.nav.payments,
+          label: adminTexts.nav.payments,
           icon: Wallet,
         },
         {
           href: "/account/admin/reports",
-          label: ADMIN_TEXTS.nav.reports,
+          label: adminTexts.nav.reports,
           icon: LifeBuoy,
         },
         {
           href: "/account/admin/users",
-          label: ADMIN_TEXTS.nav.users,
+          label: adminTexts.nav.users,
           icon: Users,
         },
         {
           href: "/account/admin/partners",
-          label: ADMIN_TEXTS.nav.partners,
+          label: adminTexts.nav.partners,
           icon: Handshake,
         },
         {
           href: "/account/admin/payouts",
-          label: ADMIN_TEXTS.nav.payouts,
+          label: adminTexts.nav.payouts,
           icon: Coins,
         },
         {
           href: "/account/admin/log",
-          label: ADMIN_TEXTS.nav.log,
+          label: adminTexts.nav.log,
           icon: ScrollText,
         },
       ],

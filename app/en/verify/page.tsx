@@ -15,8 +15,8 @@ export default function VerifyPage() {
   return (
     <CatalogShell locale={LOCALE}>
       <AuthCard locale={LOCALE}>
-        {/* Панель читает query — Next требует границу Suspense вокруг такого
-            клиента, иначе страница целиком уходит в динамический рендер. */}
+        {/* The panel reads the query, so Next requires a Suspense boundary to
+            keep the page statically rendered. */}
         <Suspense fallback={null}>
           <VerifyPanel locale={LOCALE} />
         </Suspense>

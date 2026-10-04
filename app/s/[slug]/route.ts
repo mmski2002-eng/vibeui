@@ -43,7 +43,7 @@ export async function GET(
       return new Response(
         locale === "ru"
           ? "Сценарий целиком доступен в Pro.\nОформить: https://vibeui.ru/pricing\n"
-          : "The full scenario is available in Pro.\nSubscribe: https://vibeui.ru/en/pricing\n",
+          : "The full scenario is available in Pro.\nSubscribe: https://vibeui.club/pricing\n",
         { status: 401 },
       )
     }
@@ -63,7 +63,12 @@ export async function GET(
     }),
   )
 
-  const brief = await buildScenarioBrief({ scenario, locale, siteUrl, commands })
+  const brief = await buildScenarioBrief({
+    scenario,
+    locale,
+    siteUrl,
+    commands,
+  })
 
   return new Response(`${brief}\n`, {
     headers: {

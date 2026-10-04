@@ -1,7 +1,7 @@
 import { AdminLog } from "@/components/pages/admin/log"
 
 export const metadata = {
-  title: "Журнал действий",
+  title: "Activity log",
   robots: { index: false, follow: false },
 }
 
@@ -12,5 +12,5 @@ export default async function Page({
 }) {
   const { before } = await searchParams
 
-  return <AdminLog before={before} />
+  return <AdminLog before={before} locale="en" />
 }

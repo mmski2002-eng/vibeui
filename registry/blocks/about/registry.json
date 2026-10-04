@@ -3441,7 +3441,7 @@
                 "The poster is a gradient: replace the frame background with a real video thumbnail.",
                 "Do not lift the CSS variables into globals.css: the block has to stay a single file."
               ],
-              "usage": "<Video001\n  title=\"Посмотрите за две минуты\"\n  poster=\"/video-poster.webp\"\n  posterTitle=\"Обзор каталога\"\n  durationLabel=\"2:14\"\n/>"
+              "usage": "<Video001\n  title=\"Look in two minutes\"\n  poster=\"/video-poster.webp\"\n  posterTitle=\"Catalog overview\"\n  durationLabel=\"2:14\"\n/>"
             },
             "controls": {
               "title": {

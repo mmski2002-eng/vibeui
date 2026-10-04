@@ -17,7 +17,7 @@ export default function ResetNewPageEn() {
   return (
     <CatalogShell locale={LOCALE}>
       <AuthCard locale={LOCALE} title={t.newPasswordTitle}>
-        {/* Токен приходит в query, а useSearchParams требует границы. */}
+        {/* The token comes from the query and useSearchParams needs a boundary. */}
         <Suspense fallback={null}>
           <ResetPasswordForm locale={LOCALE} />
         </Suspense>

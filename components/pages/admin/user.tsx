@@ -12,7 +12,7 @@ import {
 } from "lucide-react"
 
 import { AdminHeading, Card, Row } from "@/components/admin/parts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { ADMIN_TEXTS, getAdminTexts } from "@/components/admin/texts"
 import { UserActions } from "@/components/admin/user-actions"
 import { Bars } from "@/components/account/ui/charts"
 import { StatTile } from "@/components/account/ui/stat-tile"
@@ -29,7 +29,10 @@ import {
   user,
 } from "@/lib/db/schema"
 import { formatDate, formatDateTime, formatNumber } from "@/lib/format"
-import { resolveSubscription, getSubscriptionRow } from "@/lib/subscription-state"
+import {
+  resolveSubscription,
+  getSubscriptionRow,
+} from "@/lib/subscription-state"
 
 type Event = {
   id: string
@@ -49,10 +52,17 @@ type Event = {
  * отдельных панелях, и историю «что с ним происходило» приходилось
  * собирать в голове.
  */
-export async function AdminUser({ id }: { id: string }) {
+export async function AdminUser({
+  id,
+  locale = "ru",
+}: {
+  id: string
+  locale?: "ru" | "en"
+}) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.users
+  const adminTexts = getAdminTexts(locale)
+  const t = adminTexts.users
 
   const [row] = await db.select().from(user).where(eq(user.id, id)).limit(1)
 
@@ -60,49 +70,56 @@ export async function AdminUser({ id }: { id: string }) {
     notFound()
   }
 
-  const [subscriptionRow, months, tokens, sessions, payments, reports, actions] =
-    await Promise.all([
-      getSubscriptionRow(id),
-      db
-        .select({ period: usage.period, value: count() })
-        .from(usage)
-        .where(eq(usage.userId, id))
-        .groupBy(usage.period)
-        .orderBy(desc(usage.period))
-        .limit(6),
-      db
-        .select()
-        .from(registryToken)
-        .where(eq(registryToken.userId, id))
-        .orderBy(desc(registryToken.createdAt))
-        .limit(5),
-      db
-        .select()
-        .from(session)
-        .where(eq(session.userId, id))
-        .orderBy(desc(session.updatedAt))
-        .limit(5),
-      db
-        .select()
-        .from(payment)
-        .where(eq(payment.userId, id))
-        .orderBy(desc(payment.createdAt))
-        .limit(10),
-      db
-        .select()
-        .from(report)
-        .where(eq(report.userId, id))
-        .orderBy(desc(report.createdAt))
-        .limit(10),
-      db
-        .select()
-        .from(adminAction)
-        .where(
-          and(eq(adminAction.targetType, "user"), eq(adminAction.targetId, id)),
-        )
-        .orderBy(desc(adminAction.createdAt))
-        .limit(20),
-    ])
+  const [
+    subscriptionRow,
+    months,
+    tokens,
+    sessions,
+    payments,
+    reports,
+    actions,
+  ] = await Promise.all([
+    getSubscriptionRow(id),
+    db
+      .select({ period: usage.period, value: count() })
+      .from(usage)
+      .where(eq(usage.userId, id))
+      .groupBy(usage.period)
+      .orderBy(desc(usage.period))
+      .limit(6),
+    db
+      .select()
+      .from(registryToken)
+      .where(eq(registryToken.userId, id))
+      .orderBy(desc(registryToken.createdAt))
+      .limit(5),
+    db
+      .select()
+      .from(session)
+      .where(eq(session.userId, id))
+      .orderBy(desc(session.updatedAt))
+      .limit(5),
+    db
+      .select()
+      .from(payment)
+      .where(eq(payment.userId, id))
+      .orderBy(desc(payment.createdAt))
+      .limit(10),
+    db
+      .select()
+      .from(report)
+      .where(eq(report.userId, id))
+      .orderBy(desc(report.createdAt))
+      .limit(10),
+    db
+      .select()
+      .from(adminAction)
+      .where(
+        and(eq(adminAction.targetType, "user"), eq(adminAction.targetId, id)),
+      )
+      .orderBy(desc(adminAction.createdAt))
+      .limit(20),
+  ])
 
   const state = resolveSubscription(subscriptionRow)
   const pro = state.kind !== "free" && state.kind !== "expired"
@@ -123,10 +140,11 @@ export async function AdminUser({ id }: { id: string }) {
       id: entry.id,
       at: entry.paidAt ?? entry.createdAt,
       icon: CreditCard,
-      title: `${ADMIN_TEXTS.payments.cardTitle} · ${formatNumber(Number(entry.amount), "rub")}`,
-      note: ADMIN_TEXTS.payments.status[
-        entry.status as keyof typeof ADMIN_TEXTS.payments.status
-      ] ?? entry.status,
+      title: `${adminTexts.payments.cardTitle} · ${formatNumber(Number(entry.amount), "rub")}`,
+      note:
+        adminTexts.payments.status[
+          entry.status as keyof typeof ADMIN_TEXTS.payments.status
+        ] ?? entry.status,
       href: `/account/admin/payments/${entry.id}`,
       tone: (entry.status === "succeeded"
         ? "ok"
@@ -140,7 +158,7 @@ export async function AdminUser({ id }: { id: string }) {
       icon: LifeBuoy,
       title: entry.subject,
       note:
-        ADMIN_TEXTS.reports.status[
+        adminTexts.reports.status[
           entry.status as keyof typeof ADMIN_TEXTS.reports.status
         ] ?? entry.status,
       href: `/account/admin/reports/${entry.id}`,
@@ -150,7 +168,7 @@ export async function AdminUser({ id }: { id: string }) {
       id: entry.id,
       at: entry.createdAt,
       icon: ShieldAlert,
-      title: ADMIN_TEXTS.log.actions[entry.action] ?? entry.action,
+      title: adminTexts.log.actions[entry.action] ?? entry.action,
       note: entry.adminEmail,
       tone: "accent" as PillTone,
     })),
@@ -177,10 +195,7 @@ export async function AdminUser({ id }: { id: string }) {
             <StatusPill tone={row.emailVerified ? "ok" : "warn"}>
               {row.emailVerified ? t.verified : t.unverified}
             </StatusPill>
-            <StatusPill
-              tone={pro ? "solid" : "muted"}
-              dot={pro}
-            >
+            <StatusPill tone={pro ? "solid" : "muted"} dot={pro}>
               {state.kind}
             </StatusPill>
           </>
@@ -198,9 +213,7 @@ export async function AdminUser({ id }: { id: string }) {
         <StatTile
           index={0}
           label={t.card.subscription}
-          value={
-            "until" in state ? formatDate(state.until) : state.kind
-          }
+          value={"until" in state ? formatDate(state.until) : state.kind}
           note={state.kind}
           tone={pro ? "accent" : undefined}
         />
@@ -220,7 +233,9 @@ export async function AdminUser({ id }: { id: string }) {
         <StatTile
           index={3}
           label={t.card.sessions}
-          value={sessions.filter((entry) => entry.expiresAt > new Date()).length}
+          value={
+            sessions.filter((entry) => entry.expiresAt > new Date()).length
+          }
           note={`${t.card.tokens}: ${tokens.filter((token) => !token.revokedAt).length}`}
         />
       </div>
@@ -303,7 +318,10 @@ export async function AdminUser({ id }: { id: string }) {
             <Card
               title={
                 <span className="flex items-center gap-2">
-                  <KeyRound className="text-shell-muted size-4" aria-hidden="true" />
+                  <KeyRound
+                    className="text-shell-muted size-4"
+                    aria-hidden="true"
+                  />
                   {t.card.tokens}
                 </span>
               }
@@ -314,7 +332,14 @@ export async function AdminUser({ id }: { id: string }) {
               ) : (
                 <dl>
                   {tokens.map((token) => (
-                    <Row key={token.id} label={<span className="font-mono text-xs">{token.prefix}…</span>}>
+                    <Row
+                      key={token.id}
+                      label={
+                        <span className="font-mono text-xs">
+                          {token.prefix}…
+                        </span>
+                      }
+                    >
                       <StatusPill tone={token.revokedAt ? "muted" : "ok"}>
                         {token.revokedAt ? "отозван" : "действует"}
                       </StatusPill>
@@ -327,7 +352,10 @@ export async function AdminUser({ id }: { id: string }) {
             <Card
               title={
                 <span className="flex items-center gap-2">
-                  <MonitorSmartphone className="text-shell-muted size-4" aria-hidden="true" />
+                  <MonitorSmartphone
+                    className="text-shell-muted size-4"
+                    aria-hidden="true"
+                  />
                   {t.card.sessions}
                 </span>
               }
@@ -358,6 +386,7 @@ export async function AdminUser({ id }: { id: string }) {
         </div>
 
         <UserActions
+          locale={locale}
           userId={row.id}
           blocked={Boolean(row.blockedAt)}
           verified={row.emailVerified}

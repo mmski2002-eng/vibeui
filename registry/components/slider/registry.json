@@ -3305,7 +3305,7 @@
               },
               "surface": {
                 "label": "surface",
-                "default": "Голый ползунок"
+                "default": "Naked slider"
               }
             }
           }

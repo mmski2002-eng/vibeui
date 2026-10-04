@@ -2,29 +2,49 @@ import Link from "next/link"
 import { Wallet } from "lucide-react"
 
 import { AdminHeading, Pill, Section } from "@/components/admin/parts"
-import { ADMIN_TEXTS } from "@/components/admin/texts"
+import { getAdminTexts } from "@/components/admin/texts"
 import { EmptyState } from "@/components/account/ui/empty-state"
 import { PayoutRequestActions } from "@/components/admin/payout-request-actions"
 import { requireAdmin } from "@/lib/admin"
 import { listPayoutRequests, type AdminPayoutRequest } from "@/lib/partners"
 
-const rub = (value: string | number) =>
-  `${Number(value).toLocaleString("ru-RU")} ₽`
-const date = (value: Date | null) =>
-  value ? value.toLocaleDateString("ru-RU") : ""
+const rub = (value: string | number, locale: "ru" | "en") =>
+  `${Number(value).toLocaleString(locale === "en" ? "en-US" : "ru-RU")} ₽`
+const date = (value: Date | null, locale: "ru" | "en") =>
+  value ? value.toLocaleDateString(locale === "en" ? "en-US" : "ru-RU") : ""
 
-const STATUS: Record<string, { label: string; tone: "ok" | "muted" | "danger" }> = {
-  pending: { label: "новая", tone: "muted" },
-  approved: { label: "согласована", tone: "ok" },
-  paid: { label: "выплачена", tone: "ok" },
-  rejected: { label: "отклонена", tone: "danger" },
+const STATUS_TONE: Record<string, "ok" | "muted" | "danger"> = {
+  pending: "muted",
+  approved: "ok",
+  paid: "ok",
+  rejected: "danger",
+}
+
+function statusLabel(status: string, locale: "ru" | "en") {
+  const labels =
+    locale === "en"
+      ? {
+          pending: "new",
+          approved: "approved",
+          paid: "paid",
+          rejected: "rejected",
+        }
+      : {
+          pending: "новая",
+          approved: "согласована",
+          paid: "выплачена",
+          rejected: "отклонена",
+        }
+  return labels[status as keyof typeof labels] ?? status
 }
 
 /** Страница заявок блогеров на вывод: очередь на решение и история. */
-export async function AdminPayouts() {
+export async function AdminPayouts({
+  locale = "ru",
+}: { locale?: "ru" | "en" } = {}) {
   await requireAdmin()
 
-  const t = ADMIN_TEXTS.payouts
+  const t = getAdminTexts(locale).payouts
   const [active, resolved] = await Promise.all([
     listPayoutRequests(["pending", "approved"], "asc"),
     listPayoutRequests(["paid", "rejected"], "desc", 30),
@@ -41,7 +61,12 @@ export async function AdminPayouts() {
       ) : (
         <ul className="mt-6 grid gap-3">
           {active.map((request, position) => (
-            <ActiveRow key={request.id} request={request} index={position + 1} />
+            <ActiveRow
+              key={request.id}
+              request={request}
+              index={position + 1}
+              locale={locale}
+            />
           ))}
         </ul>
       )}
@@ -58,10 +83,10 @@ export async function AdminPayouts() {
                   {request.partnerName ?? request.partnerEmail}
                 </span>
                 <span className="text-shell-fg shrink-0 font-medium tabular-nums">
-                  {rub(request.amount)}
+                  {rub(request.amount, locale)}
                 </span>
-                <Pill tone={STATUS[request.status]?.tone ?? "muted"}>
-                  {STATUS[request.status]?.label ?? request.status}
+                <Pill tone={STATUS_TONE[request.status] ?? "muted"}>
+                  {statusLabel(request.status, locale)}
                 </Pill>
                 {request.receiptUrl ? (
                   <a
@@ -74,7 +99,7 @@ export async function AdminPayouts() {
                   </a>
                 ) : null}
                 <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
-                  {date(request.resolvedAt)}
+                  {date(request.resolvedAt, locale)}
                 </span>
               </li>
             ))}
@@ -88,12 +113,13 @@ export async function AdminPayouts() {
 function ActiveRow({
   request,
   index,
+  locale,
 }: {
   request: AdminPayoutRequest
   index: number
+  locale: "ru" | "en"
 }) {
-  const t = ADMIN_TEXTS.payouts
-  const status = STATUS[request.status] ?? { label: request.status, tone: "muted" as const }
+  const t = getAdminTexts(locale).payouts
 
   return (
     <li
@@ -108,21 +134,28 @@ function ActiveRow({
           {request.partnerName ?? request.partnerEmail}
         </Link>
         <span className="text-shell-fg shrink-0 text-lg font-semibold tabular-nums">
-          {rub(request.amount)}
+          {rub(request.amount, locale)}
         </span>
-        <Pill tone={status.tone}>{status.label}</Pill>
+        <Pill tone={STATUS_TONE[request.status] ?? "muted"}>
+          {statusLabel(request.status, locale)}
+        </Pill>
         <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">
-          {date(request.createdAt)}
+          {date(request.createdAt, locale)}
         </span>
       </div>
 
       <p className="text-shell-muted text-xs">
-        {t.inn}: <span className="text-shell-fg">{request.payoutInn ?? "—"}</span>{" "}
-        · {t.details}:{" "}
+        {t.inn}:{" "}
+        <span className="text-shell-fg">{request.payoutInn ?? "—"}</span> ·{" "}
+        {t.details}:{" "}
         <span className="text-shell-fg">{request.payoutDetails ?? "—"}</span>
       </p>
 
-      <PayoutRequestActions id={request.id} status={request.status} />
+      <PayoutRequestActions
+        id={request.id}
+        status={request.status}
+        locale={locale}
+      />
     </li>
   )
 }
