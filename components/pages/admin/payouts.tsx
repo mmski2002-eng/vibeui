@@ -6,6 +6,7 @@ import { getAdminTexts } from "@/components/admin/texts"
 import { EmptyState } from "@/components/account/ui/empty-state"
 import { PayoutRequestActions } from "@/components/admin/payout-request-actions"
 import { requireAdmin } from "@/lib/admin"
+import { isEthereumPayout } from "@/lib/payout-method"
 import { listPayoutRequests, type AdminPayoutRequest } from "@/lib/partners"
 
 const rub = (value: string | number, locale: "ru" | "en") =>
@@ -120,6 +121,7 @@ function ActiveRow({
   locale: "ru" | "en"
 }) {
   const t = getAdminTexts(locale).payouts
+  const ethereumPayout = isEthereumPayout(request.payoutInn)
 
   return (
     <li
@@ -145,15 +147,18 @@ function ActiveRow({
       </div>
 
       <p className="text-shell-muted text-xs">
-        {t.inn}:{" "}
-        <span className="text-shell-fg">{request.payoutInn ?? "—"}</span> ·{" "}
-        {t.details}:{" "}
+        {ethereumPayout ? "Network" : t.inn}:{" "}
+        <span className="text-shell-fg">
+          {ethereumPayout ? "Ethereum (USDC)" : (request.payoutInn ?? "—")}
+        </span>{" "}
+        · {ethereumPayout ? "Wallet" : t.details}:{" "}
         <span className="text-shell-fg">{request.payoutDetails ?? "—"}</span>
       </p>
 
       <PayoutRequestActions
         id={request.id}
         status={request.status}
+        requiresReceipt={!ethereumPayout}
         locale={locale}
       />
     </li>

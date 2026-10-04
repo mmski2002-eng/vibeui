@@ -11,9 +11,11 @@ import { requestPayout } from "@/lib/partner-actions"
 /** Кнопка «Запросить вывод». Причина недоступности — в подсказке рядом. */
 export function RequestPayoutButton({
   disabled,
+  locale,
   labels: t,
 }: {
   disabled: boolean
+  locale: "ru" | "en"
   labels: { button: string; sending: string; done: string; failed: string }
 }) {
   const router = useRouter()
@@ -30,13 +32,15 @@ export function RequestPayoutButton({
         setPending(true)
 
         try {
-          await requestPayout()
+          await requestPayout(locale)
           toast({ title: t.done })
           router.refresh()
         } catch (error) {
           toast({
             title:
-              error instanceof Error && error.message ? error.message : t.failed,
+              error instanceof Error && error.message
+                ? error.message
+                : t.failed,
             tone: "danger",
           })
         } finally {

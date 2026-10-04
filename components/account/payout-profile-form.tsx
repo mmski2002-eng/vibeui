@@ -6,7 +6,11 @@ import { Lock, Save } from "lucide-react"
 
 import { Button } from "@/components/account/ui/button"
 import { useToast } from "@/components/account/ui/toast"
-import { savePayoutReceipt, savePayoutRequisites } from "@/lib/partner-actions"
+import {
+  saveEthereumPayoutWallet,
+  savePayoutReceipt,
+  savePayoutRequisites,
+} from "@/lib/partner-actions"
 
 const INPUT =
   "border-shell-border bg-shell-elevated text-shell-fg placeholder:text-shell-muted focus-visible:border-shell-accent focus-visible:ring-shell-ring h-11 min-w-0 rounded-lg border px-3 text-sm outline-none transition-colors focus-visible:ring-2"
@@ -37,12 +41,14 @@ export function PayoutProfileForm({
   card,
   receipt,
   locked,
+  locale,
   labels: t,
 }: {
   inn: string
   card: string
   receipt: string
   locked: boolean
+  locale: "ru" | "en"
   labels: PayoutProfileLabels
 }) {
   const router = useRouter()
@@ -52,6 +58,7 @@ export function PayoutProfileForm({
   const [reqPending, setReqPending] = useState(false)
   const [rcpt, setRcpt] = useState(receipt)
   const [rcptPending, setRcptPending] = useState(false)
+  const ethereumPayout = locale === "en"
 
   const reqField =
     (key: keyof typeof req) => (event: ChangeEvent<HTMLInputElement>) =>
@@ -83,10 +90,12 @@ export function PayoutProfileForm({
       {locked ? (
         <div className="grid gap-2">
           <div className="flex flex-wrap gap-x-8 gap-y-1 text-sm">
-            <span>
-              <span className="text-shell-muted">{t.inn}: </span>
-              <span className="text-shell-fg font-mono">{inn}</span>
-            </span>
+            {!ethereumPayout ? (
+              <span>
+                <span className="text-shell-muted">{t.inn}: </span>
+                <span className="text-shell-fg font-mono">{inn}</span>
+              </span>
+            ) : null}
             <span>
               <span className="text-shell-muted">{t.card}: </span>
               <span className="text-shell-fg font-mono">{card}</span>
@@ -102,29 +111,41 @@ export function PayoutProfileForm({
           className="grid gap-3"
           onSubmit={(event) => {
             event.preventDefault()
-            void run(() => savePayoutRequisites(req), setReqPending)
+            void run(
+              () =>
+                ethereumPayout
+                  ? saveEthereumPayoutWallet({ wallet: req.card })
+                  : savePayoutRequisites(req),
+              setReqPending,
+            )
           }}
         >
           <div className="flex flex-wrap items-end gap-3">
-            <label className="flex flex-col gap-1">
-              <span className="text-shell-muted text-xs">{t.inn}</span>
-              <input
-                value={req.inn}
-                onChange={reqField("inn")}
-                placeholder={t.innPlaceholder}
-                inputMode="numeric"
-                maxLength={12}
-                className={`${INPUT} w-44 font-mono tabular-nums`}
-              />
-            </label>
+            {!ethereumPayout ? (
+              <label className="flex flex-col gap-1">
+                <span className="text-shell-muted text-xs">{t.inn}</span>
+                <input
+                  value={req.inn}
+                  onChange={reqField("inn")}
+                  placeholder={t.innPlaceholder}
+                  inputMode="numeric"
+                  maxLength={12}
+                  className={`${INPUT} w-44 font-mono tabular-nums`}
+                />
+              </label>
+            ) : null}
             <label className="flex min-w-0 flex-1 flex-col gap-1">
               <span className="text-shell-muted text-xs">{t.card}</span>
               <input
                 value={req.card}
                 onChange={reqField("card")}
                 placeholder={t.cardPlaceholder}
-                inputMode="numeric"
-                maxLength={23}
+                inputMode={ethereumPayout ? "text" : "numeric"}
+                maxLength={ethereumPayout ? 42 : 23}
+                pattern={ethereumPayout ? "0x[a-fA-F0-9]{40}" : undefined}
+                autoCapitalize={ethereumPayout ? "none" : undefined}
+                autoCorrect={ethereumPayout ? "off" : undefined}
+                spellCheck={ethereumPayout ? false : undefined}
                 className={`${INPUT} w-full font-mono tabular-nums sm:min-w-64`}
               />
             </label>
@@ -142,38 +163,40 @@ export function PayoutProfileForm({
         </form>
       )}
 
-      <form
-        className="grid gap-2"
-        onSubmit={(event) => {
-          event.preventDefault()
-          void run(() => savePayoutReceipt({ receipt: rcpt }), setRcptPending)
-        }}
-      >
-        <label className="flex min-w-0 flex-col gap-1">
-          <span className="text-shell-muted text-xs">{t.receipt}</span>
-          <input
-            value={rcpt}
-            onChange={(event) => setRcpt(event.target.value)}
-            placeholder={t.receiptPlaceholder}
-            type="url"
-            inputMode="url"
-            maxLength={500}
-            autoCapitalize="none"
-            autoCorrect="off"
-            spellCheck={false}
-            className={`${INPUT} w-full`}
-          />
-        </label>
-        <Button
-          type="submit"
-          size="lg"
-          pending={rcptPending}
-          icon={<Save className="size-4" aria-hidden="true" />}
-          className="justify-self-start"
+      {!ethereumPayout ? (
+        <form
+          className="grid gap-2"
+          onSubmit={(event) => {
+            event.preventDefault()
+            void run(() => savePayoutReceipt({ receipt: rcpt }), setRcptPending)
+          }}
         >
-          {rcptPending ? t.saving : t.save}
-        </Button>
-      </form>
+          <label className="flex min-w-0 flex-col gap-1">
+            <span className="text-shell-muted text-xs">{t.receipt}</span>
+            <input
+              value={rcpt}
+              onChange={(event) => setRcpt(event.target.value)}
+              placeholder={t.receiptPlaceholder}
+              type="url"
+              inputMode="url"
+              maxLength={500}
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              className={`${INPUT} w-full`}
+            />
+          </label>
+          <Button
+            type="submit"
+            size="lg"
+            pending={rcptPending}
+            icon={<Save className="size-4" aria-hidden="true" />}
+            className="justify-self-start"
+          >
+            {rcptPending ? t.saving : t.save}
+          </Button>
+        </form>
+      ) : null}
     </div>
   )
 }

@@ -1,5 +1,12 @@
 import { notFound } from "next/navigation"
-import { Link2, MousePointerClick, Tag, UserPlus, Users, Wallet } from "lucide-react"
+import {
+  Link2,
+  MousePointerClick,
+  Tag,
+  UserPlus,
+  Users,
+  Wallet,
+} from "lucide-react"
 
 import { CopyLink } from "@/components/account/copy-link"
 import { ACCOUNT_TEXTS } from "@/components/account/texts"
@@ -27,6 +34,7 @@ import {
   type PartnerPeriod,
 } from "@/lib/partners"
 import { MIN_PAYOUT } from "@/lib/limits"
+import { isEthereumPayout } from "@/lib/payout-method"
 import { partnerPromo, promoStats } from "@/lib/promo"
 import { PayoutProfileForm } from "@/components/account/payout-profile-form"
 import { PromoCodeForm } from "@/components/account/promo-code-form"
@@ -75,22 +83,25 @@ export async function AccountReferrals({
     payoutInfo,
     openRequest,
   ] = await Promise.all([
-      visitsByCode(code),
-      referralTotals(user.id),
-      referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
-      partnerStats(user.id, code, period),
-      partnerPromo(user.id),
-      promoStats(user.id),
-      payoutTotals(user.id),
-      listPayouts(user.id),
-      payoutProfile(user.id),
-      openPayoutRequest(user.id),
-    ])
+    visitsByCode(code),
+    referralTotals(user.id),
+    referralsOf(user.id, { before: validCursor, limit: PAGE + 1 }),
+    partnerStats(user.id, code, period),
+    partnerPromo(user.id),
+    promoStats(user.id),
+    payoutTotals(user.id),
+    listPayouts(user.id),
+    payoutProfile(user.id),
+    openPayoutRequest(user.id),
+  ])
 
   const money = (value: number) =>
     value.toLocaleString(locale === "en" ? "en-GB" : "ru-RU")
   const pendingPayout = Math.max(0, promoTotals.commission - paidOut.paid)
-  const requisitesFilled = Boolean(payoutInfo.inn && payoutInfo.details)
+  const requisitesFilled =
+    locale === "en"
+      ? isEthereumPayout(payoutInfo.inn) && Boolean(payoutInfo.details)
+      : Boolean(payoutInfo.inn && payoutInfo.details)
   const canRequest =
     !openRequest && pendingPayout >= MIN_PAYOUT && requisitesFilled
 
@@ -123,7 +134,10 @@ export async function AccountReferrals({
           <PanelHeader
             title={
               <span className="flex items-center gap-2">
-                <Link2 className="text-shell-accent-text size-4" aria-hidden="true" />
+                <Link2
+                  className="text-shell-accent-text size-4"
+                  aria-hidden="true"
+                />
                 {t.linkTitle}
               </span>
             }
@@ -140,7 +154,10 @@ export async function AccountReferrals({
           <PanelHeader
             title={
               <span className="flex items-center gap-2">
-                <Tag className="text-shell-accent-text size-4" aria-hidden="true" />
+                <Tag
+                  className="text-shell-accent-text size-4"
+                  aria-hidden="true"
+                />
                 {t.promoTitle}
               </span>
             }
@@ -148,10 +165,14 @@ export async function AccountReferrals({
             action={
               promo?.code && promo.active ? (
                 <span className="text-shell-muted text-xs tabular-nums">
-                  {t.promoPayments}: <span className="text-shell-fg">{promoTotals.payments}</span> ·{" "}
-                  {t.promoRevenue}:{" "}
+                  {t.promoPayments}:{" "}
+                  <span className="text-shell-fg">{promoTotals.payments}</span>{" "}
+                  · {t.promoRevenue}:{" "}
                   <span className="text-shell-fg">
-                    {promoTotals.revenue.toLocaleString(locale === "en" ? "en-GB" : "ru-RU")} ₽
+                    {promoTotals.revenue.toLocaleString(
+                      locale === "en" ? "en-GB" : "ru-RU",
+                    )}{" "}
+                    ₽
                   </span>
                 </span>
               ) : null
@@ -194,7 +215,10 @@ export async function AccountReferrals({
           <PanelHeader
             title={
               <span className="flex items-center gap-2">
-                <Wallet className="text-shell-accent-text size-4" aria-hidden="true" />
+                <Wallet
+                  className="text-shell-accent-text size-4"
+                  aria-hidden="true"
+                />
                 {t.payoutTitle}
               </span>
             }
@@ -203,7 +227,11 @@ export async function AccountReferrals({
           <div className="grid gap-5">
             <div className="grid gap-3 sm:grid-cols-3">
               {[
-                { label: t.payoutEarned, value: promoTotals.commission, accent: false },
+                {
+                  label: t.payoutEarned,
+                  value: promoTotals.commission,
+                  accent: false,
+                },
                 { label: t.payoutPaid, value: paidOut.paid, accent: false },
                 { label: t.payoutPending, value: pendingPayout, accent: true },
               ].map((cell) => (
@@ -237,6 +265,7 @@ export async function AccountReferrals({
               <div className="flex flex-wrap items-center gap-3">
                 <RequestPayoutButton
                   disabled={!canRequest}
+                  locale={locale}
                   labels={{
                     button: t.requestButton,
                     sending: t.requestSending,
@@ -261,6 +290,7 @@ export async function AccountReferrals({
                 card={payoutInfo.details}
                 receipt={payoutInfo.receipt}
                 locked={requisitesFilled}
+                locale={locale}
                 labels={{
                   inn: t.payoutInn,
                   innPlaceholder: t.payoutInnPlaceholder,
@@ -383,7 +413,10 @@ export async function AccountReferrals({
         </div>
 
         <section>
-          <h2 className="text-shell-fg acc-reveal mb-3 font-semibold" style={{ ["--i" as string]: 7 }}>
+          <h2
+            className="text-shell-fg acc-reveal mb-3 font-semibold"
+            style={{ ["--i" as string]: 7 }}
+          >
             {t.listTitle}
           </h2>
           <DataTable
@@ -393,7 +426,12 @@ export async function AccountReferrals({
             columns={[
               { key: "person", label: t.columnPerson },
               { key: "status", label: t.columnStatus, className: "w-36" },
-              { key: "date", label: t.columnDate, align: "right", className: "w-32" },
+              {
+                key: "date",
+                label: t.columnDate,
+                align: "right",
+                className: "w-32",
+              },
             ]}
             rows={page.map((referral) => ({
               id: referral.id,
@@ -403,10 +441,17 @@ export async function AccountReferrals({
                   primary={maskEmail(referral.email)}
                   secondary={referral.name}
                 />,
-                <StatusPill key="status" tone={referral.firstPaidAt ? "ok" : "muted"} dot={Boolean(referral.firstPaidAt)}>
+                <StatusPill
+                  key="status"
+                  tone={referral.firstPaidAt ? "ok" : "muted"}
+                  dot={Boolean(referral.firstPaidAt)}
+                >
                   {referral.firstPaidAt ? t.paidLabel : t.notPaid}
                 </StatusPill>,
-                <span key="date" className="text-shell-muted text-xs tabular-nums">
+                <span
+                  key="date"
+                  className="text-shell-muted text-xs tabular-nums"
+                >
                   {formatDate(referral.createdAt, locale)}
                 </span>,
               ],

@@ -27,6 +27,7 @@ import {
   wordTaken,
 } from "@/lib/partners"
 import { applyPaymentEvent, grantDays } from "@/lib/payment-apply"
+import { isEthereumPayout } from "@/lib/payout-method"
 import { PRICE_KEYS } from "@/lib/plan-prices"
 import {
   COMMISSION_PERCENT_KEY,
@@ -418,7 +419,10 @@ export async function setReceiptUrl(input: { paymentId: string; url: string }) {
 }
 
 /** Ссылка для блогера. Имя и, если известен, ник для промокода. */
-export async function createPartnerInvite(input: { name: string; promoCode?: string }) {
+export async function createPartnerInvite(input: {
+  name: string
+  promoCode?: string
+}) {
   const admin = await requireAdmin()
   const name = input.name.trim().slice(0, 120)
 
@@ -428,7 +432,9 @@ export async function createPartnerInvite(input: { name: string; promoCode?: str
 
   // НИК блогера — единое слово: и код реф-ссылки приглашения, и промокод.
   // Уникально на всю программу. Без ника — случайный код приглашения.
-  const nick = input.promoCode?.trim() ? promoCodeOrThrow(input.promoCode) : null
+  const nick = input.promoCode?.trim()
+    ? promoCodeOrThrow(input.promoCode)
+    : null
 
   if (nick && (await wordTaken(nick))) {
     throw new Error("Такой код уже занят")
@@ -615,16 +621,32 @@ export async function resolvePayoutRequest(input: {
 
     await db
       .update(payoutRequest)
-      .set({ status: "approved", approvedAt: new Date(), approvedBy: admin.email, note })
-      .where(and(eq(payoutRequest.id, input.id), eq(payoutRequest.status, "pending")))
+      .set({
+        status: "approved",
+        approvedAt: new Date(),
+        approvedBy: admin.email,
+        note,
+      })
+      .where(
+        and(
+          eq(payoutRequest.id, input.id),
+          eq(payoutRequest.status, "pending"),
+        ),
+      )
   } else if (input.action === "pay") {
     if (request.status !== "approved") {
       throw new Error("Сначала согласуйте заявку")
     }
 
     const receipt = (input.receipt ?? "").trim()
+    const [payoutProfile] = await db
+      .select({ marker: partnerInvite.payoutInn })
+      .from(partnerInvite)
+      .where(eq(partnerInvite.claimedBy, request.partnerId))
+      .limit(1)
+    const requiresReceipt = !isEthereumPayout(payoutProfile?.marker)
 
-    if (!/^https:\/\/[^\s]+$/i.test(receipt)) {
+    if (requiresReceipt && !/^https:\/\/[^\s]+$/i.test(receipt)) {
       throw new Error("Приложите ссылку на чек (https://)")
     }
 
@@ -632,7 +654,7 @@ export async function resolvePayoutRequest(input: {
       id: randomUUID(),
       partnerId: request.partnerId,
       amount: request.amount,
-      note: note ?? receipt,
+      note: (note ?? receipt) || null,
       createdBy: admin.email,
     })
 
@@ -640,12 +662,17 @@ export async function resolvePayoutRequest(input: {
       .update(payoutRequest)
       .set({
         status: "paid",
-        receiptUrl: receipt,
+        receiptUrl: receipt || null,
         note,
         resolvedAt: new Date(),
         resolvedBy: admin.email,
       })
-      .where(and(eq(payoutRequest.id, input.id), eq(payoutRequest.status, "approved")))
+      .where(
+        and(
+          eq(payoutRequest.id, input.id),
+          eq(payoutRequest.status, "approved"),
+        ),
+      )
   } else {
     if (request.status !== "pending" && request.status !== "approved") {
       throw new Error("Заявка уже закрыта")
@@ -653,7 +680,12 @@ export async function resolvePayoutRequest(input: {
 
     await db
       .update(payoutRequest)
-      .set({ status: "rejected", note, resolvedAt: new Date(), resolvedBy: admin.email })
+      .set({
+        status: "rejected",
+        note,
+        resolvedAt: new Date(),
+        resolvedBy: admin.email,
+      })
       .where(eq(payoutRequest.id, input.id))
   }
 
@@ -762,7 +794,13 @@ export async function setPlanPrices(input: {
     },
   })
 
-  for (const path of ["/", "/en", "/pricing", "/en/pricing", "/account/admin/payments"]) {
+  for (const path of [
+    "/",
+    "/en",
+    "/pricing",
+    "/en/pricing",
+    "/account/admin/payments",
+  ]) {
     revalidatePath(path)
   }
 }

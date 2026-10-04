@@ -14,6 +14,7 @@ import {
   payoutTotals,
 } from "@/lib/partners"
 import { MIN_PAYOUT } from "@/lib/limits"
+import { ETHEREUM_ADDRESS, ETHEREUM_PAYOUT_MARKER } from "@/lib/payout-method"
 import { normalizePromo, promoStats } from "@/lib/promo"
 import { requireUser } from "@/lib/session"
 
@@ -90,6 +91,43 @@ export async function savePayoutRequisites(input: {
   revalidatePath("/en/account/referrals")
 }
 
+/** Saves an Ethereum wallet once for English-version USDC payouts. */
+export async function saveEthereumPayoutWallet(input: { wallet: string }) {
+  const user = await requireUser()
+
+  if (!(await isPartner(user.id))) {
+    throw new Error("This section is for partners only")
+  }
+
+  const current = await payoutProfile(user.id)
+
+  if (current.inn || current.details) {
+    throw new Error(
+      "The wallet address is already saved and cannot be changed.",
+    )
+  }
+
+  const wallet = input.wallet.trim()
+
+  if (!ETHEREUM_ADDRESS.test(wallet)) {
+    throw new Error(
+      "Enter a valid Ethereum address: 0x followed by 40 hexadecimal characters.",
+    )
+  }
+
+  await db
+    .update(partnerInvite)
+    .set({
+      payoutInn: ETHEREUM_PAYOUT_MARKER,
+      payoutDetails: wallet,
+      payoutReceipt: null,
+    })
+    .where(eq(partnerInvite.claimedBy, user.id))
+
+  revalidatePath("/account/referrals")
+  revalidatePath("/en/account/referrals")
+}
+
 /** Ссылка на чек «Мой налог». Отдельно от реквизитов: чек меняется от выплаты
  *  к выплате, реквизиты — нет. */
 export async function savePayoutReceipt(input: { receipt: string }) {
@@ -120,21 +158,39 @@ export async function savePayoutReceipt(input: { receipt: string }) {
  * на воздух. Сумма замораживается в заявке — дальнейшее начисление её не
  * меняет.
  */
-export async function requestPayout() {
+export async function requestPayout(locale: "ru" | "en" = "ru") {
   const user = await requireUser()
 
   if (!(await isPartner(user.id))) {
-    throw new Error("Раздел только для партнёров")
+    throw new Error(
+      locale === "en"
+        ? "This section is for partners only"
+        : "Раздел только для партнёров",
+    )
   }
 
   if (await openPayoutRequest(user.id)) {
-    throw new Error("Заявка уже на рассмотрении")
+    throw new Error(
+      locale === "en"
+        ? "A payout request is already under review"
+        : "Заявка уже на рассмотрении",
+    )
   }
 
   const profile = await payoutProfile(user.id)
 
-  if (!profile.inn || !profile.details) {
-    throw new Error("Сначала заполните реквизиты выплаты")
+  const validProfile =
+    locale === "en"
+      ? profile.inn === ETHEREUM_PAYOUT_MARKER &&
+        ETHEREUM_ADDRESS.test(profile.details)
+      : Boolean(profile.inn && profile.details)
+
+  if (!validProfile) {
+    throw new Error(
+      locale === "en"
+        ? "Save your Ethereum wallet address first"
+        : "Сначала заполните реквизиты выплаты",
+    )
   }
 
   const [stats, paid] = await Promise.all([
@@ -144,7 +200,11 @@ export async function requestPayout() {
   const pending = stats.commission - paid.paid
 
   if (pending < MIN_PAYOUT) {
-    throw new Error(`К выводу доступно от ${MIN_PAYOUT} ₽`)
+    throw new Error(
+      locale === "en"
+        ? `Payouts are available from ${MIN_PAYOUT} ₽`
+        : `К выводу доступно от ${MIN_PAYOUT} ₽`,
+    )
   }
 
   await db.insert(payoutRequest).values({

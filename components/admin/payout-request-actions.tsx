@@ -18,10 +18,12 @@ type Action = "approve" | "pay" | "reject"
 export function PayoutRequestActions({
   id,
   status,
+  requiresReceipt = true,
   locale = "ru",
 }: {
   id: string
   status: string
+  requiresReceipt?: boolean
   locale?: "ru" | "en"
 }) {
   const t = getAdminTexts(locale).payouts
@@ -57,7 +59,7 @@ export function PayoutRequestActions({
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {status === "approved" ? (
+      {status === "approved" && requiresReceipt ? (
         <input
           value={receipt}
           onChange={(event) => setReceipt(event.target.value)}
@@ -86,7 +88,7 @@ export function PayoutRequestActions({
           size="sm"
           variant="primary"
           pending={pending === "pay"}
-          disabled={pending !== null || !receipt.trim()}
+          disabled={pending !== null || (requiresReceipt && !receipt.trim())}
           icon={<Check className="size-4" aria-hidden="true" />}
           onClick={() => resolve("pay")}
         >
