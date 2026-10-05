@@ -80,7 +80,7 @@ export async function discoverYouTube(
       await database.begin(async (transaction) => {
         await transaction`
           INSERT INTO creators (id, display_name, market, language, country, status)
-          VALUES (${creatorId}, ${channel.snippet?.title ?? channelId}, ${market}, ${market},
+          VALUES (${creatorId}, ${channel.snippet?.title ?? channelId}, ${channelMarket(channel, videos.filter((item) => item.snippet?.channelId === channelId).map((item) => item.snippet?.title ?? ""), market)}, ${channelMarket(channel, videos.filter((item) => item.snippet?.channelId === channelId).map((item) => item.snippet?.title ?? ""), market)},
             ${channel.snippet?.country ?? null}, 'researched')
         `;
         await transaction`
@@ -191,4 +191,16 @@ export function median(values: number[]): number | null {
   const sorted = [...values].sort((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
   return sorted.length % 2 ? sorted[middle] ?? null : Math.round((((sorted[middle - 1] ?? 0) + (sorted[middle] ?? 0)) / 2) * 10_000) / 10_000;
+}
+
+const russianSpeakingCountries = new Set(["RU", "BY", "KZ", "KG", "UZ", "AM", "AZ", "MD", "TJ", "TM", "GE", "UA"]);
+
+// The market follows the channel itself, not the language of the search query that surfaced it.
+export function channelMarket(channel: { snippet?: { title?: string; description?: string; country?: string } }, videoTitles: string[], fallback: Market): Market {
+  const country = channel.snippet?.country?.toUpperCase();
+  const text = [channel.snippet?.title ?? "", channel.snippet?.description ?? "", ...videoTitles].join(" ");
+  const cyrillic = (text.match(/[а-яё]/gi) ?? []).length;
+  const latin = (text.match(/[a-z]/gi) ?? []).length;
+  if (cyrillic + latin < 20) return country && russianSpeakingCountries.has(country) ? "ru" : fallback;
+  return cyrillic >= latin * 0.3 ? "ru" : "en";
 }

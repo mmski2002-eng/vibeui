@@ -169,7 +169,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
   const threadId = job.payload.threadId;
   if (typeof threadId !== "string") throw new Error("threadId is required");
   const rows = await database<Record<string, unknown>[]>`
-    SELECT t.id, t.creator_id, t.campaign_id, c.display_name, c.market, c.language, c.country
+    SELECT t.id, t.creator_id, t.campaign_id, t.channel, c.display_name, c.market, c.language, c.country
     FROM conversation_threads t JOIN creators c ON c.id = t.creator_id WHERE t.id = ${threadId}
   `;
   const thread = rows[0];
@@ -181,7 +181,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
   const market = thread.market;
   if (market !== "ru" && market !== "en") throw new Error("Invalid creator market");
   await assertModelBudget(database, config);
-  const output = await personalizeOutreach({ creator: thread, posts, market, model: config.generationModel });
+  const output = await personalizeOutreach({ creator: thread, posts, market, channel: thread.channel === "telegram" ? "telegram" : "email", model: config.generationModel });
   await database`
     INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, facts,
       source_urls, model, idempotency_key)
@@ -204,7 +204,7 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
   const policy = await loadPolicy(config.policyPath);
   const rows = await database<Record<string, unknown>[]>`
     SELECT m.*, t.creator_id, t.campaign_id, t.follow_up_count, c.market, c.do_not_contact,
-      cc.value AS contact_value, cc.is_public_business, oc.status AS campaign_status,
+      cc.value AS contact_value, cc.kind AS contact_kind, cc.is_public_business, oc.status AS campaign_status,
       (SELECT cs.total FROM candidate_scores cs WHERE cs.creator_id = c.id AND cs.valid = true ORDER BY cs.created_at DESC LIMIT 1) AS score
     FROM outreach_messages m
     JOIN conversation_threads t ON t.id = m.thread_id
@@ -272,6 +272,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
 
 function firstSendDenial(message: Record<string, unknown>, control: Record<string, unknown>, policy: Awaited<ReturnType<typeof loadPolicy>>, sentToday: number): string | null {
   if (control.emergency_stop === true) return "emergency_stop";
+  if (message.contact_kind !== "email") return "channel_requires_manual_send";
   if (control.outreach_paused === true || !policy.outreachEnabled) return "outreach_paused";
   if (message.campaign_status !== "active") return "campaign_not_active";
   if (message.status !== "approved" && message.status !== "sending") return "message_not_approved";

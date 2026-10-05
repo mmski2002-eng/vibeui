@@ -8,6 +8,7 @@ import { discoverTelegram } from "./discovery/telegram.js";
 import { discoverVk } from "./discovery/vk.js";
 import { importCreators } from "./import-creators.js";
 import { prepareDrafts } from "./prepare-drafts.js";
+import { maintain } from "./maintenance.js";
 import { resolve } from "node:path";
 import { configureModelProvider } from "./model-provider.js";
 
@@ -47,10 +48,13 @@ if (command === "migrate") {
   if (!path) throw new Error("Usage: tsx src/cli.ts import <creators.json>");
   console.log(await importCreators(database, resolve(process.cwd(), path)));
   await database.end();
+} else if (command === "maintain") {
+  console.log(await maintain(database, { websites: !process.argv.includes("--no-websites"), rescore: process.argv.includes("--rescore") }));
+  await database.end();
 } else if (command === "prepare-drafts") {
   console.log({ draftsQueued: await prepareDrafts(database) });
   await database.end();
 } else {
   await database.end();
-  throw new Error("Usage: migrate | worker | admin | discover youtube ... | discover telegram|vk [max] [seed...] | import <file> | prepare-drafts");
+  throw new Error("Usage: migrate | worker | admin | discover youtube ... | discover telegram|vk [max] [seed...] | import <file> | maintain [--rescore] [--no-websites] | prepare-drafts");
 }

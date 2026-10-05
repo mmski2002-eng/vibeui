@@ -38,7 +38,9 @@ Red flags are only concrete negative evidence that disqualifies the creator: sig
 scams or get-rich-quick promises, deceptive or unsafe content, spam, plagiarism, or a market/language mismatch.
 Missing or incomplete data is never a red flag: list it in dataGaps and simply give fewer points for that criterion.
 contacts lists published contacts without their values; allowedContact may score only a public business contact.
-Russian-market creators must be relevant to vibeui.ru; English-market creators to vibeui.club.`,
+Russian-market creators must be relevant to vibeui.ru; English-market creators to vibeui.club.
+VibeUI partners with individual creators. An official channel of a company, product, tool vendor, school selling courses as its main business,
+media outlet or conference is a red flag ("not an individual creator"), even if its topic fits.`,
     outputType: scoringOutput,
   });
 
