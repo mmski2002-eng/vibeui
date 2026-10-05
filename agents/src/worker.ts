@@ -175,7 +175,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
   const thread = rows[0];
   if (!thread) throw new Error(`Thread ${threadId} not found`);
   const posts = await database<Record<string, unknown>[]>`
-    SELECT title, summary, url, published_at FROM creator_posts
+    SELECT title, summary, url, published_at, views, likes, comments FROM creator_posts
     WHERE creator_id = ${String(thread.creator_id)} ORDER BY published_at DESC NULLS LAST LIMIT 10
   `;
   const market = thread.market;
@@ -290,9 +290,16 @@ async function scoreCreatorJob(database: Database, config: Config, job: AgentJob
   const creators = await database<Record<string, unknown>[]>`SELECT * FROM creators WHERE id = ${creatorId}`;
   const creator = creators[0];
   if (!creator) throw new Error(`Creator ${creatorId} not found`);
-  const profiles = await database<Record<string, unknown>[]>`SELECT * FROM creator_profiles WHERE creator_id = ${creatorId}`;
+  const profiles = await database<Record<string, unknown>[]>`
+    SELECT platform, profile_url, handle, followers, median_views, engagement_rate, raw_public_data->'snippet'->>'description' AS description,
+      raw_public_data->'statistics' AS statistics, verified_at
+    FROM creator_profiles WHERE creator_id = ${creatorId}
+  `;
+  const contacts = await database<Record<string, unknown>[]>`
+    SELECT kind, is_public_business, source_url FROM creator_contacts WHERE creator_id = ${creatorId}
+  `;
   const posts = await database<Record<string, unknown>[]>`
-    SELECT title, summary, url, published_at FROM creator_posts
+    SELECT title, summary, url, published_at, views, likes, comments FROM creator_posts
     WHERE creator_id = ${creatorId} ORDER BY published_at DESC NULLS LAST LIMIT 10
   `;
   const evidenceUrls = [...profiles.map((profile) => profile.profile_url), ...posts.map((post) => post.url)].filter((url): url is string => typeof url === "string");
@@ -303,7 +310,7 @@ async function scoreCreatorJob(database: Database, config: Config, job: AgentJob
   `;
   try {
     await assertModelBudget(database, config);
-    const score = await scoreCandidate({ candidate: { creator, profiles, posts }, model: config.scoringModel, allowedEvidenceUrls: evidenceUrls });
+    const score = await scoreCandidate({ candidate: { creator, profiles, posts, contacts }, model: config.scoringModel, allowedEvidenceUrls: evidenceUrls });
     const { usage: _creatorUsage, ...creatorScoreDetails } = score;
     const campaigns = await database<{ id: string }[]>`
       SELECT id FROM outreach_campaigns WHERE market = ${String(creator.market)} ORDER BY created_at LIMIT 1

@@ -12,6 +12,7 @@ const scoringOutput = z.object({
   allowedContact: z.number().int().min(0).max(5),
   moderateAdLoad: z.number().int().min(0).max(5),
   redFlags: z.array(z.string()).max(10),
+  dataGaps: z.array(z.string()).max(10),
   rationale: z.string().min(1).max(1500),
   evidenceUrls: z.array(z.string().max(2048)).max(20),
 });
@@ -32,7 +33,11 @@ export async function scoreCandidate(input: ScoringInput): Promise<ScoringOutput
 Use only facts and source URLs in the supplied record. Never invent audience metrics or evidence.
 Apply these maximum weights exactly: topic fit 30, builder audience 20, real reach 15,
 engagement 10, practical demonstrations 10, regularity 5, allowed public business contact 5,
-moderate advertising load 5. Add a red flag when evidence is missing or suspicious.
+moderate advertising load 5.
+Red flags are only concrete negative evidence that disqualifies the creator: signs of bought or fake audience,
+scams or get-rich-quick promises, deceptive or unsafe content, spam, plagiarism, or a market/language mismatch.
+Missing or incomplete data is never a red flag: list it in dataGaps and simply give fewer points for that criterion.
+contacts lists published contacts without their values; allowedContact may score only a public business contact.
 Russian-market creators must be relevant to vibeui.ru; English-market creators to vibeui.club.`,
     outputType: scoringOutput,
   });
@@ -47,10 +52,10 @@ Russian-market creators must be relevant to vibeui.ru; English-market creators t
   const malformed = output.evidenceUrls.filter((url) => !URL.canParse(url));
   if (malformed.length > 0) throw new ModelOutputError(`Scoring output contains malformed URLs: ${malformed.join(", ")}`, usage);
   if (input.allowedEvidenceUrls) {
+    // Unsupported citations are dropped rather than failing the whole (already paid) scoring; at least one must remain.
     const allowed = new Set(input.allowedEvidenceUrls);
-    const unsupported = output.evidenceUrls.filter((url) => !allowed.has(url));
-    if (unsupported.length > 0) throw new ModelOutputError(`Scoring output cited unsupported evidence: ${unsupported.join(", ")}`, usage);
-    if (output.evidenceUrls.length === 0) throw new ModelOutputError("Scoring output contains no evidence URLs", usage);
+    output.evidenceUrls = output.evidenceUrls.filter((url) => allowed.has(url));
+    if (output.evidenceUrls.length === 0) throw new ModelOutputError("Scoring output contains no supported evidence URLs", usage);
   }
   const total = output.redFlags.length > 0 ? Math.min(49, sumScore(output)) : sumScore(output);
   return { ...output, total, usage };

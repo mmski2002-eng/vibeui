@@ -11,10 +11,19 @@ interface SearchResponse {
     snippet?: { channelId?: string; channelTitle?: string; title?: string; description?: string; publishedAt?: string };
   }>;
 }
+interface VideosResponse {
+  items?: Array<{
+    id?: string;
+    snippet?: { title?: string; description?: string; publishedAt?: string };
+    statistics?: { viewCount?: string; likeCount?: string; commentCount?: string };
+  }>;
+}
+interface PlaylistItemsResponse { items?: Array<{ contentDetails?: { videoId?: string } }> }
 interface ChannelsResponse {
   items?: Array<{
     id?: string;
     snippet?: { title?: string; description?: string; customUrl?: string; country?: string };
+    contentDetails?: { relatedPlaylists?: { uploads?: string } };
     statistics?: { subscriberCount?: string; videoCount?: string; viewCount?: string; hiddenSubscriberCount?: boolean };
   }>;
 }
@@ -39,8 +48,12 @@ export async function discoverYouTube(
   const channelIds = [...new Set(videos.map((item) => item.snippet?.channelId).filter((id): id is string => Boolean(id)))];
   if (channelIds.length === 0) return { videosFound: 0, creatorsCreated: 0, creatorsUpdated: 0, jobsQueued: 0 };
   const channels = await getJson<ChannelsResponse>("https://www.googleapis.com/youtube/v3/channels", {
-    key: apiKey, part: "snippet,statistics", id: channelIds.join(","), maxResults: "50",
+    key: apiKey, part: "snippet,statistics,contentDetails", id: channelIds.join(","), maxResults: "50",
   });
+  const videoStats = await getJson<VideosResponse>("https://www.googleapis.com/youtube/v3/videos", {
+    key: apiKey, part: "statistics", id: videos.map((item) => item.id?.videoId).join(","), maxResults: "50",
+  });
+  const statsById = new Map((videoStats.items ?? []).flatMap((item) => item.id ? [[item.id, item.statistics ?? {}] as const] : []));
   const byId = new Map((channels.items ?? []).flatMap((channel) => channel.id ? [[channel.id, channel] as const] : []));
   let creatorsCreated = 0; let creatorsUpdated = 0; let jobsQueued = 0;
 
@@ -78,24 +91,37 @@ export async function discoverYouTube(
         `;
       });
     }
+    const contact = businessEmailFromDescription(channel.snippet?.description);
+    if (contact) {
+      await database`
+        INSERT INTO creator_contacts (id, creator_id, kind, value, normalized_value, source_url, is_public_business, verified_at)
+        VALUES (${randomUUID()}, ${creatorId}, 'email', ${contact.email}, ${contact.email.toLowerCase()}, ${profileUrl}, ${contact.isBusiness}, now())
+        ON CONFLICT (kind, normalized_value) DO NOTHING
+      `;
+    }
     for (const video of videos.filter((item) => item.snippet?.channelId === channelId)) {
       const videoId = video.id?.videoId;
       if (!videoId) continue;
+      const stats = statsById.get(videoId);
       await database`
         INSERT INTO creator_posts (id, creator_id, profile_id, external_id, url, title, summary,
-          published_at, raw_public_data)
+          published_at, views, likes, comments, raw_public_data)
         VALUES (${randomUUID()}, ${creatorId}, ${profileId}, ${videoId},
           ${`https://www.youtube.com/watch?v=${videoId}`}, ${video.snippet?.title ?? videoId},
           ${video.snippet?.description ?? null}, ${video.snippet?.publishedAt ?? null},
+          ${integerOrNull(stats?.viewCount)}, ${integerOrNull(stats?.likeCount)}, ${integerOrNull(stats?.commentCount)},
           ${database.json(video as unknown as postgres.JSONValue)})
         ON CONFLICT (profile_id, url) DO UPDATE SET title = EXCLUDED.title,
-          summary = EXCLUDED.summary, source_checked_at = now(), raw_public_data = EXCLUDED.raw_public_data
+          summary = EXCLUDED.summary, views = EXCLUDED.views, likes = EXCLUDED.likes, comments = EXCLUDED.comments,
+          source_checked_at = now(), raw_public_data = EXCLUDED.raw_public_data
       `;
     }
+    const uploads = channel.contentDetails?.relatedPlaylists?.uploads;
+    if (uploads) await enrichRecentUploads(database, apiKey, creatorId, profileId, uploads);
     await enqueue(database, "score_creator", { creatorId }, `score_creator:${creatorId}:${new Date().toISOString().slice(0, 10)}`);
     jobsQueued++;
   }
-  await writeAudit(database, { actor: "discovery_youtube", action: "discover", targetType: "query",
+  await writeAudit(database, { actor: "discovery", action: "discover", targetType: "query",
     targetId: query, decision: "completed", details: { market, query, creatorsCreated, creatorsUpdated, videos: videos.length } });
   return { videosFound: videos.length, creatorsCreated, creatorsUpdated, jobsQueued };
 }
@@ -111,4 +137,58 @@ function integerOrNull(value: string | undefined): number | null {
   if (!value) return null;
   const parsed = Number.parseInt(value, 10);
   return Number.isSafeInteger(parsed) ? parsed : null;
+}
+
+const businessMarkers = /business|sponsor|collab|partnership|advertis|inquir|enquir|сотруднич|реклам|по вопросам|деловы/i;
+
+// Only an email the creator published in the channel description counts; it is business-grade only when the
+// surrounding text says so, otherwise it is stored but sending stays blocked by the public-business rule.
+export function businessEmailFromDescription(description: string | undefined): { email: string; isBusiness: boolean } | null {
+  if (!description) return null;
+  const match = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}/.exec(description);
+  if (!match) return null;
+  const context = description.slice(Math.max(0, match.index - 120), match.index + match[0].length + 40);
+  return { email: match[0], isBusiness: businessMarkers.test(context) };
+}
+
+// Recent uploads give the scorer real reach and cadence instead of a single search hit (about 2 quota units).
+async function enrichRecentUploads(database: Database, apiKey: string, creatorId: string, profileId: string, uploadsPlaylistId: string): Promise<void> {
+  const playlist = await getJson<PlaylistItemsResponse>("https://www.googleapis.com/youtube/v3/playlistItems", {
+    key: apiKey, part: "contentDetails", playlistId: uploadsPlaylistId, maxResults: "10",
+  });
+  const ids = (playlist.items ?? []).map((item) => item.contentDetails?.videoId).filter((id): id is string => Boolean(id));
+  if (ids.length === 0) return;
+  const videos = await getJson<VideosResponse>("https://www.googleapis.com/youtube/v3/videos", {
+    key: apiKey, part: "snippet,statistics", id: ids.join(","), maxResults: "10",
+  });
+  const views: number[] = [];
+  const engagement: number[] = [];
+  for (const video of videos.items ?? []) {
+    if (!video.id) continue;
+    const viewCount = integerOrNull(video.statistics?.viewCount);
+    const likes = integerOrNull(video.statistics?.likeCount);
+    const comments = integerOrNull(video.statistics?.commentCount);
+    if (viewCount !== null) views.push(viewCount);
+    if (viewCount) engagement.push(((likes ?? 0) + (comments ?? 0)) / viewCount);
+    await database`
+      INSERT INTO creator_posts (id, creator_id, profile_id, external_id, url, title, summary, published_at, views, likes, comments)
+      VALUES (${randomUUID()}, ${creatorId}, ${profileId}, ${video.id}, ${`https://www.youtube.com/watch?v=${video.id}`},
+        ${video.snippet?.title ?? video.id}, ${video.snippet?.description?.slice(0, 1000) ?? null}, ${video.snippet?.publishedAt ?? null},
+        ${viewCount}, ${likes}, ${comments})
+      ON CONFLICT (profile_id, url) DO UPDATE SET views = EXCLUDED.views, likes = EXCLUDED.likes,
+        comments = EXCLUDED.comments, source_checked_at = now()
+    `;
+  }
+  await database`
+    UPDATE creator_profiles SET median_views = ${views.length ? Math.round(median(views) ?? 0) : null},
+      engagement_rate = ${engagement.length ? Number(median(engagement)?.toFixed(4)) : null}, updated_at = now()
+    WHERE id = ${profileId}
+  `;
+}
+
+export function median(values: number[]): number | null {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] ?? null : Math.round((((sorted[middle - 1] ?? 0) + (sorted[middle] ?? 0)) / 2) * 10_000) / 10_000;
 }
