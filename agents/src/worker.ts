@@ -10,11 +10,14 @@ import { personalizeOutreach } from "./personalization-agent.js";
 import { classifyReply } from "./reply-agent.js";
 import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
-import { calculateModelCost } from "./model-cost.js";
+import { calculateModelCost, isPricedModel } from "./model-cost.js";
 import { VibeUiClient } from "./vibeui-client.js";
 import { checkPublication } from "./publication-monitor.js";
 
 export async function runWorker(database: Database, config: Config): Promise<void> {
+  for (const model of [config.scoringModel, config.generationModel]) {
+    if (!isPricedModel(model)) throw new Error(`No price configured for model ${model}; refusing to start without budget accounting`);
+  }
   const workerId = `${hostname()}:${process.pid}`;
   let stopping = false;
   const stop = () => { stopping = true; };
@@ -240,7 +243,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
   const message = rows[0];
   if (!message) throw new Error(`Inbound message ${messageId} not found`);
   await assertModelBudget(database, config);
-  const result = await classifyReply(String(message.body), config.scoringModel);
+  const { usage, ...result } = await classifyReply(String(message.body), config.scoringModel);
   const terminal = result.classification === "unsubscribe" || result.classification === "declined";
   await database.begin(async (transaction) => {
     await transaction`UPDATE outreach_messages SET status = ${`classified:${result.classification}`} WHERE id = ${messageId}`;
@@ -255,6 +258,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
   });
   await writeAudit(database, { actor: "reply_agent", action: "classify_reply", targetType: "message",
     targetId: messageId, decision: "completed", details: result });
+  await recordUsage(database, null, null, "reply_agent", config.scoringModel, usage);
 }
 
 function firstSendDenial(message: Record<string, unknown>, control: Record<string, unknown>, policy: Awaited<ReturnType<typeof loadPolicy>>, sentToday: number): string | null {
@@ -282,7 +286,7 @@ async function scoreCreatorJob(database: Database, config: Config, job: AgentJob
     SELECT title, summary, url, published_at FROM creator_posts
     WHERE creator_id = ${creatorId} ORDER BY published_at DESC NULLS LAST LIMIT 10
   `;
-  const evidenceUrls = posts.map((post) => post.url).filter((url): url is string => typeof url === "string");
+  const evidenceUrls = [...profiles, ...posts].map((row) => row.url).filter((url): url is string => typeof url === "string");
   const runId = randomUUID();
   await database`
     INSERT INTO agent_runs (id, agent_name, job_id, status, model, input_summary)

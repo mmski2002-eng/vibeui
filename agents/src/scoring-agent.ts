@@ -13,7 +13,7 @@ const scoringOutput = z.object({
   moderateAdLoad: z.number().int().min(0).max(5),
   redFlags: z.array(z.string()).max(10),
   rationale: z.string().min(1).max(1500),
-  evidenceUrls: z.array(z.string().url()).max(20),
+  evidenceUrls: z.array(z.string().max(2048)).max(20),
 });
 
 export type ScoringOutput = z.infer<typeof scoringOutput> & { total: number; usage: TokenUsage };
@@ -40,6 +40,9 @@ Russian-market creators must be relevant to vibeui.ru; English-market creators t
   const result = await run(agent, JSON.stringify(input.candidate));
   if (!result.finalOutput) throw new Error("Scoring agent returned no structured output");
   const output = scoringOutput.parse(result.finalOutput);
+  // OpenAI strict structured outputs reject `format: uri`, so URLs are checked here instead of in the schema.
+  const malformed = output.evidenceUrls.filter((url) => !URL.canParse(url));
+  if (malformed.length > 0) throw new Error(`Scoring output contains malformed URLs: ${malformed.join(", ")}`);
   if (input.allowedEvidenceUrls) {
     const allowed = new Set(input.allowedEvidenceUrls);
     const unsupported = output.evidenceUrls.filter((url) => !allowed.has(url));

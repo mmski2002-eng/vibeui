@@ -5,8 +5,8 @@ import { extractUsage, type TokenUsage } from "./model-cost.js";
 const outputSchema = z.object({
   subject: z.string().min(1).max(160),
   body: z.string().min(50).max(3000),
-  facts: z.array(z.object({ claim: z.string().min(1).max(500), sourceUrl: z.string().url() })).min(1).max(8),
-  chosenPostUrl: z.string().url(),
+  facts: z.array(z.object({ claim: z.string().min(1).max(500), sourceUrl: z.string().max(2048) })).min(1).max(8),
+  chosenPostUrl: z.string().max(2048),
 });
 export type PersonalizationOutput = z.infer<typeof outputSchema> & { usage: TokenUsage };
 
