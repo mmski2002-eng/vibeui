@@ -1,6 +1,6 @@
 import { Agent, run } from "@openai/agents";
 import { z } from "zod";
-import { extractUsage, type TokenUsage } from "./model-cost.js";
+import { extractUsage, ModelOutputError, type TokenUsage } from "./model-cost.js";
 
 const scoringOutput = z.object({
   topicFit: z.number().int().min(0).max(30),
@@ -38,19 +38,22 @@ Russian-market creators must be relevant to vibeui.ru; English-market creators t
   });
 
   const result = await run(agent, JSON.stringify(input.candidate));
-  if (!result.finalOutput) throw new Error("Scoring agent returned no structured output");
-  const output = scoringOutput.parse(result.finalOutput);
+  const usage = extractUsage(result.state.usage);
+  if (!result.finalOutput) throw new ModelOutputError("Scoring agent returned no structured output", usage);
+  const parsed = scoringOutput.safeParse(result.finalOutput);
+  if (!parsed.success) throw new ModelOutputError(`Scoring output failed validation: ${parsed.error.message.slice(0, 500)}`, usage);
+  const output = parsed.data;
   // OpenAI strict structured outputs reject `format: uri`, so URLs are checked here instead of in the schema.
   const malformed = output.evidenceUrls.filter((url) => !URL.canParse(url));
-  if (malformed.length > 0) throw new Error(`Scoring output contains malformed URLs: ${malformed.join(", ")}`);
+  if (malformed.length > 0) throw new ModelOutputError(`Scoring output contains malformed URLs: ${malformed.join(", ")}`, usage);
   if (input.allowedEvidenceUrls) {
     const allowed = new Set(input.allowedEvidenceUrls);
     const unsupported = output.evidenceUrls.filter((url) => !allowed.has(url));
-    if (unsupported.length > 0) throw new Error(`Scoring output cited unsupported evidence: ${unsupported.join(", ")}`);
-    if (output.evidenceUrls.length === 0) throw new Error("Scoring output contains no evidence URLs");
+    if (unsupported.length > 0) throw new ModelOutputError(`Scoring output cited unsupported evidence: ${unsupported.join(", ")}`, usage);
+    if (output.evidenceUrls.length === 0) throw new ModelOutputError("Scoring output contains no evidence URLs", usage);
   }
   const total = output.redFlags.length > 0 ? Math.min(49, sumScore(output)) : sumScore(output);
-  return { ...output, total, usage: extractUsage(result.state.usage) };
+  return { ...output, total, usage };
 }
 
 function sumScore(output: z.infer<typeof scoringOutput>): number {

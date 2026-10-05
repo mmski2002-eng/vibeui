@@ -20,3 +20,8 @@ export function extractUsage(usage: { inputTokens: number; outputTokens: number;
   const cachedInputTokens = usage.inputTokensDetails.reduce((sum, item) => sum + (item.cached_tokens ?? item.cachedTokens ?? 0), 0);
   return { inputTokens: usage.inputTokens, cachedInputTokens, outputTokens: usage.outputTokens };
 }
+export class ModelOutputError extends Error {
+  constructor(message: string, readonly usage: TokenUsage) {
+    super(message);
+  }
+}

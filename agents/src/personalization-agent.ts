@@ -1,6 +1,6 @@
 import { Agent, run } from "@openai/agents";
 import { z } from "zod";
-import { extractUsage, type TokenUsage } from "./model-cost.js";
+import { extractUsage, ModelOutputError, type TokenUsage } from "./model-cost.js";
 
 const outputSchema = z.object({
   subject: z.string().min(1).max(160),
@@ -28,10 +28,13 @@ The email is sent as plain text: no Markdown, no HTML, write links as bare URLs.
     outputType: outputSchema,
   });
   const result = await run(agent, JSON.stringify({ creator: input.creator, posts: input.posts }));
-  if (!result.finalOutput) throw new Error("Personalization agent returned no structured output");
-  const output = outputSchema.parse(result.finalOutput);
+  const usage = extractUsage(result.state.usage);
+  if (!result.finalOutput) throw new ModelOutputError("Personalization agent returned no structured output", usage);
+  const parsed = outputSchema.safeParse(result.finalOutput);
+  if (!parsed.success) throw new ModelOutputError(`Personalization output failed validation: ${parsed.error.message.slice(0, 500)}`, usage);
+  const output = parsed.data;
   const citedUrls = [output.chosenPostUrl, ...output.facts.map((fact) => fact.sourceUrl)];
   const unsupported = citedUrls.filter((url) => !allowedUrls.has(url));
-  if (unsupported.length > 0) throw new Error(`Personalization cited unsupported URLs: ${unsupported.join(", ")}`);
-  return { ...output, usage: extractUsage(result.state.usage) };
+  if (unsupported.length > 0) throw new ModelOutputError(`Personalization cited unsupported URLs: ${unsupported.join(", ")}`, usage);
+  return { ...output, usage };
 }

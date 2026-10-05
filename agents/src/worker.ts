@@ -10,7 +10,7 @@ import { personalizeOutreach } from "./personalization-agent.js";
 import { classifyReply } from "./reply-agent.js";
 import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
-import { calculateModelCost, isPricedModel } from "./model-cost.js";
+import { calculateModelCost, isPricedModel, ModelOutputError } from "./model-cost.js";
 import { VibeUiClient } from "./vibeui-client.js";
 import { checkPublication } from "./publication-monitor.js";
 
@@ -40,6 +40,10 @@ export async function runWorker(database: Database, config: Config): Promise<voi
       await handleJob(database, config, job);
       await completeJob(database, job.id);
     } catch (error) {
+      if (error instanceof ModelOutputError) {
+        const model = job.kind === "personalize_thread" ? config.generationModel : config.scoringModel;
+        await recordUsage(database, null, null, `${job.kind}:rejected`, model, error.usage);
+      }
       await failJob(database, job, error);
       await writeAudit(database, {
         actor: workerId, action: job.kind, targetType: "job", targetId: job.id,
@@ -291,7 +295,7 @@ async function scoreCreatorJob(database: Database, config: Config, job: AgentJob
     SELECT title, summary, url, published_at FROM creator_posts
     WHERE creator_id = ${creatorId} ORDER BY published_at DESC NULLS LAST LIMIT 10
   `;
-  const evidenceUrls = [...profiles, ...posts].map((row) => row.url).filter((url): url is string => typeof url === "string");
+  const evidenceUrls = [...profiles.map((profile) => profile.profile_url), ...posts.map((post) => post.url)].filter((url): url is string => typeof url === "string");
   const runId = randomUUID();
   await database`
     INSERT INTO agent_runs (id, agent_name, job_id, status, model, input_summary)
