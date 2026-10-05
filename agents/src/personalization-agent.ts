@@ -23,7 +23,8 @@ export async function personalizeOutreach(input: {
     instructions: `Write one concise first-contact email in ${input.market === "ru" ? "Russian" : "English"}.
 Use exactly one supplied publication as the opening reason. VibeUI lets an AI coding agent install a real UI component file instead of recreating a generic component from a verbal description.
 Suggest a concrete comparison experiment and ask whether the creator is interested. You may offer trial access, a personal referral link, audience promo code, and commission, but no fixed amount or guaranteed earnings.
-Never invent familiarity, product functions, customers, reviews, metrics, or facts. Every factual claim about the creator must cite one supplied URL. No attachments, legal promises, or pressure.`,
+Never invent familiarity, product functions, customers, reviews, metrics, or facts. Every factual claim about the creator must cite one supplied URL. No attachments, legal promises, or pressure.
+The email is sent as plain text: no Markdown, no HTML, write links as bare URLs.`,
     outputType: outputSchema,
   });
   const result = await run(agent, JSON.stringify({ creator: input.creator, posts: input.posts }));

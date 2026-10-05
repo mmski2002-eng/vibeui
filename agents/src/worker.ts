@@ -26,6 +26,11 @@ export async function runWorker(database: Database, config: Config): Promise<voi
 
   console.log(`Worker ${workerId} started`);
   while (!stopping) {
+    const control = (await database<{ emergency_stop: boolean }[]>`SELECT emergency_stop FROM agent_control WHERE singleton = true`)[0];
+    if (control?.emergency_stop) {
+      await delay(config.workerPollMs);
+      continue;
+    }
     const job = await claimNext(database, workerId);
     if (!job) {
       await delay(config.workerPollMs);
