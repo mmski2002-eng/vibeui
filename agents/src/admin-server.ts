@@ -25,7 +25,7 @@ export function startAdminServer(database: Database, config: Config): void {
       if (!authenticate(request, config)) return unauthorized(response);
       if (request.method === "GET" && url.pathname === "/") return html(response, adminHtml);
       if (request.method === "GET" && url.pathname === "/api/dashboard") {
-        return json(response, 200, await dashboard(database));
+        return json(response, 200, await dashboard(database, config));
       }
       if (request.method === "POST" && url.pathname === "/api/control") {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
@@ -46,11 +46,33 @@ export function startAdminServer(database: Database, config: Config): void {
   });
 }
 
-async function dashboard(database: Database) {
+interface OpenRouterBalance { usage: number | null; limit: number | null; remaining: number | null; error?: string }
+let openRouterCache: { at: number; value: OpenRouterBalance } | null = null;
+
+// Shows real provider-side spend, including calls made outside the worker that model_usage never sees.
+async function openRouterBalance(config: Config): Promise<OpenRouterBalance | null> {
+  if (!config.openRouterApiKey) return null;
+  if (openRouterCache && Date.now() - openRouterCache.at < 60_000) return openRouterCache.value;
+  let value: OpenRouterBalance;
+  try {
+    const response = await fetch(`${config.openRouterBaseUrl}/key`, {
+      headers: { authorization: `Bearer ${config.openRouterApiKey}` }, signal: AbortSignal.timeout(5_000),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const { data } = await response.json() as { data: { usage?: number; limit?: number | null; limit_remaining?: number | null } };
+    value = { usage: data.usage ?? null, limit: data.limit ?? null, remaining: data.limit_remaining ?? null };
+  } catch (error) {
+    value = { usage: null, limit: null, remaining: null, error: error instanceof Error ? error.message : String(error) };
+  }
+  openRouterCache = { at: Date.now(), value };
+  return value;
+}
+
+async function dashboard(database: Database, config: Config) {
   const [candidateRows, jobRows, controlRows, runs, actions, creators, messages, campaigns, notifications, jobs] = await Promise.all([
     database<{ count: number }[]>`SELECT count(*)::int AS count FROM creators`,
     database<{ status: string; count: number }[]>`SELECT status, count(*)::int AS count FROM agent_jobs GROUP BY status`,
-    database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, reason, updated_at FROM agent_control WHERE singleton = true`,
+    database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, model_operations_paused, reason, updated_at FROM agent_control WHERE singleton = true`,
     database`SELECT agent_name, status, started_at FROM agent_runs ORDER BY started_at DESC LIMIT 20`,
     database`SELECT action, decision, created_at FROM agent_actions ORDER BY created_at DESC LIMIT 20`,
     database`SELECT c.id, c.display_name, c.market, c.status, c.do_not_contact, p.platform, p.followers,
@@ -63,8 +85,27 @@ async function dashboard(database: Database) {
     database`SELECT id, severity, kind, title, created_at FROM notifications ORDER BY created_at DESC LIMIT 30`,
     database`SELECT id, kind, status, attempts, max_attempts, last_error, created_at FROM agent_jobs ORDER BY created_at DESC LIMIT 50`,
   ]);
+  const [spendRows, spendByAgent, openRouter] = await Promise.all([
+    database<{ total: number; today: number; month: number }[]>`
+      SELECT COALESCE(sum(cost_usd), 0)::float AS total,
+        COALESCE(sum(cost_usd) FILTER (WHERE created_at >= date_trunc('day', now())), 0)::float AS today,
+        COALESCE(sum(cost_usd) FILTER (WHERE created_at >= date_trunc('month', now())), 0)::float AS month
+      FROM model_usage`,
+    database`SELECT agent_name, model, count(*)::int AS calls, sum(input_tokens)::int AS input_tokens,
+      sum(output_tokens)::int AS output_tokens, sum(cost_usd)::float AS cost_usd
+      FROM model_usage GROUP BY agent_name, model ORDER BY cost_usd DESC`,
+    openRouterBalance(config),
+  ]);
+  const spent = spendRows[0] ?? { total: 0, today: 0, month: 0 };
   const jobCounts = Object.fromEntries(jobRows.map((row) => [row.status, row.count]));
   return {
+    spending: {
+      ...spent,
+      hardBudget: config.hardModelBudgetUsd,
+      hardBudgetRemaining: Math.max(0, config.hardModelBudgetUsd - spent.total),
+      byAgent: spendByAgent,
+      openRouter,
+    },
     counts: { candidates: candidateRows[0]?.count ?? 0, queued: jobCounts.queued ?? 0, failed: jobCounts.failed ?? 0 },
     control: controlRows[0] ?? { emergency_stop: false, outreach_paused: true },
     runs,
