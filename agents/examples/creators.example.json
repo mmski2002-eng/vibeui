@@ -1,0 +1,10 @@
+[
+  {
+    "displayName": "Example creator",
+    "market": "en",
+    "language": "en",
+    "profile": { "platform": "youtube", "url": "https://www.youtube.com/@example", "handle": "@example", "followers": 10000 },
+    "posts": [{ "url": "https://www.youtube.com/watch?v=example", "title": "Building a UI with AI", "publishedAt": "2026-09-01T12:00:00.000Z" }],
+    "contact": { "kind": "email", "value": "business@example.com", "sourceUrl": "https://example.com/contact", "isPublicBusiness": true, "verifiedAt": "2026-10-05T00:00:00.000Z" }
+  }
+]

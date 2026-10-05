@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "outreachEnabled": false,
+  "minimumAutomaticScore": 80,
+  "dailyContactLimit": 5,
+  "maximumFollowUps": 2,
+  "followUpDelayDays": 4,
+  "secondFollowUpDelayDays": 9,
+  "allowedPlatforms": {
+    "ru": ["telegram", "youtube", "vk", "dzen", "habr", "vc", "rutube", "newsletter", "podcast", "website"],
+    "en": ["youtube", "x", "tiktok", "linkedin", "instagram", "newsletter", "podcast", "devto", "hashnode", "medium", "producthunt", "website"]
+  },
+  "requirePublicBusinessContact": true,
+  "requireHumanApprovalFor": ["first_contact", "payment_offer", "contract", "referral_activation"],
+  "blockedContactDomains": [],
+  "monthlyModelBudgetUsd": 50,
+  "monthlyOutreachBudgetUsd": 0
+}

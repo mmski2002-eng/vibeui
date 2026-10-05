@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "enabled": false,
+  "note": "Комиссии, скидки и фиксированные выплаты не активируются до утверждения экономики владельцем VibeUI.",
+  "ru": {
+    "currency": "RUB",
+    "commissionPercent": null,
+    "audienceDiscountPercent": null,
+    "maximumFixedPayment": null,
+    "requiresManualApproval": true
+  },
+  "en": {
+    "currency": "USD",
+    "commissionPercent": null,
+    "audienceDiscountPercent": null,
+    "maximumFixedPayment": null,
+    "requiresManualApproval": true
+  }
+}
