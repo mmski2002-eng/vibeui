@@ -1,6 +1,7 @@
 export interface TokenUsage { inputTokens: number; cachedInputTokens: number; outputTokens: number }
 const pricesPerMillion: Record<string, { input: number; cached: number; output: number }> = {
   "gpt-6-luna": { input: 0.1, cached: 0.01, output: 0.5 },
+  "openai/gpt-6-luna": { input: 0.1, cached: 0.01, output: 0.5 },
   "gpt-6.1-sol": { input: 2, cached: 0.1, output: 10 },
 };
 export function calculateModelCost(model: string, usage: TokenUsage): number {

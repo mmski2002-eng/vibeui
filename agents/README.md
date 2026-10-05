@@ -26,6 +26,18 @@
 
 Требуются Node.js 20+, PostgreSQL и API-ключ OpenAI.
 
+Для тестов поддерживается OpenRouter через OpenAI-compatible Chat Completions:
+
+```env
+OPENROUTER_API_KEY=...
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+OPENAI_SCORING_MODEL=openai/gpt-6-luna
+OPENAI_GENERATION_MODEL=openai/gpt-6-luna
+HARD_MODEL_BUDGET_USD=0.80
+```
+
+При наличии `OPENROUTER_API_KEY` SDK автоматически переключается на OpenRouter и отключает экспорт OpenAI traces. `HARD_MODEL_BUDGET_USD` — независимый локальный предохранитель; после его достижения новые модельные операции блокируются в БД.
+
 ```bash
 cd agents
 cp .env.example .env

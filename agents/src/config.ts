@@ -8,13 +8,25 @@ function integer(name: string, fallback: number): number {
   return parsed;
 }
 
+function decimal(name: string, fallback: number): number {
+  const value = process.env[name];
+  if (!value) return fallback;
+  const parsed = Number.parseFloat(value);
+  if (!Number.isFinite(parsed) || parsed < 0) throw new Error(`${name} must be a non-negative number`);
+  return parsed;
+}
+
 export type Config = ReturnType<typeof loadConfig>;
 
 export function loadConfig() {
+  const openRouterApiKey = process.env.OPENROUTER_API_KEY ?? "";
   return {
     databaseUrl: process.env.DATABASE_URL ?? "",
-    scoringModel: process.env.OPENAI_SCORING_MODEL ?? "gpt-6-luna",
-    generationModel: process.env.OPENAI_GENERATION_MODEL ?? "gpt-6.1-sol",
+    scoringModel: process.env.OPENAI_SCORING_MODEL ?? (openRouterApiKey ? "openai/gpt-6-luna" : "gpt-6-luna"),
+    generationModel: process.env.OPENAI_GENERATION_MODEL ?? (openRouterApiKey ? "openai/gpt-6-luna" : "gpt-6.1-sol"),
+    openRouterApiKey,
+    openRouterBaseUrl: process.env.OPENROUTER_BASE_URL ?? "https://openrouter.ai/api/v1",
+    hardModelBudgetUsd: decimal("HARD_MODEL_BUDGET_USD", 0.8),
     youtubeApiKey: process.env.YOUTUBE_API_KEY ?? "",
     resendApiKey: process.env.RESEND_API_KEY ?? "",
     resendWebhookSecret: process.env.RESEND_WEBHOOK_SECRET ?? "",

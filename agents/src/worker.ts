@@ -65,6 +65,7 @@ async function handleJob(database: Database, config: Config, job: AgentJob): Pro
     VALUES (${runId}, 'candidate_scorer', ${job.id}, 'running', ${config.scoringModel}, ${candidateId})
   `;
   try {
+    await assertModelBudget(database, config);
     const score = await scoreCandidate({ candidate, model: config.scoringModel });
     const { usage: _candidateUsage, ...candidateScoreDetails } = score;
     await database.begin(async (transaction) => {
@@ -167,6 +168,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
   `;
   const market = thread.market;
   if (market !== "ru" && market !== "en") throw new Error("Invalid creator market");
+  await assertModelBudget(database, config);
   const output = await personalizeOutreach({ creator: thread, posts, market, model: config.generationModel });
   await database`
     INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, facts,
@@ -237,6 +239,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
   `;
   const message = rows[0];
   if (!message) throw new Error(`Inbound message ${messageId} not found`);
+  await assertModelBudget(database, config);
   const result = await classifyReply(String(message.body), config.scoringModel);
   const terminal = result.classification === "unsubscribe" || result.classification === "declined";
   await database.begin(async (transaction) => {
@@ -286,6 +289,7 @@ async function scoreCreatorJob(database: Database, config: Config, job: AgentJob
     VALUES (${runId}, 'creator_scorer', ${job.id}, 'running', ${config.scoringModel}, ${creatorId})
   `;
   try {
+    await assertModelBudget(database, config);
     const score = await scoreCandidate({ candidate: { creator, profiles, posts }, model: config.scoringModel, allowedEvidenceUrls: evidenceUrls });
     const { usage: _creatorUsage, ...creatorScoreDetails } = score;
     const campaigns = await database<{ id: string }[]>`
@@ -335,6 +339,22 @@ async function recordUsage(database: Database, runId: string | null, campaignId:
         await transaction`INSERT INTO notifications (id, severity, kind, title, details) VALUES (${randomUUID()}, 'critical', 'campaign_budget_exceeded', 'Кампания остановлена по бюджету', ${transaction.json({ campaignId, spent: value.spent, budget: value.budget })})`;
       });
     }
+  }
+}
+
+async function assertModelBudget(database: Database, config: Config): Promise<void> {
+  const rows = await database<{ spent: number; paused: boolean }[]>`
+    SELECT COALESCE((SELECT sum(cost_usd) FROM model_usage), 0)::float AS spent,
+      model_operations_paused AS paused FROM agent_control WHERE singleton = true
+  `;
+  const state = rows[0];
+  if (state?.paused) throw new Error("Model operations are paused");
+  if ((state?.spent ?? 0) >= config.hardModelBudgetUsd) {
+    await database`
+      UPDATE agent_control SET model_operations_paused = true,
+        reason = 'Hard model budget reached', updated_at = now() WHERE singleton = true
+    `;
+    throw new Error(`Hard model budget reached: $${config.hardModelBudgetUsd.toFixed(2)}`);
   }
 }
 

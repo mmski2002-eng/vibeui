@@ -7,9 +7,11 @@ import { discoverYouTube } from "./discovery/youtube.js";
 import { importCreators } from "./import-creators.js";
 import { prepareDrafts } from "./prepare-drafts.js";
 import { resolve } from "node:path";
+import { configureModelProvider } from "./model-provider.js";
 
 const command = process.argv[2];
 const config = loadConfig();
+configureModelProvider(config);
 const database = connectDatabase(requireDatabaseUrl(config));
 
 if (command === "migrate") {
