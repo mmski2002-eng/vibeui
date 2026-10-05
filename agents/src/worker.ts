@@ -291,7 +291,7 @@ async function scoreCreatorJob(database: Database, config: Config, job: AgentJob
   const creator = creators[0];
   if (!creator) throw new Error(`Creator ${creatorId} not found`);
   const profiles = await database<Record<string, unknown>[]>`
-    SELECT platform, profile_url, handle, followers, median_views, engagement_rate, raw_public_data->'snippet'->>'description' AS description,
+    SELECT platform, profile_url, handle, followers, median_views, engagement_rate, COALESCE(raw_public_data->'snippet'->>'description', raw_public_data->>'description') AS description,
       raw_public_data->'statistics' AS statistics, verified_at
     FROM creator_profiles WHERE creator_id = ${creatorId}
   `;

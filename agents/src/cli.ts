@@ -4,6 +4,7 @@ import { migrate } from "./migrate.js";
 import { runWorker } from "./worker.js";
 import { startAdminServer } from "./admin-server.js";
 import { discoverYouTube } from "./discovery/youtube.js";
+import { discoverTelegram } from "./discovery/telegram.js";
 import { importCreators } from "./import-creators.js";
 import { prepareDrafts } from "./prepare-drafts.js";
 import { resolve } from "node:path";
@@ -31,6 +32,11 @@ if (command === "migrate") {
   }
   console.log(await discoverYouTube(database, config.youtubeApiKey, market, query, maxResults));
   await database.end();
+} else if (command === "discover" && process.argv[3] === "telegram") {
+  const maxChannels = Number.parseInt(process.argv[4] ?? "30", 10);
+  const seeds = process.argv.slice(5);
+  console.log(await discoverTelegram(database, seeds, { maxChannels, maxDepth: 2 }));
+  await database.end();
 } else if (command === "import") {
   const path = process.argv[3];
   if (!path) throw new Error("Usage: tsx src/cli.ts import <creators.json>");
@@ -41,5 +47,5 @@ if (command === "migrate") {
   await database.end();
 } else {
   await database.end();
-  throw new Error("Usage: migrate | worker | admin | discover youtube ... | import <file> | prepare-drafts");
+  throw new Error("Usage: migrate | worker | admin | discover youtube ... | discover telegram [maxChannels] [seed...] | import <file> | prepare-drafts");
 }
