@@ -9,25 +9,27 @@ import { businessEmailFromDescription, median } from "./youtube.js";
 const REQUEST_DELAY_MS = 3_000;
 const REFRESH_AFTER_DAYS = 7;
 const reservedNames = new Set(["joinchat", "addstickers", "addemoji", "share", "proxy", "socks", "iv", "s", "c", "addlist", "boost", "setlanguage", "contact"]);
-const topicPattern = /вайб.?код|vibe.?cod|cursor|claude|chatgpt|gpt|openai|нейросет|\bии\b|\bai\b|no.?code|low.?code|react|next\.?js|tailwind|shadcn|frontend|фронтенд|вёрстк|верстк|веб.?разработ|программир|разработчик|стартап|saas|\bmvp\b|indie|лендинг|landing/gi;
-const adMarkers = /реклам|сотруднич|по вопросам|для связи|коммерч|business|ads|partnership|collab/i;
+export const topicPattern = /вайб.?код|vibe.?cod|cursor|claude|chatgpt|gpt|openai|нейросет|(?<![а-яё])ии(?![а-яё])|\bai\b|no.?code|low.?code|react|next\.?js|tailwind|shadcn|frontend|фронтенд|вёрстк|верстк|веб.?разработ|программир|разработчик|стартап|saas|\bmvp\b|indie|лендинг|landing/gi;
+export const adMarkers = /реклам|сотруднич|по вопросам|для связи|коммерч|business|ads|partnership|collab/i;
 
 export interface TelegramPost { url: string; text: string; views: number | null; publishedAt: string | null }
 export interface TelegramChannel {
   username: string; title: string; description: string; subscribers: number | null;
   posts: TelegramPost[]; linkedChannels: string[];
 }
-export interface TelegramDiscoveryResult { visited: number; relevant: number; created: number; updated: number; jobsQueued: number; skipped: number }
+export interface TelegramDiscoveryResult { visited: number; relevant: number; created: number; attached: number; updated: number; jobsQueued: number; skipped: number }
+interface Seed { name: string; ownerCreatorId: string | null }
 
 export async function discoverTelegram(database: Database, seeds: string[], options: { maxChannels: number; maxDepth: number }): Promise<TelegramDiscoveryResult> {
-  const result: TelegramDiscoveryResult = { visited: 0, relevant: 0, created: 0, updated: 0, jobsQueued: 0, skipped: 0 };
-  const queue: Array<{ name: string; depth: number }> = [];
+  const result: TelegramDiscoveryResult = { visited: 0, relevant: 0, created: 0, attached: 0, updated: 0, jobsQueued: 0, skipped: 0 };
+  const queue: Array<Seed & { depth: number }> = [];
   const seen = new Set<string>();
-  const push = (name: string, depth: number) => {
-    const normalized = normalizeUsername(name);
-    if (normalized && !seen.has(normalized)) { seen.add(normalized); queue.push({ name: normalized, depth }); }
+  const push = (seed: Seed, depth: number) => {
+    const normalized = normalizeUsername(seed.name);
+    if (normalized && !seen.has(normalized)) { seen.add(normalized); queue.push({ name: normalized, ownerCreatorId: seed.ownerCreatorId, depth }); }
   };
-  for (const seed of [...seeds, ...await seedsFromDatabase(database)]) push(seed, 0);
+  for (const seed of seeds) push({ name: seed, ownerCreatorId: null }, 0);
+  for (const seed of await seedsFromDatabase(database)) push(seed, 0);
 
   while (queue.length > 0 && result.visited < options.maxChannels) {
     const next = queue.shift();
@@ -39,11 +41,11 @@ export async function discoverTelegram(database: Database, seeds: string[], opti
     if (!channel) continue;
     if (!isRelevant(channel)) continue;
     result.relevant++;
-    const saved = await saveChannel(database, channel);
-    if (saved.status === "created") result.created++; else result.updated++;
+    const saved = await saveChannel(database, channel, next.ownerCreatorId);
+    result[saved.status]++;
     await enqueue(database, "score_creator", { creatorId: saved.id }, `score_creator:${saved.id}:${new Date().toISOString().slice(0, 10)}`);
     result.jobsQueued++;
-    if (next.depth < options.maxDepth) for (const linked of channel.linkedChannels) push(linked, next.depth + 1);
+    if (next.depth < options.maxDepth) for (const linked of channel.linkedChannels) push({ name: linked, ownerCreatorId: null }, next.depth + 1);
   }
   await writeAudit(database, { actor: "discovery", action: "discover_telegram", targetType: "query", targetId: seeds.join(",").slice(0, 200) || "database-seeds",
     decision: "completed", details: { ...result } });
@@ -128,12 +130,13 @@ async function fetchChannel(username: string): Promise<TelegramChannel | null> {
   return parseChannelPage(username, await response.text());
 }
 
-async function saveChannel(database: Database, channel: TelegramChannel): Promise<{ status: "created" | "updated"; id: string }> {
+async function saveChannel(database: Database, channel: TelegramChannel, ownerCreatorId: string | null): Promise<{ status: "created" | "attached" | "updated"; id: string }> {
   const profileUrl = `https://t.me/${channel.username}`;
   const existing = await database<{ creator_id: string; profile_id: string }[]>`
     SELECT creator_id, id AS profile_id FROM creator_profiles WHERE platform = 'telegram' AND external_id = ${channel.username}
   `;
-  const creatorId = existing[0]?.creator_id ?? randomUUID();
+  const owner = !existing[0] && ownerCreatorId ? (await database<{ id: string }[]>`SELECT id FROM creators WHERE id = ${ownerCreatorId}`)[0] : undefined;
+  const creatorId = existing[0]?.creator_id ?? owner?.id ?? randomUUID();
   const profileId = existing[0]?.profile_id ?? randomUUID();
   const views = channel.posts.map((post) => post.views).filter((value): value is number => value !== null);
   const medianViews = views.length ? Math.round(median(views) ?? 0) : null;
@@ -144,8 +147,10 @@ async function saveChannel(database: Database, channel: TelegramChannel): Promis
       await transaction`UPDATE creator_profiles SET followers = ${channel.subscribers}, median_views = ${medianViews},
         raw_public_data = ${raw}, verified_at = now(), updated_at = now() WHERE id = ${profileId}`;
     } else {
-      await transaction`INSERT INTO creators (id, display_name, market, language, status)
-        VALUES (${creatorId}, ${channel.title}, ${market}, ${market}, 'researched')`;
+      if (!owner) {
+        await transaction`INSERT INTO creators (id, display_name, market, language, status)
+          VALUES (${creatorId}, ${channel.title}, ${market}, ${market}, 'researched')`;
+      }
       await transaction`INSERT INTO creator_profiles (id, creator_id, platform, external_id, profile_url, handle, followers, median_views, raw_public_data, verified_at)
         VALUES (${profileId}, ${creatorId}, 'telegram', ${channel.username}, ${profileUrl}, ${`@${channel.username}`}, ${channel.subscribers}, ${medianViews}, ${raw}, now())`;
     }
@@ -165,7 +170,7 @@ async function saveChannel(database: Database, channel: TelegramChannel): Promis
       `;
     }
   });
-  return { status: existing[0] ? "updated" : "created", id: creatorId };
+  return { status: existing[0] ? "updated" : owner ? "attached" : "created", id: creatorId };
 }
 
 async function recentlyChecked(database: Database, username: string): Promise<boolean> {
@@ -176,16 +181,18 @@ async function recentlyChecked(database: Database, username: string): Promise<bo
   return rows.length > 0;
 }
 
-// Telegram links already published by known creators (YouTube descriptions, channel bios) seed the crawl.
-async function seedsFromDatabase(database: Database): Promise<string[]> {
-  const rows = await database<{ name: string }[]>`
-    SELECT DISTINCT lower(m[1]) AS name FROM (
-      SELECT regexp_matches(COALESCE(summary, ''), 't\\.me/([A-Za-z][A-Za-z0-9_]{3,31})', 'g') AS m FROM creator_posts
+// A Telegram link in a creator's own profile description is that creator's channel; links in posts are only seeds.
+async function seedsFromDatabase(database: Database): Promise<Seed[]> {
+  const rows = await database<{ name: string; owner: string | null }[]>`
+    SELECT DISTINCT lower(m[1]) AS name, owner FROM (
+      SELECT regexp_matches(COALESCE(raw_public_data::text, ''), 't\\.me/([A-Za-z][A-Za-z0-9_]{3,31})', 'g') AS m, creator_id::text AS owner
+        FROM creator_profiles WHERE platform <> 'telegram'
       UNION ALL
-      SELECT regexp_matches(COALESCE(raw_public_data::text, ''), 't\\.me/([A-Za-z][A-Za-z0-9_]{3,31})', 'g') FROM creator_profiles WHERE platform <> 'telegram'
+      SELECT regexp_matches(COALESCE(summary, ''), 't\\.me/([A-Za-z][A-Za-z0-9_]{3,31})', 'g'), NULL FROM creator_posts
     ) links
   `;
-  return rows.map((row) => row.name);
+  return rows.map((row) => ({ name: row.name, ownerCreatorId: row.owner }))
+    .sort((a, b) => Number(b.ownerCreatorId !== null) - Number(a.ownerCreatorId !== null));
 }
 
 function stripTags(html: string): string {

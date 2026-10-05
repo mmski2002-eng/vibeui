@@ -28,6 +28,7 @@ export function loadConfig() {
     openRouterBaseUrl: process.env.OPENROUTER_BASE_URL ?? "https://openrouter.ai/api/v1",
     hardModelBudgetUsd: decimal("HARD_MODEL_BUDGET_USD", 0.8),
     youtubeApiKey: process.env.YOUTUBE_API_KEY ?? "",
+    vkServiceToken: process.env.VK_SERVICE_TOKEN ?? "",
     resendApiKey: process.env.RESEND_API_KEY ?? "",
     resendWebhookSecret: process.env.RESEND_WEBHOOK_SECRET ?? "",
     outreachEmailFrom: process.env.OUTREACH_EMAIL_FROM ?? "",
