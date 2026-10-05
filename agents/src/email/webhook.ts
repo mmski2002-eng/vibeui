@@ -30,7 +30,7 @@ export async function handleResendWebhook(database: Database, config: Config, pa
       `;
       if (rows[0]) {
         await transaction`UPDATE creators SET do_not_contact = true, status = 'do_not_contact', updated_at = now() WHERE id = ${rows[0].creator_id}`;
-        await transaction`INSERT INTO do_not_contact (id, creator_id, reason, source) VALUES (${randomUUID()}, ${rows[0].creator_id}, 'spam_complaint', 'resend_webhook') ON CONFLICT (creator_id, normalized_contact) DO NOTHING`;
+        await transaction`INSERT INTO do_not_contact (id, creator_id, reason, source) VALUES (${randomUUID()}, ${rows[0].creator_id}, 'spam_complaint', 'resend_webhook') ON CONFLICT DO NOTHING`;
       }
       await transaction`UPDATE agent_control SET emergency_stop = true, outreach_paused = true, safe_tasks_only = true, reason = 'Spam complaint', updated_at = now() WHERE singleton = true`;
     });

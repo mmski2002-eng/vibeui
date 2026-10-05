@@ -249,7 +249,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
       await transaction`UPDATE creators SET do_not_contact = true, status = 'do_not_contact', updated_at = now() WHERE id = ${String(message.creator_id)}`;
       await transaction`
         INSERT INTO do_not_contact (id, creator_id, reason, source) VALUES (${randomUUID()}, ${String(message.creator_id)}, ${result.classification}, 'reply_agent')
-        ON CONFLICT (creator_id, normalized_contact) DO NOTHING
+        ON CONFLICT DO NOTHING
       `;
     }
   });

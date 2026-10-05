@@ -49,9 +49,11 @@ CREATE TABLE IF NOT EXISTS creator_profiles (
   verified_at timestamptz,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
-  UNIQUE (platform, profile_url),
-  UNIQUE NULLS NOT DISTINCT (platform, external_id)
+  UNIQUE (platform, profile_url)
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS creator_profiles_external_id_unique_idx
+ON creator_profiles (platform, external_id) WHERE external_id IS NOT NULL;
 
 CREATE TABLE IF NOT EXISTS creator_posts (
   id uuid PRIMARY KEY,
@@ -139,9 +141,14 @@ CREATE TABLE IF NOT EXISTS do_not_contact (
   normalized_contact text,
   reason text NOT NULL,
   source text NOT NULL,
-  created_at timestamptz NOT NULL DEFAULT now(),
-  UNIQUE NULLS NOT DISTINCT (creator_id, normalized_contact)
+  created_at timestamptz NOT NULL DEFAULT now()
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS do_not_contact_creator_unique_idx
+ON do_not_contact (creator_id) WHERE creator_id IS NOT NULL AND normalized_contact IS NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS do_not_contact_value_unique_idx
+ON do_not_contact (normalized_contact) WHERE normalized_contact IS NOT NULL;
 
 CREATE TABLE IF NOT EXISTS compliance_checks (
   id uuid PRIMARY KEY,
