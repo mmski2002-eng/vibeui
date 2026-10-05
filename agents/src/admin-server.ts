@@ -1,10 +1,24 @@
 import { timingSafeEqual } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import type { Config } from "./config.js";
 import type { Database } from "./database.js";
 import { writeAudit } from "./audit.js";
-import { adminHtml } from "./admin-ui.js";
+import { handleAdminApi } from "./admin-api.js";
 import { handleResendWebhook } from "./email/webhook.js";
+
+const adminDirectory = new URL("../admin/", import.meta.url);
+const staticFiles: Record<string, string> = {
+  "/": "index.html",
+  "/assets/app.css": "app.css",
+  "/assets/app.js": "app.js",
+  "/assets/views.js": "views.js",
+};
+const contentTypes: Record<string, string> = {
+  html: "text/html; charset=utf-8",
+  css: "text/css; charset=utf-8",
+  js: "text/javascript; charset=utf-8",
+};
 
 export function startAdminServer(database: Database, config: Config): void {
   if (!config.adminPassword || config.adminPassword.length < 16) {
@@ -23,10 +37,8 @@ export function startAdminServer(database: Database, config: Config): void {
         return json(response, 200, { ok: true });
       }
       if (!authenticate(request, config)) return unauthorized(response);
-      if (request.method === "GET" && url.pathname === "/") return html(response, adminHtml);
-      if (request.method === "GET" && url.pathname === "/api/dashboard") {
-        return json(response, 200, await dashboard(database, config));
-      }
+      const staticFile = staticFiles[url.pathname];
+      if (request.method === "GET" && staticFile) return serveStatic(response, staticFile);
       if (request.method === "POST" && url.pathname === "/api/control") {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return updateControl(database, request, response);
@@ -34,6 +46,10 @@ export function startAdminServer(database: Database, config: Config): void {
       if (request.method === "POST" && url.pathname === "/api/action") {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return adminAction(database, request, response);
+      }
+      if (request.method === "GET") {
+        const result = await handleAdminApi(database, config, url);
+        if (result) return json(response, result.status, result.body);
       }
       return json(response, 404, { error: "not_found" });
     } catch (error) {
@@ -46,80 +62,28 @@ export function startAdminServer(database: Database, config: Config): void {
   });
 }
 
-interface OpenRouterBalance { usage: number | null; limit: number | null; remaining: number | null; error?: string }
-let openRouterCache: { at: number; value: OpenRouterBalance } | null = null;
-
-// Shows real provider-side spend, including calls made outside the worker that model_usage never sees.
-async function openRouterBalance(config: Config): Promise<OpenRouterBalance | null> {
-  if (!config.openRouterApiKey) return null;
-  if (openRouterCache && Date.now() - openRouterCache.at < 60_000) return openRouterCache.value;
-  let value: OpenRouterBalance;
-  try {
-    const response = await fetch(`${config.openRouterBaseUrl}/key`, {
-      headers: { authorization: `Bearer ${config.openRouterApiKey}` }, signal: AbortSignal.timeout(5_000),
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const { data } = await response.json() as { data: { usage?: number; limit?: number | null; limit_remaining?: number | null } };
-    value = { usage: data.usage ?? null, limit: data.limit ?? null, remaining: data.limit_remaining ?? null };
-  } catch (error) {
-    value = { usage: null, limit: null, remaining: null, error: error instanceof Error ? error.message : String(error) };
-  }
-  openRouterCache = { at: Date.now(), value };
-  return value;
-}
-
-async function dashboard(database: Database, config: Config) {
-  const [candidateRows, jobRows, controlRows, runs, actions, creators, messages, campaigns, notifications, jobs] = await Promise.all([
-    database<{ count: number }[]>`SELECT count(*)::int AS count FROM creators`,
-    database<{ status: string; count: number }[]>`SELECT status, count(*)::int AS count FROM agent_jobs GROUP BY status`,
-    database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, model_operations_paused, reason, updated_at FROM agent_control WHERE singleton = true`,
-    database`SELECT agent_name, status, started_at FROM agent_runs ORDER BY started_at DESC LIMIT 20`,
-    database`SELECT action, decision, created_at FROM agent_actions ORDER BY created_at DESC LIMIT 20`,
-    database`SELECT c.id, c.display_name, c.market, c.status, c.do_not_contact, p.platform, p.followers,
-      (SELECT total FROM candidate_scores s WHERE s.creator_id = c.id ORDER BY s.created_at DESC LIMIT 1) AS score
-      FROM creators c LEFT JOIN creator_profiles p ON p.creator_id = c.id ORDER BY c.updated_at DESC LIMIT 50`,
-    database`SELECT m.id, m.direction, m.kind, m.status, m.subject, m.created_at, c.display_name
-      FROM outreach_messages m JOIN conversation_threads t ON t.id = m.thread_id JOIN creators c ON c.id = t.creator_id
-      ORDER BY m.created_at DESC LIMIT 50`,
-    database`SELECT id, name, market, status, daily_limit, minimum_score FROM outreach_campaigns ORDER BY created_at`,
-    database`SELECT id, severity, kind, title, created_at FROM notifications ORDER BY created_at DESC LIMIT 30`,
-    database`SELECT id, kind, status, attempts, max_attempts, last_error, created_at FROM agent_jobs ORDER BY created_at DESC LIMIT 50`,
-  ]);
-  const [spendRows, spendByAgent, openRouter] = await Promise.all([
-    database<{ total: number; today: number; month: number }[]>`
-      SELECT COALESCE(sum(cost_usd), 0)::float AS total,
-        COALESCE(sum(cost_usd) FILTER (WHERE created_at >= date_trunc('day', now())), 0)::float AS today,
-        COALESCE(sum(cost_usd) FILTER (WHERE created_at >= date_trunc('month', now())), 0)::float AS month
-      FROM model_usage`,
-    database`SELECT agent_name, model, count(*)::int AS calls, sum(input_tokens)::int AS input_tokens,
-      sum(output_tokens)::int AS output_tokens, sum(cost_usd)::float AS cost_usd
-      FROM model_usage GROUP BY agent_name, model ORDER BY cost_usd DESC`,
-    openRouterBalance(config),
-  ]);
-  const spent = spendRows[0] ?? { total: 0, today: 0, month: 0 };
-  const jobCounts = Object.fromEntries(jobRows.map((row) => [row.status, row.count]));
-  return {
-    spending: {
-      ...spent,
-      hardBudget: config.hardModelBudgetUsd,
-      hardBudgetRemaining: Math.max(0, config.hardModelBudgetUsd - spent.total),
-      byAgent: spendByAgent,
-      openRouter,
-    },
-    counts: { candidates: candidateRows[0]?.count ?? 0, queued: jobCounts.queued ?? 0, failed: jobCounts.failed ?? 0 },
-    control: controlRows[0] ?? { emergency_stop: false, outreach_paused: true },
-    runs,
-    actions,
-    creators, messages, campaigns, notifications, jobs,
-  };
+async function serveStatic(response: ServerResponse, file: string): Promise<void> {
+  const body = await readFile(new URL(file, adminDirectory));
+  response.writeHead(200, {
+    "content-type": contentTypes[file.split(".").pop() ?? ""] ?? "application/octet-stream",
+    "cache-control": "no-store",
+    "content-security-policy": "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "x-frame-options": "DENY",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "no-referrer",
+  });
+  response.end(body);
 }
 
 async function adminAction(database: Database, request: IncomingMessage, response: ServerResponse) {
   const body = await readJson(request);
   const action = body.action;
   const id = body.id;
+  const reason = typeof body.reason === "string" && body.reason.trim() ? body.reason.trim().slice(0, 500) : null;
   if (typeof action !== "string" || typeof id !== "string") return json(response, 400, { error: "invalid_action" });
+  let targetType = "job";
   if (action === "approve_message") {
+    targetType = "message";
     const rows = await database<{ id: string }[]>`
       UPDATE outreach_messages SET status = 'approved', approved_by = 'administrator', approved_at = now()
       WHERE id = ${id} AND status = 'draft' RETURNING id
@@ -128,18 +92,41 @@ async function adminAction(database: Database, request: IncomingMessage, respons
     const { enqueue } = await import("./queue.js");
     await enqueue(database, "send_message", { messageId: id }, `send_message:${id}`);
   } else if (action === "do_not_contact") {
+    targetType = "creator";
+    const { randomUUID } = await import("node:crypto");
     await database.begin(async (transaction) => {
-      await transaction`UPDATE creators SET do_not_contact = true, status = 'do_not_contact', updated_at = now() WHERE id = ${id}`;
-      await transaction`UPDATE agent_jobs SET status = 'cancelled', updated_at = now() WHERE status = 'queued' AND payload->>'creatorId' = ${id}`;
+      const rows = await transaction`UPDATE creators SET do_not_contact = true, status = 'do_not_contact', blocked_reason = ${reason}, updated_at = now() WHERE id = ${id} RETURNING id`;
+      if (!rows[0]) return;
+      await transaction`
+        INSERT INTO do_not_contact (id, creator_id, reason, source) VALUES (${randomUUID()}, ${id}, ${reason ?? "administrator"}, 'administrator')
+        ON CONFLICT DO NOTHING
+      `;
+      // Every queued job tied to this creator, directly or through a thread or message, is cancelled at once.
+      await transaction`
+        UPDATE agent_jobs SET status = 'cancelled', last_error = 'do_not_contact', updated_at = now()
+        WHERE status = 'queued' AND (
+          payload->>'creatorId' = ${id}
+          OR payload->>'threadId' IN (SELECT id::text FROM conversation_threads WHERE creator_id = ${id})
+          OR payload->>'messageId' IN (SELECT m.id::text FROM outreach_messages m JOIN conversation_threads t ON t.id = m.thread_id WHERE t.creator_id = ${id})
+        )
+      `;
+      await transaction`UPDATE conversation_threads SET state = 'do_not_contact', updated_at = now() WHERE creator_id = ${id}`;
     });
   } else if (action === "cancel_job") {
-    await database`UPDATE agent_jobs SET status = 'cancelled', updated_at = now() WHERE id = ${id} AND status = 'queued'`;
+    const rows = await database`UPDATE agent_jobs SET status = 'cancelled', updated_at = now() WHERE id = ${id} AND status = 'queued' RETURNING id`;
+    if (!rows[0]) return json(response, 409, { error: "job_not_queued" });
   } else if (action === "retry_job") {
-    await database`UPDATE agent_jobs SET status = 'queued', available_at = now(), last_error = null, updated_at = now() WHERE id = ${id} AND status = 'failed' AND attempts < max_attempts`;
+    // A failed job has exhausted its attempts, so one extra attempt is granted. External effects stay guarded by
+    // idempotency keys and status checks (a sent message or created partner is refused on re-run).
+    const rows = await database`
+      UPDATE agent_jobs SET status = 'queued', available_at = now(), max_attempts = attempts + 1, updated_at = now()
+      WHERE id = ${id} AND status = 'failed' RETURNING id
+    `;
+    if (!rows[0]) return json(response, 409, { error: "job_not_failed" });
   } else {
     return json(response, 400, { error: "unknown_action" });
   }
-  await writeAudit(database, { actor: "administrator", action, targetType: "admin_object", targetId: id, decision: "completed" });
+  await writeAudit(database, { actor: "administrator", action, targetType, targetId: id, decision: "completed", reason: reason ?? undefined });
   return json(response, 200, { ok: true });
 }
 
@@ -152,9 +139,11 @@ async function updateControl(database: Database, request: IncomingMessage, respo
     stop: { emergency: true, paused: true, reason: "Emergency stop by administrator" },
     "clear-stop": { emergency: false, paused: true, reason: "Emergency stop cleared; outreach remains paused" },
   };
-  if (action === "pause-partnerships" || action === "resume-partnerships" || action === "pause-payouts" || action === "resume-payouts") {
-    const column = action.includes("partnerships") ? "partnerships_paused" : "payouts_paused";
-    const value = action.startsWith("pause");
+  const toggles: Record<string, string> = { partnerships: "partnerships_paused", payouts: "payouts_paused", models: "model_operations_paused" };
+  const toggle = typeof action === "string" ? /^(pause|resume)-(partnerships|payouts|models)$/.exec(action) : null;
+  if (toggle) {
+    const column = toggles[toggle[2] ?? ""] ?? "";
+    const value = toggle[1] === "pause";
     await database.unsafe(`UPDATE agent_control SET ${column} = $1, updated_at = now() WHERE singleton = true`, [value]);
     await writeAudit(database, { actor: "administrator", action: `control_${action}`, targetType: "system", decision: "completed" });
     return json(response, 200, { ok: true });
@@ -212,8 +201,4 @@ function unauthorized(response: ServerResponse): void {
 function json(response: ServerResponse, status: number, value: unknown): void {
   response.writeHead(status, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff" });
   response.end(JSON.stringify(value));
-}
-function html(response: ServerResponse, value: string): void {
-  response.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store", "content-security-policy": "default-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; frame-ancestors 'none'", "x-frame-options": "DENY", "x-content-type-options": "nosniff" });
-  response.end(value);
 }

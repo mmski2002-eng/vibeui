@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>VibeUI Agents</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Onest:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/app.css">
+<script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#/dashboard" aria-label="VibeUI Agents — дашборд">
+    <span class="brand-mark" aria-hidden="true">V</span>
+    <span class="brand-name">VibeUI Agents</span>
+  </a>
+  <span id="system-status" class="pill">—</span>
+  <button class="btn menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="sidebar">Меню</button>
+  <div class="controls" id="controls" aria-label="Управление системой"></div>
+</header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Разделы">
+    <div class="nav-group nav">
+      <div class="nav-label">Обзор</div>
+      <a href="#/dashboard">Дашборд</a>
+      <a href="#/agents">Агенты</a>
+      <a href="#/runs">Запуски</a>
+      <a href="#/queue">Очередь</a>
+    </div>
+    <div class="nav-group nav">
+      <div class="nav-label">Работа</div>
+      <a href="#/creators">Блогеры</a>
+      <a href="#/conversations">Переписки</a>
+      <a href="#/campaigns">Кампании</a>
+      <a href="#/partners">Партнёры</a>
+      <a href="#/publications">Публикации</a>
+    </div>
+    <div class="nav-group nav">
+      <div class="nav-label">Контроль</div>
+      <a href="#/finance">Финансы</a>
+      <a href="#/compliance">Compliance</a>
+      <a href="#/audit">Аудит</a>
+    </div>
+    <div class="nav-group nav">
+      <div class="nav-label">Настройки</div>
+      <a href="#/settings/policies">Политики</a>
+      <a href="#/settings/integrations">Интеграции</a>
+    </div>
+  </nav>
+  <main class="content" id="content" tabindex="-1">
+    <div class="page-head"><div><h1 id="page-title">Загрузка…</h1><p id="page-subtitle" class="muted"></p></div><span class="updated" id="updated"></span></div>
+    <div id="toolbar"></div>
+    <div id="view" aria-live="polite"></div>
+  </main>
+</div>
+<dialog id="confirm-dialog" aria-labelledby="confirm-title">
+  <form method="dialog">
+    <h2 id="confirm-title"></h2>
+    <p id="confirm-text" class="muted"></p>
+    <label class="field" id="confirm-reason-field" hidden>
+      <span class="small muted">Причина (попадёт в аудит)</span>
+      <textarea id="confirm-reason" maxlength="500"></textarea>
+    </label>
+    <div class="dialog-actions">
+      <button class="btn" value="cancel" type="submit">Отмена</button>
+      <button class="btn primary" value="confirm" id="confirm-ok" type="submit">Подтвердить</button>
+    </div>
+  </form>
+</dialog>
+</body>
+</html>
