@@ -38,11 +38,6 @@ export const AUTH_TEXTS = {
     createShort: "Создать",
     haveAccount: "Уже есть аккаунт?",
     enterShort: "Войти",
-    consent: "Соглашаюсь с",
-    offer: "офертой",
-    consentAnd: "и",
-    privacy: "политикой конфиденциальности",
-    consentAccount: "Соглашаюсь создать аккаунт.",
     verifySent:
       "Письмо со ссылкой отправлено. Откройте её, чтобы подтвердить адрес и войти. Ссылка действует 30 минут.",
     resetSent:
@@ -54,7 +49,8 @@ export const AUTH_TEXTS = {
     verifyTitle: "Подтвердите почту",
     verifyLead: (email: string) =>
       `Письмо со ссылкой отправлено на ${email}. Ссылка действует 30 минут.`,
-    verifyWrong: "Ошиблись в адресе? Зарегистрируйтесь заново — старая заявка ничего не занимает.",
+    verifyWrong:
+      "Ошиблись в адресе? Зарегистрируйтесь заново — старая заявка ничего не занимает.",
     resend: "Отправить письмо ещё раз",
     resending: "Отправляем…",
     resent: "Письмо отправлено",
@@ -70,7 +66,6 @@ export const AUTH_TEXTS = {
     toSignIn: "К входу",
     tooMany: "Слишком много попыток. Попробуйте через несколько минут.",
     offline: "Не получилось связаться с сервером. Проверьте соединение.",
-    consentRequired: "Отметьте согласие с условиями, чтобы продолжить.",
     resetDone: "Пароль обновлён. Войдите с новым паролем.",
     linkBroken:
       "Ссылка неполная или устарела. Запросите новое письмо на странице восстановления.",
@@ -112,11 +107,6 @@ export const AUTH_TEXTS = {
     createShort: "Create one",
     haveAccount: "Already have an account?",
     enterShort: "Sign in",
-    consent: "I agree to the",
-    offer: "terms",
-    consentAnd: "and",
-    privacy: "privacy policy",
-    consentAccount: "I agree to create an account.",
     verifySent:
       "The link is on its way. Open it to confirm your address and sign in. It expires in 30 minutes.",
     resetSent:
@@ -145,7 +135,6 @@ export const AUTH_TEXTS = {
     toSignIn: "To sign in",
     tooMany: "Too many attempts. Try again in a few minutes.",
     offline: "Could not reach the server. Check the connection.",
-    consentRequired: "Tick the consent box to continue.",
     resetDone: "Password updated. Sign in with the new one.",
     linkBroken:
       "The link is incomplete or expired. Request a new one on the reset page.",

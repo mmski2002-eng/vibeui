@@ -134,6 +134,9 @@ jobs:
           test "$code" = "200"
           grep -q "<loc>https://vibeui.ru/components</loc>" /tmp/vibeui-sitemap.xml
           grep -q "https://vibeui.club/components" /tmp/vibeui-sitemap.xml
+          code=$(fetch /tmp/vibeui-legal.html https://vibeui.ru/legal/offer)
+          echo "removed legal page $code"
+          test "$code" = "404"
 
       # vibeui.club — отдельный инстанс на латвийском VPS (не РФ: NOWPayments
       # доступен, латенси для англоязычных ниже). Тот же собранный релиз, свой
@@ -180,3 +183,10 @@ jobs:
           echo "sitemap $code"
           test "$code" = "200"
           grep -q "<loc>https://vibeui.club/components</loc>" /tmp/club-sitemap.xml
+          grep -q "<html lang=\"en\"" /tmp/club-start.html
+          code=$(fetch /tmp/club-legal.html https://vibeui.club/legal/privacy)
+          echo "removed legal page $code"
+          test "$code" = "404"
+          location=$(curl -sS --http1.1 -o /dev/null -D - https://vibeui.club/i/ci-unknown-ref | tr -d '\r' | awk 'tolower($1)=="location:" {print $2}')
+          echo "club referral fallback $location"
+          test "$location" = "https://vibeui.club/"

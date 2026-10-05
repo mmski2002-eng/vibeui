@@ -17,7 +17,7 @@ type RevealState = "idle" | "loading" | "ok" | "denied" | "error"
  *
  * `issueFor` — режим исходника: панель дёргает выдачу, где один раз
  * проверяются вход, подписка и лимит, и получает код плюс команду установки
- * с подписью на сутки. `url` — простой текстовый источник (инструкция /c).
+ * с подписью на 30 минут. `url` — простой текстовый источник (инструкция /c).
  * Без входа и без PRO — 401, тогда вместо кода показываем, куда идти.
  */
 export function GatedReveal({
@@ -125,8 +125,8 @@ export function GatedReveal({
               <div className="space-y-1.5">
                 <p className="text-shell-muted text-xs">
                   {en
-                    ? "Install (link is valid for 24 hours):"
-                    : "Установка (ссылка действует 24 часа):"}
+                    ? "Install (link is valid for 30 minutes):"
+                    : "Установка (ссылка действует 30 минут):"}
                 </p>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <code className="bg-shell-elevated border-shell-border text-shell-fg min-w-0 flex-1 overflow-x-auto rounded-md border px-3 py-2 font-mono text-xs">

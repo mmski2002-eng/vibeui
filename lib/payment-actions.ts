@@ -7,13 +7,14 @@ import { isPlanId, PLAN_USD, PLANS } from "@/lib/plans"
 import { createInvoice, isNowpaymentsConfigured } from "@/lib/nowpayments"
 import {
   applyDiscount,
+  applyUsdDiscount,
   checkPromo as checkPromoCode,
   isFirstPayment,
   normalizePromo,
   resolvePromo,
   type PromoCheck,
 } from "@/lib/promo"
-import { SITE_URL } from "@/lib/seo"
+import { RU_ORIGIN } from "@/lib/seo"
 import { getSession, requireUser } from "@/lib/session"
 import { localePath } from "@/lib/i18n"
 import { createCheckout, isYookassaConfigured } from "@/lib/yookassa"
@@ -65,7 +66,7 @@ export async function startCheckout(formData: FormData) {
       email: user.email,
       userId: user.id,
       plan: plan.id,
-      returnUrl: `${SITE_URL}/account/subscription`,
+      returnUrl: `${RU_ORIGIN}/account/subscription`,
       metadata: discounted
         ? {
             promo: discounted.code,
@@ -103,6 +104,7 @@ const CRYPTO_DESCRIPTION: Record<string, string> = {
  */
 export async function startCryptoCheckout(formData: FormData) {
   const planId = String(formData.get("plan"))
+  const promoRaw = formData.get("promo")
 
   if (!isPlanId(planId)) {
     throw new Error("Неизвестный тариф")
@@ -115,13 +117,25 @@ export async function startCryptoCheckout(formData: FormData) {
 
   const user = await requireUser("en")
   const plan = PLANS[planId]
+  const promo =
+    typeof promoRaw === "string" && normalizePromo(promoRaw)
+      ? await resolvePromo(promoRaw)
+      : null
+  const discounted =
+    promo && promo.partnerId !== user.id && (await isFirstPayment(user.id))
+      ? promo
+      : null
+  const listAmount = PLAN_USD[planId]
+  const amount = discounted
+    ? applyUsdDiscount(listAmount, discounted.percent)
+    : listAmount
 
   let url: string | undefined
 
   try {
     const invoice = await createInvoice({
-      amountUsd: PLAN_USD[planId],
-      orderId: `${user.id}:${planId}`,
+      amountUsd: amount,
+      orderId: [user.id, planId, discounted?.code ?? ""].join(":"),
       orderDescription: CRYPTO_DESCRIPTION[planId] ?? `VibeUI ${plan.id}`,
       ipnCallbackUrl: `${CLUB_URL}/api/payments/nowpayments/webhook`,
       successUrl: `${CLUB_URL}/account/subscription`,
@@ -140,8 +154,32 @@ export async function startCryptoCheckout(formData: FormData) {
  * Проверка промокода с витрины: процент и готовые цены по всем тарифам.
  * Округление живёт в одном месте с кассой, браузер ничего не считает.
  */
-export async function checkPromo(code: string): Promise<PromoCheck> {
+export async function checkPromo(
+  code: string,
+  locale: "ru" | "en" = "ru",
+): Promise<PromoCheck> {
   const session = await getSession()
+  const result = await checkPromoCode(
+    code,
+    await getPlans(),
+    session?.user.id ?? null,
+  )
 
-  return checkPromoCode(code, await getPlans(), session?.user.id ?? null)
+  if (locale !== "en" || !result.ok) return result
+
+  return {
+    ...result,
+    prices: {
+      monthly: applyUsdDiscount(PLAN_USD.monthly, result.percent),
+      yearly: applyUsdDiscount(PLAN_USD.yearly, result.percent),
+      "enterprise-monthly": applyUsdDiscount(
+        PLAN_USD["enterprise-monthly"],
+        result.percent,
+      ),
+      "enterprise-yearly": applyUsdDiscount(
+        PLAN_USD["enterprise-yearly"],
+        result.percent,
+      ),
+    },
+  }
 }

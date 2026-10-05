@@ -163,6 +163,23 @@ server {
 }
 ```
 
+Динамические `/api`, `/i`, `/c`, `/f` и `/r/pro` дополнительно ограничены
+в приложении. Если на одном nginx живёт несколько процессов, добавьте общий
+лимит перед `server` и зоны в соответствующие `location`:
+
+```nginx
+limit_req_zone $binary_remote_addr zone=vibeui_api:10m rate=2r/s;
+
+location ~ ^/(api|i|c|f|r/pro)/ {
+    limit_req zone=vibeui_api burst=30 nodelay;
+    proxy_pass http://127.0.0.1:3003;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
 ```bash
 sudo ln -s /etc/nginx/sites-available/vibeui /etc/nginx/sites-enabled/vibeui
 sudo nginx -t && sudo systemctl reload nginx

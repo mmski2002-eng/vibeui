@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { Geist_Mono, Inter, Onest } from "next/font/google"
+import { headers } from "next/headers"
 import "./globals.css"
 
 import { Analytics } from "@/components/analytics"
-import { SITE_NAME, SITE_URL } from "@/lib/seo"
+import { isClubHost, originFromHost, SITE_NAME } from "@/lib/seo"
 
 // Inter: тот же шрифт, что у образцов витрин компонентов, и с полной
 // кириллицей — подменять на похожий не пришлось.
@@ -29,63 +30,76 @@ const onest = Onest({
 const DESCRIPTION =
   "AI-native библиотека UI-компонентов для вайбкодинга: live preview, shadcn-совместимый registry и готовая инструкция для AI-агента."
 
-export const metadata: Metadata = {
-  // Все относительные ссылки в canonical, hreflang и Open Graph
-  // разворачиваются от этого origin.
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: "VibeUI — выбери дизайн, отдай ИИ, получи сайт",
-    template: "%s — VibeUI",
-  },
-  description: DESCRIPTION,
-  applicationName: SITE_NAME,
-  keywords: [
-    "UI компоненты",
-    "библиотека компонентов",
-    "shadcn registry",
-    "вайбкодинг",
-    "vibe coding",
-    "React компоненты",
-    "Tailwind CSS",
-    "Next.js",
-    "готовые блоки для сайта",
-    "AI агент",
-  ],
-  openGraph: {
-    type: "website",
-    siteName: SITE_NAME,
-    locale: "ru_RU",
-    alternateLocale: ["en_US"],
-    title: "VibeUI — выбери дизайн, отдай ИИ, получи сайт",
-    description: DESCRIPTION,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "VibeUI — выбери дизайн, отдай ИИ, получи сайт",
-    description: DESCRIPTION,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+const EN_DESCRIPTION =
+  "AI-native UI component library with live previews, a shadcn-compatible registry and ready-to-use prompts for coding agents."
+
+export async function generateMetadata(): Promise<Metadata> {
+  const host = (await headers()).get("host")
+  const english = isClubHost(host)
+  const origin = originFromHost(host)
+  const title = english
+    ? "VibeUI — choose a design, give it to AI, ship your site"
+    : "VibeUI — выбери дизайн, отдай ИИ, получи сайт"
+  const description = english ? EN_DESCRIPTION : DESCRIPTION
+
+  return {
+    // Все относительные ссылки в canonical, hreflang и Open Graph
+    // разворачиваются от этого origin.
+    metadataBase: new URL(origin),
+    title: {
+      default: title,
+      template: "%s — VibeUI",
+    },
+    description,
+    applicationName: SITE_NAME,
+    keywords: [
+      "UI компоненты",
+      "библиотека компонентов",
+      "shadcn registry",
+      "вайбкодинг",
+      "vibe coding",
+      "React компоненты",
+      "Tailwind CSS",
+      "Next.js",
+      "готовые блоки для сайта",
+      "AI агент",
+    ],
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      locale: english ? "en_US" : "ru_RU",
+      alternateLocale: [english ? "ru_RU" : "en_US"],
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
-  },
-  // Токены подтверждения прав публичны по своей природе: поисковик как раз
-  // и проверяет, что они лежат в открытой разметке.
-  verification: {
-    google:
-      process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ||
-      "HcuGcVeu4NGN_Ruulsn7Xkd8VQB8rw_iftfCCZwLLjE",
-    yandex: [
-      process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "73c966fb1814e673",
-      "76d9779913efc610",
-    ],
-  },
+    // Токены подтверждения прав публичны по своей природе: поисковик как раз
+    // и проверяет, что они лежат в открытой разметке.
+    verification: {
+      google:
+        process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ||
+        "HcuGcVeu4NGN_Ruulsn7Xkd8VQB8rw_iftfCCZwLLjE",
+      yandex: [
+        process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || "73c966fb1814e673",
+        "76d9779913efc610",
+      ],
+    },
+  }
 }
 
 // Ставит data-shell-theme на <html> до первой отрисовки: без этого React
@@ -103,42 +117,50 @@ const THEME_INIT_SCRIPT = `(function(){var d=document.documentElement;var t=null
 
 // Поисковикам: что за сайт и как искать по нему. Достаточно объявить один раз
 // в корне — на всех страницах разметка одна и та же.
-const SITE_JSON_LD = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: `${SITE_URL}/`,
-      name: SITE_NAME,
-      description: DESCRIPTION,
-      inLanguage: ["ru-RU", "en-US"],
-      publisher: { "@id": `${SITE_URL}/#organization` },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: {
-          "@type": "EntryPoint",
-          urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
+function siteJsonLd(locale: "ru" | "en", origin: string) {
+  const description = locale === "en" ? EN_DESCRIPTION : DESCRIPTION
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${origin}/#website`,
+        url: `${origin}/`,
+        name: SITE_NAME,
+        description,
+        inLanguage: locale === "en" ? "en-US" : "ru-RU",
+        publisher: { "@id": `${origin}/#organization` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${origin}/search?q={search_term_string}`,
+          },
+          "query-input": "required name=search_term_string",
         },
-        "query-input": "required name=search_term_string",
       },
-    },
-    {
-      "@type": "Organization",
-      "@id": `${SITE_URL}/#organization`,
-      name: SITE_NAME,
-      url: `${SITE_URL}/`,
-      logo: `${SITE_URL}/icon.svg`,
-    },
-  ],
+      {
+        "@type": "Organization",
+        "@id": `${origin}/#organization`,
+        name: SITE_NAME,
+        url: `${origin}/`,
+        logo: `${origin}/icon.svg`,
+      },
+    ],
+  }
 }
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const host = (await headers()).get("host")
+  const locale = isClubHost(host) ? "en" : "ru"
+  const jsonLd = siteJsonLd(locale, originFromHost(host))
+
   return (
     // Атрибут темы приходит из localStorage до гидратации, поэтому разметка
     // сервера и клиента здесь расходятся намеренно — предупреждение гасим.
     <html
-      lang="ru"
+      lang={locale}
       suppressHydrationWarning
       className={`${inter.variable} ${geistMono.variable} ${onest.variable} h-full antialiased`}
     >
@@ -146,7 +168,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_JSON_LD) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="flex min-h-full flex-col">

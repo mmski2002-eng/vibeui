@@ -121,7 +121,38 @@ const CLUB_SECTIONS = [
   "report",
   "start",
   "verify",
-  "legal",
+]
+
+const SECURITY_HEADERS = [
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains",
+  },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+  },
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'self'",
+      "frame-src 'self'",
+      "form-action 'self' https://yookassa.ru https://*.nowpayments.io",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://www.googletagmanager.com",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data:",
+      "connect-src 'self' https://mc.yandex.ru https://www.google-analytics.com https://*.google-analytics.com",
+      "worker-src 'self' blob:",
+      "upgrade-insecure-requests",
+    ].join("; "),
+  },
 ]
 
 function clubEnglishRewrites() {
@@ -146,6 +177,10 @@ const nextConfig: NextConfig = {
   // Самодостаточный сервер для деплоя на собственный VPS:
   // .next/standalone содержит node_modules, нужные в рантайме.
   output: "standalone",
+  poweredByHeader: false,
+  async headers() {
+    return [{ source: "/:path*", headers: SECURITY_HEADERS }]
+  },
   // Внутренний rewrite, не второй HTTP-запрос. Иначе /en снова ловит запрет
   // в proxy и публичный /start на .club становится 404.
   async rewrites() {

@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Черновые скрипты проверок из сессий агентов: в git не идут.
     "artifacts/**",
+    ".playwright-mcp/**",
   ]),
   {
     // Компоненты registry переносимы: они не имеют права зависеть от

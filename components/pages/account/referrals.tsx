@@ -33,13 +33,13 @@ import {
   visitsByCode,
   type PartnerPeriod,
 } from "@/lib/partners"
-import { MIN_PAYOUT } from "@/lib/limits"
+import { MIN_PAYOUT, MIN_PAYOUT_USD } from "@/lib/limits"
 import { isEthereumPayout } from "@/lib/payout-method"
 import { partnerPromo, promoStats } from "@/lib/promo"
 import { PayoutProfileForm } from "@/components/account/payout-profile-form"
 import { PromoCodeForm } from "@/components/account/promo-code-form"
 import { RequestPayoutButton } from "@/components/account/request-payout-button"
-import { SITE_URL } from "@/lib/seo"
+import { originFor } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 
 const PAGE = 50
@@ -60,6 +60,7 @@ export async function AccountReferrals({
   period?: PartnerPeriod
 }) {
   const user = await requireUser(locale)
+  const origin = originFor(locale)
   const code = await partnerCode(user.id)
 
   if (!code) {
@@ -97,13 +98,16 @@ export async function AccountReferrals({
 
   const money = (value: number) =>
     value.toLocaleString(locale === "en" ? "en-GB" : "ru-RU")
+  const amount = (value: number) =>
+    locale === "en" ? `$${money(value)}` : `${money(value)} ₽`
+  const minimum = locale === "en" ? MIN_PAYOUT_USD : MIN_PAYOUT
   const pendingPayout = Math.max(0, promoTotals.commission - paidOut.paid)
   const requisitesFilled =
     locale === "en"
       ? isEthereumPayout(payoutInfo.inn) && Boolean(payoutInfo.details)
       : Boolean(payoutInfo.inn && payoutInfo.details)
   const canRequest =
-    !openRequest && pendingPayout >= MIN_PAYOUT && requisitesFilled
+    !openRequest && pendingPayout >= minimum && requisitesFilled
 
   const page = rows.slice(0, PAGE)
   const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
@@ -147,7 +151,7 @@ export async function AccountReferrals({
               </span>
             }
           />
-          <CopyLink url={`${SITE_URL}/?ref=${code}`} locale={locale} />
+          <CopyLink url={`${origin}/?ref=${code}`} locale={locale} />
         </Panel>
 
         <Panel index={1}>
@@ -169,10 +173,7 @@ export async function AccountReferrals({
                   <span className="text-shell-fg">{promoTotals.payments}</span>{" "}
                   · {t.promoRevenue}:{" "}
                   <span className="text-shell-fg">
-                    {promoTotals.revenue.toLocaleString(
-                      locale === "en" ? "en-GB" : "ru-RU",
-                    )}{" "}
-                    ₽
+                    {amount(promoTotals.revenue)}
                   </span>
                 </span>
               ) : null
@@ -181,7 +182,7 @@ export async function AccountReferrals({
           <div className="grid gap-4">
             <PromoCodeForm
               code={code}
-              prefix={`${SITE_URL.replace(/^https?:\/\//, "")}/?ref=`}
+              prefix={`${origin.replace(/^https?:\/\//, "")}/?ref=`}
               labels={{
                 label: t.promoCodeLabel,
                 placeholder: t.promoCodePlaceholder,
@@ -198,11 +199,8 @@ export async function AccountReferrals({
                   {t.promoDiscount(promo.percent)}
                 </span>
                 <span className="text-shell-fg font-medium">
-                  {t.promoCommission}:{" "}
-                  {promoTotals.commission.toLocaleString(
-                    locale === "en" ? "en-GB" : "ru-RU",
-                  )}{" "}
-                  ₽ ({promoTotals.commissionPercent} %)
+                  {t.promoCommission}: {amount(promoTotals.commission)} (
+                  {promoTotals.commissionPercent} %)
                 </span>
               </div>
             ) : (
@@ -243,7 +241,7 @@ export async function AccountReferrals({
                   <p
                     className={`mt-1 text-2xl font-semibold tabular-nums ${cell.accent ? "text-shell-accent-text" : "text-shell-fg"}`}
                   >
-                    {money(cell.value)} ₽
+                    {amount(cell.value)}
                   </p>
                 </div>
               ))}
@@ -252,7 +250,7 @@ export async function AccountReferrals({
             {openRequest ? (
               <div className="border-shell-accent-line bg-shell-accent-soft rounded-xl border px-4 py-3 text-sm">
                 <span className="text-shell-fg font-medium tabular-nums">
-                  {t.requestOnReview}: {money(Number(openRequest.amount))} ₽
+                  {t.requestOnReview}: {amount(Number(openRequest.amount))}
                 </span>{" "}
                 <span className="text-shell-muted">
                   —{" "}
@@ -276,7 +274,7 @@ export async function AccountReferrals({
                 <span className="text-shell-muted text-xs">
                   {!requisitesFilled
                     ? t.requestNeedRequisites
-                    : t.requestMinHint(MIN_PAYOUT)}
+                    : t.requestMinHint(minimum)}
                 </span>
               </div>
             )}
@@ -320,7 +318,7 @@ export async function AccountReferrals({
                       className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2.5 text-sm"
                     >
                       <span className="text-shell-fg font-medium tabular-nums">
-                        {money(Number(row.amount))} ₽
+                        {amount(Number(row.amount))}
                       </span>
                       {row.note ? (
                         <span className="text-shell-muted min-w-0 flex-1 truncate text-xs">

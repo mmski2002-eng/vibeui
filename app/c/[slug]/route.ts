@@ -6,6 +6,7 @@ import { localizeItem } from "@/lib/localize"
 import { signRegistryLink, verifyRegistryLink } from "@/lib/registry-link"
 import { getSiteBaseUrl } from "@/lib/site"
 import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
+import { rateLimit } from "@/lib/rate-limit"
 
 /**
  * Инструкция для агента по короткой ссылке `/c/<name>`.
@@ -14,8 +15,8 @@ import { getCatalogItem, getItemKind, itemBasePath } from "@/registry/index"
  * нет — только команда установки, поэтому скопировать код вместо установки
  * невозможно (см. docs/DELIVERY.md).
  *
- * Открывается по подписи (её выдаёт кнопка «Копировать для ИИ» на сутки) или
- * по сессии. Команды в брифе — тоже подписанные ссылки на сутки, чтобы агент
+ * Открывается по подписи (её выдаёт кнопка «Копировать для ИИ» на 30 минут) или
+ * по сессии. Команды в брифе — тоже подписанные ссылки на 30 минут, чтобы агент
  * поставил компонент без ключа. Маршрут динамический: значения контролов
  * приезжают в query (`?tone=soft`), язык — в `?lang=en`.
  */
@@ -25,6 +26,9 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
+  const limited = rateLimit(request, "agent-brief", 120)
+  if (limited) return limited
+
   const { slug } = await params
   const found = getCatalogItem(slug)
 
@@ -62,7 +66,7 @@ export async function GET(
   const surface = search.get("theme")
   const theme = surface === "light" || surface === "dark" ? surface : undefined
 
-  // Свежая подпись на сутки для ссылок в брифе: по ним агент ставит компонент.
+  // Свежая подпись на 30 минут для ссылок в брифе: агент ставит компонент.
   const link = signRegistryLink(item.name)
   const query = `exp=${link.exp}&sig=${link.sig}`
   const registryUrl = `${siteUrl}/r/pro/${item.name}.json?${query}`

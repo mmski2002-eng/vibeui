@@ -306,7 +306,7 @@ export function PlanCards({
           <p className="mt-5 flex flex-wrap items-baseline gap-x-3 text-5xl font-semibold tracking-tight tabular-nums">
             {applied ? (
               <s className="promo-old text-2xl font-medium text-[#f2f2f2]/45 decoration-[#ff5900]/70 decoration-2">
-                {money.format(listPro)} ₽
+                {amount(listPro)}
               </s>
             ) : null}
             <span>
@@ -335,6 +335,7 @@ export function PlanCards({
           </p>
           {promo.eligible && !pro ? (
             <PromoField
+              locale={locale}
               texts={t.promo}
               initialCode={promo.initialCode}
               applied={applied}
@@ -383,8 +384,7 @@ export function PlanCards({
                   {yearly ? t.pro.payYear : t.pro.payMonth}
                   {applied ? (
                     <span className="ml-1.5 font-normal opacity-80">
-                      · {money.format(proPrice)} ₽ {t.promo.instead}{" "}
-                      {money.format(listPro)}
+                      · {amount(proPrice)} {t.promo.instead} {amount(listPro)}
                     </span>
                   ) : null}
                 </button>
@@ -413,7 +413,7 @@ export function PlanCards({
           <p className="text-shell-fg mt-5 flex flex-wrap items-baseline gap-x-3 text-4xl font-semibold tracking-tight tabular-nums">
             {applied ? (
               <s className="promo-old text-shell-muted decoration-shell-accent/60 text-xl font-medium decoration-2">
-                {money.format(listEnterprise)} ₽
+                {amount(listEnterprise)}
               </s>
             ) : null}
             <span>
@@ -442,6 +442,7 @@ export function PlanCards({
           </p>
           {promo.eligible && !pro ? (
             <PromoField
+              locale={locale}
               texts={t.promo}
               // Автопроверка кода из адреса — только на Pro-поле: промокод один
               // на все тарифы, второй автозапуск дублировал бы серверный вызов.

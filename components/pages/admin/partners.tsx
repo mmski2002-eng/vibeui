@@ -14,7 +14,7 @@ import { StatusPill } from "@/components/account/ui/status-pill"
 import { formatDate } from "@/lib/format"
 import { requireAdmin } from "@/lib/admin"
 import { listInvites } from "@/lib/partners"
-import { SITE_URL } from "@/lib/seo"
+import { originFor } from "@/lib/seo"
 
 /** Список приглашений блогеров: кто зарегистрировался, кого привёл. */
 export async function AdminPartners({
@@ -23,6 +23,7 @@ export async function AdminPartners({
   await requireAdmin()
 
   const t = getAdminTexts(locale).partners
+  const origin = originFor(locale)
   const invites = await listInvites()
 
   return (
@@ -91,7 +92,7 @@ export async function AdminPartners({
                     : null}
                 </p>
               ) : (
-                <CopyLink url={`${SITE_URL}/?ref=${invite.code}`} />
+                <CopyLink url={`${origin}/?ref=${invite.code}`} />
               )}
             </Panel>
           ))}

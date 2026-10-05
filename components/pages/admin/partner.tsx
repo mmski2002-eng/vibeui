@@ -21,7 +21,7 @@ import {
 } from "@/lib/partners"
 import { defaultPromoPercent, promoStats } from "@/lib/promo"
 import { RecordPayoutForm } from "@/components/admin/payout-actions"
-import { SITE_URL } from "@/lib/seo"
+import { originFor } from "@/lib/seo"
 import { resolveSubscription } from "@/lib/subscription-state"
 
 const PAGE = 50
@@ -39,6 +39,7 @@ export async function AdminPartner({
   await requireAdmin()
 
   const t = getAdminTexts(locale).partners
+  const origin = originFor(locale)
   const row = await getInvite(id)
 
   if (!row) {
@@ -78,6 +79,8 @@ export async function AdminPartner({
     ])
 
   const pendingPayout = Math.max(0, promo.commission - paidOut.paid)
+  const amount = (value: number) =>
+    locale === "en" ? `$${value.toLocaleString("en-US")}` : t.rub(value)
 
   const page = rows.slice(0, PAGE)
   const next = rows.length > PAGE ? page[page.length - 1]?.createdAt : null
@@ -148,12 +151,12 @@ export async function AdminPartner({
             {t.promoPayments}:{" "}
             <span className="text-shell-fg">{promo.payments}</span> ·{" "}
             {t.promoRevenue}:{" "}
-            <span className="text-shell-fg">{t.rub(promo.revenue)}</span> ·{" "}
+            <span className="text-shell-fg">{amount(promo.revenue)}</span> ·{" "}
             {t.promoDiscount}:{" "}
-            <span className="text-shell-fg">{t.rub(promo.discount)}</span> ·{" "}
+            <span className="text-shell-fg">{amount(promo.discount)}</span> ·{" "}
             {t.promoCommission}:{" "}
             <span className="text-shell-fg">
-              {t.rub(promo.commission)} ({promo.commissionPercent} %)
+              {amount(promo.commission)} ({promo.commissionPercent} %)
             </span>
           </span>
         }
@@ -176,12 +179,12 @@ export async function AdminPartner({
         action={
           <span className="text-shell-muted text-xs tabular-nums">
             {t.payoutEarned}:{" "}
-            <span className="text-shell-fg">{t.rub(promo.commission)}</span> ·{" "}
+            <span className="text-shell-fg">{amount(promo.commission)}</span> ·{" "}
             {t.payoutPaid}:{" "}
-            <span className="text-shell-fg">{t.rub(paidOut.paid)}</span> ·{" "}
+            <span className="text-shell-fg">{amount(paidOut.paid)}</span> ·{" "}
             {t.payoutPending}:{" "}
             <span className="text-shell-accent-text">
-              {t.rub(pendingPayout)}
+              {amount(pendingPayout)}
             </span>
           </span>
         }
@@ -207,7 +210,7 @@ export async function AdminPartner({
                 className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-4 py-2.5 text-sm"
               >
                 <span className="text-shell-fg font-medium tabular-nums">
-                  {t.rub(Number(row.amount))}
+                  {amount(Number(row.amount))}
                 </span>
                 {row.note ? (
                   <span className="text-shell-muted min-w-0 flex-1 truncate text-xs">
@@ -226,12 +229,12 @@ export async function AdminPartner({
       </Section>
 
       <Section title={t.inviteLink}>
-        <CopyLink url={`${SITE_URL}/?ref=${invite.code}`} />
+        <CopyLink url={`${origin}/?ref=${invite.code}`} />
       </Section>
 
       {code ? (
         <Section title={t.partnerLink}>
-          <CopyLink url={`${SITE_URL}/?ref=${code}`} />
+          <CopyLink url={`${origin}/?ref=${code}`} />
         </Section>
       ) : null}
 
@@ -274,6 +277,8 @@ function ReferralItem({
   const state = resolveSubscription(referral.subscription ?? undefined)
   const date = (value: Date) =>
     value.toLocaleDateString(locale === "en" ? "en-US" : "ru-RU")
+  const amount = (value: number) =>
+    locale === "en" ? `$${value.toLocaleString("en-US")}` : t.rub(value)
 
   const status = !referral.firstPaidAt
     ? t.notPaid
@@ -297,7 +302,7 @@ function ReferralItem({
       <Pill tone={referral.firstPaidAt ? "ok" : "muted"}>{status}</Pill>
       {referral.paidTotal > 0 ? (
         <span className="text-shell-fg shrink-0 text-xs tabular-nums">
-          {t.paidTotal}: {t.rub(referral.paidTotal)}
+          {t.paidTotal}: {amount(referral.paidTotal)}
         </span>
       ) : null}
       <span className="text-shell-muted w-24 shrink-0 text-right text-xs tabular-nums">

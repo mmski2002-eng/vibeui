@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { ArrowRight, Lock, Mail, User } from "lucide-react"
@@ -8,7 +7,6 @@ import { ArrowRight, Lock, Mail, User } from "lucide-react"
 import { Field, INPUT_CLASS, SUBMIT_CLASS } from "@/components/auth/auth-card"
 import { PasswordInput } from "@/components/auth/password-input"
 import { AUTH_TEXTS } from "@/components/auth/texts"
-import { CONSENT_VERSION } from "@/lib/consent"
 import { authClient } from "@/lib/auth-client"
 import { localePath, type Locale } from "@/lib/i18n"
 import { safeNext } from "@/lib/safe-path"
@@ -41,9 +39,6 @@ export function SignUpForm({ locale }: { locale: Locale }) {
             // Письма уходят позже, из фоновых задач: язык страницы известен
             // только здесь, и дальше его помнит сам аккаунт.
             locale,
-            // Версия документов, с которыми человек согласился. Сервер её
-            // проверяет: галочка в браузере ничего не доказывает.
-            consentVersion: CONSENT_VERSION,
             // Куда вернуть после подтверждения адреса: раньше письмо всегда
             // приводило на главную, а не туда, ради чего человек регистрировался.
             callbackURL: `${localePath(locale, "/verify")}?state=done&next=${encodeURIComponent(next)}`,
@@ -55,9 +50,7 @@ export function SignUpForm({ locale }: { locale: Locale }) {
                 ? t.emailTaken
                 : failure.status === 429
                   ? t.tooMany
-                  : failure.status === 400
-                    ? t.consentRequired
-                    : t.signUpFailed,
+                  : t.signUpFailed,
             )
 
             return
@@ -106,44 +99,6 @@ export function SignUpForm({ locale }: { locale: Locale }) {
           maxLength={128}
         />
       </Field>
-
-      <label className="mb-4 flex items-start gap-2.5 text-sm leading-snug">
-        <input
-          type="checkbox"
-          name="consent"
-          required
-          // Нативная подсказка `required` рендерится браузером на его языке —
-          // на английской версии всплывало русское «Установите флажок».
-          // Задаём свой текст под локаль страницы и снимаем его при отметке.
-          onInvalid={(event) =>
-            event.currentTarget.setCustomValidity(t.consentRequired)
-          }
-          onChange={(event) => event.currentTarget.setCustomValidity("")}
-          className="accent-shell-accent mt-0.5 size-4 shrink-0"
-        />
-        <span className="text-shell-muted leading-relaxed">
-          {locale === "ru" ? (
-            <>
-              {t.consent}{" "}
-              <Link
-                href={localePath(locale, "/legal/offer")}
-                className="text-shell-fg underline"
-              >
-                {t.offer}
-              </Link>{" "}
-              {t.consentAnd}{" "}
-              <Link
-                href={localePath(locale, "/legal/privacy")}
-                className="text-shell-fg underline"
-              >
-                {t.privacy}
-              </Link>
-            </>
-          ) : (
-            t.consentAccount
-          )}
-        </span>
-      </label>
 
       {error ? (
         <p role="alert" className="text-shell-accent-text mb-4 text-sm">

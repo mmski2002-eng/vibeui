@@ -5,13 +5,13 @@ import { createHmac, timingSafeEqual } from "node:crypto"
 /**
  * Подписанные временные ссылки на registry-item. Исходник больше не лежит
  * статикой: панель «Исходник компонента» и команда установки получают адрес
- * с подписью, который живёт сутки. Подпись — HMAC от имени и срока, без базы:
+ * с подписью, который живёт 30 минут. Подпись — HMAC от имени и срока, без базы:
  * проверка на скачивании ничего не стоит, а угадать URL нельзя.
  *
  * Лимит и подписка проверяются один раз — на ВЫДАЧЕ ссылки (см. lib/access).
- * Дальше `npx shadcn add` может дёргать адрес сколько угодно в течение суток.
+ * Дальше `npx shadcn add` может дёргать адрес в течение получаса.
  */
-const TTL_MS = 24 * 60 * 60 * 1000
+const TTL_MS = 30 * 60 * 1000
 
 function secret(): string {
   const value =
@@ -34,7 +34,7 @@ function sign(name: string, exp: number): string {
 
 export type RegistryLink = { exp: number; sig: string }
 
-/** Свежая подпись на сутки. */
+/** Свежая подпись на 30 минут. */
 export function signRegistryLink(name: string): RegistryLink {
   const exp = Date.now() + TTL_MS
 

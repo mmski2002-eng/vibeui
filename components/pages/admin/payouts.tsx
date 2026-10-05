@@ -9,8 +9,10 @@ import { requireAdmin } from "@/lib/admin"
 import { isEthereumPayout } from "@/lib/payout-method"
 import { listPayoutRequests, type AdminPayoutRequest } from "@/lib/partners"
 
-const rub = (value: string | number, locale: "ru" | "en") =>
-  `${Number(value).toLocaleString(locale === "en" ? "en-US" : "ru-RU")} ₽`
+const money = (value: string | number, locale: "ru" | "en") =>
+  locale === "en"
+    ? `$${Number(value).toLocaleString("en-US")}`
+    : `${Number(value).toLocaleString("ru-RU")} ₽`
 const date = (value: Date | null, locale: "ru" | "en") =>
   value ? value.toLocaleDateString(locale === "en" ? "en-US" : "ru-RU") : ""
 
@@ -84,7 +86,7 @@ export async function AdminPayouts({
                   {request.partnerName ?? request.partnerEmail}
                 </span>
                 <span className="text-shell-fg shrink-0 font-medium tabular-nums">
-                  {rub(request.amount, locale)}
+                  {money(request.amount, locale)}
                 </span>
                 <Pill tone={STATUS_TONE[request.status] ?? "muted"}>
                   {statusLabel(request.status, locale)}
@@ -136,7 +138,7 @@ function ActiveRow({
           {request.partnerName ?? request.partnerEmail}
         </Link>
         <span className="text-shell-fg shrink-0 text-lg font-semibold tabular-nums">
-          {rub(request.amount, locale)}
+          {money(request.amount, locale)}
         </span>
         <Pill tone={STATUS_TONE[request.status] ?? "muted"}>
           {statusLabel(request.status, locale)}

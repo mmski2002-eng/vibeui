@@ -1,11 +1,18 @@
 import { randomUUID } from "node:crypto"
-import { eq } from "drizzle-orm"
+import { and, eq, isNull } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { payment, subscription, user, webhookEvent } from "@/lib/db/schema"
+import {
+  partnerInvite,
+  payment,
+  subscription,
+  user,
+  webhookEvent,
+} from "@/lib/db/schema"
 import { nextPeriodEnd } from "@/lib/payment-apply"
-import { isPlanId, PLANS } from "@/lib/plans"
+import { isPlanId, PLAN_USD, PLANS } from "@/lib/plans"
 import { verifyIpnSignature } from "@/lib/nowpayments"
+import { applyUsdDiscount, isFirstPayment, resolvePromo } from "@/lib/promo"
 
 /**
  * Уведомления NOWPayments (крипто-оплата vibeui.club). Как и у ЮKassa: источник
@@ -68,31 +75,88 @@ export async function POST(request: Request) {
 
   // Связь платежа с пользователем и тарифом лежит в order_id — он под подписью,
   // подделать нельзя. Формат задаётся при создании инвойса: `<userId>:<planId>`.
-  const [userId, planId] = String(body.order_id ?? "").split(":")
+  const [userId, planId, promoCode] = String(body.order_id ?? "").split(":")
 
   if (userId && planId && isPlanId(planId)) {
     const plan = PLANS[planId]
 
     const [owner] = await db
-      .select({ id: user.id })
+      .select({ id: user.id, invitedBy: user.invitedBy })
       .from(user)
       .where(eq(user.id, userId))
       .limit(1)
 
     if (owner) {
-      await db
+      const promo =
+        promoCode && (await isFirstPayment(userId))
+          ? await resolvePromo(promoCode)
+          : null
+      const [inviter] = owner.invitedBy
+        ? await db
+            .select({ id: partnerInvite.id })
+            .from(partnerInvite)
+            .where(eq(partnerInvite.claimedBy, owner.invitedBy))
+            .limit(1)
+        : []
+      const attributedPartnerId =
+        promo?.partnerId ?? (inviter ? owner.invitedBy : null)
+      const listAmount = PLAN_USD[planId]
+      const expectedAmount = promo
+        ? applyUsdDiscount(listAmount, promo.percent)
+        : listAmount
+      const paidAmount = Number(body.price_amount)
+
+      // Подписанный IPN всё равно обязан соответствовать цене созданного нами
+      // инвойса. Недоплата или повреждённая сумма не выдаёт доступ.
+      if (
+        !Number.isFinite(paidAmount) ||
+        Math.abs(paidAmount - expectedAmount) > 0.001
+      ) {
+        await db
+          .update(webhookEvent)
+          .set({ processedAt: new Date() })
+          .where(eq(webhookEvent.id, paymentId))
+
+        return new Response("amount mismatch\n", { status: 400 })
+      }
+
+      const insertedPayment = await db
         .insert(payment)
         .values({
           id: randomUUID(),
           userId,
           yookassaId: `np:${paymentId}`,
-          amount: String(body.price_amount ?? ""),
+          amount: paidAmount.toFixed(2),
           currency: "USD",
           status: "succeeded",
           paidAt: new Date(),
           payload: body,
+          ...(promo
+            ? {
+                listAmount: listAmount.toFixed(2),
+                promoCode: promo.code,
+                promoPercent: promo.percent,
+                partnerId: promo.partnerId,
+              }
+            : {}),
+          ...(!promo && attributedPartnerId
+            ? { partnerId: attributedPartnerId }
+            : {}),
         })
         .onConflictDoNothing()
+        .returning({ id: payment.id })
+
+      // Параллельный повтор того же IPN мог пройти начальную проверку до того,
+      // как первый запрос выставил processedAt. Уникальный id платежа —
+      // окончательный барьер: подписку второй запрос не продлевает.
+      if (insertedPayment.length === 0) {
+        await db
+          .update(webhookEvent)
+          .set({ processedAt: new Date() })
+          .where(eq(webhookEvent.id, paymentId))
+
+        return new Response("ok\n")
+      }
 
       const [existing] = await db
         .select()
@@ -122,6 +186,13 @@ export async function POST(request: Request) {
           status: "active",
           currentPeriodEnd: periodEnd,
         })
+      }
+
+      if (promo) {
+        await db
+          .update(user)
+          .set({ invitedBy: promo.partnerId })
+          .where(and(eq(user.id, userId), isNull(user.invitedBy)))
       }
     }
   }

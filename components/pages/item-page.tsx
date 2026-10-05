@@ -10,7 +10,7 @@ import { JsonLd } from "@/components/json-ld"
 import { ReportDialog } from "@/components/report/report-dialog"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { localizeItem } from "@/lib/localize"
-import { breadcrumbs, pageUrl, SITE_URL } from "@/lib/seo"
+import { breadcrumbs, originFor, pageUrl } from "@/lib/seo"
 import { getItemDocUrl } from "@/lib/site"
 import {
   catalogBasePath,
@@ -87,7 +87,7 @@ export async function ItemPage({
           programmingLanguage: "TypeScript",
           runtimePlatform: "React",
           keywords: tags.join(", ") || undefined,
-          isPartOf: { "@id": `${SITE_URL}/#website` },
+          isPartOf: { "@id": `${originFor(locale)}/#website` },
         }}
       />
       <JsonLd
@@ -285,8 +285,8 @@ export async function ItemPage({
 
             <p className="text-shell-muted max-w-2xl text-sm text-pretty">
               {locale === "en"
-                ? "The install command lives in the “Component source” block below — a signed link that stays valid for 24 hours."
-                : "Команда установки — в блоке «Исходник компонента» ниже: подписанная ссылка действует сутки."}
+                ? "The install command lives in the “Component source” block below — a signed link that stays valid for 30 minutes."
+                : "Команда установки — в блоке «Исходник компонента» ниже: подписанная ссылка действует 30 минут."}
             </p>
 
             {block.docs ? (

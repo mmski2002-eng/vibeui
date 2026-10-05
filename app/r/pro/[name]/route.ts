@@ -2,6 +2,7 @@ import { denialText, resolveAccess } from "@/lib/access"
 import { verifyRegistryLink } from "@/lib/registry-link"
 import { buildRegistryItem } from "@/lib/registry-item"
 import { getSiteBaseUrl } from "@/lib/site"
+import { rateLimit } from "@/lib/rate-limit"
 import { getCatalogItem } from "@/registry/index"
 
 /**
@@ -17,6 +18,9 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ name: string }> },
 ) {
+  const limited = rateLimit(request, "registry-pro", 120)
+  if (limited) return limited
+
   const { name } = await params
   const slug = name.replace(/\.json$/, "")
 
@@ -24,7 +28,7 @@ export async function GET(
     return new Response("Not found\n", { status: 404 })
   }
 
-  // Подписанная ссылка (сутки) открывает item без ключа: доступ и лимит
+  // Подписанная ссылка (30 минут) открывает item без ключа: доступ и лимит
   // проверены на её выдаче. Нет подписи — обычная проверка ключа/подписки.
   const query = new URL(request.url).searchParams
   const signed = verifyRegistryLink(

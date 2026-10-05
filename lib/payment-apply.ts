@@ -4,7 +4,13 @@ import { randomUUID } from "node:crypto"
 import { and, eq, isNull } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { payment, subscription, user, webhookEvent } from "@/lib/db/schema"
+import {
+  partnerInvite,
+  payment,
+  subscription,
+  user,
+  webhookEvent,
+} from "@/lib/db/schema"
 import { getPlans } from "@/lib/plan-prices"
 import { isPlanId } from "@/lib/plans"
 import { fetchPayment } from "@/lib/yookassa"
@@ -168,13 +174,13 @@ export async function applyPaymentEvent(
   const promoPercent = Number(source.metadata?.percent)
   const promoCode = source.metadata?.promo ?? null
   const partnerId = source.metadata?.partnerId
-    ? (
+    ? ((
         await db
           .select({ id: user.id })
           .from(user)
           .where(eq(user.id, source.metadata.partnerId))
           .limit(1)
-      )[0]?.id ?? null
+      )[0]?.id ?? null)
     : null
   const promo =
     promoCode && partnerId && Number.isInteger(promoPercent)
@@ -185,8 +191,22 @@ export async function applyPaymentEvent(
           listAmount: source.metadata?.listAmount ?? plan.price,
         }
       : null
+  const [payer] = await db
+    .select({ invitedBy: user.invitedBy })
+    .from(user)
+    .where(eq(user.id, userId))
+    .limit(1)
+  const [inviter] = payer?.invitedBy
+    ? await db
+        .select({ id: partnerInvite.id })
+        .from(partnerInvite)
+        .where(eq(partnerInvite.claimedBy, payer.invitedBy))
+        .limit(1)
+    : []
+  const attributedPartnerId =
+    promo?.partnerId ?? (inviter ? payer?.invitedBy : null)
 
-  await db
+  const insertedPayment = await db
     .insert(payment)
     .values({
       id: randomUUID(),
@@ -198,9 +218,24 @@ export async function applyPaymentEvent(
       receiptStatus: source.receipt_registration ?? null,
       payload: stored,
       ...promo,
+      ...(!promo && attributedPartnerId
+        ? { partnerId: attributedPartnerId }
+        : {}),
     })
     // Повторное применение не должно плодить строки: один платёж — одна.
     .onConflictDoNothing()
+    .returning({ id: payment.id })
+
+  // Два параллельных webhook могут оба не увидеть processedAt. Уникальная
+  // строка платежа решает гонку: только победитель продлевает подписку.
+  if (insertedPayment.length === 0 && !options.force) {
+    await db
+      .update(webhookEvent)
+      .set({ processedAt: new Date() })
+      .where(eq(webhookEvent.id, id))
+
+    return { applied: false, reason: "duplicate" }
+  }
 
   // Пришёл без ссылки, но с кодом блогера — закрепляем за ним. Чужую
   // привязку не трогаем: доля и так считается по платежу.
@@ -248,7 +283,6 @@ export async function applyPaymentEvent(
       paymentMethodId: savedMethodId,
     })
   }
-
 
   await db
     .update(webhookEvent)

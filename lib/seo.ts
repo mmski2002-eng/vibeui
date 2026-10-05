@@ -32,6 +32,11 @@ export function originFor(locale: Locale) {
   return locale === "en" ? CLUB_ORIGIN : RU_ORIGIN
 }
 
+/** Публичный origin только из разрешённого host; заголовкам прокси не доверяем. */
+export function originFromHost(host: string | null | undefined) {
+  return isClubHost(host) ? CLUB_ORIGIN : RU_ORIGIN
+}
+
 /** Абсолютный публичный адрес страницы на домене её языка. */
 export function pageUrl(locale: Locale, path: string) {
   const bare = path.startsWith("/") ? path : `/${path}`

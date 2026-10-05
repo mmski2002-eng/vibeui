@@ -99,6 +99,15 @@ export function applyDiscount(price: string, percent: number): string {
   return `${discounted}.00`
 }
 
+/** Криптоцена в USD: обычная процентная скидка с округлением до цента. */
+export function applyUsdDiscount(price: number, percent: number): number {
+  if (!isPromoPercent(percent) || !Number.isFinite(price) || price <= 0) {
+    return price
+  }
+
+  return Math.round(price * (100 - percent)) / 100
+}
+
 export function promoPrices(
   plans: Plans,
   percent: number,

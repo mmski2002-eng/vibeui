@@ -6,14 +6,11 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { eq, sql } from "drizzle-orm"
 import { cookies } from "next/headers"
 
-import { CONSENT_VERSION } from "@/lib/consent"
 import { db } from "@/lib/db"
 import * as schema from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
 import { letterWithLink, sendMail } from "@/lib/mail"
 import { claimInvite, resolveCode } from "@/lib/partners"
-
-export { CONSENT_VERSION }
 
 /**
  * Тексты писем. Живут рядом с отправкой, а не в общем словаре: письмо
@@ -194,13 +191,6 @@ export const auth = betterAuth({
       // человек находится, а письма уходят позже и заголовков запроса уже
       // не видят.
       locale: { type: "string", required: false, input: true },
-      consentAt: { type: "date", required: false, input: false },
-      /**
-       * Версию согласия присылает форма — это и есть доказательство, что
-       * галочку поставил человек. Сервер её проверяет: браузерная валидация
-       * checkbox'а доказывает только то, что запрос пришёл из нашей формы.
-       */
-      consentVersion: { type: "string", required: false, input: true },
     },
   },
 
@@ -240,19 +230,10 @@ export const auth = betterAuth({
          * Привязка к партнёру ставится один раз, в момент создания
          * аккаунта: позже её нельзя ни задать, ни переписать — иначе
          * реферала можно переписать на другого блогера задним числом.
-         * Здесь же фиксируется согласие: его нужно уметь доказать.
-         *
          * Имя необязательно: пустое заменяется на «Viber000001» и далее
          * по счётчику базы. Поменять его можно потом в кабинете.
          */
         before: async (data) => {
-          if (data.consentVersion !== CONSENT_VERSION) {
-            throw new APIError("BAD_REQUEST", {
-              code: "CONSENT_REQUIRED",
-              message: "Consent to the terms is required",
-            })
-          }
-
           const store = await cookies()
           const code = store.get("vibeui_ref")?.value
           const resolved = code ? await resolveCode(code) : null
@@ -265,8 +246,6 @@ export const auth = betterAuth({
               name,
               invitedBy:
                 resolved?.kind === "referral" ? resolved.partnerId : null,
-              consentAt: new Date(),
-              consentVersion: CONSENT_VERSION,
               // Форма присылает язык сама; кука — запасной источник для
               // случая, когда регистрация пришла не из нашей формы.
               locale:

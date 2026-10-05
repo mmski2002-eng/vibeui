@@ -120,11 +120,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.6,
           })
         : locale === "ru"
-          ? localized(locale, scenario.demo, {
-              lastModified: siteDate,
-              changeFrequency: "monthly",
-              priority: 0.6,
-            }, false)
+          ? localized(
+              locale,
+              scenario.demo,
+              {
+                lastModified: siteDate,
+                changeFrequency: "monthly",
+                priority: 0.6,
+              },
+              false,
+            )
           : []),
     ]),
   ]
@@ -136,6 +141,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     }),
     ...localized(locale, "/start", {
+      lastModified: siteDate,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
+    ...localized(locale, "/pricing", {
       lastModified: siteDate,
       changeFrequency: "monthly",
       priority: 0.8,

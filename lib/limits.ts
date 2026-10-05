@@ -12,3 +12,6 @@ export const FREE_MONTHLY_LIMIT = 20
 
 /** Минимальная сумма вывода комиссии: мелкие переводы вручную не окупаются. */
 export const MIN_PAYOUT = 500
+
+/** Минимальная выплата партнёру .club в USDC. */
+export const MIN_PAYOUT_USD = 50

@@ -13,7 +13,7 @@ import {
   payoutProfile,
   payoutTotals,
 } from "@/lib/partners"
-import { MIN_PAYOUT } from "@/lib/limits"
+import { MIN_PAYOUT, MIN_PAYOUT_USD } from "@/lib/limits"
 import { ETHEREUM_ADDRESS, ETHEREUM_PAYOUT_MARKER } from "@/lib/payout-method"
 import { normalizePromo, promoStats } from "@/lib/promo"
 import { requireUser } from "@/lib/session"
@@ -198,11 +198,12 @@ export async function requestPayout(locale: "ru" | "en" = "ru") {
     payoutTotals(user.id),
   ])
   const pending = stats.commission - paid.paid
+  const minimum = locale === "en" ? MIN_PAYOUT_USD : MIN_PAYOUT
 
-  if (pending < MIN_PAYOUT) {
+  if (pending < minimum) {
     throw new Error(
       locale === "en"
-        ? `Payouts are available from ${MIN_PAYOUT} ₽`
+        ? `Payouts are available from $${MIN_PAYOUT_USD}`
         : `К выводу доступно от ${MIN_PAYOUT} ₽`,
     )
   }

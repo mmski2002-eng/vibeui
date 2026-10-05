@@ -4,10 +4,12 @@ import { cookies } from "next/headers"
 import { db } from "@/lib/db"
 import { referralVisit } from "@/lib/db/schema"
 import { resolveCode } from "@/lib/partners"
-import { SITE_URL } from "@/lib/seo"
+import { originFromHost } from "@/lib/seo"
+import { rateLimit } from "@/lib/rate-limit"
 
 /** Сколько живёт привязка к пригласившему: два месяца на раздумья. */
 const REF_COOKIE_DAYS = 60
+const REF_CODE = /^[A-Za-z0-9_-]{3,24}$/
 
 export const REF_COOKIE = "vibeui_ref"
 
@@ -18,13 +20,20 @@ export const REF_COOKIE = "vibeui_ref"
  * приглашение и чужой код ведут на главную без куки.
  */
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ code: string }> },
 ) {
+  const limited = rateLimit(request, "referral", 60)
+  if (limited) return limited
+
   const { code } = await params
-  // Публичный домен, а не request.url: за nginx запрос приходит на
-  // localhost:3003, и редирект уводил бы посетителя туда.
-  const home = new URL("/", SITE_URL)
+  // Берём только разрешённый публичный host. На .club нельзя уходить в .ru:
+  // инстансы имеют разные базы, и код второго сервера там не существует.
+  const home = new URL("/", originFromHost(request.headers.get("host")))
+
+  if (!REF_CODE.test(code)) {
+    return Response.redirect(home, 302)
+  }
 
   if (!(await resolveCode(code))) {
     return Response.redirect(home, 302)

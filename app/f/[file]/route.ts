@@ -3,6 +3,7 @@ import { withPreserveHeader } from "@/lib/registry-docs"
 import { verifyRegistryLink } from "@/lib/registry-link"
 import { getCatalogItem } from "@/registry/index"
 import { getDeliverableSource } from "@/registry/source.server"
+import { rateLimit } from "@/lib/rate-limit"
 
 /**
  * Исходник item'а по прямой ссылке `/f/<name>.tsx`.
@@ -23,6 +24,9 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ file: string }> },
 ) {
+  const limited = rateLimit(request, "source-file", 120)
+  if (limited) return limited
+
   const { file } = await params
   const slug = file.replace(/\.tsx$/, "")
   const item = getCatalogItem(slug)
@@ -32,7 +36,7 @@ export async function GET(
     return new Response("Not found\n", { status: 404 })
   }
 
-  // Подписанная ссылка живёт сутки и открывает исходник без сессии: доступ и
+  // Подписанная ссылка живёт 30 минут и открывает исходник без сессии: доступ и
   // лимит проверены на её выдаче. Нет подписи — обычная проверка сессии.
   const params_ = new URL(request.url).searchParams
   const signed = verifyRegistryLink(

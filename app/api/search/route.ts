@@ -1,6 +1,7 @@
 import { isLocale, type Locale } from "@/lib/i18n"
 import { searchCatalog } from "@/lib/search/engine"
 import { KINDS, type ItemKind } from "@/registry/categories"
+import { rateLimit } from "@/lib/rate-limit"
 
 /**
  * Подсказки поиска: `/api/search?q=тарифы&lang=ru&kind=component`.
@@ -24,6 +25,9 @@ function parseKind(value: string | null): ItemKind | undefined {
 }
 
 export function GET(request: Request) {
+  const limited = rateLimit(request, "search", 120)
+  if (limited) return limited
+
   const search = new URL(request.url).searchParams
   const query = search.get("q") ?? ""
   const lang = search.get("lang")

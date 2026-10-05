@@ -30,7 +30,8 @@ const TONE = {
       "border-[#ff5900]/50 bg-[#ff5900]/10 text-[#f2f2f2] focus-visible:ring-[#ff5900]",
     plashIcon: "text-[#ff5900]",
     plashPercent: "text-[#f2f2f2]/70",
-    remove: "text-[#f2f2f2]/60 hover:text-[#f2f2f2] focus-visible:ring-[#ff5900]",
+    remove:
+      "text-[#f2f2f2]/60 hover:text-[#f2f2f2] focus-visible:ring-[#ff5900]",
     input:
       "border-[#f2f2f2]/25 bg-[#f2f2f2]/5 text-[#f2f2f2] placeholder:text-[#f2f2f2]/40 focus-visible:border-[#ff5900] focus-visible:ring-[#ff5900]/40",
     apply:
@@ -80,12 +81,14 @@ function store(code: string | null) {
  * Цены не считает: сервер возвращает готовые, витрина только показывает.
  */
 export function PromoField({
+  locale,
   texts: t,
   initialCode,
   applied,
   onApplied,
   tone = "dark",
 }: {
+  locale: "ru" | "en"
   texts: PromoTexts
   /** Код из адреса или куки партнёра: применяется сам, без ввода. */
   initialCode: string | null
@@ -107,7 +110,7 @@ export function PromoField({
     setError(null)
 
     try {
-      const result = await checkPromo(code)
+      const result = await checkPromo(code, locale)
 
       if (result.ok) {
         onApplied({

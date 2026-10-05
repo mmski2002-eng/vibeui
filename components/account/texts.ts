@@ -579,7 +579,7 @@ export const ACCOUNT_TEXTS = {
       requestOnReview: "Payout request",
       requestStatusPending: "under review",
       requestStatusApproved: "approved, awaiting payout",
-      requestMinHint: (min: number) => `Available to withdraw from ${min} ₽`,
+      requestMinHint: (min: number) => `Available to withdraw from $${min}`,
       requestNeedRequisites: "Save your Ethereum wallet address first",
       columnPerson: "Person",
       columnStatus: "Status",

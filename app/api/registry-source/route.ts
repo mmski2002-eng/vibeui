@@ -3,18 +3,22 @@ import { signRegistryLink } from "@/lib/registry-link"
 import { getSiteBaseUrl } from "@/lib/site"
 import { getCatalogItem } from "@/registry/index"
 import { getDeliverableSource } from "@/registry/source.server"
+import { rateLimit } from "@/lib/rate-limit"
 
 /**
  * Выдача исходника для панели «Исходник компонента». Здесь один раз
  * проверяются вход, подписка и лимит (`resolveAccess`), после чего рождается
- * подпись на сутки: панель показывает код, а команда установки с этой
- * подписью работает те же сутки без повторной авторизации.
+ * подпись на 30 минут: панель показывает код, а команда установки с этой
+ * подписью работает те же 30 минут без повторной авторизации.
  *
  * Ответ зависит от того, кто спросил — маршрут динамический.
  */
 export const dynamic = "force-dynamic"
 
 export async function GET(request: Request) {
+  const limited = rateLimit(request, "registry-source", 60)
+  if (limited) return limited
+
   const slug = new URL(request.url).searchParams.get("name") ?? ""
 
   if (!getCatalogItem(slug)) {
