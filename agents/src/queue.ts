@@ -35,7 +35,11 @@ export async function claimNext(database: Database, workerId: string): Promise<A
     }[]>`
       SELECT id, kind, payload, attempts, max_attempts
       FROM agent_jobs
-      WHERE status = 'queued' AND available_at <= now() AND attempts < max_attempts
+      WHERE attempts < max_attempts AND (
+        (status = 'queued' AND available_at <= now())
+        -- A worker killed mid-job leaves it running forever; reclaim it after the lock goes stale.
+        OR (status = 'running' AND locked_at < now() - interval '15 minutes')
+      )
       ORDER BY created_at
       FOR UPDATE SKIP LOCKED
       LIMIT 1
@@ -59,7 +63,7 @@ export async function claimNext(database: Database, workerId: string): Promise<A
 }
 
 export async function completeJob(database: Database, id: string): Promise<void> {
-  await database`UPDATE agent_jobs SET status = 'completed', updated_at = now() WHERE id = ${id}`;
+  await database`UPDATE agent_jobs SET status = 'completed', last_error = null, updated_at = now() WHERE id = ${id}`;
 }
 
 export async function failJob(database: Database, job: AgentJob, error: unknown): Promise<void> {
