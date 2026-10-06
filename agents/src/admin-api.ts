@@ -277,7 +277,9 @@ const routes: Record<string, Handler> = {
     integrations: [
       { name: "OpenRouter", configured: Boolean(config.openRouterApiKey), purpose: "LLM для scoring, черновиков и ответов" },
       { name: "YouTube Data API", configured: Boolean(config.youtubeApiKey), purpose: "Discovery на YouTube" },
-      { name: "Resend API", configured: Boolean(config.resendApiKey), purpose: "Отправка писем" },
+      { name: "Gmail (SMTP + IMAP)", configured: Boolean(config.gmailUser && config.gmailAppPassword), purpose: "Отправка писем и чтение ответов" },
+      { name: "Имя отправителя", configured: Boolean(config.outreachSenderName), purpose: "Подпись и поле From" },
+      { name: "Resend API", configured: Boolean(config.resendApiKey), purpose: "Резервная отправка писем" },
       { name: "Resend webhook secret", configured: Boolean(config.resendWebhookSecret), purpose: "Проверка подписи событий доставки" },
       { name: "Адрес отправителя", configured: Boolean(config.outreachEmailFrom), purpose: "From для outreach-писем" },
       { name: "VibeUI internal API", configured: Boolean(config.vibeuiInternalApiUrl && config.vibeuiInternalApiKey), purpose: "Партнёры, промокоды, статистика" },

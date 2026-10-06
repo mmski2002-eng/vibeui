@@ -10,6 +10,7 @@ import { personalizeOutreach } from "./personalization-agent.js";
 import { classifyReply } from "./reply-agent.js";
 import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
+import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGmail } from "./email/gmail.js";
 import { calculateModelCost, isPricedModel, ModelOutputError } from "./model-cost.js";
 import { VibeUiClient } from "./vibeui-client.js";
 import { checkPublication } from "./publication-monitor.js";
@@ -25,8 +26,14 @@ export async function runWorker(database: Database, config: Config): Promise<voi
   process.once("SIGTERM", stop);
 
   console.log(`Worker ${workerId} started`);
+  let nextInboxPoll = 0;
   while (!stopping) {
-    const control = (await database<{ emergency_stop: boolean }[]>`SELECT emergency_stop FROM agent_control WHERE singleton = true`)[0];
+    // Replies are collected even under emergency stop: reading mail has no external effect.
+    if (gmailConfigured(config) && Date.now() >= nextInboxPoll) {
+      nextInboxPoll = Date.now() + config.inboxPollMs;
+      await pollGmailInbox(database, config).catch((error: unknown) => console.error("Inbox poll failed:", error instanceof Error ? error.message : error));
+    }
+    const control =(await database<{ emergency_stop: boolean }[]>`SELECT emergency_stop FROM agent_control WHERE singleton = true`)[0];
     if (control?.emergency_stop) {
       await delay(config.workerPollMs);
       continue;
@@ -181,7 +188,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
   const market = thread.market;
   if (market !== "ru" && market !== "en") throw new Error("Invalid creator market");
   await assertModelBudget(database, config);
-  const output = await personalizeOutreach({ creator: thread, posts, market, channel: thread.channel === "telegram" ? "telegram" : "email", model: config.generationModel });
+  const output = await personalizeOutreach({ creator: thread, posts, market, channel: thread.channel === "telegram" ? "telegram" : "email", senderName: config.outreachSenderName, model: config.generationModel });
   await database`
     INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, facts,
       source_urls, model, idempotency_key)
@@ -226,13 +233,24 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
       targetId: messageId, decision: "blocked", reason: denial });
     throw new Error(`Send blocked: ${denial}`);
   }
+  const retrying = message.status === "sending";
   await database`UPDATE outreach_messages SET status = 'sending' WHERE id = ${messageId} AND status IN ('approved', 'sending')`;
   const market = message.market === "ru" ? "ru" : "en";
   const optOut = market === "ru" ? "\n\nЕсли такие предложения неактуальны, ответьте «не писать», и мы больше не свяжемся." : "\n\nIf this is not relevant, reply “unsubscribe” and we will not contact you again.";
-  const externalId = await sendResendEmail(config.resendApiKey, {
-    from: config.outreachEmailFrom, to: String(message.contact_value), subject: String(message.subject),
-    text: `${String(message.body)}${optOut}`, idempotencyKey: String(message.idempotency_key),
-  });
+  const text = `${String(message.body)}${optOut}`;
+  let externalId: string;
+  if (gmailConfigured(config)) {
+    // SMTP has no idempotency key: a retry after an unknown outcome checks Sent for our Message-ID first.
+    const gmailMessageId = outboundMessageId(messageId, config.gmailUser);
+    externalId = retrying && await alreadySent(config, gmailMessageId)
+      ? gmailMessageId
+      : await sendGmail(config, { to: String(message.contact_value), subject: String(message.subject), text, messageId: gmailMessageId });
+  } else {
+    externalId = await sendResendEmail(config.resendApiKey, {
+      from: config.outreachEmailFrom, to: String(message.contact_value), subject: String(message.subject),
+      text, idempotencyKey: String(message.idempotency_key),
+    });
+  }
   await database.begin(async (transaction) => {
     await transaction`UPDATE outreach_messages SET status = 'sent', external_message_id = ${externalId}, sent_at = now() WHERE id = ${messageId}`;
     await transaction`UPDATE conversation_threads SET state = 'sent', updated_at = now() WHERE id = ${String(message.thread_id)}`;

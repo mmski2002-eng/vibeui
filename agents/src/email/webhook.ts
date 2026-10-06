@@ -2,9 +2,9 @@ import { randomUUID } from "node:crypto";
 import type postgres from "postgres";
 import type { Config } from "../config.js";
 import type { Database } from "../database.js";
-import { enqueue } from "../queue.js";
 import { writeAudit } from "../audit.js";
 import { getReceivedEmail, verifyResendWebhook } from "./resend.js";
+import { recordInboundReply, stripHtml, stripQuotedReply } from "./inbound.js";
 
 export async function handleResendWebhook(database: Database, config: Config, payload: string, headers: { id: string; timestamp: string; signature: string }): Promise<void> {
   const event = verifyResendWebhook(config.resendApiKey, config.resendWebhookSecret, payload, headers);
@@ -41,29 +41,12 @@ export async function handleResendWebhook(database: Database, config: Config, pa
 
 async function receiveEmail(database: Database, config: Config, emailId: string): Promise<void> {
   const email = await getReceivedEmail(config.resendApiKey, emailId);
-  const sender = extractEmail(email.from);
-  const contacts = await database<{ creator_id: string; thread_id: string }[]>`
-    SELECT cc.creator_id, t.id AS thread_id FROM creator_contacts cc
-    JOIN conversation_threads t ON t.creator_id = cc.creator_id
-    WHERE lower(cc.normalized_value) = ${sender} OR lower(cc.value) = ${sender}
-    ORDER BY t.updated_at DESC LIMIT 1
-  `;
-  const match = contacts[0];
-  if (!match) { await createNotification(database, "warning", "unmatched_reply", `Не найден диалог для ${sender}`, { emailId, sender }); return; }
-  const messageId = randomUUID();
-  const body = email.text ?? stripHtml(email.html ?? "");
-  const inserted = await database<{ id: string }[]>`
-    INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, external_message_id, received_at)
-    VALUES (${messageId}, ${match.thread_id}, 'inbound', 'reply', 'received', ${email.subject}, ${body}, ${emailId}, now())
-    ON CONFLICT (external_message_id) DO NOTHING RETURNING id
-  `;
-  if (!inserted[0]) return;
-  await database`UPDATE conversation_threads SET state = 'replied', updated_at = now() WHERE id = ${match.thread_id}`;
-  await enqueue(database, "classify_reply", { messageId }, `classify_reply:${messageId}`);
+  await recordInboundReply(database, {
+    sender: email.from, subject: email.subject ?? null, externalId: emailId, references: [],
+    body: stripQuotedReply(email.text ?? stripHtml(email.html ?? "")),
+  });
 }
 
 async function createNotification(database: Database, severity: string, kind: string, title: string, details: Record<string, unknown>): Promise<void> {
   await database`INSERT INTO notifications (id, severity, kind, title, details) VALUES (${randomUUID()}, ${severity}, ${kind}, ${title}, ${database.json(details as postgres.JSONValue)})`;
 }
-function extractEmail(value: string): string { return (value.match(/<([^>]+)>/)?.[1] ?? value).trim().toLowerCase(); }
-function stripHtml(value: string): string { return value.replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(); }
