@@ -76,6 +76,8 @@ export async function pollGmailInbox(database: Database, config: Config): Promis
           await notify(database, "critical", "email_bounced", "Письмо не доставлено (bounce)", { subject: parsed.subject });
           continue;
         }
+        // Automated senders (Google security alerts, newsletters) never belong to a creator conversation.
+        if (/(?:^|[.+-])no-?reply@|notifications?@|@accounts\.google\.com$/i.test(parsed.sender)) continue;
         const result = await recordInboundReply(database, parsed);
         if (result === "unmatched") unmatched++;
         if (result === "recorded") recorded++;
