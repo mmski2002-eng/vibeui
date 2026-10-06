@@ -42,6 +42,8 @@ export function stripHtml(value: string): string { return value.replace(/<style[
 // Drops the quoted original so the classifier sees only what the creator wrote.
 export function stripQuotedReply(text: string): string {
   const lines = text.split(/\r?\n/);
-  const cut = lines.findIndex((line) => /^\s*>/.test(line) || /^On .+ wrote:\s*$/.test(line) || /^.{0,80}\d{4}.{0,40}(?:написал|пишет)[^:]*:\s*$/.test(line) || /^-{2,}\s*Original Message/i.test(line));
+  const cut = lines.findIndex((line) => /^\s*>/.test(line) || /^On .+ wrote:\s*$/.test(line) || /^.{0,80}\d{4}.{0,40}(?:написал|пишет)[^:]*:\s*$/.test(line) || /^-{2,}\s*Original Message/i.test(line)
+    // Russian Gmail omits "wrote": "вт, 6 окт. 2026 г. в 12:03, Name <a@b.c>:".
+    || /^.{0,120}<[^<>\s]+@[^<>\s]+>:\s*$/.test(line));
   return (cut === -1 ? lines : lines.slice(0, cut)).join("\n").trim();
 }

@@ -6,6 +6,11 @@ import { outboundMessageId, plainTextBody } from "../src/email/gmail.js";
 test("keeps only the new part of a reply", () => {
   assert.equal(stripQuotedReply("Интересно, какие условия?\n\n5 окт. 2026 г., в 10:00, VibeUI <x@gmail.com> написал:\n> Здравствуйте"), "Интересно, какие условия?");
   assert.equal(stripQuotedReply("Sounds good\n\nOn Mon, Oct 5, 2026 at 10:00 AM VibeUI wrote:\n> Hi"), "Sounds good");
+  assert.equal(stripQuotedReply("Интересно, какие условия?
+
+вт, 6 окт. 2026 г. в 12:03, Vibeui Club <vibeuiclub@gmail.com>:
+
+> Здравствуйте"), "Интересно, какие условия?");
   assert.equal(stripQuotedReply("No quote here"), "No quote here");
 });
 
