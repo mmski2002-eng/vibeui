@@ -39,15 +39,43 @@ export function LiveCover({
   const [loaded, setLoaded] = useState(false)
   const [videoFailed, setVideoFailed] = useState(false)
   const [readyVideo, setReadyVideo] = useState<string | undefined>(undefined)
-  const videoPlaying = Boolean(video && readyVideo === video && !videoFailed)
+  const [near, setNear] = useState(false)
+  const [stillOnly, setStillOnly] = useState(false)
+  const activeVideo = video && !videoFailed && !stillOnly ? video : undefined
+  const videoPlaying = Boolean(activeVideo && readyVideo === activeVideo)
   const frameRequest = useRef<number | undefined>(undefined)
   const reveal = useRef<number | undefined>(undefined)
 
   useEffect(() => () => window.clearTimeout(reveal.current), [])
 
   useEffect(() => {
+    const connection = (
+      navigator as Navigator & { connection?: { saveData?: boolean } }
+    ).connection
+    setStillOnly(
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        Boolean(connection?.saveData),
+    )
+  }, [])
+
+  // 27 роликов с preload="metadata" тянули ~100 МБ при открытии витрины:
+  // видео монтируется, только когда карточка подъезжает к экрану.
+  useEffect(() => {
+    const element = host.current
+    if (!element || !video || near) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setNear(true)
+      },
+      { rootMargin: "200px 0px" },
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [video, near])
+
+  useEffect(() => {
     const element = videoElement.current
-    if (!element || !video || videoFailed) return
+    if (!element || !activeVideo || !near) return
 
     let visible = false
     function syncPlayback() {
@@ -59,10 +87,15 @@ export function LiveCover({
       }
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting
-      syncPlayback()
-    })
+    // Порог половины карточки: в кадре играют только реально видимые,
+    // а не все, что задели край экрана.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting
+        syncPlayback()
+      },
+      { threshold: 0.5 },
+    )
     observer.observe(element)
     document.addEventListener("visibilitychange", syncPlayback)
     return () => {
@@ -74,7 +107,7 @@ export function LiveCover({
         frameRequest.current = undefined
       }
     }
-  }, [video, videoFailed])
+  }, [activeVideo, near])
 
   useEffect(() => {
     const element = host.current
@@ -112,38 +145,40 @@ export function LiveCover({
           // оставляет статичный объект из постера поверх движущегося клипа.
           className={cn(
             "pointer-events-none absolute inset-0 z-20 h-full w-full object-cover object-top",
-            (!video || videoFailed) && "transition-opacity duration-700",
-            (video && !videoFailed ? videoPlaying : loaded) && "opacity-0",
+            !activeVideo && "transition-opacity duration-700",
+            (activeVideo ? videoPlaying : loaded) && "opacity-0",
           )}
         />
       ) : null}
-      {video && !videoFailed ? (
+      {activeVideo ? (
+        near ? (
         <video
           ref={videoElement}
-          src={video}
+          src={activeVideo}
           poster={poster}
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           onError={() => setVideoFailed(true)}
           onPlaying={(event) => {
             const element = event.currentTarget
-            if (frameRequest.current !== undefined || readyVideo === video)
+            if (frameRequest.current !== undefined || readyVideo === activeVideo)
               return
             if (typeof element.requestVideoFrameCallback === "function") {
               frameRequest.current = element.requestVideoFrameCallback(() => {
                 frameRequest.current = undefined
-                setReadyVideo(video)
+                setReadyVideo(activeVideo)
               })
             } else if (
               element.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
             ) {
-              setReadyVideo(video)
+              setReadyVideo(activeVideo)
             }
           }}
           className="absolute inset-0 z-10 h-full w-full object-cover object-top"
         />
+        ) : null
       ) : scale > 0 && live ? (
         <iframe
           src={src}
