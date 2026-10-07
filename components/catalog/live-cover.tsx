@@ -48,24 +48,22 @@ export function LiveCover({
 
   useEffect(() => () => window.clearTimeout(reveal.current), [])
 
-  useEffect(() => {
-    const connection = (
-      navigator as Navigator & { connection?: { saveData?: boolean } }
-    ).connection
-    setStillOnly(
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-        Boolean(connection?.saveData),
-    )
-  }, [])
-
-  // 27 роликов с preload="metadata" тянули ~100 МБ при открытии витрины:
+  // 27 роликов с preload="auto" тянули ~100 МБ при открытии витрины:
   // видео монтируется, только когда карточка подъезжает к экрану.
   useEffect(() => {
     const element = host.current
     if (!element || !video || near) return
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setNear(true)
+        if (!entry.isIntersecting) return
+        const connection = (
+          navigator as Navigator & { connection?: { saveData?: boolean } }
+        ).connection
+        setStillOnly(
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+            Boolean(connection?.saveData),
+        )
+        setNear(true)
       },
       { rootMargin: "200px 0px" },
     )
