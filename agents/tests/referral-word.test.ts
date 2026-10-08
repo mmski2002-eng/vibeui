@@ -15,3 +15,8 @@ test("stays within the 24-character code limit", () => {
   assert.ok(word.length <= 24);
   assert.match(word, /^[a-z0-9][a-z0-9_-]{2,23}$/);
 });
+
+test("treats Latin two-word names as channel names", () => {
+  assert.equal(referralWord(["@virtualcode"], "VIRTUAL CODE"), "for_virtualcode");
+  assert.equal(referralWord(["@ZinhoAutomates"], "Zinho Automates"), "for_zinhoautomates");
+});

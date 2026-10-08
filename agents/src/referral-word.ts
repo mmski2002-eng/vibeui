@@ -4,12 +4,13 @@ const CYRILLIC: Record<string, string> = {
   э: "e", ю: "yu", я: "ya",
 };
 
-// A person's name ("Владилен Минин") gives the surname, which the creator recognises at a glance;
-// a one-word channel name defers to the platform handle.
+// A Cyrillic "Имя Фамилия" gives the surname, which the creator recognises at a glance. Latin two-word
+// names are too often channel names ("VIRTUAL CODE"), so everything else uses the platform handle.
 export function referralWord(handles: string[], displayName: string): string {
   const handle = handles.map(slug).find((value) => value.length >= 3);
   const parts = displayName.trim().split(/\s+/);
-  const surname = parts.length === 2 ? slug(parts[1] ?? "") : "";
+  const isRussianName = parts.length === 2 && parts.every((part) => /^[А-ЯЁ][а-яё]+$/.test(part));
+  const surname = isRussianName ? slug(parts[1] ?? "") : "";
   const base = (surname.length >= 3 ? surname : undefined) ?? handle ?? (slug(displayName) || "creator");
   return `for_${base}`.slice(0, 24).replace(/[-_]+$/, "");
 }
