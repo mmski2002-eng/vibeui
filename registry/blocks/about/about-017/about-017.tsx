@@ -185,7 +185,7 @@ export function About017({
                   <h3>{peopleTitle}</h3>
                   <ul data-part="cards">
                     {people.map((person, index) => (
-                      <Card134 key={person.name} data-part="card" name={person.name} image={person.image} alt={person.alt} role={person.role} quote={person.quote} index={index} accent={accent} />
+                      <Card134 key={person.name} data-part="card" name={person.name} image={person.image} alt={person.alt ?? person.name} role={person.role} quote={person.quote} index={index} accent={accent} />
                     ))}
                   </ul>
                 </div>

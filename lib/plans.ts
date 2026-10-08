@@ -9,6 +9,7 @@ export const PLANS = {
   monthly: {
     id: "monthly",
     title: "PRO на месяц",
+    titleEn: "PRO monthly",
     price: "690.00",
     period: "мес",
     days: 30,
@@ -16,6 +17,7 @@ export const PLANS = {
   yearly: {
     id: "yearly",
     title: "PRO на год",
+    titleEn: "PRO yearly",
     price: "5900.00",
     period: "год",
     days: 365,
@@ -25,6 +27,7 @@ export const PLANS = {
   "enterprise-monthly": {
     id: "enterprise-monthly",
     title: "Энтерпрайз на месяц",
+    titleEn: "Enterprise monthly",
     price: "1380.00",
     period: "мес",
     days: 30,
@@ -32,6 +35,7 @@ export const PLANS = {
   "enterprise-yearly": {
     id: "enterprise-yearly",
     title: "Энтерпрайз на год",
+    titleEn: "Enterprise yearly",
     price: "11800.00",
     period: "год",
     days: 365,

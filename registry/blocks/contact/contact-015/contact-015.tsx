@@ -146,7 +146,7 @@ export function Contact015({
                 ))}
               </ul>
             ) : null}
-            {image ? <Card025 data-part="picture" src={image} alt={imageAlt} ratio="3/2" /> : null}
+            {image ? <Card025 data-part="picture" src={image} alt={imageAlt} ratio="3/2" caption="" /> : null}
           </div>
           {done ? (
             <div data-part="done" role="status">

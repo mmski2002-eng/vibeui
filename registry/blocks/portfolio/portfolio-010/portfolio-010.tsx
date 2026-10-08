@@ -147,7 +147,7 @@ export function Portfolio010({
           {lede ? <p data-part="lede">{lede}</p> : null}
           <div data-part="grid">
             {photos.map((photo, index) => (
-              <Button104 key={photo.src + index} data-part="item" src={photo.src} shape={photo.shape} caption={photo.caption} alt={photo.alt} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`} accent={accent} />
+              <Button104 key={photo.src + index} data-part="item" src={photo.src} shape={photo.shape} caption={photo.caption ?? ""} alt={photo.alt ?? photo.caption ?? ""} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`} accent={accent} />
             ))}
           </div>
         </div>

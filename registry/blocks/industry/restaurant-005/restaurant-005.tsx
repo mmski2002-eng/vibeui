@@ -262,7 +262,7 @@ export function Restaurant005({
             {columns.map((column, columnIndex) => (
               <div key={columnIndex} data-part="column">
                 {column.map(({ photo, index }) => (
-                  <Button094 key={index} data-part="frame" aspect={photo.aspect} caption={photo.caption} alt={photo.alt} src={photo.src} openLabel={openLabel} ref={(element) => {
+                  <Button094 key={index} data-part="frame" aspect={photo.aspect} caption={photo.caption} alt={photo.alt ?? photo.caption ?? photoLabel} src={photo.src} openLabel={openLabel} ref={(element) => {
                       frames.current[index] = element
                     }} data-hidden={phase !== "closed" && current === index} onClick={() => open(index)} accent={accent} />
                 ))}

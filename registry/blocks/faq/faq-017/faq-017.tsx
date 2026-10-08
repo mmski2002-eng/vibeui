@@ -18,6 +18,8 @@ export type Faq017Props = {
   askTitle?: string
   askText?: string
   askLabel?: string
+  /** Подсказка скринридеру у внешней ссылки. */
+  externalHint?: string
   askHref?: string
   tone?: "auto" | "light" | "dark"
   accent?: string
@@ -84,6 +86,7 @@ export function Faq017({
   askTitle = "Не нашли ответ?",
   askText = "Напишите куратору набора — расскажет, подходит ли курс именно вам.",
   askLabel = "Спросить в Telegram",
+  externalHint = "(откроется в новой вкладке)",
   askHref = "https://t.me/",
   tone = "auto",
   accent,
@@ -131,7 +134,7 @@ export function Faq017({
                     href={askHref}
                     external
                     size="lg"
-                    externalHint="(откроется в новой вкладке)"
+                    externalHint={externalHint}
                     tone="accent"
                     accent={accent}
                   />

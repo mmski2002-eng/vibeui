@@ -150,7 +150,7 @@ export function Portfolio008({
           </div>
           <div data-part="grid">
             {photos.map((photo, index) => (
-              <Button102 key={photo.src + index} data-part="item" src={photo.src} shape={photo.shape} caption={photo.caption} alt={photo.alt} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`} accent={accent} />
+              <Button102 key={photo.src + index} data-part="item" src={photo.src} shape={photo.shape} caption={photo.caption ?? ""} alt={photo.alt ?? photo.caption ?? ""} onClick={() => setCurrent(index)} aria-label={photo.caption ?? photo.alt ?? `${index + 1}`} accent={accent} />
             ))}
           </div>
         </div>

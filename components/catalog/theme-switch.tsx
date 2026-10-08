@@ -18,7 +18,7 @@ export const SHELL_THEME_EVENT = "vibeui:shell-theme"
  * пропсов/рендера, так что синхронизировать его через setState в эффекте
  * нечем — правка тут же вызвала бы лишний ре-рендер.
  */
-export function ThemeSwitch() {
+export function ThemeSwitch({ label = "Переключить тему" }: { label?: string }) {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const sunRef = useRef<SVGSVGElement>(null)
   const moonRef = useRef<SVGSVGElement>(null)
@@ -81,7 +81,7 @@ export function ThemeSwitch() {
       ref={buttonRef}
       type="button"
       onClick={toggle}
-      aria-label="Переключить тему"
+      aria-label={label}
       aria-pressed="false"
       className="border-shell-border text-shell-muted hover:text-shell-fg hover:bg-shell-panel focus-visible:ring-shell-ring inline-flex size-7 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:ring-2 focus-visible:outline-none"
     >

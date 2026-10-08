@@ -133,7 +133,7 @@ export function Portfolio009({
           </div>
           <div data-part="grid">
             {cards.map((card, index) => (
-              <Button103 key={card.src + index} data-part="card" src={card.src} shape={card.shape} caption={card.caption} alt={card.alt} from={card.from} date={card.date} back={card.back} addressee={addressee} flipped={flipped} index={index} data-flipped={flipped.has(index) ? "true" : undefined} aria-pressed={flipped.has(index)} aria-label={card.caption ?? card.alt ?? `${index + 1}`} onClick={() => flip(index)} accent={accent} />
+              <Button103 key={card.src + index} data-part="card" src={card.src} shape={card.shape} caption={card.caption ?? ""} alt={card.alt ?? card.caption ?? ""} from={card.from} date={card.date} back={card.back} addressee={addressee} flipped={flipped} index={index} data-flipped={flipped.has(index) ? "true" : undefined} aria-pressed={flipped.has(index)} aria-label={card.caption ?? card.alt ?? `${index + 1}`} onClick={() => flip(index)} accent={accent} />
             ))}
           </div>
         </div>

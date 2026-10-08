@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { headers } from "next/headers"
 import { and, eq } from "drizzle-orm"
 import { Receipt, Sparkles } from "lucide-react"
 
@@ -14,6 +15,8 @@ import { FREE_MONTHLY_LIMIT } from "@/lib/entitlements"
 import { formatDate, formatNumber } from "@/lib/format"
 import { localePath, type Locale } from "@/lib/i18n"
 import { getPlans, type Plans } from "@/lib/plan-prices"
+import { PLAN_USD } from "@/lib/plans"
+import { isClubHost } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 import {
   getSubscriptionRow,
@@ -46,6 +49,8 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
   ])
 
   const state = resolveSubscription(row, now)
+  // На vibeui.club платят в долларах (крипта), рубли там показывать нельзя.
+  const club = isClubHost((await headers()).get("host"))
   const waiting = pendingRows.length > 0
   const active = state.kind === "pro" || state.kind === "bonus"
 
@@ -94,7 +99,7 @@ export async function AccountBilling({ locale }: { locale: Locale }) {
           </ButtonLink>
         </Panel>
       ) : (
-        <ActivePlan locale={locale} state={state} now={now} plans={plans} />
+        <ActivePlan locale={locale} state={state} now={now} plans={plans} club={club} />
       )}
     </>
   )
@@ -105,9 +110,11 @@ function ActivePlan({
   state,
   now,
   plans,
+  club,
 }: {
   locale: Locale
   plans: Plans
+  club: boolean
   state: Exclude<
     ReturnType<typeof resolveSubscription>,
     { kind: "free" } | { kind: "expired" }
@@ -127,7 +134,7 @@ function ActivePlan({
   const title =
     state.kind === "bonus"
       ? ACCOUNT_TEXTS[locale].plan.bonus
-      : planTitle(state.plan)
+      : planTitle(state.plan, locale)
 
   const note =
     state.kind === "bonus"
@@ -196,7 +203,11 @@ function ActivePlan({
           index={3}
           label={t.price}
           value={
-            plan ? formatNumber(Number(plans[plan].price), "rub", locale) : "—"
+            plan
+              ? club
+                ? `$${PLAN_USD[plan]}`
+                : formatNumber(Number(plans[plan].price), "rub", locale)
+              : "—"
           }
         />
         <Field

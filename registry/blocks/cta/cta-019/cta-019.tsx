@@ -90,7 +90,7 @@ export function Cta019({
         <div data-part="shell">
           {eyebrow ? <p data-part="eyebrow">{eyebrow}</p> : null}
           {/* Кадр с фото, плашкой и наложением — card-025; блоку остаются заголовок и кнопки в слоте. */}
-          <Card025 data-part="banner" src={image} alt={imageAlt} ratio="21/9" badge={label} scrim="bottom" drift>
+          <Card025 data-part="banner" src={image} alt={imageAlt} ratio="21/9" badge={label} caption="" scrim="bottom" drift>
               {title ? <p data-part="title">{title}</p> : null}
               <div data-part="actions">
                 {secondaryLabel ? (

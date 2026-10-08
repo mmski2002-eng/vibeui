@@ -129,7 +129,7 @@ export function Testimonials029({
             {reviews.map((review) => {
               const stars = Math.max(0, Math.min(5, review.stars ?? 5))
               return (
-                <Card113 key={review.number} data-part="act" number={review.number} object={review.object} date={review.date} text={review.text} remark={review.remark} name={review.name} actLabel={actLabel} starsLabel={starsLabel} remarkLabel={remarkLabel} signLabel={signLabel} remarkStampLabel={remarkStampLabel} stampLabel={stampLabel} stars={stars} accent={accent} />
+                <Card113 key={review.number} data-part="act" number={review.number} object={review.object} date={review.date} text={review.text} remark={review.remark ?? ""} name={review.name} actLabel={actLabel} starsLabel={starsLabel} remarkLabel={remarkLabel} signLabel={signLabel} remarkStampLabel={remarkStampLabel} stampLabel={stampLabel} stars={stars} accent={accent} />
               )
             })}
           </ul>

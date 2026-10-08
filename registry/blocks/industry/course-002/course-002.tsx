@@ -309,7 +309,7 @@ export function Course002({
                             {week.lessons.map((lesson) => {
                               const kind = lesson.kind ?? "video"
                               return (
-                                <Card090 key={lesson.title} data-part="lesson" title={lesson.title} length={lesson.length} kind={kind} accent={accent} />
+                                <Card090 key={lesson.title} data-part="lesson" title={lesson.title} length={lesson.length ?? ""} kind={kind} accent={accent} />
                               )
                             })}
                           </ul>

@@ -118,7 +118,7 @@ export function People017({
           </div>
           <ul data-part="grid">
             {people.map((person, index) => (
-              <Card059 key={person.name} data-part="card" name={person.name} photo={person.photo} role={person.role} years={person.years} objects={person.objects} text={person.text} now={person.now} yearsLine={yearsLine} objectsLine={objectsLine} nowLabel={nowLabel} index={index} accent={accent} />
+              <Card059 key={person.name} data-part="card" name={person.name} photo={person.photo} role={person.role} years={person.years} objects={person.objects} text={person.text} now={person.now ?? ""} yearsLine={yearsLine} objectsLine={objectsLine} nowLabel={nowLabel} index={index} accent={accent} />
             ))}
           </ul>
         </div>

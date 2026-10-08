@@ -268,7 +268,7 @@ export function Course003({
           ) : null}
           <ul ref={lane} data-part="lane" data-drag={dragging} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
             {cases.map((item, index) => (
-              <Card091 key={item.name} data-part="card" name={item.name} work={item.work} workAlt={item.workAlt} gain={item.gain} image={item.image} before={item.before} after={item.after} quote={item.quote} href={item.href} beforeLabel={beforeLabel} afterLabel={afterLabel} linkLabel={linkLabel} data-index={index} data-seen={visible[index] ? "true" : undefined} onPointerMove={glow} onClickCapture={(event) => dragging && event.preventDefault()} accent={accent} />
+              <Card091 key={item.name} data-part="card" name={item.name} work={item.work} workAlt={item.workAlt ?? item.work ?? ""} gain={item.gain} image={item.image} before={item.before} after={item.after} quote={item.quote} href={item.href} beforeLabel={beforeLabel} afterLabel={afterLabel} linkLabel={linkLabel} data-index={index} data-seen={visible[index] ? "true" : undefined} onPointerMove={glow} onClickCapture={(event) => dragging && event.preventDefault()} accent={accent} />
             ))}
           </ul>
         </div>

@@ -171,7 +171,7 @@ export function Testimonials020({
             <ul data-part="board" aria-live="polite">
               {[...added, ...wishes].map((wish, index) => (
                 <li key={`${wish.name}-${index}`}>
-                  <Card039 data-part="footnote" text={wish.text} name={wish.name} note={wish.note} index={index} data-fresh={index < added.length ? "true" : undefined} accent={accent} />
+                  <Card039 data-part="footnote" text={wish.text} name={wish.name} note={wish.note ?? ""} index={index} data-fresh={index < added.length ? "true" : undefined} accent={accent} />
                 </li>
               ))}
             </ul>

@@ -136,7 +136,7 @@ export function Testimonials031({
               const to = position(review.after)
               const gained = Math.max(0, levels.indexOf(review.after) - levels.indexOf(review.before))
               return (
-                <Card114 key={review.name + index} data-part="card" name={review.name} quote={review.quote} note={review.note} lang={review.lang} months={review.months} before={review.before} after={review.after} levelUnits={levelUnits} monthUnits={monthUnits} scaleLabel={scaleLabel} levels={levels} from={from} to={to} gained={gained} style={{ ["--vibeui-testimonials-031-tilt" as string]: index % 3 === 0 ? -0.8 : index % 3 === 1 ? 0.6 : -0.3 }} accent={accent} />
+                <Card114 key={review.name + index} data-part="card" name={review.name} quote={review.quote} note={review.note ?? ""} lang={review.lang} months={review.months} before={review.before} after={review.after} levelUnits={levelUnits} monthUnits={monthUnits} scaleLabel={scaleLabel} levels={levels} from={from} to={to} gained={gained} style={{ ["--vibeui-testimonials-031-tilt" as string]: index % 3 === 0 ? -0.8 : index % 3 === 1 ? 0.6 : -0.3 }} accent={accent} />
               )
             })}
           </ul>

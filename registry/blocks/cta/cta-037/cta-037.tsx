@@ -205,7 +205,7 @@ export function Cta037({
       <section data-vibeui-block="cta-037" data-tone={tone === "auto" ? undefined : tone} className={className} style={palette}>
         <div data-part="shell">
           <figure data-part="figure">
-            <Card025 data-part="photo" src={image} alt={imageAlt} ratio="3/2" radius="none" />
+            <Card025 data-part="photo" src={image} alt={imageAlt} ratio="3/2" radius="none" caption="" />
             {caption ? <figcaption data-part="handwriting">{caption}</figcaption> : null}
           </figure>
           <div>

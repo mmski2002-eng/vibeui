@@ -285,6 +285,7 @@ export default function Page() {
           askTitle="Didn't find the answer?"
           askText="Message the admissions curator — they'll tell you whether the course fits you."
           askLabel="Ask on Telegram"
+          externalHint="(opens in a new tab)"
           style={{ background: SOFT }}
         />
       </div>

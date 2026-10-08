@@ -52,7 +52,19 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     applicationName: SITE_NAME,
-    keywords: [
+    keywords: english
+      ? [
+          "UI components",
+          "component library",
+          "shadcn registry",
+          "vibe coding",
+          "React components",
+          "Tailwind CSS",
+          "Next.js",
+          "website blocks",
+          "AI agent",
+        ]
+      : [
       "UI компоненты",
       "библиотека компонентов",
       "shadcn registry",

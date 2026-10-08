@@ -114,7 +114,7 @@ export function ScenariosGrid({
         <div
           className="-mb-px flex min-w-0 flex-1 [scrollbar-width:none] gap-x-1 overflow-x-auto [&::-webkit-scrollbar]:hidden"
           role="tablist"
-          aria-label="Сфера"
+          aria-label={locale === "en" ? "Industry" : "Сфера"}
         >
           <Tab active={group === "all"} onClick={() => setGroup("all")}>
             {text.all} <Count>{groupCounts.all}</Count>

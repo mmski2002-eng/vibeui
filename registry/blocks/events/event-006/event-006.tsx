@@ -184,7 +184,7 @@ export function Event006({
           {visible.length > 0 ? (
             <ol key={day + tag} data-part="slots" style={{ ["--vibeui-event-006-day" as string]: current?.color ?? "#111" }}>
               {visible.map((slot, index) => (
-                <Card119 key={slot.time + slot.title} data-part="slot" time={slot.time} title={slot.title} href={slot.href} stage={slot.stage} tag={slot.tag} tagColor={slot.tagColor} tagInk={slot.tagInk} note={slot.note} style={{ ["--vibeui-event-006-n" as string]: index }} accent={accent} />
+                <Card119 key={slot.time + slot.title} data-part="slot" time={slot.time} title={slot.title} href={slot.href} stage={slot.stage} tag={slot.tag} tagColor={slot.tagColor} tagInk={slot.tagInk} note={slot.note ?? ""} style={{ ["--vibeui-event-006-n" as string]: index }} accent={accent} />
               ))}
             </ol>
           ) : (

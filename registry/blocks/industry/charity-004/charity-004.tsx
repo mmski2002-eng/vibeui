@@ -180,7 +180,7 @@ export function Charity004({
             </p>
             <ul data-part="list">
               {points.map((point, index) => (
-                <Card082 key={point.city} data-part="city" city={point.city} note={point.note} count={point.count} data-lit={index < lit} onMouseEnter={() => setHot(index)} onMouseLeave={() => setHot(null)} accent={accent} />
+                <Card082 key={point.city} data-part="city" city={point.city} note={point.note ?? ""} count={point.count} data-lit={index < lit} onMouseEnter={() => setHot(index)} onMouseLeave={() => setHot(null)} accent={accent} />
               ))}
             </ul>
           </div>

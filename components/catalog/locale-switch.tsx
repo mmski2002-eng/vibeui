@@ -22,7 +22,7 @@ export function LocaleSwitch({ locale }: { locale: Locale }) {
   return (
     <div
       role="group"
-      aria-label="Язык · Language"
+      aria-label={locale === "en" ? "Language" : "Язык"}
       className="border-shell-border bg-shell-panel flex items-center rounded-full border p-0.5"
     >
       {LOCALES.map((option) => (

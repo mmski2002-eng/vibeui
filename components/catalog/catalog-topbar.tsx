@@ -129,7 +129,7 @@ export function CatalogTopbar({
         </div>
 
         <div className="col-start-2 row-start-1 flex items-center justify-end gap-2 lg:col-start-3 lg:gap-3">
-          <ThemeSwitch />
+          <ThemeSwitch label={locale === "en" ? "Toggle theme" : "Переключить тему"} />
           <LocaleSwitch locale={locale} />
           <span
             className="bg-shell-border mx-0.5 hidden h-5 w-px sm:block"

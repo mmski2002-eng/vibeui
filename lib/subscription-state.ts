@@ -3,6 +3,7 @@ import "server-only"
 import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
+import type { Locale } from "@/lib/i18n"
 import { subscription } from "@/lib/db/schema"
 import { PLANS, isPlanId, type PlanId } from "@/lib/plans"
 
@@ -63,8 +64,10 @@ export function isProState(state: SubscriptionState) {
 }
 
 /** Название тарифа для показа. Бонус тарифом не считается. */
-export function planTitle(plan: PlanId | null) {
-  return plan ? PLANS[plan].title : "PRO"
+export function planTitle(plan: PlanId | null, locale: Locale = "ru") {
+  if (!plan) return "PRO"
+
+  return locale === "en" ? PLANS[plan].titleEn : PLANS[plan].title
 }
 
 export async function getSubscriptionState(userId: string) {
