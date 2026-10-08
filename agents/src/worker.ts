@@ -12,7 +12,8 @@ import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
 import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGmail } from "./email/gmail.js";
 import { calculateModelCost, isPricedModel, ModelOutputError } from "./model-cost.js";
-import { VibeUiClient } from "./vibeui-client.js";
+import { createReferralInvite, VibeUiClient } from "./vibeui-client.js";
+import { referralWord } from "./referral-word.js";
 import { checkPublication } from "./publication-monitor.js";
 
 export async function runWorker(database: Database, config: Config): Promise<void> {
@@ -176,7 +177,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
   const threadId = job.payload.threadId;
   if (typeof threadId !== "string") throw new Error("threadId is required");
   const rows = await database<Record<string, unknown>[]>`
-    SELECT t.id, t.creator_id, t.campaign_id, t.channel, c.display_name, c.market, c.language, c.country
+    SELECT t.id, t.creator_id, t.campaign_id, t.channel, t.referral_url, c.display_name, c.market, c.language, c.country
     FROM conversation_threads t JOIN creators c ON c.id = t.creator_id WHERE t.id = ${threadId}
   `;
   const thread = rows[0];
@@ -188,7 +189,19 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
   const market = thread.market;
   if (market !== "ru" && market !== "en") throw new Error("Invalid creator market");
   await assertModelBudget(database, config);
-  const output = await personalizeOutreach({ creator: thread, posts, market, channel: thread.channel === "telegram" ? "telegram" : "email", senderName: config.outreachSenderName, model: config.generationModel });
+  let referralUrl = typeof thread.referral_url === "string" ? thread.referral_url : "";
+  if (!referralUrl) {
+    const handles = await database<{ handle: string }[]>`
+      SELECT handle FROM creator_profiles WHERE creator_id = ${String(thread.creator_id)} AND handle IS NOT NULL ORDER BY created_at
+    `;
+    const invite = await createReferralInvite(config.vibeuiInternalApiKey, market, {
+      creatorId: String(thread.creator_id), name: String(thread.display_name),
+      word: referralWord(handles.map((row) => row.handle), String(thread.display_name)),
+    });
+    await database`UPDATE conversation_threads SET referral_code = ${invite.code}, referral_url = ${invite.url}, updated_at = now() WHERE id = ${threadId}`;
+    referralUrl = invite.url;
+  }
+  const output = await personalizeOutreach({ creator: thread, posts, market, channel: thread.channel === "telegram" ? "telegram" : "email", referralUrl, model: config.generationModel });
   await database`
     INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, facts,
       source_urls, model, idempotency_key)
@@ -201,7 +214,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
     WHERE outreach_messages.status = 'draft'
   `;
   await writeAudit(database, { actor: "personalization_agent", action: "draft_first_contact",
-    targetType: "thread", targetId: threadId, decision: "completed", details: { sourceUrl: output.chosenPostUrl } });
+    targetType: "thread", targetId: threadId, decision: "completed", details: { sourceUrl: output.chosenPostUrl, referralUrl } });
   await recordUsage(database, null, String(thread.campaign_id), "personalization_agent", config.generationModel, output.usage);
 }
 

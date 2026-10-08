@@ -24,3 +24,19 @@ export class VibeUiClient {
     return response.json() as Promise<T>;
   }
 }
+
+// Each market is a separate VibeUI instance with its own accounts, so the invite is created on the creator's domain.
+const MARKET_ORIGIN = { ru: "https://vibeui.ru", en: "https://vibeui.club" } as const;
+
+export async function createReferralInvite(apiKey: string, market: "ru" | "en", input: { creatorId: string; name: string; word: string }) {
+  if (!apiKey) throw new Error("VIBEUI_INTERNAL_API_KEY is not configured");
+  const response = await fetch(new URL("/api/internal/invites", MARKET_ORIGIN[market]), {
+    method: "POST", signal: AbortSignal.timeout(20_000),
+    headers: { authorization: `Bearer ${apiKey}`, accept: "application/json", "content-type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!response.ok) throw new Error(`VibeUI invite API ${response.status}: ${(await response.text()).slice(0, 300)}`);
+  const body = await response.json() as { code?: unknown; url?: unknown };
+  if (typeof body.code !== "string" || typeof body.url !== "string") throw new Error("VibeUI invite API returned no link");
+  return { code: body.code, url: body.url };
+}

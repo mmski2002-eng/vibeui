@@ -15,20 +15,29 @@ export async function personalizeOutreach(input: {
   posts: Array<Record<string, unknown>>;
   market: "ru" | "en";
   channel: "email" | "telegram";
-  senderName: string;
+  referralUrl: string;
   model: string;
 }): Promise<PersonalizationOutput> {
   const allowedUrls = new Set(input.posts.map((post) => post.url).filter((url): url is string => typeof url === "string"));
   if (allowedUrls.size === 0) throw new Error("Cannot personalize without a sourced publication");
   const agent = new Agent({
     name: "VibeUI Outreach Personalizer", model: input.model,
-    instructions: `Write one concise first-contact ${input.channel === "telegram" ? "Telegram direct message: two or three short sentences, under 400 characters, no signature line; subject is only an internal label" : "email"} in ${input.market === "ru" ? "Russian" : "English"}.
-Use exactly one supplied publication as the opening reason. VibeUI lets an AI coding agent install a real UI component file instead of recreating a generic component from a verbal description.
-Suggest a concrete comparison experiment and ask whether the creator is interested. You may offer trial access, a personal referral link, audience promo code, and commission, but no fixed amount or guaranteed earnings.
+    instructions: `Write one first-contact ${input.channel === "telegram" ? "Telegram direct message: at most five short sentences, under 700 characters, no signature line; subject is only an internal label" : "email of 80-140 words"} in ${input.market === "ru" ? "Russian" : "English"}.
+
+About VibeUI: a catalog of ready UI blocks and whole-page scenarios (landing sections, pricing, dashboards, forms) for vibe coding. Each block has a "Copy for AI" button: the AI coding agent installs the real component file instead of improvising a generic one, so the page looks designed on the first prompt.
+
+Structure:
+1. Open with one specific supplied publication and why it caught attention; be concrete, no flattery.
+2. One or two sentences on how VibeUI fits what this creator shows (their stack, tools or audience), in your own words.
+3. The gift: this personal link gives a free month of VibeUI Pro on sign-up: ${input.referralUrl} . Write the link exactly as given, once, on its own line.
+4. Only then, briefly: if they like it, the same link becomes their partner link; viewers get 30% off their first payment and the creator earns 25% of all payments from people they bring. No other numbers, no guarantees.
+5. A low-effort ask: try it and reply with an honest opinion. Do not ask for a video, review or post.
+
+Style: sound like a person, not a template. Vary sentence openings and subject lines; never reuse the phrase "verbal description" or "component comparison". Subject: short, specific to the creator's content, no hype, no emoji.
 Never invent familiarity, product functions, customers, reviews, metrics, or facts. Every factual claim about the creator must cite one supplied URL. No attachments, legal promises, or pressure.
 The message is sent as plain text: no Markdown, no HTML, write links as bare URLs.
 Greet the creator by first name only when a personal first name is evident; never use a channel or brand name as a name, greet neutrally instead.
-${input.channel === "email" ? `End with a short sign-off from ${input.senderName || "the VibeUI team"}, VibeUI.` : ""}`,
+${input.channel === "email" ? `End with the sign-off line "${input.market === "ru" ? "Команда VibeUI" : "The VibeUI team"}" and nothing after it.` : ""}`,
     outputType: outputSchema,
   });
   const result = await run(agent, JSON.stringify({ creator: input.creator, posts: input.posts }));
@@ -39,6 +48,7 @@ ${input.channel === "email" ? `End with a short sign-off from ${input.senderName
   const output = parsed.data;
   const citedUrls = [output.chosenPostUrl, ...output.facts.map((fact) => fact.sourceUrl)];
   const unsupported = citedUrls.filter((url) => !allowedUrls.has(url));
+  if (output.body.split(input.referralUrl).length !== 2) throw new ModelOutputError("Personalization must contain the referral link exactly once", usage);
   if (unsupported.length > 0) throw new ModelOutputError(`Personalization cited unsupported URLs: ${unsupported.join(", ")}`, usage);
   return { ...output, usage };
 }
