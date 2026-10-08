@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "outreachEnabled": false,
+  "outreachEnabled": true,
   "minimumAutomaticScore": 80,
   "dailyContactLimit": 5,
   "maximumFollowUps": 2,

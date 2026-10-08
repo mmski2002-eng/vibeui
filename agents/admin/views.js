@@ -452,6 +452,8 @@ async function creatorCard(id) {
       <strong>${esc(creator.display_name)}</strong>
       <span class="muted">${esc(marketLabel[creator.market] ?? creator.market)} · ${esc(creator.language ?? "—")} · ${esc(creator.country ?? "—")}</span>
       ${pill(creator.do_not_contact ? "do_not_contact" : creator.status)}
+      ${data.profiles[0] ? extLink(data.profiles[0].profile_url, `${data.profiles[0].platform} ↗`) : ""}
+      ${data.threads[0] ? `<a class="btn sm" href="#/conversations/${esc(data.threads[0].id)}">Переписка</a>` : ""}
       <span class="spacer"></span>
       ${creator.do_not_contact ? `<span class="small muted">${esc(creator.blocked_reason ?? "")}</span>` : actionButton("do_not_contact", creator.id, "Do not contact", "ghost-danger")}
     </div>
@@ -474,7 +476,13 @@ async function creatorCard(id) {
           { label: "Контакт", render: (row) => `${esc(row.kind)}: ${esc(row.value)}` },
           { label: "Источник", render: (row) => extLink(row.source_url, "источник") },
           { label: "Business", render: (row) => row.is_public_business ? '<span class="pill ok">да</span>' : '<span class="pill warn">нет</span>' },
-        ], data.contacts, { empty: "Подтверждённого контакта нет — письмо не отправится" }))}
+        ], data.contacts, { empty: "Подтверждённого контакта нет — письмо не отправится" }) + `
+          <form class="contact-form" data-contact-form="${esc(creator.id)}">
+            <select name="kind" aria-label="Тип контакта"><option value="email">email</option><option value="telegram">telegram</option></select>
+            <input name="value" required placeholder="name@example.com или @username" aria-label="Контакт">
+            <input name="sourceUrl" type="url" placeholder="где найден (ссылка, необязательно)" aria-label="Источник">
+            <button class="btn sm primary" type="submit">Добавить контакт</button>
+          </form>`)}
         ${data.partner ? card("Партнёр", `<dl class="kv"><dt>Статус</dt><dd>${pill(data.partner.status)}</dd><dt>Реф. код</dt><dd class="mono">${esc(data.partner.referral_code ?? "—")}</dd><dt>Промокод</dt><dd class="mono">${esc(data.partner.promo_code ?? "—")}</dd><dt>Ссылка</dt><dd>${extLink(data.partner.referral_url)}</dd></dl>`) : ""}
       </div>
     </div>

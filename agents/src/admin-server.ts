@@ -43,6 +43,10 @@ export function startAdminServer(database: Database, config: Config): void {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return updateControl(database, request, response);
       }
+      if (request.method === "POST" && url.pathname === "/api/contact") {
+        if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
+        return addContact(database, request, response);
+      }
       if (request.method === "POST" && url.pathname === "/api/message") {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return editMessage(database, request, response);
@@ -153,6 +157,30 @@ async function adminAction(database: Database, request: IncomingMessage, respons
   }
   await writeAudit(database, { actor: "administrator", action, targetType, targetId: id, decision: "completed", reason: reason ?? undefined });
   return json(response, 200, { ok: true });
+}
+
+// A contact typed in by the administrator is trusted as a public business contact; a draft is then
+// prepared at once if the creator already qualifies.
+async function addContact(database: Database, request: IncomingMessage, response: ServerResponse) {
+  const body = await readJson(request);
+  const creatorId = body.creatorId;
+  const kind = body.kind;
+  const raw = typeof body.value === "string" ? body.value.trim() : "";
+  const sourceUrl = typeof body.sourceUrl === "string" && /^https?:\/\//.test(body.sourceUrl.trim()) ? body.sourceUrl.trim() : "manual:administrator";
+  if (typeof creatorId !== "string" || (kind !== "email" && kind !== "telegram")) return json(response, 400, { error: "invalid_contact" });
+  const value = kind === "telegram" ? `@${raw.replace(/^(https?:\/\/)?(t\.me\/)?@?/i, "")}` : raw;
+  const valid = kind === "email" ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) : /^@[A-Za-z0-9_]{4,32}$/.test(value);
+  if (!valid) return json(response, 400, { error: "invalid_contact" });
+  const { randomUUID } = await import("node:crypto");
+  const rows = await database`
+    INSERT INTO creator_contacts (id, creator_id, kind, value, normalized_value, source_url, is_public_business, verified_at)
+    SELECT ${randomUUID()}, id, ${kind}, ${value}, ${value.toLowerCase()}, ${sourceUrl}, true, now() FROM creators WHERE id = ${creatorId}
+    ON CONFLICT (kind, normalized_value) DO NOTHING RETURNING id
+  `;
+  if (!rows[0]) return json(response, 409, { error: "contact_exists_or_creator_missing" });
+  await writeAudit(database, { actor: "administrator", action: "add_contact", targetType: "creator", targetId: creatorId, decision: "completed", details: { kind } });
+  const { prepareDrafts } = await import("./prepare-drafts.js");
+  return json(response, 200, { ok: true, draftsQueued: await prepareDrafts(database) });
 }
 
 // Only a draft can be edited; an edit resets the review mark so the new text is checked again before approval.

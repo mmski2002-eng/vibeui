@@ -252,8 +252,7 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
   `)[0]?.count ?? 0;
   const denial = firstSendDenial(message, control ?? {}, policy, sentToday);
   if (denial) {
-    await notify(database, "info", "email_sent", `Письмо отправлено: ${String(message.contact_value)}`, { subject: String(message.subject) });
-  await writeAudit(database, { actor: "outreach_agent", action: "send_email", targetType: "message",
+    await writeAudit(database, { actor: "outreach_agent", action: "send_email", targetType: "message",
       targetId: messageId, decision: "blocked", reason: denial });
     throw new Error(`Send blocked: ${denial}`);
   }
@@ -280,6 +279,7 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
     await transaction`UPDATE conversation_threads SET state = 'sent', updated_at = now() WHERE id = ${String(message.thread_id)}`;
     await transaction`UPDATE creators SET status = 'sent', updated_at = now() WHERE id = ${String(message.creator_id)}`;
   });
+  await notify(database, "info", "email_sent", `Письмо отправлено: ${String(message.contact_value)}`, { subject: String(message.subject) });
   await writeAudit(database, { actor: "outreach_agent", action: "send_email", targetType: "message",
     targetId: messageId, decision: "completed", details: { externalId, policyVersion: policy.version } });
 }

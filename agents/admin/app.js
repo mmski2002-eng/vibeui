@@ -274,6 +274,19 @@ function bindGlobal() {
     if (row && !event.target.closest("a, button")) location.hash = row.dataset.href;
   });
   document.addEventListener("submit", async (event) => {
+    const contactForm = event.target.closest("[data-contact-form]");
+    if (contactForm) {
+      event.preventDefault();
+      const data = new FormData(contactForm);
+      try {
+        const result = await post("/api/contact", { creatorId: contactForm.dataset.contactForm, kind: data.get("kind"), value: data.get("value"), sourceUrl: data.get("sourceUrl") });
+        toast(result.draftsQueued ? `Контакт добавлен, черновиков в очереди: ${result.draftsQueued}` : "Контакт добавлен");
+        await refresh();
+      } catch (error) {
+        toast(`Ошибка: ${error.message}`, true);
+      }
+      return;
+    }
     const form = event.target.closest("[data-message-form]");
     if (!form) return;
     event.preventDefault();

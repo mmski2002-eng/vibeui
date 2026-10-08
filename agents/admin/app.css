@@ -148,6 +148,9 @@ td.num, th.num { text-align: right; }
 .message-body { white-space: pre-wrap; margin-top: 8px; overflow-wrap: anywhere; }
 .message-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; }
 .message-edit { display: grid; gap: 10px; margin-top: 10px; }
+.message-edit[hidden], .message-body[hidden] { display: none; }
+.contact-form { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.contact-form input, .contact-form select { background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 5px 9px; min-width: 0; flex: 1 1 160px; }
 .message-edit .field { display: grid; gap: 4px; }
 .message-edit textarea { resize: vertical; line-height: 1.5; }
 .facts { margin: 10px 0 0; padding-left: 18px; }
