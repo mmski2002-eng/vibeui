@@ -4,7 +4,7 @@ import type { Config } from "../config.js";
 import type { Database } from "../database.js";
 import { notify, recordInboundReply, stripHtml, stripQuotedReply } from "./inbound.js";
 
-export interface GmailMessage { to: string; subject: string; text: string; messageId: string }
+export interface GmailMessage { to: string; subject: string; text: string; messageId: string; inReplyTo?: string }
 
 export function gmailConfigured(config: Config): boolean {
   return Boolean(config.gmailUser && config.gmailAppPassword);
@@ -24,6 +24,7 @@ export async function sendGmail(config: Config, message: GmailMessage): Promise<
   const info = await transport.sendMail({
     from: config.outreachSenderName ? { name: config.outreachSenderName, address: config.gmailUser } : config.gmailUser,
     to: message.to, subject: message.subject, text: message.text, messageId: message.messageId,
+    ...(message.inReplyTo ? { inReplyTo: message.inReplyTo, references: [message.inReplyTo] } : {}),
   });
   if (!info.accepted?.length) throw new Error(`Gmail rejected the recipient: ${JSON.stringify(info.rejected)}`);
   return message.messageId;
