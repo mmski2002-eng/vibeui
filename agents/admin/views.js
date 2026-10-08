@@ -211,6 +211,7 @@ export const views = {
       const rows = await api(`/api/conversations${query({ state: params.state })}`);
       return card("", table([
         { label: "Блогер", render: (row) => `<strong>${esc(row.display_name)}</strong><div class="small muted">${esc(marketLabel[row.market] ?? row.market)}</div>` },
+        { label: "Контакт", render: (row) => row.contact_value ? `<span class="small muted">${esc(row.contact_kind)}</span><div class="mono small">${esc(row.contact_value)}</div>` : "—", cls: "wrap" },
         { label: "Стадия", render: (row) => pill(row.state) },
         { label: "Последнее", render: (row) => `${esc(short(row.subject ?? "—", 80))}<div class="small">${pill(row.last_status)} ${esc(row.last_direction ?? "")}</div>`, cls: "wrap" },
         { label: "Сообщений", num: true, render: (row) => fmt.num(row.messages) },

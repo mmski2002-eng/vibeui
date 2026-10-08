@@ -184,9 +184,10 @@ const routes: Record<string, Handler> = {
     const state = text(url, "state");
     return database`
       SELECT t.id, t.state, t.channel, t.follow_up_count, t.next_action_at, t.updated_at, c.id AS creator_id, c.display_name, c.market,
-        last.subject, last.status AS last_status, last.direction AS last_direction, last.created_at AS last_at,
+        cc.kind AS contact_kind, cc.value AS contact_value, last.subject, last.status AS last_status, last.direction AS last_direction, last.created_at AS last_at,
         (SELECT count(*)::int FROM outreach_messages m WHERE m.thread_id = t.id) AS messages
       FROM conversation_threads t JOIN creators c ON c.id = t.creator_id
+      LEFT JOIN creator_contacts cc ON cc.id = t.contact_id
       LEFT JOIN LATERAL (SELECT subject, status, direction, created_at FROM outreach_messages m WHERE m.thread_id = t.id ORDER BY created_at DESC LIMIT 1) last ON true
       WHERE true ${state ? database`AND t.state = ${state}` : database``}
       ORDER BY COALESCE(last.created_at, t.updated_at) DESC LIMIT ${limit(url)}`;
