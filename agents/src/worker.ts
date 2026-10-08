@@ -59,6 +59,14 @@ export async function runWorker(database: Database, config: Config): Promise<voi
         const model = job.kind === "personalize_thread" ? config.generationModel : config.scoringModel;
         await recordUsage(database, null, null, `${job.kind}:rejected`, model, error.usage);
       }
+      // The daily cap is not a failure: the send waits for tomorrow morning without spending an attempt.
+      if (job.kind === "send_message" && String(error).includes("daily_limit_reached")) {
+        await database`
+          UPDATE agent_jobs SET status = 'queued', attempts = attempts - 1, locked_at = NULL, last_error = 'waiting: daily_limit_reached',
+            available_at = date_trunc('day', now()) + interval '1 day 7 hours', updated_at = now() WHERE id = ${job.id}
+        `;
+        continue;
+      }
       await failJob(database, job, error);
       if (job.kind === "send_message" && job.attempts >= job.maxAttempts && !String(error).includes("Send blocked")) {
         await notify(database, "critical", "send_failed", "Письмо не отправлено", { messageId: String(job.payload.messageId), error: error instanceof Error ? error.message : String(error) });
