@@ -10,6 +10,7 @@ import { LikeButton } from "@/components/catalog/like-button"
 import { LiveCover } from "@/components/catalog/live-cover"
 import { useSession } from "@/lib/auth-client"
 import { localePath, type Locale } from "@/lib/i18n"
+import { scenarioFavoriteName } from "@/lib/scenario-favorite"
 import { cn } from "@/lib/utils"
 import type { ScenarioGroup } from "@/registry/scenarios"
 
@@ -38,11 +39,6 @@ export type ScenarioGridText = {
   favourite: string
 }
 
-/** Ключ сценария в таблице избранного: та же таблица, что у items каталога. */
-export function scenarioFavoriteName(slug: string) {
-  return `scenario:${slug}`
-}
-
 const GROUP_ORDER: ScenarioGroup[] = ["local", "product", "content", "events"]
 
 /**
@@ -59,10 +55,13 @@ const GROUP_ORDER: ScenarioGroup[] = ["local", "product", "content", "events"]
  */
 export function ScenariosGrid({
   cards,
+  initialCounts,
   text,
   locale,
 }: {
   cards: ScenarioCard[]
+  /** Счётчики, по которым сервер уже отсортировал карточки. */
+  initialCounts: Record<string, number>
   text: ScenarioGridText
   locale: Locale
 }) {
@@ -72,7 +71,7 @@ export function ScenariosGrid({
   const {
     items: favorites,
     counts,
-    pinnedCounts: order,
+    pinnedCounts,
     toggle,
   } = useFavorites()
   const signedIn = Boolean(useSession().data)
@@ -84,11 +83,10 @@ export function ScenariosGrid({
         (group === "all" || card.group === group) &&
         (tone === "all" || card.tone === tone),
     )
-    if (!order) return filtered
-    const likes = (card: ScenarioCard) =>
-      order[scenarioFavoriteName(card.slug)] ?? 0
-    return [...filtered].sort((a, b) => likes(b) - likes(a))
-  }, [cards, group, tone, order])
+    // Порядок по лайкам задаёт сервер: пересортировка в браузере после
+    // загрузки счётчиков дёргала сетку у человека на глазах.
+    return filtered
+  }, [cards, group, tone])
 
   function onFavourite(slug: string) {
     if (!signedIn) {
@@ -194,7 +192,7 @@ export function ScenariosGrid({
         {visible.map((card) => {
           const favName = scenarioFavoriteName(card.slug)
           const favourite = favorites?.has(favName) ?? false
-          const likes = counts[favName] ?? 0
+          const likes = (pinnedCounts ? counts : initialCounts)[favName] ?? 0
           return (
             <li key={card.slug}>
               <article className="border-shell-border bg-shell-panel acc-lift group relative flex h-full flex-col overflow-hidden rounded-xl border">

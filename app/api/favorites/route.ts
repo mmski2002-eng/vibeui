@@ -1,7 +1,8 @@
-import { count, eq } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { favorite, favoriteSeed } from "@/lib/db/schema"
+import { favorite } from "@/lib/db/schema"
+import { getFavoriteCounts } from "@/lib/favorite-counts"
 import { getSession } from "@/lib/session"
 
 /**
@@ -18,20 +19,7 @@ export const dynamic = "force-dynamic"
 export async function GET() {
   const session = await getSession()
 
-  const [totals, seeds] = await Promise.all([
-    db
-      .select({ itemName: favorite.itemName, total: count() })
-      .from(favorite)
-      .groupBy(favorite.itemName),
-    db.select().from(favoriteSeed),
-  ])
-
-  const counts: Record<string, number> = {}
-
-  for (const row of seeds) counts[row.itemName] = row.likes
-  for (const row of totals) {
-    counts[row.itemName] = (counts[row.itemName] ?? 0) + row.total
-  }
+  const counts = await getFavoriteCounts()
 
   if (!session) {
     return Response.json(

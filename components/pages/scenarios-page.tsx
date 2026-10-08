@@ -1,7 +1,9 @@
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 import { ScenariosGrid, type ScenarioCard } from "@/components/pages/scenarios-grid"
+import { getFavoriteCounts } from "@/lib/favorite-counts"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
 import { getScenarios, scenarioText } from "@/lib/scenario"
+import { scenarioFavoriteName } from "@/lib/scenario-favorite"
 
 // Сколько последних сценариев считать новыми: список в registry идёт в
 // порядке добавления, даты там нет.
@@ -13,7 +15,7 @@ const NEW_COUNT = 12
  * скриншота и всегда совпадает с тем, что откроется по клику. Новые
  * сценарии сверху, фильтры по сфере и теме — в клиентской сетке.
  */
-export function ScenariosPage({ locale }: { locale: Locale }) {
+export async function ScenariosPage({ locale }: { locale: Locale }) {
   const t = getDictionary(locale).scenarios
   const scenarios = getScenarios()
   const total = scenarios.length
@@ -38,6 +40,12 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
     })
     .reverse()
 
+  // На сборке в CI базы нет: тогда порядок по новизне, а счётчики подтянет
+  // первая же ревалидация на сервере.
+  const counts = await getFavoriteCounts().catch(() => ({}) as Record<string, number>)
+  const likes = (card: ScenarioCard) => counts[scenarioFavoriteName(card.slug)] ?? 0
+  cards.sort((a, b) => likes(b) - likes(a))
+
   return (
     <CatalogShell locale={locale}>
       <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 lg:px-6 lg:py-10">
@@ -55,6 +63,7 @@ export function ScenariosPage({ locale }: { locale: Locale }) {
         ) : (
           <ScenariosGrid
             cards={cards}
+            initialCounts={counts}
             locale={locale}
             text={{ ...t.filters, openDemo: t.openDemo, favourite: getDictionary(locale).card.favourite }}
           />
