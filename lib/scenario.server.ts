@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises"
 import path from "node:path"
 
 import type { Locale } from "@/lib/i18n"
+import { itemMedia, mediaLines, sourceMedia } from "@/lib/media"
 import { scenarioSections, scenarioText } from "@/lib/scenario"
 import type { Scenario } from "@/registry/scenarios"
 
@@ -31,8 +32,8 @@ export async function readScenarioSource(scenario: Scenario, locale: Locale): Pr
 
 /**
  * Исходник в том виде, в каком он нужен в чужом проекте: импорты из нашего
- * реестра становятся импортами установленных файлов, наши демо-картинки —
- * плейсхолдерами, которые человек заменит своими.
+ * реестра становятся импортами установленных файлов. Пути демо-медиа
+ * остаются как есть: агент скачивает файлы в те же пути (`lib/media.ts`).
  */
 export function agentSource(source: string): string {
   return source
@@ -40,7 +41,6 @@ export function agentSource(source: string): string {
       /@\/registry\/(?:animations|blocks|components)\/[\w-]+\/([\w-]+)\/\1"/g,
       '@/components/vibeui/$1"',
     )
-    .replace(/\/demo\/[\w-]+(?=["/])/g, "/photos")
     .replace(/^export const metadata = \{[\s\S]*?\n\}\n\n/m, "")
 }
 
@@ -141,8 +141,12 @@ export async function buildScenarioBrief({
   const text = scenarioText(scenario, locale)
   const sections = scenarioSections(scenario, locale)
   const source = agentSource(await readScenarioSource(scenario, locale))
-  const { images } = await readScenarioImages(scenario)
-  const files = images.map((image) => image.file).join(", ")
+  const media = [
+    ...new Set([
+      ...sourceMedia(locale === "en" && scenario.sourceEn ? scenario.sourceEn : scenario.source),
+      ...itemMedia(sections.map((section) => section.name)),
+    ]),
+  ].sort()
 
   const lines = [
     `VibeUI · ${ru ? "сценарий" : "scenario"} «${text.label}»`,
@@ -158,11 +162,7 @@ export async function buildScenarioBrief({
     ru
       ? `- Тема одна на всю страницу: tone="${scenario.theme.tone}", accent="${scenario.theme.accent}", ink="${scenario.theme.ink}". Шрифты (${scenario.theme.font}) блоки подключают сами.`
       : `- One theme for the whole page: tone="${scenario.theme.tone}", accent="${scenario.theme.accent}", ink="${scenario.theme.ink}". The blocks load their fonts (${scenario.theme.font}) themselves.`,
-    files
-      ? ru
-        ? `- Картинки: положи свои в public/photos/ с этими именами: ${files}. Пока их нет, на их месте будут подложки.`
-        : `- Images: put yours into public/photos/ with these names: ${files}. Until then placeholders show.`
-      : "",
+    ...mediaLines(media, siteUrl, locale),
     "",
     ru ? `Установка (${sections.length} ${ru ? "блоков" : "blocks"}), по одной команде на блок:` : `Install (${sections.length} blocks), one command per block:`,
     ...sections.map((section) => commands[section.name] ?? `# ${section.name}: ${ru ? "команда недоступна" : "command unavailable"}`),

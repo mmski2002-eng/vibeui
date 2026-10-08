@@ -446,7 +446,7 @@ const RU: Dictionary = {
     ],
     images: "Картинки",
     imagesNote:
-      "Промпты, которыми сделаны фото демо. Сгенерируйте свои в любом генераторе с этим общим стилем и положите в public/photos/ с этими именами.",
+      "Промпты, которыми сделаны фото демо. Сгенерируйте свои в любом генераторе с этим общим стилем и замените ими демо-файлы в public/demo/ с теми же именами.",
     imageFile: "Файл",
     imageFormat: "Формат",
     imagePrompt: "Промпт",
@@ -682,7 +682,7 @@ const EN: Dictionary = {
     ],
     images: "Images",
     imagesNote:
-      "The prompts the demo photos were made with. Generate yours in any generator with this shared style and put them into public/photos/ under these names.",
+      "The prompts the demo photos were made with. Generate yours in any generator with this shared style and replace the demo files in public/demo/ under the same names.",
     imageFile: "File",
     imageFormat: "Format",
     imagePrompt: "Prompt",

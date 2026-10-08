@@ -2,6 +2,7 @@ import { denialText, resolveAccess } from "@/lib/access"
 import { resolveControlValues } from "@/lib/controls"
 import { buildAgentBrief } from "@/lib/copy-for-ai"
 import { isLocale, type Locale } from "@/lib/i18n"
+import { itemMedia, mediaLines } from "@/lib/media"
 import { localizeItem } from "@/lib/localize"
 import { signRegistryLink, verifyRegistryLink } from "@/lib/registry-link"
 import { getSiteBaseUrl } from "@/lib/site"
@@ -93,6 +94,11 @@ export async function GET(
     pageUrl: `${siteUrl}${pagePath}/${item.name}`,
     fileUrl: `${siteUrl}/f/${item.name}.tsx?${query}`,
     partFiles,
+    media: mediaLines(
+      itemMedia([item.name, ...(item.registryDependencies ?? [])]),
+      siteUrl,
+      locale,
+    ),
     values,
     locale,
     theme,

@@ -331,6 +331,84 @@ function renderRootRegistry(registries) {
   )}\n`
 }
 
+function listFiles(directory) {
+  if (!existsSync(directory)) return []
+
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const full = path.join(directory, entry.name)
+
+    return entry.isDirectory() ? listFiles(full) : [full]
+  })
+}
+
+/**
+ * Демо-медиа, на которые ссылается исходник: точные пути и шаблоны вида
+ * `${PHOTOS}/item-0${i}.webp` от константы `const PHOTOS = "/demo/x"`.
+ * Агенту их отдают ссылками, иначе собранная страница выходит без картинок.
+ */
+function collectMedia(source) {
+  const found = new Set()
+  const exists = (url) => existsSync(path.join(ROOT, "public", url))
+
+  for (const match of source.matchAll(/\/demo\/[\w./-]+\.\w{2,4}\b/g)) {
+    if (exists(match[0])) found.add(match[0])
+  }
+
+  for (const [, name, base] of source.matchAll(
+    /const (\w+) = ["'`](\/demo\/[\w/-]+?)\/?["'`]/g,
+  )) {
+    const files = listFiles(path.join(ROOT, "public", base)).map(
+      (file) => `${base}/${path.relative(path.join(ROOT, "public", base), file).replaceAll("\\", "/")}`,
+    )
+
+    for (const [, rest] of source.matchAll(
+      new RegExp(`\\$\\{${name}\\}/([^\`"'\\s]+)`, "g"),
+    )) {
+      const pattern = new RegExp(
+        `^${base}/${rest
+          .split(/\$\{[^}]*\}/)
+          .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+          .join(".+?")}$`,
+      )
+
+      for (const file of files) if (pattern.test(file)) found.add(file)
+    }
+  }
+
+  return [...found].sort()
+}
+
+function renderMedia(registries) {
+  const items = {}
+
+  for (const registry of registries) {
+    for (const item of registry.items) {
+      const media = collectMedia(
+        (item.files ?? [])
+          .map((file) => readFileSync(path.join(ROOT, registry.directory, file.path), "utf8"))
+          .join("\n"),
+      )
+
+      if (media.length) items[item.name] = media
+    }
+  }
+
+  const sources = {}
+
+  for (const root of ["app/scenarios", "app/en/scenarios"]) {
+    for (const file of listFiles(path.join(ROOT, root))) {
+      if (!file.endsWith("page.tsx")) continue
+
+      const media = collectMedia(readFileSync(file, "utf8"))
+      const relative = path.relative(ROOT, file).replaceAll("\\", "/")
+
+      if (media.length) sources[relative] = media
+    }
+  }
+
+  return `${JSON.stringify({ items, sources }, null, 2)}\n`
+}
+
 async function emit(relativePath, contents) {
   const target = path.join(ROOT, relativePath)
   mkdirSync(path.dirname(target), { recursive: true })
@@ -383,6 +461,7 @@ const changed = [
     ),
   )),
   await emit("registry.json", renderRootRegistry(registries)),
+  await emit("registry/generated/media.json", renderMedia(registries)),
 ].some(Boolean)
 
 const summary = `${registries.length} реестров, ${previews.length} items`

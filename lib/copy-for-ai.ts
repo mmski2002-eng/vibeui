@@ -59,6 +59,8 @@ export function buildAgentBrief(
      * скачанный блок импортирует то, чего в проекте нет.
      */
     partFiles?: { target: string; url: string }[]
+    /** Команды скачивания демо-медиа, см. `lib/media.ts`. */
+    media?: string[]
     values: ControlValues
     /** Подложка, на которой человек смотрел блок на витрине. */
     theme?: "light" | "dark"
@@ -71,6 +73,7 @@ export function buildAgentBrief(
     pageUrl,
     fileUrl,
     partFiles = [],
+    media = [],
     values: chosen,
     locale,
     theme,
@@ -132,6 +135,8 @@ export function buildAgentBrief(
       ...partFiles.map((part) => `curl -o ${part.target} ${part.url}`),
     )
   }
+
+  lines.push(...media)
 
   lines.push("")
 

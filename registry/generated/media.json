@@ -1,0 +1,1025 @@
+{
+  "items": {
+    "hero-024": [
+      "/demo/tattoo/hero.webp"
+    ],
+    "hero-033": [
+      "/demo/people/call-lena.mp4",
+      "/demo/people/call-lena.webp",
+      "/demo/people/call-mark.mp4",
+      "/demo/people/call-mark.webp",
+      "/demo/people/call-olya.mp4",
+      "/demo/people/call-olya.webp"
+    ],
+    "hero-035": [
+      "/demo/vet/cat-face.png",
+      "/demo/vet/dog-face.png",
+      "/demo/vet/rabbit-face.png"
+    ],
+    "hero-036": [
+      "/demo/flowers/bouquet-01.webp",
+      "/demo/flowers/workshop-01.webp"
+    ],
+    "hero-038": [
+      "/demo/delivery/burger-cut.png",
+      "/demo/delivery/dish-03.webp"
+    ],
+    "hero-041": [
+      "/demo/market/cover-01.webp",
+      "/demo/market/cover-02.webp",
+      "/demo/market/cover-03.webp",
+      "/demo/market/cover-04.webp",
+      "/demo/market/cover-05.webp",
+      "/demo/market/cover-06.webp",
+      "/demo/market/cover-07.webp",
+      "/demo/market/cover-08.webp"
+    ],
+    "hero-043": [
+      "/demo/gadget/lamp-front.png"
+    ],
+    "hero-046": [
+      "/demo/auto/drift-car.webp",
+      "/demo/auto/drift-end.webp",
+      "/demo/auto/drift.mp4",
+      "/demo/auto/drift.webm"
+    ],
+    "hero-047": [
+      "/demo/vet/intro-cat.webp",
+      "/demo/vet/intro-end.webp",
+      "/demo/vet/intro-start.webp",
+      "/demo/vet/intro.mp4",
+      "/demo/vet/intro.webm"
+    ],
+    "hero-048": [
+      "/demo/delivery/intro-burger.webp",
+      "/demo/delivery/intro-end.webp",
+      "/demo/delivery/intro.mp4",
+      "/demo/delivery/intro.webm"
+    ],
+    "testimonials-019": [
+      "/demo/tattoo/healed-01.webp",
+      "/demo/tattoo/healed-02.webp",
+      "/demo/tattoo/healed-03.webp",
+      "/demo/tattoo/healed-04.webp"
+    ],
+    "testimonials-027": [
+      "/demo/vet/diary-01.webp",
+      "/demo/vet/diary-02.webp",
+      "/demo/vet/diary-03.webp",
+      "/demo/vet/diary-04.webp"
+    ],
+    "cta-019": [
+      "/demo/festival/banner.webp"
+    ],
+    "download-011": [
+      "/demo/delivery/promo.webp"
+    ],
+    "bakery-001": [
+      "/demo/bakery/item-01.webp",
+      "/demo/bakery/item-02.webp",
+      "/demo/bakery/item-03.webp",
+      "/demo/bakery/item-04.webp",
+      "/demo/bakery/item-05.webp",
+      "/demo/bakery/item-06.webp",
+      "/demo/bakery/item-07.webp",
+      "/demo/bakery/item-08.webp"
+    ],
+    "bakery-002": [
+      "/demo/bakery/cup-espresso.png",
+      "/demo/bakery/cup-latte.png"
+    ],
+    "bakery-003": [
+      "/demo/bakery/item-01.webp",
+      "/demo/bakery/item-02.webp",
+      "/demo/bakery/item-03.webp",
+      "/demo/bakery/item-04.webp",
+      "/demo/bakery/item-05.webp",
+      "/demo/bakery/item-06.webp",
+      "/demo/bakery/item-07.webp",
+      "/demo/bakery/item-08.webp"
+    ],
+    "bakery-004": [
+      "/demo/bakery/story-01.webp",
+      "/demo/bakery/story-02.webp",
+      "/demo/bakery/story-03.webp",
+      "/demo/bakery/story-04.webp",
+      "/demo/bakery/story-05.webp"
+    ],
+    "delivery-001": [
+      "/demo/delivery/dish-01.webp",
+      "/demo/delivery/dish-02.webp",
+      "/demo/delivery/dish-03.webp",
+      "/demo/delivery/dish-04.webp",
+      "/demo/delivery/dish-05.webp",
+      "/demo/delivery/dish-06.webp",
+      "/demo/delivery/dish-07.webp",
+      "/demo/delivery/dish-08.webp"
+    ],
+    "delivery-002": [
+      "/demo/delivery/bowl/base-greens.webp",
+      "/demo/delivery/bowl/base-noodles.webp",
+      "/demo/delivery/bowl/base-quinoa.webp",
+      "/demo/delivery/bowl/base-rice.webp",
+      "/demo/delivery/bowl/bowl-empty.webp",
+      "/demo/delivery/bowl/protein-chicken.webp",
+      "/demo/delivery/bowl/protein-salmon.webp",
+      "/demo/delivery/bowl/protein-shrimp.webp",
+      "/demo/delivery/bowl/protein-tofu.webp",
+      "/demo/delivery/bowl/sauce-peanut.webp",
+      "/demo/delivery/bowl/sauce-ponzu.webp",
+      "/demo/delivery/bowl/sauce-spicy.webp",
+      "/demo/delivery/bowl/sauce-teriyaki.webp",
+      "/demo/delivery/bowl/topping-avocado.webp",
+      "/demo/delivery/bowl/topping-chili.webp",
+      "/demo/delivery/bowl/topping-corn.webp",
+      "/demo/delivery/bowl/topping-cucumber.webp",
+      "/demo/delivery/bowl/topping-edamame.webp",
+      "/demo/delivery/bowl/topping-egg.webp",
+      "/demo/delivery/bowl/topping-mango.webp",
+      "/demo/delivery/bowl/topping-sesame.webp"
+    ],
+    "flowers-001": [
+      "/demo/flowers/video/bq-botanic.mp4",
+      "/demo/flowers/video/bq-botanic.webp",
+      "/demo/flowers/video/bq-paper.mp4",
+      "/demo/flowers/video/bq-paper.webp",
+      "/demo/flowers/video/bq-peony.mp4",
+      "/demo/flowers/video/bq-peony.webp",
+      "/demo/flowers/video/bq-plum.mp4",
+      "/demo/flowers/video/bq-plum.webp",
+      "/demo/flowers/video/bq-poppy.mp4",
+      "/demo/flowers/video/bq-poppy.webp",
+      "/demo/flowers/video/bq-single.mp4",
+      "/demo/flowers/video/bq-single.webp"
+    ],
+    "flowers-002": [
+      "/demo/flowers/stems/daisy.webp",
+      "/demo/flowers/stems/eucalyptus.webp",
+      "/demo/flowers/stems/lavender.webp",
+      "/demo/flowers/stems/peony.webp",
+      "/demo/flowers/stems/poppy.webp",
+      "/demo/flowers/stems/ranunculus.webp",
+      "/demo/flowers/stems/vase.webp"
+    ],
+    "auto-002": [
+      "/demo/auto/after-body.webp",
+      "/demo/auto/after-interior.webp",
+      "/demo/auto/after-lights.webp",
+      "/demo/auto/before-body.webp",
+      "/demo/auto/before-interior.webp",
+      "/demo/auto/before-lights.webp"
+    ],
+    "renovation-003": [
+      "/demo/renovation/after-01.webp",
+      "/demo/renovation/after-02.webp",
+      "/demo/renovation/after-03.webp",
+      "/demo/renovation/before-01.webp",
+      "/demo/renovation/before-02.webp",
+      "/demo/renovation/before-03.webp"
+    ],
+    "renovation-004": [
+      "/demo/renovation/site-01.webp",
+      "/demo/renovation/site-02.webp"
+    ],
+    "vet-002": [
+      "/demo/vet/dog-profile.png"
+    ],
+    "vet-004": [
+      "/demo/vet/dog-fluffy.png",
+      "/demo/vet/dog-trimmed.png"
+    ],
+    "gadget-001": [
+      "/demo/gadget/lamp-front.png"
+    ],
+    "gadget-002": [
+      "/demo/gadget/exploded.png",
+      "/demo/gadget/lamp-front.png"
+    ],
+    "gadget-003": [
+      "/demo/gadget/lamp-front.png",
+      "/demo/gadget/lamp-sand.png",
+      "/demo/gadget/lamp-white.png"
+    ],
+    "market-001": [
+      "/demo/market/cover-01.webp",
+      "/demo/market/cover-02.webp",
+      "/demo/market/cover-03.webp",
+      "/demo/market/cover-04.webp",
+      "/demo/market/cover-05.webp",
+      "/demo/market/cover-06.webp",
+      "/demo/market/cover-07.webp",
+      "/demo/market/cover-08.webp"
+    ],
+    "market-002": [
+      "/demo/market/cover-01.webp",
+      "/demo/market/cover-02.webp",
+      "/demo/market/cover-03.webp",
+      "/demo/market/cover-04.webp",
+      "/demo/market/cover-05.webp",
+      "/demo/market/cover-06.webp"
+    ],
+    "podcast-004": [
+      "/demo/podcast/episode-01.webp",
+      "/demo/podcast/episode-02.webp",
+      "/demo/podcast/episode-03.webp",
+      "/demo/podcast/episode-04.webp",
+      "/demo/podcast/episode-05.webp",
+      "/demo/podcast/episode-06.webp"
+    ],
+    "about-010": [
+      "/demo/tattoo/studio-01.webp",
+      "/demo/tattoo/studio-02.webp"
+    ],
+    "about-017": [
+      "/demo/flowers/florist-01.webp",
+      "/demo/flowers/florist-02.webp",
+      "/demo/flowers/video/work-cut.mp4",
+      "/demo/flowers/video/work-cut.webp",
+      "/demo/flowers/video/work-wrap.mp4",
+      "/demo/flowers/video/work-wrap.webp"
+    ],
+    "portfolio-007": [
+      "/demo/tattoo/work-01.webp",
+      "/demo/tattoo/work-02.webp",
+      "/demo/tattoo/work-03.webp",
+      "/demo/tattoo/work-04.webp",
+      "/demo/tattoo/work-05.webp",
+      "/demo/tattoo/work-06.webp",
+      "/demo/tattoo/work-07.webp",
+      "/demo/tattoo/work-08.webp",
+      "/demo/tattoo/work-09.webp",
+      "/demo/tattoo/work-10.webp",
+      "/demo/tattoo/work-11.webp",
+      "/demo/tattoo/work-12.webp"
+    ],
+    "portfolio-011": [
+      "/demo/bakery/beans.webp",
+      "/demo/bakery/coffee-espresso.webp",
+      "/demo/bakery/coffee-flat.webp",
+      "/demo/bakery/hands-flour.webp",
+      "/demo/bakery/hero.webp",
+      "/demo/bakery/queue.webp",
+      "/demo/bakery/shelf.webp",
+      "/demo/bakery/story-04.webp",
+      "/demo/bakery/story-05.webp",
+      "/demo/bakery/window.webp"
+    ],
+    "portfolio-012": [
+      "/demo/portfolio/project-01.webp",
+      "/demo/portfolio/project-02.webp",
+      "/demo/portfolio/project-03.webp",
+      "/demo/portfolio/project-04.webp",
+      "/demo/portfolio/project-05.webp"
+    ],
+    "event-005": [
+      "/demo/festival/event-01.webp",
+      "/demo/festival/event-02.webp",
+      "/demo/festival/event-03.webp",
+      "/demo/festival/event-04.webp",
+      "/demo/festival/event-05.webp",
+      "/demo/festival/event-06.webp",
+      "/demo/festival/event-07.webp",
+      "/demo/festival/event-08.webp",
+      "/demo/festival/pick.webp"
+    ],
+    "event-007": [
+      "/demo/festival/venue-01.webp",
+      "/demo/festival/venue-02.webp",
+      "/demo/festival/venue-03.webp",
+      "/demo/festival/venue-04.webp"
+    ],
+    "people-008": [
+      "/demo/festival/speaker-01.webp",
+      "/demo/festival/speaker-02.webp",
+      "/demo/festival/speaker-03.webp",
+      "/demo/festival/speaker-04.webp",
+      "/demo/festival/speaker-05.webp",
+      "/demo/festival/speaker-06.webp"
+    ],
+    "people-009": [
+      "/demo/tattoo/artist-01.webp",
+      "/demo/tattoo/artist-02.webp",
+      "/demo/tattoo/artist-03.webp",
+      "/demo/tattoo/artist-04.webp",
+      "/demo/tattoo/work-01.webp",
+      "/demo/tattoo/work-02.webp",
+      "/demo/tattoo/work-03.webp",
+      "/demo/tattoo/work-04.webp",
+      "/demo/tattoo/work-05.webp",
+      "/demo/tattoo/work-06.webp",
+      "/demo/tattoo/work-07.webp",
+      "/demo/tattoo/work-08.webp",
+      "/demo/tattoo/work-09.webp",
+      "/demo/tattoo/work-10.webp",
+      "/demo/tattoo/work-11.webp",
+      "/demo/tattoo/work-12.webp"
+    ],
+    "people-012": [
+      "/demo/bakery/olga.webp",
+      "/demo/bakery/timur.webp"
+    ],
+    "people-013": [
+      "/demo/podcast/guest-01.webp",
+      "/demo/podcast/guest-02.webp",
+      "/demo/podcast/guest-03.webp",
+      "/demo/podcast/guest-04.webp",
+      "/demo/podcast/guest-05.webp",
+      "/demo/podcast/guest-06.webp",
+      "/demo/podcast/guest-07.webp",
+      "/demo/podcast/guest-08.webp"
+    ],
+    "people-014": [
+      "/demo/auto/master-01.webp",
+      "/demo/auto/master-02.webp",
+      "/demo/auto/master-03.webp"
+    ],
+    "people-015": [
+      "/demo/vet/doctor-01.webp",
+      "/demo/vet/doctor-02.webp",
+      "/demo/vet/doctor-03.webp",
+      "/demo/vet/doctor-04.webp"
+    ],
+    "button-094": [
+      "/demo/realty/object-01.webp"
+    ],
+    "button-101": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "button-102": [
+      "/demo/realty/object-02.webp"
+    ],
+    "button-104": [
+      "/demo/realty/object-03.webp"
+    ],
+    "button-103": [
+      "/demo/realty/district-01.webp"
+    ],
+    "card-025": [
+      "/demo/realty/office.webp"
+    ],
+    "card-049": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-050": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-051": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-052": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-053": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-054": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-055": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-056": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-057": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-058": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-059": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-060": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-027": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-029": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-031": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-033": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-036": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-042": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-043": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-081": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-083": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-091": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-04.webp"
+    ],
+    "card-093": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-096": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-108": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-109": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-115": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-116": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-117": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-120": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-124": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-126": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-127": [
+      "/demo/bakery/hands-flour.webp"
+    ],
+    "card-130": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-131": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-132": [
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp"
+    ],
+    "card-134": [
+      "/demo/flowers/florist-01.webp"
+    ],
+    "card-136": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-147": [
+      "/demo/realty/object-01.webp"
+    ],
+    "card-149": [
+      "/demo/realty/object-01.webp"
+    ],
+    "mockup-001": [
+      "/demo/devices/laptop-front.webp"
+    ],
+    "mockup-002": [
+      "/demo/devices/phone-front.webp"
+    ],
+    "mockup-003": [
+      "/demo/devices/tablet-landscape.webp",
+      "/demo/devices/tablet-portrait.webp"
+    ],
+    "mockup-005": [
+      "/demo/devices/monitor-front.webp"
+    ],
+    "mockup-006": [
+      "/demo/devices/watch-front.webp"
+    ],
+    "mockup-007": [
+      "/demo/devices/laptop-angle.webp"
+    ],
+    "mockup-008": [
+      "/demo/devices/laptop-front.webp",
+      "/demo/devices/phone-front.webp"
+    ],
+    "counter-001": [
+      "/demo/bakery/story-01.webp",
+      "/demo/bakery/story-02.webp",
+      "/demo/bakery/story-03.webp",
+      "/demo/bakery/story-04.webp",
+      "/demo/bakery/story-05.webp"
+    ],
+    "cursor-005": [
+      "/demo/cards/square-01.webp",
+      "/demo/cards/square-02.webp",
+      "/demo/cards/square-03.webp",
+      "/demo/cards/square-04.webp",
+      "/demo/cards/square-05.webp",
+      "/demo/posters/poster-01.webp",
+      "/demo/posters/poster-02.webp",
+      "/demo/posters/poster-04.webp",
+      "/demo/posters/poster-05.webp",
+      "/demo/posters/poster-06.webp"
+    ],
+    "avatar-anim-004": [
+      "/demo/cards/portrait-01.webp",
+      "/demo/cards/portrait-02.webp",
+      "/demo/cards/portrait-04.webp",
+      "/demo/cards/portrait-06.webp",
+      "/demo/posters/poster-03.webp"
+    ]
+  },
+  "sources": {
+    "app/scenarios/app/demo/page.tsx": [
+      "/demo/app/evening.webp",
+      "/demo/app/night.webp"
+    ],
+    "app/scenarios/auto/demo/page.tsx": [
+      "/demo/auto/after-body.webp",
+      "/demo/auto/after-interior.webp",
+      "/demo/auto/after-lights.webp",
+      "/demo/auto/before-body.webp",
+      "/demo/auto/before-interior.webp",
+      "/demo/auto/before-lights.webp",
+      "/demo/auto/master-01.webp",
+      "/demo/auto/master-02.webp",
+      "/demo/auto/master-03.webp"
+    ],
+    "app/scenarios/bakery/demo/page.tsx": [
+      "/demo/bakery/bag.webp",
+      "/demo/bakery/beans.webp",
+      "/demo/bakery/box.webp",
+      "/demo/bakery/hero.webp"
+    ],
+    "app/scenarios/charity/demo/page.tsx": [
+      "/demo/charity/hands.webp",
+      "/demo/charity/hero.webp",
+      "/demo/charity/team-01.webp",
+      "/demo/charity/team-02.webp",
+      "/demo/charity/team-03.webp",
+      "/demo/charity/ward-01.webp",
+      "/demo/charity/ward-02.webp",
+      "/demo/charity/ward-03.webp"
+    ],
+    "app/scenarios/course/demo/page.tsx": [
+      "/demo/course/author.webp",
+      "/demo/course/graduate-01.webp",
+      "/demo/course/graduate-02.webp",
+      "/demo/course/graduate-03.webp",
+      "/demo/course/graduate-04.webp",
+      "/demo/course/lesson.webp",
+      "/demo/course/poster.webp",
+      "/demo/course/work-01.webp",
+      "/demo/course/work-02.webp",
+      "/demo/course/work-03.webp"
+    ],
+    "app/scenarios/delivery/demo/page.tsx": [
+      "/demo/delivery/promo.webp"
+    ],
+    "app/scenarios/flowers/demo/page.tsx": [
+      "/demo/flowers/video/hero.mp4",
+      "/demo/flowers/video/hero.webp"
+    ],
+    "app/scenarios/language/demo/page.tsx": [
+      "/demo/language/lesson.webp",
+      "/demo/language/teacher-01.webp",
+      "/demo/language/teacher-02.webp",
+      "/demo/language/teacher-03.webp",
+      "/demo/language/teacher-04.webp"
+    ],
+    "app/scenarios/photographer/demo/page.tsx": [
+      "/demo/photographer/about.webp",
+      "/demo/photographer/hero.webp",
+      "/demo/photographer/next.webp",
+      "/demo/photographer/work-01.webp",
+      "/demo/photographer/work-02.webp",
+      "/demo/photographer/work-03.webp",
+      "/demo/photographer/work-04.webp",
+      "/demo/photographer/work-05.webp",
+      "/demo/photographer/work-06.webp",
+      "/demo/photographer/work-07.webp",
+      "/demo/photographer/work-08.webp"
+    ],
+    "app/scenarios/podcast/demo/page.tsx": [
+      "/demo/podcast/cover.webp",
+      "/demo/podcast/host.webp",
+      "/demo/podcast/studio-01.webp"
+    ],
+    "app/scenarios/portfolio/demo/page.tsx": [
+      "/demo/portfolio/portrait-02.webp",
+      "/demo/portfolio/portrait.webp"
+    ],
+    "app/scenarios/realty/demo/page.tsx": [
+      "/demo/realty/agent-01.webp",
+      "/demo/realty/agent-02.webp",
+      "/demo/realty/agent-03.webp",
+      "/demo/realty/agent-04.webp",
+      "/demo/realty/district-01.webp",
+      "/demo/realty/district-02.webp",
+      "/demo/realty/district-03.webp",
+      "/demo/realty/district-04.webp",
+      "/demo/realty/hero-poster.webp",
+      "/demo/realty/hero.mp4",
+      "/demo/realty/hero.webm",
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp",
+      "/demo/realty/object-03.webp",
+      "/demo/realty/object-04.webp",
+      "/demo/realty/object-05.webp",
+      "/demo/realty/object-06.webp",
+      "/demo/realty/office.webp"
+    ],
+    "app/scenarios/restaurant/demo/page.tsx": [
+      "/demo/restaurant/chef-hands.webp",
+      "/demo/restaurant/chef.webp",
+      "/demo/restaurant/dish-01.webp",
+      "/demo/restaurant/dish-02.webp",
+      "/demo/restaurant/dish-03.webp",
+      "/demo/restaurant/dish-04.webp",
+      "/demo/restaurant/dish-05.webp",
+      "/demo/restaurant/dish-06.webp",
+      "/demo/restaurant/event.webp",
+      "/demo/restaurant/hall-01.webp",
+      "/demo/restaurant/hall-02.webp",
+      "/demo/restaurant/hall-03.webp",
+      "/demo/restaurant/hall-04.webp",
+      "/demo/restaurant/hero.webp"
+    ],
+    "app/scenarios/vet/demo/page.tsx": [
+      "/demo/vet/diary-01.webp",
+      "/demo/vet/diary-02.webp",
+      "/demo/vet/diary-03.webp",
+      "/demo/vet/diary-04.webp",
+      "/demo/vet/doctor-01.webp",
+      "/demo/vet/doctor-02.webp",
+      "/demo/vet/doctor-03.webp",
+      "/demo/vet/doctor-04.webp"
+    ],
+    "app/scenarios/wedding/demo/page.tsx": [
+      "/demo/wedding/gallery-01.webp",
+      "/demo/wedding/gallery-02.webp",
+      "/demo/wedding/gallery-03.webp",
+      "/demo/wedding/gallery-04.webp",
+      "/demo/wedding/gallery-05.webp",
+      "/demo/wedding/gallery-06.webp",
+      "/demo/wedding/gallery-07.webp",
+      "/demo/wedding/gallery-08.webp",
+      "/demo/wedding/hero.webp",
+      "/demo/wedding/music.mp3",
+      "/demo/wedding/people-01.webp",
+      "/demo/wedding/people-02.webp",
+      "/demo/wedding/people-03.webp",
+      "/demo/wedding/story-01.webp",
+      "/demo/wedding/story-02.webp",
+      "/demo/wedding/story-03.webp",
+      "/demo/wedding/story-04.webp",
+      "/demo/wedding/venue-01.webp"
+    ],
+    "app/scenarios/writer/demo/page.tsx": [
+      "/demo/writer/cover.webp",
+      "/demo/writer/desk.webp",
+      "/demo/writer/hero-day.mp4",
+      "/demo/writer/hero-day.webp",
+      "/demo/writer/hero-night.mp4",
+      "/demo/writer/hero-night.webp",
+      "/demo/writer/portrait.webp"
+    ],
+    "app/en/scenarios/app/demo/page.tsx": [
+      "/demo/app/evening.webp",
+      "/demo/app/night.webp"
+    ],
+    "app/en/scenarios/auto/demo/page.tsx": [
+      "/demo/auto/after-body.webp",
+      "/demo/auto/after-interior.webp",
+      "/demo/auto/after-lights.webp",
+      "/demo/auto/before-body.webp",
+      "/demo/auto/before-interior.webp",
+      "/demo/auto/before-lights.webp",
+      "/demo/auto/master-01.webp",
+      "/demo/auto/master-02.webp",
+      "/demo/auto/master-03.webp"
+    ],
+    "app/en/scenarios/bakery/demo/page.tsx": [
+      "/demo/bakery/bag.webp",
+      "/demo/bakery/beans.webp",
+      "/demo/bakery/box.webp",
+      "/demo/bakery/coffee-espresso.webp",
+      "/demo/bakery/coffee-flat.webp",
+      "/demo/bakery/cup-espresso.png",
+      "/demo/bakery/cup-latte.png",
+      "/demo/bakery/hands-flour.webp",
+      "/demo/bakery/hero.webp",
+      "/demo/bakery/item-01.webp",
+      "/demo/bakery/item-02.webp",
+      "/demo/bakery/item-03.webp",
+      "/demo/bakery/item-04.webp",
+      "/demo/bakery/item-05.webp",
+      "/demo/bakery/item-06.webp",
+      "/demo/bakery/item-07.webp",
+      "/demo/bakery/item-08.webp",
+      "/demo/bakery/olga.webp",
+      "/demo/bakery/queue.webp",
+      "/demo/bakery/shelf.webp",
+      "/demo/bakery/story-01.webp",
+      "/demo/bakery/story-02.webp",
+      "/demo/bakery/story-03.webp",
+      "/demo/bakery/story-04.webp",
+      "/demo/bakery/story-05.webp",
+      "/demo/bakery/timur.webp",
+      "/demo/bakery/window.webp"
+    ],
+    "app/en/scenarios/charity/demo/page.tsx": [
+      "/demo/charity/hands.webp",
+      "/demo/charity/hero.webp",
+      "/demo/charity/team-01.webp",
+      "/demo/charity/team-02.webp",
+      "/demo/charity/team-03.webp",
+      "/demo/charity/ward-01.webp",
+      "/demo/charity/ward-02.webp",
+      "/demo/charity/ward-03.webp"
+    ],
+    "app/en/scenarios/course/demo/page.tsx": [
+      "/demo/course/author.webp",
+      "/demo/course/graduate-01.webp",
+      "/demo/course/graduate-02.webp",
+      "/demo/course/graduate-03.webp",
+      "/demo/course/graduate-04.webp",
+      "/demo/course/lesson.webp",
+      "/demo/course/poster.webp",
+      "/demo/course/work-01.webp",
+      "/demo/course/work-02.webp",
+      "/demo/course/work-03.webp"
+    ],
+    "app/en/scenarios/delivery/demo/page.tsx": [
+      "/demo/delivery/bowl/base-greens.webp",
+      "/demo/delivery/bowl/base-noodles.webp",
+      "/demo/delivery/bowl/base-quinoa.webp",
+      "/demo/delivery/bowl/base-rice.webp",
+      "/demo/delivery/bowl/protein-chicken.webp",
+      "/demo/delivery/bowl/protein-salmon.webp",
+      "/demo/delivery/bowl/protein-shrimp.webp",
+      "/demo/delivery/bowl/protein-tofu.webp",
+      "/demo/delivery/bowl/sauce-peanut.webp",
+      "/demo/delivery/bowl/sauce-ponzu.webp",
+      "/demo/delivery/bowl/sauce-spicy.webp",
+      "/demo/delivery/bowl/sauce-teriyaki.webp",
+      "/demo/delivery/bowl/topping-avocado.webp",
+      "/demo/delivery/bowl/topping-chili.webp",
+      "/demo/delivery/bowl/topping-corn.webp",
+      "/demo/delivery/bowl/topping-cucumber.webp",
+      "/demo/delivery/bowl/topping-edamame.webp",
+      "/demo/delivery/bowl/topping-egg.webp",
+      "/demo/delivery/bowl/topping-mango.webp",
+      "/demo/delivery/bowl/topping-sesame.webp",
+      "/demo/delivery/dish-01.webp",
+      "/demo/delivery/dish-02.webp",
+      "/demo/delivery/dish-03.webp",
+      "/demo/delivery/dish-04.webp",
+      "/demo/delivery/dish-05.webp",
+      "/demo/delivery/dish-06.webp",
+      "/demo/delivery/dish-07.webp",
+      "/demo/delivery/dish-08.webp",
+      "/demo/delivery/promo.webp"
+    ],
+    "app/en/scenarios/festival/demo/page.tsx": [
+      "/demo/festival/event-01.webp",
+      "/demo/festival/event-02.webp",
+      "/demo/festival/event-03.webp",
+      "/demo/festival/event-04.webp",
+      "/demo/festival/event-05.webp",
+      "/demo/festival/event-06.webp",
+      "/demo/festival/event-07.webp",
+      "/demo/festival/event-08.webp",
+      "/demo/festival/pick.webp",
+      "/demo/festival/speaker-01.webp",
+      "/demo/festival/speaker-02.webp",
+      "/demo/festival/speaker-03.webp",
+      "/demo/festival/speaker-04.webp",
+      "/demo/festival/speaker-05.webp",
+      "/demo/festival/speaker-06.webp",
+      "/demo/festival/venue-01.webp",
+      "/demo/festival/venue-02.webp",
+      "/demo/festival/venue-03.webp",
+      "/demo/festival/venue-04.webp"
+    ],
+    "app/en/scenarios/flowers/demo/page.tsx": [
+      "/demo/flowers/florist-01.webp",
+      "/demo/flowers/florist-02.webp",
+      "/demo/flowers/stems/daisy.webp",
+      "/demo/flowers/stems/eucalyptus.webp",
+      "/demo/flowers/stems/lavender.webp",
+      "/demo/flowers/stems/peony.webp",
+      "/demo/flowers/stems/poppy.webp",
+      "/demo/flowers/stems/ranunculus.webp",
+      "/demo/flowers/video/bq-botanic.mp4",
+      "/demo/flowers/video/bq-botanic.webp",
+      "/demo/flowers/video/bq-paper.mp4",
+      "/demo/flowers/video/bq-paper.webp",
+      "/demo/flowers/video/bq-peony.mp4",
+      "/demo/flowers/video/bq-peony.webp",
+      "/demo/flowers/video/bq-plum.mp4",
+      "/demo/flowers/video/bq-plum.webp",
+      "/demo/flowers/video/bq-poppy.mp4",
+      "/demo/flowers/video/bq-poppy.webp",
+      "/demo/flowers/video/bq-single.mp4",
+      "/demo/flowers/video/bq-single.webp",
+      "/demo/flowers/video/hero.mp4",
+      "/demo/flowers/video/hero.webp",
+      "/demo/flowers/video/work-cut.mp4",
+      "/demo/flowers/video/work-cut.webp",
+      "/demo/flowers/video/work-wrap.mp4",
+      "/demo/flowers/video/work-wrap.webp"
+    ],
+    "app/en/scenarios/gadget/demo/page.tsx": [
+      "/demo/gadget/lamp-front.png",
+      "/demo/gadget/lamp-sand.png",
+      "/demo/gadget/lamp-white.png"
+    ],
+    "app/en/scenarios/language/demo/page.tsx": [
+      "/demo/language/lesson.webp",
+      "/demo/language/teacher-01.webp",
+      "/demo/language/teacher-02.webp",
+      "/demo/language/teacher-03.webp",
+      "/demo/language/teacher-04.webp"
+    ],
+    "app/en/scenarios/market/demo/page.tsx": [
+      "/demo/market/cover-01.webp",
+      "/demo/market/cover-02.webp",
+      "/demo/market/cover-03.webp",
+      "/demo/market/cover-04.webp",
+      "/demo/market/cover-05.webp",
+      "/demo/market/cover-06.webp",
+      "/demo/market/cover-07.webp",
+      "/demo/market/cover-08.webp"
+    ],
+    "app/en/scenarios/photographer/demo/page.tsx": [
+      "/demo/photographer/about.webp",
+      "/demo/photographer/hero.webp",
+      "/demo/photographer/next.webp",
+      "/demo/photographer/work-01.webp",
+      "/demo/photographer/work-02.webp",
+      "/demo/photographer/work-03.webp",
+      "/demo/photographer/work-04.webp",
+      "/demo/photographer/work-05.webp",
+      "/demo/photographer/work-06.webp",
+      "/demo/photographer/work-07.webp",
+      "/demo/photographer/work-08.webp"
+    ],
+    "app/en/scenarios/podcast/demo/page.tsx": [
+      "/demo/podcast/cover.webp",
+      "/demo/podcast/episode-01.webp",
+      "/demo/podcast/episode-02.webp",
+      "/demo/podcast/episode-03.webp",
+      "/demo/podcast/episode-04.webp",
+      "/demo/podcast/episode-05.webp",
+      "/demo/podcast/episode-06.webp",
+      "/demo/podcast/guest-01.webp",
+      "/demo/podcast/guest-02.webp",
+      "/demo/podcast/guest-03.webp",
+      "/demo/podcast/guest-04.webp",
+      "/demo/podcast/guest-05.webp",
+      "/demo/podcast/guest-06.webp",
+      "/demo/podcast/guest-07.webp",
+      "/demo/podcast/guest-08.webp",
+      "/demo/podcast/host.webp",
+      "/demo/podcast/studio-01.webp"
+    ],
+    "app/en/scenarios/portfolio/demo/page.tsx": [
+      "/demo/portfolio/portrait-02.webp",
+      "/demo/portfolio/portrait.webp",
+      "/demo/portfolio/project-01.webp",
+      "/demo/portfolio/project-02.webp",
+      "/demo/portfolio/project-03.webp",
+      "/demo/portfolio/project-04.webp",
+      "/demo/portfolio/project-05.webp"
+    ],
+    "app/en/scenarios/realty/demo/page.tsx": [
+      "/demo/realty/agent-01.webp",
+      "/demo/realty/agent-02.webp",
+      "/demo/realty/agent-03.webp",
+      "/demo/realty/agent-04.webp",
+      "/demo/realty/district-01.webp",
+      "/demo/realty/district-02.webp",
+      "/demo/realty/district-03.webp",
+      "/demo/realty/district-04.webp",
+      "/demo/realty/hero-poster.webp",
+      "/demo/realty/hero.mp4",
+      "/demo/realty/hero.webm",
+      "/demo/realty/object-01.webp",
+      "/demo/realty/object-02.webp",
+      "/demo/realty/object-03.webp",
+      "/demo/realty/object-04.webp",
+      "/demo/realty/object-05.webp",
+      "/demo/realty/object-06.webp",
+      "/demo/realty/office.webp"
+    ],
+    "app/en/scenarios/renovation/demo/page.tsx": [
+      "/demo/renovation/after-01.webp",
+      "/demo/renovation/after-02.webp",
+      "/demo/renovation/after-03.webp",
+      "/demo/renovation/before-01.webp",
+      "/demo/renovation/before-02.webp",
+      "/demo/renovation/before-03.webp",
+      "/demo/renovation/site-01.webp",
+      "/demo/renovation/site-02.webp"
+    ],
+    "app/en/scenarios/restaurant/demo/page.tsx": [
+      "/demo/restaurant/chef-hands.webp",
+      "/demo/restaurant/chef.webp",
+      "/demo/restaurant/dish-01.webp",
+      "/demo/restaurant/dish-02.webp",
+      "/demo/restaurant/dish-03.webp",
+      "/demo/restaurant/dish-04.webp",
+      "/demo/restaurant/dish-05.webp",
+      "/demo/restaurant/dish-06.webp",
+      "/demo/restaurant/event.webp",
+      "/demo/restaurant/hall-01.webp",
+      "/demo/restaurant/hall-02.webp",
+      "/demo/restaurant/hall-03.webp",
+      "/demo/restaurant/hall-04.webp",
+      "/demo/restaurant/hero.webp"
+    ],
+    "app/en/scenarios/saas/demo/page.tsx": [
+      "/demo/people/call-lena.mp4",
+      "/demo/people/call-lena.webp",
+      "/demo/people/call-mark.mp4",
+      "/demo/people/call-mark.webp",
+      "/demo/people/call-olya.mp4",
+      "/demo/people/call-olya.webp"
+    ],
+    "app/en/scenarios/tattoo/demo/page.tsx": [
+      "/demo/tattoo/artist-01.webp",
+      "/demo/tattoo/artist-02.webp",
+      "/demo/tattoo/artist-03.webp",
+      "/demo/tattoo/artist-04.webp",
+      "/demo/tattoo/healed-01.webp",
+      "/demo/tattoo/healed-02.webp",
+      "/demo/tattoo/healed-03.webp",
+      "/demo/tattoo/healed-04.webp",
+      "/demo/tattoo/work-01.webp",
+      "/demo/tattoo/work-02.webp",
+      "/demo/tattoo/work-03.webp",
+      "/demo/tattoo/work-04.webp",
+      "/demo/tattoo/work-05.webp",
+      "/demo/tattoo/work-06.webp",
+      "/demo/tattoo/work-07.webp",
+      "/demo/tattoo/work-08.webp",
+      "/demo/tattoo/work-09.webp",
+      "/demo/tattoo/work-10.webp",
+      "/demo/tattoo/work-11.webp",
+      "/demo/tattoo/work-12.webp"
+    ],
+    "app/en/scenarios/vet/demo/page.tsx": [
+      "/demo/vet/diary-01.webp",
+      "/demo/vet/diary-02.webp",
+      "/demo/vet/diary-03.webp",
+      "/demo/vet/diary-04.webp",
+      "/demo/vet/doctor-01.webp",
+      "/demo/vet/doctor-02.webp",
+      "/demo/vet/doctor-03.webp",
+      "/demo/vet/doctor-04.webp"
+    ],
+    "app/en/scenarios/wedding/demo/page.tsx": [
+      "/demo/wedding/gallery-01.webp",
+      "/demo/wedding/gallery-02.webp",
+      "/demo/wedding/gallery-03.webp",
+      "/demo/wedding/gallery-04.webp",
+      "/demo/wedding/gallery-05.webp",
+      "/demo/wedding/gallery-06.webp",
+      "/demo/wedding/gallery-07.webp",
+      "/demo/wedding/gallery-08.webp",
+      "/demo/wedding/hero.webp",
+      "/demo/wedding/music.mp3",
+      "/demo/wedding/people-01.webp",
+      "/demo/wedding/people-02.webp",
+      "/demo/wedding/people-03.webp",
+      "/demo/wedding/story-01.webp",
+      "/demo/wedding/story-02.webp",
+      "/demo/wedding/story-03.webp",
+      "/demo/wedding/story-04.webp",
+      "/demo/wedding/venue-01.webp"
+    ],
+    "app/en/scenarios/writer/demo/page.tsx": [
+      "/demo/writer/cover.webp",
+      "/demo/writer/desk.webp",
+      "/demo/writer/hero-day.mp4",
+      "/demo/writer/hero-day.webp",
+      "/demo/writer/hero-night.mp4",
+      "/demo/writer/hero-night.webp",
+      "/demo/writer/portrait.webp"
+    ]
+  }
+}
