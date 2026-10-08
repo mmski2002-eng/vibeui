@@ -190,3 +190,19 @@ jobs:
           location=$(curl -sS --http1.1 -o /dev/null -D - https://vibeui.club/i/ci-unknown-ref | tr -d '\r' | awk 'tolower($1)=="location:" {print $2}')
           echo "club referral fallback $location"
           test "$location" = "https://vibeui.club/"
+
+      # Сервис агентов (agents/) живёт на латвийском VPS рядом с .club:
+      # админка за nginx на https://vibeui.club/agents/, worker без порта.
+      - name: Залить агентов на латвийский VPS
+        run: |
+          REL="/srv/vibeui-agents/releases/$(date -u +%Y%m%d-%H%M%S)"
+          ssh "root@$CLUB_HOST" "mkdir -p '$REL'"
+          rsync -az --delete --timeout=300 \
+            --exclude node_modules --exclude .env --exclude .omc --exclude tests \
+            agents/ "root@$CLUB_HOST:$REL/"
+          ssh "root@$CLUB_HOST" "REL='$REL' bash -s" < scripts/deploy-remote-agents.sh
+          code=$(curl -sS -o /dev/null -w '%{http_code}' https://vibeui.club/agents/)
+          echo "agents admin anonymous $code"
+          test "$code" = "401"
+        env:
+          CLUB_HOST: 216.173.70.241

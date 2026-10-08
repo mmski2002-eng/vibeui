@@ -73,13 +73,13 @@ export function json(value) {
 }
 
 export async function api(path) {
-  const response = await fetch(path, { headers: { accept: "application/json" }, cache: "no-store" });
+  const response = await fetch(relative(path), { headers: { accept: "application/json" }, cache: "no-store" });
   if (!response.ok) throw new Error(`${response.status} ${path}`);
   return response.json();
 }
 
 async function post(path, body) {
-  const response = await fetch(path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  const response = await fetch(relative(path), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.error ?? `HTTP ${response.status}`);
   return data;
@@ -294,3 +294,8 @@ bindGlobal();
 await refreshShell();
 await navigate();
 poll();
+
+// The panel is served under a path prefix (/agents/) behind nginx, so API calls resolve against the page URL.
+function relative(path) {
+  return path.replace(/^\//, "");
+}
