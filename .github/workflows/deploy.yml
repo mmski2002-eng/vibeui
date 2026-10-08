@@ -201,7 +201,12 @@ jobs:
             --exclude node_modules --exclude .env --exclude .omc --exclude tests \
             agents/ "root@$CLUB_HOST:$REL/"
           ssh "root@$CLUB_HOST" "REL='$REL' bash -s" < scripts/deploy-remote-agents.sh
-          code=$(curl -sS -o /dev/null -w '%{http_code}' https://vibeui.club/agents/)
+          # Админка стартует через tsx ~10 с, до этого nginx отдаёт 502.
+          for attempt in $(seq 1 12); do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' https://vibeui.club/agents/)
+            [ "$code" = "401" ] && break
+            sleep 5
+          done
           echo "agents admin anonymous $code"
           test "$code" = "401"
         env:
