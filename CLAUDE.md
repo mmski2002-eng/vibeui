@@ -290,10 +290,10 @@ Push в `main` не только собирает и заливает релиз
 локально не гоняются (правило выше), поэтому эти `curl`-проверки сверяй глазами
 перед пушем: что раньше отдавалось в HTML/по коду, а что теперь закрыто.
 
-## Мультидомен: `.ru` и `.club` — раздельные инстансы (2026-09-20)
+## Мультидомен: `.ru` и `.club` — два инстанса, одна база (2026-10-08)
 
-**Одна кодовая база, но ДВА независимых инстанса на РАЗНЫХ серверах.** НЕ форкать
-код. Деплой один — push в `main` катит на оба.
+**Одна кодовая база, ДВА процесса на РАЗНЫХ серверах, но ОДНА база данных** (RU).
+НЕ форкать код. Деплой один — push в `main` катит на оба.
 
 - **`vibeui.ru`** — русская аудитория. **RU-VPS `185.104.251.106`** (Debian,
   общий с чужими сайтами prolatex/skazkidladetey/tarovarvara — не трогать).
@@ -305,15 +305,18 @@ Push в `main` не только собирает и заливает релиз
 - **`vibeui.club`** — англоязычная аудитория. **Латвийский VPS `216.173.70.241`**
   (Ubuntu 20.04, общий с forescape.ru/pirogi73.ru — не трогать). Отдельный
   инстанс: сервис `vibeui-club.service` (:3003), `/srv/vibeui-club-live`, env
-  `/etc/vibeui-club.env`, **своя Postgres `vibeui_club`** (аккаунты отдельные от
-  `.ru`, не переносятся). Домен **целиком английский** (proxy уводит любой раздел
+  `/etc/vibeui-club.env`. **БД — RU-база `vibeui` через SSH-туннель**
+  (`vibeui-db-tunnel.service`: `127.0.0.1:15432` → `185.104.251.106:5432`, с
+  2026-10-02). Аккаунты, подписки, приглашения и настройки общие с `.ru`. Локальная
+  Postgres `vibeui_club` на Латвии — заброшенная копия, НЕ живая (не читать как прод). Домен **целиком английский** (proxy уводит любой раздел
   в `/en`, переключатель языка скрыт). Оплата — **крипта NOWPayments** (USD).
   Почта — **Resend** (`noreply@vibeui.club`). Регистратор — Porkbun
   (акк `escape20021987`), NS → Cloudflare.
 
 **Почему раздельно:** NOWPayments геоблокирует RU-IP (403 «unavailable in your
 region»), поэтому крипту нельзя создать с RU-сервера → `.club` вынесен на не-RU
-(Латвия). А данные `.ru` по 152-ФЗ обязаны быть в РФ → `.ru` остаётся на RU.
+(Латвия). А данные по 152-ФЗ обязаны быть в РФ → база живёт на RU, Латвия ходит
+в неё туннелем. Упал туннель — лежит `.club`.
 
 ### DNS (Cloudflare, акк `Mmski2002@gmail.com`)
 - `A vibeui.club → 216.173.70.241` (Латвия, Proxied); `CNAME www → vibeui.club`.
@@ -328,7 +331,7 @@ region»), поэтому крипту нельзя создать с RU-сер�
   nginx-сайт `vibeui.ru`. (Хвост: осиротевший nginx-блок `vibeui.club` — можно
   удалить, CF шлёт `.club` на Латвию.)
 - **Латвия** `216.173.70.241`: `vibeui-club.service`, `/etc/vibeui-club.env`
-  (DATABASE_URL→`vibeui_club`, свой BETTER_AUTH_SECRET, BETTER_AUTH_URL=
+  (DATABASE_URL→`127.0.0.1:15432/vibeui` = туннель в RU-базу, свой BETTER_AUTH_SECRET, BETTER_AUTH_URL=
   `https://vibeui.club`, RESEND_API_KEY, NOWPAYMENTS_*,
   ADMIN_EMAILS=`mmski2002@gmail.com`, REGISTRY_BASE_URL). nginx-сайт
   `vibeui.club` → :3003 (self-signed TLS). Провижинился разово скриптом.
@@ -339,9 +342,17 @@ region»), поэтому крипту нельзя создать с RU-сер�
 ### Деплой (один push → оба сервера)
 [deploy.yml](.github/workflows/deploy.yml): build один раз на runner → артефакт
 scp и на RU (`scripts/deploy-remote.sh`, миграции `.ru`-БД), и на Латвию
-(`scripts/deploy-remote-club.sh`, миграции club-БД, рестарт `vibeui-club`). Ключ
+(`scripts/deploy-remote-club.sh`, миграции через туннель в ту же RU-базу, рестарт
+`vibeui-club`), затем агенты (`scripts/deploy-remote-agents.sh`). Ключ
 один — `DEPLOY_SSH_KEY` (pubkey `github-actions-vibeui-deploy` добавлен на оба
 сервера). Шаг Латвии идёт ПОСЛЕ релиза `.ru`: если Латвия упадёт, прод `.ru` цел.
+
+### Агенты рассылки (`agents/`, Латвия)
+Отдельный сервис: `vibeui-agents-admin` (:4310, nginx `https://vibeui.club/agents/`,
+Basic Auth из `/etc/vibeui-agents/agents.env`) и `vibeui-agents-worker`. Своя БД
+`vibeui_agents` (локальная Postgres Латвии). Приглашения блогерам создаёт через
+`POST /api/internal/invites` сайта (Bearer `AGENTS_API_KEY` в env обоих сайтов =
+`VIBEUI_INTERNAL_API_KEY` агента). Отправка выключена `outreachEnabled: false`.
 
 ### Код (host-aware, одна база)
 - **Локаль по хосту** — [proxy.ts](proxy.ts) (в Next 16 это `proxy.ts`, НЕ
@@ -358,7 +369,8 @@ scp и на RU (`scripts/deploy-remote.sh`, миграции `.ru`-БД), и н�
 - **Почта по хосту** — [lib/mail.ts](lib/mail.ts)/[lib/auth.ts](lib/auth.ts):
   запрос с `.club` → Resend (`noreply@vibeui.club`); иначе Postfix (`.ru`).
   Ссылки в письмах верификации/сброса переписываются на хост запроса.
-- **Аккаунты** — раздельные (у `.club` своя БД на Латвии).
+- **Аккаунты** — общие (одна RU-база). Ссылки в письмах/приглашениях строятся
+  от хоста запроса (`originFromHost`).
 - **Админка** — продублирована под `/en` (`app/en/account/admin/*`); права по
   `ADMIN_EMAILS`. Текст админки пока RU (не локализован).
 
