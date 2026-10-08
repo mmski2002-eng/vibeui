@@ -14,6 +14,8 @@ import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGm
 import { calculateModelCost, isPricedModel, ModelOutputError } from "./model-cost.js";
 import { createReferralInvite, VibeUiClient } from "./vibeui-client.js";
 import { referralWord } from "./referral-word.js";
+import { deliverNotifications, telegramConfigured } from "./telegram.js";
+import { notify } from "./email/inbound.js";
 import { checkPublication } from "./publication-monitor.js";
 
 export async function runWorker(database: Database, config: Config): Promise<void> {
@@ -28,7 +30,12 @@ export async function runWorker(database: Database, config: Config): Promise<voi
 
   console.log(`Worker ${workerId} started`);
   let nextInboxPoll = 0;
+  let nextTelegramPush = 0;
   while (!stopping) {
+    if (telegramConfigured(config) && Date.now() >= nextTelegramPush) {
+      nextTelegramPush = Date.now() + 15_000;
+      await deliverNotifications(database, config).catch((error: unknown) => console.error("Telegram push failed:", error instanceof Error ? error.message : error));
+    }
     // Replies are collected even under emergency stop: reading mail has no external effect.
     if (gmailConfigured(config) && Date.now() >= nextInboxPoll) {
       nextInboxPoll = Date.now() + config.inboxPollMs;
@@ -53,6 +60,9 @@ export async function runWorker(database: Database, config: Config): Promise<voi
         await recordUsage(database, null, null, `${job.kind}:rejected`, model, error.usage);
       }
       await failJob(database, job, error);
+      if (job.kind === "send_message" && job.attempts >= job.maxAttempts && !String(error).includes("Send blocked")) {
+        await notify(database, "critical", "send_failed", "Письмо не отправлено", { messageId: String(job.payload.messageId), error: error instanceof Error ? error.message : String(error) });
+      }
       await writeAudit(database, {
         actor: workerId, action: job.kind, targetType: "job", targetId: job.id,
         decision: "failed", reason: error instanceof Error ? error.message : String(error),
@@ -242,7 +252,8 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
   `)[0]?.count ?? 0;
   const denial = firstSendDenial(message, control ?? {}, policy, sentToday);
   if (denial) {
-    await writeAudit(database, { actor: "outreach_agent", action: "send_email", targetType: "message",
+    await notify(database, "info", "email_sent", `Письмо отправлено: ${String(message.contact_value)}`, { subject: String(message.subject) });
+  await writeAudit(database, { actor: "outreach_agent", action: "send_email", targetType: "message",
       targetId: messageId, decision: "blocked", reason: denial });
     throw new Error(`Send blocked: ${denial}`);
   }
@@ -282,7 +293,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
   `;
   const message = rows[0];
   if (!message) throw new Error(`Inbound message ${messageId} not found`);
-  await assertModelBudget(database, config);
+  await assertModelBudget(database, config, "reply");
   const { usage, ...result } = await classifyReply(String(message.body), config.scoringModel);
   const terminal = result.classification === "unsubscribe" || result.classification === "declined";
   await database.begin(async (transaction) => {
@@ -295,6 +306,10 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
         ON CONFLICT DO NOTHING
       `;
     }
+  });
+  const creator = (await database<{ display_name: string }[]>`SELECT display_name FROM creators WHERE id = ${String(message.creator_id)}`)[0];
+  await notify(database, "warning", "reply_received", `Ответ от ${creator?.display_name ?? "блогера"}: ${result.classification}`, {
+    excerpt: String(message.body).slice(0, 300), thread: `https://vibeui.club/agents/#/conversations/${String(message.thread_id)}`,
   });
   await writeAudit(database, { actor: "reply_agent", action: "classify_reply", targetType: "message",
     targetId: messageId, decision: "completed", details: result });
@@ -394,19 +409,20 @@ async function recordUsage(database: Database, runId: string | null, campaignId:
   }
 }
 
-async function assertModelBudget(database: Database, config: Config): Promise<void> {
-  const rows = await database<{ spent: number; paused: boolean }[]>`
+// The spend cap stops discovery, scoring and drafting only: answering creators who already replied must keep working.
+async function assertModelBudget(database: Database, config: Config, scope: "search" | "reply" = "search"): Promise<void> {
+  const rows = await database<{ spent: number; paused: boolean; budget: number | null }[]>`
     SELECT COALESCE((SELECT sum(cost_usd) FROM model_usage), 0)::float AS spent,
-      model_operations_paused AS paused FROM agent_control WHERE singleton = true
+      model_operations_paused AS paused, search_budget_usd::float AS budget FROM agent_control WHERE singleton = true
   `;
   const state = rows[0];
   if (state?.paused) throw new Error("Model operations are paused");
-  if ((state?.spent ?? 0) >= config.hardModelBudgetUsd) {
-    await database`
-      UPDATE agent_control SET model_operations_paused = true,
-        reason = 'Hard model budget reached', updated_at = now() WHERE singleton = true
-    `;
-    throw new Error(`Hard model budget reached: $${config.hardModelBudgetUsd.toFixed(2)}`);
+  if (scope === "reply") return;
+  const budget = state?.budget ?? config.hardModelBudgetUsd;
+  if ((state?.spent ?? 0) >= budget) {
+    const recent = await database`SELECT 1 FROM notifications WHERE kind = 'search_budget_reached' AND created_at > now() - interval '1 day' LIMIT 1`;
+    if (!recent[0]) await notify(database, "critical", "search_budget_reached", "Бюджет поиска исчерпан", { spent: `$${(state?.spent ?? 0).toFixed(2)}`, budget: `$${budget.toFixed(2)}` });
+    throw new Error(`Search model budget reached: $${budget.toFixed(2)}`);
   }
 }
 

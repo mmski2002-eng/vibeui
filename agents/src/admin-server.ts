@@ -95,6 +95,23 @@ async function adminAction(database: Database, request: IncomingMessage, respons
     if (!rows[0]) return json(response, 409, { error: "message_not_draft" });
     const { enqueue } = await import("./queue.js");
     await enqueue(database, "send_message", { messageId: id }, `send_message:${id}`);
+  } else if (action === "mark_sent_manually") {
+    targetType = "message";
+    const sent = await database.begin(async (transaction) => {
+      const rows = await transaction<{ thread_id: string }[]>`
+        UPDATE outreach_messages SET status = 'sent', sent_at = now(), external_message_id = ${`manual:${id}`},
+          approved_by = COALESCE(approved_by, 'administrator'), approved_at = COALESCE(approved_at, now())
+        WHERE id = ${id} AND direction = 'outbound' AND status IN ('draft', 'approved') RETURNING thread_id
+      `;
+      const threadId = rows[0]?.thread_id;
+      if (!threadId) return false;
+      // A queued automatic send for the same message would deliver it a second time.
+      await transaction`UPDATE agent_jobs SET status = 'cancelled', last_error = 'sent manually', updated_at = now() WHERE status = 'queued' AND kind = 'send_message' AND payload->>'messageId' = ${id}`;
+      await transaction`UPDATE conversation_threads SET state = 'sent', updated_at = now() WHERE id = ${threadId}`;
+      await transaction`UPDATE creators SET status = 'sent', updated_at = now() WHERE id = (SELECT creator_id FROM conversation_threads WHERE id = ${threadId})`;
+      return true;
+    });
+    if (!sent) return json(response, 409, { error: "message_not_sendable" });
   } else if (action === "review_message") {
     targetType = "message";
     const rows = await database`UPDATE outreach_messages SET reviewed_at = now() WHERE id = ${id} AND status = 'draft' RETURNING id`;

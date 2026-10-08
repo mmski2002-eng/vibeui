@@ -316,10 +316,12 @@ export async function spending(database: Database, config: Config) {
     openRouterBalance(config),
   ]);
   const spent = rows[0] ?? { total: 0, today: 0, month: 0 };
+  const control = await database<{ budget: number | null }[]>`SELECT search_budget_usd::float AS budget FROM agent_control WHERE singleton = true`;
+  const budget = control[0]?.budget ?? config.hardModelBudgetUsd;
   return {
     ...spent,
-    hardBudget: config.hardModelBudgetUsd,
-    hardBudgetRemaining: Math.max(0, config.hardModelBudgetUsd - spent.total),
+    hardBudget: budget,
+    hardBudgetRemaining: Math.max(0, budget - spent.total),
     byAgent,
     openRouter,
   };

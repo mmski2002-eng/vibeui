@@ -51,6 +51,16 @@ if (command === "migrate") {
 } else if (command === "maintain") {
   console.log(await maintain(database, { websites: !process.argv.includes("--no-websites"), rescore: process.argv.includes("--rescore") }));
   await database.end();
+} else if (command === "send-test") {
+  const [messageId, to] = process.argv.slice(3);
+  if (!messageId || !to) throw new Error("Usage: tsx src/cli.ts send-test <messageId> <email>");
+  const { sendGmail } = await import("./email/gmail.js");
+  const { randomUUID } = await import("node:crypto");
+  const [message] = await database<{ subject: string; body: string }[]>`SELECT subject, body FROM outreach_messages WHERE id = ${messageId}`;
+  if (!message) throw new Error(`Message ${messageId} not found`);
+  // A test copy never changes the draft: status, thread and statistics stay untouched.
+  console.log(await sendGmail(config, { to, subject: `[ТЕСТ] ${message.subject}`, text: message.body, messageId: `<test-${randomUUID()}@vibeui.club>` }));
+  await database.end();
 } else if (command === "prepare-drafts") {
   console.log({ draftsQueued: await prepareDrafts(database) });
   await database.end();

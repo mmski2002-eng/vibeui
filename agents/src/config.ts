@@ -38,6 +38,8 @@ export function loadConfig() {
     inboxPollMs: integer("INBOX_POLL_MS", 120_000),
     vibeuiInternalApiUrl: process.env.VIBEUI_INTERNAL_API_URL ?? "",
     vibeuiInternalApiKey: process.env.VIBEUI_INTERNAL_API_KEY ?? "",
+    telegramBotToken: process.env.TELEGRAM_BOT_TOKEN ?? "",
+    telegramChatId: process.env.TELEGRAM_CHAT_ID ?? "",
     adminHost: process.env.ADMIN_HOST ?? "127.0.0.1",
     adminPort: integer("ADMIN_PORT", 4310),
     adminUsername: process.env.ADMIN_USERNAME ?? "admin",
