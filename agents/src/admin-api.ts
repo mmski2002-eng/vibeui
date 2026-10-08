@@ -45,7 +45,7 @@ function limit(url: URL, fallback = 100): number {
 
 const routes: Record<string, Handler> = {
   overview: async (database, config) => {
-    const [control, counts, jobs, recentRuns, notifications, spend, metrics] = await Promise.all([
+    const [control, counts, jobs, recentRuns, notifications, spend, funnel] = await Promise.all([
       database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, model_operations_paused, reason, updated_at FROM agent_control WHERE singleton = true`,
       database`SELECT
         (SELECT count(*)::int FROM creators) AS creators,
@@ -66,10 +66,7 @@ const routes: Record<string, Handler> = {
         (SELECT sum(cost_usd)::float FROM model_usage u WHERE u.run_id = r.id) AS cost_usd FROM agent_runs r ORDER BY r.started_at DESC LIMIT 8`,
       database`SELECT id, severity, kind, title, created_at FROM notifications ORDER BY created_at DESC LIMIT 8`,
       spending(database, config),
-      database`SELECT COALESCE(sum(visits), 0)::int AS visits, COALESCE(sum(registrations), 0)::int AS registrations,
-        COALESCE(sum(installations), 0)::int AS installations, COALESCE(sum(payments), 0)::int AS payments,
-        COALESCE(sum(revenue), 0)::float AS revenue, COALESCE(sum(commission), 0)::float AS commission
-        FROM (SELECT DISTINCT ON (partner_id) * FROM referral_metrics ORDER BY partner_id, measured_at DESC) latest`,
+      partnerFunnel(config),
     ]);
     const state = control[0] ?? {};
     const c = counts[0] ?? {};
@@ -79,7 +76,7 @@ const routes: Record<string, Handler> = {
     return {
       status, control: state, counts: c,
       jobs: Object.fromEntries(jobs.map((row) => [row.status, row.count])),
-      recentRuns, notifications, spending: spend, funnel: metrics[0] ?? {},
+      recentRuns, notifications, spending: spend, funnel,
     };
   },
 
@@ -181,7 +178,7 @@ const routes: Record<string, Handler> = {
         JOIN creator_contacts cc ON cc.id = t.contact_id JOIN outreach_campaigns oc ON oc.id = t.campaign_id
         WHERE t.id = ${id}`)[0];
       if (!thread) return null;
-      const messages = await database`SELECT id, direction, kind, status, subject, body, facts, source_urls, model, approved_by, approved_at, sent_at, received_at, created_at FROM outreach_messages WHERE thread_id = ${id} ORDER BY created_at`;
+      const messages = await database`SELECT id, direction, kind, status, subject, body, facts, source_urls, model, approved_by, approved_at, reviewed_at, edited_at, sent_at, received_at, created_at FROM outreach_messages WHERE thread_id = ${id} ORDER BY created_at`;
       return { thread, messages };
     }
     const state = text(url, "state");
@@ -296,7 +293,7 @@ async function creatorCard(database: Database, id: string) {
     database`SELECT kind, value, source_url, is_public_business, verified_at FROM creator_contacts WHERE creator_id = ${id}`,
     database`SELECT total, valid, model, details, evidence_urls, created_at FROM candidate_scores WHERE creator_id = ${id} ORDER BY created_at DESC LIMIT 10`,
     database`SELECT t.id, t.state, t.channel, oc.name AS campaign,
-        COALESCE((SELECT json_agg(json_build_object('id', m.id, 'direction', m.direction, 'kind', m.kind, 'status', m.status, 'subject', m.subject, 'body', m.body, 'facts', m.facts, 'model', m.model, 'sent_at', m.sent_at, 'created_at', m.created_at) ORDER BY m.created_at)
+        COALESCE((SELECT json_agg(json_build_object('id', m.id, 'direction', m.direction, 'kind', m.kind, 'status', m.status, 'subject', m.subject, 'body', m.body, 'facts', m.facts, 'model', m.model, 'reviewed_at', m.reviewed_at, 'edited_at', m.edited_at, 'sent_at', m.sent_at, 'created_at', m.created_at) ORDER BY m.created_at)
           FROM outreach_messages m WHERE m.thread_id = t.id), '[]'::json) AS messages
       FROM conversation_threads t JOIN outreach_campaigns oc ON oc.id = t.campaign_id WHERE t.creator_id = ${id}`,
     database`SELECT status, terms, approved_by, approved_at, created_at FROM partner_offers WHERE creator_id = ${id}`,
@@ -352,4 +349,28 @@ async function openRouterBalance(config: Config): Promise<OpenRouterBalance | nu
 
 async function readPolicy(config: Config): Promise<Record<string, unknown> | null> {
   try { return JSON.parse(await readFile(config.policyPath, "utf8")) as Record<string, unknown>; } catch { return null; }
+}
+
+type PartnerFunnel = {
+  invites?: number; claimed?: number; visits?: number; registrations?: number; payments?: number;
+  commissionPercent?: number; revenue?: Array<{ currency: string; amount: number; commission: number }>; error?: string;
+};
+let funnelCache: { at: number; value: PartnerFunnel } | null = null;
+
+// Both domains share one VibeUI database, so a single call returns the whole funnel of agent invites.
+async function partnerFunnel(config: Config): Promise<PartnerFunnel> {
+  if (funnelCache && Date.now() - funnelCache.at < 60_000) return funnelCache.value;
+  let value: PartnerFunnel;
+  try {
+    if (!config.vibeuiInternalApiKey) throw new Error("VIBEUI_INTERNAL_API_KEY is not configured");
+    const response = await fetch("https://vibeui.club/api/internal/invites", {
+      headers: { authorization: `Bearer ${config.vibeuiInternalApiKey}`, accept: "application/json" }, signal: AbortSignal.timeout(5_000),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    value = await response.json() as PartnerFunnel;
+  } catch (error) {
+    value = { error: error instanceof Error ? error.message : String(error) };
+  }
+  funnelCache = { at: Date.now(), value };
+  return value;
 }

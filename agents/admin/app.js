@@ -112,7 +112,8 @@ function confirmAction({ title, text, danger = false, askReason = false, confirm
 }
 
 const actionTexts = {
-  approve_message: { title: "Одобрить письмо?", text: "Письмо будет поставлено в очередь отправки. Отправка всё равно пройдёт все проверки: policy, паузу, лимиты и emergency stop." },
+  review_message: { title: "Текст проверен?", text: "Только пометка для вас. Письмо остаётся черновиком и не ставится в очередь отправки." },
+  approve_message: { title: "Одобрить письмо?", text: "Письмо будет поставлено в очередь отправки и уйдёт само, как только рассылку разрешат. Сейчас отправку держат policy и пауза." },
   do_not_contact: { title: "Запретить контакт?", text: "Блогер попадёт в глобальный do_not_contact. Все его задания в очереди будут отменены немедленно во всех кампаниях.", danger: true, askReason: true, confirmLabel: "Запретить" },
   cancel_job: { title: "Отменить задание?", text: "Задание будет отменено и не выполнится." },
   retry_job: { title: "Повторить задание?", text: "Даётся одна дополнительная попытка. Внешние действия защищены идемпотентностью и не повторятся." },
@@ -262,10 +263,27 @@ function bindGlobal() {
   document.addEventListener("click", (event) => {
     const control = event.target.closest("[data-control]");
     if (control) return void runControl(control.dataset.control);
+    const edit = event.target.closest("[data-edit]");
+    if (edit) return void toggleEdit(edit.dataset.edit, true);
+    const cancel = event.target.closest("[data-edit-cancel]");
+    if (cancel) return void toggleEdit(cancel.dataset.editCancel, false);
     const action = event.target.closest("[data-action]");
     if (action) { event.stopPropagation(); return void runAction(action.dataset.action, action.dataset.id); }
     const row = event.target.closest("tr[data-href]");
     if (row && !event.target.closest("a, button")) location.hash = row.dataset.href;
+  });
+  document.addEventListener("submit", async (event) => {
+    const form = event.target.closest("[data-message-form]");
+    if (!form) return;
+    event.preventDefault();
+    const data = new FormData(form);
+    try {
+      await post("/api/message", { id: form.dataset.messageForm, subject: data.get("subject"), body: data.get("body") });
+      toast("Сохранено");
+      await refresh();
+    } catch (error) {
+      toast(`Ошибка: ${error.message}`, true);
+    }
   });
   document.addEventListener("keydown", (event) => {
     const row = event.target.closest?.("tr[data-href]");
@@ -279,10 +297,19 @@ function bindGlobal() {
   window.addEventListener("hashchange", navigate);
 }
 
+function toggleEdit(id, open) {
+  const form = document.querySelector(`[data-message-form="${CSS.escape(id)}"]`);
+  const body = document.querySelector(`[data-message-body="${CSS.escape(id)}"]`);
+  if (!form || !body) return;
+  form.hidden = !open;
+  body.hidden = open;
+  if (open) form.querySelector("textarea").focus();
+}
+
 function poll() {
   clearInterval(state.timer);
   state.timer = setInterval(async () => {
-    if (document.hidden || dialog().open) return;
+    if (document.hidden || dialog().open || document.querySelector("[data-message-form]:not([hidden])")) return;
     const active = document.activeElement;
     if (active && ["INPUT", "SELECT", "TEXTAREA"].includes(active.tagName) && document.getElementById("view").contains(active)) return;
     await refreshShell();

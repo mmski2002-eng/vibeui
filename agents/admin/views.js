@@ -66,11 +66,12 @@ export const views = {
         </div>
         ${spendingCards(data.spending)}
         <div class="grid cols-2">
-          ${card("Воронка партнёров", `<dl class="kv">
-            <dt>Переходы</dt><dd>${fmt.num(funnel.visits)}</dd><dt>Регистрации</dt><dd>${fmt.num(funnel.registrations)}</dd>
-            <dt>Установки</dt><dd>${fmt.num(funnel.installations)}</dd><dt>Оплаты</dt><dd>${fmt.num(funnel.payments)}</dd>
-            <dt>Выручка</dt><dd>${fmt.num(funnel.revenue)}</dd><dt>Комиссии</dt><dd>${fmt.num(funnel.commission)}</dd></dl>
-            <p class="small muted">Заполнится после подключения закрытого API VibeUI.</p>`)}
+          ${card("Воронка партнёров", funnel.error ? `<div class="empty">Нет связи с VibeUI: ${esc(funnel.error)}</div>` : `<dl class="kv">
+            <dt>Ссылок выдано</dt><dd>${fmt.num(funnel.invites)}</dd><dt>Блогеров зарегистрировалось</dt><dd>${fmt.num(funnel.claimed)}</dd>
+            <dt>Переходы по ссылкам</dt><dd>${fmt.num(funnel.visits)}</dd><dt>Регистрации зрителей</dt><dd>${fmt.num(funnel.registrations)}</dd>
+            <dt>Оплаты</dt><dd>${fmt.num(funnel.payments)}</dd>
+            ${(funnel.revenue ?? []).map((row) => `<dt>Выручка, ${esc(row.currency)}</dt><dd>${fmt.num(row.amount)} · комиссия ${fmt.num(row.commission)}</dd>`).join("") || "<dt>Выручка</dt><dd>0</dd>"}
+            </dl>`)}
           ${card("Очередь", `<dl class="kv">${["queued", "running", "failed", "completed", "cancelled"].map((status) => `<dt>${pill(status)}</dt><dd>${fmt.num(jobs[status] ?? 0)}</dd>`).join("")}</dl>`, '<a class="link small" href="#/queue">Открыть</a>')}
         </div>
         <div class="grid cols-2 section">
@@ -423,13 +424,19 @@ export const views = {
 };
 
 function messageBlock(message) {
+  const draft = message.direction === "outbound" && message.status === "draft";
   const facts = Array.isArray(message.facts) && message.facts.length
     ? `<ul class="facts small">${message.facts.map((fact) => `<li>${esc(fact.claim)} — ${extLink(fact.sourceUrl, "источник")}</li>`).join("")}</ul>` : "";
   return `<article class="message ${message.direction}">
     <div class="card-head"><div><strong>${esc(message.subject ?? (message.direction === "inbound" ? "Ответ" : "Письмо"))}</strong>
       <div class="small muted">${message.direction === "inbound" ? "входящее" : "исходящее"} · ${esc(message.kind)} · ${message.model ? esc(message.model) : ""} · ${fmt.date(message.sent_at ?? message.received_at ?? message.created_at)}</div></div>
-      <div>${pill(message.status)} ${message.direction === "outbound" && message.status === "draft" ? actionButton("approve_message", message.id, "Одобрить", "primary") : ""}</div></div>
-    <div class="message-body">${esc(message.body)}</div>
+      <div class="message-actions">${pill(message.status)}${draft && message.reviewed_at ? ` ${pill("passed")} <span class="small muted">текст проверен</span>` : ""}${draft ? ` <button class="btn sm" data-edit="${esc(message.id)}" aria-label="Редактировать текст" title="Редактировать">✎</button>${message.reviewed_at ? "" : ` ${actionButton("review_message", message.id, "Текст проверен")}`} ${actionButton("approve_message", message.id, "Одобрить", "primary")}` : ""}</div></div>
+    <div class="message-body" data-message-body="${esc(message.id)}">${esc(message.body)}</div>
+    ${draft ? `<form class="message-edit" data-message-form="${esc(message.id)}" hidden>
+      <label class="field"><span class="small muted">Тема</span><input name="subject" maxlength="160" value="${esc(message.subject ?? "")}" required></label>
+      <label class="field"><span class="small muted">Текст</span><textarea name="body" rows="14" maxlength="5000" required>${esc(message.body)}</textarea></label>
+      <div class="message-actions"><button class="btn sm primary" type="submit">Сохранить</button> <button class="btn sm" type="button" data-edit-cancel="${esc(message.id)}">Отмена</button></div>
+    </form>` : ""}
     ${facts ? `<div class="small muted section">Использованные факты:</div>${facts}` : ""}
   </article>`;
 }

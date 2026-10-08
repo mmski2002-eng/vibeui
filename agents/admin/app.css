@@ -146,6 +146,10 @@ td.num, th.num { text-align: right; }
 .message + .message { margin-top: 10px; }
 .message.inbound { background: var(--surface-2); }
 .message-body { white-space: pre-wrap; margin-top: 8px; overflow-wrap: anywhere; }
+.message-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 6px; }
+.message-edit { display: grid; gap: 10px; margin-top: 10px; }
+.message-edit .field { display: grid; gap: 4px; }
+.message-edit textarea { resize: vertical; line-height: 1.5; }
 .facts { margin: 10px 0 0; padding-left: 18px; }
 .facts li { margin: 4px 0; }
 .score-bars { display: grid; gap: 6px; }

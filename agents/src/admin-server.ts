@@ -43,6 +43,10 @@ export function startAdminServer(database: Database, config: Config): void {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return updateControl(database, request, response);
       }
+      if (request.method === "POST" && url.pathname === "/api/message") {
+        if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
+        return editMessage(database, request, response);
+      }
       if (request.method === "POST" && url.pathname === "/api/action") {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return adminAction(database, request, response);
@@ -91,6 +95,10 @@ async function adminAction(database: Database, request: IncomingMessage, respons
     if (!rows[0]) return json(response, 409, { error: "message_not_draft" });
     const { enqueue } = await import("./queue.js");
     await enqueue(database, "send_message", { messageId: id }, `send_message:${id}`);
+  } else if (action === "review_message") {
+    targetType = "message";
+    const rows = await database`UPDATE outreach_messages SET reviewed_at = now() WHERE id = ${id} AND status = 'draft' RETURNING id`;
+    if (!rows[0]) return json(response, 409, { error: "message_not_draft" });
   } else if (action === "do_not_contact") {
     targetType = "creator";
     const { randomUUID } = await import("node:crypto");
@@ -127,6 +135,24 @@ async function adminAction(database: Database, request: IncomingMessage, respons
     return json(response, 400, { error: "unknown_action" });
   }
   await writeAudit(database, { actor: "administrator", action, targetType, targetId: id, decision: "completed", reason: reason ?? undefined });
+  return json(response, 200, { ok: true });
+}
+
+// Only a draft can be edited; an edit resets the review mark so the new text is checked again before approval.
+async function editMessage(database: Database, request: IncomingMessage, response: ServerResponse) {
+  const body = await readJson(request);
+  const id = body.id;
+  const subject = typeof body.subject === "string" ? body.subject.trim() : "";
+  const text = typeof body.body === "string" ? body.body.replace(/\r\n/g, "\n").trim() : "";
+  if (typeof id !== "string" || !subject || subject.length > 160 || text.length < 20 || text.length > 5000) {
+    return json(response, 400, { error: "invalid_message" });
+  }
+  const rows = await database`
+    UPDATE outreach_messages SET subject = ${subject}, body = ${text}, edited_at = now(), reviewed_at = NULL
+    WHERE id = ${id} AND direction = 'outbound' AND status = 'draft' RETURNING id
+  `;
+  if (!rows[0]) return json(response, 409, { error: "message_not_draft" });
+  await writeAudit(database, { actor: "administrator", action: "edit_message", targetType: "message", targetId: id, decision: "completed" });
   return json(response, 200, { ok: true });
 }
 
