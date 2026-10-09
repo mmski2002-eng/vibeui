@@ -35,7 +35,8 @@ Apply these maximum weights exactly: topic fit 30, builder audience 20, real rea
 engagement 10, practical demonstrations 10, regularity 5, allowed public business contact 5,
 moderate advertising load 5.
 Red flags are only concrete negative evidence that disqualifies the creator: signs of bought or fake audience,
-scams or get-rich-quick promises, deceptive or unsafe content, spam, plagiarism, or a market/language mismatch.
+scams or get-rich-quick promises, deceptive or unsafe content, spam, plagiarism, or content in a language other than Russian or English.
+Russian content on an English-market record (or the reverse) is not a red flag: the market is corrected separately, so judge the creator on the content.
 Missing or incomplete data is never a red flag: list it in dataGaps and simply give fewer points for that criterion.
 contacts lists published contacts without their values; allowedContact may score only a public business contact.
 Russian-market creators must be relevant to vibeui.ru; English-market creators to vibeui.club.

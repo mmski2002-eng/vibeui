@@ -24,3 +24,14 @@ test("outbound Message-ID is deterministic per message", () => {
 test("unmatched reply notifications are deduplicated by normalized sender", () => {
   assert.equal(unmatchedReplyDedupeKey("Name <USER@Example.com>"), "unmatched_reply:user@example.com");
 });
+
+test("skips robots and our own mailboxes when reading replies", async () => {
+  const { isAutomatedOrOwnSender } = await import("../src/email/gmail.js");
+  const own = ["admin@vibeui.club", "noreply@vibeui.club"];
+  for (const sender of ["noreply@vibeui.club", "no-reply-h23l7nz3zh72@mail.example.com", "do-not-reply@service.io", "notifications@github.com", "Admin@vibeui.club", "x@accounts.google.com"]) {
+    assert.equal(isAutomatedOrOwnSender(sender, own), true, sender);
+  }
+  for (const sender of ["anna@creator.dev", "replyguy@mail.ru", "noreplying.fan@gmail.com"]) {
+    assert.equal(isAutomatedOrOwnSender(sender, own), false, sender);
+  }
+});

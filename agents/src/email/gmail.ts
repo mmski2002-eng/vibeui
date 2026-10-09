@@ -77,8 +77,7 @@ export async function pollGmailInbox(database: Database, config: Config): Promis
           await notify(database, "critical", "email_bounced", "Письмо не доставлено (bounce)", { subject: parsed.subject });
           continue;
         }
-        // Automated senders (Google security alerts, newsletters) never belong to a creator conversation.
-        if (/(?:^|[.+-])no-?reply@|notifications?@|@accounts\.google\.com$/i.test(parsed.sender)) continue;
+        if (isAutomatedOrOwnSender(parsed.sender, config.mailboxes)) continue;
         const result = await recordInboundReply(database, parsed);
         if (result === "unmatched") unmatched++;
         if (result === "recorded") recorded++;
@@ -86,6 +85,13 @@ export async function pollGmailInbox(database: Database, config: Config): Promis
     } finally { lock.release(); }
   } finally { await client.logout().catch(() => undefined); }
   return { recorded, unmatched };
+}
+
+// Automated senders (Google alerts, newsletters, no-reply robots) and our own mailboxes never belong to a creator conversation.
+export function isAutomatedOrOwnSender(sender: string, ownMailboxes: string[]): boolean {
+  const address = sender.toLowerCase();
+  if (ownMailboxes.includes(address)) return true;
+  return /(?:^|[.+-])(?:no|do-?not)-?reply(?:[-_.+][^@]*)?@|notifications?@|@accounts\.google\.com$/.test(address);
 }
 
 export function parseMessage(message: Pick<FetchMessageObject, "envelope" | "source" | "headers">) {

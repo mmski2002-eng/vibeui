@@ -11,6 +11,7 @@ import { discoverRutube } from "./discovery/rutube.js";
 import { discoverDevto } from "./discovery/devto.js";
 import { searchTelegramChannels, telegramSearchConfigured } from "./discovery/telegram-search.js";
 import { maintain } from "./maintenance.js";
+import { billedUsage } from "./openrouter-usage.js";
 
 export interface DiscoveryTask { source: string; query: string }
 export interface SchedulerState { emergencyStop: boolean; modelsPaused: boolean; spentToday: number; dailyBudget: number; spentTotal: number; totalBudget: number; pendingScoring: number; stock: number; dailyContactLimit: number }
@@ -46,21 +47,44 @@ export function discoveryTasks(policy: Policy, config: Pick<Config, "youtubeApiK
   ];
 }
 
-// Never-run tasks go first, then the one that waited longest; nothing repeats within REPEAT_AFTER_HOURS.
+// Platforms take turns: the one idle longest goes next, so a long query list on one platform cannot starve the rest.
+// Inside it the oldest query runs; nothing repeats within REPEAT_AFTER_HOURS.
 export function pickTask(tasks: DiscoveryTask[], lastRuns: Map<string, Date>, now: Date): DiscoveryTask | null {
+  const last = (task: DiscoveryTask) => lastRuns.get(`${task.source}|${task.query}`)?.getTime() ?? 0;
+  const sourceLast = new Map<string, number>();
+  for (const task of tasks) sourceLast.set(task.source, Math.max(sourceLast.get(task.source) ?? 0, last(task)));
   const due = tasks
-    .map((task) => ({ task, last: lastRuns.get(`${task.source}|${task.query}`) ?? null }))
-    .filter(({ last }) => !last || now.getTime() - last.getTime() >= REPEAT_AFTER_HOURS * 3_600_000)
-    .sort((a, b) => (a.last?.getTime() ?? 0) - (b.last?.getTime() ?? 0));
-  return due[0]?.task ?? null;
+    .filter((task) => now.getTime() - last(task) >= REPEAT_AFTER_HOURS * 3_600_000)
+    .sort((a, b) => (sourceLast.get(a.source)! - sourceLast.get(b.source)!) || (last(a) - last(b)));
+  return due[0] ?? null;
+}
+
+// Keeps eligible/scored in line with the current threshold by each creator's latest score; contacted creators are untouched.
+export async function resortCreators(database: Database): Promise<{ promoted: number; demoted: number }> {
+  return database.begin(async (transaction) => {
+    const [{ value }] = await transaction<{ value: number }[]>`SELECT minimum_score AS value FROM agent_control WHERE singleton = true`;
+    const promoted = await transaction`
+      UPDATE creators c SET status = 'eligible', updated_at = now()
+      WHERE c.status = 'scored' AND c.do_not_contact = false
+        AND (SELECT s.valid AND s.total >= ${value} FROM candidate_scores s WHERE s.creator_id = c.id ORDER BY s.created_at DESC LIMIT 1)
+    `;
+    const demoted = await transaction`
+      UPDATE creators c SET status = 'scored', updated_at = now()
+      WHERE c.status = 'eligible'
+        AND NOT COALESCE((SELECT s.valid AND s.total >= ${value} FROM candidate_scores s WHERE s.creator_id = c.id ORDER BY s.created_at DESC LIMIT 1), false)
+    `;
+    return { promoted: promoted.count, demoted: demoted.count };
+  });
 }
 
 export async function runScheduler(database: Database, config: Config): Promise<Record<string, unknown>> {
   const policy = await loadPolicy(config.policyPath);
+  const resorted = await resortCreators(database);
   const queuedScoring = await queueUnscored(database);
   const state = await readState(database, policy);
+  state.spentTotal = Math.max(state.spentTotal, (await billedUsage(config)) ?? 0);
   const decision = gate(state);
-  let outcome: Record<string, unknown> = { ...state, queuedScoring, decision: decision.run ? "run" : decision.reason };
+  let outcome: Record<string, unknown> = { ...state, resorted, queuedScoring, decision: decision.run ? "run" : decision.reason };
   if (decision.run) {
     const lastRuns = new Map((await database<{ key: string; last: Date }[]>`
       SELECT source || '|' || query AS key, max(started_at) AS last FROM discovery_runs GROUP BY source, query

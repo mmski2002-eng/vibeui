@@ -162,7 +162,7 @@ const routes: Record<string, Handler> = {
     const platform = text(url, "platform");
     return database`
       SELECT c.id, c.display_name, c.market, c.language, c.country, c.status, c.do_not_contact, c.updated_at,
-        p.platform, p.profile_url, p.followers, p.median_views,
+        count(*) OVER ()::int AS total_count, p.platform, p.profile_url, p.followers, p.median_views,
         s.total AS score, s.valid AS score_valid, s.details->'redFlags' AS red_flags,
         (SELECT source_url FROM creator_contacts cc WHERE cc.creator_id = c.id ORDER BY verified_at DESC NULLS LAST LIMIT 1) AS contact_source,
         (SELECT max(m.sent_at) FROM outreach_messages m JOIN conversation_threads t ON t.id = m.thread_id WHERE t.creator_id = c.id) AS last_contact_at
@@ -299,15 +299,20 @@ const routes: Record<string, Handler> = {
   "settings/policies": async (_database, config) => ({ path: config.policyPath, policy: await readPolicy(config) }),
 
   "settings/integrations": async (_database, config) => ({
-    models: { scoring: config.scoringModel, generation: config.generationModel, hardBudgetUsd: config.hardModelBudgetUsd },
+    models: { scoring: config.scoringModel, generation: config.generationModel },
     integrations: [
       { name: "OpenRouter", configured: Boolean(config.openRouterApiKey), purpose: "LLM для scoring, черновиков и ответов" },
       { name: "YouTube Data API", configured: Boolean(config.youtubeApiKey), purpose: "Discovery на YouTube" },
       { name: "Gmail (SMTP + IMAP)", configured: Boolean(config.gmailUser && config.gmailAppPassword), purpose: "Отправка писем и чтение ответов" },
       { name: "Имя отправителя", configured: Boolean(config.outreachSenderName), purpose: "Подпись и поле From" },
-      { name: "Resend API", configured: Boolean(config.resendApiKey), purpose: "Резервная отправка писем" },
-      { name: "Resend webhook secret", configured: Boolean(config.resendWebhookSecret), purpose: "Проверка подписи событий доставки" },
-      { name: "Адрес отправителя", configured: Boolean(config.outreachEmailFrom), purpose: "From для outreach-писем" },
+      // Resend is only the fallback when Gmail is absent, so its gaps are not a problem while Gmail works.
+      ...[
+        { name: "Resend API", configured: Boolean(config.resendApiKey), purpose: "Резервная отправка писем" },
+        { name: "Resend webhook secret", configured: Boolean(config.resendWebhookSecret), purpose: "Проверка подписи событий доставки Resend" },
+        { name: "Адрес отправителя Resend", configured: Boolean(config.outreachEmailFrom), purpose: "From для резервной отправки через Resend" },
+      ].map((row) => ({ ...row, configured: row.configured || (config.gmailUser && config.gmailAppPassword ? "unused" : false) })),
+      { name: "VK service token", configured: Boolean(config.vkServiceToken), purpose: "Обход VK-сообществ по ссылкам" },
+      { name: "Telegram-аккаунт", configured: Boolean(config.telegramApiId && config.telegramApiHash && config.telegramSession), purpose: "Поиск Telegram-каналов по словам" },
       { name: "VibeUI internal API", configured: Boolean(config.vibeuiInternalApiKey), purpose: "Реферальные ссылки и статистика блогеров" },
     ],
   }),

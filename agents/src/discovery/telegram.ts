@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type { Database } from "../database.js";
 import type { Market } from "../types.js";
-import { enqueue } from "../queue.js";
+import { queueScoring } from "./save.js";
 import { writeAudit } from "../audit.js";
 import { businessEmailFromDescription, median } from "./youtube.js";
 
@@ -43,8 +43,7 @@ export async function discoverTelegram(database: Database, seeds: string[], opti
     result.relevant++;
     const saved = await saveChannel(database, channel, next.ownerCreatorId);
     result[saved.status]++;
-    await enqueue(database, "score_creator", { creatorId: saved.id }, `score_creator:${saved.id}:${new Date().toISOString().slice(0, 10)}`);
-    result.jobsQueued++;
+    if (await queueScoring(database, saved.id)) result.jobsQueued++;
     if (next.depth < options.maxDepth) for (const linked of channel.linkedChannels) push({ name: linked, ownerCreatorId: null }, next.depth + 1);
   }
   await writeAudit(database, { actor: "discovery", action: "discover_telegram", targetType: "query", targetId: seeds.join(",").slice(0, 200) || "database-seeds",

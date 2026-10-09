@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type { Database } from "../database.js";
 import type { Market } from "../types.js";
-import { enqueue } from "../queue.js";
+import { queueScoring } from "./save.js";
 import { writeAudit } from "../audit.js";
 import { median } from "./youtube.js";
 import { adMarkers, topicPattern } from "./telegram.js";
@@ -53,8 +53,7 @@ export async function discoverVk(database: Database, token: string, seeds: strin
     result.relevant++;
     const saved = await saveGroup(database, group, posts, next.ownerCreatorId);
     result[saved.status]++;
-    await enqueue(database, "score_creator", { creatorId: saved.creatorId }, `score_creator:${saved.creatorId}:${new Date().toISOString().slice(0, 10)}`);
-    result.jobsQueued++;
+    if (await queueScoring(database, saved.creatorId)) result.jobsQueued++;
     if (next.depth < options.maxDepth) {
       for (const linked of linkedGroups(posts, group.id)) push({ name: linked, ownerCreatorId: null }, next.depth + 1);
     }

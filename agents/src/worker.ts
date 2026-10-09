@@ -18,6 +18,7 @@ import { deliverNotifications, telegramConfigured } from "./telegram.js";
 import { notify } from "./email/inbound.js";
 import { checkPublication } from "./publication-monitor.js";
 import { runScheduler } from "./scheduler.js";
+import { billedUsage } from "./openrouter-usage.js";
 
 export async function runWorker(database: Database, config: Config): Promise<void> {
   for (const model of [config.scoringModel, config.generationModel]) {
@@ -240,7 +241,7 @@ async function personalizeThreadJob(database: Database, config: Config, job: Age
     await database`UPDATE conversation_threads SET referral_code = ${invite.code}, referral_url = ${invite.url}, updated_at = now() WHERE id = ${threadId}`;
     referralUrl = invite.url;
   }
-  const output = await personalizeOutreach({ creator: thread, posts, market, channel: thread.channel === "telegram" ? "telegram" : "email", referralUrl, model: config.generationModel });
+  const output = await personalizeOutreach({ creator: thread, posts, market, channel: thread.channel === "telegram" ? "telegram" : "email", referralUrl, senderName: config.outreachSenderName || undefined, model: config.generationModel });
   await database`
     INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, facts,
       source_urls, model, idempotency_key)
@@ -494,9 +495,10 @@ async function assertModelBudget(database: Database, config: Config, scope: "sea
   const state = rows[0];
   if (state?.paused) throw new Error("Model operations are paused");
   if (scope === "reply") return;
-  if (state && state.total >= state.total_budget) {
+  const total = Math.max(state?.total ?? 0, (await billedUsage(config)) ?? 0);
+  if (state && total >= state.total_budget) {
     const recent = await database`SELECT 1 FROM notifications WHERE kind = 'total_budget_reached' AND created_at > now() - interval '1 day' LIMIT 1`;
-    if (!recent[0]) await notify(database, "critical", "total_budget_reached", "Общий лимит на модели исчерпан", { spent: `$${state.total.toFixed(2)}`, budget: `$${state.total_budget.toFixed(2)}` });
+    if (!recent[0]) await notify(database, "critical", "total_budget_reached", "Общий лимит на модели исчерпан", { spent: `$${total.toFixed(2)}`, budget: `$${state.total_budget.toFixed(2)}` });
     throw new Error(`Total search budget reached: $${state.total_budget.toFixed(2)}`);
   }
   const budget = state?.budget ?? config.hardModelBudgetUsd;

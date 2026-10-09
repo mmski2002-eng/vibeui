@@ -55,8 +55,18 @@ export async function saveProfile(database: Database, profile: FoundProfile): Pr
       `;
     }
   });
-  await enqueue(database, "score_creator", { creatorId }, `score_creator:${creatorId}:${new Date().toISOString().slice(0, 10)}`);
+  await queueScoring(database, creatorId);
   return { status: existing[0] ? "updated" : "created", id: creatorId };
+}
+
+// Searches keep returning the same people; paying to score them again only makes sense once the old score is stale.
+export async function queueScoring(database: Database, creatorId: string, staleAfterDays = 30): Promise<boolean> {
+  const fresh = await database`
+    SELECT 1 FROM candidate_scores WHERE creator_id = ${creatorId} AND created_at > now() - make_interval(days => ${staleAfterDays}) LIMIT 1
+  `;
+  if (fresh.length > 0) return false;
+  await enqueue(database, "score_creator", { creatorId }, `score_creator:${creatorId}:${new Date().toISOString().slice(0, 10)}`);
+  return true;
 }
 
 export async function recentlyChecked(database: Database, platform: string, externalId: string, days = 30): Promise<boolean> {

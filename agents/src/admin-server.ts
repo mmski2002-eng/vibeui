@@ -121,6 +121,8 @@ async function sendMailbox(database: Database, config: Config, request: Incoming
   }
 }
 
+import { resortCreators } from "./scheduler.js";
+
 async function adminAction(database: Database, request: IncomingMessage, response: ServerResponse) {
   const body = await readJson(request);
   const action = body.action;
@@ -130,13 +132,16 @@ async function adminAction(database: Database, request: IncomingMessage, respons
   let targetType = "job";
   if (action === "approve_message") {
     targetType = "message";
-    const rows = await database<{ id: string }[]>`
-      UPDATE outreach_messages SET status = 'approved', approved_by = 'administrator', approved_at = now()
-      WHERE id = ${id} AND status = 'draft' RETURNING id
+    const rows = await database<{ id: string; channel: string }[]>`
+      UPDATE outreach_messages m SET status = 'approved', approved_by = 'administrator', approved_at = now()
+      FROM conversation_threads t WHERE t.id = m.thread_id AND m.id = ${id} AND m.status = 'draft' RETURNING m.id, t.channel
     `;
     if (!rows[0]) return json(response, 409, { error: "message_not_draft" });
-    const { enqueue } = await import("./queue.js");
-    await enqueue(database, "send_message", { messageId: id }, `send_message:${id}`);
+    // Only email is sent by the worker; an approved Telegram text waits for «Отправлено вручную».
+    if (rows[0].channel === "email") {
+      const { enqueue } = await import("./queue.js");
+      await enqueue(database, "send_message", { messageId: id }, `send_message:${id}`);
+    }
   } else if (action === "approve_all_messages") {
     targetType = "message";
     // Only email drafts: other channels are sent by hand, an approval would only park them in the send queue.
@@ -253,20 +258,8 @@ async function editMessage(database: Database, request: IncomingMessage, respons
 
 // A new threshold re-sorts creators already scored, judged by their latest score; contacted creators keep their status.
 export async function applyMinimumScore(database: Database, value: number): Promise<{ promoted: number; demoted: number }> {
-  return database.begin(async (transaction) => {
-    await transaction`UPDATE agent_control SET minimum_score = ${value}, updated_at = now() WHERE singleton = true`;
-    const promoted = await transaction`
-      UPDATE creators c SET status = 'eligible', updated_at = now()
-      WHERE c.status = 'scored' AND c.do_not_contact = false
-        AND (SELECT s.valid AND s.total >= ${value} FROM candidate_scores s WHERE s.creator_id = c.id ORDER BY s.created_at DESC LIMIT 1)
-    `;
-    const demoted = await transaction`
-      UPDATE creators c SET status = 'scored', updated_at = now()
-      WHERE c.status = 'eligible'
-        AND NOT COALESCE((SELECT s.valid AND s.total >= ${value} FROM candidate_scores s WHERE s.creator_id = c.id ORDER BY s.created_at DESC LIMIT 1), false)
-    `;
-    return { promoted: promoted.count, demoted: demoted.count };
-  });
+  await database`UPDATE agent_control SET minimum_score = ${value}, updated_at = now() WHERE singleton = true`;
+  return resortCreators(database);
 }
 
 async function updateControl(database: Database, request: IncomingMessage, response: ServerResponse) {

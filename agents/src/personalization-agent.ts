@@ -10,34 +10,41 @@ const outputSchema = z.object({
 });
 export type PersonalizationOutput = z.infer<typeof outputSchema> & { usage: TokenUsage };
 
+// A named person gets more replies than a team signature; the team line stays as the fallback.
+function signOff(input: { market: "ru" | "en"; senderName?: string }): string {
+  if (input.senderName) return `${input.senderName}, VibeUI`;
+  return input.market === "ru" ? "Команда VibeUI" : "The VibeUI team";
+}
+
 export async function personalizeOutreach(input: {
   creator: Record<string, unknown>;
   posts: Array<Record<string, unknown>>;
   market: "ru" | "en";
   channel: "email" | "telegram";
   referralUrl: string;
+  senderName?: string;
   model: string;
 }): Promise<PersonalizationOutput> {
   const allowedUrls = new Set(input.posts.map((post) => post.url).filter((url): url is string => typeof url === "string"));
   if (allowedUrls.size === 0) throw new Error("Cannot personalize without a sourced publication");
   const agent = new Agent({
     name: "VibeUI Outreach Personalizer", model: input.model,
-    instructions: `Write one first-contact ${input.channel === "telegram" ? "Telegram direct message: at most five short sentences, under 700 characters, no signature line; subject is only an internal label" : "email of 80-140 words"} in ${input.market === "ru" ? "Russian" : "English"}.
+    instructions: `Write one first-contact ${input.channel === "telegram" ? "Telegram direct message: at most five short sentences, under 700 characters, no signature line; subject is only an internal label" : "email of 60-110 words"} in ${input.market === "ru" ? "Russian" : "English"}.
 
 About VibeUI: a catalog of ready UI blocks and whole-page scenarios (landing sections, pricing, dashboards, forms) for vibe coding. Each block has a "Copy for AI" button: the AI coding agent installs the real component file instead of improvising a generic one, so the page looks designed on the first prompt.
 
 Structure:
-1. Open with one specific supplied publication and why it caught attention; be concrete, no flattery.
-2. One or two sentences on how VibeUI fits what this creator shows (their stack, tools or audience), in your own words.
+1. Open with one specific supplied publication (name it by its title, do not paste its URL: the creator knows their own video) and why it caught attention; be concrete, no flattery.
+2. One sentence on how VibeUI fits what this creator shows (their stack, tools or audience), in your own words. No feature list.
 3. The gift, stated explicitly in the sentence right before the link: signing up through this personal link gives a free month of VibeUI Pro. Then the link exactly as given, once, on its own line: ${input.referralUrl}
 4. Only then, briefly: if they like it, the same link becomes their partner link; viewers get 30% off their first payment and the creator earns 25% of all payments from people they bring. No other numbers, no guarantees.
-5. A low-effort ask: try it and reply with an honest opinion. Do not ask for a video, review or post.
+5. End with one easy question tied to their content that can be answered in a line (for example, whether ready sections would help in their next build). Do not ask for a video, review or post.
 
-${input.market === "ru" ? "Russian: always address the creator formally with «вы», never «ты». Use plain Russian words instead of anglicisms like «generic» (Copy for AI stays as is). Never write «Источник:»; put the publication link naturally in the sentence.\n" : ""}Style: sound like a person, not a template. Vary sentence openings and subject lines; never reuse the phrase "verbal description" or "component comparison". Subject: short, specific to the creator's content, no hype, no emoji.
+${input.market === "ru" ? "Russian: always address the creator formally with «вы», never «ты». Use plain Russian words instead of anglicisms like «generic» (Copy for AI stays as is). Never write «Источник:».\n" : ""}Style: sound like a person, not a template. Vary sentence openings and subject lines; never reuse the phrase "verbal description" or "component comparison". Subject: short, specific to the creator's content, no hype, no emoji.
 Never invent familiarity, product functions, customers, reviews, metrics, or facts. Every factual claim about the creator must cite one supplied URL. No attachments, legal promises, or pressure.
 The message is sent as plain text: no Markdown, no HTML, write links as bare URLs.
 Greet the creator by first name only when a personal first name is evident; never use a channel or brand name as a name, greet neutrally instead.
-${input.channel === "email" ? `End with the sign-off line "${input.market === "ru" ? "Команда VibeUI" : "The VibeUI team"}" and nothing after it.` : ""}`,
+${input.channel === "email" ? `End with the sign-off line "${signOff(input)}" and nothing after it.` : ""}`,
     outputType: outputSchema,
   });
   const result = await run(agent, JSON.stringify({ creator: input.creator, posts: input.posts }));

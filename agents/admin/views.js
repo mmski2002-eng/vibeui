@@ -136,6 +136,8 @@ export const views = {
         ["Регистрации зрителей", funnel.registrations], ["Оплаты", funnel.payments],
       ];
       const openRouter = data.spending.openRouter;
+      // The total cap counts what OpenRouter actually billed when that is higher than our estimate.
+      const spentTotal = Math.max(data.spending.total ?? 0, openRouter?.usage ?? 0);
       return `
         <div class="status-strip ${banner[0]}"><span class="dot" aria-hidden="true"></span><strong>${banner[1]}</strong><span class="muted small">${banner[2]}</span>${control.reason ? `<span class="small muted">· ${esc(control.reason)}</span>` : ""}</div>
         <div class="dash-row hero">
@@ -158,7 +160,7 @@ export const views = {
           ${card("Деньги на модели", `<div class="money">
             <div><span class="label">Остаток OpenRouter</span><span class="big">${openRouter ? (openRouter.error ? "ошибка" : openRouter.remaining == null ? "без лимита" : fmt.usd(openRouter.remaining, 2)) : "нет ключа"}</span></div>
             <div><span class="label">За месяц</span><span class="big">${fmt.usd(data.spending.month, 2)}</span></div>
-            <div><span class="label">Всего из ${fmt.usd(data.spending.totalBudget, 2)}</span><span class="big">${fmt.usd(data.spending.total, 2)}</span>${meter(data.spending.total, data.spending.totalBudget)}</div>
+            <div><span class="label">Всего из ${fmt.usd(data.spending.totalBudget, 2)}</span><span class="big">${fmt.usd(spentTotal, 2)}</span>${meter(spentTotal, data.spending.totalBudget)}</div>
           </div>${columns(data.daily, "spent", (value) => fmt.usd(value, 2), "small")}`, '<a class="link small" href="#/finance">Финансы</a>')}
           ${card("Партнёрская программа на сайте", funnel.error ? `<div class="empty">Нет связи с VibeUI: ${esc(funnel.error)}</div>` : `${funnelBars(partnerSteps)}
             <p class="small muted">Выручка: ${(funnel.revenue ?? []).map((row) => `${fmt.num(row.amount)} ${esc(row.currency)} · комиссия ${fmt.num(row.commission)}`).join("; ") || "пока нет"}</p>`, '<a class="link small" href="#/partners">Партнёры</a>')}
@@ -260,12 +262,13 @@ export const views = {
       ${search(params.q, "Имя или URL профиля")}
       ${select("market", params.market, [["", "Все рынки"], ["ru", "RU · vibeui.ru"], ["en", "EN · vibeui.club"]])}
       ${select("status", params.status, [["", "Все статусы"], ["researched", "researched"], ["scored", "scored"], ["eligible", "eligible"], ["sent", "sent"], ["partner_created", "partner_created"], ["do_not_contact", "do_not_contact"]])}
-      ${select("platform", params.platform, [["", "Все площадки"], ["youtube", "YouTube"], ["telegram", "Telegram"], ["vk", "VK"], ["habr", "Habr"], ["x", "X"], ["newsletter", "Newsletter"], ["website", "Сайт"]])}
+      ${select("platform", params.platform, [["", "Все площадки"], ["youtube", "YouTube"], ["telegram", "Telegram"], ["vk", "VK"], ["habr", "Хабр"], ["rutube", "Rutube"], ["devto", "Dev.to"], ["x", "X"], ["newsletter", "Newsletter"], ["website", "Сайт"]])}
     </div>`,
     async render({ id, query: params }) {
       if (id) return creatorCard(id);
       const rows = await api(`/api/creators${query(params)}`);
-      return card("", table([
+      const total = rows[0]?.total_count ?? 0;
+      return card("", `${total > rows.length ? `<p class="small muted">Показаны ${fmt.num(rows.length)} с лучшей оценкой из ${fmt.num(total)}. Сузьте фильтрами или поиском.</p>` : `<p class="small muted">Всего: ${fmt.num(total)}</p>`}${table([
         { label: "Имя", render: (row) => `<strong>${esc(row.display_name)}</strong><div class="small">${extLink(row.profile_url, row.platform)}</div>` },
         { label: "Рынок", render: (row) => esc(marketLabel[row.market] ?? row.market) },
         { label: "Подписчики", num: true, render: (row) => fmt.num(row.followers) },
@@ -275,7 +278,7 @@ export const views = {
         { label: "Контакт", render: (row) => row.contact_source ? extLink(row.contact_source, "источник") : '<span class="muted">нет</span>' },
         { label: "Статус", render: (row) => pill(row.do_not_contact ? "do_not_contact" : row.status) },
         { label: "Контакт был", render: (row) => fmt.date(row.last_contact_at) },
-      ], rows, { href: (row) => `#/creators/${row.id}`, empty: "Блогеров пока нет" }));
+      ], rows, { href: (row) => `#/creators/${row.id}`, empty: "Блогеров пока нет" })}`);
     },
   },
 
@@ -558,9 +561,9 @@ export const views = {
       return `<div class="grid cols-2">
         ${card("Подключения", table([
           { label: "Интеграция", key: "name" }, { label: "Назначение", key: "purpose", cls: "small" },
-          { label: "Статус", render: (row) => row.configured ? '<span class="pill ok">настроено</span>' : '<span class="pill warn">нет</span>' },
+          { label: "Статус", render: (row) => row.configured === "unused" ? '<span class="pill">не используется</span>' : row.configured ? '<span class="pill ok">настроено</span>' : '<span class="pill warn">нет</span>' },
         ], data.integrations))}
-        ${card("Модели", `<dl class="kv"><dt>Scoring и ответы</dt><dd class="mono">${esc(data.models.scoring)}</dd><dt>Черновики</dt><dd class="mono">${esc(data.models.generation)}</dd><dt>Жёсткий лимит</dt><dd>${fmt.usd(data.models.hardBudgetUsd, 2)}</dd></dl>`)}
+        ${card("Модели", `<dl class="kv"><dt>Scoring и ответы</dt><dd class="mono">${esc(data.models.scoring)}</dd><dt>Черновики</dt><dd class="mono">${esc(data.models.generation)}</dd><dt>Лимиты</dt><dd><a class="link" href="#/search">дневной и общий — в «Поиске»</a></dd></dl>`)}
       </div>`;
     },
   },
@@ -568,12 +571,13 @@ export const views = {
 
 function messageBlock(message) {
   const draft = message.direction === "outbound" && message.status === "draft";
+  const approved = message.direction === "outbound" && message.status === "approved";
   const facts = Array.isArray(message.facts) && message.facts.length
     ? `<ul class="facts small">${message.facts.map((fact) => `<li>${esc(fact.claim)} — ${extLink(fact.sourceUrl, "источник")}</li>`).join("")}</ul>` : "";
   return `<article class="message ${message.direction}">
     <div class="card-head"><div><strong>${esc(message.subject ?? (message.direction === "inbound" ? "Ответ" : "Письмо"))}</strong>
       <div class="small muted">${message.direction === "inbound" ? "входящее" : "исходящее"} · ${esc(message.kind)} · ${message.model ? esc(message.model) : ""} · ${fmt.date(message.sent_at ?? message.received_at ?? message.created_at)}</div></div>
-      <div class="message-actions">${pill(message.status)}${draft && message.reviewed_at ? ` ${pill("passed")} <span class="small muted">текст проверен</span>` : ""}${draft ? ` <button class="btn sm" data-edit="${esc(message.id)}" aria-label="Редактировать текст" title="Редактировать">✎</button>${message.reviewed_at ? "" : ` ${actionButton("review_message", message.id, "Текст проверен")}`} ${actionButton("mark_sent_manually", message.id, "Отправлено вручную")} ${actionButton("approve_message", message.id, "Одобрить", "primary")}` : ""}</div></div>
+      <div class="message-actions">${pill(message.status)}${draft && message.reviewed_at ? ` ${pill("passed")} <span class="small muted">текст проверен</span>` : ""}${draft ? ` <button class="btn sm" data-edit="${esc(message.id)}" aria-label="Редактировать текст" title="Редактировать">✎</button>${message.reviewed_at ? "" : ` ${actionButton("review_message", message.id, "Текст проверен")}`} ${actionButton("mark_sent_manually", message.id, "Отправлено вручную")} ${actionButton("approve_message", message.id, "Одобрить", "primary")}` : ""}${approved ? ` ${actionButton("mark_sent_manually", message.id, "Отправлено вручную")}` : ""}</div></div>
     <div class="message-body" data-message-body="${esc(message.id)}">${esc(message.body)}</div>
     ${draft ? `<form class="message-edit" data-message-form="${esc(message.id)}" hidden>
       <label class="field"><span class="small muted">Тема</span><input name="subject" maxlength="160" value="${esc(message.subject ?? "")}" required></label>

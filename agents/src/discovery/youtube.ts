@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import type postgres from "postgres";
 import type { Database } from "../database.js";
 import type { Market } from "../types.js";
-import { enqueue } from "../queue.js";
+import { queueScoring } from "./save.js";
 import { writeAudit } from "../audit.js";
 
 interface SearchResponse {
@@ -118,8 +118,7 @@ export async function discoverYouTube(
     }
     const uploads = channel.contentDetails?.relatedPlaylists?.uploads;
     if (uploads) await enrichRecentUploads(database, apiKey, creatorId, profileId, uploads);
-    await enqueue(database, "score_creator", { creatorId }, `score_creator:${creatorId}:${new Date().toISOString().slice(0, 10)}`);
-    jobsQueued++;
+    if (await queueScoring(database, creatorId)) jobsQueued++;
   }
   await writeAudit(database, { actor: "discovery", action: "discover", targetType: "query",
     targetId: query, decision: "completed", details: { market, query, creatorsCreated, creatorsUpdated, videos: videos.length } });

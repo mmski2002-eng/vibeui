@@ -34,3 +34,12 @@ test("picks a never-run task first, then the longest waiting, and skips recent o
   assert.deepEqual(pickTask(tasks, runs, now), { source: "devto", query: "nextjs" });
   assert.equal(pickTask(tasks, new Map(tasks.map((task) => [`${task.source}|${task.query}`, hoursAgo(1)])), now), null);
 });
+
+test("rotates platforms instead of draining one platform's query list", () => {
+  const now = new Date("2026-10-09T12:00:00Z");
+  const tasks = [{ source: "youtube:ru", query: "a" }, { source: "youtube:ru", query: "b" }, { source: "habr", query: "webdev" }];
+  const runs = new Map([["youtube:ru|a", new Date(now.getTime() - 25 * 3_600_000)]]);
+  assert.deepEqual(pickTask(tasks, runs, now), { source: "habr", query: "webdev" });
+  runs.set("habr|webdev", new Date(now.getTime() - 3_600_000));
+  assert.deepEqual(pickTask(tasks, runs, now), { source: "youtube:ru", query: "b" });
+});
