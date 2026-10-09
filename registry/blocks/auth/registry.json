@@ -1741,6 +1741,165 @@
           "background"
         ]
       }
+    },
+    {
+      "name": "auth-011",
+      "type": "registry:block",
+      "title": "Вход и регистрация перевёртышем",
+      "description": "Неоморфная карточка входа и регистрации, которая переворачивается в 3D: поля с бегущей искрой по контуру, плавающие подписи, показ пароля.",
+      "categories": [
+        "auth"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "auth-011/auth-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/auth-011.tsx"
+        }
+      ],
+      "docs": "Блок самодостаточен: один файл, без npm-зависимостей, собственная палитра в локальных переменных --vibeui-auth-011-*. Клиентский: \"use client\" ради useState — сторона карточки, показ пароля и отклик кнопки. Обе стороны лежат в одной ячейке грида, поэтому высота карточки равна большей стороне; переворот — rotateY на обёртке с preserve-3d, обратная сторона скрыта backface-visibility, а неактивная помечена inert, чтобы Tab не уходил в невидимую форму. Искра в фокусе — конический градиент под маской цвета поверхности. Иконки — встроенные SVG.",
+      "meta": {
+        "tags": [
+          "auth",
+          "login",
+          "signup",
+          "register",
+          "flip",
+          "neumorphism",
+          "form",
+          "password",
+          "3d"
+        ],
+        "ai": {
+          "export": "Auth011",
+          "usage": "<Auth011 loginTitle=\"С возвращением\" signupTitle=\"Новый аккаунт\" />",
+          "summary": "Вход и регистрация на одной неоморфной карточке-перевёртыше: поля с анимированной искрой в фокусе, плавающие подписи, показ пароля, переключение сторон кнопкой-кругом. Ноль зависимостей, один файл.",
+          "preserve": [
+            "локальную палитру --vibeui-auth-011-* и не подменять её токенами вашей темы",
+            "неоморфизм: поверхность, поля и кнопки одного цвета, объём только двумя тенями — светлой и тёмной",
+            "3D-переворот через rotateY, preserve-3d и backface-visibility, обе стороны в одной ячейке грида",
+            "inert на скрытой стороне — иначе Tab уводит фокус в невидимую форму",
+            "искру по контуру поля в фокусе (конический градиент под маской) и плавающие подписи",
+            "autoComplete username/current-password при входе и new-password при регистрации",
+            "prefers-reduced-motion: анимации и переворот без движения"
+          ],
+          "adapt": [
+            "loginTitle, signupTitle, подзаголовки и тексты кнопок обеих сторон",
+            "подписи полей, rememberLabel, forgot, toSignup, toLogin и successLabel",
+            "акцент через проп accent",
+            "background — цвет поверхности; тени считаются от темы, поэтому брать близкий по светлоте к исходному",
+            "набор полей регистрации"
+          ],
+          "notes": [
+            "Тема берётся из color-scheme. Чтобы компонент темнел вместе с системой, у проекта должно быть объявлено color-scheme: light dark на html.",
+            "Формы ничего не отправляют: обработчики, проверка совпадения паролей и защита от подбора за вызывающим кодом.",
+            "Неоморфизм плохо читается на фоне, отличном от поверхности блока: кладите блок на страницу того же цвета или оставляйте ему свою подложку.",
+            "Не выносите CSS-переменные в globals.css: блок обязан оставаться одним файлом."
+          ]
+        },
+        "preview": {
+          "width": "fit"
+        },
+        "i18n": {
+          "en": {
+            "title": "Flip Sign In & Sign Up",
+            "description": "A neumorphic sign-in and sign-up card that flips in 3D: fields with a spark running along the outline, floating labels, show password.",
+            "docs": "The block is self-contained: one file, no npm dependencies, its own palette in local variables --vibeui-auth-011-*. A client component: \"use client\" is there for useState — the card side, password reveal and button feedback. Both faces sit in one grid cell, so the card is as tall as the larger face; the flip is rotateY on a preserve-3d wrapper, the back face is hidden with backface-visibility and the inactive face is marked inert so Tab does not wander into the hidden form. The focus spark is a conic gradient under a surface-coloured mask. Icons are inline SVG.",
+            "ai": {
+              "summary": "Sign in and sign up on one neumorphic flip card: fields with an animated spark on focus, floating labels, show password, a round button to switch sides. Zero dependencies, one file.",
+              "preserve": [
+                "the local --vibeui-auth-011-* palette — do not swap it for your theme tokens",
+                "the neumorphism: surface, fields and buttons share one colour, depth comes only from a light and a dark shadow",
+                "the 3D flip through rotateY, preserve-3d and backface-visibility, with both faces in one grid cell",
+                "inert on the hidden face — otherwise Tab moves focus into an invisible form",
+                "the spark along the focused field outline (a conic gradient under a mask) and the floating labels",
+                "autoComplete username/current-password on sign in and new-password on sign up",
+                "prefers-reduced-motion: animations and the flip without motion"
+              ],
+              "adapt": [
+                "loginTitle, signupTitle, leads and button labels on both faces",
+                "field labels, rememberLabel, forgot, toSignup, toLogin and successLabel",
+                "the accent through the accent prop",
+                "background — the surface colour; shadows follow the theme, so keep it close in lightness to the original",
+                "the set of sign-up fields"
+              ],
+              "notes": [
+                "The theme comes from color-scheme. For the component to darken with the system, the project must declare color-scheme: light dark on html.",
+                "The forms submit nothing: handlers, password match checks and rate limiting belong to the caller.",
+                "Neumorphism reads poorly on a background other than the block surface: place it on a page of the same colour or let it keep its own panel.",
+                "Do not lift the CSS variables into globals.css: the block has to stay a single file."
+              ],
+              "usage": "<Auth011 loginTitle=\"Welcome back\" signupTitle=\"Create account\" />"
+            },
+            "controls": {
+              "loginTitle": {
+                "label": "Heading",
+                "default": "Welcome back"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "loginTitle": "Welcome back",
+                "loginLead": "Sign in to continue your work",
+                "loginSubmit": "Sign in",
+                "signupTitle": "Create account",
+                "signupLead": "A couple of fields and you are in",
+                "signupSubmit": "Create account",
+                "nameLabel": "Full name",
+                "emailLabel": "Email",
+                "passwordLabel": "Password",
+                "confirmLabel": "Confirm password",
+                "rememberLabel": "Remember me",
+                "forgot": "Forgot password?",
+                "toSignup": "No account yet?",
+                "toLogin": "Already have an account?",
+                "successLabel": "✓ Done",
+                "showPasswordLabel": "Show password",
+                "mismatchLabel": "Passwords do not match",
+                "emailMissingLabel": "Enter your email",
+                "emailInvalidLabel": "That email address looks mistyped",
+                "passwordMissingLabel": "Enter your password",
+                "passwordShortLabel": "Password is shorter than {n} characters",
+                "pendingLabel": "One moment…"
+              }
+            }
+          }
+        },
+        "controls": [
+          {
+            "prop": "loginTitle",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "С возвращением",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Поверхность",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "loginTitle",
+          "accent",
+          "background"
+        ]
+      }
     }
   ]
 }

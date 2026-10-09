@@ -24,4 +24,6 @@ export const PREVIEWS = {
     import("@/registry/blocks/auth/auth-009/auth-009").then((module) => module.Auth009),
   "auth-010": () =>
     import("@/registry/blocks/auth/auth-010/auth-010").then((module) => module.Auth010),
+  "auth-011": () =>
+    import("@/registry/blocks/auth/auth-011/auth-011").then((module) => module.Auth011),
 } satisfies PreviewLoaderMap

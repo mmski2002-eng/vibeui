@@ -1,12 +1,10 @@
 import { Suspense } from "react"
 
 import { AuthCard } from "@/components/auth/auth-card"
-import { SignInForm } from "@/components/auth/signin-form"
-import { AUTH_TEXTS } from "@/components/auth/texts"
+import { FlipAuth } from "@/components/auth/flip-auth"
 import { CatalogShell } from "@/components/catalog/catalog-shell"
 
 const LOCALE = "ru" as const
-const t = AUTH_TEXTS[LOCALE]
 
 export const metadata = {
   title: "Вход",
@@ -16,16 +14,9 @@ export const metadata = {
 export default function SignInPage() {
   return (
     <CatalogShell locale={LOCALE}>
-      <AuthCard
-        locale={LOCALE}
-        tabs="signin"
-        title={t.signInTitle}
-        description={t.signInHint}
-      >
-        {/* Форма читает ?next= и ?reset= из адреса: без границы
-            Suspense страница входа перестала бы собираться заранее. */}
+      <AuthCard locale={LOCALE} bare>
         <Suspense fallback={null}>
-          <SignInForm locale={LOCALE} />
+          <FlipAuth locale={LOCALE} side="login" />
         </Suspense>
       </AuthCard>
     </CatalogShell>

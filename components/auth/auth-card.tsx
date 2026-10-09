@@ -21,6 +21,7 @@ export function AuthCard({
   children,
   footer,
   tabs,
+  bare,
 }: {
   locale: Locale
   title?: string
@@ -31,6 +32,8 @@ export function AuthCard({
   showcase?: boolean
   /** Переключатель «Вход / Регистрация» над формой; какая вкладка активна. */
   tabs?: "signin" | "signup"
+  /** Без стеклянной карточки: форма несёт свою (вход и регистрация на auth-011). */
+  bare?: boolean
 }) {
   const t = AUTH_TEXTS[locale]
 
@@ -39,7 +42,7 @@ export function AuthCard({
       {/* Фон: точечная сетка с растворением к краям и два пятна света. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] bg-[size:22px_22px] [mask-image:radial-gradient(70%_70%_at_50%_45%,#000_30%,transparent_100%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] [mask-image:radial-gradient(70%_70%_at_50%_45%,#000_30%,transparent_100%)] bg-[size:22px_22px]"
       />
       <div
         aria-hidden="true"
@@ -51,36 +54,46 @@ export function AuthCard({
       />
 
       <div className="auth-rise w-full max-w-[26rem] motion-reduce:animate-none">
-        <div className="relative rounded-2xl border border-white/10 bg-[#151515]/85 p-5 shadow-[0_40px_120px_-40px_rgba(255,89,0,0.45),0_0_0_1px_rgba(255,255,255,0.02)_inset] backdrop-blur-xl sm:p-6">
-          <div
-            className="pointer-events-none absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-[#ff5900] to-transparent"
-            aria-hidden="true"
-          />
-          {tabs ? (
-            <nav
-              aria-label={t.tabsLabel}
-              className="mb-5 grid grid-cols-2 gap-1 rounded-xl border border-white/10 bg-black/30 p-1"
-            >
-              <Tab href={localePath(locale, "/signin")} active={tabs === "signin"}>
-                {t.tabSignIn}
-              </Tab>
-              <Tab href={localePath(locale, "/signup")} active={tabs === "signup"}>
-                {t.tabSignUp}
-              </Tab>
-            </nav>
-          ) : null}
-          {title ? (
-            <h1 className="text-shell-fg text-xl font-semibold tracking-tight sm:text-2xl">
-              {title}
-            </h1>
-          ) : null}
-          {description ? (
-            <p className="text-shell-muted mt-1.5 text-sm leading-relaxed">
-              {description}
-            </p>
-          ) : null}
-          <div className={title ? "mt-5" : ""}>{children}</div>
-        </div>
+        {bare ? (
+          children
+        ) : (
+          <div className="relative rounded-2xl border border-white/10 bg-[#151515]/85 p-5 shadow-[0_40px_120px_-40px_rgba(255,89,0,0.45),0_0_0_1px_rgba(255,255,255,0.02)_inset] backdrop-blur-xl sm:p-6">
+            <div
+              className="pointer-events-none absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-[#ff5900] to-transparent"
+              aria-hidden="true"
+            />
+            {tabs ? (
+              <nav
+                aria-label={t.tabsLabel}
+                className="mb-5 grid grid-cols-2 gap-1 rounded-xl border border-white/10 bg-black/30 p-1"
+              >
+                <Tab
+                  href={localePath(locale, "/signin")}
+                  active={tabs === "signin"}
+                >
+                  {t.tabSignIn}
+                </Tab>
+                <Tab
+                  href={localePath(locale, "/signup")}
+                  active={tabs === "signup"}
+                >
+                  {t.tabSignUp}
+                </Tab>
+              </nav>
+            ) : null}
+            {title ? (
+              <h1 className="text-shell-fg text-xl font-semibold tracking-tight sm:text-2xl">
+                {title}
+              </h1>
+            ) : null}
+            {description ? (
+              <p className="text-shell-muted mt-1.5 text-sm leading-relaxed">
+                {description}
+              </p>
+            ) : null}
+            <div className={title ? "mt-5" : ""}>{children}</div>
+          </div>
+        )}
         <div className="text-shell-muted mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm">
           <Link
             href={localePath(locale, "/")}

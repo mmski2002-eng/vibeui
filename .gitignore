@@ -58,3 +58,4 @@ next-env.d.ts
 /local/
 # Черновые скрипты проверок из сессий агентов
 /artifacts/
+CODES/
