@@ -12801,6 +12801,131 @@
           }
         }
       }
+    },
+    {
+      "name": "button-group-001",
+      "type": "registry:component",
+      "title": "Объёмные кнопки соцсетей",
+      "description": "Ссылки на соцсети изометрическими плитками: при наведении плитка всплывает к зрителю, тень вытягивается, грани окрашиваются в акцент. В узком контейнере плитки встают столбиком.",
+      "categories": [
+        "button-group"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "button-group-001/button-group-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/button-group-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-button-group-001-*. Серверный: хуков нет. Плитка — одна ссылка, боковая грань и торец нарисованы ::before и ::after со skew. Оттенки граней при наведении считаются от акцента через oklch(from …), поэтому объём сохраняется при любом цвете. Значки Telegram, GitHub, YouTube, X, Instagram и VK встроены SVG. Ряд включается контейнерным запросом от 58rem.",
+      "meta": {
+        "tags": [
+          "social",
+          "buttons",
+          "links",
+          "3d",
+          "isometric",
+          "hover",
+          "telegram",
+          "github"
+        ],
+        "ai": {
+          "export": "ButtonGroup001",
+          "usage": "<ButtonGroup001 items={[{ network: \"telegram\", label: \"Telegram\", href: \"https://t.me/…\" }]} />",
+          "summary": "Группа ссылок на соцсети объёмными изометрическими плитками с всплытием и окраской в акцент при наведении.",
+          "preserve": [
+            "изометрию rotate(-30deg) skew(25deg) и грани на ::before/::after — плитка остаётся одной ссылкой",
+            "оттенки граней от акцента через oklch(from …) — иначе объём пропадает на другом цвете",
+            "столбик в узком контейнере: ряд изометрических плиток шире телефона",
+            "палитру --vibeui-button-group-001-* и light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "items — сеть, подпись и ссылка",
+            "label — подпись группы для диктора",
+            "accent — цвет плитки при наведении",
+            "background — подложка"
+          ],
+          "notes": [
+            "Больше пяти плиток в ряд не ставьте: изометрия съедает ширину.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись группы",
+            "type": "text",
+            "default": "Мы в соцсетях",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "3D Social Buttons",
+            "description": "Social links as isometric 3D tiles: on hover a tile lifts toward the viewer, the shadow stretches and the faces take the accent. In a narrow container the tiles stack into a column.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-button-group-001-*. A server component: no hooks. Each tile is a single link; the side face and the edge are ::before and ::after with skew. The hover face shades are derived from the accent through oklch(from …), so the depth survives any colour. Telegram, GitHub, YouTube, X, Instagram and VK icons are inline SVG. The row layout switches on with a container query from 58rem.",
+            "ai": {
+              "summary": "A group of social links as isometric 3D tiles that lift and take the accent on hover.",
+              "preserve": [
+                "the isometry rotate(-30deg) skew(25deg) and the faces on ::before/::after — the tile stays a single link",
+                "face shades derived from the accent via oklch(from …) — otherwise the depth disappears on another colour",
+                "the column in a narrow container: a row of isometric tiles is wider than a phone",
+                "the --vibeui-button-group-001-* palette and light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "items — network, label and link",
+                "label — the group name for screen readers",
+                "accent — the tile colour on hover",
+                "background — the surface"
+              ],
+              "notes": [
+                "Do not put more than five tiles in a row: the isometry eats the width.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<ButtonGroup001 label=\"Follow us\" items={[{ network: \"github\", label: \"GitHub\", href: \"https://github.com/…\" }]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Group label",
+                "default": "Find us on"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Find us on"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "accent",
+          "background"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "pro": true
+      }
     }
   ]
 }

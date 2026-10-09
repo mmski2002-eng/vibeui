@@ -87,4 +87,7 @@ export const PREVIEWS = {
   "aspect-008": dynamic(() =>
     import("@/registry/components/carousel/aspect-008/aspect-008").then((module) => module.Aspect008),
   ),
+  "carousel-020": dynamic(() =>
+    import("@/registry/components/carousel/carousel-020/carousel-020").then((module) => module.Carousel020),
+  ),
 } satisfies PreviewMap

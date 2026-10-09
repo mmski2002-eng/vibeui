@@ -58,4 +58,6 @@ export const PREVIEWS = {
     import("@/registry/components/carousel/aspect-007/aspect-007").then((module) => module.Aspect007),
   "aspect-008": () =>
     import("@/registry/components/carousel/aspect-008/aspect-008").then((module) => module.Aspect008),
+  "carousel-020": () =>
+    import("@/registry/components/carousel/carousel-020/carousel-020").then((module) => module.Carousel020),
 } satisfies PreviewLoaderMap

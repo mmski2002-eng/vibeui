@@ -21388,6 +21388,142 @@
           }
         }
       }
+    },
+    {
+      "name": "card-173",
+      "type": "registry:component",
+      "title": "Стеклянные цифровые часы",
+      "description": "Цифровые часы на карточке из матового стекла поверх переливающегося градиента и всплывающих искр: время, дата на выбранном языке и в выбранном поясе.",
+      "categories": [
+        "card"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "card-173/card-173.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/card-173.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-card-173-*. Клиентский: \"use client\" ради useEffect с setInterval. Время и дата форматируются Intl.DateTimeFormat по locale и timeZone. На сервере время неизвестно: первая отрисовка показывает прочерки и заполняется после гидрации. Позиции искр детерминированы, а не Math.random(), чтобы разметка сервера и клиента совпадала.",
+      "meta": {
+        "tags": [
+          "clock",
+          "time",
+          "glassmorphism",
+          "widget",
+          "date",
+          "timezone",
+          "gradient"
+        ],
+        "ai": {
+          "export": "Card173",
+          "usage": "<Card173 title=\"Москва\" locale=\"ru\" timeZone=\"Europe/Moscow\" />",
+          "summary": "Цифровые часы на стеклянной карточке с датой через Intl, поясом и анимированным фоном.",
+          "preserve": [
+            "Intl.DateTimeFormat для времени и даты — язык и пояс остаются пропсами",
+            "прочерки до гидрации — иначе время сервера и браузера расходится",
+            "детерминированные позиции искр вместо Math.random()",
+            "tabular-nums у цифр: время не дрожит по ширине каждую секунду"
+          ],
+          "adapt": [
+            "title — подпись под часами",
+            "locale и timeZone",
+            "showSeconds и particles",
+            "accent — цвет градиента",
+            "background — свой фон вместо градиента"
+          ],
+          "notes": [
+            "Для нескольких городов ставьте несколько карточек с разным timeZone.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Время в студии",
+            "maxLength": 30
+          },
+          {
+            "prop": "showSeconds",
+            "label": "Секунды",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "particles",
+            "label": "Искры",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Glass Digital Clock",
+            "description": "A digital clock on a frosted-glass card over a shifting gradient and rising sparks: time and date in the chosen language and time zone.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-card-173-*. A client component: \"use client\" is there for useEffect with setInterval. Time and date are formatted with Intl.DateTimeFormat by locale and timeZone. The server does not know the time: the first render shows dashes and fills in after hydration. Spark positions are deterministic rather than Math.random() so the server and client markup match.",
+            "ai": {
+              "summary": "A digital clock on a glass card with an Intl date, time zone and an animated background.",
+              "preserve": [
+                "Intl.DateTimeFormat for time and date — language and zone stay props",
+                "dashes until hydration — otherwise server and browser time disagree",
+                "deterministic spark positions instead of Math.random()",
+                "tabular-nums on the digits: the time does not wobble in width every second"
+              ],
+              "adapt": [
+                "title — the caption under the clock",
+                "locale and timeZone",
+                "showSeconds and particles",
+                "accent — the gradient colour",
+                "background — your own background instead of the gradient"
+              ],
+              "notes": [
+                "For several cities place several cards with different timeZone values.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Card173 title=\"London\" locale=\"en-GB\" timeZone=\"Europe/London\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Caption",
+                "default": "Studio time"
+              },
+              "showSeconds": {
+                "label": "Seconds"
+              },
+              "particles": {
+                "label": "Sparks"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Studio time",
+                "locale": "en"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "showSeconds",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "pro": true
+      }
     }
   ]
 }

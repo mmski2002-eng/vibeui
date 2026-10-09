@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useRef } from "react"
 
 import { AUTH_TEXTS } from "@/components/auth/texts"
 import { authClient } from "@/lib/auth-client"
@@ -23,6 +24,8 @@ export function FlipAuth({
 }) {
   const t = AUTH_TEXTS[locale]
   const router = useRouter()
+  // Адрес письма нужен странице подтверждения, а переход идёт уже после анимации.
+  const signupEmail = useRef("")
   const params = useSearchParams()
 
   // Адрес уже абсолютный (`/en/...`), языковой префикс к нему не добавляется.
@@ -98,8 +101,8 @@ export function FlipAuth({
           return t.offline
         }
 
-        router.push(next)
-        router.refresh()
+        // Кабинет грузится, пока играет анимация успеха.
+        router.prefetch(next)
       }}
       onSignup={async ({ name, email, password }) => {
         try {
@@ -124,8 +127,17 @@ export function FlipAuth({
           return t.offline
         }
 
+        signupEmail.current = email
+      }}
+      onSuccess={(side) => {
+        if (side === "login") {
+          router.push(next)
+          router.refresh()
+          return
+        }
+
         router.push(
-          `${localePath(locale, "/verify")}?email=${encodeURIComponent(email)}&next=${encodeURIComponent(next)}`,
+          `${localePath(locale, "/verify")}?email=${encodeURIComponent(signupEmail.current)}&next=${encodeURIComponent(next)}`,
         )
       }}
     />

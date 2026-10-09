@@ -130,4 +130,6 @@ export const PREVIEWS = {
     import("@/registry/components/special-input/rating-008/rating-008").then((module) => module.Rating008),
   "rating-009": () =>
     import("@/registry/components/special-input/rating-009/rating-009").then((module) => module.Rating009),
+  "special-input-001": () =>
+    import("@/registry/components/special-input/special-input-001/special-input-001").then((module) => module.SpecialInput001),
 } satisfies PreviewLoaderMap

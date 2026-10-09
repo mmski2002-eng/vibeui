@@ -300,4 +300,7 @@ export const PREVIEWS = {
   "input-034": dynamic(() =>
     import("@/registry/components/input/input-034/input-034").then((module) => module.Input034),
   ),
+  "input-035": dynamic(() =>
+    import("@/registry/components/input/input-035/input-035").then((module) => module.Input035),
+  ),
 } satisfies PreviewMap

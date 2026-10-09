@@ -98,4 +98,6 @@ export const PREVIEWS = {
     import("@/registry/components/navigation/footerlinks-002/footerlinks-002").then((module) => module.Footerlinks002),
   "footerlinks-019": () =>
     import("@/registry/components/navigation/footerlinks-019/footerlinks-019").then((module) => module.Footerlinks019),
+  "navigation-001": () =>
+    import("@/registry/components/navigation/navigation-001/navigation-001").then((module) => module.Navigation001),
 } satisfies PreviewLoaderMap

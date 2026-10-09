@@ -438,4 +438,7 @@ export const PREVIEWS = {
   "card-165": dynamic(() =>
     import("@/registry/components/card/card-165/card-165").then((module) => module.Card165),
   ),
+  "card-173": dynamic(() =>
+    import("@/registry/components/card/card-173/card-173").then((module) => module.Card173),
+  ),
 } satisfies PreviewMap

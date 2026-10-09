@@ -195,4 +195,7 @@ export const PREVIEWS = {
   "rating-009": dynamic(() =>
     import("@/registry/components/special-input/rating-009/rating-009").then((module) => module.Rating009),
   ),
+  "special-input-001": dynamic(() =>
+    import("@/registry/components/special-input/special-input-001/special-input-001").then((module) => module.SpecialInput001),
+  ),
 } satisfies PreviewMap

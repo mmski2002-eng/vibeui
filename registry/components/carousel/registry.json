@@ -5047,6 +5047,176 @@
           "label"
         ]
       }
+    },
+    {
+      "name": "carousel-020",
+      "type": "registry:component",
+      "title": "Слайдер со счётчиком",
+      "description": "Полноформатный слайдер изображений: подпись поверх затемнения, счётчик «01 — 05», точки-индикаторы и стеклянные стрелки. Слайды сменяются прозрачностью с лёгким зумом.",
+      "categories": [
+        "carousel"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "carousel-020/carousel-020.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/carousel-020.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-carousel-020-*. Клиентский: \"use client\" ради useState — текущий слайд. Слайды лежат стопкой в одной ячейке грида и сменяются opacity и scale, высота задана aspect-ratio (17/10, в узком контейнере 4/5). Слайд без src заливается градиентом из акцента. Управление: стрелки, точки и клавиши ← → на самом слайдере.",
+      "meta": {
+        "tags": [
+          "carousel",
+          "slider",
+          "gallery",
+          "images",
+          "fade",
+          "counter",
+          "hero"
+        ],
+        "ai": {
+          "export": "Carousel020",
+          "usage": "<Carousel020 slides={[{ src: \"/photo.jpg\", eyebrow: \"Маршрут\", title: \"Откройте что-то новое\" }]} />",
+          "summary": "Слайдер изображений со сменой прозрачностью, подписью, счётчиком, точками и стеклянными стрелками.",
+          "preserve": [
+            "стопку слайдов в одной ячейке грида и смену opacity/scale — без сдвига ленты",
+            "aspect-ratio вместо высоты картинки: слайдер не прыгает при смене кадра",
+            "затемнение снизу под подписью — без него текст тонет в светлом фото",
+            "клавиши ← → и aria-current у точек"
+          ],
+          "adapt": [
+            "slides — картинка, alt, надзаголовок и заголовок",
+            "label, previousLabel, nextLabel — подписи для диктора",
+            "accent — цвет активной точки и надзаголовка"
+          ],
+          "notes": [
+            "Автопрокрутки нет намеренно: она мешает читать и требует паузы для доступности.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Галерея",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Image Slider with Counter",
+            "description": "A full-bleed image slider: a caption over a bottom shade, a 01 — 05 counter, dot indicators and glass arrows. Slides cross-fade with a gentle zoom.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-carousel-020-*. A client component: \"use client\" is there for useState — the current slide. Slides are stacked in one grid cell and switch by opacity and scale; the height comes from aspect-ratio (17/10, 4/5 in a narrow container). A slide without src gets an accent gradient. Controls: arrows, dots and the ← → keys on the slider itself.",
+            "ai": {
+              "summary": "An image slider with cross-fade, caption, counter, dots and glass arrows.",
+              "preserve": [
+                "the slide stack in one grid cell and the opacity/scale switch — no sliding strip",
+                "aspect-ratio instead of the image height: the slider does not jump between frames",
+                "the bottom shade under the caption — without it text drowns in a light photo",
+                "the ← → keys and aria-current on the dots"
+              ],
+              "adapt": [
+                "slides — image, alt, eyebrow and title",
+                "label, previousLabel, nextLabel — screen reader labels",
+                "accent — the active dot and eyebrow colour"
+              ],
+              "notes": [
+                "There is no autoplay on purpose: it gets in the way of reading and needs a pause control for accessibility.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Carousel020 slides={[{ src: \"/photo.jpg\", eyebrow: \"Explore\", title: \"Discover something new\" }]} />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Gallery"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Gallery",
+                "previousLabel": "Previous slide",
+                "nextLabel": "Next slide",
+                "slides": [
+                  {
+                    "src": "/demo/slider/1.webp",
+                    "eyebrow": "Explore",
+                    "title": "Discover something new"
+                  },
+                  {
+                    "src": "/demo/slider/2.webp",
+                    "eyebrow": "Season",
+                    "title": "Places that stay quiet even in August"
+                  },
+                  {
+                    "src": "/demo/slider/3.webp",
+                    "eyebrow": "Weekend",
+                    "title": "Two days without a phone"
+                  },
+                  {
+                    "src": "/demo/slider/4.webp",
+                    "eyebrow": "Collection",
+                    "title": "Places worth coming back to"
+                  },
+                  {
+                    "src": "/demo/slider/5.webp",
+                    "eyebrow": "Tip",
+                    "title": "The best light is an hour before sunset"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "accent"
+        ],
+        "preview": {
+          "width": "full",
+          "props": {
+            "slides": [
+              {
+                "src": "/demo/slider/1.webp",
+                "eyebrow": "Маршрут",
+                "title": "Откройте что-то новое"
+              },
+              {
+                "src": "/demo/slider/2.webp",
+                "eyebrow": "Сезон",
+                "title": "Места, где тихо даже в августе"
+              },
+              {
+                "src": "/demo/slider/3.webp",
+                "eyebrow": "Выходные",
+                "title": "Два дня без телефона"
+              },
+              {
+                "src": "/demo/slider/4.webp",
+                "eyebrow": "Подборка",
+                "title": "Куда хочется вернуться"
+              },
+              {
+                "src": "/demo/slider/5.webp",
+                "eyebrow": "Совет",
+                "title": "Лучший свет — за час до заката"
+              }
+            ]
+          }
+        },
+        "pro": true
+      }
     }
   ]
 }

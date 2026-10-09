@@ -20,6 +20,8 @@ export type Auth011Props = {
     password: string
     remember: boolean
   }) => SubmitResult
+  /** Вызывается после анимации успеха — сюда переход в кабинет. */
+  onSuccess?: (side: Side) => void
   onSignup?: (data: {
     name: string
     email: string
@@ -255,7 +257,52 @@ outline:2px solid var(--vibeui-auth-011-accent);outline-offset:3px;
 [data-vibeui-block="auth-011"] [data-part="field"][data-invalid] input{
 box-shadow:inset 2px 2px 4px var(--vibeui-auth-011-dark),inset -2px -2px 4px var(--vibeui-auth-011-light),inset 0 0 0 100px var(--vibeui-auth-011-field),0 0 0 1.5px var(--vibeui-auth-011-accent);
 }
-@media (prefers-reduced-motion:reduce){[data-vibeui-block="auth-011"] *,[data-vibeui-block="auth-011"] *::before{animation:none!important;transition:none!important}}
+/* Ожидание ответа: значок дышит, пока сервер думает. */
+[data-vibeui-block="auth-011"][data-pending] [data-part="logo"]{animation:vibeui-auth-011-breathe 1.1s ease-in-out infinite}
+@keyframes vibeui-auth-011-breathe{50%{transform:scale(1.08);box-shadow:0 0 0 6px oklch(from var(--vibeui-auth-011-accent) l c h / 0.18)}}
+/* Успех в три такта: кнопка заливается и ставит галочку (1), карточка
+   уходит вглубь, а в центре всплывает круг с открывающимся замком (2),
+   круг вспыхивает и гаснет вместе с подсветкой сцены (3). Круг живёт поверх
+   карточки, а не в её шапке: на низком экране значок шапки спрятан. */
+[data-vibeui-block="auth-011"] [data-part="scene"]{position:relative}
+[data-vibeui-block="auth-011"] [data-part="card"]{transition:opacity .55s ease,scale .55s ease,filter .55s ease}
+[data-vibeui-block="auth-011"]:is([data-success="2"],[data-success="3"]) [data-part="card"]{opacity:0;scale:.92;filter:blur(8px);pointer-events:none}
+[data-vibeui-block="auth-011"] [data-part="success"]{
+position:absolute;inset:0;z-index:5;display:grid;place-items:center;pointer-events:none;
+opacity:0;visibility:hidden;
+}
+[data-vibeui-block="auth-011"] [data-part="success"]::before{
+content:"";position:absolute;width:70%;aspect-ratio:1;border-radius:50%;
+background:radial-gradient(closest-side,oklch(from var(--vibeui-auth-011-accent) l c h / 0.55),transparent);
+opacity:0;scale:.4;
+}
+[data-vibeui-block="auth-011"]:is([data-success="2"],[data-success="3"]) [data-part="success"]{opacity:1;visibility:visible}
+[data-vibeui-block="auth-011"][data-success="2"] [data-part="success"]::before{animation:vibeui-auth-011-glow 1.1s ease-out .15s forwards}
+@keyframes vibeui-auth-011-glow{40%{opacity:1;scale:1.25}100%{opacity:.35;scale:1}}
+[data-vibeui-block="auth-011"] [data-part="badge"]{
+position:relative;width:6.5rem;height:6.5rem;display:grid;place-items:center;border-radius:50%;
+background:var(--vibeui-auth-011-surface);color:var(--vibeui-auth-011-accent);
+box-shadow:10px 10px 22px var(--vibeui-auth-011-dark),-8px -8px 18px var(--vibeui-auth-011-light);
+scale:.5;opacity:0;
+}
+[data-vibeui-block="auth-011"]:is([data-success="2"],[data-success="3"]) [data-part="badge"]{animation:vibeui-auth-011-pop .5s cubic-bezier(.34,1.56,.64,1) .2s forwards}
+@keyframes vibeui-auth-011-pop{to{scale:1;opacity:1}}
+[data-vibeui-block="auth-011"] [data-part="badge"]::after{
+content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--vibeui-auth-011-accent);opacity:0;
+}
+[data-vibeui-block="auth-011"][data-success="2"] [data-part="badge"]::after{animation:vibeui-auth-011-ring .8s ease-out .75s}
+@keyframes vibeui-auth-011-ring{from{opacity:.9;scale:1}to{opacity:0;scale:1.7}}
+[data-vibeui-block="auth-011"] [data-part="badge"] svg{width:2.6rem;height:2.6rem;overflow:visible}
+/* Дужка замка поднимается и проворачивается вокруг правой ножки. */
+[data-vibeui-block="auth-011"] [data-part="shackle"]{transform-box:fill-box;transform-origin:100% 100%}
+[data-vibeui-block="auth-011"][data-success="2"] [data-part="shackle"]{animation:vibeui-auth-011-unlock .5s cubic-bezier(.34,1.56,.64,1) .65s forwards}
+@keyframes vibeui-auth-011-unlock{to{transform:translateY(-3px) rotate(-28deg)}}
+[data-vibeui-block="auth-011"] [data-part="tick"]{stroke-dasharray:24;stroke-dashoffset:24}
+[data-vibeui-block="auth-011"][data-success="2"] [data-part="tick"]{animation:vibeui-auth-011-draw .45s ease-out .65s forwards}
+@keyframes vibeui-auth-011-draw{to{stroke-dashoffset:0}}
+[data-vibeui-block="auth-011"][data-success="3"] [data-part="success"]{transition:opacity .4s ease,scale .4s ease;opacity:0;scale:1.12}
+[data-vibeui-block="auth-011"][data-success="3"] [data-part="badge"]{scale:1;opacity:1}
+@media (prefers-reduced-motion:reduce){[data-vibeui-block="auth-011"] *,[data-vibeui-block="auth-011"] *::before,[data-vibeui-block="auth-011"] *::after{animation:none!important;transition:none!important}[data-vibeui-block="auth-011"] [data-part="badge"]{scale:1;opacity:1}[data-vibeui-block="auth-011"] [data-part="tick"]{stroke-dashoffset:0}}
 `
 
 const ICON_PROPS = {
@@ -275,12 +322,31 @@ const LockIcon = () => (
   </svg>
 )
 
+const UnlockIcon = () => (
+  <svg {...ICON_PROPS}>
+    <rect x="4" y="11" width="16" height="10" rx="2" />
+    <path data-part="shackle" d="M8 11V7a4 4 0 0 1 8 0v4" />
+    <circle cx="12" cy="16" r="1.2" fill="currentColor" stroke="none" />
+  </svg>
+)
+
+const UserCheckIcon = () => (
+  <svg {...ICON_PROPS}>
+    <circle cx="9.5" cy="8" r="3.5" />
+    <path d="M3 20a6.5 6.5 0 0 1 13 0" />
+    <path data-part="tick" d="m15.5 11.5 2.5 2.5 4.5-5" />
+  </svg>
+)
+
 const UserIcon = () => (
   <svg {...ICON_PROPS}>
     <circle cx="12" cy="8" r="4" />
     <path d="M4 21a8 8 0 0 1 16 0" />
   </svg>
 )
+
+const wait = (ms: number) =>
+  new Promise((resolve) => window.setTimeout(resolve, ms))
 
 const PlusIcon = () => (
   <svg {...ICON_PROPS}>
@@ -437,6 +503,7 @@ export function Auth011({
   forgotHref = "#",
   nameRequired = true,
   passwordMinLength,
+  onSuccess,
   accent,
   background,
   className,
@@ -446,6 +513,7 @@ export function Auth011({
   const [side, setSide] = useState<Side>(initialSide)
   const [done, setDone] = useState<Side | null>(null)
   const [pending, setPending] = useState<Side | null>(null)
+  const [success, setSuccess] = useState<1 | 2 | 3 | null>(null)
   const [error, setError] = useState<{
     face: Side
     message: ReactNode
@@ -466,7 +534,7 @@ export function Auth011({
   // Без обработчика форма ничего не шлёт, только показывает отклик кнопки.
   async function handleSubmit(event: FormEvent<HTMLFormElement>, face: Side) {
     event.preventDefault()
-    if (pending) return
+    if (pending || success) return
     setError(null)
 
     const element = event.currentTarget
@@ -517,7 +585,24 @@ export function Auth011({
     }
 
     setDone(face)
-    window.setTimeout(() => setDone(null), 1800)
+    // Без движения анимации нет — сразу дальше, не заставляя ждать.
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    setSuccess(1)
+    await wait(still ? 0 : 450)
+    setSuccess(2)
+    await wait(still ? 300 : 1300)
+    setSuccess(3)
+    await wait(still ? 0 : 350)
+
+    if (onSuccess) {
+      onSuccess(face)
+      return
+    }
+
+    // Демонстрация: карточка возвращается, чтобы анимацию можно было повторить.
+    await wait(900)
+    setSuccess(null)
+    setDone(null)
   }
 
   const [flipping, setFlipping] = useState<"prep" | "run" | null>(null)
@@ -548,6 +633,8 @@ export function Auth011({
         data-vibeui-block="auth-011"
         data-side={side}
         data-flipping={flipping ?? undefined}
+        data-pending={pending ? "" : undefined}
+        data-success={success ?? undefined}
         className={className}
         style={palette}
         aria-label={side === "login" ? loginTitle : signupTitle}
@@ -699,6 +786,11 @@ export function Auth011({
                 </button>
               </div>
             </div>
+          </div>
+          <div data-part="success" aria-hidden="true">
+            <span data-part="badge">
+              {side === "login" ? <UnlockIcon /> : <UserCheckIcon />}
+            </span>
           </div>
         </div>
       </section>

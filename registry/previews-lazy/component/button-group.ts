@@ -234,4 +234,7 @@ export const PREVIEWS = {
   "togglegroup-019": dynamic(() =>
     import("@/registry/components/button-group/togglegroup-019/togglegroup-019").then((module) => module.Togglegroup019),
   ),
+  "button-group-001": dynamic(() =>
+    import("@/registry/components/button-group/button-group-001/button-group-001").then((module) => module.ButtonGroup001),
+  ),
 } satisfies PreviewMap

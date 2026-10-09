@@ -10850,6 +10850,149 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "special-input-001",
+      "type": "registry:component",
+      "title": "Код подтверждения с анимацией проверки",
+      "description": "Ввод одноразового кода как маленькое представление: ячейки разлетаются и кружатся, кольцо считает проценты проверки, зелёная сфера превращается в галочку «Проверено». Неверный код встряхивает карточку.",
+      "categories": [
+        "special-input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "special-input-001/special-input-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/special-input-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-special-input-001-*. Клиентский: \"use client\" ради состояния ячеек и фаз. Фазы: input → scatter → verify → orb → done или error. verify(code) может вернуть промис: проценты доходят до 90 и ждут ответа, 100 — только после него. Вставка из буфера раскладывает код по ячейкам, первая ячейка помечена autoComplete=\"one-time-code\" для подстановки из СМС. Backspace и стрелки ходят по ячейкам.",
+      "meta": {
+        "tags": [
+          "otp",
+          "verification",
+          "code",
+          "pin",
+          "2fa",
+          "animation",
+          "auth"
+        ],
+        "ai": {
+          "export": "SpecialInput001",
+          "usage": "<SpecialInput001 length={4} verify={async (code) => checkCode(code)} onVerified={() => router.push(\"/account\")} />",
+          "summary": "Ввод одноразового кода с многошаговой анимацией проверки и честным ожиданием ответа verify.",
+          "preserve": [
+            "проценты до 90 до ответа verify и 100 только после — анимация не обещает успех заранее",
+            "autoComplete=\"one-time-code\" на первой ячейке и раскладку вставки по ячейкам",
+            "встряску и очистку ячеек на неверном коде",
+            "зелёный цвет успеха отдельно от акцента — успех читается независимо от бренда",
+            "prefers-reduced-motion: фазы сменяются без движения"
+          ],
+          "adapt": [
+            "length — число цифр",
+            "verify, onVerified, onResend — обработчики",
+            "title, lead и все тексты фаз, badge и подписи повторной отправки",
+            "accent — цвет фокуса и колец",
+            "background — подложка карточки"
+          ],
+          "notes": [
+            "Без verify подходит любой полный код — это демонстрация, на проде проверка за сервером.",
+            "Ограничивайте попытки на сервере: клиентская анимация не защищает от перебора.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "length",
+            "label": "Цифр",
+            "type": "number",
+            "default": 4,
+            "min": 4,
+            "max": 6
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Введите код доступа",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Animated OTP Verification",
+            "description": "One-time code entry as a small show: the cells scatter and spin, a ring counts the verification percent, a green orb turns into a Verified check. A wrong code shakes the card.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-special-input-001-*. A client component: \"use client\" is there for the cell and phase state. Phases: input → scatter → verify → orb → done or error. verify(code) may return a promise: the percent climbs to 90 and waits, reaching 100 only after the answer. Pasting spreads the code across the cells, the first cell has autoComplete=\"one-time-code\" for SMS autofill. Backspace and arrows move between cells.",
+            "ai": {
+              "summary": "One-time code entry with a multi-step verification animation that honestly waits for verify.",
+              "preserve": [
+                "the percent up to 90 before verify answers and 100 only after — the animation does not promise success early",
+                "autoComplete=\"one-time-code\" on the first cell and spreading a paste across the cells",
+                "the shake and the cleared cells on a wrong code",
+                "the success green kept apart from the accent — success reads regardless of the brand",
+                "prefers-reduced-motion: phases switch without motion"
+              ],
+              "adapt": [
+                "length — number of digits",
+                "verify, onVerified, onResend — handlers",
+                "title, lead and all phase texts, badge and the resend copy",
+                "accent — the focus and ring colour",
+                "background — the card surface"
+              ],
+              "notes": [
+                "Without verify any complete code passes — that is a demo; in production the check belongs to the server.",
+                "Limit attempts on the server: a client animation does not stop brute force.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<SpecialInput001 length={4} verify={async (code) => checkCode(code)} onVerified={() => router.push(\"/account\")} />"
+            },
+            "controls": {
+              "length": {
+                "label": "Digits"
+              },
+              "title": {
+                "label": "Title",
+                "default": "Enter access code"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Enter access code",
+                "lead": "We sent a 4-digit code to your device.",
+                "verifyingTitle": "Verifying…",
+                "verifyingLead": "Securely checking your code.",
+                "doneTitle": "Access granted",
+                "doneLead": "Welcome back. Redirecting to your account…",
+                "badge": "Verified",
+                "errorTitle": "Wrong code",
+                "errorLead": "Check the digits and enter the code again.",
+                "resendText": "Didn't get it?",
+                "resendLabel": "Resend",
+                "digitLabel": "Digit"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "length",
+          "accent"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "pro": true
+      }
     }
   ]
 }

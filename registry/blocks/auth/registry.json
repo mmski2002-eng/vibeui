@@ -1898,7 +1898,8 @@
           "loginTitle",
           "accent",
           "background"
-        ]
+        ],
+        "pro": true
       }
     }
   ]

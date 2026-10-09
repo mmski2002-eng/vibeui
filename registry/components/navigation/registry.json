@@ -7786,6 +7786,184 @@
           }
         }
       }
+    },
+    {
+      "name": "navigation-001",
+      "type": "registry:component",
+      "title": "Стеклянная панель пользователя",
+      "description": "Боковое меню кабинета из матового стекла: поиск, разделы с разделителями, активный пункт в акценте и сворачивание в колонку иконок.",
+      "categories": [
+        "navigation"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navigation-001/navigation-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navigation-001.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-navigation-001-*. Клиентский: \"use client\" ради useState — свёрнута ли панель. Стекло держится на backdrop-filter, поэтому у компонента своя сцена с пятнами акцента, свой фон отдаётся через background. Свёрнутая панель прячет подписи, но ссылкам остаются aria-label и title. Пункты — массив items, разделитель — { divider: true }. Значки встроены SVG.",
+      "meta": {
+        "tags": [
+          "sidebar",
+          "menu",
+          "navigation",
+          "glassmorphism",
+          "dashboard",
+          "collapsible",
+          "account"
+        ],
+        "ai": {
+          "export": "Navigation001",
+          "usage": "<Navigation001 title=\"Кабинет\" items={[{ icon: \"home\", label: \"Обзор\", href: \"/\", current: true }]} />",
+          "summary": "Сворачиваемое боковое меню из матового стекла с поиском и разделами.",
+          "preserve": [
+            "backdrop-filter и яркую сцену под стеклом — без неё стекло читается серой плашкой",
+            "aria-label и title у ссылок свёрнутой панели — подписи скрыты, но не потеряны",
+            "aria-current у активного пункта и aria-expanded у переключателя",
+            "палитру --vibeui-navigation-001-*"
+          ],
+          "adapt": [
+            "title и searchLabel",
+            "items — значок, подпись, ссылка, current; разделитель { divider: true }",
+            "defaultCollapsed — стартовое состояние",
+            "accent — цвет активного пункта",
+            "background — сцена под стеклом"
+          ],
+          "notes": [
+            "Поиск — только поле: фильтрация пунктов или запрос на сервер за вызывающим кодом.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кабинет",
+            "maxLength": 16
+          },
+          {
+            "prop": "defaultCollapsed",
+            "label": "Свёрнута",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Glass User Panel",
+            "description": "A frosted-glass account sidebar: search, sections with dividers, the current item in the accent and a collapse into an icon column.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-navigation-001-*. A client component: \"use client\" is there for useState — whether the panel is collapsed. The glass relies on backdrop-filter, so the component has its own scene with accent glows; pass your own through background. A collapsed panel hides labels but keeps aria-label and title on the links. Items are the items array, a divider is { divider: true }. Icons are inline SVG.",
+            "ai": {
+              "summary": "A collapsible frosted-glass sidebar menu with search and sections.",
+              "preserve": [
+                "backdrop-filter and a vivid scene under the glass — without it the glass reads as a grey slab",
+                "aria-label and title on the links of the collapsed panel — the labels are hidden, not lost",
+                "aria-current on the current item and aria-expanded on the toggle",
+                "the --vibeui-navigation-001-* palette"
+              ],
+              "adapt": [
+                "title and searchLabel",
+                "items — icon, label, link, current; a divider is { divider: true }",
+                "defaultCollapsed — the initial state",
+                "accent — the current item colour",
+                "background — the scene under the glass"
+              ],
+              "notes": [
+                "Search is only a field: filtering items or querying the server belongs to the caller.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Navigation001 title=\"Account\" items={[{ icon: \"home\", label: \"Overview\", href: \"/\", current: true }]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Account"
+              },
+              "defaultCollapsed": {
+                "label": "Collapsed"
+              },
+              "accent": {
+                "label": "Accent"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Account",
+                "searchLabel": "Search",
+                "collapseLabel": "Collapse panel",
+                "expandLabel": "Expand panel",
+                "items": [
+                  {
+                    "icon": "home",
+                    "label": "Overview",
+                    "href": "#",
+                    "current": true
+                  },
+                  {
+                    "icon": "user",
+                    "label": "Profile",
+                    "href": "#"
+                  },
+                  {
+                    "divider": true
+                  },
+                  {
+                    "icon": "folder",
+                    "label": "Projects",
+                    "href": "#"
+                  },
+                  {
+                    "icon": "chart",
+                    "label": "Analytics",
+                    "href": "#"
+                  },
+                  {
+                    "icon": "message",
+                    "label": "Messages",
+                    "href": "#"
+                  },
+                  {
+                    "icon": "bell",
+                    "label": "Notifications",
+                    "href": "#"
+                  },
+                  {
+                    "divider": true
+                  },
+                  {
+                    "icon": "settings",
+                    "label": "Settings",
+                    "href": "#"
+                  },
+                  {
+                    "icon": "logout",
+                    "label": "Log out",
+                    "href": "#"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "defaultCollapsed",
+          "accent"
+        ],
+        "preview": {
+          "width": "full"
+        },
+        "pro": true
+      }
     }
   ]
 }

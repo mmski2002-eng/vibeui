@@ -156,4 +156,6 @@ export const PREVIEWS = {
     import("@/registry/components/button-group/togglegroup-018/togglegroup-018").then((module) => module.Togglegroup018),
   "togglegroup-019": () =>
     import("@/registry/components/button-group/togglegroup-019/togglegroup-019").then((module) => module.Togglegroup019),
+  "button-group-001": () =>
+    import("@/registry/components/button-group/button-group-001/button-group-001").then((module) => module.ButtonGroup001),
 } satisfies PreviewLoaderMap

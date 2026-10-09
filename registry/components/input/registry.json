@@ -15895,6 +15895,130 @@
           "width": "full"
         }
       }
+    },
+    {
+      "name": "input-035",
+      "type": "registry:component",
+      "title": "Вдавленное поле с подсветкой",
+      "description": "Неоморфное поле, вдавленное в поверхность: в фокусе подпись поднимается на кромку и окрашивается в акцент, поле мягко светится.",
+      "categories": [
+        "input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "input-035/input-035.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/input-035.tsx"
+        }
+      ],
+      "docs": "Компонент самодостаточен: один файл, без зависимостей, палитра в --vibeui-input-035-*. Серверный: хуков состояния нет, useId связывает подпись с полем. Плавающая подпись держится на :placeholder-shown, поэтому placeholder занят пробелом и в пропсах его нет. Объём — две внутренние тени из цвета поверхности, поэтому у компонента своя подложка. Остальные пропсы уходят в <input>.",
+      "meta": {
+        "tags": [
+          "input",
+          "field",
+          "neumorphism",
+          "floating-label",
+          "focus",
+          "glow",
+          "login"
+        ],
+        "ai": {
+          "export": "Input035",
+          "usage": "<Input035 label=\"Почта\" type=\"email\" name=\"email\" autoComplete=\"email\" />",
+          "summary": "Вдавленное неоморфное поле с всплывающей подписью и свечением акцента в фокусе.",
+          "preserve": [
+            "плавающую подпись на :placeholder-shown — placeholder занят пробелом",
+            "две внутренние тени из цвета поверхности — объём, а не рамка",
+            "свечение акцента в фокусе вместо outline — фокус всё равно виден",
+            "палитру --vibeui-input-035-* и light-dark() в палитре: компонент следует color-scheme окружения"
+          ],
+          "adapt": [
+            "label — подпись",
+            "type, name, autoComplete и прочие атрибуты input",
+            "accent — цвет фокуса",
+            "background — цвет поверхности"
+          ],
+          "notes": [
+            "Кладите поле на поверхность того же цвета: на чужом фоне вдавленность не читается.",
+            "Не выносите CSS-переменные в globals.css: компонент обязан оставаться одним файлом."
+          ]
+        },
+        "controls": [
+          {
+            "prop": "label",
+            "label": "Подпись",
+            "type": "text",
+            "default": "Почта",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Поверхность",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "i18n": {
+          "en": {
+            "title": "Inset Field with Focus Glow",
+            "description": "A neumorphic field pressed into the surface: on focus the label rises onto the edge in the accent colour and the field glows softly.",
+            "docs": "Self-contained: one file, no dependencies, palette in --vibeui-input-035-*. A server component: no state hooks, useId ties the label to the field. The floating label rests on :placeholder-shown, so the placeholder is a space and is not in the props. Depth comes from two inset shadows of the surface colour, so the component carries its own surface. Other props go to the <input>.",
+            "ai": {
+              "summary": "An inset neumorphic field with a floating label and an accent glow on focus.",
+              "preserve": [
+                "the floating label on :placeholder-shown — the placeholder is a space",
+                "two inset shadows of the surface colour — depth, not a border",
+                "the accent glow on focus instead of an outline — focus is still visible",
+                "the --vibeui-input-035-* palette and light-dark() in the palette: the component follows the surrounding color-scheme"
+              ],
+              "adapt": [
+                "label — the caption",
+                "type, name, autoComplete and other input attributes",
+                "accent — the focus colour",
+                "background — the surface colour"
+              ],
+              "notes": [
+                "Place the field on a surface of the same colour: on a different background the inset does not read.",
+                "Do not lift the CSS variables into globals.css: the component has to stay a single file."
+              ],
+              "usage": "<Input035 label=\"Email\" type=\"email\" name=\"email\" autoComplete=\"email\" />"
+            },
+            "controls": {
+              "label": {
+                "label": "Label",
+                "default": "Email"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Surface"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Email"
+              }
+            }
+          }
+        },
+        "cardControls": [
+          "label",
+          "accent"
+        ],
+        "preview": {
+          "width": "fit"
+        },
+        "pro": true
+      }
     }
   ]
 }

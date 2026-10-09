@@ -292,4 +292,6 @@ export const PREVIEWS = {
     import("@/registry/components/card/card-172/card-172").then((module) => module.Card172),
   "card-165": () =>
     import("@/registry/components/card/card-165/card-165").then((module) => module.Card165),
+  "card-173": () =>
+    import("@/registry/components/card/card-173/card-173").then((module) => module.Card173),
 } satisfies PreviewLoaderMap
