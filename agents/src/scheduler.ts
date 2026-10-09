@@ -11,10 +11,11 @@ import { discoverRutube } from "./discovery/rutube.js";
 import { discoverDevto } from "./discovery/devto.js";
 import { searchTelegramChannels, telegramSearchConfigured } from "./discovery/telegram-search.js";
 import { maintain } from "./maintenance.js";
+import { prepareDrafts } from "./prepare-drafts.js";
 import { billedUsage } from "./openrouter-usage.js";
 
 export interface DiscoveryTask { source: string; query: string }
-export interface SchedulerState { emergencyStop: boolean; modelsPaused: boolean; spentToday: number; dailyBudget: number; spentTotal: number; totalBudget: number; pendingScoring: number; stock: number; dailyContactLimit: number }
+export interface SchedulerState { emergencyStop: boolean; modelsPaused: boolean; spentToday: number; dailyBudget: number; spentTotal: number; totalBudget: number; pendingScoring: number; stock: number; dailyContactLimit: number; drafts?: number }
 export type Gate = { run: true } | { run: false; reason: "emergency_stop" | "models_paused" | "total_budget_spent" | "budget_spent" | "scoring_in_progress" | "enough_candidates" };
 
 // Stock that covers this many days of sending stops new searches: found creators get scored and contacted first.
@@ -31,6 +32,13 @@ export function gate(state: SchedulerState): Gate {
   if (state.pendingScoring > 0) return { run: false, reason: "scoring_in_progress" };
   if (state.stock >= state.dailyContactLimit * STOCK_DAYS) return { run: false, reason: "enough_candidates" };
   return { run: true };
+}
+
+// Two days of sending stay drafted ahead, so the owner always has letters to approve without paying for a big backlog.
+export function draftsNeeded(state: SchedulerState): number {
+  if (state.emergencyStop || state.modelsPaused) return 0;
+  if (state.spentToday >= state.dailyBudget || state.spentTotal >= state.totalBudget) return 0;
+  return Math.max(0, state.dailyContactLimit * 2 - (state.drafts ?? 0));
 }
 
 export function discoveryTasks(policy: Policy, config: Pick<Config, "youtubeApiKey" | "vkServiceToken"> & { telegramSearch: boolean }): DiscoveryTask[] {
@@ -83,8 +91,9 @@ export async function runScheduler(database: Database, config: Config): Promise<
   const queuedScoring = await queueUnscored(database);
   const state = await readState(database, policy);
   state.spentTotal = Math.max(state.spentTotal, (await billedUsage(config)) ?? 0);
+  const draftsQueued = draftsNeeded(state) > 0 ? await prepareDrafts(database, draftsNeeded(state)) : 0;
   const decision = gate(state);
-  let outcome: Record<string, unknown> = { ...state, resorted, queuedScoring, decision: decision.run ? "run" : decision.reason };
+  let outcome: Record<string, unknown> = { ...state, resorted, queuedScoring, draftsQueued, decision: decision.run ? "run" : decision.reason };
   if (decision.run) {
     const lastRuns = new Map((await database<{ key: string; last: Date }[]>`
       SELECT source || '|' || query AS key, max(started_at) AS last FROM discovery_runs GROUP BY source, query
@@ -138,7 +147,7 @@ async function queueUnscored(database: Database): Promise<number> {
 }
 
 async function readState(database: Database, policy: Policy): Promise<SchedulerState> {
-  const [row] = await database<{ emergency_stop: boolean; models_paused: boolean; spent: number; total: number; budget: number | null; total_budget: number; pending: number; stock: number }[]>`
+  const [row] = await database<{ emergency_stop: boolean; models_paused: boolean; spent: number; total: number; budget: number | null; total_budget: number; pending: number; stock: number; drafts: number }[]>`
     SELECT emergency_stop, model_operations_paused AS models_paused, search_budget_usd::float AS budget, total_budget_usd::float AS total_budget,
       COALESCE((SELECT sum(cost_usd) FROM model_usage), 0)::float AS total,
       COALESCE((SELECT sum(cost_usd) FROM model_usage WHERE created_at >= date_trunc('day', now())), 0)::float AS spent,
@@ -146,12 +155,14 @@ async function readState(database: Database, policy: Policy): Promise<SchedulerS
       ((SELECT count(*) FROM creators c WHERE c.status = 'eligible' AND c.do_not_contact = false
           AND EXISTS (SELECT 1 FROM creator_contacts cc WHERE cc.creator_id = c.id AND cc.is_public_business AND cc.verified_at IS NOT NULL)
           AND NOT EXISTS (SELECT 1 FROM conversation_threads t WHERE t.creator_id = c.id))
-        + (SELECT count(*) FROM outreach_messages WHERE direction = 'outbound' AND kind = 'first_contact' AND status IN ('draft', 'approved')))::int AS stock
+        + (SELECT count(*) FROM outreach_messages WHERE direction = 'outbound' AND kind = 'first_contact' AND status IN ('draft', 'approved')))::int AS stock,
+      ((SELECT count(*) FROM outreach_messages WHERE direction = 'outbound' AND kind = 'first_contact' AND status IN ('draft', 'approved'))
+        + (SELECT count(*) FROM agent_jobs WHERE kind = 'personalize_thread' AND status IN ('queued', 'running')))::int AS drafts
     FROM agent_control WHERE singleton = true
   `;
   return {
     emergencyStop: row?.emergency_stop ?? true, modelsPaused: row?.models_paused ?? true,
     spentToday: row?.spent ?? 0, dailyBudget: row?.budget ?? 0.5, spentTotal: row?.total ?? 0, totalBudget: row?.total_budget ?? 3, pendingScoring: row?.pending ?? 0,
-    stock: row?.stock ?? 0, dailyContactLimit: policy.dailyContactLimit,
+    stock: row?.stock ?? 0, dailyContactLimit: policy.dailyContactLimit, drafts: row?.drafts ?? 0,
   };
 }

@@ -197,8 +197,8 @@ async function adminAction(database: Database, request: IncomingMessage, respons
       await transaction`UPDATE conversation_threads SET state = 'do_not_contact', updated_at = now() WHERE creator_id = ${id}`;
     });
   } else if (action === "cancel_job") {
-    const rows = await database`UPDATE agent_jobs SET status = 'cancelled', updated_at = now() WHERE id = ${id} AND status = 'queued' RETURNING id`;
-    if (!rows[0]) return json(response, 409, { error: "job_not_queued" });
+    const rows = await database`UPDATE agent_jobs SET status = 'cancelled', updated_at = now() WHERE id = ${id} AND status IN ('queued', 'failed') RETURNING id`;
+    if (!rows[0]) return json(response, 409, { error: "job_not_cancellable" });
   } else if (action === "retry_job") {
     // A failed job has exhausted its attempts, so one extra attempt is granted. External effects stay guarded by
     // idempotency keys and status checks (a sent message or created partner is refused on re-run).

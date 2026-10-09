@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { discoveryTasks, gate, pickTask, type SchedulerState } from "../src/scheduler.js";
+import { discoveryTasks, draftsNeeded, gate, pickTask, type SchedulerState } from "../src/scheduler.js";
 import type { Policy } from "../src/policy.js";
 
 const ready: SchedulerState = { emergencyStop: false, modelsPaused: false, spentToday: 0.1, dailyBudget: 0.5, spentTotal: 1, totalBudget: 3, pendingScoring: 0, stock: 4, dailyContactLimit: 5 };
@@ -14,6 +14,14 @@ test("searches only when budget is left, nothing waits for scoring and the stock
   assert.deepEqual(gate({ ...ready, pendingScoring: 3 }), { run: false, reason: "scoring_in_progress" });
   assert.deepEqual(gate({ ...ready, stock: 15 }), { run: false, reason: "enough_candidates" });
   assert.deepEqual(gate({ ...ready, stock: 14 }), { run: true });
+});
+
+test("keeps two days of drafts ahead and drafts nothing when stopped or out of budget", () => {
+  assert.equal(draftsNeeded({ ...ready, drafts: 3 }), 7);
+  assert.equal(draftsNeeded({ ...ready, drafts: 12 }), 0);
+  assert.equal(draftsNeeded({ ...ready, drafts: 0, spentToday: 0.5 }), 0);
+  assert.equal(draftsNeeded({ ...ready, drafts: 0, spentTotal: 3 }), 0);
+  assert.equal(draftsNeeded({ ...ready, drafts: 0, modelsPaused: true }), 0);
 });
 
 const policy = { discovery: { youtube: { ru: ["вайбкодинг"], en: ["vibe coding"] }, rutube: ["cursor"], habrHubs: ["webdev"], devtoTags: ["nextjs"], telegramQueries: ["cursor"] } } as Policy;

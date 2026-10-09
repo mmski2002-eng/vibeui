@@ -250,7 +250,7 @@ export const views = {
         { label: "Следующий запуск", render: (row) => row.status === "queued" ? `<span class="nowrap">${fmt.date(row.available_at)}</span>` : "—" },
         { label: "Исполнитель", render: (row) => esc(row.locked_by ?? "—"), cls: "small" },
         { label: "Ошибка", render: (row) => esc(short(row.last_error ?? "", 140)), cls: "wrap small" },
-        { label: "", render: (row) => row.status === "queued" ? actionButton("cancel_job", row.id, "Отменить") : row.status === "failed" ? actionButton("retry_job", row.id, "Повторить") : "" },
+        { label: "", render: (row) => row.status === "queued" ? actionButton("cancel_job", row.id, "Отменить") : row.status === "failed" ? `${actionButton("retry_job", row.id, "Повторить")} ${actionButton("cancel_job", row.id, "Отменить")}` : "" },
       ], rows, { empty: "Очередь пуста" }));
     },
   },
