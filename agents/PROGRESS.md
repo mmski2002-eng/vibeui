@@ -2,6 +2,19 @@
 
 Ход работы между сессиями. Свежие записи сверху. Факты сверены с кодом на дату записи.
 
+## 2026-10-09 — Telegram без аккаунта: поиск через Яндекс и Brave (не закоммичено)
+
+- my.telegram.org: с RU-сервера вход по коду удался, создание приложения — `ERROR` (2 попытки), у владельца так было
+  всегда. Письмо в recover@telegram.org отправлено с admin@vibeui.club (id 01a12051…). Ответ ждать в «Почте» админки.
+- Google Custom Search JSON API закрыт для новых клиентов (отключение 2027-01-01) — заменён на Brave Search API.
+- `src/discovery/web-search.ts`: «<запрос> site:t.me» → ссылки → имена каналов → обход t.me/s (сохранение и оценка).
+  Яндекс: `POST searchapi.api.cloud.yandex.net/v2/web/search`, `Api-Key`, folderId, ответ base64 XML (формат как в
+  SearXNG); только ночью 00–08 МСК. Brave: `GET api.search.brave.com/res/v1/web/search`, `X-Subscription-Token`.
+  Запросы — `discovery.telegramQueries` в policy.
+- Env: `YANDEX_SEARCH_API_KEY`, `YANDEX_FOLDER_ID`, `BRAVE_SEARCH_API_KEY`. Без них источники не в ротации.
+- Проверка: тесты 50/50; живые эндпоинты отвечают 401/422 на фиктивный ключ (адреса и заголовки верны).
+- Ждём: согласие на коммит/пуш; ключи от владельца → `/etc/vibeui-agents/agents.env` на Латвии.
+
 ## 2026-10-09 — проверка прода после деплоя 5101468c
 
 Деплой зелёный (run 37910000523). Все 15 разделов API админки отвечают 200 (overview ~1 с, остальные < 0.4 с).

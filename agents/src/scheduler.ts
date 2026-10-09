@@ -10,6 +10,7 @@ import { discoverHabr } from "./discovery/habr.js";
 import { discoverRutube } from "./discovery/rutube.js";
 import { discoverDevto } from "./discovery/devto.js";
 import { searchTelegramChannels, telegramSearchConfigured } from "./discovery/telegram-search.js";
+import { braveConfigured, braveTelegramChannels, isMoscowNight, yandexConfigured, yandexTelegramChannels } from "./discovery/web-search.js";
 import { maintain } from "./maintenance.js";
 import { prepareDrafts } from "./prepare-drafts.js";
 import { billedUsage } from "./openrouter-usage.js";
@@ -41,7 +42,7 @@ export function draftsNeeded(state: SchedulerState): number {
   return Math.max(0, state.dailyContactLimit * 2 - (state.drafts ?? 0));
 }
 
-export function discoveryTasks(policy: Policy, config: Pick<Config, "youtubeApiKey" | "vkServiceToken"> & { telegramSearch: boolean }): DiscoveryTask[] {
+export function discoveryTasks(policy: Policy, config: Pick<Config, "youtubeApiKey" | "vkServiceToken"> & { telegramSearch: boolean; yandex?: boolean; brave?: boolean; night?: boolean }): DiscoveryTask[] {
   const plan = policy.discovery;
   return [
     ...(config.youtubeApiKey ? [...plan.youtube.ru.map((query) => ({ source: "youtube:ru", query })), ...plan.youtube.en.map((query) => ({ source: "youtube:en", query }))] : []),
@@ -49,6 +50,8 @@ export function discoveryTasks(policy: Policy, config: Pick<Config, "youtubeApiK
     ...plan.habrHubs.map((query) => ({ source: "habr", query })),
     ...plan.devtoTags.map((query) => ({ source: "devto", query })),
     ...(config.telegramSearch ? plan.telegramQueries.map((query) => ({ source: "telegram-search", query })) : []),
+    ...(config.yandex && config.night ? plan.telegramQueries.map((query) => ({ source: "yandex-tg", query })) : []),
+    ...(config.brave ? plan.telegramQueries.map((query) => ({ source: "brave-tg", query })) : []),
     { source: "telegram", query: "links" },
     ...(config.vkServiceToken ? [{ source: "vk", query: "links" }] : []),
     { source: "maintenance", query: "contacts" },
@@ -98,7 +101,9 @@ export async function runScheduler(database: Database, config: Config): Promise<
     const lastRuns = new Map((await database<{ key: string; last: Date }[]>`
       SELECT source || '|' || query AS key, max(started_at) AS last FROM discovery_runs GROUP BY source, query
     `).map((row) => [row.key, row.last]));
-    const task = pickTask(discoveryTasks(policy, { ...config, telegramSearch: telegramSearchConfigured(config) }), lastRuns, new Date());
+    const task = pickTask(discoveryTasks(policy, {
+      ...config, telegramSearch: telegramSearchConfigured(config), yandex: yandexConfigured(config), brave: braveConfigured(config), night: isMoscowNight(new Date()),
+    }), lastRuns, new Date());
     outcome = { ...outcome, task: task ?? null, ...(task ? { result: await runTask(database, config, task) } : { decision: "nothing_due" }) };
   }
   await database`UPDATE agent_control SET scheduler_state = ${database.json({ ...outcome, at: new Date().toISOString() } as postgres.JSONValue)} WHERE singleton = true`;
@@ -124,6 +129,8 @@ async function executeTask(database: Database, config: Config, task: DiscoveryTa
   if (task.source === "habr") return discoverHabr(database, task.query, { maxAuthors: 15 });
   if (task.source === "devto") return discoverDevto(database, task.query, { maxAuthors: 15 });
   if (task.source === "telegram-search") return discoverTelegram(database, await searchTelegramChannels(config, task.query), { maxChannels: 30, maxDepth: 1 });
+  if (task.source === "yandex-tg") return discoverTelegram(database, await yandexTelegramChannels(config, task.query), { maxChannels: 30, maxDepth: 1 });
+  if (task.source === "brave-tg") return discoverTelegram(database, await braveTelegramChannels(config, task.query), { maxChannels: 30, maxDepth: 1 });
   if (task.source === "telegram") return discoverTelegram(database, [], { maxChannels: 30, maxDepth: 2 });
   if (task.source === "vk") return discoverVk(database, config.vkServiceToken, [], { maxGroups: 30, maxDepth: 2 });
   if (task.source === "maintenance") return maintain(database, { websites: true, rescore: false });

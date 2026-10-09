@@ -313,6 +313,8 @@ const routes: Record<string, Handler> = {
       ].map((row) => ({ ...row, configured: row.configured || (config.gmailUser && config.gmailAppPassword ? "unused" : false) })),
       { name: "VK service token", configured: Boolean(config.vkServiceToken), purpose: "Обход VK-сообществ по ссылкам" },
       { name: "Telegram-аккаунт", configured: Boolean(config.telegramApiId && config.telegramApiHash && config.telegramSession), purpose: "Поиск Telegram-каналов по словам" },
+      { name: "Yandex Search API", configured: Boolean(config.yandexSearchApiKey && config.yandexFolderId), purpose: "Поиск Telegram-каналов через Яндекс (ночью)" },
+      { name: "Brave Search API", configured: Boolean(config.braveSearchApiKey), purpose: "Поиск Telegram-каналов через Brave" },
       { name: "VibeUI internal API", configured: Boolean(config.vibeuiInternalApiKey), purpose: "Реферальные ссылки и статистика блогеров" },
     ],
   }),

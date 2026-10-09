@@ -13,6 +13,7 @@ import { discoverHabr } from "./discovery/habr.js";
 import { discoverRutube } from "./discovery/rutube.js";
 import { discoverDevto } from "./discovery/devto.js";
 import { searchTelegramChannels } from "./discovery/telegram-search.js";
+import { braveTelegramChannels, yandexTelegramChannels } from "./discovery/web-search.js";
 import { runScheduler } from "./scheduler.js";
 import { resolve } from "node:path";
 import { configureModelProvider } from "./model-provider.js";
@@ -62,13 +63,15 @@ if (command === "migrate") {
   const maxGroups = Number.parseInt(process.argv[4] ?? "30", 10);
   console.log(await discoverVk(database, config.vkServiceToken, process.argv.slice(5), { maxGroups, maxDepth: 2 }));
   await database.end();
-} else if (command === "discover" && ["habr", "rutube", "devto", "telegram-search"].includes(process.argv[3] ?? "")) {
+} else if (command === "discover" && ["habr", "rutube", "devto", "telegram-search", "yandex-tg", "brave-tg"].includes(process.argv[3] ?? "")) {
   const query = process.argv[4];
   if (!query) throw new Error('Usage: tsx src/cli.ts discover habr|rutube|devto|telegram-search "<hub|query|tag>"');
   const source = process.argv[3];
   if (source === "habr") console.log(await discoverHabr(database, query, { maxAuthors: 15 }));
   if (source === "rutube") console.log(await discoverRutube(database, query, { maxChannels: 15 }));
   if (source === "devto") console.log(await discoverDevto(database, query, { maxAuthors: 15 }));
+  if (source === "yandex-tg") console.log(await discoverTelegram(database, await yandexTelegramChannels(config, query), { maxChannels: 30, maxDepth: 1 }));
+  if (source === "brave-tg") console.log(await discoverTelegram(database, await braveTelegramChannels(config, query), { maxChannels: 30, maxDepth: 1 }));
   if (source === "telegram-search") console.log(await discoverTelegram(database, await searchTelegramChannels(config, query), { maxChannels: 30, maxDepth: 1 }));
   await database.end();
 } else if (command === "schedule") {
@@ -97,5 +100,5 @@ if (command === "migrate") {
   await database.end();
 } else {
   await database.end();
-  throw new Error("Usage: migrate | worker | admin | discover youtube ... | discover telegram|vk [max] [seed...] | discover habr|rutube|devto|telegram-search <query> | schedule | telegram-login | import <file> | maintain [--rescore] [--no-websites] | prepare-drafts");
+  throw new Error("Usage: migrate | worker | admin | discover youtube ... | discover telegram|vk [max] [seed...] | discover habr|rutube|devto|telegram-search|yandex-tg|brave-tg <query> | schedule | telegram-login | import <file> | maintain [--rescore] [--no-websites] | prepare-drafts");
 }
