@@ -192,12 +192,13 @@ export function SpecialInput001({
     await wait(1100)
 
     setPhase("verify")
-    const started = performance.now()
     // Проценты идут к 90 за 1,5 с и замирают, пока verify не ответил.
     let finished = false
     result.then(() => (finished = true))
     await new Promise<void>((resolve) => {
+      let started: number | null = null
       const tick = (time: number) => {
+        started ??= time
         const progress = Math.min(1, (time - started) / 1500)
         const value =
           finished && progress === 1
