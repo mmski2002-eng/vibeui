@@ -287,6 +287,22 @@ function bindGlobal() {
       }
       return;
     }
+    const mailForm = event.target.closest("[data-mail-form]");
+    if (mailForm) {
+      event.preventDefault();
+      const data = new FormData(mailForm);
+      const button = mailForm.querySelector("[type=submit]");
+      button.disabled = true;
+      try {
+        await post("/api/mail/send", { to: data.get("to"), subject: data.get("subject"), text: data.get("text") });
+        toast("Письмо отправлено");
+        location.hash = "#/mail?box=sent";
+      } catch (error) {
+        button.disabled = false;
+        toast(`Ошибка: ${error.message}`, true);
+      }
+      return;
+    }
     const form = event.target.closest("[data-message-form]");
     if (!form) return;
     event.preventDefault();
@@ -323,7 +339,7 @@ function toggleEdit(id, open) {
 function poll() {
   clearInterval(state.timer);
   state.timer = setInterval(async () => {
-    if (document.hidden || dialog().open || document.querySelector("[data-message-form]:not([hidden])")) return;
+    if (document.hidden || dialog().open || document.querySelector("[data-message-form]:not([hidden]), [data-mail-form]")) return;
     const active = document.activeElement;
     if (active && ["INPUT", "SELECT", "TEXTAREA"].includes(active.tagName) && document.getElementById("view").contains(active)) return;
     await refreshShell();

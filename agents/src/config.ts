@@ -32,6 +32,7 @@ export function loadConfig() {
     resendApiKey: process.env.RESEND_API_KEY ?? "",
     resendWebhookSecret: process.env.RESEND_WEBHOOK_SECRET ?? "",
     outreachEmailFrom: process.env.OUTREACH_EMAIL_FROM ?? "",
+    mailboxFrom: process.env.MAILBOX_FROM ?? "VibeUI <noreply@vibeui.club>",
     gmailUser: process.env.GMAIL_USER ?? "",
     gmailAppPassword: (process.env.GMAIL_APP_PASSWORD ?? "").replace(/\s+/g, ""),
     outreachSenderName: process.env.OUTREACH_SENDER_NAME ?? "",

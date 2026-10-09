@@ -33,7 +33,46 @@ const runColumns = [
   { label: "Начало", render: (row) => `<span class="nowrap">${fmt.date(row.started_at)}</span>` },
 ];
 
+const mailText = (email) => email.text?.trim() || (email.html ? new DOMParser().parseFromString(email.html, "text/html").body.textContent.trim() : "");
+const replySubject = (subject) => /^re:/i.test(subject ?? "") ? subject : `Re: ${subject ?? ""}`;
+const quote = (email) => `\n\n${fmt.date(email.created_at)}, ${email.from}:\n${mailText(email).split("\n").map((line) => `> ${line}`).join("\n")}`;
+
 export const views = {
+  mail: {
+    title: (id) => id ? "Письмо" : "Почта",
+    subtitle: "Ящик, с которого уходят коды и письма сайта",
+    toolbar: (params) => `<div class="toolbar">${select("box", params.box, [["", "Входящие"], ["sent", "Отправленные"]])} <a class="btn sm primary" href="#/mail?compose=1">Написать</a></div>`,
+    async render({ id, query: params }) {
+      const box = params.box === "sent" ? "sent" : "inbox";
+      if (params.compose || id && params.reply) {
+        const source = id ? await api(`/api/mail/${box}/${id}`) : null;
+        const to = source ? (source.reply_to?.[0] ?? source.from) : params.to ?? "";
+        return card("Новое письмо", `<form class="mail-form" data-mail-form>
+          <label class="field"><span class="small muted">Кому</span><input name="to" type="email" required value="${esc(to)}"></label>
+          <label class="field"><span class="small muted">Тема</span><input name="subject" required maxlength="300" value="${esc(source ? replySubject(source.subject) : "")}"></label>
+          <label class="field"><span class="small muted">Текст</span><textarea name="text" required rows="14">${esc(source ? quote(source) : "")}</textarea></label>
+          <div class="dialog-actions"><a class="btn" href="#/mail${box === "sent" ? "?box=sent" : ""}">Отмена</a><button class="btn primary" type="submit">Отправить</button></div>
+        </form>`);
+      }
+      if (id) {
+        const email = await api(`/api/mail/${box}/${id}`);
+        const back = `#/mail${box === "sent" ? "?box=sent" : ""}`;
+        return `<p><a class="link" href="${back}">← ${box === "sent" ? "Отправленные" : "Входящие"}</a></p>
+          ${card(email.subject || "(без темы)", `<dl class="kv"><dt>От</dt><dd>${esc(email.from)}</dd><dt>Кому</dt><dd>${esc([].concat(email.to ?? []).join(", "))}</dd><dt>Когда</dt><dd>${fmt.date(email.created_at)}</dd>
+            ${email.attachments?.length ? `<dt>Вложения</dt><dd>${esc(email.attachments.join(", "))}</dd>` : ""}</dl>
+            <pre class="mail-body">${esc(mailText(email) || "(пустое письмо)")}</pre>`,
+            box === "inbox" ? `<a class="btn sm primary" href="#/mail/${esc(id)}?reply=1">Ответить</a>` : "")}`;
+      }
+      const { from, emails } = await api(`/api/mail/${box}`);
+      return card(`${box === "sent" ? "Отправленные" : "Входящие"} · ${from}`, table([
+        { label: box === "sent" ? "Кому" : "От", render: (row) => `<span class="mono small">${esc(box === "sent" ? [].concat(row.to ?? []).join(", ") : row.from)}</span>`, cls: "wrap" },
+        { label: "Тема", render: (row) => esc(short(row.subject || "(без темы)", 100)), cls: "wrap" },
+        ...(box === "sent" ? [{ label: "Статус", render: (row) => pill(row.status) }] : []),
+        { label: "Когда", render: (row) => `<span class="nowrap">${fmt.date(row.created_at)}</span>` },
+      ], emails, { href: (row) => `#/mail/${row.id}${box === "sent" ? "?box=sent" : ""}`, empty: box === "sent" ? "Отправленных нет" : "Входящих нет. Приём должен быть включён для домена в Resend (MX + webhook email.received)." }));
+    },
+  },
+
   dashboard: {
     title: () => "Дашборд",
     subtitle: "Состояние системы, воронка и расходы",

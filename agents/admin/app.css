@@ -70,6 +70,11 @@ code, .mono { font-family: var(--font-mono); font-size: 12.5px; }
 .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); min-height: calc(100vh - 57px); }
 .sidebar { border-right: 1px solid var(--line); padding: 16px 10px; position: sticky; top: 57px; height: calc(100vh - 57px); overflow: auto; }
 .nav-group { margin-bottom: 14px; }
+.sidebar { display: flex; flex-direction: column; }
+.nav-bottom { margin-top: auto; margin-bottom: 0; padding-top: 10px; border-top: 1px solid var(--line); }
+.mail-form { display: grid; gap: 12px; }
+.mail-form input, .mail-form textarea { width: 100%; }
+.mail-body { white-space: pre-wrap; word-break: break-word; font: inherit; margin: 16px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
 .nav-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding: 0 10px 6px; }
 .nav a { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: var(--muted); }
 .nav a:hover { background: var(--surface-2); color: var(--text); }
@@ -188,7 +193,7 @@ dialog p { margin: 0; }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .menu-toggle { display: inline-flex; }
   .sidebar { display: none; position: fixed; inset: 0 0 0 auto; top: 0; height: 100vh; width: min(280px, 85vw); z-index: 30; background: var(--surface); padding-top: 60px; border-left: 1px solid var(--line); border-right: 0; }
-  .sidebar.open { display: block; }
+  .sidebar.open { display: flex; }
   .content { padding: 16px 16px 60px; }
   .cols-2, .cols-3 { grid-template-columns: minmax(0, 1fr); }
   .controls { width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }

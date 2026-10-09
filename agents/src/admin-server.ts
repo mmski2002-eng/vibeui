@@ -6,6 +6,7 @@ import type { Database } from "./database.js";
 import { writeAudit } from "./audit.js";
 import { handleAdminApi } from "./admin-api.js";
 import { handleResendWebhook } from "./email/webhook.js";
+import { getMail, listMail, sendMail, type MailBox } from "./email/mailbox.js";
 
 const adminDirectory = new URL("../admin/", import.meta.url);
 const staticFiles: Record<string, string> = {
@@ -55,6 +56,19 @@ export function startAdminServer(database: Database, config: Config): void {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return adminAction(database, request, response);
       }
+      if (request.method === "POST" && url.pathname === "/api/mail/send") {
+        if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
+        return sendMailbox(database, config, request, response);
+      }
+      const mailMatch = /^\/api\/mail\/(inbox|sent)(?:\/([0-9a-f-]{36}))?$/i.exec(url.pathname);
+      if (request.method === "GET" && mailMatch) {
+        const box = mailMatch[1] as MailBox;
+        try {
+          return json(response, 200, mailMatch[2] ? await getMail(config.resendApiKey, box, mailMatch[2]) : { from: config.mailboxFrom, emails: await listMail(config.resendApiKey, box) });
+        } catch (error) {
+          return json(response, 502, { error: error instanceof Error ? error.message : "resend_error" });
+        }
+      }
       if (request.method === "GET") {
         const result = await handleAdminApi(database, config, url);
         if (result) return json(response, result.status, result.body);
@@ -81,6 +95,21 @@ async function serveStatic(response: ServerResponse, file: string): Promise<void
     "referrer-policy": "no-referrer",
   });
   response.end(body);
+}
+
+async function sendMailbox(database: Database, config: Config, request: IncomingMessage, response: ServerResponse) {
+  const body = await readJson(request);
+  const to = typeof body.to === "string" ? body.to.trim() : "";
+  const subject = typeof body.subject === "string" ? body.subject.trim().slice(0, 300) : "";
+  const text = typeof body.text === "string" ? body.text.slice(0, 15_000) : "";
+  if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(to) || !subject || !text.trim()) return json(response, 400, { error: "invalid_mail" });
+  try {
+    const id = await sendMail(config.resendApiKey, config.mailboxFrom, { to, subject, text });
+    await writeAudit(database, { actor: "administrator", action: "mailbox_send", targetType: "email", targetId: id, decision: "completed", details: { to, subject } });
+    return json(response, 200, { id });
+  } catch (error) {
+    return json(response, 502, { error: error instanceof Error ? error.message : "resend_error" });
+  }
 }
 
 async function adminAction(database: Database, request: IncomingMessage, response: ServerResponse) {
