@@ -23,28 +23,28 @@ test("Yandex 'nothing found' is empty, other errors fail", () => {
 });
 
 test("Yandex request carries the key, folder and site:t.me, and decodes base64 XML", async (context) => {
-  let sent: { url: string; auth: string | null; body: Record<string, any> } | null = null;
+  const calls: { url: string; auth: string | null; body: { folderId: string; responseFormat: string; query: { queryText: string } } }[] = [];
   context.mock.method(globalThis, "fetch", async (input: string, init: RequestInit) => {
-    sent = { url: String(input), auth: new Headers(init.headers).get("authorization"), body: JSON.parse(String(init.body)) };
+    calls.push({ url: String(input), auth: new Headers(init.headers).get("authorization"), body: JSON.parse(String(init.body)) });
     return Response.json({ rawData: Buffer.from(xml).toString("base64") });
   });
   assert.deepEqual(await yandexTelegramChannels({ yandexSearchApiKey: "key", yandexFolderId: "b1gfolder" }, "вайбкодинг"), ["vibechan", "ai_frontend"]);
-  assert.equal(sent!.url, "https://searchapi.api.cloud.yandex.net/v2/web/search");
-  assert.equal(sent!.auth, "Api-Key key");
-  assert.equal(sent!.body.folderId, "b1gfolder");
-  assert.equal(sent!.body.query.queryText, "вайбкодинг site:t.me");
-  assert.equal(sent!.body.responseFormat, "FORMAT_XML");
+  assert.equal(calls[0]?.url, "https://searchapi.api.cloud.yandex.net/v2/web/search");
+  assert.equal(calls[0]?.auth, "Api-Key key");
+  assert.equal(calls[0]?.body.folderId, "b1gfolder");
+  assert.equal(calls[0]?.body.query.queryText, "вайбкодинг site:t.me");
+  assert.equal(calls[0]?.body.responseFormat, "FORMAT_XML");
 });
 
 test("Brave request uses the subscription token and reads web results", async (context) => {
-  let sent: { url: string; token: string | null } | null = null;
+  const calls: { url: string; token: string | null }[] = [];
   context.mock.method(globalThis, "fetch", async (input: URL, init: RequestInit) => {
-    sent = { url: String(input), token: new Headers(init.headers).get("x-subscription-token") };
+    calls.push({ url: String(input), token: new Headers(init.headers).get("x-subscription-token") });
     return Response.json({ web: { results: [{ url: "https://t.me/s/NoCodeDaily" }, { url: "https://example.com" }] } });
   });
   assert.deepEqual(await braveTelegramChannels({ braveSearchApiKey: "brave" }, "no-code"), ["nocodedaily"]);
-  assert.equal(sent!.token, "brave");
-  assert.match(sent!.url, /q=no-code\+site%3At\.me/);
+  assert.equal(calls[0]?.token, "brave");
+  assert.match(calls[0]?.url ?? "", /q=no-code\+site%3At\.me/);
   context.mock.method(globalThis, "fetch", async () => new Response("quota", { status: 429 }));
   await assert.rejects(braveTelegramChannels({ braveSearchApiKey: "brave" }, "x"), /Brave Search API 429/);
 });
