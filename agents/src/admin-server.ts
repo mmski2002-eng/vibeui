@@ -63,8 +63,10 @@ export function startAdminServer(database: Database, config: Config): void {
       const mailMatch = /^\/api\/mail\/(inbox|sent)(?:\/([0-9a-f-]{36}))?$/i.exec(url.pathname);
       if (request.method === "GET" && mailMatch) {
         const box = mailMatch[1] as MailBox;
+        const account = mailAccount(config, url.searchParams.get("account"));
+        if (!account) return json(response, 400, { error: "unknown_mailbox" });
         try {
-          return json(response, 200, mailMatch[2] ? await getMail(config.resendApiKey, box, mailMatch[2]) : { from: config.mailboxFrom, emails: await listMail(config.resendApiKey, box) });
+          return json(response, 200, mailMatch[2] ? await getMail(config.resendApiKey, box, mailMatch[2]) : { account, accounts: config.mailboxes, emails: await listMail(config.resendApiKey, box, account) });
         } catch (error) {
           return json(response, 502, { error: error instanceof Error ? error.message : "resend_error" });
         }
@@ -97,15 +99,22 @@ async function serveStatic(response: ServerResponse, file: string): Promise<void
   response.end(body);
 }
 
+function mailAccount(config: Config, requested: string | null): string | null {
+  const account = requested?.trim().toLowerCase() || config.mailboxes[0];
+  return account && config.mailboxes.includes(account) ? account : null;
+}
+
 async function sendMailbox(database: Database, config: Config, request: IncomingMessage, response: ServerResponse) {
   const body = await readJson(request);
   const to = typeof body.to === "string" ? body.to.trim() : "";
   const subject = typeof body.subject === "string" ? body.subject.trim().slice(0, 300) : "";
   const text = typeof body.text === "string" ? body.text.slice(0, 15_000) : "";
+  const account = mailAccount(config, typeof body.account === "string" ? body.account : null);
+  if (!account) return json(response, 400, { error: "unknown_mailbox" });
   if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(to) || !subject || !text.trim()) return json(response, 400, { error: "invalid_mail" });
   try {
-    const id = await sendMail(config.resendApiKey, config.mailboxFrom, { to, subject, text });
-    await writeAudit(database, { actor: "administrator", action: "mailbox_send", targetType: "email", targetId: id, decision: "completed", details: { to, subject } });
+    const id = await sendMail(config.resendApiKey, `VibeUI <${account}>`, { to, subject, text });
+    await writeAudit(database, { actor: "administrator", action: "mailbox_send", targetType: "email", targetId: id, decision: "completed", details: { from: account, to, subject } });
     return json(response, 200, { id });
   } catch (error) {
     return json(response, 502, { error: error instanceof Error ? error.message : "resend_error" });

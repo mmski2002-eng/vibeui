@@ -294,9 +294,9 @@ function bindGlobal() {
       const button = mailForm.querySelector("[type=submit]");
       button.disabled = true;
       try {
-        await post("/api/mail/send", { to: data.get("to"), subject: data.get("subject"), text: data.get("text") });
+        await post("/api/mail/send", { account: mailForm.dataset.mailForm, to: data.get("to"), subject: data.get("subject"), text: data.get("text") });
         toast("Письмо отправлено");
-        location.hash = "#/mail?box=sent";
+        location.hash = `#/mail?${new URLSearchParams({ account: mailForm.dataset.mailForm, box: "sent" })}`;
       } catch (error) {
         button.disabled = false;
         toast(`Ошибка: ${error.message}`, true);

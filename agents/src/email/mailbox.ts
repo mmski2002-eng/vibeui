@@ -8,11 +8,14 @@ function client(apiKey: string): Resend {
   return new Resend(apiKey);
 }
 
-export async function listMail(apiKey: string, box: MailBox) {
+const addresses = (value: string | string[] | null | undefined) => [value ?? []].flat().map((item) => (item.match(/<([^>]+)>/)?.[1] ?? item).trim().toLowerCase());
+
+// Resend keeps one log per domain, so each mailbox is a filter over it by our address.
+export async function listMail(apiKey: string, box: MailBox, account: string) {
   const resend = client(apiKey);
   const result = box === "inbox" ? await resend.emails.receiving.list({ limit: 100 }) : await resend.emails.list({ limit: 100 });
   if (result.error) throw new Error(`Resend: ${result.error.message}`);
-  return result.data.data.map((email) => ({
+  return result.data.data.filter((email) => addresses(box === "inbox" ? email.to : email.from).includes(account)).map((email) => ({
     id: email.id, from: email.from, to: email.to, subject: email.subject, created_at: email.created_at,
     status: "last_event" in email ? email.last_event : null,
   }));
