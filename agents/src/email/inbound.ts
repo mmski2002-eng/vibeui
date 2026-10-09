@@ -17,7 +17,7 @@ export async function recordInboundReply(database: Database, email: InboundEmail
   `;
   const threadId = byReference[0]?.thread_id ?? bySender[0]?.thread_id;
   if (!threadId) {
-    await notify(database, "warning", "unmatched_reply", `Не найден диалог для ${sender}`, { sender, subject: email.subject });
+    await notify(database, "warning", "unmatched_reply", `Не найден диалог для ${sender}`, { sender, subject: email.subject }, unmatchedReplyDedupeKey(sender));
     return "unmatched";
   }
   const messageId = randomUUID();
@@ -32,11 +32,16 @@ export async function recordInboundReply(database: Database, email: InboundEmail
   return "recorded";
 }
 
-export async function notify(database: Database, severity: string, kind: string, title: string, details: Record<string, unknown>): Promise<void> {
-  await database`INSERT INTO notifications (id, severity, kind, title, details) VALUES (${randomUUID()}, ${severity}, ${kind}, ${title}, ${database.json(details as postgres.JSONValue)})`;
+export async function notify(database: Database, severity: string, kind: string, title: string, details: Record<string, unknown>, dedupeKey?: string): Promise<void> {
+  await database`
+    INSERT INTO notifications (id, severity, kind, title, details, dedupe_key)
+    VALUES (${randomUUID()}, ${severity}, ${kind}, ${title}, ${database.json(details as postgres.JSONValue)}, ${dedupeKey ?? null})
+    ON CONFLICT (dedupe_key) DO NOTHING
+  `;
 }
 
 export function extractEmail(value: string): string { return (value.match(/<([^>]+)>/)?.[1] ?? value).trim().toLowerCase(); }
+export function unmatchedReplyDedupeKey(sender: string): string { return `unmatched_reply:${extractEmail(sender)}`; }
 export function stripHtml(value: string): string { return value.replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(); }
 
 // Drops the quoted original so the classifier sees only what the creator wrote.

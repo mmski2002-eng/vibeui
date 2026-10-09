@@ -37,7 +37,6 @@ export function loadConfig() {
     gmailAppPassword: (process.env.GMAIL_APP_PASSWORD ?? "").replace(/\s+/g, ""),
     outreachSenderName: process.env.OUTREACH_SENDER_NAME ?? "",
     inboxPollMs: integer("INBOX_POLL_MS", 120_000),
-    vibeuiInternalApiUrl: process.env.VIBEUI_INTERNAL_API_URL ?? "",
     vibeuiInternalApiKey: process.env.VIBEUI_INTERNAL_API_KEY ?? "",
     telegramBotToken: process.env.TELEGRAM_BOT_TOKEN ?? "",
     telegramChatId: process.env.TELEGRAM_CHAT_ID ?? "",

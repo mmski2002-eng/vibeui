@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { stripQuotedReply } from "../src/email/inbound.js";
+import { stripQuotedReply, unmatchedReplyDedupeKey } from "../src/email/inbound.js";
 import { outboundMessageId, plainTextBody } from "../src/email/gmail.js";
 
 test("keeps only the new part of a reply", () => {
@@ -19,4 +19,8 @@ test("decodes plain text from multipart, quoted-printable and base64", () => {
 
 test("outbound Message-ID is deterministic per message", () => {
   assert.equal(outboundMessageId("abc", "vibeui.partners@gmail.com"), "<abc.vibeui@gmail.com>");
+});
+
+test("unmatched reply notifications are deduplicated by normalized sender", () => {
+  assert.equal(unmatchedReplyDedupeKey("Name <USER@Example.com>"), "unmatched_reply:user@example.com");
 });

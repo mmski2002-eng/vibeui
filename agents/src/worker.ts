@@ -12,7 +12,7 @@ import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
 import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGmail } from "./email/gmail.js";
 import { calculateModelCost, isPricedModel, ModelOutputError } from "./model-cost.js";
-import { createReferralInvite, VibeUiClient } from "./vibeui-client.js";
+import { createReferralInvite, fetchCreatorStats, marketRevenue } from "./vibeui-client.js";
 import { referralWord } from "./referral-word.js";
 import { deliverNotifications, telegramConfigured } from "./telegram.js";
 import { notify } from "./email/inbound.js";
@@ -31,6 +31,7 @@ export async function runWorker(database: Database, config: Config): Promise<voi
   console.log(`Worker ${workerId} started`);
   let nextInboxPoll = 0;
   let nextTelegramPush = 0;
+  let nextStatsSync = 0;
   while (!stopping) {
     if (telegramConfigured(config) && Date.now() >= nextTelegramPush) {
       nextTelegramPush = Date.now() + 15_000;
@@ -45,6 +46,10 @@ export async function runWorker(database: Database, config: Config): Promise<voi
     if (control?.emergency_stop) {
       await delay(config.workerPollMs);
       continue;
+    }
+    if (config.vibeuiInternalApiKey && Date.now() >= nextStatsSync) {
+      nextStatsSync = Date.now() + 6 * 60 * 60_000;
+      await scheduleStatsSync(database).catch((error: unknown) => console.error("Stats sync scheduling failed:", error instanceof Error ? error.message : error));
     }
     const job = await claimNext(database, workerId);
     if (!job) {
@@ -86,7 +91,6 @@ async function handleJob(database: Database, config: Config, job: AgentJob): Pro
   if (job.kind === "send_message") return sendMessageJob(database, config, job);
   if (job.kind === "classify_reply") return classifyReplyJob(database, config, job);
   if (job.kind === "draft_reply") return draftReplyJob(database, config, job);
-  if (job.kind === "create_partner") return createPartnerJob(database, config, job);
   if (job.kind === "monitor_publication") return monitorPublicationJob(database, job);
   if (job.kind === "sync_partner_stats") return syncPartnerStatsJob(database, config, job);
   if (job.kind !== "score_candidate") throw new Error(`Unsupported job kind: ${job.kind}`);
@@ -132,38 +136,6 @@ async function handleJob(database: Database, config: Config, job: AgentJob): Pro
   }
 }
 
-async function createPartnerJob(database: Database, config: Config, job: AgentJob): Promise<void> {
-  const offerId = job.payload.offerId;
-  if (typeof offerId !== "string") throw new Error("offerId is required");
-  const rows = await database<Record<string, unknown>[]>`
-    SELECT po.*, c.display_name, cc.value AS email FROM partner_offers po
-    JOIN creators c ON c.id = po.creator_id
-    JOIN creator_contacts cc ON cc.creator_id = c.id AND cc.kind = 'email' AND cc.is_public_business = true
-    WHERE po.id = ${offerId} ORDER BY cc.verified_at DESC NULLS LAST LIMIT 1
-  `;
-  const offer = rows[0];
-  if (!offer) throw new Error(`Partner offer ${offerId} not found`);
-  const control = (await database<Record<string, unknown>[]>`SELECT * FROM agent_control WHERE singleton = true`)[0];
-  if (control?.emergency_stop === true || control?.partnerships_paused === true) throw new Error("Partner creation is paused");
-  if (offer.status !== "approved" || !offer.approved_by || !offer.approved_at) throw new Error("Partner offer requires human approval");
-  const client = new VibeUiClient(config.vibeuiInternalApiUrl, config.vibeuiInternalApiKey);
-  const external = await client.createPartner({ creatorId: String(offer.creator_id), email: String(offer.email), displayName: String(offer.display_name) }, `partner:${offer.creator_id}`);
-  const promo = await client.issuePromo(external.id, {}, `partner-promo:${offer.creator_id}`);
-  await client.grantAccess(external.id, `partner-access:${offer.creator_id}`);
-  await database.begin(async (transaction) => {
-    await transaction`
-      INSERT INTO partners (id, creator_id, external_partner_id, referral_code, referral_url, promo_code, status)
-      VALUES (${randomUUID()}, ${String(offer.creator_id)}, ${external.id}, ${promo.referralCode}, ${promo.referralUrl}, ${promo.promoCode}, 'active')
-      ON CONFLICT (creator_id) DO UPDATE SET external_partner_id = EXCLUDED.external_partner_id,
-        referral_code = EXCLUDED.referral_code, referral_url = EXCLUDED.referral_url,
-        promo_code = EXCLUDED.promo_code, status = 'active', updated_at = now()
-    `;
-    await transaction`UPDATE partner_offers SET status = 'created' WHERE id = ${offerId}`;
-    await transaction`UPDATE creators SET status = 'partner_created', updated_at = now() WHERE id = ${String(offer.creator_id)}`;
-  });
-  await writeAudit(database, { actor: "partner_agent", action: "create_partner", targetType: "offer", targetId: offerId, decision: "completed", details: { externalPartnerId: external.id } });
-}
-
 async function monitorPublicationJob(database: Database, job: AgentJob): Promise<void> {
   const publicationId = job.payload.publicationId;
   if (typeof publicationId !== "string") throw new Error("publicationId is required");
@@ -181,15 +153,48 @@ async function monitorPublicationJob(database: Database, job: AgentJob): Promise
   });
 }
 
+// One job per creator per day: the key repeats within a day, so restarts do not multiply jobs.
+// Do-not-contact creators stay in: reading our own stats sends them nothing.
+async function scheduleStatsSync(database: Database): Promise<void> {
+  const creators = await database<{ creator_id: string }[]>`
+    SELECT DISTINCT creator_id FROM conversation_threads WHERE referral_url IS NOT NULL
+  `;
+  const day = new Date().toISOString().slice(0, 10);
+  for (const { creator_id } of creators) {
+    await enqueue(database, "sync_partner_stats", { creatorId: creator_id }, `sync_partner_stats:${creator_id}:${day}`);
+  }
+}
+
 async function syncPartnerStatsJob(database: Database, config: Config, job: AgentJob): Promise<void> {
-  const partnerId = job.payload.partnerId;
-  if (typeof partnerId !== "string") throw new Error("partnerId is required");
-  const rows = await database<{ id: string; external_partner_id: string }[]>`SELECT id, external_partner_id FROM partners WHERE id = ${partnerId}`;
-  const partner = rows[0];
-  if (!partner?.external_partner_id) throw new Error(`Partner ${partnerId} is not linked to VibeUI`);
-  const raw = await new VibeUiClient(config.vibeuiInternalApiUrl, config.vibeuiInternalApiKey).stats(partner.external_partner_id);
-  const number = (key: string) => typeof raw[key] === "number" ? raw[key] : 0;
-  await database`INSERT INTO referral_metrics (partner_id, visits, registrations, installations, payments, revenue, commission, raw_data) VALUES (${partnerId}, ${number("visits")}, ${number("registrations")}, ${number("installations")}, ${number("payments")}, ${number("revenue")}, ${number("commission")}, ${database.json(raw as postgres.JSONValue)})`;
+  const creatorId = job.payload.creatorId;
+  if (typeof creatorId !== "string") throw new Error("creatorId is required");
+  const rows = await database<{ market: string; referral_url: string | null }[]>`
+    SELECT c.market, t.referral_url FROM creators c
+    LEFT JOIN conversation_threads t ON t.creator_id = c.id AND t.referral_url IS NOT NULL
+    WHERE c.id = ${creatorId} LIMIT 1
+  `;
+  const creator = rows[0];
+  if (!creator) throw new Error(`Creator ${creatorId} not found`);
+  if (creator.market !== "ru" && creator.market !== "en") throw new Error("Invalid creator market");
+  const stats = await fetchCreatorStats(config.vibeuiInternalApiKey, creator.market, creatorId);
+  if (!stats?.claimed) return;
+  const { revenue, commission } = marketRevenue(stats, creator.market);
+  await database.begin(async (transaction) => {
+    const [partner] = await transaction<{ id: string }[]>`
+      INSERT INTO partners (id, creator_id, referral_code, referral_url, promo_code, status)
+      VALUES (${randomUUID()}, ${creatorId}, ${stats.code}, ${creator.referral_url}, ${stats.code}, 'active')
+      ON CONFLICT (creator_id) DO UPDATE SET status = 'active', updated_at = now()
+      RETURNING id
+    `;
+    await transaction`
+      INSERT INTO referral_metrics (partner_id, visits, registrations, payments, revenue, commission, raw_data)
+      VALUES (${partner!.id}, ${stats.visits}, ${stats.registrations}, ${stats.payments}, ${revenue}, ${commission}, ${transaction.json(stats as unknown as postgres.JSONValue)})
+    `;
+    await transaction`
+      UPDATE creators SET status = 'partner_created', updated_at = now()
+      WHERE id = ${creatorId} AND status NOT IN ('partner_created', 'do_not_contact')
+    `;
+  });
 }
 
 async function personalizeThreadJob(database: Database, config: Config, job: AgentJob): Promise<void> {

@@ -16,7 +16,7 @@ export const knownAgents = [
 
 const jobAgent: Record<string, string> = {
   score_creator: "creator_scorer", score_candidate: "creator_scorer", personalize_thread: "personalization_agent",
-  send_message: "outreach_agent", classify_reply: "reply_agent", create_partner: "partner_agent",
+  send_message: "outreach_agent", classify_reply: "reply_agent",
   monitor_publication: "publication_monitor", sync_partner_stats: "partner_agent",
 };
 
@@ -280,7 +280,7 @@ const routes: Record<string, Handler> = {
       { name: "Resend API", configured: Boolean(config.resendApiKey), purpose: "Резервная отправка писем" },
       { name: "Resend webhook secret", configured: Boolean(config.resendWebhookSecret), purpose: "Проверка подписи событий доставки" },
       { name: "Адрес отправителя", configured: Boolean(config.outreachEmailFrom), purpose: "From для outreach-писем" },
-      { name: "VibeUI internal API", configured: Boolean(config.vibeuiInternalApiUrl && config.vibeuiInternalApiKey), purpose: "Партнёры, промокоды, статистика" },
+      { name: "VibeUI internal API", configured: Boolean(config.vibeuiInternalApiKey), purpose: "Реферальные ссылки и статистика блогеров" },
     ],
   }),
 };
@@ -288,7 +288,7 @@ const routes: Record<string, Handler> = {
 async function creatorCard(database: Database, id: string) {
   const creator = (await database`SELECT * FROM creators WHERE id = ${id}`)[0];
   if (!creator) return null;
-  const [profiles, posts, contacts, scores, threads, offers, partner, actions] = await Promise.all([
+  const [profiles, posts, contacts, scores, threads, partner, actions] = await Promise.all([
     database`SELECT platform, profile_url, handle, followers, median_views, engagement_rate, verified_at FROM creator_profiles WHERE creator_id = ${id}`,
     database`SELECT url, title, summary, published_at, views, likes, comments FROM creator_posts WHERE creator_id = ${id} ORDER BY published_at DESC NULLS LAST LIMIT 20`,
     database`SELECT kind, value, source_url, is_public_business, verified_at FROM creator_contacts WHERE creator_id = ${id}`,
@@ -297,11 +297,10 @@ async function creatorCard(database: Database, id: string) {
         COALESCE((SELECT json_agg(json_build_object('id', m.id, 'direction', m.direction, 'kind', m.kind, 'status', m.status, 'subject', m.subject, 'body', m.body, 'facts', m.facts, 'model', m.model, 'reviewed_at', m.reviewed_at, 'edited_at', m.edited_at, 'sent_at', m.sent_at, 'created_at', m.created_at) ORDER BY m.created_at)
           FROM outreach_messages m WHERE m.thread_id = t.id), '[]'::json) AS messages
       FROM conversation_threads t JOIN outreach_campaigns oc ON oc.id = t.campaign_id WHERE t.creator_id = ${id}`,
-    database`SELECT status, terms, approved_by, approved_at, created_at FROM partner_offers WHERE creator_id = ${id}`,
     database`SELECT id, status, referral_code, referral_url, promo_code, created_at FROM partners WHERE creator_id = ${id}`,
     database`SELECT id::text, actor, action, decision, reason, created_at FROM agent_actions WHERE target_id = ${id} ORDER BY created_at DESC LIMIT 50`,
   ]);
-  return { creator, profiles, posts, contacts, scores, threads, offers, partner: partner[0] ?? null, actions };
+  return { creator, profiles, posts, contacts, scores, threads, partner: partner[0] ?? null, actions };
 }
 
 export async function spending(database: Database, config: Config) {

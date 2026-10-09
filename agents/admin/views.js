@@ -192,7 +192,7 @@ export const views = {
     subtitle: "Задания worker. Retry не повторяет внешний эффект: письма и партнёры защищены идемпотентностью",
     toolbar: (params) => `<div class="toolbar">
       ${select("status", params.status, [["", "Все статусы"], ["queued", "queued"], ["running", "running"], ["failed", "failed"], ["completed", "completed"], ["cancelled", "cancelled"]])}
-      ${select("kind", params.kind, [["", "Все типы"], ["score_creator", "score_creator"], ["personalize_thread", "personalize_thread"], ["send_message", "send_message"], ["classify_reply", "classify_reply"], ["create_partner", "create_partner"], ["monitor_publication", "monitor_publication"], ["sync_partner_stats", "sync_partner_stats"]])}
+      ${select("kind", params.kind, [["", "Все типы"], ["score_creator", "score_creator"], ["personalize_thread", "personalize_thread"], ["send_message", "send_message"], ["classify_reply", "classify_reply"], ["monitor_publication", "monitor_publication"], ["sync_partner_stats", "sync_partner_stats"]])}
     </div>`,
     async render({ query: params }) {
       const rows = await api(`/api/queue${query({ status: params.status, kind: params.kind })}`);
