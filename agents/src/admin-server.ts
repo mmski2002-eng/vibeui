@@ -137,6 +137,18 @@ async function adminAction(database: Database, request: IncomingMessage, respons
     if (!rows[0]) return json(response, 409, { error: "message_not_draft" });
     const { enqueue } = await import("./queue.js");
     await enqueue(database, "send_message", { messageId: id }, `send_message:${id}`);
+  } else if (action === "approve_all_messages") {
+    targetType = "message";
+    // Only email drafts: other channels are sent by hand, an approval would only park them in the send queue.
+    const rows = await database<{ id: string }[]>`
+      UPDATE outreach_messages m SET status = 'approved', approved_by = 'administrator', approved_at = now()
+      FROM conversation_threads t WHERE t.id = m.thread_id AND t.channel = 'email'
+        AND m.direction = 'outbound' AND m.status = 'draft' RETURNING m.id
+    `;
+    const { enqueue } = await import("./queue.js");
+    for (const row of rows) await enqueue(database, "send_message", { messageId: row.id }, `send_message:${row.id}`);
+    await writeAudit(database, { actor: "administrator", action, targetType, targetId: id, decision: "completed", details: { approved: rows.length } });
+    return json(response, 200, { ok: true, approved: rows.length });
   } else if (action === "mark_sent_manually") {
     targetType = "message";
     const sent = await database.begin(async (transaction) => {
@@ -239,6 +251,24 @@ async function editMessage(database: Database, request: IncomingMessage, respons
   return json(response, 200, { ok: true });
 }
 
+// A new threshold re-sorts creators already scored, judged by their latest score; contacted creators keep their status.
+export async function applyMinimumScore(database: Database, value: number): Promise<{ promoted: number; demoted: number }> {
+  return database.begin(async (transaction) => {
+    await transaction`UPDATE agent_control SET minimum_score = ${value}, updated_at = now() WHERE singleton = true`;
+    const promoted = await transaction`
+      UPDATE creators c SET status = 'eligible', updated_at = now()
+      WHERE c.status = 'scored' AND c.do_not_contact = false
+        AND (SELECT s.valid AND s.total >= ${value} FROM candidate_scores s WHERE s.creator_id = c.id ORDER BY s.created_at DESC LIMIT 1)
+    `;
+    const demoted = await transaction`
+      UPDATE creators c SET status = 'scored', updated_at = now()
+      WHERE c.status = 'eligible'
+        AND NOT COALESCE((SELECT s.valid AND s.total >= ${value} FROM candidate_scores s WHERE s.creator_id = c.id ORDER BY s.created_at DESC LIMIT 1), false)
+    `;
+    return { promoted: promoted.count, demoted: demoted.count };
+  });
+}
+
 async function updateControl(database: Database, request: IncomingMessage, response: ServerResponse) {
   const body = await readJson(request);
   const action = body.action;
@@ -248,6 +278,27 @@ async function updateControl(database: Database, request: IncomingMessage, respo
     stop: { emergency: true, paused: true, reason: "Emergency stop by administrator" },
     "clear-stop": { emergency: false, paused: true, reason: "Emergency stop cleared; outreach remains paused" },
   };
+  if (action === "set-search-budget") {
+    const value = Number(body.value);
+    if (!Number.isFinite(value) || value < 0 || value > 100) return json(response, 400, { error: "invalid_budget" });
+    await database`UPDATE agent_control SET search_budget_usd = ${Math.round(value * 100) / 100}, updated_at = now() WHERE singleton = true`;
+    await writeAudit(database, { actor: "administrator", action: "control_set_search_budget", targetType: "system", decision: "completed", details: { value } });
+    return json(response, 200, { ok: true });
+  }
+  if (action === "set-total-budget") {
+    const value = Number(body.value);
+    if (!Number.isFinite(value) || value < 0 || value > 10_000) return json(response, 400, { error: "invalid_budget" });
+    await database`UPDATE agent_control SET total_budget_usd = ${Math.round(value * 100) / 100}, updated_at = now() WHERE singleton = true`;
+    await writeAudit(database, { actor: "administrator", action: "control_set_total_budget", targetType: "system", decision: "completed", details: { value } });
+    return json(response, 200, { ok: true });
+  }
+  if (action === "set-minimum-score") {
+    const value = Number(body.value);
+    if (!Number.isInteger(value) || value < 0 || value > 100) return json(response, 400, { error: "invalid_score" });
+    const changed = await applyMinimumScore(database, value);
+    await writeAudit(database, { actor: "administrator", action: "control_set_minimum_score", targetType: "system", decision: "completed", details: { value, ...changed } });
+    return json(response, 200, { ok: true, ...changed });
+  }
   const toggles: Record<string, string> = { partnerships: "partnerships_paused", payouts: "payouts_paused", models: "model_operations_paused" };
   const toggle = typeof action === "string" ? /^(pause|resume)-(partnerships|payouts|models)$/.exec(action) : null;
   if (toggle) {

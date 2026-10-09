@@ -13,6 +13,8 @@
     "import": "tsx src/cli.ts import",
     "prepare-drafts": "tsx src/cli.ts prepare-drafts",
     "migrate": "tsx src/cli.ts migrate",
+    "schedule": "tsx src/cli.ts schedule",
+    "telegram-login": "tsx src/cli.ts telegram-login",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test tests/**/*.test.ts"
   },
@@ -22,6 +24,7 @@
     "nodemailer": "^7.0.13",
     "postgres": "^3.4.7",
     "resend": "^6.32.0",
+    "telegram": "^2.26.22",
     "zod": "^4.1.12"
   },
   "devDependencies": {

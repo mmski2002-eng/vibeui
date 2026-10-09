@@ -26,6 +26,13 @@ export const policySchema = z.object({
   blockedContactDomains: z.array(z.string().min(1)),
   monthlyModelBudgetUsd: z.number().nonnegative(),
   monthlyOutreachBudgetUsd: z.number().nonnegative(),
+  discovery: z.object({
+    youtube: z.object({ ru: z.array(z.string().min(2)), en: z.array(z.string().min(2)) }),
+    rutube: z.array(z.string().min(2)),
+    habrHubs: z.array(z.string().regex(/^[A-Za-z0-9_]+$/)),
+    devtoTags: z.array(z.string().regex(/^[a-z0-9]+$/)),
+    telegramQueries: z.array(z.string().min(2)),
+  }),
 });
 
 export type Policy = z.infer<typeof policySchema>;

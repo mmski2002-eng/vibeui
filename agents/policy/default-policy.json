@@ -7,12 +7,92 @@
   "followUpDelayDays": 4,
   "secondFollowUpDelayDays": 9,
   "allowedPlatforms": {
-    "ru": ["telegram", "youtube", "vk", "dzen", "habr", "vc", "rutube", "newsletter", "podcast", "website"],
-    "en": ["youtube", "x", "tiktok", "linkedin", "instagram", "newsletter", "podcast", "devto", "hashnode", "medium", "producthunt", "website"]
+    "ru": [
+      "telegram",
+      "youtube",
+      "vk",
+      "dzen",
+      "habr",
+      "vc",
+      "rutube",
+      "newsletter",
+      "podcast",
+      "website"
+    ],
+    "en": [
+      "youtube",
+      "x",
+      "tiktok",
+      "linkedin",
+      "instagram",
+      "newsletter",
+      "podcast",
+      "devto",
+      "hashnode",
+      "medium",
+      "producthunt",
+      "website"
+    ]
   },
   "requirePublicBusinessContact": true,
-  "requireHumanApprovalFor": ["first_contact", "payment_offer", "contract", "referral_activation"],
+  "requireHumanApprovalFor": [
+    "first_contact",
+    "payment_offer",
+    "contract",
+    "referral_activation"
+  ],
   "blockedContactDomains": [],
   "monthlyModelBudgetUsd": 50,
-  "monthlyOutreachBudgetUsd": 0
+  "monthlyOutreachBudgetUsd": 0,
+  "discovery": {
+    "youtube": {
+      "ru": [
+        "вайбкодинг",
+        "cursor ai сайт",
+        "claude code",
+        "сайт с помощью нейросети",
+        "лендинг нейросеть",
+        "shadcn ui"
+      ],
+      "en": [
+        "vibe coding",
+        "cursor ai tutorial",
+        "claude code tutorial",
+        "build website with ai",
+        "shadcn ui",
+        "v0 dev tutorial"
+      ]
+    },
+    "rutube": [
+      "вайбкодинг",
+      "cursor нейросеть",
+      "сайт нейросеть",
+      "claude code",
+      "лендинг нейросеть"
+    ],
+    "habrHubs": [
+      "artificial_intelligence",
+      "webdev",
+      "javascript",
+      "ReactJS",
+      "machine_learning"
+    ],
+    "devtoTags": [
+      "vibecoding",
+      "cursor",
+      "nextjs",
+      "tailwindcss",
+      "react",
+      "webdev",
+      "ai"
+    ],
+    "telegramQueries": [
+      "вайбкодинг",
+      "cursor",
+      "нейросети разработка",
+      "vibe coding",
+      "no-code",
+      "claude code"
+    ]
+  }
 }

@@ -5,7 +5,7 @@ import type { Database } from "./database.js";
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export const knownAgents = [
-  { name: "discovery", title: "Discovery Agent", description: "Поиск кандидатов через YouTube API и импорт", runNames: [] as string[], actor: "discovery" },
+  { name: "discovery", title: "Discovery Agent", description: "Поиск кандидатов: YouTube, Rutube, Хабр, Dev.to, Telegram, VK", runNames: [] as string[], actor: "discovery" },
   { name: "creator_scorer", title: "Scoring Agent", description: "Оценка блогера по шкале плана", runNames: ["creator_scorer", "candidate_scorer"], actor: "creator_scorer" },
   { name: "personalization_agent", title: "Personalization Agent", description: "Черновик первого письма по подтверждённой публикации", runNames: ["personalization_agent"], actor: "personalization_agent" },
   { name: "outreach_agent", title: "Outreach Agent", description: "Отправка одобренных писем через Resend", runNames: ["outreach_agent"], actor: "outreach_agent" },
@@ -45,12 +45,13 @@ function limit(url: URL, fallback = 100): number {
 
 const routes: Record<string, Handler> = {
   overview: async (database, config) => {
-    const [control, counts, jobs, recentRuns, notifications, spend, funnel] = await Promise.all([
-      database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, model_operations_paused, reason, updated_at FROM agent_control WHERE singleton = true`,
+    const [control, counts, jobs, recentRuns, notifications, spend, funnel, daily, policy] = await Promise.all([
+      database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, model_operations_paused, minimum_score, scheduler_state, reason, updated_at FROM agent_control WHERE singleton = true`,
       database`SELECT
         (SELECT count(*)::int FROM creators) AS creators,
         (SELECT count(*)::int FROM creators WHERE created_at >= date_trunc('day', now())) AS creators_today,
         (SELECT count(*)::int FROM creators WHERE status = 'eligible') AS eligible,
+        (SELECT count(DISTINCT creator_id)::int FROM candidate_scores) AS scored,
         (SELECT count(*)::int FROM outreach_messages WHERE direction = 'outbound' AND status = 'draft') AS drafts,
         (SELECT count(*)::int FROM outreach_messages WHERE direction = 'outbound' AND sent_at IS NOT NULL) AS sent,
         (SELECT count(*)::int FROM outreach_messages WHERE direction = 'outbound' AND sent_at >= date_trunc('day', now())) AS sent_today,
@@ -67,6 +68,12 @@ const routes: Record<string, Handler> = {
       database`SELECT id, severity, kind, title, created_at FROM notifications ORDER BY created_at DESC LIMIT 8`,
       spending(database, config),
       partnerFunnel(config),
+      database`SELECT to_char(d, 'YYYY-MM-DD') AS day,
+          (SELECT count(*)::int FROM creators c WHERE c.created_at >= d AND c.created_at < d + interval '1 day') AS found,
+          (SELECT count(*)::int FROM outreach_messages m WHERE m.direction = 'outbound' AND m.sent_at >= d AND m.sent_at < d + interval '1 day') AS sent,
+          (SELECT COALESCE(sum(cost_usd), 0)::float FROM model_usage u WHERE u.created_at >= d AND u.created_at < d + interval '1 day') AS spent
+        FROM generate_series(date_trunc('day', now()) - interval '13 days', date_trunc('day', now()), interval '1 day') d ORDER BY d`,
+      readPolicy(config),
     ]);
     const state = control[0] ?? {};
     const c = counts[0] ?? {};
@@ -76,7 +83,7 @@ const routes: Record<string, Handler> = {
     return {
       status, control: state, counts: c,
       jobs: Object.fromEntries(jobs.map((row) => [row.status, row.count])),
-      recentRuns, notifications, spending: spend, funnel,
+      recentRuns, notifications, spending: spend, funnel, daily, dailyContactLimit: policy?.dailyContactLimit ?? 5,
     };
   },
 
@@ -268,6 +275,27 @@ const routes: Record<string, Handler> = {
       ORDER BY id DESC LIMIT ${limit(url)}`;
   },
 
+  search: async (database) => {
+    const [control, bands, platforms, runs, queue] = await Promise.all([
+      database`SELECT search_budget_usd::float AS budget, total_budget_usd::float AS total_budget, minimum_score, scheduler_state,
+        COALESCE((SELECT sum(cost_usd) FROM model_usage WHERE created_at >= date_trunc('day', now())), 0)::float AS spent_today,
+        COALESCE((SELECT sum(cost_usd) FROM model_usage), 0)::float AS spent_total
+        FROM agent_control WHERE singleton = true`,
+      database`WITH latest AS (SELECT DISTINCT ON (creator_id) total, valid FROM candidate_scores ORDER BY creator_id, created_at DESC)
+        SELECT (CASE WHEN NOT valid THEN -1 ELSE least(total / 10 * 10, 90) END)::int AS band, count(*)::int AS count FROM latest GROUP BY 1 ORDER BY 1 DESC`,
+      database`SELECT cp.platform, count(DISTINCT cp.creator_id)::int AS creators,
+          count(DISTINCT cp.creator_id) FILTER (WHERE c.status = 'eligible')::int AS eligible,
+          count(DISTINCT cp.creator_id) FILTER (WHERE cp.created_at >= now() - interval '7 days')::int AS week
+        FROM creator_profiles cp JOIN creators c ON c.id = cp.creator_id GROUP BY cp.platform ORDER BY creators DESC`,
+      database`SELECT source, query, started_at, finished_at, result, error FROM discovery_runs ORDER BY started_at DESC LIMIT 20`,
+      database`SELECT
+        (SELECT count(*)::int FROM creators WHERE status = 'researched') AS unscored,
+        (SELECT count(*)::int FROM agent_jobs WHERE kind = 'score_creator' AND status IN ('queued', 'running')) AS scoring_jobs,
+        (SELECT count(*)::int FROM outreach_messages m JOIN conversation_threads t ON t.id = m.thread_id
+          WHERE m.direction = 'outbound' AND m.status = 'draft' AND t.channel = 'email') AS email_drafts`,
+    ]);
+    return { control: control[0] ?? {}, bands, platforms, runs, queue: queue[0] ?? {} };
+  },
   "settings/policies": async (_database, config) => ({ path: config.policyPath, policy: await readPolicy(config) }),
 
   "settings/integrations": async (_database, config) => ({
@@ -316,12 +344,13 @@ export async function spending(database: Database, config: Config) {
     openRouterBalance(config),
   ]);
   const spent = rows[0] ?? { total: 0, today: 0, month: 0 };
-  const control = await database<{ budget: number | null }[]>`SELECT search_budget_usd::float AS budget FROM agent_control WHERE singleton = true`;
+  const control = await database<{ budget: number | null; total_budget: number }[]>`SELECT search_budget_usd::float AS budget, total_budget_usd::float AS total_budget FROM agent_control WHERE singleton = true`;
   const budget = control[0]?.budget ?? config.hardModelBudgetUsd;
   return {
     ...spent,
+    totalBudget: control[0]?.total_budget ?? 3,
     hardBudget: budget,
-    hardBudgetRemaining: Math.max(0, budget - spent.total),
+    hardBudgetRemaining: Math.max(0, budget - spent.today),
     byAgent,
     openRouter,
   };

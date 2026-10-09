@@ -10,7 +10,7 @@ export async function prepareDrafts(database: Database): Promise<number> {
     JOIN creator_contacts cc ON cc.creator_id = c.id AND cc.is_public_business = true AND cc.verified_at IS NOT NULL
     JOIN outreach_campaigns oc ON oc.market = c.market AND oc.status IN ('dry_run', 'active')
     WHERE c.status = 'eligible' AND c.do_not_contact = false
-      AND EXISTS (SELECT 1 FROM candidate_scores cs WHERE cs.creator_id = c.id AND cs.valid = true AND cs.total >= oc.minimum_score)
+      AND EXISTS (SELECT 1 FROM candidate_scores cs WHERE cs.creator_id = c.id AND cs.valid = true AND cs.total >= (SELECT minimum_score FROM agent_control WHERE singleton = true))
       AND NOT EXISTS (SELECT 1 FROM conversation_threads t WHERE t.creator_id = c.id AND t.campaign_id = oc.id)
     ORDER BY c.id, oc.id, (cc.kind = 'email') DESC, cc.verified_at DESC
   `;

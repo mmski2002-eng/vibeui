@@ -114,6 +114,7 @@ function confirmAction({ title, text, danger = false, askReason = false, confirm
 const actionTexts = {
   mark_sent_manually: { title: "Отмечено как отправленное вручную?", text: "Письмо считается отправленным сейчас: попадёт в статистику, автоматическая отправка для него отменяется." },
   review_message: { title: "Текст проверен?", text: "Только пометка для вас. Письмо остаётся черновиком и не ставится в очередь отправки." },
+  approve_all_messages: { title: "Согласовать все черновики?", text: "Все черновики на email уйдут в очередь отправки. Отправляется не больше дневного лимита, остальные уйдут в следующие дни. Черновики в Telegram остаются для ручной отправки." },
   approve_message: { title: "Одобрить письмо?", text: "Письмо будет поставлено в очередь отправки и уйдёт само, как только рассылку разрешат. Сейчас отправку держат policy и пауза." },
   do_not_contact: { title: "Запретить контакт?", text: "Блогер попадёт в глобальный do_not_contact. Все его задания в очереди будут отменены немедленно во всех кампаниях.", danger: true, askReason: true, confirmLabel: "Запретить" },
   cancel_job: { title: "Отменить задание?", text: "Задание будет отменено и не выполнится." },
@@ -138,8 +139,8 @@ export async function runAction(action, id) {
   const answer = await confirmAction(texts);
   if (!answer) return;
   try {
-    await post("/api/action", { action, id, reason: answer.reason || undefined });
-    toast("Готово");
+    const result = await post("/api/action", { action, id, reason: answer.reason || undefined });
+    toast(result.approved !== undefined ? `Согласовано писем: ${result.approved}` : "Готово");
     await refresh();
   } catch (error) {
     toast(`Ошибка: ${error.message}`, true);
@@ -252,6 +253,7 @@ export async function refresh() {
     container.innerHTML = html;
     container.querySelectorAll("[data-w]").forEach((element) => { element.style.width = `${Math.max(0, Math.min(100, Number(element.dataset.w)))}%`; });
     container.querySelectorAll("[data-h]").forEach((element) => { element.style.height = `${Math.max(0, Math.min(100, Number(element.dataset.h)))}%`; });
+    container.querySelectorAll("[data-h]").forEach((element) => { element.style.height = `${Math.max(0, Math.min(100, Number(element.dataset.h)))}%`; });
     document.getElementById("updated").textContent = `Обновлено ${new Date().toLocaleTimeString("ru-RU")}`;
   } catch (error) {
     document.getElementById("view").innerHTML = `<div class="empty">Не удалось загрузить: ${esc(error.message)}</div>`;
@@ -281,6 +283,18 @@ function bindGlobal() {
       try {
         const result = await post("/api/contact", { creatorId: contactForm.dataset.contactForm, kind: data.get("kind"), value: data.get("value"), sourceUrl: data.get("sourceUrl") });
         toast(result.draftsQueued ? `Контакт добавлен, черновиков в очереди: ${result.draftsQueued}` : "Контакт добавлен");
+        await refresh();
+      } catch (error) {
+        toast(`Ошибка: ${error.message}`, true);
+      }
+      return;
+    }
+    const settingForm = event.target.closest("[data-setting]");
+    if (settingForm) {
+      event.preventDefault();
+      try {
+        const result = await post("/api/control", { action: settingForm.dataset.setting, value: new FormData(settingForm).get("value") });
+        toast(result.promoted !== undefined ? `Сохранено. В письма добавлено ${result.promoted}, убрано ${result.demoted}` : "Сохранено");
         await refresh();
       } catch (error) {
         toast(`Ошибка: ${error.message}`, true);

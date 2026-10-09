@@ -17,6 +17,7 @@ import { referralWord } from "./referral-word.js";
 import { deliverNotifications, telegramConfigured } from "./telegram.js";
 import { notify } from "./email/inbound.js";
 import { checkPublication } from "./publication-monitor.js";
+import { runScheduler } from "./scheduler.js";
 
 export async function runWorker(database: Database, config: Config): Promise<void> {
   for (const model of [config.scoringModel, config.generationModel]) {
@@ -32,6 +33,7 @@ export async function runWorker(database: Database, config: Config): Promise<voi
   let nextInboxPoll = 0;
   let nextTelegramPush = 0;
   let nextStatsSync = 0;
+  let nextDiscovery = 0;
   while (!stopping) {
     if (telegramConfigured(config) && Date.now() >= nextTelegramPush) {
       nextTelegramPush = Date.now() + 15_000;
@@ -51,6 +53,11 @@ export async function runWorker(database: Database, config: Config): Promise<voi
       nextStatsSync = Date.now() + 6 * 60 * 60_000;
       await scheduleStatsSync(database).catch((error: unknown) => console.error("Stats sync scheduling failed:", error instanceof Error ? error.message : error));
     }
+    if (Date.now() >= nextDiscovery) {
+      nextDiscovery = Date.now() + 30 * 60_000;
+      await runScheduler(database, config).then((outcome) => console.log("Scheduler:", JSON.stringify(outcome)))
+        .catch((error: unknown) => console.error("Scheduler failed:", error instanceof Error ? error.message : error));
+    }
     const job = await claimNext(database, workerId);
     if (!job) {
       await delay(config.workerPollMs);
@@ -69,6 +76,14 @@ export async function runWorker(database: Database, config: Config): Promise<voi
         await database`
           UPDATE agent_jobs SET status = 'queued', attempts = attempts - 1, locked_at = NULL, last_error = 'waiting: daily_limit_reached',
             available_at = date_trunc('day', now()) + interval '1 day 7 hours', updated_at = now() WHERE id = ${job.id}
+        `;
+        continue;
+      }
+      // Same for the daily search budget: scoring and drafting resume after midnight instead of failing.
+      if (/search budget reached/.test(String(error))) {
+        await database`
+          UPDATE agent_jobs SET status = 'queued', attempts = attempts - 1, locked_at = NULL, last_error = 'waiting: daily search budget',
+            available_at = date_trunc('day', now()) + interval '1 day 10 minutes', updated_at = now() WHERE id = ${job.id}
         `;
         continue;
       }
@@ -114,7 +129,7 @@ async function handleJob(database: Database, config: Config, job: AgentJob): Pro
     await database.begin(async (transaction) => {
       await transaction`
         UPDATE candidates SET score = ${score.total}, score_details = ${transaction.json(candidateScoreDetails)},
-          status = ${score.total >= 80 ? "qualified" : "review"}, updated_at = now()
+          status = ${score.total >= await minimumScore(database) ? "qualified" : "review"}, updated_at = now()
         WHERE id = ${candidateId}
       `;
       await transaction`
@@ -385,7 +400,7 @@ function firstSendDenial(message: Record<string, unknown>, control: Record<strin
   if (!message.approved_by || !message.approved_at) return "human_approval_required";
   if (message.do_not_contact === true) return "do_not_contact";
   if (message.is_public_business !== true) return "contact_not_verified_as_public_business";
-  if (typeof message.score !== "number" || message.score < policy.minimumAutomaticScore) return "score_below_threshold";
+  if (typeof message.score !== "number" || message.score < Number(control.minimum_score ?? 65)) return "score_below_threshold";
   if (sentToday >= policy.dailyContactLimit) return "daily_limit_reached";
   if (message.kind === "follow_up" && Number(message.follow_up_count) >= policy.maximumFollowUps) return "follow_up_limit_reached";
   return null;
@@ -430,7 +445,7 @@ async function scoreCreatorJob(database: Database, config: Config, job: AgentJob
           ${transaction.json(creatorScoreDetails)}, ${transaction.json(score.evidenceUrls)}, ${valid}, ${config.scoringModel})
       `;
       await transaction`
-        UPDATE creators SET status = ${valid && score.total >= 80 ? "eligible" : "scored"}, updated_at = now()
+        UPDATE creators SET status = ${valid && score.total >= await minimumScore(transaction) ? "eligible" : "scored"}, updated_at = now()
         WHERE id = ${creatorId}
       `;
       await transaction`
@@ -469,21 +484,32 @@ async function recordUsage(database: Database, runId: string | null, campaignId:
   }
 }
 
-// The spend cap stops discovery, scoring and drafting only: answering creators who already replied must keep working.
+// The daily cap stops discovery, scoring and drafting only: answering creators who already replied must keep working.
 async function assertModelBudget(database: Database, config: Config, scope: "search" | "reply" = "search"): Promise<void> {
-  const rows = await database<{ spent: number; paused: boolean; budget: number | null }[]>`
-    SELECT COALESCE((SELECT sum(cost_usd) FROM model_usage), 0)::float AS spent,
-      model_operations_paused AS paused, search_budget_usd::float AS budget FROM agent_control WHERE singleton = true
+  const rows = await database<{ spent: number; total: number; paused: boolean; budget: number | null; total_budget: number }[]>`
+    SELECT COALESCE((SELECT sum(cost_usd) FROM model_usage WHERE created_at >= date_trunc('day', now())), 0)::float AS spent,
+      COALESCE((SELECT sum(cost_usd) FROM model_usage), 0)::float AS total,
+      model_operations_paused AS paused, search_budget_usd::float AS budget, total_budget_usd::float AS total_budget FROM agent_control WHERE singleton = true
   `;
   const state = rows[0];
   if (state?.paused) throw new Error("Model operations are paused");
   if (scope === "reply") return;
+  if (state && state.total >= state.total_budget) {
+    const recent = await database`SELECT 1 FROM notifications WHERE kind = 'total_budget_reached' AND created_at > now() - interval '1 day' LIMIT 1`;
+    if (!recent[0]) await notify(database, "critical", "total_budget_reached", "Общий лимит на модели исчерпан", { spent: `$${state.total.toFixed(2)}`, budget: `$${state.total_budget.toFixed(2)}` });
+    throw new Error(`Total search budget reached: $${state.total_budget.toFixed(2)}`);
+  }
   const budget = state?.budget ?? config.hardModelBudgetUsd;
   if ((state?.spent ?? 0) >= budget) {
     const recent = await database`SELECT 1 FROM notifications WHERE kind = 'search_budget_reached' AND created_at > now() - interval '1 day' LIMIT 1`;
-    if (!recent[0]) await notify(database, "critical", "search_budget_reached", "Бюджет поиска исчерпан", { spent: `$${(state?.spent ?? 0).toFixed(2)}`, budget: `$${budget.toFixed(2)}` });
-    throw new Error(`Search model budget reached: $${budget.toFixed(2)}`);
+    if (!recent[0]) await notify(database, "warning", "search_budget_reached", "Дневной бюджет поиска исчерпан", { spent: `$${(state?.spent ?? 0).toFixed(2)}`, budget: `$${budget.toFixed(2)}` });
+    throw new Error(`Daily search budget reached: $${budget.toFixed(2)}`);
   }
+}
+
+export async function minimumScore(database: Database | postgres.TransactionSql): Promise<number> {
+  const rows = await database<{ minimum_score: number }[]>`SELECT minimum_score FROM agent_control WHERE singleton = true`;
+  return rows[0]?.minimum_score ?? 65;
 }
 
 function delay(milliseconds: number): Promise<void> {

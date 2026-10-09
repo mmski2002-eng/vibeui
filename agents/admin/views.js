@@ -14,6 +14,38 @@ const scoreParts = [
   ["allowedContact", "Разрешённый контакт", 5], ["moderateAdLoad", "Умеренная реклама", 5],
 ];
 
+const schedulerText = { run: "идёт поиск", nothing_due: "все запросы недавно были", emergency_stop: "emergency stop", models_paused: "LLM на паузе",
+  budget_spent: "дневной лимит исчерпан", total_budget_spent: "общий лимит исчерпан", scoring_in_progress: "оценивает найденных", enough_candidates: "кандидатов хватает" };
+
+// Each bar is relative to the first step; the percent is the conversion from the previous step.
+function funnelBars(steps) {
+  const top = Math.max(1, Number(steps[0]?.[1] ?? 0));
+  return `<ol class="funnel">${steps.map(([label, value, href], index) => {
+    const previous = index ? Number(steps[index - 1][1] ?? 0) : null;
+    const rate = previous ? `→ ${Math.round((Number(value ?? 0) / previous) * 100)}%` : "";
+    const name = href ? `<a class="link-plain" href="${href}">${esc(label)}</a>` : esc(label);
+    return `<li><span class="name">${name}</span><span class="bar" title="${esc(label)}: ${fmt.num(value ?? 0)}"><span data-w="${(Number(value ?? 0) / top) * 100}"></span></span><strong>${fmt.num(value ?? 0)}</strong><span class="rate">${rate}</span></li>`;
+  }).join("")}</ol>`;
+}
+
+function todayLine(label, value, part = null, total = null, money = false, href = "") {
+  const over = total && part / total >= 1;
+  return `<div class="today-line"><span class="label">${href ? `<a class="link-plain" href="${href}">${label}</a>` : label}</span><span class="value">${value}</span>
+    ${total ? `<div class="meter${over && money ? " danger" : ""}"><span data-w="${(part / total) * 100}"></span></div>` : ""}</div>`;
+}
+
+// Single-series daily columns; the native title is the hover tooltip, the caption gives total and peak as text.
+function columns(daily, key, format, size = "") {
+  const values = daily.map((row) => Number(row[key] ?? 0));
+  const max = Math.max(...values, 0);
+  const total = values.reduce((sum, value) => sum + value, 0);
+  const label = (day) => day ? new Date(`${day}T00:00:00`).toLocaleDateString("ru-RU", { day: "numeric", month: "short" }) : "";
+  return `<div class="columns ${size}" role="img" aria-label="${esc(`За 14 дней: всего ${format(total)}, пик ${format(max)}`)}">
+      ${daily.map((row, index) => `<span class="col${index === daily.length - 1 ? " today" : ""}" title="${esc(`${label(row.day)}: ${format(values[index])}`)}"><span data-h="${max ? Math.max(2, (values[index] / max) * 100) : 0}"></span></span>`).join("")}
+    </div>
+    <div class="columns-axis small muted"><span>${label(daily[0]?.day)}</span><span>всего ${format(total)} · пик ${format(max)}</span><span>сегодня</span></div>`;
+}
+
 function spendingCards(spending) {
   const openRouter = spending.openRouter;
   const remaining = openRouter ? (openRouter.error ? "ошибка" : openRouter.remaining == null ? "без лимита" : fmt.usd(openRouter.remaining)) : "нет ключа";
@@ -21,7 +53,7 @@ function spendingCards(spending) {
   return `<div class="grid kpis">
     ${kpi("Остаток на ключе OpenRouter", remaining, `${openRouterHint}${openRouter?.limit ? meter(openRouter.usage ?? 0, openRouter.limit) : ""}`, true)}
     ${kpi("Потрачено агентами", fmt.usd(spending.total), `сегодня ${fmt.usd(spending.today)} · месяц ${fmt.usd(spending.month)}`)}
-    ${kpi("До жёсткого лимита", fmt.usd(spending.hardBudgetRemaining), `лимит ${fmt.usd(spending.hardBudget, 2)}${meter(spending.total, spending.hardBudget)}`)}
+    ${kpi("Осталось на поиск сегодня", fmt.usd(spending.hardBudgetRemaining), `дневной лимит ${fmt.usd(spending.hardBudget, 2)} · <a class="link" href="#/search">изменить</a>${meter(spending.today, spending.hardBudget)}`)}
   </div>`;
 }
 
@@ -90,35 +122,48 @@ export const views = {
         paused: ["warn", "Рассылка на паузе", "Поиск, анализ и черновики работают. Письма не отправляются."],
         normal: ["ok", "Система работает", "Все флаги в рабочем положении."],
       }[data.status];
-      const flags = [
-        ["Рассылка", control.outreach_paused], ["Партнёры", control.partnerships_paused],
-        ["Выплаты", control.payouts_paused], ["LLM", control.model_operations_paused],
-      ].map(([label, paused]) => `<span class="pill ${paused ? "warn" : "ok"}">${label}: ${paused ? "пауза" : "вкл"}</span>`).join(" ");
-      const replyRate = c.sent ? `${Math.round((c.replied_threads / c.sent) * 100)}%` : "—";
+      const today = data.daily.at(-1) ?? { found: 0, sent: 0 };
+      const scheduler = control.scheduler_state ?? {};
+      const steps = [
+        ["Найдено", c.creators, "#/creators"], ["Оценено", c.scored, "#/search"], ["Прошли порог", c.eligible, "#/creators?status=eligible"],
+        ["Писем отправлено", c.sent, "#/conversations"], ["Ответили", c.replied_threads, "#/conversations"], ["Партнёры", c.partners, "#/partners"],
+      ];
+      const health = [
+        ["Ошибки агентов", c.errors_24h], ["Критичные уведомления", c.critical_24h], ["Блокировки защит", c.blocked_24h], ["Задания с ошибкой", jobs.failed ?? 0],
+      ];
+      const partnerSteps = funnel.error ? [] : [
+        ["Ссылок выдано", funnel.invites], ["Блогеров зарегистрировалось", funnel.claimed], ["Переходы по ссылкам", funnel.visits],
+        ["Регистрации зрителей", funnel.registrations], ["Оплаты", funnel.payments],
+      ];
+      const openRouter = data.spending.openRouter;
       return `
-        <div class="status-banner ${banner[0]}"><strong>${banner[1]}</strong><span class="muted">${banner[2]}</span><span>${flags}</span>${control.reason ? `<span class="small muted">Причина: ${esc(control.reason)}</span>` : ""}</div>
-        <div class="grid kpis">
-          ${kpi("Кандидаты", fmt.num(c.creators), `сегодня +${fmt.num(c.creators_today)}`)}
-          ${kpi("Прошли фильтр", fmt.num(c.eligible), "score ≥ 80, без флагов")}
-          ${kpi("Черновики", fmt.num(c.drafts), "ждут проверки")}
-          ${kpi("Отправлено", fmt.num(c.sent), `сегодня ${fmt.num(c.sent_today)}`)}
-          ${kpi("Ответы", fmt.num(c.replied_threads), `доля ответов ${replyRate}`)}
-          ${kpi("Активные переговоры", fmt.num(c.active_threads))}
-          ${kpi("Партнёры", fmt.num(c.partners))}
-          ${kpi("Публикации за 7 дней", fmt.num(c.publications_week))}
-          ${kpi("Ошибки 24 ч", fmt.num(c.errors_24h), `блокировок ${fmt.num(c.blocked_24h)} · критичных ${fmt.num(c.critical_24h)}`)}
+        <div class="status-strip ${banner[0]}"><span class="dot" aria-hidden="true"></span><strong>${banner[1]}</strong><span class="muted small">${banner[2]}</span>${control.reason ? `<span class="small muted">· ${esc(control.reason)}</span>` : ""}</div>
+        <div class="dash-row hero">
+          ${card("Воронка поиска партнёров", funnelBars(steps), `<span class="small muted">порог оценки ${esc(control.minimum_score ?? 65)}</span>`)}
+          ${card("Сегодня", `<div class="today">
+            ${todayLine("Найдено блогеров", `+${fmt.num(today.found)}`)}
+            ${todayLine("Писем отправлено", `${fmt.num(c.sent_today)} <span class="muted">из ${fmt.num(data.dailyContactLimit)}</span>`, c.sent_today, data.dailyContactLimit)}
+            ${todayLine("Расход на поиск", `${fmt.usd(data.spending.today, 2)} <span class="muted">из ${fmt.usd(data.spending.hardBudget, 2)}</span>`, data.spending.today, data.spending.hardBudget, true)}
+            ${todayLine("Черновики ждут проверки", fmt.num(c.drafts), null, null, false, c.drafts ? "#/conversations" : "")}
+            <p class="small muted today-note">Планировщик: ${esc(schedulerText[scheduler.decision] ?? "ещё не запускался")}${scheduler.at ? ` · ${fmt.ago(scheduler.at)}` : ""} · <a class="link" href="#/search">поиск</a></p>
+          </div>`)}
         </div>
-        ${spendingCards(data.spending)}
-        <div class="grid cols-2">
-          ${card("Воронка партнёров", funnel.error ? `<div class="empty">Нет связи с VibeUI: ${esc(funnel.error)}</div>` : `<dl class="kv">
-            <dt>Ссылок выдано</dt><dd>${fmt.num(funnel.invites)}</dd><dt>Блогеров зарегистрировалось</dt><dd>${fmt.num(funnel.claimed)}</dd>
-            <dt>Переходы по ссылкам</dt><dd>${fmt.num(funnel.visits)}</dd><dt>Регистрации зрителей</dt><dd>${fmt.num(funnel.registrations)}</dd>
-            <dt>Оплаты</dt><dd>${fmt.num(funnel.payments)}</dd>
-            ${(funnel.revenue ?? []).map((row) => `<dt>Выручка, ${esc(row.currency)}</dt><dd>${fmt.num(row.amount)} · комиссия ${fmt.num(row.commission)}</dd>`).join("") || "<dt>Выручка</dt><dd>0</dd>"}
-            </dl>`)}
-          ${card("Очередь", `<dl class="kv">${["queued", "running", "failed", "completed", "cancelled"].map((status) => `<dt>${pill(status)}</dt><dd>${fmt.num(jobs[status] ?? 0)}</dd>`).join("")}</dl>`, '<a class="link small" href="#/queue">Открыть</a>')}
+        <div class="dash-row thirds">
+          ${card("Найдено за 14 дней", columns(data.daily, "found", (value) => fmt.num(value)))}
+          ${card("Писем за 14 дней", columns(data.daily, "sent", (value) => fmt.num(value)))}
+          ${card("Здоровье за 24 часа", `<ul class="health">${health.map(([label, value]) => `<li class="${Number(value) ? "bad" : "good"}"><span class="mark" aria-hidden="true">${Number(value) ? "!" : "✓"}</span><span>${label}</span><strong>${fmt.num(value)}</strong></li>`).join("")}</ul>
+            <div class="queue-line small muted">Очередь: ${["queued", "running", "failed"].map((status) => `${pill(status)} ${fmt.num(jobs[status] ?? 0)}`).join(" ")} · <a class="link" href="#/queue">открыть</a></div>`)}
         </div>
-        <div class="grid cols-2 section">
+        <div class="dash-row halves">
+          ${card("Деньги на модели", `<div class="money">
+            <div><span class="label">Остаток OpenRouter</span><span class="big">${openRouter ? (openRouter.error ? "ошибка" : openRouter.remaining == null ? "без лимита" : fmt.usd(openRouter.remaining, 2)) : "нет ключа"}</span></div>
+            <div><span class="label">За месяц</span><span class="big">${fmt.usd(data.spending.month, 2)}</span></div>
+            <div><span class="label">Всего из ${fmt.usd(data.spending.totalBudget, 2)}</span><span class="big">${fmt.usd(data.spending.total, 2)}</span>${meter(data.spending.total, data.spending.totalBudget)}</div>
+          </div>${columns(data.daily, "spent", (value) => fmt.usd(value, 2), "small")}`, '<a class="link small" href="#/finance">Финансы</a>')}
+          ${card("Партнёрская программа на сайте", funnel.error ? `<div class="empty">Нет связи с VibeUI: ${esc(funnel.error)}</div>` : `${funnelBars(partnerSteps)}
+            <p class="small muted">Выручка: ${(funnel.revenue ?? []).map((row) => `${fmt.num(row.amount)} ${esc(row.currency)} · комиссия ${fmt.num(row.commission)}`).join("; ") || "пока нет"}</p>`, '<a class="link small" href="#/partners">Партнёры</a>')}
+        </div>
+        <div class="dash-row halves">
           ${card("Последние запуски", table(runColumns, data.recentRuns, { href: (row) => `#/runs/${row.id}`, empty: "Запусков ещё не было" }), '<a class="link small" href="#/runs">Все</a>')}
           ${card("Уведомления", table([
             { label: "Уровень", render: (row) => pill(row.severity) },
@@ -253,14 +298,15 @@ export const views = {
           <div class="section">${messages.map(messageBlock).join("") || '<div class="empty">Сообщений нет</div>'}</div>`;
       }
       const rows = await api(`/api/conversations${query({ state: params.state })}`);
-      return card("", table([
+      const drafts = rows.filter((row) => row.last_status === "draft" && row.contact_kind === "email").length;
+      return card("", `${drafts ? `<p>${actionButton("approve_all_messages", "all", `Согласовать всё (${drafts})`, "primary")}</p>` : ""}${table([
         { label: "Блогер", render: (row) => `<strong>${esc(row.display_name)}</strong><div class="small muted">${esc(marketLabel[row.market] ?? row.market)}</div>` },
         { label: "Контакт", render: (row) => row.contact_value ? `<span class="small muted">${esc(row.contact_kind)}</span><div class="mono small">${esc(row.contact_value)}</div>` : "—", cls: "wrap" },
         { label: "Стадия", render: (row) => pill(row.state) },
         { label: "Последнее", render: (row) => `${esc(short(row.subject ?? "—", 80))}<div class="small">${pill(row.last_status)} ${esc(row.last_direction ?? "")}</div>`, cls: "wrap" },
         { label: "Сообщений", num: true, render: (row) => fmt.num(row.messages) },
         { label: "Когда", render: (row) => fmt.date(row.last_at ?? row.updated_at) },
-      ], rows, { href: (row) => `#/conversations/${row.id}`, empty: "Переписок пока нет. Черновики появятся после scoring и подготовки писем." }));
+      ], rows, { href: (row) => `#/conversations/${row.id}`, empty: "Переписок пока нет. Черновики появятся после scoring и подготовки писем." })}`);
     },
   },
 
@@ -425,6 +471,58 @@ export const views = {
         { label: "Объект", render: (row) => row.target_type === "creator" ? `<a class="link" href="#/creators/${esc(row.target_id)}">блогер</a>` : `<span class="small">${esc(row.target_type ?? "—")}</span> <span class="mono small muted">${esc(short(row.target_id ?? "", 13))}</span>` },
         { label: "Причина / детали", render: (row) => `${esc(row.reason ?? "")} <span class="mono small muted wrap">${esc(short(JSON.stringify(row.details ?? {}) === "{}" ? "" : JSON.stringify(row.details), 140))}</span>`, cls: "wrap" },
       ], rows, { empty: "Записей нет" }));
+    },
+  },
+
+  search: {
+    title: () => "Поиск",
+    subtitle: "Площадки, дневной лимит, порог оценки. Новый поиск не запускается, пока есть кого оценивать и кому писать",
+    async render() {
+      const { control, bands, platforms, runs, queue } = await api("/api/search");
+      const state = control.scheduler_state ?? {};
+      const reasons = { run: "поиск идёт", nothing_due: "все запросы уже были за последние 20 ч", emergency_stop: "emergency stop", models_paused: "модельные операции на паузе",
+        budget_spent: "дневной лимит исчерпан", total_budget_spent: "общий лимит исчерпан", scoring_in_progress: "сначала оцениваются найденные", enough_candidates: "кандидатов хватает на 3 дня писем" };
+      const maxBand = Math.max(1, ...bands.map((row) => row.count));
+      const bandLabel = (band) => band < 0 ? "с красными флагами" : band === 90 ? "90–100" : `${band}–${band + 9}`;
+      return `<div class="grid cols-2">
+          ${card("Настройки", `<form class="setting-form" data-setting="set-search-budget">
+              <label class="field"><span class="small muted">Лимит на поиск в день, $ (оценка и черновики; ответы блогерам не ограничены)</span>
+              <input name="value" type="number" min="0" max="100" step="0.05" required value="${esc(control.budget ?? 0.5)}"></label>
+              <button class="btn sm primary" type="submit">Сохранить</button>
+              <p class="small muted">Сегодня потрачено ${fmt.usd(control.spent_today)}${meter(control.spent_today, control.budget)}</p>
+            </form>
+            <form class="setting-form" data-setting="set-total-budget">
+              <label class="field"><span class="small muted">Общий лимит на модели за всё время, $ (поиск останавливается, ответы блогерам — нет)</span>
+              <input name="value" type="number" min="0" max="10000" step="0.5" required value="${esc(control.total_budget ?? 3)}"></label>
+              <button class="btn sm primary" type="submit">Сохранить</button>
+              <p class="small muted">Всего потрачено ${fmt.usd(control.spent_total, 2)}${meter(control.spent_total, control.total_budget)}</p>
+            </form>
+            <form class="setting-form" data-setting="set-minimum-score">
+              <label class="field"><span class="small muted">Порог оценки: с этого балла блогер идёт в письма</span>
+              <input name="value" type="number" min="0" max="100" step="1" required value="${esc(control.minimum_score ?? 65)}"></label>
+              <button class="btn sm primary" type="submit">Сохранить</button>
+            </form>`)}
+          ${card("Планировщик", `<dl class="kv">
+            <dt>Решение</dt><dd>${esc(reasons[state.decision] ?? state.decision ?? "ещё не запускался")}</dd>
+            <dt>Последняя проверка</dt><dd>${state.at ? fmt.date(state.at) : "—"}</dd>
+            <dt>Задача</dt><dd>${state.task ? `${esc(state.task.source)} · ${esc(state.task.query)}` : "—"}</dd>
+            <dt>Запас на письма</dt><dd>${fmt.num(state.stock ?? 0)} из ${fmt.num((state.dailyContactLimit ?? 5) * 3)}</dd>
+            <dt>Не оценено</dt><dd>${fmt.num(queue.unscored)} · в очереди оценки ${fmt.num(queue.scoring_jobs)}</dd>
+            <dt>Черновики на email</dt><dd>${fmt.num(queue.email_drafts)}</dd>
+          </dl><p class="small muted">Проверка раз в 30 минут.</p>`)}
+        </div>
+        <div class="grid cols-2 section">
+          ${card("Оценки блогеров (последняя у каждого)", bands.length ? `<dl class="kv">${bands.map((row) => `<dt>${bandLabel(row.band)}${row.band >= 0 && row.band + 9 >= (control.minimum_score ?? 65) ? " ✓" : ""}</dt><dd>${fmt.num(row.count)}<div class="meter"><span data-w="${(row.count / maxBand) * 100}"></span></div></dd>`).join("")}</dl><p class="small muted">✓ — диапазон проходит порог целиком или частично.</p>` : '<div class="empty">Оценок пока нет</div>')}
+          ${card("Площадки", table([
+            { label: "Площадка", key: "platform" }, { label: "Блогеров", num: true, render: (row) => fmt.num(row.creators) },
+            { label: "Прошли", num: true, render: (row) => fmt.num(row.eligible) }, { label: "За 7 дней", num: true, render: (row) => fmt.num(row.week) },
+          ], platforms, { empty: "Пока никого" }))}
+        </div>
+        <div class="section">${card("Последние запуски поиска", table([
+          { label: "Когда", render: (row) => fmt.date(row.started_at) },
+          { label: "Площадка", key: "source" }, { label: "Запрос", key: "query", cls: "wrap" },
+          { label: "Итог", render: (row) => row.error ? `<span class="pill danger">ошибка</span> <span class="small">${esc(short(row.error, 120))}</span>` : row.finished_at ? `<span class="small mono">${esc(short(JSON.stringify(row.result ?? {}), 140))}</span>` : pill("running"), cls: "wrap" },
+        ], runs, { empty: "Поиск ещё не запускался" }))}</div>`;
     },
   },
 

@@ -9,6 +9,7 @@ const policy = policySchema.parse({
   allowedPlatforms: { ru: ["telegram"], en: ["youtube"] },
   requirePublicBusinessContact: true, requireHumanApprovalFor: ["first_contact"],
   blockedContactDomains: [], monthlyModelBudgetUsd: 50, monthlyOutreachBudgetUsd: 0,
+  discovery: { youtube: { ru: [], en: [] }, rutube: [], habrHubs: [], devtoTags: [], telegramQueries: [] },
 });
 const candidate = { id: "1", market: "ru" as const, platform: "telegram" as const, score: 90,
   contact: "public@example.com", contactIsPublicBusiness: true, doNotContact: false, previousContacts: 0 };
