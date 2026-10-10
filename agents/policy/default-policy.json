@@ -2,7 +2,7 @@
   "version": 1,
   "outreachEnabled": true,
   "minimumAutomaticScore": 80,
-  "dailyContactLimit": 5,
+  "dailyContactLimit": 10,
   "maximumFollowUps": 2,
   "followUpDelayDays": 4,
   "secondFollowUpDelayDays": 9,
