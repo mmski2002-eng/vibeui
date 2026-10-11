@@ -64,3 +64,14 @@ If a previous draft is given, apply the owner's corrections to it and keep every
   if (!result.finalOutput) throw new Error("Owner reply drafter returned no structured output");
   return { body: result.finalOutput.body, usage: extractUsage(result.state.usage) };
 }
+
+export async function translateWithModel(text: string, language: string, model: string): Promise<{ text: string; usage: TokenUsage }> {
+  const agent = new Agent({
+    name: "VibeUI Translator", model,
+    instructions: `Translate the email into the language with ISO code "${language}". Keep meaning, tone, line breaks, links and the sign-off; translate "Команда VibeUI" as the team sign-off. Output only the translation.`,
+    outputType: z.object({ text: z.string().max(8000) }),
+  });
+  const result = await run(agent, text);
+  if (!result.finalOutput) throw new Error("Translator returned no structured output");
+  return { text: result.finalOutput.text, usage: extractUsage(result.state.usage) };
+}

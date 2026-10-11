@@ -7,7 +7,7 @@ import { writeAudit } from "./audit.js";
 import { claimNext, completeJob, enqueue, failJob, type AgentJob } from "./queue.js";
 import { scoreCandidate } from "./scoring-agent.js";
 import { personalizeOutreach } from "./personalization-agent.js";
-import { classifyReply, draftOwnerReply, draftReply } from "./reply-agent.js";
+import { classifyReply, draftOwnerReply, draftReply, translateWithModel } from "./reply-agent.js";
 import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
 import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGmail } from "./email/gmail.js";
@@ -34,12 +34,17 @@ export async function runWorker(database: Database, config: Config): Promise<voi
   console.log(`Worker ${workerId} started`);
   let nextInboxPoll = 0;
   let nextTelegramPush = 0;
+  let nextTelegramPoll = 0;
   let nextStatsSync = 0;
   let nextDiscovery = 0;
   while (!stopping) {
     if (telegramConfigured(config) && Date.now() >= nextTelegramPush) {
       nextTelegramPush = Date.now() + 15_000;
       await deliverNotifications(database, config).catch((error: unknown) => console.error("Telegram push failed:", error instanceof Error ? error.message : error));
+    }
+    // Button presses expire within seconds, so updates are read far more often than notifications are pushed.
+    if (telegramConfigured(config) && Date.now() >= nextTelegramPoll) {
+      nextTelegramPoll = Date.now() + 3_000;
       await pollTelegramUpdates(database, config).catch((error: unknown) => console.error("Telegram poll failed:", error instanceof Error ? error.message : error));
     }
     // Replies are collected even under emergency stop: reading mail has no external effect.
@@ -431,15 +436,29 @@ async function telegramSendJob(database: Database, config: Config, job: AgentJob
   const draftId = job.payload.draftId;
   if (typeof draftId !== "string") throw new Error("draftId is required");
   const draft = (await database<Record<string, unknown>[]>`
-    SELECT d.body_ru, d.thread_id, d.sent_message_id, m.body AS inbound_body, m.external_message_id, c.display_name,
+    SELECT d.body_ru, d.thread_id, d.sent_message_id, m.body AS inbound_body, m.external_message_id, c.display_name, c.market,
       (SELECT subject FROM outreach_messages f WHERE f.thread_id = d.thread_id AND f.kind = 'first_contact' LIMIT 1) AS first_subject
     FROM telegram_drafts d JOIN outreach_messages m ON m.id = d.inbound_message_id
     JOIN conversation_threads t ON t.id = d.thread_id JOIN creators c ON c.id = t.creator_id WHERE d.id = ${draftId}
   `)[0];
   if (!draft) throw new Error(`Draft ${draftId} not found`);
-  if (draft.sent_message_id) return;
-  const language = (await translate(String(draft.inbound_body).slice(0, 1000), "ru")).source || "en";
-  const text = language === "ru" ? String(draft.body_ru) : (await translate(String(draft.body_ru), language)).text;
+  // A crash between saving the letter and queueing it must not lose the send; the queue key keeps it single.
+  if (draft.sent_message_id) {
+    await enqueue(database, "send_message", { messageId: String(draft.sent_message_id) }, `send_message:${String(draft.sent_message_id)}`);
+    return;
+  }
+  const language = await translate(String(draft.inbound_body).slice(0, 1000), "ru").then((result) => result.source)
+    .catch(() => "") || (draft.market === "ru" ? "ru" : "en");
+  let text = String(draft.body_ru);
+  if (language !== "ru") {
+    // The free translator rate-limits the server; the model is the paid fallback so the answer still goes out.
+    text = await translate(text, language).then((result) => result.text).catch(async (error: unknown) => {
+      console.error("Free translate failed, using model:", error instanceof Error ? error.message : error);
+      const { usage, text: translated } = await translateWithModel(String(draft.body_ru), language, config.generationModel);
+      await recordUsage(database, null, null, "telegram_translator", config.generationModel, usage);
+      return translated;
+    });
+  }
   const messageId = randomUUID();
   const subject = `Re: ${String(draft.first_subject ?? "VibeUI").replace(/^(re:\s*)+/i, "")}`;
   await database.begin(async (transaction) => {

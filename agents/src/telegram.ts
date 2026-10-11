@@ -95,23 +95,32 @@ export async function pollTelegramUpdates(database: Database, config: Config): P
   const offset = (await database<{ update_offset: string }[]>`SELECT update_offset FROM telegram_bot_state WHERE singleton = true`)[0]?.update_offset ?? "0";
   const updates = await callTelegram<TelegramUpdate[]>(config, "getUpdates", { offset: Number(offset), timeout: 0, allowed_updates: ["message", "callback_query"] });
   for (const update of updates) {
-    const message = update.message;
-    if (message && String(message.chat.id) === config.telegramChatId && message.reply_to_message && message.text) {
-      const link = (await database<{ inbound_message_id: string; draft_id: string | null }[]>`
-        SELECT inbound_message_id, draft_id FROM telegram_links WHERE telegram_message_id = ${message.reply_to_message.message_id}
-      `)[0];
-      if (link) {
-        await enqueue(database, "telegram_draft", { inboundId: link.inbound_message_id, previousDraftId: link.draft_id, instruction: message.text }, `telegram_draft:${update.update_id}`);
-        await sendTelegram(config, link.draft_id ? "Принял правки, переделываю ответ…" : "Принял, готовлю ответ…");
-      } else {
-        await sendTelegram(config, "Не понял, к какому письму это относится. Ответьте на сообщение с письмом блогера или на черновик.");
-      }
-    }
-    const callback = update.callback_query;
-    if (callback && String(callback.message?.chat.id) === config.telegramChatId && callback.data?.startsWith("send:")) {
-      await enqueue(database, "telegram_send", { draftId: callback.data.slice(5) }, `telegram_send:${callback.data.slice(5)}`);
-      await callTelegram(config, "answerCallbackQuery", { callback_query_id: callback.id, text: "Перевожу и отправляю" });
-    }
+    // The offset moves first: one broken update must not block every later one.
     await database`UPDATE telegram_bot_state SET update_offset = ${update.update_id + 1} WHERE singleton = true`;
+    await handleUpdate(database, config, update).catch((error: unknown) => console.error("Telegram update failed:", error instanceof Error ? error.message : error));
+  }
+}
+
+async function handleUpdate(database: Database, config: Config, update: TelegramUpdate): Promise<void> {
+  const message = update.message;
+  if (message && String(message.chat.id) === config.telegramChatId && message.reply_to_message && message.text) {
+    const link = (await database<{ inbound_message_id: string; draft_id: string | null }[]>`
+      SELECT inbound_message_id, draft_id FROM telegram_links WHERE telegram_message_id = ${message.reply_to_message.message_id}
+    `)[0];
+    if (link) {
+      await enqueue(database, "telegram_draft", { inboundId: link.inbound_message_id, previousDraftId: link.draft_id, instruction: message.text }, `telegram_draft:${update.update_id}`);
+      await sendTelegram(config, link.draft_id ? "Принял правки, переделываю ответ…" : "Принял, готовлю ответ…");
+    } else {
+      await sendTelegram(config, "Не понял, к какому письму это относится. Ответьте на сообщение с письмом блогера или на черновик.");
+    }
+  }
+  const callback = update.callback_query;
+  if (callback && String(callback.message?.chat.id) === config.telegramChatId && callback.data?.startsWith("send:")) {
+    const draftId = callback.data.slice(5);
+    const draft = (await database<{ sent_message_id: string | null }[]>`SELECT sent_message_id FROM telegram_drafts WHERE id = ${draftId}`)[0];
+    if (draft && !draft.sent_message_id) await enqueue(database, "telegram_send", { draftId }, `telegram_send:${draftId}`);
+    const text = !draft ? "Черновик не найден" : draft.sent_message_id ? "Уже отправлено, повторно не шлю" : "Перевожу и отправляю";
+    await callTelegram(config, "answerCallbackQuery", { callback_query_id: callback.id, text })
+      .catch((error: unknown) => console.error("Telegram answerCallbackQuery failed:", error instanceof Error ? error.message : error));
   }
 }
