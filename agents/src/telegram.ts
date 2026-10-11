@@ -84,6 +84,19 @@ export async function deliverNotifications(database: Database, config: Config): 
   }
 }
 
+// The site's RU server cannot reach Telegram, so it queues messages in its own database and we relay them.
+export async function deliverSiteNotifications(site: Database, config: Config): Promise<void> {
+  const rows = await site<{ id: string; title: string; body: string }[]>`
+    SELECT id, title, body FROM admin_notification
+    WHERE delivered_at IS NULL AND created_at > now() - interval '1 day' ORDER BY created_at LIMIT 10
+  `;
+  for (const row of rows) {
+    await sendTelegram(config, `${row.title}
+${row.body}`);
+    await site`UPDATE admin_notification SET delivered_at = now() WHERE id = ${row.id}`;
+  }
+}
+
 interface TelegramUpdate {
   update_id: number;
   message?: { message_id: number; chat: { id: number }; text?: string; reply_to_message?: { message_id: number } };

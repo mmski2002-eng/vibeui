@@ -11,6 +11,7 @@ import {
   user,
   webhookEvent,
 } from "@/lib/db/schema"
+import { notifyPayment } from "@/lib/owner-notify"
 import { getPlans } from "@/lib/plan-prices"
 import { isPlanId } from "@/lib/plans"
 import { fetchPayment } from "@/lib/yookassa"
@@ -288,6 +289,16 @@ export async function applyPaymentEvent(
     .update(webhookEvent)
     .set({ processedAt: new Date() })
     .where(eq(webhookEvent.id, id))
+
+  await notifyPayment({
+    userId,
+    plan: plan.id,
+    amount: String(source.amount?.value ?? plan.price),
+    currency: "RUB",
+    promoCode: promo?.promoCode,
+    partnerId: attributedPartnerId,
+    source: "ЮKassa",
+  })
 
   return { applied: true, userId, plan: plan.id }
 }

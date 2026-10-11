@@ -22,6 +22,7 @@ export function loadConfig() {
   const openRouterApiKey = process.env.OPENROUTER_API_KEY ?? "";
   return {
     databaseUrl: process.env.DATABASE_URL ?? "",
+    siteDatabaseUrl: process.env.SITE_DATABASE_URL ?? "",
     scoringModel: process.env.OPENAI_SCORING_MODEL ?? (openRouterApiKey ? "openai/gpt-6-luna" : "gpt-6-luna"),
     generationModel: process.env.OPENAI_GENERATION_MODEL ?? (openRouterApiKey ? "openai/gpt-6-luna" : "gpt-6.1-sol"),
     openRouterApiKey,

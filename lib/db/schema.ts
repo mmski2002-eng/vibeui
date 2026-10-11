@@ -454,3 +454,12 @@ export const setting = pgTable("setting", {
   value: text("value").notNull(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
+
+/** Очередь сообщений владельцу в Telegram; отправляет worker агентов. */
+export const adminNotification = pgTable("admin_notification", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  body: text("body").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  deliveredAt: timestamp("delivered_at"),
+})

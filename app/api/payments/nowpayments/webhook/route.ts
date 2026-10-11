@@ -9,6 +9,7 @@ import {
   user,
   webhookEvent,
 } from "@/lib/db/schema"
+import { notifyPayment } from "@/lib/owner-notify"
 import { nextPeriodEnd } from "@/lib/payment-apply"
 import { isPlanId, PLAN_USD, PLANS } from "@/lib/plans"
 import { verifyIpnSignature } from "@/lib/nowpayments"
@@ -194,6 +195,16 @@ export async function POST(request: Request) {
           .set({ invitedBy: promo.partnerId })
           .where(and(eq(user.id, userId), isNull(user.invitedBy)))
       }
+
+      await notifyPayment({
+        userId,
+        plan: plan.id,
+        amount: paidAmount.toFixed(2),
+        currency: "USD",
+        promoCode: promo?.code,
+        partnerId: attributedPartnerId,
+        source: "NOWPayments (крипта)",
+      })
     }
   }
 

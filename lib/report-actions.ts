@@ -10,6 +10,7 @@ import { db } from "@/lib/db"
 import { report, reportMessage } from "@/lib/db/schema"
 import type { Locale } from "@/lib/i18n"
 import { sendMail } from "@/lib/mail"
+import { notifyOwner } from "@/lib/owner-notify"
 import type {
   CreateReportResult,
   ReportKind,
@@ -30,6 +31,12 @@ import { hashToken } from "@/lib/token"
 /** Сколько обращений принимаем с одного адреса за десять минут. */
 const RATE_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT = 3
+
+const REPORT_KIND_LABEL: Record<ReportKind, string> = {
+  component: "компонент",
+  support: "поддержка",
+  legal: "права",
+}
 
 function clean(value: string, max: number) {
   return value.trim().slice(0, max)
@@ -106,6 +113,15 @@ export async function createReport(input: {
   })
 
   await notifyAdmins({ id, kind: input.kind, subject, email })
+  await notifyOwner(`🆘 Обращение (${REPORT_KIND_LABEL[input.kind]})`, [
+    `От: ${email}`,
+    `Тема: ${subject}`,
+    ...(input.itemName ? [`Компонент: ${clean(input.itemName, 100)}`] : []),
+    "",
+    message,
+    "",
+    `${SITE_URL}/account/admin/reports/${id}`,
+  ])
 
   revalidatePath("/account/admin/reports")
 
@@ -130,17 +146,11 @@ async function notifyAdmins(input: {
 
   if (recipients.length === 0) return
 
-  const kinds: Record<ReportKind, string> = {
-    component: "компонент",
-    support: "поддержка",
-    legal: "права",
-  }
-
   await sendMail({
     to: recipients.join(", "),
-    subject: `Новое обращение (${kinds[input.kind]}): ${input.subject}`,
+    subject: `Новое обращение (${REPORT_KIND_LABEL[input.kind]}): ${input.subject}`,
     text: [
-      `Вид: ${kinds[input.kind]}`,
+      `Вид: ${REPORT_KIND_LABEL[input.kind]}`,
       `От: ${input.email}`,
       `Тема: ${input.subject}`,
       "",

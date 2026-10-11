@@ -2,7 +2,7 @@ import { hostname } from "node:os";
 import { randomUUID } from "node:crypto";
 import type postgres from "postgres";
 import type { Config } from "./config.js";
-import type { Database } from "./database.js";
+import { connectDatabase, type Database } from "./database.js";
 import { writeAudit } from "./audit.js";
 import { claimNext, completeJob, enqueue, failJob, type AgentJob } from "./queue.js";
 import { scoreCandidate } from "./scoring-agent.js";
@@ -14,7 +14,7 @@ import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGm
 import { calculateModelCost, isPricedModel, ModelOutputError } from "./model-cost.js";
 import { createReferralInvite, fetchCreatorStats, marketRevenue } from "./vibeui-client.js";
 import { referralWord } from "./referral-word.js";
-import { deliverNotifications, linkTelegramMessages, pollTelegramUpdates, sendTelegram, telegramConfigured } from "./telegram.js";
+import { deliverNotifications, deliverSiteNotifications, linkTelegramMessages, pollTelegramUpdates, sendTelegram, telegramConfigured } from "./telegram.js";
 import { translate } from "./translate.js";
 import { notify } from "./email/inbound.js";
 import { checkPublication } from "./publication-monitor.js";
@@ -35,12 +35,14 @@ export async function runWorker(database: Database, config: Config): Promise<voi
   let nextInboxPoll = 0;
   let nextTelegramPush = 0;
   let nextTelegramPoll = 0;
+  const site = config.siteDatabaseUrl ? connectDatabase(config.siteDatabaseUrl) : null;
   let nextStatsSync = 0;
   let nextDiscovery = 0;
   while (!stopping) {
     if (telegramConfigured(config) && Date.now() >= nextTelegramPush) {
       nextTelegramPush = Date.now() + 15_000;
       await deliverNotifications(database, config).catch((error: unknown) => console.error("Telegram push failed:", error instanceof Error ? error.message : error));
+      if (site) await deliverSiteNotifications(site, config).catch((error: unknown) => console.error("Site notifications failed:", error instanceof Error ? error.message : error));
     }
     // Button presses expire within seconds, so updates are read far more often than notifications are pushed.
     if (telegramConfigured(config) && Date.now() >= nextTelegramPoll) {

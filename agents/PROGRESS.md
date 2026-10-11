@@ -155,3 +155,11 @@
   ни в какие лимиты и паузы рассылки (только аварийный стоп, do-not-contact, согласование).
 - Worker опрашивает `getUpdates` раз в 15 с; доверяет только `TELEGRAM_CHAT_ID`.
 - `npm test` 52/52, перевод проверен вживую локально. На проде не проверено до деплоя.
+
+## 2026-10-11 — уведомления сайта в Telegram
+
+- RU-сервер не достаёт до api.telegram.org (таймаут), поэтому сайт кладёт строки в `admin_notification`
+  (RU-база, `drizzle/0014`), а worker агентов на Латвии читает её по `SITE_DATABASE_URL` (туннель :15432) и шлёт в бот.
+- Пишут: новое обращение (`createReport`, полный текст) и успешная оплата (ЮKassa `applyPaymentEvent`, NOWPayments
+  webhook) — только при первом применении платежа.
+- Нужно в `/etc/vibeui-agents/agents.env`: `SITE_DATABASE_URL` = `DATABASE_URL` из `/etc/vibeui-club.env`, рестарт worker.
