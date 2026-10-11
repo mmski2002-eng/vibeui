@@ -39,6 +39,7 @@ import { partnerPromo, promoStats } from "@/lib/promo"
 import { PayoutProfileForm } from "@/components/account/payout-profile-form"
 import { PromoCodeForm } from "@/components/account/promo-code-form"
 import { RequestPayoutButton } from "@/components/account/request-payout-button"
+import { PartnerGuideLink } from "@/components/pages/account/referrals-guide"
 import { originFor } from "@/lib/seo"
 import { requireUser } from "@/lib/session"
 
@@ -119,7 +120,11 @@ export async function AccountReferrals({
     <>
       <PageHeader
         title={t.title}
-        lead={t.lead}
+        lead={
+          <>
+            {t.lead} <PartnerGuideLink locale={locale} />
+          </>
+        }
         action={
           <Segmented
             name="ref-period"
@@ -467,7 +472,10 @@ export async function AccountReferrals({
         </section>
 
         <Panel variant="soft" index={9}>
-          <PanelHeader title={t.howTitle} />
+          <PanelHeader
+            title={t.howTitle}
+            action={<PartnerGuideLink locale={locale} />}
+          />
           <ol className="text-shell-muted grid gap-2 text-sm leading-relaxed">
             {t.how.map((line, position) => (
               <li key={line} className="flex gap-2.5">
