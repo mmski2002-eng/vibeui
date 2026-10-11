@@ -15,3 +15,9 @@ test("letter shows original and translation only when given", () => {
   assert.match(withTranslation, /— Оригинал —\nHello\n\n— Перевод —\nПривет/);
   assert.doesNotMatch(letterText("t", null, "Привет", null), /Перевод/);
 });
+
+test("detects Russian text before translating", async () => {
+  const { looksRussian } = await import("../src/telegram.js");
+  assert.equal(looksRussian("Здравствуйте, спасибо за письмо! VibeUI"), true);
+  assert.equal(looksRussian("Hi VibeUI Team, thanks!"), false);
+});

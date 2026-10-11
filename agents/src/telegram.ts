@@ -1,6 +1,8 @@
 import type { Config } from "./config.js";
 import type { Database } from "./database.js";
+import { calculateModelCost } from "./model-cost.js";
 import { enqueue } from "./queue.js";
+import { translateWithModel } from "./reply-agent.js";
 import { splitText, translate } from "./translate.js";
 
 const icon: Record<string, string> = { critical: "🔴", warning: "🟠", info: "🔵" };
@@ -47,12 +49,30 @@ export function letterText(title: string, subject: string | null, body: string, 
     .filter((line) => line !== null).join("\n");
 }
 
-async function russianTranslation(body: string): Promise<string | null> {
+export function looksRussian(text: string): boolean {
+  const letters = text.match(/\p{L}/gu) ?? [];
+  return letters.length > 0 && letters.filter((letter) => /[а-яё]/i.test(letter)).length / letters.length > 0.5;
+}
+
+// Free Google first; the server is often rate-limited there, so the model is the paid fallback.
+async function russianTranslation(database: Database, config: Config, body: string): Promise<string | null> {
+  if (looksRussian(body)) return null;
   try {
     const result = await translate(body, "ru");
     return result.source === "ru" ? null : result.text;
   } catch (error) {
-    console.error("Translate failed:", error instanceof Error ? error.message : error);
+    console.error("Free translate failed, using model:", error instanceof Error ? error.message : error);
+  }
+  try {
+    const { text, usage } = await translateWithModel(body.slice(0, 12_000), "ru", config.generationModel);
+    await database`
+      INSERT INTO model_usage (agent_name, model, input_tokens, cached_input_tokens, output_tokens, cost_usd)
+      VALUES ('telegram_translator', ${config.generationModel}, ${usage.inputTokens}, ${usage.cachedInputTokens}, ${usage.outputTokens},
+        ${calculateModelCost(config.generationModel, usage)})
+    `;
+    return text;
+  } catch (error) {
+    console.error("Model translate failed:", error instanceof Error ? error.message : error);
     return "(перевод недоступен)";
   }
 }
@@ -71,7 +91,7 @@ export async function deliverNotifications(database: Database, config: Config): 
       : undefined;
     let text: string;
     if (letter) {
-      text = letterText(title, letter.subject, letter.body, await russianTranslation(letter.body));
+      text = letterText(title, letter.subject, letter.body, await russianTranslation(database, config, letter.body));
     } else {
       const lines = Object.entries(row.details ?? {})
         .filter(([key, value]) => key !== "messageId" && value !== null && value !== undefined && typeof value !== "object")
