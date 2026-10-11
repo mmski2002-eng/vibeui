@@ -7,14 +7,15 @@ import { writeAudit } from "./audit.js";
 import { claimNext, completeJob, enqueue, failJob, type AgentJob } from "./queue.js";
 import { scoreCandidate } from "./scoring-agent.js";
 import { personalizeOutreach } from "./personalization-agent.js";
-import { classifyReply, draftReply } from "./reply-agent.js";
+import { classifyReply, draftOwnerReply, draftReply } from "./reply-agent.js";
 import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
 import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGmail } from "./email/gmail.js";
 import { calculateModelCost, isPricedModel, ModelOutputError } from "./model-cost.js";
 import { createReferralInvite, fetchCreatorStats, marketRevenue } from "./vibeui-client.js";
 import { referralWord } from "./referral-word.js";
-import { deliverNotifications, telegramConfigured } from "./telegram.js";
+import { deliverNotifications, linkTelegramMessages, pollTelegramUpdates, sendTelegram, telegramConfigured } from "./telegram.js";
+import { translate } from "./translate.js";
 import { notify } from "./email/inbound.js";
 import { checkPublication } from "./publication-monitor.js";
 import { runScheduler } from "./scheduler.js";
@@ -39,6 +40,7 @@ export async function runWorker(database: Database, config: Config): Promise<voi
     if (telegramConfigured(config) && Date.now() >= nextTelegramPush) {
       nextTelegramPush = Date.now() + 15_000;
       await deliverNotifications(database, config).catch((error: unknown) => console.error("Telegram push failed:", error instanceof Error ? error.message : error));
+      await pollTelegramUpdates(database, config).catch((error: unknown) => console.error("Telegram poll failed:", error instanceof Error ? error.message : error));
     }
     // Replies are collected even under emergency stop: reading mail has no external effect.
     if (gmailConfigured(config) && Date.now() >= nextInboxPoll) {
@@ -107,6 +109,8 @@ async function handleJob(database: Database, config: Config, job: AgentJob): Pro
   if (job.kind === "send_message") return sendMessageJob(database, config, job);
   if (job.kind === "classify_reply") return classifyReplyJob(database, config, job);
   if (job.kind === "draft_reply") return draftReplyJob(database, config, job);
+  if (job.kind === "telegram_draft") return telegramDraftJob(database, config, job);
+  if (job.kind === "telegram_send") return telegramSendJob(database, config, job);
   if (job.kind === "monitor_publication") return monitorPublicationJob(database, job);
   if (job.kind === "sync_partner_stats") return syncPartnerStatsJob(database, config, job);
   if (job.kind !== "score_candidate") throw new Error(`Unsupported job kind: ${job.kind}`);
@@ -340,7 +344,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
   });
   const creator = (await database<{ display_name: string }[]>`SELECT display_name FROM creators WHERE id = ${String(message.creator_id)}`)[0];
   await notify(database, "warning", "reply_received", `Ответ от ${creator?.display_name ?? "блогера"}: ${result.classification}`, {
-    excerpt: String(message.body).slice(0, 300), thread: `https://vibeui.club/agents/#/conversations/${String(message.thread_id)}`,
+    messageId, thread: `https://vibeui.club/agents/#/conversations/${String(message.thread_id)}`,
   });
   await writeAudit(database, { actor: "reply_agent", action: "classify_reply", targetType: "message",
     targetId: messageId, decision: "completed", details: result });
@@ -349,7 +353,7 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
     await enqueue(database, "draft_reply", { messageId }, `draft_reply:${messageId}`);
   } else if (result.classification === "unsupported_request") {
     await notify(database, "critical", "reply_needs_human", `Нужен вы: ${creator?.display_name ?? "блогер"}`, {
-      summary: result.summary, thread: `https://vibeui.club/agents/#/conversations/${String(message.thread_id)}`,
+      summary: result.summary, messageId, thread: `https://vibeui.club/agents/#/conversations/${String(message.thread_id)}`,
     });
   }
 }
@@ -379,7 +383,7 @@ async function draftReplyJob(database: Database, config: Config, job: AgentJob):
   await recordUsage(database, null, null, "reply_drafter", config.generationModel, usage);
   const thread = `https://vibeui.club/agents/#/conversations/${String(inbound.thread_id)}`;
   if (draft.needsHuman || draft.body.trim().length < 20) {
-    await notify(database, "critical", "reply_needs_human", `Нужен вы: ${String(inbound.display_name)}`, { reason: draft.reason, thread });
+    await notify(database, "critical", "reply_needs_human", `Нужен вы: ${String(inbound.display_name)}`, { reason: draft.reason, messageId: inboundId, thread });
     return;
   }
   const subject = `Re: ${String(inbound.first_subject ?? "VibeUI").replace(/^(re:\s*)+/i, "")}`;
@@ -389,17 +393,77 @@ async function draftReplyJob(database: Database, config: Config, job: AgentJob):
       ${config.generationModel}, ${`reply:${inboundId}`}, ${typeof inbound.external_message_id === "string" ? inbound.external_message_id : null})
     ON CONFLICT (idempotency_key) DO NOTHING
   `;
-  await notify(database, "warning", "reply_draft_ready", `Черновик ответа готов: ${String(inbound.display_name)}`, { thread });
+  await notify(database, "warning", "reply_draft_ready", `Черновик ответа готов: ${String(inbound.display_name)}`, { messageId: inboundId, thread });
+}
+
+async function telegramDraftJob(database: Database, config: Config, job: AgentJob): Promise<void> {
+  const { inboundId, previousDraftId, instruction } = job.payload;
+  if (typeof inboundId !== "string" || typeof instruction !== "string") throw new Error("inboundId and instruction are required");
+  const inbound = (await database<{ thread_id: string; display_name: string; referral_url: string | null }[]>`
+    SELECT m.thread_id, c.display_name, t.referral_url FROM outreach_messages m
+    JOIN conversation_threads t ON t.id = m.thread_id JOIN creators c ON c.id = t.creator_id WHERE m.id = ${inboundId}
+  `)[0];
+  if (!inbound) throw new Error(`Inbound message ${inboundId} not found`);
+  const previous = typeof previousDraftId === "string"
+    ? (await database<{ body_ru: string }[]>`SELECT body_ru FROM telegram_drafts WHERE id = ${previousDraftId}`)[0]?.body_ru ?? null
+    : null;
+  const history = await database<{ direction: string; body: string }[]>`
+    SELECT direction, body FROM outreach_messages
+    WHERE thread_id = ${inbound.thread_id} AND (direction = 'inbound' OR sent_at IS NOT NULL) ORDER BY created_at
+  `;
+  await assertModelBudget(database, config, "reply");
+  const { usage, body } = await draftOwnerReply({
+    instruction, previousDraft: previous, referralUrl: inbound.referral_url ?? "", creatorName: inbound.display_name,
+    history: history.map((row) => ({ direction: row.direction, body: row.body.slice(0, 12_000) })), model: config.generationModel,
+  });
+  await recordUsage(database, null, null, "telegram_drafter", config.generationModel, usage);
+  const draftId = randomUUID();
+  await database`
+    INSERT INTO telegram_drafts (id, thread_id, inbound_message_id, instruction, body_ru)
+    VALUES (${draftId}, ${inbound.thread_id}, ${inboundId}, ${instruction}, ${body.trim()})
+  `;
+  const ids = await sendTelegram(config, `✍️ Черновик ответа для ${inbound.display_name}:\n\n${body.trim()}\n\nОтветьте на это сообщение правками или нажмите «Отправить» — переведу на язык блогера и отправлю.`,
+    [{ text: "Отправить", callback_data: `send:${draftId}` }]);
+  await linkTelegramMessages(database, ids, inboundId, draftId);
+}
+
+async function telegramSendJob(database: Database, config: Config, job: AgentJob): Promise<void> {
+  const draftId = job.payload.draftId;
+  if (typeof draftId !== "string") throw new Error("draftId is required");
+  const draft = (await database<Record<string, unknown>[]>`
+    SELECT d.body_ru, d.thread_id, d.sent_message_id, m.body AS inbound_body, m.external_message_id, c.display_name,
+      (SELECT subject FROM outreach_messages f WHERE f.thread_id = d.thread_id AND f.kind = 'first_contact' LIMIT 1) AS first_subject
+    FROM telegram_drafts d JOIN outreach_messages m ON m.id = d.inbound_message_id
+    JOIN conversation_threads t ON t.id = d.thread_id JOIN creators c ON c.id = t.creator_id WHERE d.id = ${draftId}
+  `)[0];
+  if (!draft) throw new Error(`Draft ${draftId} not found`);
+  if (draft.sent_message_id) return;
+  const language = (await translate(String(draft.inbound_body).slice(0, 1000), "ru")).source || "en";
+  const text = language === "ru" ? String(draft.body_ru) : (await translate(String(draft.body_ru), language)).text;
+  const messageId = randomUUID();
+  const subject = `Re: ${String(draft.first_subject ?? "VibeUI").replace(/^(re:\s*)+/i, "")}`;
+  await database.begin(async (transaction) => {
+    await transaction`
+      INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, approved_by, approved_at, idempotency_key, reply_to_external_id)
+      VALUES (${messageId}, ${String(draft.thread_id)}, 'outbound', 'reply', 'approved', ${subject}, ${text}, 'telegram', now(),
+        ${`telegram:${draftId}`}, ${typeof draft.external_message_id === "string" ? draft.external_message_id : null})
+    `;
+    await transaction`UPDATE telegram_drafts SET sent_message_id = ${messageId} WHERE id = ${draftId}`;
+  });
+  await enqueue(database, "send_message", { messageId }, `send_message:${messageId}`);
+  await sendTelegram(config, `📤 Отправляю ${String(draft.display_name)} (${language}):\n\n${text}`);
 }
 
 function firstSendDenial(message: Record<string, unknown>, control: Record<string, unknown>, policy: Awaited<ReturnType<typeof loadPolicy>>, sentToday: number): string | null {
   if (control.emergency_stop === true) return "emergency_stop";
   if (message.contact_kind !== "email") return "channel_requires_manual_send";
-  if (control.outreach_paused === true || !policy.outreachEnabled) return "outreach_paused";
-  if (message.campaign_status !== "active") return "campaign_not_active";
   if (message.status !== "approved" && message.status !== "sending") return "message_not_approved";
   if (!message.approved_by || !message.approved_at) return "human_approval_required";
   if (message.do_not_contact === true) return "do_not_contact";
+  // Limits and outreach switches govern reaching new creators; a conversation the creator started is always answered.
+  if (message.kind === "reply") return null;
+  if (control.outreach_paused === true || !policy.outreachEnabled) return "outreach_paused";
+  if (message.campaign_status !== "active") return "campaign_not_active";
   if (message.is_public_business !== true) return "contact_not_verified_as_public_business";
   if (typeof message.score !== "number" || message.score < Number(control.minimum_score ?? 65)) return "score_below_threshold";
   if (sentToday >= policy.dailyContactLimit) return "daily_limit_reached";

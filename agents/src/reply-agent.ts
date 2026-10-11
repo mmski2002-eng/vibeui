@@ -45,3 +45,22 @@ Set needsHuman=true and leave body empty when they ask for anything outside thes
   if (!result.finalOutput) throw new Error("Reply drafter returned no structured output");
   return { ...result.finalOutput, usage: extractUsage(result.state.usage) };
 }
+
+// The owner decides what to say; the model only turns their instruction into a polite Russian letter.
+export async function draftOwnerReply(input: {
+  instruction: string; previousDraft: string | null; referralUrl: string; creatorName: string;
+  history: Array<{ direction: string; body: string }>; model: string;
+}): Promise<{ body: string; usage: TokenUsage }> {
+  const agent = new Agent({
+    name: "VibeUI Owner Reply Drafter", model: input.model,
+    instructions: `You write the next email from the VibeUI team to the content creator ${input.creatorName}. The VibeUI owner tells you what to answer; follow the owner's instruction exactly, it overrides everything else. Read the whole conversation, answer every question the creator asked that the instruction covers.
+Write in Russian, polite and natural, plain text, no subject, no Markdown, usually 40-180 words. It will be machine-translated to the creator's language, so use simple clear sentences and no idioms. End with "Команда VibeUI".
+Background you may use: VibeUI is a catalog of ready UI blocks and whole-page scenarios for vibe coding; "Copy for AI" makes an AI coding agent install the real component file. The creator's personal link gives a free month of Pro: ${input.referralUrl || "(no link)"}. Partners get 25% of payments from people they bring, viewers get 30% off the first payment.
+Never invent money amounts, dates or promises that the owner did not give.
+If a previous draft is given, apply the owner's corrections to it and keep everything else.`,
+    outputType: z.object({ body: z.string().max(4000) }),
+  });
+  const result = await run(agent, JSON.stringify({ conversation: input.history, previousDraft: input.previousDraft, ownerInstruction: input.instruction }));
+  if (!result.finalOutput) throw new Error("Owner reply drafter returned no structured output");
+  return { body: result.finalOutput.body, usage: extractUsage(result.state.usage) };
+}

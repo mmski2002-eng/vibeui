@@ -16,7 +16,7 @@ export const knownAgents = [
 
 const jobAgent: Record<string, string> = {
   score_creator: "creator_scorer", score_candidate: "creator_scorer", personalize_thread: "personalization_agent",
-  send_message: "outreach_agent", classify_reply: "reply_agent",
+  send_message: "outreach_agent", classify_reply: "reply_agent", telegram_draft: "reply_agent", telegram_send: "reply_agent",
   monitor_publication: "publication_monitor", sync_partner_stats: "partner_agent",
 };
 
