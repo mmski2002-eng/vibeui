@@ -7,7 +7,7 @@ import { writeAudit } from "./audit.js";
 import { claimNext, completeJob, enqueue, failJob, type AgentJob } from "./queue.js";
 import { scoreCandidate } from "./scoring-agent.js";
 import { personalizeOutreach } from "./personalization-agent.js";
-import { classifyReply, draftOwnerReply, draftReply, translateWithModel } from "./reply-agent.js";
+import { classifyReply, draftOwnerReply, translateWithModel } from "./reply-agent.js";
 import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
 import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGmail } from "./email/gmail.js";
@@ -113,7 +113,6 @@ async function handleJob(database: Database, config: Config, job: AgentJob): Pro
   if (job.kind === "personalize_thread") return personalizeThreadJob(database, config, job);
   if (job.kind === "send_message") return sendMessageJob(database, config, job);
   if (job.kind === "classify_reply") return classifyReplyJob(database, config, job);
-  if (job.kind === "draft_reply") return draftReplyJob(database, config, job);
   if (job.kind === "telegram_draft") return telegramDraftJob(database, config, job);
   if (job.kind === "telegram_send") return telegramSendJob(database, config, job);
   if (job.kind === "monitor_publication") return monitorPublicationJob(database, job);
@@ -354,51 +353,12 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
   await writeAudit(database, { actor: "reply_agent", action: "classify_reply", targetType: "message",
     targetId: messageId, decision: "completed", details: result });
   await recordUsage(database, null, null, "reply_agent", config.scoringModel, usage);
-  if (["interested", "asks_price", "asks_details", "wants_free_access"].includes(result.classification)) {
-    await enqueue(database, "draft_reply", { messageId }, `draft_reply:${messageId}`);
-  } else if (result.classification === "unsupported_request") {
+  // Answers are written only from Telegram on the owner's instruction, never drafted automatically.
+  if (result.classification === "unsupported_request") {
     await notify(database, "critical", "reply_needs_human", `Нужен вы: ${creator?.display_name ?? "блогер"}`, {
       summary: result.summary, messageId, thread: `https://vibeui.club/agents/#/conversations/${String(message.thread_id)}`,
     });
   }
-}
-
-// A reply draft follows the same path as a first contact: it is only sent after the administrator approves it.
-async function draftReplyJob(database: Database, config: Config, job: AgentJob): Promise<void> {
-  const inboundId = job.payload.messageId;
-  if (typeof inboundId !== "string") throw new Error("messageId is required");
-  const inbound = (await database<Record<string, unknown>[]>`
-    SELECT m.id, m.thread_id, m.external_message_id, m.status, t.referral_url, c.market, c.display_name, c.do_not_contact,
-      (SELECT subject FROM outreach_messages f WHERE f.thread_id = t.id AND f.kind = 'first_contact' LIMIT 1) AS first_subject
-    FROM outreach_messages m JOIN conversation_threads t ON t.id = m.thread_id JOIN creators c ON c.id = t.creator_id
-    WHERE m.id = ${inboundId} AND m.direction = 'inbound'
-  `)[0];
-  if (!inbound) throw new Error(`Inbound message ${inboundId} not found`);
-  if (inbound.do_not_contact === true) return;
-  const market = inbound.market === "ru" ? "ru" : "en";
-  const history = await database<{ direction: string; body: string }[]>`
-    SELECT direction, body FROM outreach_messages
-    WHERE thread_id = ${String(inbound.thread_id)} AND (direction = 'inbound' OR sent_at IS NOT NULL) ORDER BY created_at
-  `;
-  await assertModelBudget(database, config, "reply");
-  const { usage, ...draft } = await draftReply({
-    market, classification: String(inbound.status).replace(/^classified:/, ""), referralUrl: String(inbound.referral_url ?? ""),
-    history: history.map((row) => ({ direction: row.direction, body: row.body.slice(0, 4000) })), model: config.generationModel,
-  });
-  await recordUsage(database, null, null, "reply_drafter", config.generationModel, usage);
-  const thread = `https://vibeui.club/agents/#/conversations/${String(inbound.thread_id)}`;
-  if (draft.needsHuman || draft.body.trim().length < 20) {
-    await notify(database, "critical", "reply_needs_human", `Нужен вы: ${String(inbound.display_name)}`, { reason: draft.reason, messageId: inboundId, thread });
-    return;
-  }
-  const subject = `Re: ${String(inbound.first_subject ?? "VibeUI").replace(/^(re:\s*)+/i, "")}`;
-  await database`
-    INSERT INTO outreach_messages (id, thread_id, direction, kind, status, subject, body, model, idempotency_key, reply_to_external_id)
-    VALUES (${randomUUID()}, ${String(inbound.thread_id)}, 'outbound', 'reply', 'draft', ${subject}, ${draft.body.trim()},
-      ${config.generationModel}, ${`reply:${inboundId}`}, ${typeof inbound.external_message_id === "string" ? inbound.external_message_id : null})
-    ON CONFLICT (idempotency_key) DO NOTHING
-  `;
-  await notify(database, "warning", "reply_draft_ready", `Черновик ответа готов: ${String(inbound.display_name)}`, { messageId: inboundId, thread });
 }
 
 async function telegramDraftJob(database: Database, config: Config, job: AgentJob): Promise<void> {
