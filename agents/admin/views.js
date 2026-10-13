@@ -313,6 +313,65 @@ export const views = {
     },
   },
 
+  training: {
+    title: () => "Обучение",
+    subtitle: "Правила общения с блогерами, ответы агента и самообучение раз в 3 дня",
+    async render() {
+      const data = await api("/api/training");
+      const { playbook, recent } = data;
+      const authorLabel = { seed: "начальная", owner: "вы", agent: "агент", rollback: "откат" };
+      const decisionLabel = { reply: "ответ", skip: "не отвечать", escalate: "вопрос для вас" };
+      const percent = (value) => value == null ? "—" : `${Math.round(value * 100)}%`;
+      const draftState = (row) => row.sent_at ? pill("sent") : row.skipped_at ? '<span class="pill">не отправлен</span>' : pill("draft");
+      const pending = data.drafts.filter((row) => !row.sent_at && !row.skipped_at && row.body_ru);
+      return `<div class="grid cols-2">
+          ${card("Режим", `<p>${data.askOwner
+            ? "Сейчас агент <strong>спрашивает вас</strong>: каждый его ответ ждёт кнопку «Отправить» здесь или в Telegram-боте."
+            : "Сейчас агент <strong>отвечает сам</strong>: ответ уходит сразу, вам приходит копия. Вопросы о деньгах, договорах и жалобах он не решает, отвечает «уточню» и зовёт вас."}</p>
+            <button class="btn ${data.askOwner ? "danger" : "primary"}" data-ask-owner="${data.askOwner ? "false" : "true"}">${data.askOwner ? "Перестать спрашивать меня" : "Снова спрашивать меня"}</button>`)}
+          ${card("Последние 3 дня", `<dl class="kv">
+            <dt>Отправлено писем</dt><dd>${fmt.num(recent.sent)}</dd>
+            <dt>На них ответили</dt><dd>${fmt.num(recent.answered)} (${percent(recent.responseRate)})</dd>
+            <dt>Новых партнёров</dt><dd>${fmt.num(recent.partners)}</dd>
+            <dt>Роликов</dt><dd>${fmt.num(recent.publications)}</dd>
+            <dt>Отказов</dt><dd>${fmt.num(recent.declined)}</dd>
+            <dt>Следующее обучение</dt><dd>${fmt.date(data.nextRun)}</dd>
+          </dl><p><button class="btn sm" data-playbook-action="learn">Обучить сейчас</button></p>`)}
+        </div>
+        ${pending.length ? `<div class="section">${card(`Ждут решения (${pending.length})`, pending.map(draftForm).join(""))}</div>` : ""}
+        <div class="section">${card("Правила", `<form class="message-edit" data-playbook-form>
+            <p class="small muted">Версия от ${fmt.date(playbook.created_at)} · автор: ${esc(authorLabel[playbook.author] ?? playbook.author)}</p>
+            <label class="field"><span class="small muted"><strong>Закреплено</strong> — факты и запреты. Меняете только вы, агент эту часть не трогает</span>
+              <textarea name="locked" rows="18" maxlength="20000" required>${esc(playbook.locked)}</textarea></label>
+            <label class="field"><span class="small muted"><strong>Опыт</strong> — тон и ответы на типовые ситуации. Агент переписывает эту часть сам по итогам переписок</span>
+              <textarea name="experience" rows="22" maxlength="20000" required>${esc(playbook.experience)}</textarea></label>
+            <label class="field"><span class="small muted">Что поменяли (для истории, необязательно)</span><input name="reason" maxlength="500"></label>
+            <div class="message-actions"><button class="btn sm primary" type="submit">Сохранить правила</button></div>
+          </form>`)}</div>
+        <div class="section">${card("Обучения", table([
+          { label: "Когда", render: (row) => fmt.date(row.created_at) },
+          { label: "Ответили", render: (row) => `${percent(row.metrics?.responseRate)} <span class="small muted">из ${fmt.num(row.metrics?.sent ?? 0)}</span>` },
+          { label: "Партнёры / ролики", render: (row) => `${fmt.num(row.metrics?.partners ?? 0)} / ${fmt.num(row.metrics?.publications ?? 0)}` },
+          { label: "Итог", cls: "wrap", render: (row) => row.error ? `<span class="pill danger">ошибка</span> <span class="small">${esc(short(row.error, 200))}</span>`
+            : row.rolled_back_version_id ? `<span class="pill warn">откат</span> ${esc((row.changes ?? []).join(" "))}`
+            : (row.changes ?? []).length ? `<ul class="list small">${row.changes.map((change) => `<li>${esc(change)}</li>`).join("")}</ul>` : '<span class="small muted">без изменений: данных мало или всё работает</span>' },
+        ], data.runs, { empty: "Агент ещё не обучался. Первое обучение — в ближайшие полчаса после запуска, дальше раз в 3 дня" }))}</div>
+        <div class="section">${card("История правил", table([
+          { label: "Когда", render: (row) => fmt.date(row.created_at) },
+          { label: "Автор", render: (row) => esc(authorLabel[row.author] ?? row.author) },
+          { label: "Что поменялось", cls: "wrap", render: (row) => `<div class="small pre">${esc(short(row.reason ?? "—", 600))}</div>` },
+          { label: "", render: (row) => row.id === playbook.id ? '<span class="pill ok">текущая</span>' : `<button class="btn sm" data-playbook-action="restore" data-id="${esc(row.id)}">Вернуть</button>` },
+        ], data.versions))}</div>
+        <div class="section">${card("Ответы агента и ваши", table([
+          { label: "Когда", render: (row) => fmt.date(row.created_at) },
+          { label: "Блогер", render: (row) => `<a class="link" href="#/conversations/${esc(row.thread_id)}">${esc(row.display_name)}</a><div class="small">${pill(row.inbound_status)}</div>` },
+          { label: "Кто", render: (row) => row.author === "agent" ? `агент · ${esc(decisionLabel[row.decision] ?? row.decision ?? "")}` : "вы" },
+          { label: "Текст", cls: "wrap", render: (row) => `<div class="small">${esc(short(row.body_ru || row.instruction, 400))}</div>` },
+          { label: "Статус", render: draftState },
+        ], data.drafts, { empty: "Ответов пока нет" }))}</div>`;
+    },
+  },
+
   campaigns: {
     title: () => "Кампании",
     subtitle: "Новая кампания стартует в dry run: поиск, оценка и черновики без отправки",
@@ -643,4 +702,16 @@ async function creatorCard(id) {
       { label: "Когда", render: (row) => fmt.date(row.created_at) }, { label: "Исполнитель", key: "actor" },
       { label: "Действие", key: "action" }, { label: "Решение", render: (row) => pill(row.decision) }, { label: "Причина", render: (row) => esc(row.reason ?? "—") },
     ], data.actions, { empty: "Действий нет" }))}</div>`;
+}
+
+function draftForm(row) {
+  return `<article class="message">
+    <div class="card-head"><div><strong>${esc(row.display_name)}</strong><div class="small muted">${fmt.date(row.created_at)} · ${pill(row.inbound_status)}</div></div></div>
+    <div class="message-body small muted">${esc(row.inbound_body)}</div>
+    <form class="message-edit" data-draft-form="${esc(row.id)}">
+      <label class="field"><span class="small muted">Ответ агента (по-русски, переведётся на язык блогера) · ${esc(row.instruction ?? "")}</span>
+        <textarea name="body" rows="8" maxlength="4000" required>${esc(row.body_ru)}</textarea></label>
+      <div class="message-actions"><button class="btn sm" type="button" data-draft-skip="${esc(row.id)}">Не отвечать</button> <button class="btn sm primary" type="submit">Отправить</button></div>
+    </form>
+  </article>`;
 }

@@ -148,9 +148,16 @@ async function handleUpdate(database: Database, config: Config, update: Telegram
     }
   }
   const callback = update.callback_query;
+  if (callback && String(callback.message?.chat.id) === config.telegramChatId && callback.data?.startsWith("skip:")) {
+    const rows = await database`UPDATE telegram_drafts SET skipped_at = now() WHERE id = ${callback.data.slice(5)} AND sent_message_id IS NULL AND skipped_at IS NULL RETURNING id`;
+    await callTelegram(config, "answerCallbackQuery", { callback_query_id: callback.id, text: rows[0] ? "Не отвечаю" : "Уже отправлено или отменено" })
+      .catch((error: unknown) => console.error("Telegram answerCallbackQuery failed:", error instanceof Error ? error.message : error));
+    return;
+  }
   if (callback && String(callback.message?.chat.id) === config.telegramChatId && callback.data?.startsWith("send:")) {
     const draftId = callback.data.slice(5);
-    const draft = (await database<{ sent_message_id: string | null }[]>`SELECT sent_message_id FROM telegram_drafts WHERE id = ${draftId}`)[0];
+    const draft = (await database<{ sent_message_id: string | null; skipped_at: Date | null }[]>`SELECT sent_message_id, skipped_at FROM telegram_drafts WHERE id = ${draftId}`)[0];
+    if (draft && !draft.sent_message_id) await database`UPDATE telegram_drafts SET skipped_at = NULL WHERE id = ${draftId}`;
     if (draft && !draft.sent_message_id) await enqueue(database, "telegram_send", { draftId }, `telegram_send:${draftId}`);
     const text = !draft ? "Черновик не найден" : draft.sent_message_id ? "Уже отправлено, повторно не шлю" : "Перевожу и отправляю";
     await callTelegram(config, "answerCallbackQuery", { callback_query_id: callback.id, text })

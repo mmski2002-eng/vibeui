@@ -270,6 +270,12 @@ function bindGlobal() {
     if (edit) return void toggleEdit(edit.dataset.edit, true);
     const cancel = event.target.closest("[data-edit-cancel]");
     if (cancel) return void toggleEdit(cancel.dataset.editCancel, false);
+    const askOwner = event.target.closest("[data-ask-owner]");
+    if (askOwner) return void setAskOwner(askOwner.dataset.askOwner === "true");
+    const playbookButton = event.target.closest("[data-playbook-action]");
+    if (playbookButton) return void playbookAction(playbookButton.dataset.playbookAction, playbookButton.dataset.id);
+    const skip = event.target.closest("[data-draft-skip]");
+    if (skip) return void playbookAction("skip_draft", skip.dataset.draftSkip);
     const action = event.target.closest("[data-action]");
     if (action) { event.stopPropagation(); return void runAction(action.dataset.action, action.dataset.id); }
     const row = event.target.closest("tr[data-href]");
@@ -299,6 +305,19 @@ function bindGlobal() {
       } catch (error) {
         toast(`Ошибка: ${error.message}`, true);
       }
+      return;
+    }
+    const playbookForm = event.target.closest("[data-playbook-form]");
+    if (playbookForm) {
+      event.preventDefault();
+      const data = new FormData(playbookForm);
+      await playbookAction("save", null, { locked: data.get("locked"), experience: data.get("experience"), reason: data.get("reason") });
+      return;
+    }
+    const draftForm = event.target.closest("[data-draft-form]");
+    if (draftForm) {
+      event.preventDefault();
+      await playbookAction("send_draft", draftForm.dataset.draftForm, { body: new FormData(draftForm).get("body") });
       return;
     }
     const mailForm = event.target.closest("[data-mail-form]");
@@ -341,6 +360,39 @@ function bindGlobal() {
   window.addEventListener("hashchange", navigate);
 }
 
+const playbookTexts = {
+  save: { title: "Сохранить правила?", text: "Новая версия сразу начнёт действовать для всех ответов агента. Прошлую можно вернуть из истории." },
+  restore: { title: "Вернуть эту версию?", text: "Она станет текущей как новая запись в истории; нынешняя версия тоже останется в истории." },
+  learn: { title: "Обучить агента сейчас?", text: "Агент разберёт переписки с прошлого обучения и, если есть выводы, перепишет часть «Опыт». Займёт около минуты." },
+  send_draft: { title: "Отправить ответ?", text: "Текст переведётся на язык блогера и уйдёт в ту же переписку." },
+  skip_draft: { title: "Не отвечать на это сообщение?", text: "Ответ не уйдёт. Агент учтёт это при следующем обучении." },
+};
+
+async function playbookAction(action, id, fields = {}) {
+  if (!await confirmAction(playbookTexts[action])) return;
+  try {
+    const result = await post("/api/playbook", { action, id, ...fields });
+    toast(result.unchanged ? "Ничего не поменялось" : action === "learn" ? "Обучение поставлено в очередь" : "Готово");
+    await refresh();
+  } catch (error) {
+    toast(`Ошибка: ${error.message}`, true);
+  }
+}
+
+async function setAskOwner(value) {
+  const answer = await confirmAction(value
+    ? { title: "Снова спрашивать вас?", text: "Каждый ответ агента будет ждать вашей кнопки." }
+    : { title: "Агент будет отвечать сам?", text: "Ответы блогерам начнут уходить без вашего подтверждения, вам будут приходить копии.", danger: true, confirmLabel: "Пусть отвечает сам" });
+  if (!answer) return;
+  try {
+    await post("/api/control", { action: "set-ask-owner", value });
+    toast("Режим изменён");
+    await refresh();
+  } catch (error) {
+    toast(`Ошибка: ${error.message}`, true);
+  }
+}
+
 function toggleEdit(id, open) {
   const form = document.querySelector(`[data-message-form="${CSS.escape(id)}"]`);
   const body = document.querySelector(`[data-message-body="${CSS.escape(id)}"]`);
@@ -353,7 +405,7 @@ function toggleEdit(id, open) {
 function poll() {
   clearInterval(state.timer);
   state.timer = setInterval(async () => {
-    if (document.hidden || dialog().open || document.querySelector("[data-message-form]:not([hidden]), [data-mail-form]")) return;
+    if (document.hidden || dialog().open || document.querySelector("[data-message-form]:not([hidden]), [data-mail-form], [data-playbook-form], [data-draft-form]")) return;
     const active = document.activeElement;
     if (active && ["INPUT", "SELECT", "TEXTAREA"].includes(active.tagName) && document.getElementById("view").contains(active)) return;
     await refreshShell();

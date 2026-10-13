@@ -17,6 +17,7 @@ export const knownAgents = [
 const jobAgent: Record<string, string> = {
   score_creator: "creator_scorer", score_candidate: "creator_scorer", personalize_thread: "personalization_agent",
   send_message: "outreach_agent", classify_reply: "reply_agent", telegram_draft: "reply_agent", telegram_send: "reply_agent",
+  agent_reply: "reply_agent", learn_playbook: "reply_agent",
   monitor_publication: "publication_monitor", sync_partner_stats: "partner_agent",
 };
 
@@ -44,6 +45,28 @@ function limit(url: URL, fallback = 100): number {
 }
 
 const routes: Record<string, Handler> = {
+  training: async (database, config) => {
+    const { currentPlaybook } = await import("./playbook.js");
+    const { windowMetrics, learningIntervalDays } = await import("./learning.js");
+    const playbook = await currentPlaybook(database, config);
+    const now = new Date();
+    const [control, versions, runs, drafts, recent] = await Promise.all([
+      database`SELECT ask_owner FROM agent_control WHERE singleton = true`,
+      database`SELECT id, author, reason, created_at, length(experience) AS size FROM playbook_versions ORDER BY created_at DESC LIMIT 30`,
+      database`SELECT id, window_start, window_end, metrics, changes, version_id, rolled_back_version_id, error, created_at FROM learning_runs ORDER BY created_at DESC LIMIT 20`,
+      database`
+        SELECT d.id, d.created_at, d.author, d.decision, d.instruction, d.body_ru, d.skipped_at, d.thread_id, c.display_name,
+          s.sent_at, s.body AS sent_body, left(i.body, 600) AS inbound_body, i.status AS inbound_status
+        FROM telegram_drafts d JOIN conversation_threads t ON t.id = d.thread_id JOIN creators c ON c.id = t.creator_id
+        JOIN outreach_messages i ON i.id = d.inbound_message_id LEFT JOIN outreach_messages s ON s.id = d.sent_message_id
+        ORDER BY d.created_at DESC LIMIT 40
+      `,
+      windowMetrics(database, new Date(now.getTime() - learningIntervalDays * 86_400_000), now),
+    ]);
+    const last = runs[0] as { created_at?: Date } | undefined;
+    const nextRun = last?.created_at ? new Date(new Date(last.created_at).getTime() + learningIntervalDays * 86_400_000) : now;
+    return { askOwner: control[0]?.ask_owner !== false, playbook, versions, runs, drafts, recent, nextRun, intervalDays: learningIntervalDays };
+  },
   overview: async (database, config) => {
     const [control, counts, jobs, recentRuns, notifications, spend, funnel, daily, policy] = await Promise.all([
       database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, model_operations_paused, minimum_score, scheduler_state, reason, updated_at FROM agent_control WHERE singleton = true`,

@@ -52,6 +52,10 @@ export function startAdminServer(database: Database, config: Config): void {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return editMessage(database, request, response);
       }
+      if (request.method === "POST" && url.pathname === "/api/playbook") {
+        if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
+        return playbookAction(database, config, request, response);
+      }
       if (request.method === "POST" && url.pathname === "/api/action") {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return adminAction(database, request, response);
@@ -255,6 +259,52 @@ async function editMessage(database: Database, request: IncomingMessage, respons
   return json(response, 200, { ok: true });
 }
 
+async function playbookAction(database: Database, config: Config, request: IncomingMessage, response: ServerResponse) {
+  const body = await readJson(request);
+  const { currentPlaybook, savePlaybook } = await import("./playbook.js");
+  if (body.action === "save") {
+    const locked = typeof body.locked === "string" ? body.locked.replace(/\r\n/g, "\n").trim() : "";
+    const experience = typeof body.experience === "string" ? body.experience.replace(/\r\n/g, "\n").trim() : "";
+    if (locked.length < 50 || experience.length < 50 || locked.length > 20_000 || experience.length > 20_000) return json(response, 400, { error: "invalid_playbook" });
+    const current = await currentPlaybook(database, config);
+    if (current.locked === locked && current.experience === experience) return json(response, 200, { ok: true, unchanged: true });
+    const version = await savePlaybook(database, { locked, experience, author: "owner", reason: typeof body.reason === "string" && body.reason.trim() ? body.reason.trim().slice(0, 500) : "Правка владельца" });
+    await writeAudit(database, { actor: "administrator", action: "playbook_save", targetType: "playbook", targetId: version.id, decision: "completed" });
+    return json(response, 200, { ok: true });
+  }
+  if (body.action === "restore" && typeof body.id === "string") {
+    const rows = await database<{ locked: string; experience: string; created_at: Date }[]>`SELECT locked, experience, created_at FROM playbook_versions WHERE id = ${body.id}`;
+    const old = rows[0];
+    if (!old) return json(response, 404, { error: "version_not_found" });
+    const version = await savePlaybook(database, { locked: old.locked, experience: old.experience, author: "owner",
+      reason: `Возвращена версия от ${old.created_at.toISOString().slice(0, 16).replace("T", " ")}` });
+    await writeAudit(database, { actor: "administrator", action: "playbook_restore", targetType: "playbook", targetId: version.id, decision: "completed", details: { from: body.id } });
+    return json(response, 200, { ok: true });
+  }
+  if ((body.action === "send_draft" || body.action === "skip_draft") && typeof body.id === "string") {
+    const text = typeof body.body === "string" ? body.body.replace(/\r\n/g, "\n").trim() : "";
+    const sending = body.action === "send_draft";
+    if (sending && (text.length < 10 || text.length > 4000)) return json(response, 400, { error: "invalid_body" });
+    const rows = sending
+      ? await database`UPDATE telegram_drafts SET body_ru = ${text}, skipped_at = NULL WHERE id = ${body.id} AND sent_message_id IS NULL RETURNING id`
+      : await database`UPDATE telegram_drafts SET skipped_at = now() WHERE id = ${body.id} AND sent_message_id IS NULL RETURNING id`;
+    if (!rows[0]) return json(response, 409, { error: "draft_already_sent" });
+    if (sending) {
+      const { enqueue } = await import("./queue.js");
+      await enqueue(database, "telegram_send", { draftId: body.id }, `telegram_send:${body.id}`);
+    }
+    await writeAudit(database, { actor: "administrator", action: `playbook_${body.action}`, targetType: "draft", targetId: body.id, decision: "completed" });
+    return json(response, 200, { ok: true });
+  }
+  if (body.action === "learn") {
+    const { enqueue } = await import("./queue.js");
+    await enqueue(database, "learn_playbook", { manual: true }, `learn_playbook:manual:${Date.now()}`);
+    await writeAudit(database, { actor: "administrator", action: "playbook_learn", targetType: "playbook", decision: "completed" });
+    return json(response, 200, { ok: true });
+  }
+  return json(response, 400, { error: "invalid_action" });
+}
+
 // A new threshold re-sorts creators already scored, judged by their latest score; contacted creators keep their status.
 export async function applyMinimumScore(database: Database, value: number): Promise<{ promoted: number; demoted: number }> {
   await database`UPDATE agent_control SET minimum_score = ${value}, updated_at = now() WHERE singleton = true`;
@@ -270,6 +320,12 @@ async function updateControl(database: Database, request: IncomingMessage, respo
     stop: { emergency: true, paused: true, reason: "Emergency stop by administrator" },
     "clear-stop": { emergency: false, paused: true, reason: "Emergency stop cleared; outreach remains paused" },
   };
+  if (action === "set-ask-owner") {
+    const value = body.value === true || body.value === "true";
+    await database`UPDATE agent_control SET ask_owner = ${value}, updated_at = now() WHERE singleton = true`;
+    await writeAudit(database, { actor: "administrator", action: "control_set_ask_owner", targetType: "system", decision: "completed", details: { value } });
+    return json(response, 200, { ok: true });
+  }
   if (action === "set-search-budget") {
     const value = Number(body.value);
     if (!Number.isFinite(value) || value < 0 || value > 100) return json(response, 400, { error: "invalid_budget" });
@@ -340,7 +396,7 @@ async function readText(request: IncomingMessage): Promise<string> {
   for await (const chunk of request) {
     const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
     size += buffer.length;
-    if (size > 16_384) throw new Error("Request body too large");
+    if (size > 65_536) throw new Error("Request body too large");
     chunks.push(buffer);
   }
   return Buffer.concat(chunks).toString("utf8");

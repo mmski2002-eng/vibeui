@@ -1,6 +1,4 @@
 import { hostname } from "node:os";
-import { readFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
 import { randomUUID } from "node:crypto";
 import type postgres from "postgres";
 import type { Config } from "./config.js";
@@ -9,7 +7,9 @@ import { writeAudit } from "./audit.js";
 import { claimNext, completeJob, enqueue, failJob, type AgentJob } from "./queue.js";
 import { scoreCandidate } from "./scoring-agent.js";
 import { personalizeOutreach } from "./personalization-agent.js";
-import { classifyReply, draftOwnerReply, translateWithModel } from "./reply-agent.js";
+import { classifyReply, draftAgentReply, draftOwnerReply, translateWithModel } from "./reply-agent.js";
+import { currentPlaybook, playbookText } from "./playbook.js";
+import { learningDue, runLearning } from "./learning.js";
 import { loadPolicy } from "./policy.js";
 import { sendResendEmail } from "./email/resend.js";
 import { alreadySent, gmailConfigured, outboundMessageId, pollGmailInbox, sendGmail } from "./email/gmail.js";
@@ -73,6 +73,9 @@ export async function runWorker(database: Database, config: Config): Promise<voi
     }
     if (Date.now() >= nextDiscovery) {
       nextDiscovery = Date.now() + 30 * 60_000;
+      if (await learningDue(database).catch(() => false)) {
+        await enqueue(database, "learn_playbook", {}, `learn_playbook:${new Date().toISOString().slice(0, 10)}`);
+      }
       await runScheduler(database, config).then((outcome) => console.log("Scheduler:", JSON.stringify(outcome)))
         .catch((error: unknown) => console.error("Scheduler failed:", error instanceof Error ? error.message : error));
     }
@@ -132,6 +135,8 @@ async function handleJob(database: Database, config: Config, job: AgentJob): Pro
   if (job.kind === "classify_reply") return classifyReplyJob(database, config, job);
   if (job.kind === "telegram_draft") return telegramDraftJob(database, config, job);
   if (job.kind === "telegram_send") return telegramSendJob(database, config, job);
+  if (job.kind === "agent_reply") return agentReplyJob(database, config, job);
+  if (job.kind === "learn_playbook") return runLearning(database, config);
   if (job.kind === "monitor_publication") return monitorPublicationJob(database, job);
   if (job.kind === "sync_partner_stats") return syncPartnerStatsJob(database, config, job);
   if (job.kind !== "score_candidate") throw new Error(`Unsupported job kind: ${job.kind}`);
@@ -375,7 +380,8 @@ async function classifyReplyJob(database: Database, config: Config, job: AgentJo
   await writeAudit(database, { actor: "reply_agent", action: "classify_reply", targetType: "message",
     targetId: messageId, decision: "completed", details: result });
   await recordUsage(database, null, null, "reply_agent", config.scoringModel, usage);
-  // Answers are written only from Telegram on the owner's instruction, never drafted automatically.
+  // Declined and unsubscribed creators are not written to again, not even a goodbye.
+  if (!terminal) await enqueue(database, "agent_reply", { inboundId: messageId, classification: result.classification }, `agent_reply:${messageId}`);
   if (result.classification === "unsupported_request") {
     await notify(database, "critical", "reply_needs_human", `Нужен вы: ${creator?.display_name ?? "блогер"}`, {
       summary: result.summary, messageId, thread: `https://vibeui.club/agents/#/conversations/${String(message.thread_id)}`,
@@ -400,7 +406,7 @@ async function telegramDraftJob(database: Database, config: Config, job: AgentJo
   `;
   await assertModelBudget(database, config, "reply");
   const { usage, body } = await draftOwnerReply({
-    instruction, previousDraft: previous, playbook: await readFile(join(dirname(config.policyPath), "playbook.md"), "utf8").catch(() => ""), referralUrl: inbound.referral_url ?? "", creatorName: inbound.display_name,
+    instruction, previousDraft: previous, playbook: playbookText(await currentPlaybook(database, config)), referralUrl: inbound.referral_url ?? "", creatorName: inbound.display_name,
     history: history.map((row) => ({ direction: row.direction, body: row.body.slice(0, 12_000) })), model: config.generationModel,
   });
   await recordUsage(database, null, null, "telegram_drafter", config.generationModel, usage);
@@ -411,6 +417,67 @@ async function telegramDraftJob(database: Database, config: Config, job: AgentJo
   `;
   const ids = await sendTelegram(config, `✍️ Черновик ответа для ${inbound.display_name}:\n\n${body.trim()}\n\nОтветьте на это сообщение правками или нажмите «Отправить» — переведу на язык блогера и отправлю.`,
     [{ text: "Отправить", callback_data: `send:${draftId}` }]);
+  await linkTelegramMessages(database, ids, inboundId, draftId);
+}
+
+async function agentReplyJob(database: Database, config: Config, job: AgentJob): Promise<void> {
+  const { inboundId, classification } = job.payload;
+  if (typeof inboundId !== "string") throw new Error("inboundId is required");
+  const inbound = (await database<{ thread_id: string; display_name: string; referral_url: string | null; newer: boolean; answered: boolean }[]>`
+    SELECT m.thread_id, c.display_name, t.referral_url,
+      EXISTS (SELECT 1 FROM outreach_messages n WHERE n.thread_id = m.thread_id AND n.direction = 'inbound' AND n.received_at > m.received_at) AS newer,
+      EXISTS (SELECT 1 FROM telegram_drafts d WHERE d.inbound_message_id = m.id) AS answered
+    FROM outreach_messages m JOIN conversation_threads t ON t.id = m.thread_id JOIN creators c ON c.id = t.creator_id WHERE m.id = ${inboundId}
+  `)[0];
+  if (!inbound) throw new Error(`Inbound message ${inboundId} not found`);
+  // A later message gets its own answer that sees this one; the owner may already be answering this one.
+  if (inbound.newer || inbound.answered) return;
+  const history = await database<{ direction: string; body: string }[]>`
+    SELECT direction, body FROM outreach_messages
+    WHERE thread_id = ${inbound.thread_id} AND (direction = 'inbound' OR sent_at IS NOT NULL) ORDER BY created_at
+  `;
+  await assertModelBudget(database, config, "reply");
+  const reply = await draftAgentReply({
+    playbook: playbookText(await currentPlaybook(database, config)), referralUrl: inbound.referral_url ?? "", creatorName: inbound.display_name,
+    classification: String(classification ?? ""), history: history.map((row) => ({ direction: row.direction, body: row.body.slice(0, 12_000) })), model: config.generationModel,
+  });
+  await recordUsage(database, null, null, "reply_agent_auto", config.generationModel, reply.usage);
+  const draftId = randomUUID();
+  const body = reply.decision === "skip" ? "" : reply.body.trim();
+  await database`
+    INSERT INTO telegram_drafts (id, thread_id, inbound_message_id, instruction, body_ru, author, decision, skipped_at)
+    VALUES (${draftId}, ${inbound.thread_id}, ${inboundId}, ${`агент: ${reply.reason}`}, ${body}, 'agent', ${reply.decision},
+      ${reply.decision === "skip" ? new Date() : null})
+  `;
+  const control = (await database<{ ask_owner: boolean }[]>`SELECT ask_owner FROM agent_control WHERE singleton = true`)[0];
+  const name = inbound.display_name;
+  if (reply.decision === "skip") {
+    const ids = await sendTelegram(config, `🤖 Агент не отвечает ${name}: ${reply.reason}
+
+Ответьте на это сообщение, если ответить всё-таки нужно.`);
+    await linkTelegramMessages(database, ids, inboundId);
+    return;
+  }
+  if (reply.decision === "escalate") {
+    await notify(database, "critical", "reply_needs_human", `Нужен вы: ${name}`, { summary: reply.reason, messageId: inboundId,
+      thread: `https://vibeui.club/agents/#/conversations/${inbound.thread_id}` });
+  }
+  if (control?.ask_owner !== false) {
+    const ids = await sendTelegram(config, `🤖 Агент предлагает ответ для ${name}${reply.decision === "escalate" ? " (вопрос для вас, ответ-заглушка)" : ""}:
+
+${body}
+
+Почему: ${reply.reason}
+
+Ответьте на это сообщение правками или нажмите кнопку.`,
+      [{ text: "Отправить", callback_data: `send:${draftId}` }, { text: "Не отвечать", callback_data: `skip:${draftId}` }]);
+    await linkTelegramMessages(database, ids, inboundId, draftId);
+    return;
+  }
+  await enqueue(database, "telegram_send", { draftId }, `telegram_send:${draftId}`);
+  const ids = await sendTelegram(config, `🤖 Агент ответил ${name} сам:
+
+${body}`);
   await linkTelegramMessages(database, ids, inboundId, draftId);
 }
 

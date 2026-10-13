@@ -270,3 +270,4 @@ dialog p { margin: 0; }
   .status-strip .flags { margin-left: 0; }
   .money .big { font-size: 18px; }
 }
+.pre { white-space: pre-wrap; }
