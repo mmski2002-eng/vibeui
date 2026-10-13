@@ -142,7 +142,7 @@ const SECURITY_HEADERS = [
       "base-uri 'self'",
       "object-src 'none'",
       "frame-ancestors 'self'",
-      "frame-src 'self'",
+      "frame-src 'self' https://yandex.ru https://www.google.com https://www.openstreetmap.org",
       "form-action 'self' https://yookassa.ru https://*.nowpayments.io",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://www.googletagmanager.com",
       "style-src 'self' 'unsafe-inline'",
