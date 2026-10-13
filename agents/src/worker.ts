@@ -1,4 +1,6 @@
 import { hostname } from "node:os";
+import { readFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
 import { randomUUID } from "node:crypto";
 import type postgres from "postgres";
 import type { Config } from "./config.js";
@@ -288,7 +290,9 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
   const rows = await database<Record<string, unknown>[]>`
     SELECT m.*, t.creator_id, t.campaign_id, t.follow_up_count, c.market, c.do_not_contact,
       cc.value AS contact_value, cc.kind AS contact_kind, cc.is_public_business, oc.status AS campaign_status,
-      (SELECT cs.total FROM candidate_scores cs WHERE cs.creator_id = c.id AND cs.valid = true ORDER BY cs.created_at DESC LIMIT 1) AS score
+      (SELECT cs.total FROM candidate_scores cs WHERE cs.creator_id = c.id AND cs.valid = true ORDER BY cs.created_at DESC LIMIT 1) AS score,
+      EXISTS (SELECT 1 FROM outreach_messages n WHERE n.thread_id = m.thread_id AND n.id <> m.id AND n.direction = 'outbound'
+        AND n.sent_at > m.created_at) AS superseded
     FROM outreach_messages m
     JOIN conversation_threads t ON t.id = m.thread_id
     JOIN creators c ON c.id = t.creator_id
@@ -396,7 +400,7 @@ async function telegramDraftJob(database: Database, config: Config, job: AgentJo
   `;
   await assertModelBudget(database, config, "reply");
   const { usage, body } = await draftOwnerReply({
-    instruction, previousDraft: previous, referralUrl: inbound.referral_url ?? "", creatorName: inbound.display_name,
+    instruction, previousDraft: previous, playbook: await readFile(join(dirname(config.policyPath), "playbook.md"), "utf8").catch(() => ""), referralUrl: inbound.referral_url ?? "", creatorName: inbound.display_name,
     history: history.map((row) => ({ direction: row.direction, body: row.body.slice(0, 12_000) })), model: config.generationModel,
   });
   await recordUsage(database, null, null, "telegram_drafter", config.generationModel, usage);
@@ -458,6 +462,8 @@ function firstSendDenial(message: Record<string, unknown>, control: Record<strin
   if (message.status !== "approved" && message.status !== "sending") return "message_not_approved";
   if (!message.approved_by || !message.approved_at) return "human_approval_required";
   if (message.do_not_contact === true) return "do_not_contact";
+  // A reply drafted before another answer went out repeats or contradicts it.
+  if (message.kind === "reply" && message.superseded === true) return "reply_superseded";
   // Limits and outreach switches govern reaching new creators; a conversation the creator started is always answered.
   if (message.kind === "reply") return null;
   if (control.outreach_paused === true || !policy.outreachEnabled) return "outreach_paused";

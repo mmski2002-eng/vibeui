@@ -137,18 +137,17 @@ async function adminAction(database: Database, request: IncomingMessage, respons
       FROM conversation_threads t WHERE t.id = m.thread_id AND m.id = ${id} AND m.status = 'draft' RETURNING m.id, t.channel
     `;
     if (!rows[0]) return json(response, 409, { error: "message_not_draft" });
-    // Only email is sent by the worker; an approved Telegram text waits for «Отправлено вручную».
-    if (rows[0].channel === "email") {
+    if (rows[0].channel === "email" || rows[0].channel === "telegram") {
       const { enqueue } = await import("./queue.js");
       await enqueue(database, "send_message", { messageId: id }, `send_message:${id}`);
     }
   } else if (action === "approve_all_messages") {
     targetType = "message";
-    // Only email drafts: other channels are sent by hand, an approval would only park them in the send queue.
+    // Replies are never bulk-approved: a stale reply draft would answer a conversation that has moved on.
     const rows = await database<{ id: string }[]>`
       UPDATE outreach_messages m SET status = 'approved', approved_by = 'administrator', approved_at = now()
-      FROM conversation_threads t WHERE t.id = m.thread_id AND t.channel = 'email'
-        AND m.direction = 'outbound' AND m.status = 'draft' RETURNING m.id
+      FROM conversation_threads t WHERE t.id = m.thread_id AND t.channel IN ('email', 'telegram')
+        AND m.direction = 'outbound' AND m.kind <> 'reply' AND m.status = 'draft' RETURNING m.id
     `;
     const { enqueue } = await import("./queue.js");
     for (const row of rows) await enqueue(database, "send_message", { messageId: row.id }, `send_message:${row.id}`);

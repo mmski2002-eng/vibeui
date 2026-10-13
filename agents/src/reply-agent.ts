@@ -19,15 +19,18 @@ export async function classifyReply(body: string, model: string): Promise<ReplyC
 
 // The owner decides what to say; the model only turns their instruction into a polite Russian letter.
 export async function draftOwnerReply(input: {
-  instruction: string; previousDraft: string | null; referralUrl: string; creatorName: string;
+  instruction: string; previousDraft: string | null; referralUrl: string; creatorName: string; playbook: string;
   history: Array<{ direction: string; body: string }>; model: string;
 }): Promise<{ body: string; usage: TokenUsage }> {
   const agent = new Agent({
     name: "VibeUI Owner Reply Drafter", model: input.model,
     instructions: `You write the next email from the VibeUI team to the content creator ${input.creatorName}. The VibeUI owner tells you what to answer; follow the owner's instruction exactly, it overrides everything else. Read the whole conversation, answer every question the creator asked that the instruction covers.
 Write in Russian, polite and natural, plain text, no subject, no Markdown, usually 40-180 words. It will be machine-translated to the creator's language, so use simple clear sentences and no idioms. End with "Команда VibeUI".
-Background you may use: VibeUI is a catalog of ready UI blocks and whole-page scenarios for vibe coding; "Copy for AI" makes an AI coding agent install the real component file. The creator's personal link gives a free month of Pro: ${input.referralUrl || "(no link)"}. Partners get 25% of payments from people they bring, viewers get 30% off the first payment.
+The creator's personal link: ${input.referralUrl || "(no link)"}.
+Follow the owner's playbook below for tone, facts and typical situations; use only facts from it or from the instruction.
 Never invent money amounts, dates or promises that the owner did not give.
+
+${input.playbook}
 If a previous draft is given, apply the owner's corrections to it and keep everything else.`,
     outputType: z.object({ body: z.string().max(4000) }),
   });
