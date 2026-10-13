@@ -163,3 +163,16 @@
 - Пишут: новое обращение (`createReport`, полный текст) и успешная оплата (ЮKassa `applyPaymentEvent`, NOWPayments
   webhook) — только при первом применении платежа.
 - Нужно в `/etc/vibeui-agents/agents.env`: `SITE_DATABASE_URL` = `DATABASE_URL` из `/etc/vibeui-club.env`, рестарт worker.
+
+## 2026-10-13 — рассылка и ответы в Telegram (личный аккаунт)
+
+- `src/telegram-dm.ts`: отдельный user-аккаунт (GramJS, env `TELEGRAM_OUTREACH_SESSION`), не аккаунт поиска.
+  `send_message` для контакта `telegram` шлёт личное сообщение; не человек (канал/бот) → `Send blocked`.
+  Повтор после сбоя сверяет последние сообщения диалога (идемпотентность).
+- Первые контакты в Telegram — не чаще раза в `TELEGRAM_FIRST_CONTACT_GAP_HOURS` (6 ч → 4 в сутки);
+  ответы без интервала. Ожидание = `SendDeferred`, задача ждёт без траты попытки.
+- `FLOOD_WAIT`/`PEER_FLOOD` → `telegram_bot_state.outreach_paused_until` (миграция 014) + critical-уведомление.
+- Ответы: worker раз в минуту читает непрочитанные диалоги с собеседниками наших тредов
+  (`external_thread_id` = id пользователя) → inbound → `classify_reply` → прежняя цепочка бота.
+- `npm test` 55/55. Вживую не проверено — нет сессии аккаунта.
+- После деплоя: 3 одобренных telegram-сообщения имеют `cancelled` задачи — вернуть в `queued` (SQL в чате 2026-10-13).

@@ -17,6 +17,7 @@ import { referralWord } from "./referral-word.js";
 import { deliverNotifications, deliverSiteNotifications, linkTelegramMessages, pollTelegramUpdates, sendTelegram, telegramConfigured } from "./telegram.js";
 import { translate } from "./translate.js";
 import { notify } from "./email/inbound.js";
+import { assertTelegramSlot, pollTelegramDirect, SendDeferred, sendTelegramDirect, telegramOutreachConfigured } from "./telegram-dm.js";
 import { checkPublication } from "./publication-monitor.js";
 import { runScheduler } from "./scheduler.js";
 import { billedUsage } from "./openrouter-usage.js";
@@ -33,6 +34,7 @@ export async function runWorker(database: Database, config: Config): Promise<voi
 
   console.log(`Worker ${workerId} started`);
   let nextInboxPoll = 0;
+  let nextDirectPoll = 0;
   let nextTelegramPush = 0;
   let nextTelegramPoll = 0;
   const site = config.siteDatabaseUrl ? connectDatabase(config.siteDatabaseUrl) : null;
@@ -53,6 +55,10 @@ export async function runWorker(database: Database, config: Config): Promise<voi
     if (gmailConfigured(config) && Date.now() >= nextInboxPoll) {
       nextInboxPoll = Date.now() + config.inboxPollMs;
       await pollGmailInbox(database, config).catch((error: unknown) => console.error("Inbox poll failed:", error instanceof Error ? error.message : error));
+    }
+    if (telegramOutreachConfigured(config) && Date.now() >= nextDirectPoll) {
+      nextDirectPoll = Date.now() + 60_000;
+      await pollTelegramDirect(database, config).catch((error: unknown) => console.error("Telegram DM poll failed:", error instanceof Error ? error.message : error));
     }
     const control =(await database<{ emergency_stop: boolean }[]>`SELECT emergency_stop FROM agent_control WHERE singleton = true`)[0];
     if (control?.emergency_stop) {
@@ -86,6 +92,13 @@ export async function runWorker(database: Database, config: Config): Promise<voi
         await database`
           UPDATE agent_jobs SET status = 'queued', attempts = attempts - 1, locked_at = NULL, last_error = 'waiting: daily_limit_reached',
             available_at = date_trunc('day', now()) + interval '1 day 7 hours', updated_at = now() WHERE id = ${job.id}
+        `;
+        continue;
+      }
+      if (error instanceof SendDeferred) {
+        await database`
+          UPDATE agent_jobs SET status = 'queued', attempts = attempts - 1, locked_at = NULL, last_error = ${`waiting: ${error.reason}`},
+            available_at = ${error.until}, updated_at = now() WHERE id = ${job.id}
         `;
         continue;
       }
@@ -290,7 +303,7 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
     SELECT count(*)::int AS count FROM outreach_messages
     WHERE direction = 'outbound' AND kind <> 'reply' AND sent_at >= date_trunc('day', now())
   `)[0]?.count ?? 0;
-  const denial = firstSendDenial(message, control ?? {}, policy, sentToday);
+  const denial = firstSendDenial(message, control ?? {}, policy, sentToday, telegramOutreachConfigured(config));
   if (denial) {
     await writeAudit(database, { actor: "outreach_agent", action: "send_email", targetType: "message",
       targetId: messageId, decision: "blocked", reason: denial });
@@ -302,7 +315,10 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
   const optOut = market === "ru" ? "\n\nЕсли такие предложения неактуальны, ответьте «не писать», и мы больше не свяжемся." : "\n\nIf this is not relevant, reply “unsubscribe” and we will not contact you again.";
   const text = message.kind === "reply" ? String(message.body) : `${String(message.body)}${optOut}`;
   let externalId: string;
-  if (gmailConfigured(config)) {
+  if (message.contact_kind === "telegram") {
+    await assertTelegramSlot(database, config, message.kind !== "reply");
+    externalId = await sendTelegramDirect(database, config, { threadId: String(message.thread_id), username: String(message.contact_value), text, retrying });
+  } else if (gmailConfigured(config)) {
     // SMTP has no idempotency key: a retry after an unknown outcome checks Sent for our Message-ID first.
     const gmailMessageId = outboundMessageId(messageId, config.gmailUser);
     externalId = retrying && await alreadySent(config, gmailMessageId)
@@ -320,7 +336,7 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
     await transaction`UPDATE conversation_threads SET state = 'sent', updated_at = now() WHERE id = ${String(message.thread_id)}`;
     await transaction`UPDATE creators SET status = 'sent', updated_at = now() WHERE id = ${String(message.creator_id)}`;
   });
-  await notify(database, "info", "email_sent", `Письмо отправлено: ${String(message.contact_value)}`, { subject: String(message.subject) });
+  await notify(database, "info", "email_sent", `${message.contact_kind === "telegram" ? "Сообщение в Telegram" : "Письмо"} отправлено: ${String(message.contact_value)}`, { subject: String(message.subject) });
   await writeAudit(database, { actor: "outreach_agent", action: "send_email", targetType: "message",
     targetId: messageId, decision: "completed", details: { externalId, policyVersion: policy.version } });
 }
@@ -435,9 +451,10 @@ async function telegramSendJob(database: Database, config: Config, job: AgentJob
   await sendTelegram(config, `📤 Отправляю ${String(draft.display_name)} (${language}):\n\n${text}`);
 }
 
-function firstSendDenial(message: Record<string, unknown>, control: Record<string, unknown>, policy: Awaited<ReturnType<typeof loadPolicy>>, sentToday: number): string | null {
+function firstSendDenial(message: Record<string, unknown>, control: Record<string, unknown>, policy: Awaited<ReturnType<typeof loadPolicy>>, sentToday: number, telegramReady: boolean): string | null {
   if (control.emergency_stop === true) return "emergency_stop";
-  if (message.contact_kind !== "email") return "channel_requires_manual_send";
+  if (message.contact_kind === "telegram" && !telegramReady) return "telegram_outreach_not_configured";
+  if (message.contact_kind !== "email" && message.contact_kind !== "telegram") return "channel_requires_manual_send";
   if (message.status !== "approved" && message.status !== "sending") return "message_not_approved";
   if (!message.approved_by || !message.approved_at) return "human_approval_required";
   if (message.do_not_contact === true) return "do_not_contact";

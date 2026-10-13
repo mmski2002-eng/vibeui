@@ -44,6 +44,8 @@ export function loadConfig() {
     telegramApiId: integer("TELEGRAM_API_ID", 0),
     telegramApiHash: process.env.TELEGRAM_API_HASH ?? "",
     telegramSession: process.env.TELEGRAM_SESSION ?? "",
+    telegramOutreachSession: process.env.TELEGRAM_OUTREACH_SESSION ?? "",
+    telegramFirstContactGapHours: integer("TELEGRAM_FIRST_CONTACT_GAP_HOURS", 6),
     yandexSearchApiKey: process.env.YANDEX_SEARCH_API_KEY ?? "",
     yandexFolderId: process.env.YANDEX_FOLDER_ID ?? "",
     braveSearchApiKey: process.env.BRAVE_SEARCH_API_KEY ?? "",
