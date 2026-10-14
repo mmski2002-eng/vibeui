@@ -3,7 +3,7 @@ import type { Config } from "./config.js";
 import type { Database } from "./database.js";
 import { idleSources } from "./scheduler.js";
 import { telegramSearchConfigured } from "./discovery/telegram-search.js";
-import { braveConfigured, yandexConfigured } from "./discovery/web-search.js";
+import { yandexConfigured } from "./discovery/web-search.js";
 
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -127,7 +127,7 @@ const routes: Record<string, Handler> = {
     ]);
     const configured: Record<string, boolean> = {
       "youtube:ru": Boolean(config.youtubeApiKey), "youtube:en": Boolean(config.youtubeApiKey), rutube: true, habr: true, devto: true,
-      telegram: true, "telegram-search": telegramSearchConfigured(config), "yandex-tg": yandexConfigured(config), "brave-tg": braveConfigured(config),
+      telegram: true, "telegram-search": telegramSearchConfigured(config), "yandex-tg": yandexConfigured(config),
       vk: Boolean(config.vkServiceToken),
     };
     const bySource = new Map(sourceRuns.map((row) => [row.source, row]));
@@ -374,7 +374,6 @@ const routes: Record<string, Handler> = {
       { name: "VK service token", configured: Boolean(config.vkServiceToken), purpose: "Обход VK-сообществ по ссылкам" },
       { name: "Telegram-аккаунт", configured: Boolean(config.telegramApiId && config.telegramApiHash && config.telegramSession), purpose: "Поиск Telegram-каналов по словам" },
       { name: "Yandex Search API", configured: Boolean(config.yandexSearchApiKey && config.yandexFolderId), purpose: "Поиск Telegram-каналов через Яндекс (ночью)" },
-      { name: "Brave Search API", configured: Boolean(config.braveSearchApiKey), purpose: "Поиск Telegram-каналов через Brave" },
       { name: "VibeUI internal API", configured: Boolean(config.vibeuiInternalApiKey), purpose: "Реферальные ссылки и статистика блогеров" },
     ],
   }),

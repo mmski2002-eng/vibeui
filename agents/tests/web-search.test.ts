@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { braveTelegramChannels, isMoscowNight, telegramChannelsFromUrls, urlsFromYandexXml, yandexTelegramChannels } from "../src/discovery/web-search.js";
+import { isMoscowNight, telegramChannelsFromUrls, urlsFromYandexXml, yandexTelegramChannels } from "../src/discovery/web-search.js";
 import { discoveryTasks } from "../src/scheduler.js";
 import type { Policy } from "../src/policy.js";
 
@@ -36,19 +36,6 @@ test("Yandex request carries the key, folder and site:t.me, and decodes base64 X
   assert.equal(calls[0]?.body.responseFormat, "FORMAT_XML");
 });
 
-test("Brave request uses the subscription token and reads web results", async (context) => {
-  const calls: { url: string; token: string | null }[] = [];
-  context.mock.method(globalThis, "fetch", async (input: URL, init: RequestInit) => {
-    calls.push({ url: String(input), token: new Headers(init.headers).get("x-subscription-token") });
-    return Response.json({ web: { results: [{ url: "https://t.me/s/NoCodeDaily" }, { url: "https://example.com" }] } });
-  });
-  assert.deepEqual(await braveTelegramChannels({ braveSearchApiKey: "brave" }, "no-code"), ["nocodedaily"]);
-  assert.equal(calls[0]?.token, "brave");
-  assert.match(calls[0]?.url ?? "", /q=no-code\+site%3At\.me/);
-  context.mock.method(globalThis, "fetch", async () => new Response("quota", { status: 429 }));
-  await assert.rejects(braveTelegramChannels({ braveSearchApiKey: "brave" }, "x"), /Brave Search API 429/);
-});
-
 test("Moscow night is 00:00–08:00 UTC+3", () => {
   assert.equal(isMoscowNight(new Date("2026-10-09T21:30:00Z")), true);
   assert.equal(isMoscowNight(new Date("2026-10-09T04:59:00Z")), true);
@@ -56,11 +43,11 @@ test("Moscow night is 00:00–08:00 UTC+3", () => {
   assert.equal(isMoscowNight(new Date("2026-10-09T12:00:00Z")), false);
 });
 
-test("Yandex tasks appear only at night, Brave whenever its key is set", () => {
+test("Yandex tasks appear only at night", () => {
   const policy = { discovery: { youtube: { ru: [], en: [] }, rutube: [], habrHubs: [], devtoTags: [], telegramQueries: ["cursor"] } } as Policy;
-  const sources = (options: { yandex: boolean; brave: boolean; night: boolean }) =>
+  const sources = (options: { yandex: boolean; night: boolean }) =>
     discoveryTasks(policy, { youtubeApiKey: "", vkServiceToken: "", telegramSearch: false, ...options }).map((task) => task.source);
-  assert.deepEqual(sources({ yandex: true, brave: true, night: false }), ["brave-tg", "telegram", "maintenance"]);
-  assert.deepEqual(sources({ yandex: true, brave: false, night: true }), ["yandex-tg", "telegram", "maintenance"]);
-  assert.deepEqual(sources({ yandex: false, brave: false, night: true }), ["telegram", "maintenance"]);
+  assert.deepEqual(sources({ yandex: true, night: false }), ["telegram", "maintenance"]);
+  assert.deepEqual(sources({ yandex: true, night: true }), ["yandex-tg", "telegram", "maintenance"]);
+  assert.deepEqual(sources({ yandex: false, night: true }), ["telegram", "maintenance"]);
 });

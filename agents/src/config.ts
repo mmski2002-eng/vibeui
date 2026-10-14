@@ -48,7 +48,6 @@ export function loadConfig() {
     telegramFirstContactGapHours: integer("TELEGRAM_FIRST_CONTACT_GAP_HOURS", 2),
     yandexSearchApiKey: process.env.YANDEX_SEARCH_API_KEY ?? "",
     yandexFolderId: process.env.YANDEX_FOLDER_ID ?? "",
-    braveSearchApiKey: process.env.BRAVE_SEARCH_API_KEY ?? "",
     adminHost: process.env.ADMIN_HOST ?? "127.0.0.1",
     adminPort: integer("ADMIN_PORT", 4310),
     adminUsername: process.env.ADMIN_USERNAME ?? "admin",

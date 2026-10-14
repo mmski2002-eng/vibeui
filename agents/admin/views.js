@@ -18,7 +18,7 @@ const schedulerText = { run: "идёт поиск", nothing_due: "все зап�
   budget_spent: "дневной лимит исчерпан", total_budget_spent: "общий лимит исчерпан", scoring_in_progress: "оценивает найденных", enough_candidates: "кандидатов хватает" };
 
 const sourceNames = { "youtube:ru": "YouTube RU", "youtube:en": "YouTube EN", rutube: "Rutube", habr: "Habr", devto: "Dev.to", telegram: "Telegram · ссылки",
-  "telegram-search": "Telegram · поиск", "yandex-tg": "Telegram · Яндекс", "brave-tg": "Telegram · Brave", vk: "VK" };
+  "telegram-search": "Telegram · поиск", "yandex-tg": "Telegram · Яндекс", vk: "VK" };
 
 // Each bar is relative to the first step; the percent is the conversion from the previous step.
 function funnelBars(steps) {

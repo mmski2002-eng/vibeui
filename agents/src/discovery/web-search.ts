@@ -3,14 +3,10 @@ import { normalizeUsername } from "./telegram.js";
 
 // Keyword search for Telegram channels through web search engines: "<query> site:t.me" returns channel and post pages,
 // their usernames go to the t.me/s/ crawler, which saves and scores them. No Telegram account is needed.
-// Request format follows Yandex Search API v2 (the same one SearXNG uses) and Brave Search API v1.
+// Request format follows Yandex Search API v2 (the same one SearXNG uses).
 
 export function yandexConfigured(config: Pick<Config, "yandexSearchApiKey" | "yandexFolderId">): boolean {
   return Boolean(config.yandexSearchApiKey && config.yandexFolderId);
-}
-
-export function braveConfigured(config: Pick<Config, "braveSearchApiKey">): boolean {
-  return Boolean(config.braveSearchApiKey);
 }
 
 export async function yandexTelegramChannels(config: Pick<Config, "yandexSearchApiKey" | "yandexFolderId">, query: string): Promise<string[]> {
@@ -27,19 +23,6 @@ export async function yandexTelegramChannels(config: Pick<Config, "yandexSearchA
   const { rawData } = await response.json() as { rawData?: string };
   if (!rawData) throw new Error("Yandex Search API returned no rawData");
   return telegramChannelsFromUrls(urlsFromYandexXml(Buffer.from(rawData, "base64").toString("utf8")));
-}
-
-export async function braveTelegramChannels(config: Pick<Config, "braveSearchApiKey">, query: string): Promise<string[]> {
-  const url = new URL("https://api.search.brave.com/res/v1/web/search");
-  url.searchParams.set("q", `${query} site:t.me`);
-  url.searchParams.set("count", "20");
-  const response = await fetch(url, {
-    signal: AbortSignal.timeout(30_000),
-    headers: { accept: "application/json", "x-subscription-token": config.braveSearchApiKey },
-  });
-  if (!response.ok) throw new Error(`Brave Search API ${response.status}: ${(await response.text()).slice(0, 300)}`);
-  const body = await response.json() as { web?: { results?: { url?: string }[] } };
-  return telegramChannelsFromUrls((body.web?.results ?? []).map((result) => result.url ?? ""));
 }
 
 // Code 15 is Yandex's "nothing found", not a failure.
