@@ -271,3 +271,18 @@ dialog p { margin: 0; }
   .money .big { font-size: 18px; }
 }
 .pre { white-space: pre-wrap; }
+
+.x-feed { display: grid; gap: 14px; max-width: 640px; }
+.x-post { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+.x-post.next { border-color: var(--primary); }
+.x-post.done { opacity: 0.7; }
+.x-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.x-card { display: grid; grid-template-columns: 40px 1fr; gap: 10px; }
+.x-avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--primary); color: #fff; font-weight: 700; }
+.x-body { min-width: 0; }
+.x-text { white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 2px; }
+.x-link { color: #1d9bf0; }
+.x-image { display: block; width: 100%; height: auto; margin-top: 10px; border: 1px solid var(--line); border-radius: 16px; }
+.x-post .message-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; margin-top: 10px; }
+.x-post .message-actions .small { margin-right: auto; }
+.danger-text { color: var(--danger); }

@@ -72,7 +72,53 @@ const quote = (email) => `\n\n${fmt.date(email.created_at)}, ${email.from}:\n${m
 let mailAccounts = ["admin@vibeui.club", "noreply@vibeui.club"];
 const mailHref = (id, params) => `#/mail${id ? `/${id}` : ""}${query({ account: params.account, box: params.box, compose: params.compose, reply: params.reply })}`;
 
+const xWeight = (text) => text.replace(/https?:\/\/\S+/g, "x".repeat(23)).length;
+const xText = (text) => esc(text).replace(/https?:\/\/[^\s<]+/g, (url) => `<span class="x-link">${url}</span>`);
+
+function xPost(post, handle, next) {
+  const weight = xWeight(post.text);
+  return `<article class="x-post${next ? " next" : ""}${post.published_at ? " done" : ""}" data-x-day="${post.day}" data-text="${esc(post.text)}">
+    <div class="x-meta"><strong>День ${post.day}</strong>${next ? ' <span class="pill info">следующий</span>' : ""}
+      ${post.published_at ? `<span class="pill ok">опубликован ${fmt.day(post.published_at)}</span>` : ""}</div>
+    <div class="x-card">
+      <span class="x-avatar" aria-hidden="true">V</span>
+      <div class="x-body">
+        <div class="x-name"><strong>VibeUI</strong> <span class="muted">@${esc(handle)}</span></div>
+        <div class="x-text">${xText(post.text)}</div>
+        ${post.image ? `<img class="x-image" src="x-images/${esc(post.image)}" alt="Кадр к посту дня ${post.day}" loading="lazy">` : ""}
+      </div>
+    </div>
+    <div class="message-actions">
+      <span class="small ${weight > 280 ? "danger-text" : "muted"}">${weight}/280</span>
+      ${post.image ? `<a class="btn sm" href="x-images/${esc(post.image)}" download>Скачать кадр</a>` : ""}
+      ${post.published_at ? `<button class="btn sm" data-x="unpublish" data-day="${post.day}">Снять отметку</button>` : ""}
+      <button class="btn sm primary" data-x="open" data-day="${post.day}">${post.published_at ? "Открыть в X ещё раз" : "Опубликовать в X"}</button>
+    </div>
+    <details><summary class="small muted">Править текст</summary>
+      <form class="message-edit" data-x-form="${post.day}"><textarea name="text" rows="7" maxlength="4000" required>${esc(post.text)}</textarea>
+        <div class="message-actions"><button class="btn sm" type="submit">Сохранить</button></div></form>
+    </details>
+  </article>`;
+}
+
 export const views = {
+  "x-posts": {
+    title: () => "Посты в X",
+    subtitle: "«Опубликовать в X» кладёт картинку в буфер и открывает готовый пост: вставьте Ctrl+V и нажмите «Опубликовать». День сразу отмечается опубликованным.",
+    toolbar: (params) => select("show", params.show, [["", "Не опубликованы"], ["all", "Все дни"], ["done", "Опубликованы"]]),
+    async render({ query: params }) {
+      const { handle, posts } = await api("/api/x-posts");
+      const next = posts.find((post) => !post.published_at);
+      const done = posts.length - posts.filter((post) => !post.published_at).length;
+      const shown = posts.filter((post) => params.show === "all" ? true : params.show === "done" ? post.published_at : !post.published_at);
+      return `<div data-x-posts class="grid kpis">
+          ${kpi("Опубликовано", `${done} / ${posts.length}`, meter(done, posts.length), true)}
+          ${kpi("Следующий", next ? `День ${next.day}` : "всё", next ? "17:00 МСК — свой пост" : "")}
+          ${kpi("Аккаунт", `<a class="link" href="https://x.com/${esc(handle)}" target="_blank" rel="noopener noreferrer">@${esc(handle)}</a>`)}
+        </div>
+        <div class="section x-feed">${shown.map((post) => xPost(post, handle, post === next)).join("") || '<div class="empty">Пусто</div>'}</div>`;
+    },
+  },
   mail: {
     title: (id) => id ? "Письмо" : "Почта",
     subtitle: "Почта домена vibeui.club",

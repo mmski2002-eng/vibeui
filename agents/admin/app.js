@@ -276,6 +276,8 @@ function bindGlobal() {
     if (playbookButton) return void playbookAction(playbookButton.dataset.playbookAction, playbookButton.dataset.id);
     const skip = event.target.closest("[data-draft-skip]");
     if (skip) return void playbookAction("skip_draft", skip.dataset.draftSkip);
+    const xButton = event.target.closest("[data-x]");
+    if (xButton) return void xPostAction(xButton.dataset.x, Number(xButton.dataset.day));
     const action = event.target.closest("[data-action]");
     if (action) { event.stopPropagation(); return void runAction(action.dataset.action, action.dataset.id); }
     const row = event.target.closest("tr[data-href]");
@@ -336,6 +338,12 @@ function bindGlobal() {
       }
       return;
     }
+    const xForm = event.target.closest("[data-x-form]");
+    if (xForm) {
+      event.preventDefault();
+      await xPostAction("save", Number(xForm.dataset.xForm), new FormData(xForm).get("text"));
+      return;
+    }
     const form = event.target.closest("[data-message-form]");
     if (!form) return;
     event.preventDefault();
@@ -393,6 +401,26 @@ async function setAskOwner(value) {
   }
 }
 
+// X web intents cannot attach media, so the frame goes to the clipboard first and is pasted into the composer with Ctrl+V.
+async function xPostAction(action, day, text) {
+  const article = document.querySelector(`[data-x-day="${day}"]`);
+  try {
+    if (action === "open") {
+      const image = article.querySelector("img");
+      const copied = image ? navigator.clipboard.write([new ClipboardItem({ "image/png": fetch(image.src).then((response) => response.blob()) })]).then(() => true, () => false) : Promise.resolve(false);
+      window.open(`https://x.com/intent/post?text=${encodeURIComponent(article.dataset.text)}`, "_blank", "noopener");
+      await post("/api/x-post", { action: "publish", day });
+      toast(await copied ? `День ${day}: картинка в буфере — вставьте Ctrl+V и нажмите «Опубликовать»` : `День ${day} отмечен. Картинку скачайте кнопкой и прикрепите`);
+    } else {
+      await post("/api/x-post", { action, day, text });
+      toast(action === "save" ? "Текст сохранён" : "Отметка снята");
+    }
+    await refresh();
+  } catch (error) {
+    toast(`Ошибка: ${error.message}`, true);
+  }
+}
+
 function toggleEdit(id, open) {
   const form = document.querySelector(`[data-message-form="${CSS.escape(id)}"]`);
   const body = document.querySelector(`[data-message-body="${CSS.escape(id)}"]`);
@@ -405,7 +433,7 @@ function toggleEdit(id, open) {
 function poll() {
   clearInterval(state.timer);
   state.timer = setInterval(async () => {
-    if (document.hidden || dialog().open || document.querySelector("[data-message-form]:not([hidden]), [data-mail-form], [data-playbook-form], [data-draft-form]")) return;
+    if (document.hidden || dialog().open || document.querySelector("[data-message-form]:not([hidden]), [data-mail-form], [data-playbook-form], [data-draft-form], [data-x-posts]")) return;
     const active = document.activeElement;
     if (active && ["INPUT", "SELECT", "TEXTAREA"].includes(active.tagName) && document.getElementById("view").contains(active)) return;
     await refreshShell();

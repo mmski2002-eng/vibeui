@@ -60,6 +60,12 @@ export function startAdminServer(database: Database, config: Config): void {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return adminAction(database, request, response);
       }
+      if (request.method === "POST" && url.pathname === "/api/x-post") {
+        if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
+        return xPostAction(database, request, response);
+      }
+      const xImage = /^\/x-images\/(day-\d{2,3}\.png)$/.exec(url.pathname);
+      if (request.method === "GET" && xImage) return serveXImage(response, xImage[1]!);
       if (request.method === "POST" && url.pathname === "/api/mail/send") {
         if (!sameOrigin(request)) return json(response, 403, { error: "origin_not_allowed" });
         return sendMailbox(database, config, request, response);
@@ -101,6 +107,24 @@ async function serveStatic(response: ServerResponse, file: string): Promise<void
     "referrer-policy": "no-referrer",
   });
   response.end(body);
+}
+
+async function serveXImage(response: ServerResponse, file: string): Promise<void> {
+  const body = await readFile(new URL(`../content/x-posts/${file}`, import.meta.url)).catch(() => null);
+  if (!body) return json(response, 404, { error: "not_found" });
+  response.writeHead(200, { "content-type": "image/png", "cache-control": "private, max-age=3600", "x-content-type-options": "nosniff" });
+  response.end(body);
+}
+
+async function xPostAction(database: Database, request: IncomingMessage, response: ServerResponse) {
+  const body = await readJson(request);
+  const day = Number(body.day);
+  if (!Number.isInteger(day)) return json(response, 400, { error: "invalid_day" });
+  if (body.action === "publish") await database`UPDATE x_posts SET published_at = coalesce(published_at, now()), updated_at = now() WHERE day = ${day}`;
+  else if (body.action === "unpublish") await database`UPDATE x_posts SET published_at = NULL, updated_at = now() WHERE day = ${day}`;
+  else if (body.action === "save" && typeof body.text === "string" && body.text.trim()) await database`UPDATE x_posts SET text = ${body.text.trim().slice(0, 4000)}, updated_at = now() WHERE day = ${day}`;
+  else return json(response, 400, { error: "invalid_action" });
+  return json(response, 200, { ok: true });
 }
 
 function mailAccount(config: Config, requested: string | null): string | null {

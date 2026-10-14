@@ -1,0 +1,702 @@
+[
+  {
+    "day": 1,
+    "text": "The agent keeps redrawing your button until it almost looks right.\n\nVibeUI is a shadcn registry. Copy for AI, then the agent runs:\n\nnpx shadcn@latest add https://vibeui.club/r/button-001.json\n\nThe file already has accessibility and keyboard support.",
+    "image": "day-01.png",
+    "shot": null,
+    "published": true
+  },
+  {
+    "day": 2,
+    "text": "Your agent describes a navbar. You get a navbar-shaped div.\n\nVibeUI gives the agent the file.\nhttps://vibeui.club/components",
+    "image": "day-02.png",
+    "shot": null,
+    "published": true
+  },
+  {
+    "day": 3,
+    "text": "One command. The component lands in the project with its own palette. Nothing else gets installed.\n\nnpx shadcn@latest add https://vibeui.club/r/hero-001.json",
+    "image": "day-03.png",
+    "shot": null,
+    "published": true
+  },
+  {
+    "day": 4,
+    "text": "2000+ items in the registry.\nComponents, full page sections, animations.\nSame install for all of them.\n\nhttps://vibeui.club",
+    "image": "day-04.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 5,
+    "text": "Free account: 20 different components a month.\n\nOpen one, copy the prompt, let the agent install it.\nhttps://vibeui.club/pricing",
+    "image": "day-05.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 6,
+    "text": "This section is already in the registry.\nThe agent installs it. It does not redraw it.\n\nhttps://vibeui.club/blocks/cta-001",
+    "image": "day-06.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 7,
+    "text": "Shipping VibeUI in public.\nThis week: the animation catalog, one file per effect.\n\nhttps://vibeui.club/animations",
+    "image": "day-07.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 8,
+    "text": "A prompt asks the agent to invent a card.\nThe registry gives it the card that is already built.\n\nhttps://vibeui.club/components/card-001",
+    "image": "day-08.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 9,
+    "text": "An animation from the registry.\nOne file. The agent installs that file.\n\nhttps://vibeui.club/animations/background-005",
+    "image": "day-09.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 10,
+    "text": "A whole page, already assembled from registry blocks.\nThe agent installs the sections. It does not redesign them.\n\nhttps://vibeui.club/scenarios/delivery/demo",
+    "image": "day-10.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 11,
+    "text": "The installed file already has keyboard support and accessibility.\nThat work is not left for the agent to invent.\n\nhttps://vibeui.club",
+    "image": "day-11.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 12,
+    "text": "The catalog is public.\n20 components a month are free.\nPaid plans are on the pricing page.\n\nhttps://vibeui.club/pricing",
+    "image": "day-12.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 13,
+    "text": "Which screen is your agent redrawing this week?\nNavbar, pricing, hero, or something else?\n\nThe matching section is probably already in the registry.\nhttps://vibeui.club/blocks",
+    "image": "day-13.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 14,
+    "text": "Asked for a navbar.\nThis one is in the registry.\n\nhttps://vibeui.club/blocks/navbar-004",
+    "image": "day-14.png",
+    "shot": null,
+    "published": false
+  },
+  {
+    "day": 15,
+    "text": "Pricing pages are where agents get creative in the wrong way.\n\nThree plans, one recommended, real spacing. Already built:\nhttps://vibeui.club/blocks/pricing-002",
+    "image": "day-015.png",
+    "shot": "/preview/pricing-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 16,
+    "text": "A command palette with arrow keys, Enter and Escape that actually work.\n\nAsk the agent to install it, not to imagine it:\nnpx shadcn@latest add https://vibeui.club/r/command-001.json",
+    "image": "day-016.png",
+    "shot": "/preview/command-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 17,
+    "text": "Console Hero.\nA terminal-style first screen for dev tools.\n\nhttps://vibeui.club/blocks/hero-002",
+    "image": "day-017.png",
+    "shot": "/preview/hero-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 18,
+    "text": "A SaaS landing, section by section, all from the registry.\n\nHero, features, pricing, FAQ, footer. The agent installs each one.\n\nhttps://vibeui.club/scenarios/saas/demo",
+    "image": "day-018.png",
+    "shot": "/scenarios/saas/demo",
+    "published": false
+  },
+  {
+    "day": 19,
+    "text": "Password field: show/hide, caps lock hint, proper label.\n\nSmall thing. Agents skip half of it every time.\nhttps://vibeui.club/components/input-003",
+    "image": "day-019.png",
+    "shot": "/preview/input-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 20,
+    "text": "Sticky FAQ: questions on the left stay in view while answers scroll.\n\nnpx shadcn@latest add https://vibeui.club/r/faq-001.json",
+    "image": "day-020.png",
+    "shot": "/preview/faq-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 21,
+    "text": "Tip: give your agent the component file, not a screenshot.\n\nA screenshot gets approximated. A file gets installed.\n\nhttps://vibeui.club/components",
+    "image": "day-021.png",
+    "shot": "/components",
+    "published": false
+  },
+  {
+    "day": 22,
+    "text": "Cursor spotlight background.\nOne file, reduced-motion respected, no extra packages.\n\nhttps://vibeui.club/blocks/surface-002",
+    "image": "day-022.png",
+    "shot": "/preview/surface-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 23,
+    "text": "Destructive dialog: focus trap, Escape to close, the dangerous button is not the default.\n\nhttps://vibeui.club/components/dialog-002",
+    "image": "day-023.png",
+    "shot": "/preview/dialog-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 24,
+    "text": "Featured testimonials.\nOne big quote, smaller ones around it. Ready to drop in.\n\nnpx shadcn@latest add https://vibeui.club/r/testimonials-001.json",
+    "image": "day-024.png",
+    "shot": "/preview/testimonials-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 25,
+    "text": "Sortable table with keyboard focus on the headers.\n\nThe agent installs it and you fill in your data.\nhttps://vibeui.club/components/table-004",
+    "image": "day-025.png",
+    "shot": "/preview/table-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 26,
+    "text": "Shop navbar with search.\nMobile menu included, not left as \"TODO\".\n\nhttps://vibeui.club/blocks/navbar-005",
+    "image": "day-026.png",
+    "shot": "/preview/navbar-005?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 27,
+    "text": "Magnetic cursor.\nThe kind of detail you would not prompt your way into.\n\nhttps://vibeui.club/animations/cursor-002",
+    "image": "day-027.png",
+    "shot": "/preview/cursor-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 28,
+    "text": "Every component carries its own palette in CSS variables.\nChange the brand color in one place, the rest follows.\n\nhttps://vibeui.club/pricing",
+    "image": "day-028.png",
+    "shot": "/pricing",
+    "published": false
+  },
+  {
+    "day": 29,
+    "text": "Undo toast.\nDelete, see \"Undo\", click it, nothing lost. Timer pauses on hover.\n\nhttps://vibeui.club/components/toast-002",
+    "image": "day-029.png",
+    "shot": "/preview/toast-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 30,
+    "text": "Timeline history for an About page.\nYears, milestones, responsive from 320px.\n\nnpx shadcn@latest add https://vibeui.club/r/about-002.json",
+    "image": "day-030.png",
+    "shot": "/preview/about-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 31,
+    "text": "Range picker.\nTwo dates, keyboard navigation, no date library.\n\nhttps://vibeui.club/components/calendar-002",
+    "image": "day-031.png",
+    "shot": "/preview/calendar-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 32,
+    "text": "Mosaic hero.\nIf your landing needs a grid of shots on the first screen:\n\nhttps://vibeui.club/blocks/hero-003",
+    "image": "day-032.png",
+    "shot": "/preview/hero-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 33,
+    "text": "How I use it:\n1. Open the block\n2. Copy for AI\n3. Paste into Claude or Cursor\n4. The agent runs one shadcn command\n\nThat's the whole flow.\nhttps://vibeui.club/blocks",
+    "image": "day-033.png",
+    "shot": "/blocks",
+    "published": false
+  },
+  {
+    "day": 34,
+    "text": "People picker.\nType a name, pick with arrows, see avatars.\n\nhttps://vibeui.club/components/combobox-004",
+    "image": "day-034.png",
+    "shot": "/preview/combobox-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 35,
+    "text": "Color slab CTA.\nA bold strip before the footer. Just swap the text.\n\nnpx shadcn@latest add https://vibeui.club/r/cta-004.json",
+    "image": "day-035.png",
+    "shot": "/preview/cta-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 36,
+    "text": "Alternating headline swap.\nThe second word rotates. Respects reduced motion.\n\nhttps://vibeui.club/animations/text-001",
+    "image": "day-036.png",
+    "shot": "/preview/text-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 37,
+    "text": "Four column footer.\nThe boring part of every site. Done once, properly.\n\nhttps://vibeui.club/blocks/footer-002",
+    "image": "day-037.png",
+    "shot": "/preview/footer-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 38,
+    "text": "OTP field with a resend timer.\nPaste a 6-digit code, it fills every box.\n\nhttps://vibeui.club/components/otp-003",
+    "image": "day-038.png",
+    "shot": "/preview/otp-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 39,
+    "text": "A restaurant site assembled from registry blocks.\nMenu, booking, map, reviews.\n\nhttps://vibeui.club/scenarios/restaurant/demo",
+    "image": "day-039.png",
+    "shot": "/scenarios/restaurant/demo",
+    "published": false
+  },
+  {
+    "day": 40,
+    "text": "Line chart without a chart library.\nSVG, tooltips, works in dark mode.\n\nhttps://vibeui.club/components/chart-001",
+    "image": "day-040.png",
+    "shot": "/preview/chart-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 41,
+    "text": "Sign in screen.\nLabels, errors, password toggle. Wire it to your auth.\n\nnpx shadcn@latest add https://vibeui.club/r/auth-001.json",
+    "image": "day-041.png",
+    "shot": "/preview/auth-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 42,
+    "text": "What is the most redrawn component in your projects?\n\nMine was the pricing table. Now it's one command.\nhttps://vibeui.club/animations",
+    "image": "day-042.png",
+    "shot": "/animations",
+    "published": false
+  },
+  {
+    "day": 43,
+    "text": "Bento showcase.\nThe grid everyone asks their agent for, already balanced.\n\nhttps://vibeui.club/blocks/layout-001",
+    "image": "day-043.png",
+    "shot": "/preview/layout-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 44,
+    "text": "Process stepper.\nDone, current, next. Readable on mobile.\n\nhttps://vibeui.club/components/stepper-001",
+    "image": "day-044.png",
+    "shot": "/preview/stepper-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 45,
+    "text": "Hand-drawn button.\nFor when the site should not look like every other SaaS.\n\nhttps://vibeui.club/animations/sketch-001",
+    "image": "day-045.png",
+    "shot": "/preview/sketch-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 46,
+    "text": "Newsletter signup with an email preview.\nPeople see what they get before they type.\n\nnpx shadcn@latest add https://vibeui.club/r/subscribe-002.json",
+    "image": "day-046.png",
+    "shot": "/preview/subscribe-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 47,
+    "text": "File tree with arrow-key navigation.\nExpand, collapse, select. No dependencies.\n\nhttps://vibeui.club/components/tree-001",
+    "image": "day-047.png",
+    "shot": "/preview/tree-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 48,
+    "text": "Filtered gallery.\nTags on top, smooth reflow, no layout jump.\n\nhttps://vibeui.club/blocks/portfolio-002",
+    "image": "day-048.png",
+    "shot": "/preview/portfolio-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 49,
+    "text": "The agent does not need a design system doc.\nIt needs the component file.\n\nhttps://vibeui.club/components",
+    "image": "day-049.png",
+    "shot": "/components",
+    "published": false
+  },
+  {
+    "day": 50,
+    "text": "Native accordion on details/summary.\nKeyboard and screen readers work without extra JS.\n\nhttps://vibeui.club/components/accordion-001",
+    "image": "day-050.png",
+    "shot": "/preview/accordion-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 51,
+    "text": "Arc fan of cards.\nHover, the fan opens. One file.\n\nhttps://vibeui.club/animations/stack-001",
+    "image": "day-051.png",
+    "shot": "/preview/stack-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 52,
+    "text": "Demo request form.\nValidation and states included: sending, sent, error.\n\nnpx shadcn@latest add https://vibeui.club/r/contact-003.json",
+    "image": "day-052.png",
+    "shot": "/preview/contact-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 53,
+    "text": "404 page with search.\nThe page people see most when something breaks.\n\nhttps://vibeui.club/blocks/errorpage-001",
+    "image": "day-053.png",
+    "shot": "/preview/errorpage-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 54,
+    "text": "Dual range slider.\nMin and max, keyboard steps, visible values.\n\nhttps://vibeui.club/components/slider-004",
+    "image": "day-054.png",
+    "shot": "/preview/slider-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 55,
+    "text": "A portfolio site from registry blocks.\nYou change the text and photos. The layout stays.\n\nhttps://vibeui.club/scenarios/portfolio/demo",
+    "image": "day-055.png",
+    "shot": "/scenarios/portfolio/demo",
+    "published": false
+  },
+  {
+    "day": 56,
+    "text": "Status badge.\nTiny, but agents still invent a new one per page.\n\nhttps://vibeui.club/components/badge-001",
+    "image": "day-056.png",
+    "shot": "/preview/badge-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 57,
+    "text": "Team grid with a department filter.\n\nnpx shadcn@latest add https://vibeui.club/r/people-002.json",
+    "image": "day-057.png",
+    "shot": "/preview/people-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 58,
+    "text": "Twisted ribbon background.\nCanvas, pauses off-screen, respects reduced motion.\n\nhttps://vibeui.club/animations/background-001",
+    "image": "day-058.png",
+    "shot": "/preview/background-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 59,
+    "text": "Bulk action bar for tables.\nSelect rows, the bar slides in with actions.\n\nhttps://vibeui.club/blocks/datagrid-002",
+    "image": "day-059.png",
+    "shot": "/preview/datagrid-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 60,
+    "text": "Free: 20 components a month.\nEnough to build a landing page end to end.\n\nhttps://vibeui.club/pricing",
+    "image": "day-060.png",
+    "shot": "/pricing",
+    "published": false
+  },
+  {
+    "day": 61,
+    "text": "Peek cards carousel.\nScroll-snap, swipe on mobile, arrows on desktop.\n\nhttps://vibeui.club/components/carousel-002",
+    "image": "day-061.png",
+    "shot": "/preview/carousel-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 62,
+    "text": "Aurora hero.\nStill one of the most installed blocks.\n\nnpx shadcn@latest add https://vibeui.club/r/hero-001.json",
+    "image": "day-062.png",
+    "shot": "/preview/hero-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 63,
+    "text": "Editor toolbar.\nToggle states, groups, roving focus.\n\nhttps://vibeui.club/components/buttongroup-004",
+    "image": "day-063.png",
+    "shot": "/preview/buttongroup-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 64,
+    "text": "Schedule grid for conferences and meetups.\n\nhttps://vibeui.club/blocks/event-003",
+    "image": "day-064.png",
+    "shot": "/preview/event-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 65,
+    "text": "Write the content yourself.\nLet the agent install the layout.\nThat split works better than asking it to do both.\n\nhttps://vibeui.club/blocks",
+    "image": "day-065.png",
+    "shot": "/blocks",
+    "published": false
+  },
+  {
+    "day": 66,
+    "text": "Confirm popover.\nFor actions that don't deserve a full dialog.\n\nhttps://vibeui.club/components/popover-003",
+    "image": "day-066.png",
+    "shot": "/preview/popover-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 67,
+    "text": "Monthly / yearly switch pricing.\nPrices update without a layout shift.\n\nnpx shadcn@latest add https://vibeui.club/r/pricing-003.json",
+    "image": "day-067.png",
+    "shot": "/preview/pricing-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 68,
+    "text": "Designer's crosshair cursor.\nFun on a portfolio, one file.\n\nhttps://vibeui.club/animations/cursor-003",
+    "image": "day-068.png",
+    "shot": "/preview/cursor-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 69,
+    "text": "Article reader.\nGood line length, headings, code blocks. Reading first.\n\nhttps://vibeui.club/blocks/blog-002",
+    "image": "day-069.png",
+    "shot": "/preview/blog-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 70,
+    "text": "Browser window mockup.\nPut your screenshot inside, done.\n\nhttps://vibeui.club/components/mockup-004",
+    "image": "day-070.png",
+    "shot": "/preview/mockup-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 71,
+    "text": "A mobile app landing from registry blocks.\n\nhttps://vibeui.club/scenarios/app/demo",
+    "image": "day-071.png",
+    "shot": "/scenarios/app/demo",
+    "published": false
+  },
+  {
+    "day": 72,
+    "text": "Select with a description under each option.\nBetter than a bare dropdown for plans and roles.\n\nhttps://vibeui.club/components/select-005",
+    "image": "day-072.png",
+    "shot": "/preview/select-005?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 73,
+    "text": "Logo marquee.\nPauses on hover, stops for reduced motion.\n\nnpx shadcn@latest add https://vibeui.club/r/logocloud-002.json",
+    "image": "day-073.png",
+    "shot": "/preview/logocloud-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 74,
+    "text": "How the AI works: a three-node pipeline with running dots.\nFor any AI product landing.\n\nhttps://vibeui.club/blocks/ai-001",
+    "image": "day-074.png",
+    "shot": "/preview/ai-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 75,
+    "text": "Percent ring meter.\nReal progress, not a spinner forever.\n\nhttps://vibeui.club/components/spinner-004",
+    "image": "day-075.png",
+    "shot": "/preview/spinner-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 76,
+    "text": "Product navbar with a mega menu.\nThe hardest navbar to prompt right.\n\nhttps://vibeui.club/blocks/navbar-004",
+    "image": "day-076.png",
+    "shot": "/preview/navbar-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 77,
+    "text": "Question for people building with Claude or Cursor:\n\ndo you let the agent design UI, or do you hand it existing components?\n\nhttps://vibeui.club/components",
+    "image": "day-077.png",
+    "shot": "/components",
+    "published": false
+  },
+  {
+    "day": 78,
+    "text": "Product card.\nImage, price, rating, add to cart. Responsive.\n\nnpx shadcn@latest add https://vibeui.club/r/card-004.json",
+    "image": "day-078.png",
+    "shot": "/preview/card-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 79,
+    "text": "Mesh gradient background.\nCSS only, no canvas.\n\nhttps://vibeui.club/blocks/surface-004",
+    "image": "day-079.png",
+    "shot": "/preview/surface-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 80,
+    "text": "Parent checkbox with the indeterminate state.\nAgents get this one wrong a lot.\n\nhttps://vibeui.club/components/checkbox-003",
+    "image": "day-080.png",
+    "shot": "/preview/checkbox-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 81,
+    "text": "Tabbed FAQ.\nFor products with many question groups.\n\nhttps://vibeui.club/blocks/faq-003",
+    "image": "day-081.png",
+    "shot": "/preview/faq-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 82,
+    "text": "Tabs with a sliding underline.\nArrow keys move between tabs.\n\nnpx shadcn@latest add https://vibeui.club/r/tabs-003.json",
+    "image": "day-082.png",
+    "shot": "/preview/tabs-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 83,
+    "text": "An online course landing from registry blocks.\nProgram, author, pricing, FAQ.\n\nhttps://vibeui.club/scenarios/course/demo",
+    "image": "day-083.png",
+    "shot": "/scenarios/course/demo",
+    "published": false
+  },
+  {
+    "day": 84,
+    "text": "Avatar stack with \"+5\".\nFor teams, comments, attendees.\n\nhttps://vibeui.club/components/avatar-003",
+    "image": "day-084.png",
+    "shot": "/preview/avatar-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 85,
+    "text": "Single quote testimonial.\nOne strong quote beats a wall of five-star cards.\n\nhttps://vibeui.club/blocks/testimonials-003",
+    "image": "day-085.png",
+    "shot": "/preview/testimonials-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 86,
+    "text": "Flip card.\nFront and back, keyboard accessible.\n\nhttps://vibeui.club/animations/flip-001",
+    "image": "day-086.png",
+    "shot": "/preview/flip-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 87,
+    "text": "Contact form.\nLabels, errors, success state.\n\nnpx shadcn@latest add https://vibeui.club/r/contact-001.json",
+    "image": "day-087.png",
+    "shot": "/preview/contact-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 88,
+    "text": "Code block with copy and a \"copied\" timer.\nFor docs and dev tool landings.\n\nhttps://vibeui.club/components/codeblock-002",
+    "image": "day-088.png",
+    "shot": "/preview/codeblock-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 89,
+    "text": "Each block is a single file with its own CSS variables.\nNo global theme to break, no extra packages.\n\nhttps://vibeui.club/blocks",
+    "image": "day-089.png",
+    "shot": "/blocks",
+    "published": false
+  },
+  {
+    "day": 90,
+    "text": "Plan comparison table.\nChecks, limits, sticky header.\n\nhttps://vibeui.club/blocks/pricing-004",
+    "image": "day-090.png",
+    "shot": "/preview/pricing-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 91,
+    "text": "Paragraph with growing highlights.\nText that marks itself as you scroll.\n\nhttps://vibeui.club/animations/text-003",
+    "image": "day-091.png",
+    "shot": "/preview/text-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 92,
+    "text": "Dropdown with keyboard shortcuts.\n\nnpx shadcn@latest add https://vibeui.club/r/dropdown-003.json",
+    "image": "day-092.png",
+    "shot": "/preview/dropdown-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 93,
+    "text": "Map with an address bar.\nOpenStreetMap works without an API key.\n\nhttps://vibeui.club/blocks/map-003",
+    "image": "day-093.png",
+    "shot": "/preview/map-003?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 94,
+    "text": "Team grid.\nPhotos, roles, links.\n\nhttps://vibeui.club/blocks/people-001",
+    "image": "day-094.png",
+    "shot": "/preview/people-001?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 95,
+    "text": "Decision alert.\nA warning with the two actions right inside it.\n\nhttps://vibeui.club/components/alert-004",
+    "image": "day-095.png",
+    "shot": "/preview/alert-004?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 96,
+    "text": "Coffee strength slider with a filling cup.\nIndustry blocks are where the registry gets playful.\n\nhttps://vibeui.club/blocks/bakery-002",
+    "image": "day-096.png",
+    "shot": "/preview/bakery-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 97,
+    "text": "Magnifying dock.\nThe macOS dock effect, as one React file.\n\nnpx shadcn@latest add https://vibeui.club/r/button-anim-002.json",
+    "image": "day-097.png",
+    "shot": "/preview/button-anim-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 98,
+    "text": "100 days of posting about VibeUI.\nFull circle: the delivery demo, still the best example of a page built from blocks.\n\nhttps://vibeui.club/scenarios/delivery/demo",
+    "image": "day-098.png",
+    "shot": "/scenarios/delivery/demo",
+    "published": false
+  },
+  {
+    "day": 99,
+    "text": "Centered dual CTA.\nPrimary and secondary action, nothing else.\n\nhttps://vibeui.club/blocks/cta-002",
+    "image": "day-099.png",
+    "shot": "/preview/cta-002?theme=dark&lang=en",
+    "published": false
+  },
+  {
+    "day": 100,
+    "text": "Pick a design. Hand it to AI. Ship the page.\n\nThat's the whole idea of VibeUI.\nhttps://vibeui.club",
+    "image": "day-100.png",
+    "shot": "/",
+    "published": false
+  }
+]

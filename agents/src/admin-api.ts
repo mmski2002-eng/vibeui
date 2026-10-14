@@ -45,6 +45,15 @@ function limit(url: URL, fallback = 100): number {
 }
 
 const routes: Record<string, Handler> = {
+  "x-posts": async (database) => {
+    const seed = await readFile(new URL("../content/x-posts.json", import.meta.url), "utf8");
+    await database`
+      INSERT INTO x_posts (day, text, image, published_at)
+      SELECT day, text, image, CASE WHEN published THEN now() END FROM jsonb_to_recordset(${seed}::text::jsonb) AS s(day int, text text, image text, published boolean)
+      ON CONFLICT (day) DO NOTHING
+    `;
+    return { handle: "escapes69291363", posts: await database`SELECT day, text, image, published_at FROM x_posts ORDER BY day` };
+  },
   training: async (database, config) => {
     const { currentPlaybook } = await import("./playbook.js");
     const { windowMetrics, learningIntervalDays } = await import("./learning.js");
