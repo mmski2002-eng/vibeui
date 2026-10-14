@@ -194,8 +194,8 @@
 
 ## 2026-10-14 — вкладка «Посты в X»
 
-- 100 постов для @escapes69291363: `content/x-posts.json` (собирает `scripts/x-posts-build.cjs`, проверяет 280 знаков и
-  существование items), кадры `content/x-posts/` (дни 1–14 из `x-posts/`, остальные — `scripts/x-posts-shoot.cjs`,
+- 100 постов для @escapes69291363: `content/x-posts.json` (собирает `scripts/x-posts-build.mjs`, проверяет 280 знаков и
+  существование items), кадры `content/x-posts/` (дни 1–14 из `x-posts/`, остальные — `scripts/x-posts-shoot.mjs`,
   headless Chrome по vibeui.club). Дни 1–3 сидятся опубликованными.
 - Таблица `x_posts` (миграция 016), сид при первом GET `/api/x-posts`, `POST /api/x-post` publish/unpublish/save,
   картинки `/x-images/*`. Кнопка «Опубликовать в X»: кадр в буфер + web intent, день отмечается сразу.

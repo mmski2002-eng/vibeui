@@ -1,8 +1,10 @@
-// Screenshots vibeui.club for every post without a ready frame: node scripts/x-posts-shoot.cjs [day...]
-const fs = require("fs");
-const path = require("path");
-const os = require("os");
-const { execFileSync } = require("child_process");
+// Screenshots vibeui.club for every post without a ready frame: node scripts/x-posts-shoot.mjs [day...]
+import fs from "node:fs";
+import path from "node:path";
+import os from "node:os";
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const chrome = "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const root = path.resolve(__dirname, "../..");

@@ -1,6 +1,8 @@
 // Builds content/x-posts.json from the plan below and checks every post against X limits and the registry.
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SITE = "https://vibeui.club";
 const root = path.resolve(__dirname, "../..");
