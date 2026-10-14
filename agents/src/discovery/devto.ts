@@ -7,7 +7,7 @@ import { delay, getJson, recentlyChecked, saveProfile, topicHits, type FoundPost
 // Dev.to public API (no key). Top articles of a tag give authors; an author's own articles decide relevance.
 // Dev.to hides emails, so the website goes into raw data for the website contact enrichment.
 const API = "https://dev.to/api";
-const REQUEST_DELAY_MS = 1_000;
+const REQUEST_DELAY_MS = 3_000;
 
 interface DevtoArticle {
   url: string; title: string; description?: string | null; published_at?: string | null; tag_list?: string[] | string;
@@ -24,10 +24,9 @@ export async function discoverDevto(database: Database, tag: string, options: { 
     result.authors++;
     if (await recentlyChecked(database, "devto", username)) { result.skipped++; continue; }
     await delay(REQUEST_DELAY_MS);
-    const [user, own] = await Promise.all([
-      getJson<DevtoUser>(`${API}/users/by_username?url=${encodeURIComponent(username)}`),
-      getJson<DevtoArticle[]>(`${API}/articles?username=${encodeURIComponent(username)}&per_page=10`),
-    ]);
+    const user = await getJson<DevtoUser>(`${API}/users/by_username?url=${encodeURIComponent(username)}`);
+    await delay(REQUEST_DELAY_MS / 2);
+    const own = await getJson<DevtoArticle[]>(`${API}/articles?username=${encodeURIComponent(username)}&per_page=10`);
     const posts = articlesToPosts(own);
     if (topicHits([user.summary ?? "", ...posts.map((post) => `${post.title} ${post.summary}`)], topicPattern) < 3) continue;
     result.relevant++;

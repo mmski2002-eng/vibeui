@@ -81,13 +81,30 @@ export function topicHits(texts: string[], pattern: RegExp): number {
   return (texts.join("\n").match(new RegExp(pattern.source, pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`)) ?? []).length;
 }
 
+const RETRY_DELAYS_MS = [10_000, 30_000];
+
+// Network drops, timeouts, 429 and 5xx are transient on Habr and dev.to: retry before failing the whole run.
 export async function getJson<T>(url: string): Promise<T> {
-  const response = await fetch(url, {
-    headers: { "user-agent": "Mozilla/5.0 (compatible; VibeUIResearch/1.0)", accept: "application/json" },
-    signal: AbortSignal.timeout(20_000),
-  });
-  if (!response.ok) throw new Error(`${new URL(url).host} ${response.status}`);
-  return response.json() as Promise<T>;
+  for (let attempt = 0; ; attempt++) {
+    let response: Response | null = null;
+    let failure: Error;
+    try {
+      response = await fetch(url, {
+        headers: { "user-agent": "Mozilla/5.0 (compatible; VibeUIResearch/1.0)", accept: "application/json" },
+        signal: AbortSignal.timeout(20_000),
+      });
+    } catch (error) {
+      const cause = error instanceof Error && error.cause instanceof Error ? `: ${error.cause.message}` : "";
+      failure = new Error(`${new URL(url).host} ${error instanceof Error ? error.message : String(error)}${cause}`);
+    }
+    if (response?.ok) return response.json() as Promise<T>;
+    if (response) {
+      failure = new Error(`${new URL(url).host} ${response.status}`);
+      if (response.status !== 429 && response.status < 500) throw failure;
+    }
+    if (attempt >= RETRY_DELAYS_MS.length) throw failure!;
+    await delay(RETRY_DELAYS_MS[attempt]!);
+  }
 }
 
 export function delay(milliseconds: number): Promise<void> {

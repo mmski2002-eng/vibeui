@@ -6,7 +6,7 @@ import { delay, getJson, recentlyChecked, saveProfile, topicHits, type FoundPost
 
 // Habr's public JSON behind habr.com (no key). A hub feed gives authors; each author's own articles decide relevance.
 const API = "https://habr.com/kek/v2";
-const REQUEST_DELAY_MS = 1_500;
+const REQUEST_DELAY_MS = 4_000;
 
 interface HabrArticle {
   id: string; timePublished: string; isCorporative: boolean; titleHtml: string;
@@ -26,11 +26,12 @@ export async function discoverHabr(database: Database, hub: string, options: { m
     result.authors++;
     if (await recentlyChecked(database, "habr", alias)) { result.skipped++; continue; }
     await delay(REQUEST_DELAY_MS);
-    const [card, whois, own] = await Promise.all([
-      getJson<HabrCard>(`${API}/users/${encodeURIComponent(alias)}/card?fl=ru&hl=ru`),
-      getJson<HabrWhois>(`${API}/users/${encodeURIComponent(alias)}/whois?fl=ru&hl=ru`),
-      getJson<HabrFeed>(`${API}/articles/?user=${encodeURIComponent(alias)}&sort=all&fl=ru&hl=ru&page=1`),
-    ]);
+    // One request at a time: Habr's bot guard resets bursts of parallel connections.
+    const card = await getJson<HabrCard>(`${API}/users/${encodeURIComponent(alias)}/card?fl=ru&hl=ru`);
+    await delay(REQUEST_DELAY_MS / 2);
+    const whois = await getJson<HabrWhois>(`${API}/users/${encodeURIComponent(alias)}/whois?fl=ru&hl=ru`);
+    await delay(REQUEST_DELAY_MS / 2);
+    const own = await getJson<HabrFeed>(`${API}/articles/?user=${encodeURIComponent(alias)}&sort=all&fl=ru&hl=ru&page=1`);
     const posts = articlesToPosts(own);
     if (topicHits([card.speciality ?? "", ...posts.map((post) => post.title)], topicPattern) < 2) continue;
     result.relevant++;

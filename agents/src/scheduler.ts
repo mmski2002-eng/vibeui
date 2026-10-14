@@ -24,6 +24,31 @@ const STOCK_DAYS = 3;
 // The same query is not repeated sooner than this: feeds and search results change slowly.
 const REPEAT_AFTER_HOURS = 20;
 const UNSCORED_BATCH = 20;
+// A platform whose last runs brought nobody new rests for a week instead of burning quota on the same people.
+const IDLE_RUNS = 5;
+const IDLE_PAUSE_DAYS = 7;
+const NEVER_PAUSED = new Set(["maintenance"]);
+
+// Pause ends IDLE_PAUSE_DAYS after the last empty run; a query never tried yet keeps its platform active.
+export async function idleSources(database: Database): Promise<Map<string, Date>> {
+  const rows = await database<{ source: string; until: Date }[]>`
+    WITH ranked AS (
+      SELECT source, started_at, error, result, row_number() OVER (PARTITION BY source ORDER BY started_at DESC) AS n
+      FROM discovery_runs WHERE finished_at IS NOT NULL
+    )
+    SELECT source, max(started_at) + make_interval(days => ${IDLE_PAUSE_DAYS}) AS until FROM ranked WHERE n <= ${IDLE_RUNS}
+    GROUP BY source
+    HAVING count(*) = ${IDLE_RUNS}
+      AND bool_and(error IS NULL AND COALESCE((result->>'created')::int, (result->>'creatorsCreated')::int, 0) = 0)
+      AND max(started_at) + make_interval(days => ${IDLE_PAUSE_DAYS}) > now()
+  `;
+  return new Map(rows.filter((row) => !NEVER_PAUSED.has(row.source)).map((row) => [row.source, row.until]));
+}
+
+export function activeTasks(tasks: DiscoveryTask[], idle: Map<string, Date>, lastRuns: Map<string, Date>): DiscoveryTask[] {
+  const fresh = new Set(tasks.filter((task) => !lastRuns.has(`${task.source}|${task.query}`)).map((task) => task.source));
+  return tasks.filter((task) => !idle.has(task.source) || fresh.has(task.source));
+}
 
 export function gate(state: SchedulerState): Gate {
   if (state.emergencyStop) return { run: false, reason: "emergency_stop" };
@@ -101,9 +126,10 @@ export async function runScheduler(database: Database, config: Config): Promise<
     const lastRuns = new Map((await database<{ key: string; last: Date }[]>`
       SELECT source || '|' || query AS key, max(started_at) AS last FROM discovery_runs GROUP BY source, query
     `).map((row) => [row.key, row.last]));
-    const task = pickTask(discoveryTasks(policy, {
+    const tasks = discoveryTasks(policy, {
       ...config, telegramSearch: telegramSearchConfigured(config), yandex: yandexConfigured(config), brave: braveConfigured(config), night: isMoscowNight(new Date()),
-    }), lastRuns, new Date());
+    });
+    const task = pickTask(activeTasks(tasks, await idleSources(database), lastRuns), lastRuns, new Date());
     outcome = { ...outcome, task: task ?? null, ...(task ? { result: await runTask(database, config, task) } : { decision: "nothing_due" }) };
   }
   await database`UPDATE agent_control SET scheduler_state = ${database.json({ ...outcome, at: new Date().toISOString() } as postgres.JSONValue)} WHERE singleton = true`;

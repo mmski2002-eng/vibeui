@@ -17,6 +17,9 @@ const scoreParts = [
 const schedulerText = { run: "идёт поиск", nothing_due: "все запросы недавно были", emergency_stop: "emergency stop", models_paused: "LLM на паузе",
   budget_spent: "дневной лимит исчерпан", total_budget_spent: "общий лимит исчерпан", scoring_in_progress: "оценивает найденных", enough_candidates: "кандидатов хватает" };
 
+const sourceNames = { "youtube:ru": "YouTube RU", "youtube:en": "YouTube EN", rutube: "Rutube", habr: "Habr", devto: "Dev.to", telegram: "Telegram · ссылки",
+  "telegram-search": "Telegram · поиск", "yandex-tg": "Telegram · Яндекс", "brave-tg": "Telegram · Brave", vk: "VK" };
+
 // Each bar is relative to the first step; the percent is the conversion from the previous step.
 function funnelBars(steps) {
   const top = Math.max(1, Number(steps[0]?.[1] ?? 0));
@@ -211,6 +214,17 @@ export const views = {
           ${card("Партнёрская программа на сайте", funnel.error ? `<div class="empty">Нет связи с VibeUI: ${esc(funnel.error)}</div>` : `${funnelBars(partnerSteps)}
             <p class="small muted">Выручка: ${(funnel.revenue ?? []).map((row) => `${fmt.num(row.amount)} ${esc(row.currency)} · комиссия ${fmt.num(row.commission)}`).join("; ") || "пока нет"}</p>`, '<a class="link small" href="#/partners">Партнёры</a>')}
         </div>
+        ${card("Площадки поиска", table([
+          { label: "Площадка", render: (row) => `<strong>${esc(sourceNames[row.source] ?? row.source)}</strong>` },
+          { label: "Состояние", render: (row) => !row.configured ? '<span class="pill">нет ключа</span>' : row.pausedUntil ? `<span class="pill warn">пауза</span> <span class="small muted">до ${fmt.date(row.pausedUntil)}</span>` : '<span class="pill ok">работает</span>' },
+          { label: "Запусков 7д", render: (row) => fmt.num(row.runs_7d) },
+          { label: "Ошибок 7д", render: (row) => row.errors_7d ? `<span class="pill danger">${fmt.num(row.errors_7d)}</span>` : "0" },
+          { label: "Проверено 7д", render: (row) => fmt.num(row.checked_7d) },
+          { label: "Новых 7д", render: (row) => fmt.num(row.created_7d) },
+          { label: "Новых всего", render: (row) => fmt.num(row.created_total) },
+          { label: "Последний", render: (row) => row.last_at ? fmt.ago(row.last_at) : "—" },
+          { label: "Последняя ошибка", render: (row) => row.last_error ? `<span class="small muted">${esc(short(row.last_error, 80))}</span>` : "—", cls: "wrap" },
+        ], data.sources ?? [], { empty: "Запусков поиска ещё не было" }), '<span class="small muted">5 пустых запусков подряд → пауза 7 дней</span>')}
         <div class="dash-row halves">
           ${card("Последние запуски", table(runColumns, data.recentRuns, { href: (row) => `#/runs/${row.id}`, empty: "Запусков ещё не было" }), '<a class="link small" href="#/runs">Все</a>')}
           ${card("Уведомления", table([

@@ -1,6 +1,9 @@
 import { readFile } from "node:fs/promises";
 import type { Config } from "./config.js";
 import type { Database } from "./database.js";
+import { idleSources } from "./scheduler.js";
+import { telegramSearchConfigured } from "./discovery/telegram-search.js";
+import { braveConfigured, yandexConfigured } from "./discovery/web-search.js";
 
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -77,7 +80,7 @@ const routes: Record<string, Handler> = {
     return { askOwner: control[0]?.ask_owner !== false, playbook, versions, runs, drafts, recent, nextRun, intervalDays: learningIntervalDays };
   },
   overview: async (database, config) => {
-    const [control, counts, jobs, recentRuns, notifications, spend, funnel, daily, policy] = await Promise.all([
+    const [control, counts, jobs, recentRuns, notifications, spend, funnel, daily, policy, sourceRuns, idle] = await Promise.all([
       database`SELECT emergency_stop, outreach_paused, partnerships_paused, payouts_paused, safe_tasks_only, model_operations_paused, minimum_score, scheduler_state, reason, updated_at FROM agent_control WHERE singleton = true`,
       database`SELECT
         (SELECT count(*)::int FROM creators) AS creators,
@@ -106,7 +109,32 @@ const routes: Record<string, Handler> = {
           (SELECT COALESCE(sum(cost_usd), 0)::float FROM model_usage u WHERE u.created_at >= d AND u.created_at < d + interval '1 day') AS spent
         FROM generate_series(date_trunc('day', now()) - interval '13 days', date_trunc('day', now()), interval '1 day') d ORDER BY d`,
       readPolicy(config),
+      database<{ source: string; runs_7d: number; errors_7d: number; created_7d: number; created_total: number; checked_7d: number; last_at: Date | null; last_error: string | null }[]>`
+        SELECT source,
+          count(*) FILTER (WHERE started_at >= now() - interval '7 days')::int AS runs_7d,
+          count(*) FILTER (WHERE started_at >= now() - interval '7 days' AND error IS NOT NULL)::int AS errors_7d,
+          COALESCE(sum(created) FILTER (WHERE started_at >= now() - interval '7 days'), 0)::int AS created_7d,
+          COALESCE(sum(created), 0)::int AS created_total,
+          COALESCE(sum(checked) FILTER (WHERE started_at >= now() - interval '7 days'), 0)::int AS checked_7d,
+          max(started_at) AS last_at,
+          (array_agg(error ORDER BY started_at DESC) FILTER (WHERE error IS NOT NULL))[1] AS last_error
+        FROM (SELECT source, started_at, error,
+            COALESCE((result->>'created')::int, (result->>'creatorsCreated')::int, 0) AS created,
+            COALESCE((result->>'visited')::int, (result->>'channels')::int, (result->>'authors')::int, (result->>'videosFound')::int, 0) AS checked
+          FROM discovery_runs WHERE source <> 'maintenance') r
+        GROUP BY source`,
+      idleSources(database),
     ]);
+    const configured: Record<string, boolean> = {
+      "youtube:ru": Boolean(config.youtubeApiKey), "youtube:en": Boolean(config.youtubeApiKey), rutube: true, habr: true, devto: true,
+      telegram: true, "telegram-search": telegramSearchConfigured(config), "yandex-tg": yandexConfigured(config), "brave-tg": braveConfigured(config),
+      vk: Boolean(config.vkServiceToken),
+    };
+    const bySource = new Map(sourceRuns.map((row) => [row.source, row]));
+    const sources = Object.keys(configured).map((source) => ({
+      source, configured: configured[source], pausedUntil: idle.get(source) ?? null,
+      ...(bySource.get(source) ?? { runs_7d: 0, errors_7d: 0, created_7d: 0, created_total: 0, checked_7d: 0, last_at: null, last_error: null }),
+    }));
     const state = control[0] ?? {};
     const c = counts[0] ?? {};
     const status = state.emergency_stop ? "emergency_stop"
@@ -115,7 +143,7 @@ const routes: Record<string, Handler> = {
     return {
       status, control: state, counts: c,
       jobs: Object.fromEntries(jobs.map((row) => [row.status, row.count])),
-      recentRuns, notifications, spending: spend, funnel, daily, dailyContactLimit: policy?.dailyContactLimit ?? 5,
+      recentRuns, notifications, spending: spend, funnel, daily, sources, dailyContactLimit: policy?.dailyContactLimit ?? 5,
     };
   },
 
