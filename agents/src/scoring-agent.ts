@@ -34,6 +34,7 @@ Use only facts and source URLs in the supplied record. Never invent audience met
 Apply these maximum weights exactly: topic fit 30, builder audience 20, real reach 15,
 engagement 10, practical demonstrations 10, regularity 5, allowed public business contact 5,
 moderate advertising load 5.
+Judge reach and engagement by the creator's strongest platform (most followers or typical views); a weaker secondary platform must not lower them.
 Red flags are only concrete negative evidence that disqualifies the creator: signs of bought or fake audience,
 scams or get-rich-quick promises, deceptive or unsafe content, spam, plagiarism, or content in a language other than Russian or English.
 Russian content on an English-market record (or the reverse) is not a red flag: the market is corrected separately, so judge the creator on the content.
@@ -51,6 +52,8 @@ media outlet or conference is a red flag ("not an individual creator"), even if 
   const parsed = scoringOutput.safeParse(result.finalOutput);
   if (!parsed.success) throw new ModelOutputError(`Scoring output failed validation: ${parsed.error.message.slice(0, 500)}`, usage);
   const output = parsed.data;
+  // A big audience on an off-topic channel is not a reason to write: reach counts fully only when the topic fits.
+  if (output.topicFit < 15) output.realReach = Math.min(output.realReach, 5);
   // OpenAI strict structured outputs reject `format: uri`, so URLs are checked here instead of in the schema.
   const malformed = output.evidenceUrls.filter((url) => !URL.canParse(url));
   if (malformed.length > 0) throw new ModelOutputError(`Scoring output contains malformed URLs: ${malformed.join(", ")}`, usage);
