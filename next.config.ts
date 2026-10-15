@@ -145,9 +145,9 @@ const SECURITY_HEADERS = [
       "frame-src 'self' https://yandex.ru https://www.google.com https://www.openstreetmap.org",
       "form-action 'self' https://yookassa.ru https://*.nowpayments.io",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://www.googletagmanager.com",
-      "style-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: blob: https:",
-      "font-src 'self' data:",
+      "font-src 'self' data: https://fonts.gstatic.com",
       "connect-src 'self' https://mc.yandex.ru https://www.google-analytics.com https://*.google-analytics.com",
       "worker-src 'self' blob:",
       "upgrade-insecure-requests",
@@ -178,6 +178,10 @@ const nextConfig: NextConfig = {
   // .next/standalone содержит node_modules, нужные в рантайме.
   output: "standalone",
   poweredByHeader: false,
+  // Только dev: английскую витрину локально открывают как vibeui.club,
+  // направленный на 127.0.0.1 (видео-обложки, scripts/render-scenario-motion.mjs).
+  // Без этого dev-сервер отклоняет её скрипты и HMR, и страница не гидрируется.
+  allowedDevOrigins: ["vibeui.club"],
   async headers() {
     return [{ source: "/:path*", headers: SECURITY_HEADERS }]
   },
