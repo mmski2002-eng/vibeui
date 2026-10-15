@@ -18,6 +18,7 @@ import { spawn, execFileSync } from "node:child_process"
 import { once } from "node:events"
 import { setTimeout as delay } from "node:timers/promises"
 import path from "node:path"
+import http from "node:http"
 
 const root = process.cwd()
 const toolsDirectory = process.env.MOTION_TOOLS ?? path.join(root, ".playwright-mcp/motion-tools")
@@ -64,7 +65,8 @@ const cursorScript = () => {
   const style = document.createElement("style")
   // Explicit instant scroll is essential: the demo's smooth scroll otherwise
   // starts a new browser interpolation for every single requested frame.
-  style.textContent = "html{scroll-behavior:auto!important;scrollbar-width:none!important}::-webkit-scrollbar{display:none!important}"
+  // nextjs-portal — значок dev-сервера Next, в кадр он попадать не должен.
+  style.textContent = "html{scroll-behavior:auto!important;scrollbar-width:none!important}::-webkit-scrollbar{display:none!important}nextjs-portal{display:none!important}"
   document.head.append(style)
   const cursor = document.createElement("div")
   cursor.id = "__motion_cursor"
@@ -438,6 +440,11 @@ const interactions = {
     "#mortgage": async d => { await d.slider('#mortgage input[type="range"]', .55) },
     "#faq": async d => { await d.click('#faq summary, #faq [data-part="q"]', 1, .9) },
   },
+  house: {
+    "#projects": async d => { await d.click('#projects [data-part="chip"]', 1, .9); await d.click('#projects [data-part="chip"]', 0, .8) },
+    "#calc": async d => { await d.slider('#calc input[type="range"]', .7); await d.click('#calc [data-part="option"]', 1, .8); await d.click('#calc [data-part="submit"]', 0, .8) },
+    "#faq": async d => { await d.click('#faq [data-part="q"]', 1, .9) },
+  },
   renovation: {
     "#calc": async d => { await d.slider('#calc input[type="range"]', .55); await d.click('#calc [data-part="type"]', 1, .8) },
     "#works": async d => { await d.click('#works [data-part="tab"]', 1, .8); await d.slider('#works input[type="range"]', .8) },
@@ -526,7 +533,9 @@ async function render(slug, locale, captureOverride) {
   // Native still capture uses the same frozen UI clock and per-frame poses.
   const captureMode = captureOverride ?? process.env.MOTION_CAPTURE ?? (["bakery", "app"].includes(slug) ? "screenshot" : "compositor")
   if (!["screenshot", "compositor"].includes(captureMode)) throw new Error("Invalid MOTION_CAPTURE")
-  const browser = await chromium.launch({ headless: true, args: captureMode === "compositor" ? ["--enable-begin-frame-control", "--run-all-compositor-stages-before-draw"] : [] })
+  const localEnglish = locale === "en" && Boolean(process.env.MOTION_EN_HOST && process.env.MOTION_BASE)
+  const hostArgs = localEnglish ? [`--host-resolver-rules=MAP ${process.env.MOTION_EN_HOST} ${new URL(process.env.MOTION_BASE).host}`, "--disable-features=LocalNetworkAccessChecks,BlockInsecurePrivateNetworkRequests,PrivateNetworkAccessSendPreflights"] : []
+  const browser = await chromium.launch({ headless: true, args: [...(captureMode === "compositor" ? ["--enable-begin-frame-control", "--run-all-compositor-stages-before-draw"] : []), ...hostArgs] })
   const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT }, deviceScaleFactor: 1, locale: locale === "ru" ? "ru-RU" : "en-US" })
   let encoder, completion
   try {
@@ -535,8 +544,39 @@ async function render(slug, locale, captureOverride) {
       // Third-party map widgets keep their own native timers and rendering.
       if (window.top !== window) window.__pwClock?.controller.uninstall()
     })
-    const response = await page.goto(`${baseFor(locale)}/scenarios/${slug}/demo`, { waitUntil: "domcontentloaded", timeout: 120000 })
+    // Локальный прогон английской версии (MOTION_EN_HOST=vibeui.club): язык
+    // решает хост, поэтому браузер открывает настоящий http://vibeui.club,
+    // направленный на локальный сервер (см. launch и allowedDevOrigins в
+    // next.config). Из CSP убираем upgrade-insecure-requests — иначе ресурсы
+    // уходят на https, которого локально нет. HMR проксируем без команд
+    // пересборки: dev-клиент иначе перезагружает страницу посреди съёмки.
+    if (localEnglish) {
+      await page.routeWebSocket(/\/_next\/(webpack-)?hmr/, socket => {
+        const server = socket.connectToServer()
+        server.onMessage(message => {
+          if (!/"type":"(building|built|reloadPage|serverComponentChanges)"/.test(String(message))) socket.send(message)
+        })
+      })
+      await page.route(`http://${process.env.MOTION_EN_HOST}/scenarios/${slug}/demo`, async route => {
+        const { headers, body } = await new Promise((resolve, reject) => http.get(`${process.env.MOTION_BASE}/scenarios/${slug}/demo`, { headers: { host: process.env.MOTION_EN_HOST } }, response => {
+          const chunks = []
+          response.on("data", chunk => chunks.push(chunk)).on("end", () => resolve({ headers: response.headers, body: Buffer.concat(chunks) })).on("error", reject)
+        }).on("error", reject))
+        const passed = { ...headers }
+        for (const name of ["strict-transport-security", "content-length", "transfer-encoding"]) delete passed[name]
+        passed["content-security-policy"] = String(passed["content-security-policy"]).replace(/;\s*upgrade-insecure-requests/, "")
+        await route.fulfill({ status: 200, headers: passed, body })
+      })
+    }
+    // vibeui.club загружает страницу дважды (вторая загрузка — через ~1 с
+    // после первой, так же ведёт себя прод). Снимать можно только после неё.
+    const reloaded = localEnglish ? page.waitForEvent("framenavigated", { predicate: frame => frame === page.mainFrame(), timeout: 20000 }).then(() => page.waitForEvent("framenavigated", { predicate: frame => frame === page.mainFrame(), timeout: 20000 })).catch(() => {}) : null
+    const response = await page.goto(localEnglish ? `http://${process.env.MOTION_EN_HOST}/scenarios/${slug}/demo` : `${baseFor(locale)}/scenarios/${slug}/demo`, { waitUntil: "domcontentloaded", timeout: 120000 })
     if (response.status() !== 200) throw new Error(`HTTP ${response.status()}`)
+    if (reloaded) {
+      await reloaded
+      await page.waitForLoadState("load")
+    }
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {})
     await page.evaluate(() => document.fonts.ready)
     // Force lazy images to load before freezing the render clock; this never
@@ -630,8 +670,11 @@ async function render(slug, locale, captureOverride) {
           entries.push({ el, selector: `[data-motion-scene="${index}"]` })
         })
         const result = entries.sort((a, b) => a.el.getBoundingClientRect().top - b.el.getBoundingClientRect().top).map(entry => entry.selector)
-        const footer = document.querySelector('footer,[data-vibeui-block^="footer-"]')
-        if (footer && !result.some(selector => document.querySelector(selector).contains(footer))) result.push('footer,[data-vibeui-block^="footer-"]')
+        // Блок подвала важнее тега: <footer> бывает и подписью цитаты в отзывах,
+        // и тогда настоящий подвал считался уже показанным.
+        const footerSelector = document.querySelector('[data-vibeui-block^="footer-"]') ? '[data-vibeui-block^="footer-"]' : 'footer'
+        const footer = document.querySelector(footerSelector)
+        if (footer && !result.some(selector => document.querySelector(selector).contains(footer))) result.push(footerSelector)
         return result
       })
       if (scenes.length < 5) throw new Error(`Too few scenes: ${JSON.stringify(scenes)}`)
