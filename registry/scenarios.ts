@@ -1814,6 +1814,39 @@ export const SCENARIOS: Scenario[] = [
       { item: "footer-044", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Колофон с виньеткой и «наверх».", noteEn: "A colophon with a vignette and “to the top”." },
     ],
   },
+  {
+    slug: "house",
+    group: "local",
+    label: "Дома из клеёного бруса",
+    en: "Glulam timber homes",
+    summary:
+      "Сайт строительной компании «Сосна» — тёмный и кинематографичный, поверх фото домов в сумерках, единственный акцент — тёплый янтарь окон: слайдер проектов на весь экран со стеклянной карточкой и ценой-счётчиком, каталог «Какой дом ваш?» с фильтром по площади и светом за курсором, калькулятор стоимости с растущим силуэтом дома, балка бруса, которая раскладывается на ламели при прокрутке, этапы стройки на липкой сцене, построенные дома лентой со счётчиками, отзывы владельцев, вопросы и заявка, которая подхватывает расчёт. Manrope и JetBrains Mono.",
+    summaryEn:
+      "A home builder site “Pine” — dark and cinematic over photos of houses at dusk, with the warm amber of windows as the only accent: a full-screen project slider with a glass card and a rolling price, a “Which house is yours?” catalog with an area filter and cursor light, a cost calculator with a growing house silhouette, a timber beam that splits into lamellas on scroll, construction stages on a sticky stage, built homes as a rail with counters, homeowner reviews, FAQ and a request form that picks up the estimate. Manrope and JetBrains Mono.",
+    demo: "/scenarios/house/demo",
+    source: "app/scenarios/house/demo/page.tsx",
+    sourceEn: "app/en/scenarios/house/demo/page.tsx",
+    images: "docs/scenarios/house/IMAGES.md",
+    theme: {
+      tone: "dark",
+      accent: "#e8a35c",
+      ink: "#f2efe9",
+      font: "Manrope, JetBrains Mono",
+    },
+    sections: [
+      { item: "navbar-046", anchor: "", role: "Шапка", roleEn: "Header", note: "Прозрачная поверх фото, стекло при прокрутке, нить прогресса, «Обсудить дом».", noteEn: "Transparent over the photo, glass on scroll, a progress line, “Discuss a house”." },
+      { item: "hero-049", anchor: "top", role: "Первый экран", roleEn: "First screen", note: "Слайдер проектов: ken burns, стеклянная карточка, цена докручивается, таймер.", noteEn: "A project slider: ken burns, a glass card, a rolling price, a timer." },
+      { item: "house-001", anchor: "projects", role: "Каталог", roleEn: "Catalog", note: "Фильтр по площади, каскад карточек, свет за курсором.", noteEn: "An area filter, a card cascade, cursor light." },
+      { item: "house-002", anchor: "calc", role: "Стоимость", roleEn: "Pricing", note: "Площадь × комплектация × фундамент × кровля, силуэт растёт, расчёт уходит в заявку.", noteEn: "Area × package × foundation × roof, the silhouette grows, the estimate goes to the form." },
+      { item: "house-003", anchor: "tech", role: "Технология", roleEn: "Technology", note: "Балка в 3D раскладывается на ламели по прокрутке, свойства загораются.", noteEn: "A 3D beam splits into lamellas on scroll, properties light up." },
+      { item: "house-004", anchor: "stages", role: "Этапы", roleEn: "Stages", note: "Липкое фото этапа, нить прогресса до текущего шага.", noteEn: "A sticky stage photo, a progress line up to the current step." },
+      { item: "house-005", anchor: "built", role: "Построенные", roleEn: "Built homes", note: "Счётчики при появлении, лента фото со снапом и перетаскиванием.", noteEn: "Counters on appear, a photo rail with snap and drag." },
+      { item: "testimonials-036", anchor: "reviews", role: "Отзывы", roleEn: "Reviews", note: "Фото из дома под шторкой, цитата с размытием, таймер-полоски.", noteEn: "A home photo under a curtain, a blurred-in quote, timer bars." },
+      { item: "faq-025", anchor: "faq", role: "Вопросы", roleEn: "FAQ", note: "Плавный аккордеон, плюс-крест, карточка «спросить инженера».", noteEn: "A smooth accordion, plus-to-cross, an “ask an engineer” card." },
+      { item: "cta-038", anchor: "contact", role: "Заявка", roleEn: "Request", note: "Стекло на ночном фото, одно поле, канал связи, чип расчёта.", noteEn: "Glass over a night photo, one field, a channel, an estimate chip." },
+      { item: "footer-045", anchor: "footer", role: "Подвал", roleEn: "Footer", note: "Огромное слово бренда контуром, заливка по наведению.", noteEn: "A huge outlined brand word that fills on hover." },
+    ],
+  },
 ]
 
 // Опечатка в имени item'а здесь означала бы пустую карточку в рецепте,

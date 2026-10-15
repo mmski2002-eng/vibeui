@@ -4930,6 +4930,183 @@
           }
         }
       }
+    },
+    {
+      "name": "faq-025",
+      "type": "registry:block",
+      "title": "Тёмный аккордеон вопросов с карточкой «не нашли ответ»",
+      "description": "Частые вопросы тёмным аккордеоном: номер вопроса моно, плюс поворачивается в крест и заливается янтарём, ответ раскрывается плавно через grid-template-rows без измерения высоты. Открыт один вопрос. Слева заголовок и липкая карточка «Не нашли ответ?» с кнопкой «Спросить инженера».",
+      "categories": [
+        "faq"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "faq-025/faq-025.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/faq-025.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "faq",
+          "accordion",
+          "questions",
+          "answers",
+          "collapse",
+          "sticky",
+          "construction",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Faq025",
+          "usage": "<Faq025\n  items={[{ question: \"Можно строить зимой?\", answer: \"Да…\" }]}\n/>",
+          "summary": "Аккордеон вопросов: плавное раскрытие grid-rows, плюс-крест, карточка связи.",
+          "preserve": [
+            "ответ — grid-template-rows 0fr → 1fr, внутренний div overflow:hidden",
+            "кнопка вопроса с aria-expanded и aria-controls на область ответа",
+            "открыт один вопрос; повторный клик закрывает",
+            "от 60rem — две колонки, левая липкая"
+          ],
+          "adapt": [
+            "eyebrow, title",
+            "items: question, answer",
+            "cardTitle, cardText, cardLabel, cardHref",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Что обычно спрашивают",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Dark FAQ accordion with a “didn't find an answer” card",
+            "description": "A dark FAQ accordion: a mono question number, a plus that rotates into a cross and fills with amber, the answer opens smoothly via grid-template-rows without measuring height. One question open at a time. On the left a title and a sticky “Didn't find an answer?” card with an “Ask an engineer” button.",
+            "ai": {
+              "summary": "A FAQ accordion: smooth grid-rows reveal, plus-to-cross, a contact card.",
+              "preserve": [
+                "the answer is grid-template-rows 0fr → 1fr with an inner overflow:hidden div",
+                "the question button has aria-expanded and aria-controls on the answer region",
+                "one question open; a second click closes it",
+                "from 60rem — two columns, the left one sticky"
+              ],
+              "adapt": [
+                "eyebrow, title",
+                "items: question, answer",
+                "cardTitle, cardText, cardLabel, cardHref",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Faq025\n  items={[{ question: \"Can you build in winter?\", answer: \"Yes…\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "What people usually ask"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Questions",
+                "title": "What people usually ask",
+                "cardTitle": "Didn't find an answer?",
+                "cardText": "An engineer replies in the messenger within 15 minutes during working hours.",
+                "cardLabel": "Ask an engineer",
+                "cardHref": "#contact",
+                "items": [
+                  {
+                    "question": "Does glulam timber shrink?",
+                    "answer": "Under 1% in the first year — versus 5–8% for green logs. So windows, doors and finishing go in right away, not a year later."
+                  },
+                  {
+                    "question": "Can you build in winter?",
+                    "answer": "Yes, winter is the best time for assembly: the timber does not absorb moisture and machinery drives easily on frozen ground. Pile foundations work in any season."
+                  },
+                  {
+                    "question": "Do you work with mortgages?",
+                    "answer": "We are accredited with major banks: construction loans with staged payments through escrow, and a down payment from 15%."
+                  },
+                  {
+                    "question": "What does turnkey include?",
+                    "answer": "Foundation, house kit and assembly, roof, windows and doors, wiring, heating, water supply and sewerage, wall sanding and coating, finished floors and plumbing."
+                  },
+                  {
+                    "question": "What is the warranty?",
+                    "answer": "10 years on the structure and 3 years on utilities. A year after handover we come for a free seasonal inspection."
+                  },
+                  {
+                    "question": "Can a ready project be changed?",
+                    "answer": "Yes: move walls, add a deck or a double-height living room. Changes up to 15% of the area come without a design fee."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

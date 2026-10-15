@@ -144,4 +144,14 @@ export const PREVIEWS = {
     import("@/registry/blocks/industry/podcast-006/podcast-006").then((module) => module.Podcast006),
   "podcast-007": () =>
     import("@/registry/blocks/industry/podcast-007/podcast-007").then((module) => module.Podcast007),
+  "house-001": () =>
+    import("@/registry/blocks/industry/house-001/house-001").then((module) => module.House001),
+  "house-002": () =>
+    import("@/registry/blocks/industry/house-002/house-002").then((module) => module.House002),
+  "house-003": () =>
+    import("@/registry/blocks/industry/house-003/house-003").then((module) => module.House003),
+  "house-004": () =>
+    import("@/registry/blocks/industry/house-004/house-004").then((module) => module.House004),
+  "house-005": () =>
+    import("@/registry/blocks/industry/house-005/house-005").then((module) => module.House005),
 } satisfies PreviewLoaderMap

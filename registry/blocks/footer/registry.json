@@ -8004,6 +8004,215 @@
         }
       },
       "docs": "Составной блок: импортирует  из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+    },
+    {
+      "name": "footer-045",
+      "type": "registry:block",
+      "title": "Тёмный подвал с огромным словом бренда с фото внутри букв",
+      "description": "Подвал сайта: подпись компании, телефон и почта крупно с янтарным подчёркиванием по наведению, адрес шоурума и часы, три колонки разделов. Внизу огромное слово бренда под янтарной линией-горизонтом: внутри букв фотография дома, растворяющаяся книзу в фон, по наведению она медленно проплывает; без фото — градиентная заливка. Реквизиты моно и кнопка «наверх» кругом.",
+      "categories": [
+        "footer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "footer-045/footer-045.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/footer-045.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "footer",
+          "contacts",
+          "links",
+          "brand",
+          "gradient",
+          "construction",
+          "dark",
+          "text clip",
+          "photo text"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Footer045",
+          "usage": "<Footer045 brand=\"Сосна\" phone=\"+7 (812) 407-18-42\" email=\"dom@sosna.build\" />",
+          "summary": "Подвал: контакты крупно, колонки, огромное слово бренда с фото в буквах.",
+          "preserve": [
+            "слово бренда — прозрачный текст с background-clip:text: фото из --vibeui-footer-045-word под градиентом в фон, без фото — градиент",
+            "по наведению фото медленно сдвигается background-position",
+            "колонки 2 → 3 от 56rem контейнера, контакты — отдельная колонка",
+            "серверный компонент без состояния"
+          ],
+          "adapt": [
+            "brand, wordImage, tagline, phone, email, address, hours",
+            "columns: title, links",
+            "legal, copyright",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Бренд",
+            "type": "text",
+            "default": "Сосна",
+            "maxLength": 12
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Dark footer with a huge brand word filled with a photo",
+            "description": "A site footer: a company line, a large phone and email with an amber underline on hover, a showroom address and hours, three link columns. At the bottom a huge brand word under an amber horizon line: a house photo inside the letters fading into the background, slowly drifting on hover; without a photo — a gradient fill. Mono legal details and a round “back to top” button.",
+            "ai": {
+              "summary": "A footer: big contacts, columns, a huge brand word with a photo inside the letters.",
+              "preserve": [
+                "the brand word is transparent text with background-clip:text: a photo from --vibeui-footer-045-word under a fade-to-background gradient, a gradient without a photo",
+                "on hover the photo slowly shifts its background-position",
+                "columns 2 → 3 from a 56rem container, contacts in their own column",
+                "a stateless server component"
+              ],
+              "adapt": [
+                "brand, wordImage, tagline, phone, email, address, hours",
+                "columns: title, links",
+                "legal, copyright",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Footer045 brand=\"Pine\" phone=\"+1 (604) 555-0142\" email=\"home@pine.build\" />"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Pine"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Pine",
+                "tagline": "Building glulam timber homes on lakes and in forests since 2015.",
+                "phone": "+1 (604) 555-0142",
+                "email": "home@pine.build",
+                "address": "Showroom: 12 Lakeshore Road, Pine Hills",
+                "hours": "Daily 9:00–21:00",
+                "legal": "Pine Homes Ltd · Reg. 4712034567",
+                "copyright": "© 2026",
+                "topLabel": "Back to top",
+                "columns": [
+                  {
+                    "title": "Homes",
+                    "links": [
+                      {
+                        "label": "Project catalog",
+                        "href": "#projects"
+                      },
+                      {
+                        "label": "Sauna houses",
+                        "href": "#projects"
+                      },
+                      {
+                        "label": "Custom project",
+                        "href": "#contact"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Company",
+                    "links": [
+                      {
+                        "label": "Technology",
+                        "href": "#tech"
+                      },
+                      {
+                        "label": "Stages",
+                        "href": "#stages"
+                      },
+                      {
+                        "label": "Built homes",
+                        "href": "#built"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "Clients",
+                    "links": [
+                      {
+                        "label": "Pricing",
+                        "href": "#calc"
+                      },
+                      {
+                        "label": "Mortgage",
+                        "href": "#faq"
+                      },
+                      {
+                        "label": "Warranty",
+                        "href": "#faq"
+                      }
+                    ]
+                  }
+                ],
+                "wordImage": "/demo/house/hero-02.webp"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

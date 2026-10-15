@@ -9382,6 +9382,212 @@
           }
         }
       }
+    },
+    {
+      "name": "hero-049",
+      "type": "registry:block",
+      "title": "Хиро-слайдер проектов домов со стеклянной карточкой и ценой",
+      "description": "Первый экран на весь экран для застройщика и строительной компании: фото дома медленно наплывает (ken burns) и сменяется кроссфейдом, крупный тонкий заголовок поднимается по словам, поверх зерно плёнки. Стеклянная карточка проекта внизу слева — код, площадь, характеристики, цена докручивается до нового значения, кнопка «Смотреть проект», счётчик 01 / 04 со стрелками и полоской-таймером автопрокрутки. Свайп, стрелки клавиатуры, пауза при наведении.",
+      "categories": [
+        "hero"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "hero-049/hero-049.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/hero-049.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "hero",
+          "slider",
+          "carousel",
+          "ken burns",
+          "glass",
+          "real estate",
+          "house",
+          "construction",
+          "builder",
+          "price",
+          "dark",
+          "fullscreen"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Hero049",
+          "usage": "<Hero049\n  title=\"Строительство домов\"\n  slides={[{ image: \"/photos/house.webp\", code: \"КБ-242\", area: \"242 м²\", price: 21780000 }]}\n/>",
+          "summary": "Слайдер проектов на весь экран: ken burns, стеклянная карточка с ценой-счётчиком, таймер.",
+          "preserve": [
+            "все фото лежат стопкой, активное — opacity 1 и медленный scale 1.14→1.02 за 9 с",
+            "таймер — CSS-анимация полоски, её animationend листает слайд; пауза — animation-play-state",
+            "цена докручивается requestAnimationFrame от прошлого значения",
+            "заголовок режется по словам, каждое слово выезжает из-под маски с задержкой"
+          ],
+          "adapt": [
+            "title, subtitle, slides: image, code, area, specs, price, priceNote, href",
+            "currency, ctaLabel, asideLabel, interval, locale",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Строительство домов",
+            "maxLength": 40
+          },
+          {
+            "prop": "interval",
+            "label": "Секунд на слайд",
+            "type": "number",
+            "default": 7,
+            "min": 0,
+            "max": 20
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Full-screen house project slider with a glass card and price",
+            "description": "A full-screen first screen for a home builder: the house photo slowly zooms (ken burns) and crossfades, a large thin headline rises word by word, film grain on top. A glass project card at the bottom left — code, area, specs, the price rolls to the new value, a “View project” button, a 01 / 04 counter with arrows and an autoplay timer bar. Swipe, keyboard arrows, pause on hover.",
+            "ai": {
+              "summary": "A full-screen project slider: ken burns, a glass card with a rolling price, a timer.",
+              "preserve": [
+                "all photos are stacked, the active one gets opacity 1 and a slow scale 1.14→1.02 over 9s",
+                "the timer is a CSS bar animation, its animationend advances the slide; pause — animation-play-state",
+                "the price rolls with requestAnimationFrame from the previous value",
+                "the headline is split into words, each rises from under a mask with a delay"
+              ],
+              "adapt": [
+                "title, subtitle, slides: image, code, area, specs, price, priceNote, href",
+                "currency, ctaLabel, asideLabel, interval, locale",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Hero049\n  title=\"Glulam timber homes\"\n  slides={[{ image: \"/photos/house.webp\", code: \"PH-242\", area: \"2,600 sq ft\", price: 1290000 }]}\n  currency=\"$\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Homes built from glulam"
+              },
+              "interval": {
+                "label": "Seconds per slide"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Homes built from glulam",
+                "subtitle": "timber — from blueprint to keys in six months",
+                "currency": "$",
+                "ctaLabel": "View project",
+                "asideLabel": "Find a project by size and budget",
+                "prevLabel": "Previous project",
+                "nextLabel": "Next project",
+                "slidesLabel": "Projects",
+                "imageAlt": "Glulam house {code}",
+                "slides": [
+                  {
+                    "image": "/demo/house/hero-01.webp",
+                    "code": "PH-242",
+                    "area": "2,600 sq ft",
+                    "specs": "2 floors · 4 bedrooms · double height",
+                    "price": 1290000,
+                    "priceNote": "turnkey, with utilities",
+                    "href": "#projects"
+                  },
+                  {
+                    "image": "/demo/house/hero-02.webp",
+                    "code": "PH-160",
+                    "area": "1,720 sq ft",
+                    "specs": "1 floor · 3 bedrooms · 520 sq ft deck",
+                    "price": 735000,
+                    "priceNote": "turnkey, with utilities",
+                    "href": "#projects"
+                  },
+                  {
+                    "image": "/demo/house/hero-03.webp",
+                    "code": "BH-138",
+                    "area": "1,485 sq ft",
+                    "specs": "1 floor · 3 bedrooms · barnhouse",
+                    "price": 649000,
+                    "priceNote": "turnkey, with utilities",
+                    "href": "#projects"
+                  },
+                  {
+                    "image": "/demo/house/hero-04.webp",
+                    "code": "PH-198",
+                    "area": "2,130 sq ft",
+                    "specs": "2 floors · 4 bedrooms · sauna",
+                    "price": 1035000,
+                    "priceNote": "turnkey, with utilities",
+                    "href": "#projects"
+                  }
+                ],
+                "locale": "en-US"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

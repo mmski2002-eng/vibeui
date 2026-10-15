@@ -8362,6 +8362,188 @@
         }
       },
       "docs": "Составной блок: импортирует button-114 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+    },
+    {
+      "name": "navbar-046",
+      "type": "registry:block",
+      "title": "Прозрачная шапка поверх фото со стеклом при прокрутке",
+      "description": "Шапка сайта поверх фото первого экрана: лого-домик с названием и подписью, меню разделов с подчёркиванием-янтарём по наведению, телефон моно и белая пилюля «Обсудить дом» со стрелкой в круге. Отрицательный нижний отступ кладёт её на хиро, после прокрутки она становится матовым стеклом с blur, по низу тонкая нить — прогресс прокрутки страницы. На узком — бургер-крестик и выпадающая стеклянная панель.",
+      "categories": [
+        "navbar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "navbar-046/navbar-046.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/navbar-046.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "navbar",
+          "header",
+          "transparent",
+          "glass",
+          "sticky",
+          "scroll progress",
+          "burger",
+          "construction",
+          "real estate",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Navbar046",
+          "usage": "<Navbar046 brand=\"Сосна\" links={[{ label: \"Проекты\", href: \"#projects\" }]} phone=\"+7 (812) 407-18-42\" />",
+          "summary": "Прозрачная шапка поверх фото, стекло при прокрутке, нить прогресса, бургер.",
+          "preserve": [
+            "position:sticky и отрицательный margin-bottom на высоту шапки — она лежит на хиро",
+            "data-scrolled включает стекло после 24px прокрутки, data-open — панель бургера",
+            "нить прогресса — scaleX от доли прокрутки документа",
+            "меню скрывается и появляется бургер по ширине контейнера 64rem"
+          ],
+          "adapt": [
+            "brand, tagline, links, phone, ctaLabel, ctaHref",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "brand",
+            "label": "Название",
+            "type": "text",
+            "default": "Сосна",
+            "maxLength": 24
+          },
+          {
+            "prop": "ctaLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Обсудить дом",
+            "maxLength": 24
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "brand",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Transparent header over a photo that turns to glass on scroll",
+            "description": "A site header over the hero photo: a house logo with name and tagline, section links with an amber underline on hover, a mono phone and a white “Discuss a house” pill with an arrow in a circle. A negative bottom margin lays it over the hero; after scrolling it turns into frosted glass with blur, and a thin line at the bottom shows page scroll progress. On narrow widths — a burger-cross and a glass dropdown panel.",
+            "ai": {
+              "summary": "A transparent header over a photo, glass on scroll, a progress line, a burger.",
+              "preserve": [
+                "position:sticky and a negative margin-bottom of the header height — it lies over the hero",
+                "data-scrolled turns on the glass after 24px of scroll, data-open — the burger panel",
+                "the progress line is scaleX of the document scroll fraction",
+                "links hide and the burger shows by container width 64rem"
+              ],
+              "adapt": [
+                "brand, tagline, links, phone, ctaLabel, ctaHref",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Navbar046 brand=\"Pine\" links={[{ label: \"Projects\", href: \"#projects\" }]} phone=\"+1 (604) 555-0142\" />"
+            },
+            "controls": {
+              "brand": {
+                "label": "Brand",
+                "default": "Pine"
+              },
+              "ctaLabel": {
+                "label": "Button",
+                "default": "Discuss a house"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "brand": "Pine",
+                "tagline": "glulam timber homes",
+                "links": [
+                  {
+                    "label": "Projects",
+                    "href": "#projects"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "#calc"
+                  },
+                  {
+                    "label": "Technology",
+                    "href": "#tech"
+                  },
+                  {
+                    "label": "Stages",
+                    "href": "#stages"
+                  },
+                  {
+                    "label": "Built homes",
+                    "href": "#built"
+                  }
+                ],
+                "phone": "+1 (604) 555-0142",
+                "ctaLabel": "Discuss a house",
+                "menuLabel": "Menu",
+                "homeLabel": "Home"
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

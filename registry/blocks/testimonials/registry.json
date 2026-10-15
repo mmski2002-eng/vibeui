@@ -8111,6 +8111,227 @@
         }
       },
       "docs": "Составной блок: импортирует card-048 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+    },
+    {
+      "name": "testimonials-036",
+      "type": "registry:block",
+      "title": "Отзывы владельцев домов: фото и крупная цитата с таймером",
+      "description": "Отзывы владельцев: слева вертикальное фото из их дома с кодом проекта, справа крупная цитата, имя и «живут N лет». Смена отзыва — фото проявляется из-под шторки clip-path с лёгким зумом, цитата поднимается с размытием. Номера отзывов — кнопки с заполняющейся полоской-таймером автопрокрутки, рядом стрелки.",
+      "categories": [
+        "testimonials"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "testimonials-036/testimonials-036.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/testimonials-036.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "testimonials",
+          "reviews",
+          "quote",
+          "carousel",
+          "photo",
+          "timer",
+          "clip-path",
+          "real estate",
+          "construction",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Testimonials036",
+          "usage": "<Testimonials036\n  reviews={[{ quote: \"…\", name: \"Андрей\", meta: \"живёт 3 года\", image: \"/photos/review-01.webp\" }]}\n/>",
+          "summary": "Отзыв с фото дома: шторка clip-path, цитата с размытием, таймер-полоски.",
+          "preserve": [
+            "фото и цитата перемонтируются по key и проигрывают вход заново",
+            "автопрокрутка — CSS-анимация полоски активного номера, animationend листает",
+            "при prefers-reduced-motion анимации нет — автопрокрутки тоже",
+            "раскладка в две колонки от 56rem контейнера"
+          ],
+          "adapt": [
+            "eyebrow, title, interval",
+            "reviews: quote, name, meta, image, project",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Слово тем, кто уже живёт",
+            "maxLength": 40
+          },
+          {
+            "prop": "interval",
+            "label": "Секунд на отзыв",
+            "type": "number",
+            "default": 9,
+            "min": 0,
+            "max": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Homeowner reviews: a photo and a large quote with a timer",
+            "description": "Homeowner reviews: a vertical photo from their home with a project code on the left, a large quote, name and “living here N years” on the right. On change the photo is revealed from under a clip-path curtain with a slight zoom, the quote rises out of a blur. Review numbers are buttons with a filling autoplay timer bar, arrows beside them.",
+            "ai": {
+              "summary": "A review with a home photo: a clip-path curtain, a blurred-in quote, timer bars.",
+              "preserve": [
+                "the photo and quote remount by key and replay the entrance",
+                "autoplay is a CSS bar animation on the active number, animationend advances",
+                "with prefers-reduced-motion there is no animation — and no autoplay",
+                "two columns from a 56rem container"
+              ],
+              "adapt": [
+                "eyebrow, title, interval",
+                "reviews: quote, name, meta, image, project",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Testimonials036\n  reviews={[{ quote: \"…\", name: \"Andrew\", meta: \"living here 3 years\", image: \"/photos/review-01.webp\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "In the words of those who live there"
+              },
+              "interval": {
+                "label": "Seconds per review"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Reviews",
+                "title": "In the words of those who live there",
+                "prevLabel": "Previous review",
+                "nextLabel": "Next review",
+                "reviewLabel": "Review",
+                "reviews": [
+                  {
+                    "quote": "We moved in in October, and by January we understood the main thing: at minus thirty the house is quiet and warm, and it smells of wood, not paint. Not a cent over the estimate.",
+                    "name": "Andrew and Mary",
+                    "meta": "living here 3 years · Priozersk",
+                    "image": "/demo/house/review-01.webp",
+                    "project": "PH-198"
+                  },
+                  {
+                    "quote": "They built it while we lived in another city. Every Friday — a photo report and a short video. We came once for the foundation and the second time to collect the keys.",
+                    "name": "Olga Savelyeva",
+                    "meta": "living here 2 years · Valdai",
+                    "image": "/demo/house/review-02.webp",
+                    "project": "PH-160"
+                  },
+                  {
+                    "quote": "Not a single crack in the timber, no door got stuck. A year later we called the crew for the warranty check — they tightened a couple of dowels for free.",
+                    "name": "Igor Vetrov",
+                    "meta": "living here 4 years · Istra",
+                    "image": "/demo/house/review-03.webp",
+                    "project": "BH-138"
+                  }
+                ]
+              }
+            },
+            "slots": {
+              "shape": "One large quote at a time: a vertical photo from the home on the left, the quote, name and years lived on the right, number timers",
+              "items": [
+                {
+                  "role": "photo from the owner's home"
+                },
+                {
+                  "role": "quote"
+                },
+                {
+                  "role": "name and “living here N years · place”"
+                }
+              ]
+            }
+          }
+        },
+        "slots": {
+          "shape": "Одна большая цитата за раз: вертикальное фото из дома слева, цитата, имя и срок жизни в доме справа, номера-таймеры",
+          "density": "light",
+          "items": [
+            {
+              "role": "фото из дома владельца",
+              "type": "image",
+              "count": "1 на отзыв",
+              "required": true
+            },
+            {
+              "role": "цитата",
+              "type": "quote",
+              "count": "2–6",
+              "required": true
+            },
+            {
+              "role": "имя и «живут N лет · место»",
+              "type": "text",
+              "required": true
+            }
+          ]
+        }
+      }
     }
   ]
 }

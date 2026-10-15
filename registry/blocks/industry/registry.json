@@ -14992,6 +14992,1047 @@
         }
       },
       "docs": "Составной блок: импортирует button-099 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+    },
+    {
+      "name": "house-001",
+      "type": "registry:block",
+      "title": "Каталог проектов домов с фильтром по площади",
+      "description": "Каталог «Какой дом ваш?» для строительной компании: чипы по площади (до 150, 150–200, более 200 м²) фильтруют сетку, карточки перестраиваются каскадом, счётчик «Найдено» и кнопка «Все проекты (26)». Карточка — фото с медленным зумом, бейдж «Хит» или «Новинка», мягкое янтарное пятно света ходит за курсором, код проекта крупно, площадь, этажи и спальни, цена моно с подписью «под ключ» и кнопка-пилюля «Смотреть проект» во всю карточку.",
+      "categories": [
+        "industry"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "house-001/house-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/house-001.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "catalog",
+          "projects",
+          "filter",
+          "cards",
+          "real estate",
+          "house",
+          "construction",
+          "builder",
+          "grid",
+          "spotlight",
+          "price",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "House001",
+          "usage": "<House001\n  projects={[{ code: \"КБ-86\", image: \"/photos/p-01.webp\", area: 86, price: \"5 779 718 ₽\" }]}\n/>",
+          "summary": "Каталог домов: фильтр по площади, каскад карточек, свет за курсором, цена.",
+          "preserve": [
+            "фильтр по area: min включительно, max исключительно; сетка перемонтируется по key и проигрывает каскад",
+            "пятно света — radial-gradient по --vibeui-house-001-mx/my из pointermove",
+            "ссылка карточки растянута ::after на всю карточку",
+            "колонки 1 → 2 (40rem) → 3 (72rem) по ширине контейнера"
+          ],
+          "adapt": [
+            "eyebrow, title, allLabel, allCount, allHref",
+            "projects: code, image, area, floors, bedrooms, price, priceNote, badge, href",
+            "filters: label, min, max",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Какой дом ваш?",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "House project catalog with an area filter",
+            "description": "A “Which house is yours?” catalog for a home builder: area chips (under 150, 150–200, over 200 m²) filter the grid, cards rebuild in a cascade, a “Found” counter and an “All projects (26)” button. A card — a photo with a slow zoom, a “Bestseller” or “New” badge, a soft amber light spot following the cursor, a large project code, area, floors and bedrooms, a mono price with a “turnkey” note and a “View project” pill covering the card.",
+            "ai": {
+              "summary": "A house catalog: area filter, card cascade, cursor light, price.",
+              "preserve": [
+                "filtering by area: min inclusive, max exclusive; the grid remounts by key and replays the cascade",
+                "the light spot is a radial-gradient at --vibeui-house-001-mx/my from pointermove",
+                "the card link is stretched with ::after over the whole card",
+                "columns 1 → 2 (40rem) → 3 (72rem) by container width"
+              ],
+              "adapt": [
+                "eyebrow, title, allLabel, allCount, allHref",
+                "projects: code, image, area, floors, bedrooms, price, priceNote, badge, href",
+                "filters: label, min, max",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<House001\n  areaUnit=\"sq ft\"\n  projects={[{ code: \"PH-86\", image: \"/photos/p-01.webp\", area: 925, price: \"$342,000\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Which house is yours?"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Project catalog",
+                "title": "Which house is yours?",
+                "allLabel": "All projects",
+                "foundLabel": "Found",
+                "openLabel": "View project",
+                "areaUnit": "m²",
+                "filtersLabel": "House area",
+                "emptyText": "No projects in this range yet — we will design one for you.",
+                "filters": [
+                  {
+                    "label": "All sizes"
+                  },
+                  {
+                    "label": "Under 150 m²",
+                    "max": 150
+                  },
+                  {
+                    "label": "150–200 m²",
+                    "min": 150,
+                    "max": 200
+                  },
+                  {
+                    "label": "Over 200 m²",
+                    "min": 200
+                  }
+                ],
+                "projects": [
+                  {
+                    "code": "PH-86",
+                    "image": "/demo/house/p-01.webp",
+                    "area": 86,
+                    "floors": "1 floor",
+                    "bedrooms": "2 bedrooms",
+                    "price": "$342,000",
+                    "priceNote": "house kit",
+                    "href": "#calc"
+                  },
+                  {
+                    "code": "PH-160",
+                    "image": "/demo/house/p-02.webp",
+                    "area": 160,
+                    "floors": "1 floor",
+                    "bedrooms": "3 bedrooms",
+                    "price": "$735,000",
+                    "priceNote": "turnkey",
+                    "badge": "Bestseller",
+                    "href": "#calc"
+                  },
+                  {
+                    "code": "PH-242",
+                    "image": "/demo/house/p-03.webp",
+                    "area": 242,
+                    "floors": "2 floors",
+                    "bedrooms": "4 bedrooms",
+                    "price": "$1,290,000",
+                    "priceNote": "turnkey",
+                    "href": "#calc"
+                  },
+                  {
+                    "code": "GH-64",
+                    "image": "/demo/house/p-04.webp",
+                    "area": 64,
+                    "floors": "1 floor",
+                    "bedrooms": "sauna + guest room",
+                    "price": "$244,000",
+                    "priceNote": "turnkey",
+                    "badge": "Sauna house",
+                    "href": "#calc"
+                  },
+                  {
+                    "code": "PH-198",
+                    "image": "/demo/house/p-05.webp",
+                    "area": 198,
+                    "floors": "2 floors",
+                    "bedrooms": "4 bedrooms",
+                    "price": "$1,035,000",
+                    "priceNote": "turnkey",
+                    "href": "#calc"
+                  },
+                  {
+                    "code": "BH-138",
+                    "image": "/demo/house/p-06.webp",
+                    "area": 138,
+                    "floors": "1 floor",
+                    "bedrooms": "3 bedrooms",
+                    "price": "$649,000",
+                    "priceNote": "turnkey",
+                    "badge": "New",
+                    "href": "#calc"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "house-002",
+      "type": "registry:block",
+      "title": "Калькулятор стоимости дома с растущим силуэтом",
+      "description": "Калькулятор стоимости дома из бруса: площадь ползунком, комплектация (домокомплект, тёплый контур, под ключ), фундамент и кровля чипами. Справа силуэт дома растёт вместе с площадью и зажигает окна по комплектации, итог докручивается до новой суммы, цена за м² и срок в неделях, полосы состава цены. «Отправить расчёт» шлёт CustomEvent с итогом — форма заявки на странице подхватывает его чипом.",
+      "categories": [
+        "industry"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "house-002/house-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/house-002.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "calculator",
+          "estimate",
+          "price",
+          "slider",
+          "house",
+          "construction",
+          "builder",
+          "cost",
+          "form",
+          "custom event",
+          "dark",
+          "interactive"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "House002",
+          "usage": "<House002\n  packages={[{ label: \"Под ключ\", rate: 71000, weeks: 26 }]}\n  eventName=\"vibeui-house:estimate\"\n/>",
+          "summary": "Калькулятор дома: площадь, комплектация, фундамент, кровля → итог, срок, состав, событие в заявку.",
+          "preserve": [
+            "итог = площадь × (ставка комплектации + фундамента + кровли), докручивается requestAnimationFrame",
+            "силуэт масштабируется 0.62–1 от площади, окна зажигаются по номеру комплектации",
+            "отправка — window.dispatchEvent(new CustomEvent(eventName, { detail: { area, package, total, text } }))",
+            "трек ползунка закрашен по --vibeui-house-002-p"
+          ],
+          "adapt": [
+            "title, lede, minArea, maxArea, defaultArea",
+            "packages, foundations, roofs: label, note, rate, weeks",
+            "currency, areaUnit, eventName, locale",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Посчитайте дом за минуту",
+            "maxLength": 40
+          },
+          {
+            "prop": "defaultArea",
+            "label": "Площадь по умолчанию",
+            "type": "number",
+            "default": 160,
+            "min": 60,
+            "max": 320
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "House cost calculator with a growing silhouette",
+            "description": "A timber house cost calculator: area by slider, package (house kit, weather-tight shell, turnkey), foundation and roof as chips. On the right a house silhouette grows with the area and lights windows by package, the total rolls to the new sum, price per m² and term in weeks, cost breakdown bars. “Send estimate” fires a CustomEvent with the total — the request form on the page picks it up as a chip.",
+            "ai": {
+              "summary": "A house calculator: area, package, foundation, roof → total, term, breakdown, an event to the request form.",
+              "preserve": [
+                "total = area × (package + foundation + roof rate), rolled with requestAnimationFrame",
+                "the silhouette scales 0.62–1 by area, windows light up by package index",
+                "sending is window.dispatchEvent(new CustomEvent(eventName, { detail: { area, package, total, text } }))",
+                "the slider track is filled by --vibeui-house-002-p"
+              ],
+              "adapt": [
+                "title, lede, minArea, maxArea, defaultArea",
+                "packages, foundations, roofs: label, note, rate, weeks",
+                "currency, areaUnit, eventName, locale",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<House002\n  currency=\"$\"\n  packages={[{ label: \"Turnkey\", rate: 4200, weeks: 26 }]}\n  eventName=\"vibeui-house:estimate\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Price your house in a minute"
+              },
+              "defaultArea": {
+                "label": "Default area"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Pricing",
+                "title": "Price your house in a minute",
+                "lede": "The price is fixed in the contract and does not grow during construction. The calculator uses this season's prices.",
+                "areaLabel": "House area",
+                "packageLabel": "Package",
+                "foundationLabel": "Foundation",
+                "roofLabel": "Roof",
+                "totalLabel": "Estimated cost",
+                "perMeterLabel": "Per m²",
+                "termLabel": "Term",
+                "weekShort": "wk",
+                "currency": "$",
+                "areaUnit": "m²",
+                "submitLabel": "Send estimate",
+                "sentLabel": "Estimate added to the form ↓",
+                "note": "An exact quote after a free site visit.",
+                "packages": [
+                  {
+                    "label": "House kit",
+                    "note": "timber, rafters, assembly on the foundation",
+                    "rate": 2250,
+                    "weeks": 10
+                  },
+                  {
+                    "label": "Weather-tight shell",
+                    "note": "+ roof, windows, doors, insulation",
+                    "rate": 3050,
+                    "weeks": 16
+                  },
+                  {
+                    "label": "Turnkey",
+                    "note": "+ utilities, finishing, plumbing",
+                    "rate": 4200,
+                    "weeks": 26
+                  }
+                ],
+                "foundations": [
+                  {
+                    "label": "Screw piles",
+                    "rate": 150
+                  },
+                  {
+                    "label": "Strip footing",
+                    "rate": 310
+                  },
+                  {
+                    "label": "Insulated slab",
+                    "rate": 440
+                  }
+                ],
+                "roofs": [
+                  {
+                    "label": "Asphalt shingles",
+                    "rate": 180
+                  },
+                  {
+                    "label": "Metal tiles",
+                    "rate": 140
+                  },
+                  {
+                    "label": "Standing seam",
+                    "rate": 270
+                  }
+                ],
+                "locale": "en-US"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "house-003",
+      "type": "registry:block",
+      "title": "Технология клеёного бруса: балка раскладывается на ламели при прокрутке",
+      "description": "Секция о технологии на липкой сцене: изометрическая балка клеёного бруса из пяти ламелей при прокрутке разъезжается по слоям, подсвеченный слой сменяется, рядом фото среза бруса. Справа по очереди загораются свойства — число ламелей, влажность, усадка, теплопроводность, срок — с крупными янтарными цифрами. Высота секции задаёт длину анимации, без движения слои сразу раздвинуты.",
+      "categories": [
+        "industry"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "house-003/house-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/house-003.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "technology",
+          "scroll",
+          "sticky",
+          "3d",
+          "isometric",
+          "exploded view",
+          "timber",
+          "glulam",
+          "construction",
+          "features",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "House003",
+          "usage": "<House003\n  facts={[{ value: \"12 %\", label: \"влажность с завода\" }]}\n  image=\"/photos/tech.webp\"\n/>",
+          "summary": "Балка бруса в 3D разъезжается на ламели по прокрутке, свойства загораются по очереди.",
+          "preserve": [
+            "секция высотой min(240vh,400rem) со sticky-сценой; прогресс 0–1 — от верхней границы секции",
+            "ламели — translateZ от --vibeui-house-003-p в preserve-3d, грани нарисованы ::before/::after",
+            "активное свойство = floor(progress × число свойств)",
+            "prefers-reduced-motion: секция в обычной высоте, всё раскрыто"
+          ],
+          "adapt": [
+            "eyebrow, title, lede",
+            "facts: value, label, text",
+            "image, imageAlt, imageCaption",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Брус, который не садится и не трескается",
+            "maxLength": 60
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Glulam technology: a beam splits into lamellas on scroll",
+            "description": "A technology section on a sticky stage: an isometric glulam beam of five lamellas splits into layers on scroll, the highlighted layer changes, a photo of a beam cross-section beside it. On the right the properties light up one by one — lamella count, moisture, shrinkage, warmth, term — with large amber figures. The section height sets the animation length; without motion the layers are spread at once.",
+            "ai": {
+              "summary": "A 3D timber beam splits into lamellas on scroll, properties light up one by one.",
+              "preserve": [
+                "a section of min(240vh,400rem) with a sticky stage; progress 0–1 is from the section top",
+                "lamellas are translateZ from --vibeui-house-003-p in preserve-3d, faces drawn with ::before/::after",
+                "the active property = floor(progress × property count)",
+                "prefers-reduced-motion: normal section height, everything expanded"
+              ],
+              "adapt": [
+                "eyebrow, title, lede",
+                "facts: value, label, text",
+                "image, imageAlt, imageCaption",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<House003\n  facts={[{ value: \"12%\", label: \"factory moisture\" }]}\n  image=\"/photos/tech.webp\"\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Timber that does not shrink or crack"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Technology",
+                "title": "Timber that does not shrink or crack",
+                "lede": "Glulam is not a log. Five kiln-dried lamellas glued with opposing grain: geometry that lasts decades and moving in without a year of settling.",
+                "image": "/demo/house/tech.webp",
+                "imageAlt": "Glulam beam cross-section",
+                "imageCaption": "section 200 × 280",
+                "facts": [
+                  {
+                    "value": "5",
+                    "label": "lamellas per section",
+                    "text": "Glued with opposing grain — the beam does not warp or twist."
+                  },
+                  {
+                    "value": "12%",
+                    "label": "factory moisture",
+                    "text": "Kiln drying: the house does not settle or crack."
+                  },
+                  {
+                    "value": "<1%",
+                    "label": "shrinkage in year one",
+                    "text": "We start finishing right away, no year of waiting."
+                  },
+                  {
+                    "value": "×1.7",
+                    "label": "warmer than a log",
+                    "text": "A tight tongue-and-groove joint with insulation inside."
+                  },
+                  {
+                    "value": "6 mo",
+                    "label": "from blueprint to keys",
+                    "text": "The kit is made at the plant while the foundation is poured."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "house-004",
+      "type": "registry:block",
+      "title": "Этапы стройки дома с липким фото текущего этапа",
+      "description": "Этапы строительства дома: справа список шагов с номером, сроком и описанием, слева на липкой сцене фото текущего этапа — кадры сменяются наплывом с увеличением, подпись и счётчик 01 / 07. Активный шаг выбирается тем, какой пункт пересёк середину экрана, вертикальная нить заливается янтарём до него, пройденные точки горят. На узком — фото внутри каждого шага.",
+      "categories": [
+        "industry"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "house-004/house-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/house-004.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "process",
+          "steps",
+          "timeline",
+          "stages",
+          "sticky",
+          "scroll",
+          "construction",
+          "house",
+          "builder",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "House004",
+          "usage": "<House004\n  stages={[{ title: \"Фундамент\", weeks: \"3 недели\", text: \"…\", image: \"/photos/stage-01.webp\" }]}\n/>",
+          "summary": "Этапы стройки: липкое фото этапа, нить прогресса, шаг по середине экрана.",
+          "preserve": [
+            "IntersectionObserver с rootMargin -35% 0px -60% 0px выбирает активный шаг",
+            "нить — ::after списка, scaleY по --vibeui-house-004-fill",
+            "липкая сцена появляется от 60rem контейнера, на узком фото внутри шага",
+            "фото этапов лежат стопкой, активное — opacity 1 и scale 1"
+          ],
+          "adapt": [
+            "eyebrow, title, total, totalLabel",
+            "stages: title, weeks, text, image",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Семь этапов от участка до ключей",
+            "maxLength": 50
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "House construction stages with a sticky photo of the current stage",
+            "description": "House construction stages: a list of steps with number, term and description on the right, a sticky photo of the current stage on the left — frames crossfade with a zoom, a caption and a 01 / 07 counter. The active step is whichever item crosses the middle of the screen, a vertical line fills with amber up to it, passed dots glow. On narrow widths — a photo inside each step.",
+            "ai": {
+              "summary": "Construction stages: a sticky stage photo, a progress line, step by mid-screen.",
+              "preserve": [
+                "an IntersectionObserver with rootMargin -35% 0px -60% 0px picks the active step",
+                "the line is the list ::after, scaleY by --vibeui-house-004-fill",
+                "the sticky stage appears from a 60rem container, on narrow the photo is inside the step",
+                "stage photos are stacked, the active one gets opacity 1 and scale 1"
+              ],
+              "adapt": [
+                "eyebrow, title, total, totalLabel",
+                "stages: title, weeks, text, image",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<House004\n  stages={[{ title: \"Foundation\", weeks: \"3 weeks\", text: \"…\", image: \"/photos/stage-01.webp\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Seven stages from plot to keys"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "How we build",
+                "title": "Seven stages from plot to keys",
+                "total": "24 wk",
+                "totalLabel": "turnkey on average",
+                "stages": [
+                  {
+                    "title": "Design and estimate",
+                    "weeks": "2 weeks",
+                    "text": "We fit the project to your plot, calculate loads and fix the price in the contract. It does not change after that.",
+                    "image": "/demo/house/p-03.webp"
+                  },
+                  {
+                    "title": "Foundation",
+                    "weeks": "3 weeks",
+                    "text": "Soil survey, layout, piles or a slab. While the concrete cures, the plant cuts your house kit.",
+                    "image": "/demo/house/stage-01.webp"
+                  },
+                  {
+                    "title": "House kit",
+                    "weeks": "4 weeks",
+                    "text": "Timber is CNC-cut to the project with millimetre precision, numbered and delivered wrapped in film.",
+                    "image": "/demo/house/stage-02.webp"
+                  },
+                  {
+                    "title": "Wall assembly",
+                    "weeks": "3 weeks",
+                    "text": "The timber goes together like a kit: tongue into groove, insulation in the joint, dowels every five feet.",
+                    "image": "/demo/house/stage-03.webp"
+                  },
+                  {
+                    "title": "Roof and windows",
+                    "weeks": "4 weeks",
+                    "text": "Rafters, insulation, standing seam or shingles. Panoramic windows sit on sliding supports for settling.",
+                    "image": "/demo/house/stage-04.webp"
+                  },
+                  {
+                    "title": "Utilities and finishing",
+                    "weeks": "8 weeks",
+                    "text": "Wiring in conduit, underfloor heating, plumbing, sanding and hardwax oil. A photo report every week.",
+                    "image": "/demo/house/stage-05.webp"
+                  },
+                  {
+                    "title": "Keys",
+                    "weeks": "one day",
+                    "text": "We hand over by an acceptance act with the house passport and a 10-year structural warranty.",
+                    "image": "/demo/house/stage-06.webp"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "house-005",
+      "type": "registry:block",
+      "title": "Построенные дома: счётчики и лента фото с прокруткой",
+      "description": "Портфолио построенных домов: счётчики (домов сдано, лет, регионов, доплат) докручиваются при появлении, ниже лента крупных фото с прокруткой по снапу — тянется пальцем, мышью и стрелками, янтарная полоска показывает положение в ленте. Карточка — место, год и площадь, при наведении фото увеличивается и появляется код проекта.",
+      "categories": [
+        "industry"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "house-005/house-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/house-005.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "portfolio",
+          "gallery",
+          "carousel",
+          "counters",
+          "stats",
+          "scroll snap",
+          "drag",
+          "construction",
+          "house",
+          "real estate",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "House005",
+          "usage": "<House005\n  homes={[{ image: \"/photos/built-01.webp\", place: \"Ладога\", year: \"2025\", area: \"212 м²\" }]}\n/>",
+          "summary": "Счётчики при появлении и лента построенных домов со снапом и перетаскиванием.",
+          "preserve": [
+            "счётчики стартуют IntersectionObserver'ом (threshold 0.4) и докручиваются requestAnimationFrame",
+            "лента — grid-auto-flow:column со scroll-snap, мышью тянется pointermove, на время перетаскивания снап выключен",
+            "полоска положения — ширина = видимая доля, сдвиг = доля прокрутки",
+            "стрелки листают на ширину карточки с behavior smooth"
+          ],
+          "adapt": [
+            "eyebrow, title",
+            "homes: image, place, year, area, code",
+            "stats: value, suffix, label",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Живут в них уже сейчас",
+            "maxLength": 40
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Built homes: counters and a scrolling photo rail",
+            "description": "A built homes portfolio: counters (homes delivered, years, regions, extra charges) roll up on appear, below a rail of large photos with snap scrolling — drag with a finger, mouse or arrows, an amber bar shows the position in the rail. A card — place, year and area; on hover the photo zooms and the project code appears.",
+            "ai": {
+              "summary": "Counters on appear and a built homes rail with snap and drag.",
+              "preserve": [
+                "counters start via an IntersectionObserver (threshold 0.4) and roll with requestAnimationFrame",
+                "the rail is grid-auto-flow:column with scroll-snap, mouse drag via pointermove, snap off while dragging",
+                "the position bar width = visible fraction, offset = scroll fraction",
+                "arrows step by a card width with smooth behaviour"
+              ],
+              "adapt": [
+                "eyebrow, title",
+                "homes: image, place, year, area, code",
+                "stats: value, suffix, label",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<House005\n  homes={[{ image: \"/photos/built-01.webp\", place: \"Lake Tahoe\", year: \"2025\", area: \"2,280 sq ft\" }]}\n/>"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "People already live in them"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Built homes",
+                "title": "People already live in them",
+                "prevLabel": "Back",
+                "nextLabel": "Forward",
+                "galleryLabel": "Built homes",
+                "homes": [
+                  {
+                    "image": "/demo/house/built-01.webp",
+                    "place": "Lake Ladoga shore",
+                    "year": "2025",
+                    "area": "212 m²",
+                    "code": "PH-212"
+                  },
+                  {
+                    "image": "/demo/house/built-02.webp",
+                    "place": "Istra, Moscow region",
+                    "year": "2024",
+                    "area": "138 m²",
+                    "code": "BH-138"
+                  },
+                  {
+                    "image": "/demo/house/built-03.webp",
+                    "place": "Valdai Hills",
+                    "year": "2025",
+                    "area": "176 m²",
+                    "code": "PH-176"
+                  },
+                  {
+                    "image": "/demo/house/built-04.webp",
+                    "place": "Sortavala, Karelia",
+                    "year": "2023",
+                    "area": "242 m²",
+                    "code": "PH-242"
+                  }
+                ],
+                "stats": [
+                  {
+                    "value": 214,
+                    "label": "homes delivered"
+                  },
+                  {
+                    "value": 11,
+                    "label": "years building with glulam"
+                  },
+                  {
+                    "value": 14,
+                    "label": "regions"
+                  },
+                  {
+                    "value": 0,
+                    "suffix": " $",
+                    "label": "over the contract price"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

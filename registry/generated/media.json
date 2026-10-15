@@ -56,6 +56,12 @@
       "/demo/delivery/intro.mp4",
       "/demo/delivery/intro.webm"
     ],
+    "hero-049": [
+      "/demo/house/hero-01.webp",
+      "/demo/house/hero-02.webp",
+      "/demo/house/hero-03.webp",
+      "/demo/house/hero-04.webp"
+    ],
     "testimonials-019": [
       "/demo/tattoo/healed-01.webp",
       "/demo/tattoo/healed-02.webp",
@@ -68,11 +74,22 @@
       "/demo/vet/diary-03.webp",
       "/demo/vet/diary-04.webp"
     ],
+    "testimonials-036": [
+      "/demo/house/review-01.webp",
+      "/demo/house/review-02.webp",
+      "/demo/house/review-03.webp"
+    ],
     "cta-019": [
       "/demo/festival/banner.webp"
     ],
     "download-011": [
       "/demo/delivery/promo.webp"
+    ],
+    "cta-038": [
+      "/demo/house/cta.webp"
+    ],
+    "footer-045": [
+      "/demo/house/hero-02.webp"
     ],
     "bakery-001": [
       "/demo/bakery/item-01.webp",
@@ -225,6 +242,32 @@
       "/demo/podcast/episode-04.webp",
       "/demo/podcast/episode-05.webp",
       "/demo/podcast/episode-06.webp"
+    ],
+    "house-001": [
+      "/demo/house/p-01.webp",
+      "/demo/house/p-02.webp",
+      "/demo/house/p-03.webp",
+      "/demo/house/p-04.webp",
+      "/demo/house/p-05.webp",
+      "/demo/house/p-06.webp"
+    ],
+    "house-003": [
+      "/demo/house/tech.webp"
+    ],
+    "house-004": [
+      "/demo/house/p-03.webp",
+      "/demo/house/stage-01.webp",
+      "/demo/house/stage-02.webp",
+      "/demo/house/stage-03.webp",
+      "/demo/house/stage-04.webp",
+      "/demo/house/stage-05.webp",
+      "/demo/house/stage-06.webp"
+    ],
+    "house-005": [
+      "/demo/house/built-01.webp",
+      "/demo/house/built-02.webp",
+      "/demo/house/built-03.webp",
+      "/demo/house/built-04.webp"
     ],
     "about-010": [
       "/demo/tattoo/studio-01.webp",
@@ -593,6 +636,9 @@
       "/demo/flowers/video/hero.mp4",
       "/demo/flowers/video/hero.webp"
     ],
+    "app/scenarios/house/demo/page.tsx": [
+      "/demo/house/hero-01.webp"
+    ],
     "app/scenarios/language/demo/page.tsx": [
       "/demo/language/lesson.webp",
       "/demo/language/teacher-01.webp",
@@ -847,6 +893,33 @@
       "/demo/gadget/lamp-front.png",
       "/demo/gadget/lamp-sand.png",
       "/demo/gadget/lamp-white.png"
+    ],
+    "app/en/scenarios/house/demo/page.tsx": [
+      "/demo/house/built-01.webp",
+      "/demo/house/built-02.webp",
+      "/demo/house/built-03.webp",
+      "/demo/house/built-04.webp",
+      "/demo/house/cta.webp",
+      "/demo/house/hero-01.webp",
+      "/demo/house/hero-02.webp",
+      "/demo/house/hero-03.webp",
+      "/demo/house/hero-04.webp",
+      "/demo/house/p-01.webp",
+      "/demo/house/p-02.webp",
+      "/demo/house/p-03.webp",
+      "/demo/house/p-04.webp",
+      "/demo/house/p-05.webp",
+      "/demo/house/p-06.webp",
+      "/demo/house/review-01.webp",
+      "/demo/house/review-02.webp",
+      "/demo/house/review-03.webp",
+      "/demo/house/stage-01.webp",
+      "/demo/house/stage-02.webp",
+      "/demo/house/stage-03.webp",
+      "/demo/house/stage-04.webp",
+      "/demo/house/stage-05.webp",
+      "/demo/house/stage-06.webp",
+      "/demo/house/tech.webp"
     ],
     "app/en/scenarios/language/demo/page.tsx": [
       "/demo/language/lesson.webp",

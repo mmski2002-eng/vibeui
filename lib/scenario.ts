@@ -40,7 +40,7 @@ const VIDEO_SLUGS = new Set([
   "tattoo", "vet", "language", "flowers", "wedding-winter", "wedding",
   "realty", "course", "festival", "bakery", "podcast", "opensource",
   "portfolio", "app", "renovation", "fintech", "market", "api", "gadget",
-  "charity", "writer",
+  "charity", "writer", "house",
 ])
 
 const EN_VIDEO_SLUGS = VIDEO_SLUGS

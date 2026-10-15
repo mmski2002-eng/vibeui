@@ -6565,6 +6565,181 @@
         }
       },
       "docs": "Составной блок: импортирует button-123 из @/components/vibeui/ — команда установки приносит их вместе с блоком. Блок владеет раскладкой и своим текстом, частям передаёт только пропсы, их палитры --vibeui-<name>-* не трогает."
+    },
+    {
+      "name": "cta-038",
+      "type": "registry:block",
+      "title": "Заявка на фото-фоне с выбором канала и расчётом из калькулятора",
+      "description": "Финальная заявка на ночном фото дома у воды: фон медленно дышит масштабом, крупный тонкий заголовок, стеклянная форма с одним полем телефона, переключатель «Звонок / Telegram / WhatsApp» и янтарная кнопка. Если на странице считали дом в калькуляторе, итог приходит CustomEvent'ом и встаёт в форму чипом. После отправки прорисовывается галочка.",
+      "categories": [
+        "cta"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "cta-038/cta-038.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/cta-038.tsx"
+        }
+      ],
+      "meta": {
+        "pro": true,
+        "tags": [
+          "cta",
+          "form",
+          "request",
+          "lead",
+          "phone",
+          "glass",
+          "background image",
+          "custom event",
+          "construction",
+          "dark"
+        ],
+        "preview": {
+          "props": {},
+          "width": "fit"
+        },
+        "ai": {
+          "export": "Cta038",
+          "usage": "<Cta038 image=\"/photos/cta.webp\" eventName=\"vibeui-house:estimate\" />",
+          "summary": "Заявка поверх фото: одно поле, канал связи, чип расчёта из события, галочка.",
+          "preserve": [
+            "слушает window-событие eventName и берёт detail.text в чип",
+            "отправка без сети — проверяет 10+ цифр и показывает состояние успеха с role=status",
+            "галочка — stroke-dashoffset 60 → 0",
+            "фон — img absolute с бесконечной анимацией scale, затемнение градиентом"
+          ],
+          "adapt": [
+            "eyebrow, title, lede, image",
+            "phoneLabel, phonePlaceholder, channels, submitLabel",
+            "successTitle, successText, consent, eventName",
+            "tone — тема",
+            "accent — акцент (янтарь окон)",
+            "ink — текст",
+            "background — фон"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ваш дом у воды — уже этой осенью",
+            "maxLength": 50
+          },
+          {
+            "prop": "submitLabel",
+            "label": "Кнопка",
+            "type": "text",
+            "default": "Обсудить мой дом",
+            "maxLength": 30
+          },
+          {
+            "prop": "tone",
+            "label": "Тема",
+            "type": "select",
+            "options": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "default": "dark"
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "ink",
+            "label": "Текст",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "tone",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "A request form over a photo with a channel choice and a calculator estimate",
+            "description": "A final request over a night photo of a house by the water: the background slowly breathes in scale, a large thin headline, a glass form with one phone field, a “Call / Telegram / WhatsApp” switch and an amber button. If a house was priced in the calculator on the page, the total arrives via a CustomEvent and appears in the form as a chip. After sending a checkmark draws itself.",
+            "ai": {
+              "summary": "A request over a photo: one field, a channel, an estimate chip from an event, a checkmark.",
+              "preserve": [
+                "listens for the window event eventName and puts detail.text into the chip",
+                "sending is offline — checks 10+ digits and shows a success state with role=status",
+                "the checkmark is stroke-dashoffset 60 → 0",
+                "the background is an absolute img with an infinite scale animation, darkened by a gradient"
+              ],
+              "adapt": [
+                "eyebrow, title, lede, image",
+                "phoneLabel, phonePlaceholder, channels, submitLabel",
+                "successTitle, successText, consent, eventName",
+                "tone — theme",
+                "accent — accent (window amber)",
+                "ink — ink",
+                "background — background"
+              ],
+              "usage": "<Cta038 image=\"/photos/cta.webp\" eventName=\"vibeui-house:estimate\" channels={[\"Call\", \"Telegram\", \"WhatsApp\"]} />"
+            },
+            "controls": {
+              "title": {
+                "label": "Title",
+                "default": "Your house by the water — this autumn"
+              },
+              "submitLabel": {
+                "label": "Button",
+                "default": "Discuss my house"
+              },
+              "tone": {
+                "label": "Theme"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "ink": {
+                "label": "Ink"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "eyebrow": "Discuss a house",
+                "title": "Your house by the water — this autumn",
+                "lede": "Leave your phone: an engineer will call back, match a project to your plot and budget and invite you to tour a finished home.",
+                "image": "/demo/house/cta.webp",
+                "phoneLabel": "Phone",
+                "phonePlaceholder": "+1 (___) ___-____",
+                "channelsLabel": "How to reach you",
+                "channels": [
+                  "Call",
+                  "Telegram",
+                  "WhatsApp"
+                ],
+                "submitLabel": "Discuss my house",
+                "successTitle": "Request received",
+                "successText": "An engineer will contact you within 15 minutes.",
+                "estimateLabel": "Your estimate",
+                "consent": "By pressing the button you agree to the processing of personal data."
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
