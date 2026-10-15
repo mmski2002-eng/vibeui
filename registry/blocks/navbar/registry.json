@@ -8395,7 +8395,7 @@
           "dark"
         ],
         "preview": {
-          "props": {},
+          "props": { "overlay": false },
           "width": "fit"
         },
         "ai": {
@@ -8409,7 +8409,7 @@
             "меню скрывается и появляется бургер по ширине контейнера 64rem"
           ],
           "adapt": [
-            "brand, tagline, links, phone, ctaLabel, ctaHref",
+            "brand, tagline, links, phone, ctaLabel, ctaHref; overlay={false} — обычная шапка без наложения на хиро",
             "tone — тема",
             "accent — акцент (янтарь окон)",
             "ink — текст",
@@ -8479,7 +8479,7 @@
                 "links hide and the burger shows by container width 64rem"
               ],
               "adapt": [
-                "brand, tagline, links, phone, ctaLabel, ctaHref",
+                "brand, tagline, links, phone, ctaLabel, ctaHref; overlay={false} — regular header that does not overlap the hero",
                 "tone — theme",
                 "accent — accent (window amber)",
                 "ink — ink",

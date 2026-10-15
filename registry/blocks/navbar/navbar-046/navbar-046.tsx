@@ -13,6 +13,7 @@ export type Navbar046Props = {
   ctaHref?: string
   menuLabel?: string
   homeLabel?: string
+  overlay?: boolean
   tone?: "auto" | "light" | "dark"
   accent?: string
   ink?: string
@@ -43,6 +44,9 @@ const STYLES = `
 :where(${S}[data-tone="light"]){color-scheme:light}
 :where(${S}[data-tone="dark"]){color-scheme:dark}
 ${S}{position:sticky;top:0;z-index:40;height:var(--vibeui-navbar-046-h);margin-bottom:calc(var(--vibeui-navbar-046-h) * -1);color:var(--vibeui-navbar-046-fg);font-family:var(--vibeui-navbar-046-font);font-size:.875rem;transition:background-color .5s,backdrop-filter .5s,box-shadow .5s;container-type:inline-size}
+${S}{top:.5rem;border-radius:1.4rem;transition:background-color .5s,backdrop-filter .5s,box-shadow .5s,margin .5s cubic-bezier(.2,.8,.2,1)}
+${S}[data-scrolled="true"]{margin-inline:.5rem}
+${S}[data-overlay="false"]{position:relative;top:0;margin:.5rem;background:color-mix(in oklab,var(--vibeui-navbar-046-bg) 72%,transparent);box-shadow:inset 0 0 0 1px var(--vibeui-navbar-046-line)}
 ${S} *{box-sizing:border-box}
 ${S}[data-scrolled="true"]{background:color-mix(in oklab,var(--vibeui-navbar-046-bg) 72%,transparent);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);box-shadow:inset 0 -1px 0 var(--vibeui-navbar-046-line)}
 ${S} [data-part="bar"]{display:flex;align-items:center;gap:1.5rem;height:100%;max-width:90rem;margin:0 auto;padding:0 clamp(1rem,3cqi,2.5rem)}
@@ -73,7 +77,7 @@ ${S} [data-part="sheet"]{position:absolute;top:100%;left:.75rem;right:.75rem;dis
 ${S}[data-open="true"] [data-part="sheet"]{opacity:1;transform:none;pointer-events:auto}
 ${S} [data-part="sheet"] a{padding:.8rem .9rem;border-radius:.8rem;color:inherit;text-decoration:none;font-size:1.05rem}
 ${S} [data-part="sheet"] a:hover{background:var(--vibeui-navbar-046-line)}
-${S} [data-part="progress"]{position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--vibeui-navbar-046-accent);transform-origin:left;transform:scaleX(var(--vibeui-navbar-046-p,0))}
+${S} [data-part="progress"]{position:absolute;left:1.4rem;bottom:0;height:1px;width:calc(100% - 2.8rem);background:var(--vibeui-navbar-046-accent);transform-origin:left;transform:scaleX(var(--vibeui-navbar-046-p,0))}
 ${S} a:focus-visible,${S} button:focus-visible{outline:2px solid var(--vibeui-navbar-046-accent);outline-offset:2px}
 @container (min-width: 64rem){${S} [data-part="links"]{display:flex}${S} [data-part="burger"],${S} [data-part="sheet"]{display:none}}
 @container (min-width: 76rem){${S} [data-part="phone"]{display:block}}
@@ -111,6 +115,7 @@ export function Navbar046({
   ctaHref = "#contact",
   menuLabel = "Меню",
   homeLabel = "На главную",
+  overlay = true,
   tone = "dark",
   accent,
   ink,
@@ -152,7 +157,7 @@ export function Navbar046({
       <style href="vibeui-navbar-046" precedence="medium">
         {STYLES}
       </style>
-      <header data-vibeui-block="navbar-046" data-tone={tone === "auto" ? undefined : tone} data-scrolled={scrolled || open} data-open={open} className={className} style={palette}>
+      <header data-vibeui-block="navbar-046" data-tone={tone === "auto" ? undefined : tone} data-overlay={overlay} data-scrolled={scrolled || open} data-open={open} className={className} style={palette}>
         <nav data-part="bar">
           <a data-part="brand" href="#top" aria-label={homeLabel}>
             <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" aria-hidden="true">
