@@ -12,8 +12,8 @@ export type PersonalizationOutput = z.infer<typeof outputSchema> & { usage: Toke
 
 // A named person gets more replies than a team signature; the team line stays as the fallback.
 function signOff(input: { market: "ru" | "en"; senderName?: string }): string {
-  if (input.senderName) return `${input.senderName}, VibeUI`;
-  return input.market === "ru" ? "Команда VibeUI" : "The VibeUI team";
+  const name = input.senderName && input.senderName.toLowerCase() !== "vibeui" ? input.senderName : "Max";
+  return input.market === "ru" ? `${name} из VibeUI` : `${name} from VibeUI`;
 }
 
 export async function personalizeOutreach(input: {
@@ -32,8 +32,8 @@ export async function personalizeOutreach(input: {
     instructions: `Write one first-contact ${input.channel === "telegram" ? "Telegram direct message" : "email"} in ${input.market === "ru" ? "Russian" : "English"}. The owner wrote this message; reproduce it almost word for word:
 
 ${input.market === "ru"
-  ? "Добрый день! Предлагаю сотрудничество: прорекламировать мой продукт — сайт UI-компонентов vibeui.ru. Ваша выгода — процент от продаж подписки на сервис. Если интересно, пишите."
-  : "Hi! I'd like to offer a partnership: promoting my product — vibeui.club, a site of UI components. Your benefit is a percentage of subscription sales. If interested, please reply."}
+  ? "Добрый день! Предлагаю сотрудничество: прорекламировать мой продукт — сайт UI-компонентов https://vibeui.ru. Ваша выгода — процент от продаж подписки на сервис. Если интересно, пишите."
+  : "Hi! I'd like to offer a partnership: promoting my product — https://vibeui.club, a site of UI components. Your benefit is a percentage of subscription sales. If interested, please reply."}
 
 Change at most one or two words or short phrases with natural synonyms (for example a different greeting or a different "if interested" phrase) so that messages to different people are not identical. Keep the meaning, the length, the order and the domain exactly. Add nothing else: no compliments, no product description, no links, no numbers, no Pro month, no questions, no emoji.
 The message is plain text, no Markdown.
@@ -46,7 +46,8 @@ For "facts" and "chosenPostUrl" use any one supplied publication URL; they are i
   if (!result.finalOutput) throw new ModelOutputError("Personalization agent returned no structured output", usage);
   const parsed = outputSchema.safeParse(result.finalOutput);
   if (!parsed.success) throw new ModelOutputError(`Personalization output failed validation: ${parsed.error.message.slice(0, 500)}`, usage);
-  const output = parsed.data;
+  // A bare domain is not always clickable in Telegram and mail clients; the full URL always is.
+  const output = { ...parsed.data, body: parsed.data.body.replace(/(?<![\w/.])vibeui\.(ru|club)\b/g, "https://vibeui.$1") };
   const citedUrls = [output.chosenPostUrl, ...output.facts.map((fact) => fact.sourceUrl)];
   const unsupported = citedUrls.filter((url) => !allowedUrls.has(url));
   if (output.body.includes(input.referralUrl)) throw new ModelOutputError("The first message must not contain the referral link", usage);
