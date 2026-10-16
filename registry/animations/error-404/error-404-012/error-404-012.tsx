@@ -89,8 +89,8 @@ export function Error404012({
     const lines = script.split("\n")
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduced) {
-      setRows(lines.map((text) => ({ text })))
-      return
+      const timer = window.setTimeout(() => setRows(lines.map((text) => ({ text }))))
+      return () => window.clearTimeout(timer)
     }
     let line = 0
     let character = 0
