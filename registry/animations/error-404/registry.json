@@ -1,0 +1,2303 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "error-404-001",
+      "type": "registry:component",
+      "title": "Цифры из пыли",
+      "description": "Страница 404, где огромный код собран из тысяч пылинок: они держатся за контур цифр пружиной и разлетаются от курсора, а потом собираются обратно.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-001/error-404-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-001.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент на 2D canvas без зависимостей. Код рисуется на временном холсте шрифтом 900, из непрозрачных пикселей с шагом 3 берутся опорные точки. Число пылинок задаёт density и уменьшается на узком кадре. Отрисовка останавливается вне экрана (IntersectionObserver), плотность пикселей ограничена 2, при prefers-reduced-motion пыль сразу стоит на месте без движения.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "particles",
+          "canvas",
+          "interactive",
+          "cursor",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404001",
+          "usage": "<Error404001 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Холст с частицами: точки снимаются с невидимого холста, куда код пишется системным шрифтом, каждая пылинка тянется к своей точке пружиной и отталкивается от курсора.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-001-* — не подменять её токенами темы сайта",
+            "выборку точек с невидимого холста — цифры остаются текстом, а не картинкой",
+            "пружину и затухание скорости: без них пыль не собирается обратно в цифры",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title, density — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница не найдена",
+            "maxLength": 40
+          },
+          {
+            "prop": "density",
+            "label": "Пылинок",
+            "type": "number",
+            "default": 2600,
+            "min": 600,
+            "max": 5000
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет пыли",
+            "type": "color",
+            "default": "#f0643c"
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "density",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Dust digits",
+            "description": "A 404 page where the giant code is made of thousands of dust specks: they cling to the digit outline on springs, scatter away from the cursor and settle back.",
+            "docs": "A client component on a 2D canvas with no dependencies. The code is drawn on a temporary canvas at weight 900 and anchor points are taken from opaque pixels on a 3-pixel step. density sets the number of specks and shrinks on a narrow frame. Drawing stops off-screen (IntersectionObserver), the pixel ratio is capped at 2, and prefers-reduced-motion leaves the dust settled and still.",
+            "ai": {
+              "summary": "A particle canvas: points are sampled from a hidden canvas where the code is drawn in the system font, each speck springs back to its point and is pushed away by the cursor.",
+              "preserve": [
+                "the local --vibeui-error-404-001-* palette — do not swap it for your theme tokens",
+                "point sampling from a hidden canvas — the digits stay text, not an image",
+                "the spring and velocity damping: without them the dust never settles back into digits",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title, density — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404001 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Page not found"
+              },
+              "density": {
+                "label": "Specks"
+              },
+              "accent": {
+                "label": "Dust colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Page not found",
+                "description": "The page you were looking for does not exist or has moved.",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-002",
+      "type": "registry:component",
+      "title": "Бумажные самолётики",
+      "description": "Страница 404 с небом из бумажных самолётиков: стая летит по диагонали, каждый своим курсом и со своей скоростью, а в центре — короткое «Потерялись в полёте?».",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-002/error-404-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. Секция — контейнер размеров (container-type:size), поэтому траектория в cqw/cqh масштабируется под кадр. Число самолётиков задаёт planes. При prefers-reduced-motion самолётики стоят на местах.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "planes",
+          "sky",
+          "css animation",
+          "light"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404002",
+          "usage": "<Error404002 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Небо из самолётиков на одном @keyframes: курс, скорость и задержка у каждого заданы переменными, разброс детерминированный, поэтому сервер и браузер рисуют один кадр.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-002-* — не подменять её токенами темы сайта",
+            "детерминированный разброс курсов — случайность в рендере ломает гидратацию",
+            "самолётик как inline SVG, а не картинка",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title, planes — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Потерялись в полёте?",
+            "maxLength": 40
+          },
+          {
+            "prop": "planes",
+            "label": "Самолётиков",
+            "type": "number",
+            "default": 14,
+            "min": 4,
+            "max": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет самолётиков",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "planes",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Paper planes",
+            "description": "A 404 page with a sky of paper planes: the flock crosses diagonally, each plane on its own course and speed, around a short \"Lost in flight?\".",
+            "docs": "A server component with no JS. The section is a size container (container-type:size), so the cqw/cqh flight path scales with the frame. planes sets how many fly. With prefers-reduced-motion the planes hold still.",
+            "ai": {
+              "summary": "A sky of planes on a single @keyframes: each plane's course, speed and delay are variables, and the spread is deterministic so the server and the browser render the same frame.",
+              "preserve": [
+                "the local --vibeui-error-404-002-* palette — do not swap it for your theme tokens",
+                "the deterministic spread of courses — randomness in render breaks hydration",
+                "the plane as inline SVG, not an image",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title, planes — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404002 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Lost in flight?"
+              },
+              "planes": {
+                "label": "Planes"
+              },
+              "accent": {
+                "label": "Plane colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Lost in flight?",
+                "actionLabel": "Find your way home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-003",
+      "type": "registry:component",
+      "title": "Вышивка по точкам",
+      "description": "Страница 404, где код натягивается нитью по сетке гвоздиков: цифры прорисовываются по очереди, а по готовому контуру бегает светлячок. Ниже — заголовок и два выхода.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-003/error-404-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. Палитра --vibeui-error-404-003-* с light-dark(). Нити рисуются с задержкой 0.4 с между цифрами, светлячок стартует после прорисовки. prefers-reduced-motion показывает готовые цифры без светлячка.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "svg",
+          "line drawing",
+          "dots",
+          "grid",
+          "stroke animation"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404003",
+          "usage": "<Error404003 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "SVG-доска с точками: цифры — ломаные по узлам сетки, прорисовка через stroke-dashoffset с pathLength=1, светлячок едет по offset-path последней цифры.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-003-* — не подменять её токенами темы сайта",
+            "цифры как ломаные по узлам сетки 20×20 — так нить совпадает с гвоздиками",
+            "две кнопки: заливная главная и контурная справка",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница не найдена",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет нити",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pin-board stitch",
+            "description": "A 404 page where the code is strung with thread across a grid of pins: the digits draw in one after another and a spark runs along the finished outline. A heading and two ways out below.",
+            "docs": "A server component with no JS. Palette in --vibeui-error-404-003-* with light-dark(). Threads draw with a 0.4 s delay between digits and the spark starts once they finish. prefers-reduced-motion shows the finished digits without the spark.",
+            "ai": {
+              "summary": "An SVG pin board: the digits are polylines through grid nodes, drawn in with stroke-dashoffset and pathLength=1, and the spark rides the offset-path of the last digit.",
+              "preserve": [
+                "the local --vibeui-error-404-003-* palette — do not swap it for your theme tokens",
+                "the digits as polylines through the 20×20 grid nodes — that keeps the thread on the pins",
+                "two buttons: a filled primary home and an outlined help",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404003 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Page not found"
+              },
+              "accent": {
+                "label": "Thread colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Page not found",
+                "description": "The page you were looking for doesn't exist.",
+                "actionLabel": "Go to the homepage",
+                "secondaryLabel": "Browse the guides"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-004",
+      "type": "registry:component",
+      "title": "Бегущая строка на плакате",
+      "description": "Страница 404-плакат: гигантские цифры тоном темнее полотна и бегущая строка поверх них с сообщением и ссылкой домой. При наведении строка замирает.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-004/error-404-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. Копии строки помечены aria-hidden и убраны из табуляции, читается одна. Скорость — speed в секундах на проход. prefers-reduced-motion останавливает строку и оставляет одну копию по центру.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "marquee",
+          "ticker",
+          "poster",
+          "bold",
+          "large type"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404004",
+          "usage": "<Error404004 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Плакат на одном цвете: цифры — тот же акцент, затемнённый относительным цветом oklch, бегущая строка из четырёх копий едет на translateX(-50%) без шва.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-004-* — не подменять её токенами темы сайта",
+            "цвет цифр и текста вычисляется из accent — меняется один проп",
+            "паузу строки при наведении и фокусе: иначе по ссылке не попасть",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "message, speed — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Исследовать — тоже часть процесса, но вы заблудились.",
+            "maxLength": 80
+          },
+          {
+            "prop": "speed",
+            "label": "Секунд на проход",
+            "type": "number",
+            "default": 22,
+            "min": 8,
+            "max": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет полотна",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "message",
+          "speed",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Marquee poster",
+            "description": "A 404 poster page: giant digits a shade darker than the canvas with a marquee running across them carrying the message and a link home. The marquee pauses on hover.",
+            "docs": "A server component with no JS. Marquee copies are aria-hidden and removed from tab order, only one is read. speed is seconds per pass. prefers-reduced-motion stops the marquee and keeps one centred copy.",
+            "ai": {
+              "summary": "A one-colour poster: the digits are the same accent darkened with relative oklch, and the marquee of four copies slides by translateX(-50%) with no visible seam.",
+              "preserve": [
+                "the local --vibeui-error-404-004-* palette — do not swap it for your theme tokens",
+                "the digit and text colours derive from accent — one prop changes all",
+                "the marquee pause on hover and focus: otherwise the link cannot be hit",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "message, speed — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404004 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "Exploration is also part of our process, but you are lost."
+              },
+              "speed": {
+                "label": "Seconds per pass"
+              },
+              "accent": {
+                "label": "Canvas colour"
+              }
+            },
+            "preview": {
+              "props": {
+                "message": "Exploration is also part of our process, but you are lost.",
+                "actionLabel": "Take me back home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-005",
+      "type": "registry:component",
+      "title": "Пиксельные пришельцы",
+      "description": "Страница 404 с аркадой: строй пиксельных пришельцев марширует над гигантским кодом, клик сбивает любого, а когда сбиты все — растёт уровень.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-005/error-404-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-005.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент на useState, без холста и зависимостей. Счётчик уровня объявлен aria-live. prefers-reduced-motion останавливает марш, сбивать по-прежнему можно.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "game",
+          "arcade",
+          "pixel",
+          "invaders",
+          "retro",
+          "interactive"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404005",
+          "usage": "<Error404005 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Мини-игра на кнопках: пришелец — SVG-маска 11×8, строй марширует steps(), клик помечает пришельца сбитым, полный строй возвращается со следующим уровнем.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-005-* — не подменять её токенами темы сайта",
+            "пришельцы — настоящие кнопки с подписью: игра доступна с клавиатуры",
+            "ступенчатое движение steps() — аркадный ритм, а не плавный дрейф",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "message — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Упс, что-то пошло не так. Сбейте баги, чтобы вернуться домой.",
+            "maxLength": 80
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет пришельцев",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "message",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pixel invaders",
+            "description": "A 404 page with an arcade: a formation of pixel invaders marches above the giant code, a click shoots any of them down, and clearing the board raises the level.",
+            "docs": "A client component on useState, no canvas and no dependencies. The level counter is aria-live. prefers-reduced-motion stops the march; shooting still works.",
+            "ai": {
+              "summary": "A mini-game made of buttons: an invader is an 11×8 SVG mask, the formation marches with steps(), a click marks an invader hit, and a cleared board comes back at the next level.",
+              "preserve": [
+                "the local --vibeui-error-404-005-* palette — do not swap it for your theme tokens",
+                "invaders are real labelled buttons: the game works from the keyboard",
+                "stepped steps() motion — an arcade rhythm, not a smooth drift",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "message — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404005 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "Oops, something went wrong. Defeat the bugs to return home."
+              },
+              "accent": {
+                "label": "Invader colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "message": "Oops, something went wrong. Defeat the bugs to return home.",
+                "actionLabel": "Back to home",
+                "levelLabel": "Level",
+                "targetLabel": "Shoot invader"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-006",
+      "type": "registry:component",
+      "title": "Пиксельная кроличья нора",
+      "description": "Тёмная страница 404 с пиксельными цифрами из клеток 5×7: клетки вспыхивают как экран старого терминала, а над кодом прыгает пиксельная стрелка «вниз, в нору».",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-006/error-404-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-006.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. Маски заведены для всех цифр 0–9, поэтому code можно сменить на 500 или 410. Размер клетки считается от ширины блока. prefers-reduced-motion гасит мерцание и прыжки.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "pixel",
+          "terminal",
+          "retro",
+          "dark",
+          "flicker"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404006",
+          "usage": "<Error404006 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Пиксельный шрифт на CSS-сетке: каждая цифра — 35 клеток по маске, клетки мерцают с разной фазой, стрелка — сетка 3×4.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-006-* — не подменять её токенами темы сайта",
+            "цифры как маски-строки в коде — без шрифта и картинок",
+            "разные фазы мерцания клеток: синхронное мигание выглядит как сбой",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "code, title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "code",
+            "label": "Код",
+            "type": "text",
+            "default": "404",
+            "maxLength": 4
+          },
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вы провалились в кроличью нору.",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет стрелки",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "code",
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Pixel rabbit hole",
+            "description": "A dark 404 page with pixel digits built from 5×7 cells: the cells flicker like an old terminal screen while a pixel arrow hops above the code pointing down the hole.",
+            "docs": "A server component with no JS. Masks exist for all digits 0–9, so code can become 500 or 410. Cell size follows the block width. prefers-reduced-motion stops the flicker and the hop.",
+            "ai": {
+              "summary": "A pixel font on a CSS grid: each digit is 35 cells from a mask, cells flicker on different phases, and the arrow is a 3×4 grid.",
+              "preserve": [
+                "the local --vibeui-error-404-006-* palette — do not swap it for your theme tokens",
+                "digits as string masks in code — no font, no images",
+                "different flicker phases per cell: synchronised blinking reads as a glitch",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "code, title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404006 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "code": {
+                "label": "Code",
+                "default": "404"
+              },
+              "title": {
+                "label": "Heading",
+                "default": "You went down a rabbit hole."
+              },
+              "accent": {
+                "label": "Arrow colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "You went down a rabbit hole.",
+                "description": "Even we don't know where this one goes.",
+                "actionLabel": "Climb back home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-007",
+      "type": "registry:component",
+      "title": "Плакат с игрушками",
+      "description": "Кричащая страница 404: «Страница не найдена» во весь кадр на жёлтом полотне, а вокруг плавают объёмные игрушки — пончик, шар, звезда, капсула и кубик.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-007/error-404-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. Цвет полотна — accent, текст тёмный. Игрушки декоративные (aria-hidden), кнопка лежит поверх них. prefers-reduced-motion останавливает качание.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "poster",
+          "3d",
+          "floating",
+          "playful",
+          "colorful",
+          "bold"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404007",
+          "usage": "<Error404007 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Плакат с летающими игрушками: каждая фигура собрана градиентами и clip-path, качается по своей траектории и со своим периодом.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-007-* — не подменять её токенами темы сайта",
+            "игрушки на CSS-градиентах — блок остаётся одним файлом без картинок",
+            "разные периоды качания, чтобы композиция не повторялась глазом",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница не найдена",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет полотна",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Toy poster",
+            "description": "A loud 404 page: \"Page not found\" fills the frame on a yellow canvas while chunky toys float around it — a donut, a ball, a star, a capsule and a cube.",
+            "docs": "A server component with no JS. accent is the canvas colour, the text is dark. Toys are decorative (aria-hidden) and the button sits above them. prefers-reduced-motion stops the sway.",
+            "ai": {
+              "summary": "A poster with floating toys: each shape is built from gradients and clip-path and sways on its own path and period.",
+              "preserve": [
+                "the local --vibeui-error-404-007-* palette — do not swap it for your theme tokens",
+                "toys made of CSS gradients — the block stays one file with no images",
+                "different sway periods so the composition never visibly repeats",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404007 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Page not found"
+              },
+              "accent": {
+                "label": "Canvas colour"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Page not found",
+                "code": "Error 404",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-008",
+      "type": "registry:component",
+      "title": "Лабиринт-головоломка",
+      "description": "Страница 404-головоломка: доску-лабиринт поворачивают кнопками или стрелками, шарик под гравитацией катится до стены, цель — довести его до выхода.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-008/error-404-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-008.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент на useState. Лабиринт — массив строк в коде: # стена, S старт, E выход. Счётчик ходов объявлен aria-live. prefers-reduced-motion убирает транзиции, игра работает мгновенно.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "game",
+          "maze",
+          "puzzle",
+          "interactive",
+          "gravity"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404008",
+          "usage": "<Error404008 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Головоломка на сетке 7×7: поворот доски и качение шарика — две CSS-транзиции, логика сдвигает шарик по сетке в направлении, которое после поворота смотрит вниз.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-008-* — не подменять её токенами темы сайта",
+            "шарик катится после поворота доски, а не одновременно — так читается гравитация",
+            "управление и кнопками, и стрелками клавиатуры",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "message — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "message",
+            "label": "Сообщение",
+            "type": "text",
+            "default": "Вы вышли за пределы задуманной архитектуры. Поверните доску, дайте шарику упасть, найдите выход.",
+            "maxLength": 120
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет шарика",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "message",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Tilt maze puzzle",
+            "description": "A 404 puzzle page: the maze board is rotated with buttons or arrow keys, the ball rolls under gravity to the next wall, and the goal is to reach the exit.",
+            "docs": "A client component on useState. The maze is an array of strings in code: # wall, S start, E exit. The move counter is aria-live. prefers-reduced-motion removes transitions and the game snaps instantly.",
+            "ai": {
+              "summary": "A puzzle on a 7×7 grid: the board rotation and ball roll are two CSS transitions, and the logic slides the ball along the grid in whichever direction points down after the turn.",
+              "preserve": [
+                "the local --vibeui-error-404-008-* palette — do not swap it for your theme tokens",
+                "the ball rolls after the board turns, not during — that is what reads as gravity",
+                "control by both buttons and keyboard arrows",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "message — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404008 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "message": {
+                "label": "Message",
+                "default": "You've stepped outside the intended architecture. Rotate the board. Let it fall. Find the exit."
+              },
+              "accent": {
+                "label": "Ball colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "message": "You've stepped outside the intended architecture. Rotate the board. Let it fall. Find the exit.",
+                "leftLabel": "← Left",
+                "rightLabel": "Right →",
+                "restartLabel": "Restart",
+                "movesLabel": "Moves",
+                "winLabel": "Exit found!",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-009",
+      "type": "registry:component",
+      "title": "Сломанный экран",
+      "description": "Страница 404 со сломанным экраном: строки двоятся в красный и голубой канал, дёргаются срезами, по фону бежит шум, а клик перемешивает строку случайными знаками.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-009/error-404-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-009.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент: состояние — только текущие строки. Строки декоративные (aria-hidden), смысл несут код, подсказка и ссылка. prefers-reduced-motion останавливает шум и рывки.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "glitch",
+          "rgb split",
+          "noise",
+          "dark",
+          "interactive"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404009",
+          "usage": "<Error404009 />",
+          "summary": "Глитч на CSS: двоение каналов — text-shadow, рывки — clip-path по ключевым кадрам, шум — повторяющиеся градиенты; клик заменяет одну строку случайными знаками.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-009-* — не подменять её токенами темы сайта",
+            "рывки редкие (последние 14% цикла): постоянное дрожание утомляет и мешает читать",
+            "ссылка домой не перехватывается кликом-перемешиванием",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "hint — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "hint",
+            "label": "Подсказка",
+            "type": "text",
+            "default": "(просто кликните по экрану)",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "hint",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Glitch screen",
+            "description": "A 404 page with a broken screen: lines split into red and cyan channels, jerk in slices, noise crawls over the background, and a click scrambles a line into random characters.",
+            "docs": "A client component: the only state is the current lines. Lines are decorative (aria-hidden); the code, the hint and the link carry the meaning. prefers-reduced-motion stops the noise and jerks.",
+            "ai": {
+              "summary": "A CSS glitch: channel split via text-shadow, jerks via clip-path keyframes, noise via repeating gradients; a click replaces one line with random characters.",
+              "preserve": [
+                "the local --vibeui-error-404-009-* palette — do not swap it for your theme tokens",
+                "rare jerks (the last 14% of the cycle): constant shaking tires the eye and blocks reading",
+                "the home link is not hijacked by the scramble click",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "hint — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404009 />"
+            },
+            "controls": {
+              "hint": {
+                "label": "Hint",
+                "default": "(just click on the screen)"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "lines": [
+                  "123456789",
+                  "AWEUGUYIUHOIJOPKOopkopdaodpasd",
+                  "(don't worry)"
+                ],
+                "hint": "(just click on the screen)",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-010",
+      "type": "registry:component",
+      "title": "Цифры-перевёртыши",
+      "description": "Минималистичная страница 404: цифры по очереди переворачиваются вокруг оси, меняя гротеск на каллиграфию, как таблички на вокзальном табло.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-010/error-404-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-010.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. Каллиграфическая сторона берёт Old English Text MT, если он есть, и откатывается к курсивной антикве. speed — секунды на цикл. prefers-reduced-motion оставляет гротеск.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "typography",
+          "flip",
+          "3d",
+          "minimal",
+          "calligraphy"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404010",
+          "usage": "<Error404010 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "У каждой цифры две стороны с backface-visibility: hidden — гротеск и каллиграфия; цифра поворачивается на 180° с паузой, задержка по индексу пускает волну.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-010-* — не подменять её токенами темы сайта",
+            "две стороны цифры и паузы на каждой — без паузы переворот читается как мелькание",
+            "системные шрифты с запасными вариантами вместо веб-шрифта",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "speed — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "speed",
+            "label": "Секунд на цикл",
+            "type": "number",
+            "default": 6,
+            "min": 3,
+            "max": 15
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет цифр",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "speed",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Flipping digits",
+            "description": "A minimal 404 page: the digits flip around their axis one after another, swapping a grotesque for a calligraphic face like split-flap station boards.",
+            "docs": "A server component with no JS. The calligraphic side uses Old English Text MT when present and falls back to an italic serif. speed is seconds per cycle. prefers-reduced-motion keeps the grotesque.",
+            "ai": {
+              "summary": "Each digit has two backface-hidden faces — grotesque and calligraphic; the digit turns 180° with a pause and an index delay sends a wave across.",
+              "preserve": [
+                "the local --vibeui-error-404-010-* palette — do not swap it for your theme tokens",
+                "two faces per digit with a pause on each — without the pause the flip reads as flicker",
+                "system fonts with fallbacks instead of a web font",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "speed — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404010 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "speed": {
+                "label": "Seconds per cycle"
+              },
+              "accent": {
+                "label": "Digit colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "actionLabel": "See selected work"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-011",
+      "type": "registry:component",
+      "title": "Пузырьки в глубине",
+      "description": "Страница 404 «утонула»: в синей толще поднимаются пузырьки разного размера, крупные размыты, курсор раздвигает их, а сквозь воду проступает огромный код.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-011/error-404-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-011.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент на 2D canvas. count — число пузырьков. Плотность пикселей ограничена 2, цикл стоит вне экрана, prefers-reduced-motion показывает неподвижный кадр.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "bubbles",
+          "particles",
+          "canvas",
+          "depth",
+          "underwater"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404011",
+          "usage": "<Error404011 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Холст с пузырьками: глубина задаёт размер, скорость и размытие, поэтому плоский слой читается объёмом; курсор отталкивает пузырьки по горизонтали.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-011-* — не подменять её токенами темы сайта",
+            "связку глубины с размером, скоростью и размытием — на ней держится объём",
+            "остановку отрисовки вне экрана",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title, count — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница утонула",
+            "maxLength": 30
+          },
+          {
+            "prop": "count",
+            "label": "Пузырьков",
+            "type": "number",
+            "default": 260,
+            "min": 60,
+            "max": 600
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет пузырьков",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "count",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Deep-water bubbles",
+            "description": "A \"sunk\" 404 page: bubbles of different sizes rise through deep blue water, the large ones blurred, the cursor parts them and a giant code shows through.",
+            "docs": "A client component on a 2D canvas. count is the number of bubbles. The pixel ratio is capped at 2, the loop pauses off-screen, and prefers-reduced-motion shows a still frame.",
+            "ai": {
+              "summary": "A bubble canvas: depth sets size, speed and blur so the flat layer reads as volume; the cursor pushes bubbles aside horizontally.",
+              "preserve": [
+                "the local --vibeui-error-404-011-* palette — do not swap it for your theme tokens",
+                "the link between depth and size, speed and blur — the sense of volume rests on it",
+                "stopping the draw loop off-screen",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title, count — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404011 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This page sank"
+              },
+              "count": {
+                "label": "Bubbles"
+              },
+              "accent": {
+                "label": "Bubble colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "This page sank",
+                "actionLabel": "Surface to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-012",
+      "type": "registry:component",
+      "title": "Терминал с глазом",
+      "description": "Страница 404-терминал: печатает отчёт посимвольно, рядом глаз в треугольнике следит за курсором и моргает, а в строку можно вводить команды help, home и clear.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-012/error-404-012.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-012.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент. Интро, справка и ответ на неизвестную команду — пропы. При prefers-reduced-motion интро выводится сразу, глаз не моргает.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "terminal",
+          "console",
+          "command line",
+          "eye",
+          "interactive",
+          "dark"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404012",
+          "usage": "<Error404012 accent=\"#ff5a1f\" />",
+          "summary": "Терминал с настоящим вводом: интро печатается таймером, команды обрабатываются формой, глаз — SVG, зрачок сдвигается переменными от положения курсора.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-012-* — не подменять её токенами темы сайта",
+            "настоящий ввод команд, а не имитацию: home ведёт по ссылке",
+            "лог объявлен aria-live — ответы терминала слышны скринридеру",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "homeHref — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "accent",
+            "label": "Цвет приглашения",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "homeHref",
+            "label": "Ссылка home",
+            "type": "text",
+            "default": "/",
+            "maxLength": 60
+          }
+        ],
+        "cardControls": [
+          "accent",
+          "background",
+          "homeHref"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Watching terminal",
+            "description": "A 404 terminal page: it types its report character by character, an eye in a triangle follows the cursor and blinks, and the prompt accepts help, home and clear.",
+            "docs": "A client component. The intro, help and unknown-command reply are props. With prefers-reduced-motion the intro appears at once and the eye does not blink.",
+            "ai": {
+              "summary": "A terminal with real input: the intro is typed on a timer, commands are handled by a form, and the eye is SVG with the pupil moved by cursor-driven variables.",
+              "preserve": [
+                "the local --vibeui-error-404-012-* palette — do not swap it for your theme tokens",
+                "real command input, not an imitation: home follows the link",
+                "the log is aria-live — terminal replies reach screen readers",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "homeHref — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404012 accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "accent": {
+                "label": "Prompt colour"
+              },
+              "background": {
+                "label": "Background"
+              },
+              "homeHref": {
+                "label": "Home link",
+                "default": "/"
+              }
+            },
+            "preview": {
+              "props": {
+                "intro": [
+                  "> ROUTE NOT FOUND",
+                  "> scanning /404...",
+                  "> 0 results",
+                  "[ ... ] something is watching.",
+                  "[ ◉ ] hello. type 'help' if you're lost"
+                ],
+                "helpText": "commands: help — this hint, home — go home, clear — clear the screen",
+                "unknownText": ": command not found. Try help",
+                "inputLabel": "Terminal command"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-013",
+      "type": "registry:component",
+      "title": "След из карточек",
+      "description": "Страница 404 со следом за курсором: пока водишь мышью, под указателем ложатся карточки-фото и тают, то пряча, то открывая огромное «Страница не найдена».",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-013/error-404-013.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-013.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент. images — фото для карточек; пусто — цветные градиенты. На тач-экранах след появляется при протягивании. prefers-reduced-motion отключает след.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "cursor trail",
+          "images",
+          "interactive",
+          "dark",
+          "large type"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404013",
+          "usage": "<Error404013 />",
+          "summary": "След карточек: новая карточка появляется каждые 70 px пути, хвост ограничен 12 штуками, каждая тает своим ключевым кадром.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-013-* — не подменять её токенами темы сайта",
+            "шаг по пути, а не по времени — неподвижный курсор не плодит карточки",
+            "ограниченный хвост: старые карточки удаляются из DOM",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница не найдена",
+            "maxLength": 30
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Card trail",
+            "description": "A 404 page with a cursor trail: as the mouse moves, photo cards drop under the pointer and fade away, hiding and revealing a giant \"Page not found\".",
+            "docs": "A client component. images are photos for the cards; empty means coloured gradients. On touch screens the trail follows a drag. prefers-reduced-motion disables the trail.",
+            "ai": {
+              "summary": "A card trail: a new card appears every 70 px of travel, the tail is capped at 12 cards and each fades on its own keyframe.",
+              "preserve": [
+                "the local --vibeui-error-404-013-* palette — do not swap it for your theme tokens",
+                "a distance step, not a timer — a still cursor spawns nothing",
+                "a capped tail: old cards are removed from the DOM",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404013 />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Page not found"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "[ERROR 404]",
+                "title": "Page not found",
+                "actionLabel": "[ BACK HOME ]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-014",
+      "type": "registry:component",
+      "title": "Цифры на развёртке",
+      "description": "Страница 404, где огромный код нарезан на вертикальные полосы: каждая едет вверх-вниз со своей фазой, и по цифрам бежит волна, как помеха на развёртке.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-014/error-404-014.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-014.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. slices — число полос, фон расчерчен в такт полосам. prefers-reduced-motion собирает цифры неподвижно.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "glitch",
+          "wave",
+          "slices",
+          "typography",
+          "brutalist"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404014",
+          "usage": "<Error404014 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Нарезка через clip-path: каждая полоса — тот же текст с вырезом по своей колонке, анимация со сдвигом фазы по индексу даёт бегущую волну.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-014-* — не подменять её токенами темы сайта",
+            "одну и ту же строку в каждой полосе — без картинок и холста",
+            "невидимый «призрак» кода задаёт размер блока",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "slices — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "slices",
+            "label": "Полос",
+            "type": "number",
+            "default": 36,
+            "min": 12,
+            "max": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет цифр",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "slices",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Scanline wave",
+            "description": "A 404 page where the giant code is cut into vertical strips: each one rides up and down on its own phase and a wave runs through the digits like scanline interference.",
+            "docs": "A server component with no JS. slices is the strip count and the background is ruled to match. prefers-reduced-motion holds the digits still.",
+            "ai": {
+              "summary": "Slicing via clip-path: each strip is the same text clipped to its column, and an animation offset by index produces a travelling wave.",
+              "preserve": [
+                "the local --vibeui-error-404-014-* palette — do not swap it for your theme tokens",
+                "the same string in every strip — no images, no canvas",
+                "an invisible ghost copy of the code sets the block size",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "slices — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404014 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "slices": {
+                "label": "Strips"
+              },
+              "accent": {
+                "label": "Digit colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-015",
+      "type": "registry:component",
+      "title": "Невесомость",
+      "description": "Страница 404 в невесомости: буквы слова ERROR, цифры и блестящие фигуры разлетелись по чёрному кадру и медленно кувыркаются в 3D вокруг своих осей.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-015/error-404-015.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-015.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. word — слово, которое разлетается (к нему дописывается 404). prefers-reduced-motion замораживает сцену.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "3d",
+          "floating",
+          "zero gravity",
+          "dark",
+          "glossy"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404015",
+          "usage": "<Error404015 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Сцена на CSS 3D: буквы и фигуры вращаются rotate по своей оси с разным периодом и покачиваются; фигуры — радиальные градиенты с бликом.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-015-* — не подменять её токенами темы сайта",
+            "разные оси и периоды вращения — синхронное кручение выглядит как спиннер",
+            "текст буквами, а не картинкой",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "word — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "word",
+            "label": "Слово",
+            "type": "text",
+            "default": "ERROR",
+            "maxLength": 8
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет фигуры",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "word",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Zero gravity",
+            "description": "A zero-gravity 404 page: the letters of ERROR, the digits and glossy shapes drift across a black frame, slowly tumbling in 3D around their own axes.",
+            "docs": "A server component with no JS. word is the word that scatters (404 is appended). prefers-reduced-motion freezes the scene.",
+            "ai": {
+              "summary": "A CSS 3D scene: letters and shapes rotate around their own axes at different periods and bob; shapes are radial gradients with a highlight.",
+              "preserve": [
+                "the local --vibeui-error-404-015-* palette — do not swap it for your theme tokens",
+                "different axes and periods — synchronised spinning reads as a loader",
+                "letters as text, not an image",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "word — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404015 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "word": {
+                "label": "Word",
+                "default": "ERROR"
+              },
+              "accent": {
+                "label": "Shape colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "code": "Error 404",
+                "actionLabel": "Homepage"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-016",
+      "type": "registry:component",
+      "title": "Аркада-стрелялка",
+      "description": "Страница 404 с игрой: кнопка «Начать игру» запускает стрелялку, корабль следует за мышью или стрелками, злодеи спускаются волнами и ускоряются со счётом.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-016/error-404-016.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-016.tsx"
+        }
+      ],
+      "docs": "Клиентский компонент. Счёт объявлен aria-live, подсказка управления — подпись холста. Злодеи-квадраты рисуются кодом, без спрайтов. prefers-reduced-motion останавливает прыжки злодеев в интро; саму игру человек запускает сам.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "game",
+          "arcade",
+          "shooter",
+          "canvas",
+          "interactive"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404016",
+          "usage": "<Error404016 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Игра на 2D canvas: requestAnimationFrame работает только во время игры, корабль ведётся указателем или стрелками, выстрел — клик, касание или пробел.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-016-* — не подменять её токенами темы сайта",
+            "игра стартует только по кнопке — страница не нагружает процессор зря",
+            "обычная ссылка домой рядом с кнопкой игры",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ой, что-то пошло не так.",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет корабля",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Arcade shooter",
+            "description": "A 404 page with a game: \"Start game\" launches a shooter, the ship follows the mouse or arrow keys, and villains descend in waves that speed up with the score.",
+            "docs": "A client component. The score is aria-live and the controls hint labels the canvas. Square villains are drawn in code, no sprites. prefers-reduced-motion stops the intro villains' hop; the game itself only starts on request.",
+            "ai": {
+              "summary": "A game on a 2D canvas: requestAnimationFrame runs only while playing, the ship follows the pointer or arrows, and firing is click, tap or space.",
+              "preserve": [
+                "the local --vibeui-error-404-016-* palette — do not swap it for your theme tokens",
+                "the game starts only on the button — the page does not burn CPU for nothing",
+                "a plain home link next to the game button",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404016 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Uh oh, something went wrong."
+              },
+              "accent": {
+                "label": "Ship colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Uh oh, something went wrong.",
+                "description": "Defeat the villains and restore peace.",
+                "startLabel": "Start game",
+                "actionLabel": "Return to home",
+                "scoreLabel": "Score",
+                "overLabel": "Game over — click to play again",
+                "hint": "Move with the mouse or arrows, shoot with a click or space"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-017",
+      "type": "registry:component",
+      "title": "Колыбель Ньютона",
+      "description": "Страница 404 «потеряла импульс»: рядом с заголовком качается колыбель Ньютона из цветных шаров, крайние шары по очереди отлетают и бьют в ряд.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-017/error-404-017.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-017.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. На широком кадре текст и колыбель встают в две колонки. prefers-reduced-motion останавливает колыбель.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "newton's cradle",
+          "pendulum",
+          "physics",
+          "playful",
+          "light"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404017",
+          "usage": "<Error404017 />",
+          "summary": "Маятники на CSS: нить и шар — псевдоэлементы, крайние маятники поворачиваются вокруг точки подвеса двумя ключевыми кадрами со сдвигом на полцикла.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-017-* — не подменять её токенами темы сайта",
+            "точку подвеса transform-origin 50% 0 — иначе шар не качается, а вращается",
+            "цвета шаров как массив пропа",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Эта страница потеряла импульс.",
+            "maxLength": 40
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Newton's cradle",
+            "description": "A 404 page that \"lost its momentum\": next to the heading a Newton's cradle of coloured balls swings, the end balls taking turns to fly out and strike the row.",
+            "docs": "A server component with no JS. On a wide frame the text and the cradle sit in two columns. prefers-reduced-motion stops the cradle.",
+            "ai": {
+              "summary": "CSS pendulums: the string and ball are pseudo-elements, and the end pendulums rotate about the pivot on two keyframes offset by half a cycle.",
+              "preserve": [
+                "the local --vibeui-error-404-017-* palette — do not swap it for your theme tokens",
+                "the pivot at transform-origin 50% 0 — otherwise the ball spins instead of swinging",
+                "ball colours as an array prop",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404017 />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This page lost its momentum."
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "label": "Error 404 — not found",
+                "title": "This page lost its momentum.",
+                "description": "The page you're looking for doesn't exist or has moved. Give the cradle a swing — then head home.",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-018",
+      "type": "registry:component",
+      "title": "Проявление и талисман",
+      "description": "Страница 404: заголовок «Ошибка 404» проявляется из размытия буква за буквой, а рядом покачивается и моргает мягкий талисман-капля.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-018/error-404-018.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-018.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. На широком кадре текст и талисман в две колонки. prefers-reduced-motion показывает заголовок сразу и останавливает талисман.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "blur reveal",
+          "mascot",
+          "character",
+          "friendly",
+          "text animation"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404018",
+          "usage": "<Error404018 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Проявление текста фильтром blur с задержкой по индексу буквы; талисман — один border-radius с анимированной формой, глаза — псевдоэлементы.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-018-* — не подменять её токенами темы сайта",
+            "проявление по буквам с задержкой — целиком заголовок появляется слишком резко",
+            "заголовок доступен целиком через aria-label",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ошибка 404",
+            "maxLength": 24
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Blur reveal mascot",
+            "description": "A 404 page: the \"Error 404\" heading resolves out of blur letter by letter while a soft blob mascot sways and blinks beside it.",
+            "docs": "A server component with no JS. On a wide frame the text and mascot sit in two columns. prefers-reduced-motion shows the heading at once and stops the mascot.",
+            "ai": {
+              "summary": "Text revealed with a blur filter delayed by letter index; the mascot is a single animated border-radius blob with pseudo-element eyes.",
+              "preserve": [
+                "the local --vibeui-error-404-018-* palette — do not swap it for your theme tokens",
+                "per-letter reveal with delays — the whole heading at once feels abrupt",
+                "the full heading is exposed via aria-label",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404018 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Error 404"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "lead": "Sorry, we couldn't find this page.",
+                "title": "Error 404",
+                "actionLabel": "Go home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "error-404-019",
+      "type": "registry:component",
+      "title": "Табло-барабаны",
+      "description": "Страница 404 с механическим табло: каждая цифра — барабан 0–9, который прокручивается и защёлкивается на своей цифре кода, слева направо, в рамке-визире.",
+      "categories": [
+        "error-404"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "error-404-019/error-404-019.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/error-404-019.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS. Любой цифровой code (500, 403) встаёт сам. prefers-reduced-motion показывает код без прокрутки.",
+      "meta": {
+        "pro": true,
+        "tags": [
+          "404",
+          "not found",
+          "counter",
+          "odometer",
+          "reels",
+          "numbers",
+          "minimal"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "Error404019",
+          "usage": "<Error404019 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Барабаны на CSS: лента из трёх кругов цифр сдвигается translateY в em, останавливаясь на нужной цифре; задержка по индексу даёт защёлкивание слева направо.",
+          "preserve": [
+            "локальную палитру --vibeui-error-404-019-* — не подменять её токенами темы сайта",
+            "сдвиг в em от размера цифры — барабан не разъезжается при смене кегля",
+            "код доступен целиком через aria-label",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "code, tagline — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "code",
+            "label": "Код",
+            "type": "text",
+            "default": "404",
+            "maxLength": 4
+          },
+          {
+            "prop": "tagline",
+            "label": "Слоган",
+            "type": "text",
+            "default": "Вдохновляй · Создавай · Влияй",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет визира",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "code",
+          "tagline",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Odometer reels",
+            "description": "A 404 page with a mechanical counter: each digit is a 0–9 reel that spins and clicks onto its code digit from left to right inside a viewfinder frame.",
+            "docs": "A server component with no JS. Any numeric code (500, 403) lands by itself. prefers-reduced-motion shows the code without spinning.",
+            "ai": {
+              "summary": "CSS reels: a strip of three rounds of digits shifts by translateY in em and stops on the right digit; an index delay makes them click in left to right.",
+              "preserve": [
+                "the local --vibeui-error-404-019-* palette — do not swap it for your theme tokens",
+                "the em-based shift tied to digit size — the reel stays aligned at any font size",
+                "the full code is exposed via aria-label",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "code, tagline — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<Error404019 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "code": {
+                "label": "Code",
+                "default": "404"
+              },
+              "tagline": {
+                "label": "Tagline",
+                "default": "Inspire · Innovate · Impact"
+              },
+              "accent": {
+                "label": "Frame colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "tagline": "Inspire · Innovate · Impact",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

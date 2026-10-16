@@ -482,8 +482,8 @@ export const CATEGORIES = [
   },
   {
     slug: "not-found",
-    label: "Страница не найдена",
-    en: "Not Found",
+    label: "Страница 404",
+    en: "404 page",
     group: "application",
   },
   {
@@ -520,6 +520,14 @@ export const CATEGORIES = [
     group: "marketing",
     // Раскладка — композиция во всю ширину: bento, стопки, ленты. В половине
     // кадра её геометрия не читается.
+    wide: true,
+  },
+  {
+    slug: "error-404",
+    label: "Страница 404",
+    en: "404 page",
+    group: "application",
+    // Страница 404 — целый экран: в половинном кадре сцена не читается.
     wide: true,
   },
   {
@@ -587,7 +595,7 @@ export const POPULAR_CATEGORIES: Record<ItemKind, readonly CategorySlug[]> = {
     "avatar",
     "toast",
   ],
-  animation: ["background", "promo", "cursor", "stacks", "interface"],
+  animation: ["background", "promo", "cursor", "stacks", "interface", "error-404"],
   template: [],
 }
 

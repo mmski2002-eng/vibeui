@@ -367,7 +367,7 @@ export const SYNONYMS: Synonym[] = [
   },
   {
     say: ["ошибка", "страница не найдена", "404"],
-    categories: ["errors", "not-found", "error"],
+    categories: ["errors", "not-found", "error", "error-404"],
     terms: ["error"],
   },
   {

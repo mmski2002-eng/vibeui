@@ -51,6 +51,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/block/newsletter")).PREVIEWS
     case "block/team":
       return (await import("@/registry/previews-lazy/block/team")).PREVIEWS
+    case "block/not-found":
+      return (await import("@/registry/previews-lazy/block/not-found")).PREVIEWS
     case "block/background":
       return (await import("@/registry/previews-lazy/block/background")).PREVIEWS
     case "block/layout":
@@ -125,6 +127,8 @@ export async function loadLazyPreviewMap(
       return (await import("@/registry/previews-lazy/animation/sketch")).PREVIEWS
     case "animation/background":
       return (await import("@/registry/previews-lazy/animation/background")).PREVIEWS
+    case "animation/error-404":
+      return (await import("@/registry/previews-lazy/animation/error-404")).PREVIEWS
     case "animation/interface":
       return (await import("@/registry/previews-lazy/animation/interface")).PREVIEWS
     case "animation/promo":

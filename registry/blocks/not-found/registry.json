@@ -1,0 +1,1422 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "not-found-001",
+      "type": "registry:block",
+      "title": "404 с разделами",
+      "description": "Аккуратная страница 404 для продукта: огромный код с градиентом на мягком свечении акцента, бейдж с пульсом, заголовок, две кнопки и список разделов со стрелками.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-001/not-found-001.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-001.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-001-* с light-dark(). links — массив { label, hint, href }. Пульс бейджа гасится при prefers-reduced-motion.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "saas",
+          "product",
+          "links",
+          "gradient",
+          "dot grid"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound001",
+          "usage": "<NotFound001 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Две колонки от ширины блока: слева код с градиентной заливкой background-clip:text и размытым пятном акцента, справа бейдж, текст, кнопки и список разделов; фон — точечная сетка.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-001-* — не подменять её токенами темы сайта",
+            "список разделов с подсказками — выход со страницы, а не декор",
+            "иерархию кнопок: заливная главная, контурная поиск",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title, description — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница не найдена",
+            "maxLength": 40
+          },
+          {
+            "prop": "description",
+            "label": "Текст",
+            "type": "text",
+            "default": "Такой страницы нет или она переехала. Проверьте адрес или начните с одного из разделов ниже.",
+            "maxLength": 140
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "description",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "404 with sections",
+            "description": "A polished product 404 page: a giant gradient code over a soft accent glow, a pulsing badge, a heading, two buttons and a list of sections with arrows.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-001-* with light-dark(). links is an array of { label, hint, href }. The badge pulse stops under prefers-reduced-motion.",
+            "ai": {
+              "summary": "Two columns driven by the block width: a gradient-clipped code with a blurred accent glow on the left, the badge, copy, buttons and section list on the right; a dot-grid background.",
+              "preserve": [
+                "the local --vibeui-not-found-001-* palette — do not swap it for your theme tokens",
+                "the section list with hints — the way out, not decoration",
+                "the button hierarchy: filled home, outlined search",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title, description — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound001 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Page not found"
+              },
+              "description": {
+                "label": "Text",
+                "default": "This page doesn't exist or has moved. Check the address or start from one of the sections below."
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "badge": "Error 404",
+                "title": "Page not found",
+                "description": "This page doesn't exist or has moved. Check the address or start from one of the sections below.",
+                "actionLabel": "Go home",
+                "secondaryLabel": "Search the site",
+                "links": [
+                  {
+                    "label": "Catalogue",
+                    "hint": "All components and blocks",
+                    "href": "/components"
+                  },
+                  {
+                    "label": "Pricing",
+                    "hint": "What the plan includes",
+                    "href": "/pricing"
+                  },
+                  {
+                    "label": "Support",
+                    "hint": "Write to us — we will help",
+                    "href": "/contact"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-002",
+      "type": "registry:block",
+      "title": "Компас с поиском",
+      "description": "Страница 404 с компасом, стрелка которого мечется в поисках страницы, и настоящим поиском по сайту с подсказками популярных запросов.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-002/not-found-002.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-002.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-002-*. suggestions — массив { label, href }, searchAction — адрес страницы поиска.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "compass",
+          "search",
+          "suggestions",
+          "illustration"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound002",
+          "usage": "<NotFound002 accent=\"#ff5a1f\" />",
+          "summary": "Компас на CSS: циферблат из радиальных и конических градиентов, стрелка-ромб вращается по ключевым кадрам с перелётом; рядом форма поиска и чипы подсказок.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-002-* — не подменять её токенами темы сайта",
+            "настоящую форму поиска с name=q — потерявшемуся нужен инструмент",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Даже компас не нашёл эту страницу",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Compass with search",
+            "description": "A 404 page with a compass whose needle swings around looking for the page, plus a real site search with popular query chips.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-002-*. suggestions is an array of { label, href }; searchAction is the search page address.",
+            "ai": {
+              "summary": "A CSS compass: a dial of radial and conic gradients and a diamond needle rotating on keyframes with overshoot; next to it a search form and suggestion chips.",
+              "preserve": [
+                "the local --vibeui-not-found-002-* palette — do not swap it for your theme tokens",
+                "the real search form with name=q — a lost visitor needs a tool",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound002 accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Even the compass couldn't find this page"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "code": "Error 404",
+                "title": "Even the compass couldn't find this page",
+                "description": "Looks like the address changed or the page went on holiday. Search for what you need — or pick a popular section.",
+                "searchPlaceholder": "What were you looking for?",
+                "searchLabel": "Search",
+                "suggestionsLabel": "Popular:",
+                "suggestions": [
+                  {
+                    "label": "Pricing",
+                    "href": "/pricing"
+                  },
+                  {
+                    "label": "Navbar",
+                    "href": "/search?q=navbar"
+                  },
+                  {
+                    "label": "Hero",
+                    "href": "/search?q=hero"
+                  },
+                  {
+                    "label": "Contact",
+                    "href": "/contact"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-003",
+      "type": "registry:block",
+      "title": "Выпавший ноль",
+      "description": "Страница 404, где ноль выпал из кода: на его месте пунктирный контур, а само кольцо лежит ниже с тенью и покачивается. Наведение возвращает его на место.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-003/not-found-003.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-003.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-003-*. Размер кода от ширины блока. prefers-reduced-motion убирает покачивание.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "typography",
+          "hover",
+          "playful",
+          "illustration"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound003",
+          "usage": "<NotFound003 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Код из двух четвёрок и пунктирного места; кольцо-ноль позиционировано от центра кода, сдвинуто вниз transform и возвращается пружинной кривой при наведении.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-003-* — не подменять её токенами темы сайта",
+            "кольцо, сдвинутое transform от своего места, — возврат при наведении работает от любого размера",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Кажется, у нас кое-что выпало",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет нуля",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Dropped zero",
+            "description": "A 404 page where the zero has fallen out of the code: a dashed outline marks its place while the ring lies below with a shadow, rocking. Hover snaps it back.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-003-*. Code size follows the block width. prefers-reduced-motion removes the rocking.",
+            "ai": {
+              "summary": "The code is two fours and a dashed slot; the ring is positioned from the code centre, pushed down by transform and springs back on hover.",
+              "preserve": [
+                "the local --vibeui-not-found-003-* palette — do not swap it for your theme tokens",
+                "the ring offset by transform from its slot — the hover return works at any size",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound003 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Looks like something fell out"
+              },
+              "accent": {
+                "label": "Zero colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Looks like something fell out",
+                "description": "The page you're looking for got lost on the way. Hover to put it back together — meanwhile, try the homepage.",
+                "actionLabel": "Go home →"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-004",
+      "type": "registry:block",
+      "title": "Стекло над цветком",
+      "description": "Премиальная страница 404: карточка из матового стекла с антиквой поверх медленно вращающегося градиентного цветка, две кнопки.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-004/not-found-004.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-004.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-004-*. Оборот цветка за 40 секунд; prefers-reduced-motion его останавливает.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "glassmorphism",
+          "gradient",
+          "premium",
+          "serif"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound004",
+          "usage": "<NotFound004 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Шесть градиентных лепестков вращаются под карточкой, backdrop-filter размывает их в сияние; второй цвет лепестков выводится из акцента сдвигом тона.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-004-* — не подменять её токенами темы сайта",
+            "backdrop-filter у карточки — без него цветок спорит с текстом",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Эта страница расцвела где-то в другом месте",
+            "maxLength": 60
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет лепестков",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Glass over a flower",
+            "description": "A premium 404 page: a frosted-glass card with a serif heading over a slowly turning gradient flower, with two buttons.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-004-*. The flower turns once in 40 seconds; prefers-reduced-motion stops it.",
+            "ai": {
+              "summary": "Six gradient petals turn beneath the card and backdrop-filter blurs them into a glow; the second petal colour derives from the accent by a hue shift.",
+              "preserve": [
+                "the local --vibeui-not-found-004-* palette — do not swap it for your theme tokens",
+                "backdrop-filter on the card — without it the flower fights the text",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound004 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This page blossomed somewhere else"
+              },
+              "accent": {
+                "label": "Petal colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "This page blossomed somewhere else",
+                "description": "We couldn't find what you were looking for. The link may be outdated — head home or drop us a line.",
+                "actionLabel": "Go home",
+                "secondaryLabel": "Contact us"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-005",
+      "type": "registry:block",
+      "title": "Карта сайта с дырой",
+      "description": "Страница 404 в виде карты сайта: главная, разделы и страницы соединены линиями, а на месте пропавшей мигает пунктирная карточка 404. Все узлы — ссылки.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-005/not-found-005.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-005.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-005-*. branches — массив { label, href, pages[] }. На узком кадре разделы встают в две колонки.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "sitemap",
+          "tree",
+          "navigation",
+          "diagram"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound005",
+          "usage": "<NotFound005 accent=\"#ff5a1f\" />",
+          "summary": "Дерево на CSS grid: линии — псевдоэлементы, число колонок задаётся переменной от числа разделов; пропавшая страница встаёт в раздел без своих страниц.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-005-* — не подменять её токенами темы сайта",
+            "узлы дерева как настоящие ссылки — схема ведёт дальше, а не просто объясняет",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Этой страницы нет на карте",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет пропажи",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sitemap with a gap",
+            "description": "A 404 page drawn as a sitemap: home, sections and pages joined by lines, with a blinking dashed 404 card where the missing page should be. Every node is a link.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-005-*. branches is an array of { label, href, pages[] }. On a narrow frame sections wrap into two columns.",
+            "ai": {
+              "summary": "A CSS grid tree: lines are pseudo-elements, the column count comes from a variable set by the number of sections; the missing page lands in a section without pages.",
+              "preserve": [
+                "the local --vibeui-not-found-005-* palette — do not swap it for your theme tokens",
+                "tree nodes as real links — the diagram leads on, not just explains",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound005 accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This page isn't on the map"
+              },
+              "accent": {
+                "label": "Missing colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "This page isn't on the map",
+                "description": "We checked the whole site structure — here is what we have. Pick the closest section.",
+                "rootLabel": "Home",
+                "branches": [
+                  {
+                    "label": "Catalogue",
+                    "href": "/components",
+                    "pages": [
+                      {
+                        "label": "Blocks",
+                        "href": "/blocks"
+                      },
+                      {
+                        "label": "Animations",
+                        "href": "/animations"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "/pricing",
+                    "pages": [
+                      {
+                        "label": "Compare",
+                        "href": "/pricing#compare"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Blog",
+                    "href": "/blog",
+                    "pages": []
+                  },
+                  {
+                    "label": "Contact",
+                    "href": "/contact",
+                    "pages": [
+                      {
+                        "label": "Support",
+                        "href": "/contact#support"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-006",
+      "type": "registry:block",
+      "title": "Телефон без сигнала",
+      "description": "Страница 404 с мокапом телефона: на экране телевизионный шум и «Нет сигнала», палочки связи пустые. Рядом крупный заголовок и кнопка; при наведении телефон выпрямляется.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-006/not-found-006.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-006.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-006-*. prefers-reduced-motion останавливает шум.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "phone",
+          "mockup",
+          "static",
+          "no signal"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound006",
+          "usage": "<NotFound006 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Корпус телефона с островком на CSS, шум — два повторяющихся радиальных градиента, сдвигаемых steps(), поверх — строчная развёртка.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-006-* — не подменять её токенами темы сайта",
+            "шум градиентами, а не картинкой или видео",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Связь с этой страницей потеряна",
+            "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет кнопки",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Phone with no signal",
+            "description": "A 404 page with a phone mockup: TV static and \"No signal\" on screen, empty signal bars. A large heading and button beside it; on hover the phone straightens up.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-006-*. prefers-reduced-motion stops the static.",
+            "ai": {
+              "summary": "A CSS phone body with an island; the static is two repeating radial gradients shifted with steps(), with scanlines on top.",
+              "preserve": [
+                "the local --vibeui-not-found-006-* palette — do not swap it for your theme tokens",
+                "the static as gradients, not an image or video",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound006 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "We lost contact with this page"
+              },
+              "accent": {
+                "label": "Button colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "code": "Error 404",
+                "title": "We lost contact with this page",
+                "description": "We searched every frequency, but it isn't responding. Head back home — reception is great there.",
+                "signal": "No signal",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-007",
+      "type": "registry:block",
+      "title": "Солнечная 404",
+      "description": "Дружелюбная страница 404: ноль в коде — улыбающееся солнце с вращающимися лучами и моргающими глазами, округлый шрифт и кнопки-таблетки.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-007/not-found-007.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-007.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-007-*. prefers-reduced-motion останавливает лучи и моргание.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "friendly",
+          "sun",
+          "illustration",
+          "colorful",
+          "kids"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound007",
+          "usage": "<NotFound007 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Солнце на CSS: лучи — conic-gradient с маской-кольцом, лицо — радиальный градиент, глаза и улыбка — элементы; все цвета выводятся из accent.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-007-* — не подменять её токенами темы сайта",
+            "цвета солнца и текста из accent — меняется один проп",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Ой, тут пусто — но не грустно!",
+            "maxLength": 40
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет полотна",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Sunny 404",
+            "description": "A friendly 404 page: the zero is a smiling sun with turning rays and blinking eyes, set in a rounded face with pill buttons.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-007-*. prefers-reduced-motion stops the rays and blinking.",
+            "ai": {
+              "summary": "A CSS sun: rays are a conic-gradient masked to a ring, the face a radial gradient, eyes and smile are elements; every colour derives from accent.",
+              "preserve": [
+                "the local --vibeui-not-found-007-* palette — do not swap it for your theme tokens",
+                "sun and text colours derived from accent — one prop changes all",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound007 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Oops, it's empty — but not gloomy!"
+              },
+              "accent": {
+                "label": "Canvas colour"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "Oops, it's empty — but not gloomy!",
+                "description": "This page doesn't exist. But the homepage is bright, warm and everything is in its place.",
+                "actionLabel": "Go home",
+                "secondaryLabel": "Contact us"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-008",
+      "type": "registry:block",
+      "title": "Браузер, который не загрузился",
+      "description": "Страница 404 с окном браузера: в адресной строке битый URL, полоса загрузки застряла, контент — заглушки с бегущим бликом. Ниже объяснение и кнопка.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-008/not-found-008.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-008.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-008-*. url — адрес в строке. prefers-reduced-motion останавливает блики.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "browser",
+          "mockup",
+          "skeleton",
+          "loading"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound008",
+          "usage": "<NotFound008 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Мокап окна на CSS: последний сегмент URL зачёркнут волнистой линией, полоса загрузки дёргается, заглушки переливаются сдвигом градиента.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-008-* — не подменять её токенами темы сайта",
+            "битый сегмент адреса выделен — сразу видно, что не так",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title, url — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Страница так и не загрузилась",
+            "maxLength": 40
+          },
+          {
+            "prop": "url",
+            "label": "Адрес",
+            "type": "text",
+            "default": "example.com/blog/old-article",
+            "maxLength": 48
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "url",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Browser that never loaded",
+            "description": "A 404 page with a browser window: a broken URL in the address bar, a stuck loading bar and skeleton content with a moving shine. Explanation and button below.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-008-*. url is the address shown. prefers-reduced-motion stops the shimmer.",
+            "ai": {
+              "summary": "A CSS window mockup: the last URL segment is struck through with a wavy line, the loading bar twitches and skeletons shimmer via a gradient shift.",
+              "preserve": [
+                "the local --vibeui-not-found-008-* palette — do not swap it for your theme tokens",
+                "the broken address segment is highlighted — what went wrong is obvious",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title, url — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound008 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "This page never loaded"
+              },
+              "url": {
+                "label": "Address",
+                "default": "example.com/blog/old-article"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "title": "This page never loaded",
+                "description": "There is nothing at this address: the link is outdated or has a typo. Try starting from the homepage.",
+                "actionLabel": "Open homepage"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-009",
+      "type": "registry:block",
+      "title": "Газета «Вестник 404»",
+      "description": "Страница 404 в виде газетной полосы: «Пропала страница. Поиски продолжаются», буквица, колонки, особые приметы списком и красный штамп 404.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-009/not-found-009.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-009.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-009-*. signs — массив примет.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "newspaper",
+          "editorial",
+          "serif",
+          "storytelling"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound009",
+          "usage": "<NotFound009 actionHref=\"/\" accent=\"#ff5a1f\" />",
+          "summary": "Редакционная вёрстка: двойные линейки, буквица ::first-letter, две колонки на широком кадре, повёрнутый штамп с mix-blend-mode.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-009-* — не подменять её токенами темы сайта",
+            "сюжет объявления о пропаже — шутка держит внимание дольше извинений",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Пропала страница. Поиски продолжаются",
+            "maxLength": 50
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет штампа",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "\"404 Herald\" newspaper",
+            "description": "A 404 page as a newspaper page: \"Page missing. Search continues\", a drop cap, columns, distinguishing marks in a list and a red 404 stamp.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-009-*. signs is the list of distinguishing marks.",
+            "ai": {
+              "summary": "Editorial layout: double rules, a ::first-letter drop cap, two columns on a wide frame and a rotated stamp with mix-blend-mode.",
+              "preserve": [
+                "the local --vibeui-not-found-009-* palette — do not swap it for your theme tokens",
+                "the missing-notice story — the joke holds attention longer than an apology",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound009 actionHref=\"/\" accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "Page missing. Search continues"
+              },
+              "accent": {
+                "label": "Stamp colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "masthead": "The 404 Herald",
+                "issue": "Issue No. 404 · Breaking",
+                "kicker": "Incidents",
+                "title": "Page missing. Search continues",
+                "lead": "Last night the page you are looking for failed to check in. The newsroom questioned the server, checked the links and the archive — no trace was found. Readers are asked not to worry and to carry on from the homepage.",
+                "signs": [
+                  "Answered to the address /old-page",
+                  "Last seen in an old newsletter",
+                  "Was useful and well laid out"
+                ],
+                "signsLabel": "Distinguishing marks",
+                "reward": "Eternal gratitude of the newsroom to the finder.",
+                "actionLabel": "Back to home"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-010",
+      "type": "registry:block",
+      "title": "Лестница вниз",
+      "description": "Страница 404 с лестницей: ступени — разделы сайта, по ним можно подняться обратно, на нижней ступени — 404, где подпрыгивает шарик «вы здесь».",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-010/not-found-010.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-010.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-010-*. steps — до четырёх ступеней { label, href }. prefers-reduced-motion останавливает шарик.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "stairs",
+          "navigation",
+          "illustration",
+          "bounce"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound010",
+          "usage": "<NotFound010 accent=\"#ff5a1f\" />",
+          "summary": "Ступени — ссылки со сдвигом лесенкой через переменную индекса; на ступени 404 подпрыгивает шарик-метка.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-010-* — не подменять её токенами темы сайта",
+            "ступени как ссылки на разделы — лестница и есть навигация",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вы спустились чуть ниже, чем нужно",
+            "maxLength": 44
+          },
+          {
+            "prop": "accent",
+            "label": "Акцент",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Staircase down",
+            "description": "A 404 page with a staircase: the steps are site sections you can climb back up, the bottom step is 404, where a \"you are here\" ball bounces.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-010-*. steps holds up to four { label, href } steps. prefers-reduced-motion stops the ball.",
+            "ai": {
+              "summary": "Steps are links offset into a staircase via an index variable; a marker ball bounces on the 404 step.",
+              "preserve": [
+                "the local --vibeui-not-found-010-* palette — do not swap it for your theme tokens",
+                "steps as section links — the staircase is the navigation",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound010 accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "You went a little further down than needed"
+              },
+              "accent": {
+                "label": "Accent"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "code": "Error 404",
+                "title": "You went a little further down than needed",
+                "description": "This page doesn't exist — you're on the very bottom step. Climb back up any of them.",
+                "steps": [
+                  {
+                    "label": "Home",
+                    "href": "/"
+                  },
+                  {
+                    "label": "Catalogue",
+                    "href": "/components"
+                  },
+                  {
+                    "label": "Pricing",
+                    "href": "/pricing"
+                  },
+                  {
+                    "label": "Contact",
+                    "href": "/contact"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "not-found-011",
+      "type": "registry:block",
+      "title": "Буквы под рукой",
+      "description": "Страница 404 с крупным заголовком, буквы которого подпрыгивают под курсором, и сеткой карточек «Возможно, вы искали» с иконками.",
+      "categories": [
+        "not-found"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "not-found-011/not-found-011.tsx",
+          "type": "registry:component",
+          "target": "@components/vibeui/not-found-011.tsx"
+        }
+      ],
+      "docs": "Серверный компонент без JS, один файл, палитра --vibeui-not-found-011-*. cards — массив { icon, label, hint, href }.",
+      "meta": {
+        "tags": [
+          "404",
+          "not found",
+          "typography",
+          "hover",
+          "cards",
+          "suggestions"
+        ],
+        "preview": {
+          "width": "natural"
+        },
+        "ai": {
+          "export": "NotFound011",
+          "usage": "<NotFound011 accent=\"#ff5a1f\" />",
+          "summary": "Каждая буква — элемент; :hover и соседи через :has() и + дают волну; слова не переносятся посередине, кегль подогнан под ширину блока.",
+          "preserve": [
+            "локальную палитру --vibeui-not-found-011-* — не подменять её токенами темы сайта",
+            "заголовок целиком в aria-label, буквы скрыты от скринридера",
+            "правило prefers-reduced-motion: без движения страница остаётся рабочей",
+            "ссылку домой обычным <a href> — выход со страницы ошибки не зависит от JS"
+          ],
+          "adapt": [
+            "title — тексты и параметры компонента: переведите и перепишите голосом бренда",
+            "actionHref — куда ведёт выход (главная, каталог, поиск)",
+            "accent и background — цвета под бренд; пусто — палитра по умолчанию"
+          ]
+        },
+        "controls": [
+          {
+            "prop": "title",
+            "label": "Заголовок",
+            "type": "text",
+            "default": "Вы забрели не туда",
+            "maxLength": 30
+          },
+          {
+            "prop": "accent",
+            "label": "Цвет буквы",
+            "type": "color",
+            "default": ""
+          },
+          {
+            "prop": "background",
+            "label": "Фон",
+            "type": "color",
+            "default": ""
+          }
+        ],
+        "cardControls": [
+          "title",
+          "accent",
+          "background"
+        ],
+        "i18n": {
+          "en": {
+            "title": "Hover letters",
+            "description": "A 404 page with a large heading whose letters jump under the cursor, and a grid of \"You might be looking for\" cards with icons.",
+            "docs": "A server component with no JS, one file, palette in --vibeui-not-found-011-*. cards is an array of { icon, label, hint, href }.",
+            "ai": {
+              "summary": "Each letter is an element; :hover plus neighbours via :has() and + make a wave; words never break mid-word and the size fits the block width.",
+              "preserve": [
+                "the local --vibeui-not-found-011-* palette — do not swap it for your theme tokens",
+                "the full heading in aria-label, letters hidden from screen readers",
+                "the prefers-reduced-motion rule: without motion the page still works",
+                "the home link as a plain <a href> — the way out of an error page must not depend on JS"
+              ],
+              "adapt": [
+                "title — the component copy and settings: translate and rewrite them in your brand voice",
+                "actionHref — where the way out leads (home, catalogue, search)",
+                "accent and background — brand colours; empty keeps the default palette"
+              ],
+              "usage": "<NotFound011 accent=\"#ff5a1f\" />"
+            },
+            "controls": {
+              "title": {
+                "label": "Heading",
+                "default": "You wandered off"
+              },
+              "accent": {
+                "label": "Letter colour"
+              },
+              "background": {
+                "label": "Background"
+              }
+            },
+            "preview": {
+              "props": {
+                "code": "Error 404",
+                "title": "You wandered off",
+                "description": "Hover the letters — they don't bite. To find what you need, try one of the sections below.",
+                "cardsLabel": "You might be looking for",
+                "cards": [
+                  {
+                    "icon": "🏠",
+                    "label": "Home",
+                    "hint": "Start over",
+                    "href": "/"
+                  },
+                  {
+                    "icon": "🧩",
+                    "label": "Catalogue",
+                    "hint": "All components and blocks",
+                    "href": "/components"
+                  },
+                  {
+                    "icon": "💬",
+                    "label": "Support",
+                    "hint": "We reply within a day",
+                    "href": "/contact"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

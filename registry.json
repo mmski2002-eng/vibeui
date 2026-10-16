@@ -24,6 +24,7 @@
     "registry/blocks/logos/registry.json",
     "registry/blocks/newsletter/registry.json",
     "registry/blocks/team/registry.json",
+    "registry/blocks/not-found/registry.json",
     "registry/blocks/background/registry.json",
     "registry/blocks/layout/registry.json",
     "registry/components/accordion/registry.json",
@@ -61,6 +62,7 @@
     "registry/animations/cursor/registry.json",
     "registry/animations/sketch/registry.json",
     "registry/animations/background/registry.json",
+    "registry/animations/error-404/registry.json",
     "registry/animations/interface/registry.json",
     "registry/animations/promo/registry.json"
   ]

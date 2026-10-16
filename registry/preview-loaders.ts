@@ -51,6 +51,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/block/newsletter")).PREVIEWS
     case "block/team":
       return (await import("@/registry/previews/block/team")).PREVIEWS
+    case "block/not-found":
+      return (await import("@/registry/previews/block/not-found")).PREVIEWS
     case "block/background":
       return (await import("@/registry/previews/block/background")).PREVIEWS
     case "block/layout":
@@ -125,6 +127,8 @@ export async function loadPreviewMap(
       return (await import("@/registry/previews/animation/sketch")).PREVIEWS
     case "animation/background":
       return (await import("@/registry/previews/animation/background")).PREVIEWS
+    case "animation/error-404":
+      return (await import("@/registry/previews/animation/error-404")).PREVIEWS
     case "animation/interface":
       return (await import("@/registry/previews/animation/interface")).PREVIEWS
     case "animation/promo":

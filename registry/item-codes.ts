@@ -121,6 +121,7 @@ export const ITEM_CODES: Record<string, string> = {
   "navmenu": "NM",
   "newsletter": "NE",
   "not-found": "NF",
+  "error-404": "E4",
   "notifications": "NO",
   "number": "NU",
   "otp": "OT",

@@ -24,6 +24,7 @@ import dataGridRegistry from "@/registry/blocks/data-grid/registry.json"
 import logosRegistry from "@/registry/blocks/logos/registry.json"
 import newsletterRegistry from "@/registry/blocks/newsletter/registry.json"
 import teamRegistry from "@/registry/blocks/team/registry.json"
+import notFoundRegistry from "@/registry/blocks/not-found/registry.json"
 import backgroundRegistry from "@/registry/blocks/background/registry.json"
 import layoutRegistry from "@/registry/blocks/layout/registry.json"
 import accordionRegistry from "@/registry/components/accordion/registry.json"
@@ -61,6 +62,7 @@ import stacksRegistry from "@/registry/animations/stacks/registry.json"
 import cursorRegistry from "@/registry/animations/cursor/registry.json"
 import sketchRegistry from "@/registry/animations/sketch/registry.json"
 import backgroundAnimationRegistry from "@/registry/animations/background/registry.json"
+import error404Registry from "@/registry/animations/error-404/registry.json"
 import interfaceRegistry from "@/registry/animations/interface/registry.json"
 import promoRegistry from "@/registry/animations/promo/registry.json"
 
@@ -178,6 +180,11 @@ export const SOURCES = [
     directory: "registry/blocks/team",
     kind: "block",
     items: teamRegistry.items,
+  },
+  {
+    directory: "registry/blocks/not-found",
+    kind: "block",
+    items: notFoundRegistry.items,
   },
   {
     directory: "registry/blocks/background",
@@ -363,6 +370,11 @@ export const SOURCES = [
     directory: "registry/animations/background",
     kind: "animation",
     items: backgroundAnimationRegistry.items,
+  },
+  {
+    directory: "registry/animations/error-404",
+    kind: "animation",
+    items: error404Registry.items,
   },
   {
     directory: "registry/animations/interface",
