@@ -322,7 +322,7 @@ async function sendMessageJob(database: Database, config: Config, job: AgentJob)
   await database`UPDATE outreach_messages SET status = 'sending' WHERE id = ${messageId} AND status IN ('approved', 'sending')`;
   const market = message.market === "ru" ? "ru" : "en";
   const optOut = market === "ru" ? "\n\nЕсли такие предложения неактуальны, ответьте «не писать», и мы больше не свяжемся." : "\n\nIf this is not relevant, reply “unsubscribe” and we will not contact you again.";
-  const text = message.kind === "reply" ? String(message.body) : `${String(message.body)}${optOut}`;
+  const text = message.kind === "reply" || message.contact_kind === "telegram" ? String(message.body) : `${String(message.body)}${optOut}`;
   let externalId: string;
   if (message.contact_kind === "telegram") {
     await assertTelegramSlot(database, config, message.kind !== "reply");
