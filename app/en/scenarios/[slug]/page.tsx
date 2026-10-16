@@ -1,4 +1,5 @@
 import { ScenarioPage } from "@/components/pages/scenario-page"
+import { scenarioCopy } from "@/lib/landing-copy"
 import { getScenario, getScenarios } from "@/lib/scenario"
 import { pageMetadata } from "@/lib/seo"
 
@@ -17,11 +18,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {}
   }
 
+  const copy = scenarioCopy(scenario.slug, "en")
+
   return pageMetadata({
     locale: "en",
     path: `/scenarios/${scenario.slug}`,
-    title: scenario.en,
-    description: scenario.summaryEn,
+    title: copy?.title ?? scenario.en,
+    description: copy?.description ?? scenario.summaryEn,
   })
 }
 

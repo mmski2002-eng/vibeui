@@ -6,6 +6,7 @@ import { CatalogGrid } from "@/components/catalog/catalog-grid"
 import { FilterableGrid } from "@/components/catalog/filterable-grid"
 import { JsonLd } from "@/components/json-ld"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import { categoryCopy } from "@/lib/landing-copy"
 import { breadcrumbs } from "@/lib/seo"
 import type { ItemKind } from "@/registry/categories"
 import {
@@ -43,6 +44,7 @@ export function CategoryPage({
         ? t.topbar.animations
         : t.topbar.components
   const label = getCategoryLabel(category, locale)
+  const copy = categoryCopy(kind, category, locale)
   const single = kind === "block" || isWideCategory(category)
   // Фильтр по форме включается только там, где блоки размечены слотами:
   // без разметки чипы нечем наполнить.
@@ -66,11 +68,16 @@ export function CategoryPage({
       </nav>
 
       <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-        {label}
+        {copy?.h1 ?? label}
       </h1>
       <p className="text-shell-muted mt-2 text-sm">
         {t.catalog.count(items.length)}
       </p>
+      {copy ? (
+        <p className="text-shell-muted mt-3 max-w-3xl text-sm text-pretty">
+          {copy.intro}
+        </p>
+      ) : null}
     </div>
   )
 

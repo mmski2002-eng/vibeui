@@ -8,6 +8,7 @@ import { ScenarioCopy } from "@/components/catalog/scenario-copy"
 import { ScenarioTour } from "@/components/catalog/scenario-tour"
 import { isPro } from "@/lib/entitlements"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import { scenarioCopy } from "@/lib/landing-copy"
 import { getScenario, scenarioSections, scenarioText } from "@/lib/scenario"
 import {
   extractThemeConsts,
@@ -40,6 +41,7 @@ export async function ScenarioPage({
   const t = getDictionary(locale).scenarios
   const text = scenarioText(scenario, locale)
   const sections = scenarioSections(scenario, locale)
+  const copy = scenarioCopy(scenario.slug, locale)
   const session = await getSession()
   const pro = session ? await isPro(session.user.id) : false
   const [source, pictures] = pro
@@ -70,11 +72,16 @@ export async function ScenarioPage({
 
         <header className="mb-6">
           <h1 className="text-shell-fg text-2xl font-semibold tracking-tight sm:text-3xl">
-            {text.label}
+            {copy?.h1 ?? text.label}
           </h1>
           <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty sm:text-base">
             {text.summary}
           </p>
+          {copy ? (
+            <p className="text-shell-muted mt-3 max-w-2xl text-sm text-pretty">
+              {copy.intro}
+            </p>
+          ) : null}
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <Link
               href={text.demo}

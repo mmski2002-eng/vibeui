@@ -1,4 +1,6 @@
 import type { Locale } from "@/lib/i18n"
+import { CLUB_ORIGIN } from "@/lib/club-routes"
+import { categoryCopy } from "@/lib/landing-copy"
 import { localizeItem } from "@/lib/localize"
 import type { ItemKind } from "@/registry/categories"
 import {
@@ -20,7 +22,7 @@ export const SITE_URL = (
 export const SITE_NAME = "VibeUI"
 
 export const RU_ORIGIN = "https://vibeui.ru"
-export const CLUB_ORIGIN = "https://vibeui.club"
+export { CLUB_ORIGIN }
 
 export function isClubHost(host: string | null | undefined) {
   const name = (host ?? "").split(":")[0].toLowerCase()
@@ -137,12 +139,14 @@ export function catalogSlugMetadata({
     }
 
     const label = getCategoryLabel(category.slug, locale)
+    const copy = categoryCopy(kind, category.slug, locale)
 
     return pageMetadata({
       locale,
       path: `${base}/${category.slug}`,
-      title: label,
-      description: categoryDescription(locale, label, category.count),
+      title: copy?.title ?? label,
+      description:
+        copy?.description ?? categoryDescription(locale, label, category.count),
     })
   }
 

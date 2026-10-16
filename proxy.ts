@@ -1,6 +1,7 @@
 import { getSessionCookie } from "better-auth/cookies"
 import { NextResponse, type NextRequest } from "next/server"
 
+import { CLUB_ORIGIN, MERGED_CATEGORIES } from "@/lib/club-routes"
 import { PATH_HEADER } from "@/lib/session.shared"
 
 function isAccountPath(pathname: string) {
@@ -9,6 +10,57 @@ function isAccountPath(pathname: string) {
 
 function isRetiredEnglishPath(pathname: string) {
   return pathname === "/en" || pathname.startsWith("/en/")
+}
+
+/**
+ * Публичные разделы, чьи `/en/...` успели попасть в поиск. Кабинет, вход и
+ * поиск сюда не входят: ссылок на них из выдачи нет, редирект им не нужен.
+ */
+const EN_REDIRECT_SECTIONS = [
+  "components",
+  "blocks",
+  "animations",
+  "scenarios",
+  "pricing",
+  "start",
+]
+
+/**
+ * Удалённые страницы, у которых нет равноценной замены: им честный 404 сразу,
+ * а не 301 на адрес, который всё равно не существует. Список — из 404 в
+ * Search Console на 2026-10-16.
+ */
+const EN_GONE = new Set([
+  "/blocks/ai-005",
+  "/blocks/auth-016",
+  "/blocks/dashboard-031",
+  "/blocks/dashboard-047",
+  "/blocks/features-001",
+  "/components/avatar-033",
+  "/components/textarea",
+  "/components/textarea-001",
+  "/scenarios/service-landing",
+])
+
+/**
+ * Старый `/en/...` → тот же раздел на vibeui.club. Слитая категория ведёт
+ * сразу на родителя, без второго прыжка. Чужой раздел — null (404).
+ */
+function clubPathFor(pathname: string): string | null {
+  const segments = pathname.split("/").slice(2).filter(Boolean)
+
+  if (segments.length === 0) return "/"
+  if (!EN_REDIRECT_SECTIONS.includes(segments[0])) return null
+  if (EN_GONE.has(`/${segments.join("/")}`)) return null
+
+  const parent =
+    segments.length === 2
+      ? MERGED_CATEGORIES[segments[0]]?.[segments[1]]
+      : undefined
+
+  if (parent) segments[1] = parent
+
+  return `/${segments.join("/")}`
 }
 
 /**
@@ -29,10 +81,18 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(`/i/${ref}`, request.url))
   }
 
-  // Старый адрес с приставкой. Редиректа нет. Rewrite на пустой путь в Next 16
-  // отдаёт 500, поэтому ответ 404 собираем здесь.
+  // Старый адрес с приставкой: английский переехал на vibeui.club без неё, а
+  // /en/* успели собрать клики в Google. Rewrite на пустой путь в Next 16
+  // отдаёт 500, поэтому ответ 404 для чужих разделов собираем здесь.
   if (isRetiredEnglishPath(pathname)) {
-    return new NextResponse(null, { status: 404 })
+    const target = clubPathFor(pathname)
+
+    if (!target) return new NextResponse(null, { status: 404 })
+
+    return NextResponse.redirect(
+      `${CLUB_ORIGIN}${target}${request.nextUrl.search}`,
+      301,
+    )
   }
 
   // Гейтинг кабинета — только для /account. Остальные страницы публичны:

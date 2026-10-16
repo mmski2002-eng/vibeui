@@ -122,9 +122,12 @@ jobs:
           echo "start $code"
           test "$code" = "200"
           grep -q 'id="paste"' /tmp/vibeui-start.html
-          code=$(fetch /tmp/vibeui-en.html https://vibeui.ru/en/start)
-          echo "en $code"
-          test "$code" = "404"
+          headers=$(curl -sS --http1.1 -o /dev/null -D - "https://vibeui.ru/en/start?utm_source=ci" | tr -d '\r')
+          code=$(printf '%s\n' "$headers" | awk 'NR==1 {print $2}')
+          location=$(printf '%s\n' "$headers" | awk 'tolower($1)=="location:" {print $2}')
+          echo "en redirect $code $location"
+          test "$code" = "301"
+          test "$location" = "https://vibeui.club/start?utm_source=ci"
           code=$(fetch /tmp/vibeui-robots.txt https://vibeui.ru/robots.txt)
           echo "robots $code"
           test "$code" = "200"
@@ -172,9 +175,12 @@ jobs:
           echo "scenarios $code"
           test "$code" = "200"
           grep -q '/scenarios/bakery/demo' /tmp/club-scenarios.html
-          code=$(fetch /tmp/club-en.html https://vibeui.club/en/start)
-          echo "en $code"
-          test "$code" = "404"
+          headers=$(curl -sS --http1.1 -o /dev/null -D - "https://vibeui.club/en/start?utm_source=ci" | tr -d '\r')
+          code=$(printf '%s\n' "$headers" | awk 'NR==1 {print $2}')
+          location=$(printf '%s\n' "$headers" | awk 'tolower($1)=="location:" {print $2}')
+          echo "en redirect $code $location"
+          test "$code" = "301"
+          test "$location" = "https://vibeui.club/start?utm_source=ci"
           code=$(fetch /tmp/club-robots.txt https://vibeui.club/robots.txt)
           echo "robots $code"
           test "$code" = "200"

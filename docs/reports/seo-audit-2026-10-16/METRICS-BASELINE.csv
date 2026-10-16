@@ -1,0 +1,26 @@
+KPI,Definition,Source,Formula,Segments,Baseline 2026-10-16,Baseline status,Frequency,Owner,Data limits
+URLs in sitemap,Число loc в sitemap,sitemap.xml,count(loc),домен,.ru 2141; .club 2141,Факт (curl),еженедельно,SEO,—
+Valid sitemap URLs,Доля URL sitemap с 200 и self-canonical,краул,200&self-canonical / all,шаблон,"2415/2447 = 98.7% (32 демо без canonical)",Факт (краул .ru полный + 1/7 .club),ежемесячно,SEO,.club частично
+Indexed URLs,Страницы в индексе,GSC Индексирование; Вебмастер Страницы в поиске,count,домен/шаблон,"Google: .ru 913, .club 1750; Яндекс: .ru 4 (site: 3), .club 1157 (site: 40)",Факт 2026-10-16,еженедельно,SEO,задержка 2–7 дней; Вебмастер частично недоступен
+Crawl errors,4xx/5xx при обходе,GSC Статистика сканирования + краул,count,,"GSC .ru: 404 = 407 (бывшие /en/*), 5xx <1%; .club 404 = 57; /legal/* 404",Факт 2026-10-16,еженедельно,разработка,—
+Organic impressions/clicks,Показы/клики,GSC; Вебмастер,sum,"бренд/небренд, домен, страна, устройство, шаблон","Google .ru 07.09–13.10: 18 / 632; .club 24.09–13.10: 12 / 442; Яндекс .ru 06.09–06.10: 1 / 3",Факт,еженедельно,SEO,история с 07.09.2026
+Non-brand clicks,Клики без «vibeui|vibe ui|вайбюай»,GSC,sum where query !~ brand,домен,не посчитано (нужна выгрузка запросов; брендовые vibe ui/vibeui — 0 кликов),Частично,еженедельно,SEO,анонимизация
+CTR,Клики/показы,GSC,clicks/impr,шаблон,".ru 2,8%; .club 2,7%",Факт,еженедельно,SEO,—
+Top 3/10/20 share,Доля запросов по средней позиции,GSC / сервис позиций,count(pos<=N)/all,кластер,"не посчитано; средняя позиция .ru 10,4, .club 9,9; бренд vibe ui ~44",Частично,ежемесячно,SEO,средняя позиция усреднена
+Organic landing pages with traffic,Число URL с ≥1 органическим кликом,GSC,count,шаблон,".ru: 418 URL с показами; с кликами ~15 (топ-10 видно)",Частично,ежемесячно,SEO,—
+TTFB p50/p90 (server),Время до первого байта при обходе,curl краул,перцентиль,шаблон,p50 0.33s; p90 0.69s; max 8.18s,Факт (2447 запросов),ежемесячно,разработка,"лаборатория, из РФ, 6 потоков"
+HTML size p50/p90/max,Размер документа,curl краул,перцентиль,шаблон,"p50 157 КБ; p90 214 КБ; max 730 КБ",Факт,ежемесячно,разработка,без сжатия
+LCP/INP/CLS mobile (lab),Lighthouse mobile,pagespeed.web.dev,—,"/ ; /components ; /blocks/hero ; /blocks/hero-001 ; /scenarios/bakery ; /scenarios/bakery/demo ; /pricing ; /search?q=hero",не измерено,Пробел (PSI 429),ежемесячно,разработка,lab ≠ field
+CWV field,CrUX p75,GSC CWV / CrUX,—,домен,не измерено,Пробел,ежемесячно,разработка,нужен трафик для CrUX
+Organic item views,Сессии organic с landing = item,GA4/Метрика,count,домен,"GA4 18.09–15.10: Organic Search 29 сеансов из 253; AI Assistant 7",Факт (канал; landing не разбит),еженедельно,аналитика,Метрика недоступна
+Preview rate,preview_interact / view_item,GA4,ratio,источник,нет события,Событие не внедрено,еженедельно,аналитика,A-01
+Copy for AI rate,copy_for_ai / view_item,GA4/Метрика,ratio,"источник, kind, logged_in",нет события,Событие не внедрено,еженедельно,аналитика,A-01
+Install copy rate,copy_install / view_item,GA4,ratio,,нет события,Событие не внедрено,еженедельно,аналитика,A-01
+Signup rate,sign_up / sessions (organic),GA4,ratio,landing template,нет события,Событие не внедрено,еженедельно,аналитика,A-01
+Paid conversion,purchase / sign_up,GA4 MP / БД,ratio,план/валюта,нет события,Событие не внедрено,ежемесячно,аналитика,серверное событие
+Revenue from organic,Σ purchase.value где first touch = organic,GA4 + БД,sum,домен,нет данных,Не внедрено,ежемесячно,аналитика,атрибуция
+Zero-result searches,search_zero / search,GA4 или лог /api/search,ratio,локаль,нет события,Не внедрено,еженедельно,продукт,—
+Organic retention,return_copy среди юзеров с first touch organic,GA4/БД,ratio,когорта,нет данных,Не внедрено,ежемесячно,аналитика,—
+Referring domains,Уникальные ссылающиеся домены,GSC Ссылки / Вебмастер,count,,нет данных,Нет доступа,ежемесячно,SEO,GSC неполный
+Quality mentions,Листинги и статьи (список COMPETITORS L1–L4),ручной трекер,count,RU/EN,0 найдено,Гипотеза (web search),ежемесячно,SEO,—
+LLM visibility,Доля из 20 промптов с упоминанием VibeUI,ручной тест,count/20,"ChatGPT, Perplexity, AI Overviews, Яндекс Нейро",не измерено,Пробел,ежемесячно,SEO,нестабильность ответов
