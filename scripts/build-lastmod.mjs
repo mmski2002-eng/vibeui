@@ -154,12 +154,19 @@ function build() {
     itemDate[item.name] = newer(itemDate[item.name], date)
   }
 
+  // Заголовок и вводный текст страницы категории живут не в её items, а в
+  // общем файле текстов: его правка — тоже изменение страницы категории.
+  const copyDate = dates.get("lib/landing-copy.ts")
+
   for (const item of items) {
     const date = itemDate[item.name] ?? site
     itemDate[item.name] = date
 
     const categoryKey = `${item.kind}/${item.category}`
-    categoryDate[categoryKey] = newer(categoryDate[categoryKey], date)
+    categoryDate[categoryKey] = newer(
+      newer(categoryDate[categoryKey], date),
+      copyDate,
+    )
     rootDate[item.kind] = newer(rootDate[item.kind], date)
   }
 
