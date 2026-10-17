@@ -2721,7 +2721,7 @@
     {
       "name": "case-003",
       "type": "registry:block",
-      "title": "До и после",
+      "title": "Метрики до и после",
       "description": "Кейсы парой значений «было → стало»: приглушённое «до», акцентное «после» и бейдж роста со стрелкой. Самодостаточен: один файл, без зависимостей, со своей палитрой.",
       "categories": [
         "portfolio"
@@ -2810,7 +2810,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Before and After",
+            "title": "Before and After Metrics",
             "description": "Case studies as \"was → became\" value pairs: a muted \"before\", an accent \"after\" and a growth badge with an arrow. Self-contained: one file, no dependencies, its own palette.",
             "docs": "A composite block: imports heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in local --vibeui-case-003-* variables. A server component. The card: the client and the metric name on top, below a dashed divider the \"was → became\" pair — \"was\" is muted and struck through, \"became\" is large in the accent colour, with an inline SVG arrow between them. Under the pair sits a growth badge with an up-right arrow. The grid folds into three columns based on the block's own width. Icons are inline SVG with aria-hidden, no external files.",
             "ai": {

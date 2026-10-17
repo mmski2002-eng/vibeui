@@ -4,11 +4,13 @@ import { notFound } from "next/navigation"
 import { CatalogItemNav } from "@/components/catalog/catalog-item-nav"
 import { CatalogColumns } from "@/components/catalog/catalog-columns"
 import { CatalogSidebar } from "@/components/catalog/catalog-sidebar"
+import { ItemReference } from "@/components/catalog/item-reference"
 import { ItemWorkbench } from "@/components/catalog/item-workbench"
 import { GatedReveal } from "@/components/catalog/gated-reveal"
 import { JsonLd } from "@/components/json-ld"
 import { ReportDialog } from "@/components/report/report-dialog"
 import { getDictionary, localePath, type Locale } from "@/lib/i18n"
+import { getBlocksUsing, getScenariosUsing } from "@/lib/item-links"
 import { localizeItem } from "@/lib/localize"
 import { breadcrumbs, originFor, pageUrl } from "@/lib/seo"
 import { getItemDocUrl } from "@/lib/site"
@@ -272,6 +274,14 @@ export async function ItemPage({
             locale={locale}
             docUrl={docUrl}
             pro={isProItem(block.name)}
+          />
+
+          <ItemReference
+            locale={locale}
+            usage={block.meta?.ai?.usage}
+            controls={block.meta?.controls ?? []}
+            blocks={kind === "block" ? [] : getBlocksUsing(block.name, locale)}
+            scenarios={getScenariosUsing(block.name, locale)}
           />
 
           {/* Вторичное: developer / inspection. Не путь установки. */}

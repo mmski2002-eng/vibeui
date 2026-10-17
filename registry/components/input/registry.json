@@ -2181,7 +2181,7 @@
     {
       "name": "input-014",
       "type": "registry:component",
-      "title": "Проверка ника",
+      "title": "Проверка ника с вариантами",
       "description": "Имя пользователя с проверкой занятости и готовыми свободными вариантами: занятое имя не просто отвергается, взамен предлагаются три работающих.",
       "categories": [
         "input"
@@ -2309,7 +2309,7 @@
                 "label": "Background"
               }
             },
-            "title": "Handle Check",
+            "title": "Handle Check with Suggestions",
             "preview": {
               "props": {
                 "label": "Username",
@@ -2513,7 +2513,7 @@
     {
       "name": "input-016",
       "type": "registry:component",
-      "title": "Генератор пароля",
+      "title": "Генератор пароля с оценкой энтропии",
       "description": "Пароль с генерацией случайной строки по кнопке, копированием в буфер и оценкой в битах энтропии словами вместо цветной полоски надёжности.",
       "categories": [
         "input"
@@ -2650,7 +2650,7 @@
                 "label": "Background"
               }
             },
-            "title": "Password Generator",
+            "title": "Password Generator with Entropy",
             "preview": {
               "props": {
                 "label": "Password",
@@ -6536,7 +6536,7 @@
     {
       "name": "inputgroup-009",
       "type": "registry:component",
-      "title": "Ошибка группы",
+      "title": "Ошибка составного поля",
       "description": "Ошибка на всей сцепке, а не на одной половине: логин без домена и домен без логина — одна и та же неправильная почта.",
       "categories": [
         "input"
@@ -11890,7 +11890,7 @@
     {
       "name": "field-003",
       "type": "registry:component",
-      "title": "Отметка обязательного",
+      "title": "Обязательное поле со сноской",
       "description": "Обязательное поле со звёздочкой, которая объясняет себя: расшифровка в <abbr>, скрытое слово для screen reader и сноска рядом с полями.",
       "categories": [
         "input"

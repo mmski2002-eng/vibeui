@@ -266,7 +266,7 @@
     {
       "name": "avatar-anim-002",
       "type": "registry:component",
-      "title": "Стопка аватаров",
+      "title": "Анимированная стопка аватаров",
       "description": "Ряд аватаров внахлёст с обводкой цвета карточки и пилюлей остатка «+N»: при появлении карточки кружки разъезжаются из одной точки в свою позицию, а по наведению верхний слегка приподнимается.",
       "categories": [
         "interface"
@@ -340,7 +340,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Avatar stack",
+            "title": "Animated Avatar Stack",
             "description": "An overlapping avatar stack with a remaining count badge. On mount the circles slide out from a single point into their overlapped position, and on hover the top one lifts slightly.",
             "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-avatar-anim-002-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. Circles overlap via negative margin-left and a card-colored border; on mount each circle slides out from a shared point into its slot with a delay via --i, and on hover it lifts and comes to the front.",
             "ai": {
@@ -1542,7 +1542,7 @@
     {
       "name": "notifications-001",
       "type": "registry:component",
-      "title": "Колокольчик уведомлений",
+      "title": "Звенящий колокольчик с бейджем",
       "description": "Иконка колокольчика с бейджем непрочитанных: колокольчик периодически звенит коротким покачиванием, а бейдж с числом выскакивает поверх плитки с эффектом перехлёста.",
       "categories": [
         "interface"
@@ -1884,7 +1884,7 @@
     {
       "name": "checklist-001",
       "type": "registry:component",
-      "title": "Чек-лист",
+      "title": "Анимированный чек-лист",
       "description": "Чек-лист задач, которые сами отмечаются выполненными по очереди: флажок заполняется галочкой, подпись перечёркивается растущей линией, затем всё гаснет и цикл повторяется со следующего пункта.",
       "categories": [
         "interface"
@@ -1950,7 +1950,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Checklist",
+            "title": "Animated Checklist",
             "description": "A checklist whose items complete one by one on their own: the checkbox fills with a check mark, the label gets a growing strikethrough line, then everything fades and the cycle repeats from the next item.",
             "docs": "The component is self-contained: one file, zero dependencies, palette in local --vibeui-checklist-001-* variables. It takes the theme from the environment via light-dark() plus a rule for the .dark class. The cycle runs on @keyframes: the checkbox, check mark and strikethrough line share the same keyframes (vibeui-checklist-001-box/-check/-label/-strike) with an animation-delay computed from the row's position in the list via the --vibeui-checklist-001-duration variable. No JS involved, each item takes its own turn. Animation stops under prefers-reduced-motion.",
             "ai": {

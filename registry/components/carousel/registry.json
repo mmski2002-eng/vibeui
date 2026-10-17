@@ -604,7 +604,7 @@
     {
       "name": "carousel-004",
       "type": "registry:component",
-      "title": "Бегущая строка логотипов",
+      "title": "Бесшовная лента логотипов",
       "description": "Бегущая лента логотипов: список продублирован и сдвигается ровно на половину, поэтому шва между повторами не видно.",
       "categories": [
         "carousel"
@@ -683,7 +683,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Logo Marquee",
+            "title": "Seamless Logo Marquee",
             "description": "A logo marquee: the list is duplicated and shifts by exactly half, so the seam between repeats never shows.",
             "docs": "The component is self-contained: one file, zero dependencies, its own palette in the local --vibeui-carousel-004-* variables. Server component: no hooks. The list is rendered twice, the second copy is marked aria-hidden, and the animation shifts the rail by half its width — that is what makes the repeat seamless. The edges are wiped out with a mask gradient. Under prefers-reduced-motion the animation is switched off and the rail turns into ordinary scrolling.",
             "ai": {

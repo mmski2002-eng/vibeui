@@ -2933,7 +2933,7 @@
     {
       "name": "select-020",
       "type": "registry:component",
-      "title": "Выбор периода",
+      "title": "Выбор периода со своим диапазоном",
       "description": "Select периода: обычные пресеты сверху и пункт «Свой диапазон» последним — он раскрывает два поля дат прямо под полем, вместо перехода в календарь.",
       "categories": [
         "select"
@@ -6051,7 +6051,7 @@
     {
       "name": "nativeselect-001",
       "type": "registry:component",
-      "title": "Нативный список",
+      "title": "Нативный список с подсказкой",
       "description": "Нативный select с подписью и собственной стрелкой: оболочка наша, а выпадающий список рисует операционная система.",
       "categories": [
         "select"
@@ -6846,7 +6846,7 @@
     {
       "name": "nativeselect-006",
       "type": "registry:component",
-      "title": "Список с ошибкой",
+      "title": "Нативный список с ошибкой",
       "description": "Нативный select с постоянным сообщением об ошибке вместо всплывающей подсказки браузера, которая исчезает через пару секунд.",
       "categories": [
         "select"
@@ -6984,7 +6984,7 @@
                 "default": "Not selected"
               }
             },
-            "title": "Invalid Select",
+            "title": "Native Invalid Select",
             "preview": {
               "props": {
                 "label": "Payment method",
@@ -7012,7 +7012,7 @@
     {
       "name": "nativeselect-007",
       "type": "registry:component",
-      "title": "Шкала размеров",
+      "title": "Нативный список в трёх размерах",
       "description": "Нативный select с размерной шкалой sm / md / lg: три ступени описаны одним набором правил и четырьмя переменными геометрии.",
       "categories": [
         "select"
@@ -7142,7 +7142,7 @@
                 "label": "Background"
               }
             },
-            "title": "Size Scale",
+            "title": "Native Select Size Scale",
             "preview": {
               "props": {
                 "label": "Package size",

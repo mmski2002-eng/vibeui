@@ -4443,7 +4443,7 @@
     {
       "name": "tooltip-014",
       "type": "registry:component",
-      "title": "Причина недоступности",
+      "title": "Подсказка у отключённой кнопки",
       "description": "Подсказка на визуально отключённой кнопке: aria-disabled вместо disabled оставляет её доступной наведению и фокусу, а подсказка объясняет, чего не хватает.",
       "categories": [
         "popover"
@@ -5335,7 +5335,7 @@
     {
       "name": "hovercard-003",
       "type": "registry:component",
-      "title": "Карточка товара",
+      "title": "Всплывающая карточка товара",
       "description": "Карточка товара у названия в тексте: цена и наличие стоят выше отзывов, а дробный рейтинг залит градиентом по звёздам — 4,3 видно как 4,3.",
       "categories": [
         "popover"
@@ -5468,7 +5468,7 @@
                 "label": "Background"
               }
             },
-            "title": "Product Card",
+            "title": "Product Hover Card",
             "preview": {
               "props": {
                 "name": "Kite 68 mechanical keyboard",
@@ -5827,7 +5827,7 @@
     {
       "name": "hovercard-006",
       "type": "registry:component",
-      "title": "Карточка события",
+      "title": "Всплывающая карточка события",
       "description": "Карточка события у названия встречи: дата вынесена в отрывной листок календаря, а участники сложены веером с остатком числом.",
       "categories": [
         "popover"
@@ -5958,7 +5958,7 @@
                 "label": "Background"
               }
             },
-            "title": "Event Card",
+            "title": "Event Hover Card",
             "preview": {
               "props": {
                 "title": "Catalog mockup review",

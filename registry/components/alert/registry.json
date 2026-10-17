@@ -2939,7 +2939,7 @@
     {
       "name": "alert-018",
       "type": "registry:component",
-      "title": "Нет соединения",
+      "title": "Полоса «Нет соединения»",
       "description": "Полоса «нет соединения», которая следит за состоянием сама через события браузера. Сообщения «связь вернулась» здесь нет: о возврате говорит исчезновение полосы.",
       "categories": [
         "alert"
@@ -5840,6 +5840,7 @@
         ],
         "i18n": {
           "en": {
+            "title": "App Install Banner",
             "description": "An install-the-app invitation bar: an icon, a name and what it does — not an ad-like \"install us\" line, but the app's own card.",
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local --vibeui-banner-015-* variables. The icon is an image falling back to the app name's first letter when iconSrc is unset or fails to load (the same trick as the avatar in toast-015). The close button appears only when onDismiss is passed: a bar with nothing to close it with does not need a cross. On a narrow width the text and buttons move to their own lines via @container.",
             "ai": {

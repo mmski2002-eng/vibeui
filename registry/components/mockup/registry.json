@@ -139,7 +139,7 @@
     {
       "name": "mockup-002",
       "type": "registry:component",
-      "title": "Смартфон",
+      "title": "Фото-мокап смартфона",
       "description": "Мокап смартфона с фото-корпусом: рамка, клавиши и стекло из фото, экран — живой слой под прозрачным вырезом. Вертикальный скриншот 9/19.5 или разметка подставляются пропом.",
       "categories": [
         "mockup"
@@ -224,7 +224,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Phone",
+            "title": "Photo Phone Mockup",
             "description": "A phone mockup with a photo body: frame, keys and glass from the photo, the screen a live layer under a transparent cutout. A 9/19.5 screenshot or markup goes in via props.",
             "docs": "Server component, no hooks. The body is an 853×1738 WebP with a transparent screen cutout on top. The screen is an absolute layer under it, placed by four cutout variables; src (top-aligned object-fit: cover), otherwise children, otherwise a placeholder with a clock, an app grid and a dock. A gradient glare above the content, a blurred ellipse shadow. The body is centred with margin: 0 auto, up to 18rem wide.",
             "ai": {

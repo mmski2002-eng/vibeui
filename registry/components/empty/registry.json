@@ -1624,7 +1624,7 @@
     {
       "name": "empty-011",
       "type": "registry:component",
-      "title": "Запрос разрешения",
+      "title": "Запрос доступа к разделу",
       "description": "Закрытый раздел с формой запроса доступа: выбор нужной роли из списка, отправка и смена карточки на подтверждение.",
       "categories": ["empty"],
       "dependencies": [],
@@ -1753,7 +1753,7 @@
                 "label": "Surface"
               }
             },
-            "title": "Permission Request",
+            "title": "Access Request",
             "preview": {
               "props": {
                 "title": "This section is closed to your role",

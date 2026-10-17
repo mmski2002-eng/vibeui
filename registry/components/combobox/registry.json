@@ -352,7 +352,7 @@
     {
       "name": "combobox-003",
       "type": "registry:component",
-      "title": "Множественный выбор чипами",
+      "title": "Множественный выбор чипами с вводом",
       "description": "Множественный выбор фишками: отмеченное остаётся в списке с галочкой, счётчик держит лимит, Backspace в пустом поле снимает последнюю фишку.",
       "categories": [
         "combobox"
@@ -6587,7 +6587,7 @@
     {
       "name": "autocomplete-009",
       "type": "registry:component",
-      "title": "Код страны",
+      "title": "Телефон с поиском страны",
       "description": "Телефон с выбором страны: поиск идёт и по названию, и по коду — половина людей ищет «+7», а не «Россия».",
       "categories": [
         "combobox"
@@ -6816,7 +6816,7 @@
     {
       "name": "autocomplete-010",
       "type": "registry:component",
-      "title": "Создание значения",
+      "title": "Создание значения из пустой выдачи",
       "description": "Пустая выдача превращается в действие: последняя строка предлагает завести метку прямо здесь, не уходя в настройки.",
       "categories": [
         "combobox"
@@ -6959,7 +6959,7 @@
                 "label": "Background"
               }
             },
-            "title": "Create Option",
+            "title": "Create Option from Empty Results",
             "preview": {
               "props": {
                 "label": "Label",

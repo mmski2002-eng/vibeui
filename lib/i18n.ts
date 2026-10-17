@@ -185,6 +185,15 @@ type Dictionary = {
     composedOf: string
     composedOfNote: string
     filterLead: string
+    usage: string
+    usageNote: string
+    settings: string
+    settingsDefault: string
+    settingsOn: string
+    settingsOff: string
+    settingsTheme: string
+    usedInBlocks: string
+    usedInScenarios: string
     densityLabel: string
     density: { light: string; medium: string; heavy: string }
     needsLabel: string
@@ -473,6 +482,16 @@ const RU: Dictionary = {
     composedOfNote:
       "Команда установки поставит и эти компоненты. Блок задаёт им только пропсы: их палитра и поведение — свои.",
     filterLead: "Подобрать под свой контент",
+    usage: "Как использовать",
+    usageNote:
+      "Пример вызова. Сам компонент агент ставит из реестра по ссылке «Копировать для ИИ».",
+    settings: "Настройки",
+    settingsDefault: "по умолчанию",
+    settingsOn: "включено",
+    settingsOff: "выключено",
+    settingsTheme: "цвет темы",
+    usedInBlocks: "Используется в блоках",
+    usedInScenarios: "Используется в сценариях",
     densityLabel: "Плотность текста",
     density: { light: "лёгкий", medium: "средний", heavy: "плотный" },
     needsLabel: "Нужно",
@@ -713,6 +732,16 @@ const EN: Dictionary = {
     composedOfNote:
       "The install command brings these components too. The block only passes them props: their palette and behaviour stay their own.",
     filterLead: "Match to your content",
+    usage: "How to use",
+    usageNote:
+      "A sample call. The agent installs the component itself from the registry via the “Copy for AI” link.",
+    settings: "Settings",
+    settingsDefault: "default",
+    settingsOn: "on",
+    settingsOff: "off",
+    settingsTheme: "theme colour",
+    usedInBlocks: "Used in blocks",
+    usedInScenarios: "Used in scenarios",
     densityLabel: "Text density",
     density: { light: "light", medium: "medium", heavy: "heavy" },
     needsLabel: "Needs",

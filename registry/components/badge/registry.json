@@ -3692,7 +3692,7 @@
     {
       "name": "badge-024",
       "type": "registry:component",
-      "title": "Группа с переполнением",
+      "title": "Группа плашек с «+N»",
       "description": "Группа плашек, хвост которой сворачивается в «+4» и раскрывается по нажатию — на нативном details, без единой строки клиентского кода.",
       "categories": [
         "badge"
@@ -3844,7 +3844,7 @@
                 "label": "Background"
               }
             },
-            "title": "Overflow Group",
+            "title": "Badge Overflow Group",
             "preview": {
               "props": {
                 "label": "Stack",

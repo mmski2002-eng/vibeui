@@ -122,7 +122,9 @@ export function proxy(request: NextRequest) {
 export const config = {
   // Ловим все страницы, кроме ассетов, api и раздач исходников (r/f/c/s/i/
   // preview). На vibeui.club английский файл подставляется под любой раздел.
+  // Картинка соцкарточки .club живёт по /en/opengraph-image: без исключения
+  // её ловил запрет старых /en/* и отдавал 404.
   matcher: [
-    "/((?!_next|api|r/|f/|c/|s/|i/|preview/|.*\\.[^/]+$).*)",
+    "/((?!_next|api|r/|f/|c/|s/|i/|preview/|.*opengraph-image|.*\\.[^/]+$).*)",
   ],
 }

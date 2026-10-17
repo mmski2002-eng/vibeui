@@ -3110,7 +3110,7 @@
     {
       "name": "buttongroup-020",
       "type": "registry:component",
-      "title": "Выбор валюты",
+      "title": "Выбор валюты кнопками",
       "description": "Выбор валюты, где разделители нарисованы просветами сетки: gap:1px поверх заливки цвета границы вместо отрицательных отступов.",
       "categories": [
         "button-group"
@@ -3243,7 +3243,7 @@
                 "label": "Background"
               }
             },
-            "title": "Currency Picker",
+            "title": "Currency Button Group",
             "preview": {
               "props": {
                 "currencies": [
@@ -5248,7 +5248,7 @@
     {
       "name": "buttongroup-033",
       "type": "registry:component",
-      "title": "Обязательный выбор",
+      "title": "Обязательный выбор кнопками",
       "description": "Обязательный выбор, который сам показывает ошибку: пока ни один вариант не отмечен, корень попадает под :not(:has(input:checked)) и группа краснеет.",
       "categories": [
         "button-group"
@@ -5377,7 +5377,7 @@
                 "default": "Pick a payment method — the order needs one"
               }
             },
-            "title": "Required Choice",
+            "title": "Required Button Choice",
             "preview": {
               "props": {
                 "options": [
@@ -5894,7 +5894,7 @@
     {
       "name": "buttongroup-037",
       "type": "registry:component",
-      "title": "Файл или ссылка",
+      "title": "Переключатель «файл или ссылка»",
       "description": "Переключатель источника вложения: две сцепленные вкладки меняют панель под собой, и неактивная панель уходит и из потока, и из обхода Tab.",
       "categories": [
         "button-group"
@@ -6049,7 +6049,7 @@
                 "default": "Attachment source"
               }
             },
-            "title": "File Or Link",
+            "title": "File or Link Switcher",
             "preview": {
               "props": {
                 "label": "Attachment source",
@@ -7125,7 +7125,7 @@
     {
       "name": "buttongroup-044",
       "type": "registry:component",
-      "title": "Счётчик количества",
+      "title": "Счётчик количества с подписью",
       "description": "Количество, которое можно и нащёлкать, и набрать: между кнопками стоит настоящий input[type=number], а значение зажимается по потере фокуса.",
       "categories": [
         "button-group"
@@ -7264,7 +7264,7 @@
                 "default": "Quantity"
               }
             },
-            "title": "Quantity Stepper",
+            "title": "Labeled Quantity Stepper",
             "preview": {
               "props": {
                 "unit": "pcs",
@@ -7471,7 +7471,7 @@
     {
       "name": "buttongroup-046",
       "type": "registry:component",
-      "title": "Пресеты дат",
+      "title": "Пресеты периода с датами",
       "description": "Пресеты периода с конкретными датами под названием: «Последние 7 дней» и «6–12 мая» отвечают на разные вопросы, и вторая строка снимает поход в календарь.",
       "categories": [
         "button-group"

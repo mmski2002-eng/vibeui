@@ -89,6 +89,17 @@ export function pageMetadata({
   absoluteTitle?: boolean
 }) {
   const url = pageUrl(locale, path)
+  // Явная картинка сайта: стоит странице объявить свой openGraph, и Next
+  // перестаёт наследовать файловую opengraph-image корня.
+  const image = {
+    url:
+      locale === "en"
+        ? `${CLUB_ORIGIN}/en/opengraph-image`
+        : `${RU_ORIGIN}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: SITE_NAME,
+  }
 
   return {
     title: absoluteTitle ? { absolute: title } : title,
@@ -101,6 +112,7 @@ export function pageMetadata({
       description,
       siteName: SITE_NAME,
       locale: OG_LOCALE[locale],
+      images: [image],
     },
     // Иначе карточка в X осталась бы с заголовком корневого layout'а:
     // Next наследует twitter от родителя, даже когда openGraph переопределён.
@@ -108,8 +120,59 @@ export function pageMetadata({
       card: "summary_large_image" as const,
       title,
       description,
+      images: [image.url],
     },
   }
+}
+
+const ITEM_TYPE: Record<Locale, Record<ItemKind, string>> = {
+  ru: {
+    block: "React-блок",
+    component: "React-компонент",
+    animation: "React-анимация",
+    template: "React-шаблон",
+  },
+  en: {
+    block: "React block",
+    component: "React component",
+    animation: "React animation",
+    template: "React template",
+  },
+}
+
+/** Слово вида уже в названии — тогда к нему дописывается только стек. */
+const KIND_WORD: Record<Locale, Record<ItemKind, RegExp>> = {
+  ru: {
+    block: /блок/i,
+    component: /компонент/i,
+    animation: /аним/i,
+    template: /шаблон/i,
+  },
+  en: {
+    block: /block/i,
+    component: /component/i,
+    animation: /animat/i,
+    template: /template/i,
+  },
+}
+
+/** Дальше Google режет заголовок, и хвост с типом всё равно не виден. */
+const ITEM_TITLE_LIMIT = 55
+
+/**
+ * Заголовок item'а в выдаче: название плюс что это и на чём — так ищут
+ * («avatar stack react»). H1 остаётся названием без приписок.
+ */
+function itemTitle(title: string, kind: ItemKind, locale: Locale) {
+  if (title.length > ITEM_TITLE_LIMIT || /react/i.test(title)) {
+    return `${title} | ${SITE_NAME}`
+  }
+
+  const type = KIND_WORD[locale][kind].test(title)
+    ? "React"
+    : ITEM_TYPE[locale][kind]
+
+  return `${title} — ${type} | ${SITE_NAME}`
 }
 
 /**
@@ -155,8 +218,9 @@ export function catalogSlugMetadata({
   return pageMetadata({
     locale,
     path: `${base}/${item.name}`,
-    title: item.title ?? item.name,
+    title: itemTitle(item.title ?? item.name, kind, locale),
     description: item.description,
+    absoluteTitle: true,
   })
 }
 

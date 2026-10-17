@@ -334,7 +334,7 @@
     {
       "name": "avatar-003",
       "type": "registry:component",
-      "title": "Стопка аватаров",
+      "title": "Стопка аватаров с подсказками",
       "description": "Стопка участников с честной шириной: перекрытие сделано отрицательным margin, хвост свёрнут в счётчик, а с включёнными подсказками кружки называют себя по наведению и по фокусу.",
       "categories": [
         "avatar"
@@ -469,7 +469,7 @@
                 "label": "Name tooltips"
               }
             },
-            "title": "Avatar Stack",
+            "title": "Avatar Stack with Tooltips",
             "preview": {
               "props": {
                 "names": [

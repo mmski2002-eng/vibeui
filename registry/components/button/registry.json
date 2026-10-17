@@ -3980,7 +3980,7 @@
     {
       "name": "button-027",
       "type": "registry:component",
-      "title": "Повтор с отсчётом",
+      "title": "Повторная отправка кода с отсчётом",
       "description": "Повторная отправка кода с паузой: кнопка заблокирована, кольцо убывает, время идёт моноширинными цифрами, по нулю она сама разблокируется.",
       "categories": [
         "button"
@@ -11520,7 +11520,7 @@
     {
       "name": "button-074",
       "type": "registry:component",
-      "title": "Кнопка копирования",
+      "title": "Кнопка копирования с морфом иконки",
       "description": "Копирует строку в буфер обмена и подтверждает это морфом иконки: листы перетекают в галочку с пружиной и через полторы секунды возвращаются.",
       "categories": [
         "button"
@@ -11606,7 +11606,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Copy Button",
+            "title": "Copy Button with Icon Morph",
             "description": "Copies a string to the clipboard and confirms it with an icon morph: the sheets spring into a check and revert a second and a half later.",
             "docs": "The component is self-contained: one file, no dependencies, its own palette in the local --vibeui-button-074-* variables. The value prop is what goes to the clipboard, and it is also shown next to the button in a monospace face, truncated with an ellipsis on narrow widths. Both icons sit stacked in one square and swap through opacity and scale: replacing one node with the other would shift the caption for a frame. The scale settles on a spring with a slight overshoot. navigator.clipboard.writeText fails without a secure context, so a refusal gets its own state instead of being passed off as success. A hidden role=\"status\" region announces the outcome: a caption change inside a button is not read on its own.",
             "ai": {
@@ -16698,7 +16698,7 @@
     {
       "name": "button-103",
       "type": "registry:component",
-      "title": "Переворачивающаяся карточка",
+      "title": "Кнопка-карточка с переворотом",
       "description": "Кнопка-карточка с переворотом: лицевая сторона с фото и оборот с текстом; перевёрнута по data-flipped.",
       "categories": [
         "button"
@@ -16809,7 +16809,7 @@
         },
         "i18n": {
           "en": {
-            "title": "Flip card",
+            "title": "Flip Card Button",
             "description": "Flip card button: front with a photo and back with text; flipped through data-flipped.",
             "docs": "Extracted from the portfolio-009 block as is: one file, no dependencies, its own palette in the --vibeui-button-103-* variables. The block owns the layout and data and passes them as props.",
             "ai": {

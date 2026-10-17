@@ -498,7 +498,7 @@
     {
       "name": "toast-004",
       "type": "registry:component",
-      "title": "Сообщение по этапам",
+      "title": "Уведомление по этапам",
       "description": "Одно уведомление на всю операцию: карточка не пересоздаётся, а меняет значок и строку с «собираем» на «готово» или «не вышло».",
       "categories": ["toast"],
       "dependencies": [],
@@ -3864,6 +3864,7 @@
         ],
         "i18n": {
           "en": {
+            "title": "Added to Cart Toast",
             "description": "An \"added to cart\" confirmation with a product thumbnail: the shopper sees exactly what was added instead of trusting a caption.",
             "docs": "The component is self-contained: one file, no dependencies, its own palette in local --vibeui-toast-025-* variables. The thumbnail is an image falling back to the item name's first letter when imageSrc is unset or fails to load (the same trick as the avatar in toast-015). The component only displays the toast: the queue, auto-hide and removal are the caller's job via onClose.",
             "ai": {

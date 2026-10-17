@@ -4088,7 +4088,7 @@
     {
       "name": "datagrid-019",
       "type": "registry:block",
-      "title": "Конструктор фильтров",
+      "title": "Таблица с конструктором фильтров",
       "description": "Сетка с конструктором условий: поле, оператор и значение в каждой строке, одна связка «и/или» на весь набор и живой счётчик подошедших строк.",
       "categories": [
         "data-grid"
@@ -4182,7 +4182,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Filter Builder",
+            "title": "Data Grid Filter Builder",
             "description": "A grid with a condition builder: field, operator and value on every line, one and/or joiner for the whole set and a live count of matching rows.",
             "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe component is self-contained: one file, no npm dependencies, the palette in --vibeui-datagrid-019-*. A client component: useState holds the array of conditions and the joiner; changing the field resets the operator and the value, because numbers and text take different operator sets. The builder is collected in a fieldset with a legend — for a screen reader this is one group rather than a scatter of fields; the legend carries float:left with width:100%, so the condition rows get clear:both. The joiner is shown as a separate line between the conditions and is not built into them: otherwise \"and\" reads as part of the neighbouring condition. Every field has its own aria-label with the number of the condition, and the counter of matches is declared role=status. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The joiner and defaultRules props keep acting after mounting: the reader's edits are stored alongside them rather than instead of them.",
             "ai": {
@@ -4350,7 +4350,7 @@
     {
       "name": "datagrid-020",
       "type": "registry:block",
-      "title": "Сохранённые виды",
+      "title": "Таблица с сохранёнными видами",
       "description": "Сетка с сохранёнными представлениями: вкладка восстанавливает фильтр и сортировку разом, а отклонение от сохранённого набора помечено словом «изменено».",
       "categories": [
         "data-grid"
@@ -4444,7 +4444,7 @@
         ],
         "i18n": {
           "en": {
-            "title": "Saved Views",
+            "title": "Data Grid Saved Views",
             "description": "A grid with saved views: a tab restores the filter and the sort at once, and any drift from the saved set is marked «changed».",
             "docs": "A composite block: imports  from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe component is self-contained: one file, no npm dependencies, the palette in --vibeui-datagrid-020-*. A client component: useState holds the list of views, the active name and the current state separately from it. Comparing the current state with the saved one gives the \"changed\" marker — without it there is no telling whether you are looking at a view or already at something of your own; the save button is blocked while there are no changes. The tabs lie in a nav with aria-label, and the active one is marked aria-current rather than by colour alone. A view stores both the filter and the sort: half a restored state is worse than none. The theme comes from the surrounding color-scheme through light-dark(): by default the grid lays no panel under itself, it sits directly on the page background and darkens along with it. The views and startView props keep acting after mounting: the reader's edits are stored alongside them rather than instead of them.",
             "ai": {
@@ -6719,7 +6719,7 @@
     {
       "name": "datagrid-029",
       "type": "registry:block",
-      "title": "Ошибка загрузки",
+      "title": "Таблица с ошибкой загрузки",
       "description": "Сетка с состоянием ошибки загрузки: шапка остаётся на месте, а в теле стоит объяснение с кодом ошибки, кнопкой повтора и счётчиком попыток.",
       "categories": [
         "data-grid"
@@ -6862,7 +6862,7 @@
                 "label": "Background"
               }
             },
-            "title": "Load Error",
+            "title": "Data Grid Load Error",
             "preview": {
               "props": {
                 "caption": "The header stays put: it is clear what failed to load",

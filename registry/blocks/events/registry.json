@@ -141,7 +141,7 @@
     {
       "name": "event-002",
       "type": "registry:block",
-      "title": "Карточка события",
+      "title": "Страница события",
       "description": "Страница одного мероприятия: обложка-градиент с бейджем, описание, детали (дата, время, место, цена), спикеры инициалами и кнопка регистрации. Самодостаточна: один файл, без зависимостей.",
       "categories": [
         "events"
@@ -273,7 +273,7 @@
                 "label": "Background"
               }
             },
-            "title": "Event Card",
+            "title": "Event Page",
             "docs": "A composite block: imports button-016, card-025, heading-001 from @/components/vibeui/ — the install command brings them along with the block. The block owns the layout and its own text, passes the parts props only and leaves their --vibeui-<name>-* palettes alone.\n\nThe block is self-contained: one file, no npm dependencies, its own palette in the local --vibeui-event-002-* variables. A server component. The cover is a warm gradient with a semi-transparent badge. Details are a 2×2 grid, speakers are a stack of initial avatars ringed in the card colour. Initials instead of photos: a stock face hurts trust.",
             "preview": {
               "props": {
